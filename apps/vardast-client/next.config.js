@@ -37,7 +37,7 @@ const nextConfig = {
       "storage",
       "trustseal.enamad.ir"
     ],
-    path: `${process.env.NEXT_PUBLIC_SITE_URL}/_next/image`
+    path: `${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}/_next/image`
   },
   async redirects() {
     return [
