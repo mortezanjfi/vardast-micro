@@ -1,0 +1,39 @@
+{
+  "name": "@vardast/component",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    "./*": "./src/*"
+  },
+  "license": "MIT",
+  "scripts": {
+    "add": "pnpm dlx shadcn-ui add",
+    "clean": "rm -rf .turbo node_modules",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@vardast/ui": "workspace:*",
+    "@vardast/hook": "workspace:*",
+    "@vardast/asset": "workspace:*",
+    "@vardast/query": "workspace:*",
+    "@vardast/type": "workspace:*",
+    "@vardast/provider": "workspace:*",
+    "@vardast/util": "workspace:*",
+    "@vardast/graphql": "workspace:*",
+    "@vardast/tailwind-config": "workspace:*"
+  },
+  "devDependencies": {
+    "@vardast/eslint-config": "workspace:*",
+    "@vardast/prettier-config": "workspace:*"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@vardast/eslint-config/base",
+      "@vardast/eslint-config/react"
+    ]
+  },
+  "prettier": "@vardast/prettier-config"
+}

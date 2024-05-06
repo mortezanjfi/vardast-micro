@@ -1,0 +1,3 @@
+query CalculatePrice($amount: String!, $valueDiscount: String!) {
+  calculatePrice(amount: $amount, valueDiscount: $valueDiscount)
+}

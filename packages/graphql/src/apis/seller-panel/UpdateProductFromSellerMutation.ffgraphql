@@ -1,0 +1,38 @@
+mutation UpdateProductMutation($updateProductInput: UpdateProductInput!) {
+  updateProduct(updateProductInput: $updateProductInput) {
+    id
+    slug
+    type
+    name
+    sku
+    isActive
+    description
+    title
+    metaDescription
+
+    status
+    uom {
+      id
+      name
+      slug
+      symbol
+      isActive
+    }
+    category {
+      id
+      title
+      titleEn
+      slug
+      icon
+      sort
+      isActive
+
+      childrenCount
+    }
+    brand {
+      id
+      name
+      slug
+    }
+  }
+}

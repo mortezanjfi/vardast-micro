@@ -1,0 +1,7 @@
+query GetAllBrandsWithoutPagination($indexBrandInput: IndexBrandInput) {
+  brandsWithoutPagination(indexBrandInput: $indexBrandInput) {
+    id
+    name
+    slug
+  }
+}

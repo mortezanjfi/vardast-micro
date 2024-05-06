@@ -1,0 +1,14 @@
+mutation RemoveCityMutation($id: Int!) {
+  removeCity(id: $id) {
+    id
+    name
+    nameEn
+    slug
+    type
+    sort
+    isActive
+    latitude
+    longitude
+    areasCount
+  }
+}

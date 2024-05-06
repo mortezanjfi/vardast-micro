@@ -1,0 +1,80 @@
+query GetAllSellers($indexSellerInput: IndexSellerInput) {
+  sellers(indexSellerInput: $indexSellerInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    from
+    to
+    data {
+      sum
+      rating
+      id
+      name
+      bio
+      status
+      isPublic
+      brands {
+        name
+        id
+      }
+      logoFile {
+        id
+        uuid
+        modelType
+        modelId
+        name
+        originalName
+        size
+        mimeType
+        disk
+        bucketName
+        orderColumn
+
+        presignedUrl {
+          url
+          expiresAt
+        }
+      }
+      addresses {
+        id
+        relatedType
+        relatedId
+        title
+        address
+        postalCode
+        latitude
+        longitude
+        sort
+        isPublic
+        status
+        rejectionReason
+
+        city {
+          id
+          name
+          nameEn
+          slug
+          type
+          sort
+          isActive
+          latitude
+          longitude
+          areasCount
+        }
+        province {
+          id
+          name
+          nameEn
+          slug
+          path
+          sort
+          isActive
+          latitude
+          longitude
+          citiesCount
+        }
+      }
+    }
+  }
+}

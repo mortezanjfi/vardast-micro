@@ -1,0 +1,135 @@
+query GetBrand($id: Int!) {
+  brand(id: $id) {
+    id
+    name
+    slug
+    bio
+    sum
+    rating
+    sellersCount
+    categoriesCount
+    catalog {
+      id
+      uuid
+      modelType
+      modelId
+      name
+      originalName
+      size
+      mimeType
+      disk
+      createdAt
+      bucketName
+      orderColumn
+      presignedUrl {
+        url
+        expiresAt
+      }
+    }
+    priceList {
+      id
+      uuid
+      modelType
+      modelId
+      name
+      originalName
+      size
+      mimeType
+      disk
+      createdAt
+      bucketName
+      orderColumn
+      presignedUrl {
+        url
+        expiresAt
+      }
+    }
+    logoFile {
+      id
+      uuid
+      modelType
+      modelId
+      name
+      originalName
+      size
+      mimeType
+      disk
+      bucketName
+      orderColumn
+
+      presignedUrl {
+        url
+        expiresAt
+      }
+    }
+    contacts {
+      id
+      relatedType
+      relatedId
+      title
+      code
+      number
+      ext
+      type
+      sort
+      isPublic
+      status
+      rejectionReason
+
+      country {
+        id
+        name
+        nameEn
+        slug
+        alphaTwo
+        iso
+        phonePrefix
+        sort
+        isActive
+        latitude
+        longitude
+        flagEmoji
+        provincesCount
+      }
+    }
+    addresses {
+      id
+      relatedType
+      relatedId
+      title
+      address
+      postalCode
+      latitude
+      longitude
+      sort
+      isPublic
+      status
+      rejectionReason
+
+      province {
+        id
+        name
+        nameEn
+        slug
+        path
+        sort
+        isActive
+        latitude
+        longitude
+        citiesCount
+      }
+      city {
+        id
+        name
+        nameEn
+        slug
+        type
+        sort
+        isActive
+        latitude
+        longitude
+        areasCount
+      }
+    }
+  }
+}

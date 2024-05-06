@@ -1,0 +1,84 @@
+query GetMyProfileCategoriesSeller(
+  $searchSellerRepresentativeInput: SearchSellerRepresentativeInput!
+) {
+  myProfileSeller(
+    searchSellerRepresentativeInput: $searchSellerRepresentativeInput
+  ) {
+    id
+    myProduct {
+      id
+      product {
+        id
+        category {
+          title
+          titleEn
+          slug
+          icon
+          sort
+          isActive
+          childrenCount
+          id
+          productsCount
+          description
+          url
+          children {
+            id
+            title
+            titleEn
+            slug
+            icon
+            sort
+            isActive
+            url
+            description
+            childrenCount
+            productsCount
+            parentCategory {
+              id
+              title
+              titleEn
+              slug
+              icon
+              sort
+              isActive
+              url
+              childrenCount
+            }
+          }
+          imageCategory {
+            file {
+              id
+              size
+              name
+              presignedUrl {
+                url
+              }
+            }
+          }
+          parentCategory {
+            id
+            title
+            titleEn
+            slug
+            icon
+            sort
+            isActive
+            url
+            childrenCount
+          }
+          parentsChain {
+            id
+            title
+            titleEn
+            slug
+            icon
+            sort
+            isActive
+            url
+            childrenCount
+          }
+        }
+      }
+    }
+  }
+}

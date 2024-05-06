@@ -1,0 +1,11 @@
+mutation CreateCategoryMutation($createCategoryInput: CreateCategoryInput!) {
+  createCategory(createCategoryInput: $createCategoryInput) {
+    id
+    title
+    titleEn
+    slug
+    icon
+    sort
+    isActive
+  }
+}

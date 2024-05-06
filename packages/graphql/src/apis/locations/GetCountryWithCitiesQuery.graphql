@@ -1,0 +1,29 @@
+query GetCountryWithCities($id: Int, $slug: String) {
+  country(id: $id, slug: $slug) {
+    id
+    name
+    nameEn
+    slug
+    alphaTwo
+    iso
+    phonePrefix
+    sort
+    isActive
+    provincesCount
+    provinces {
+      id
+      name
+      nameEn
+      slug
+      sort
+      isActive
+      cities {
+        id
+        name
+        nameEn
+        slug
+      }
+      citiesCount
+    }
+  }
+}

@@ -1,0 +1,41 @@
+query GetBannerHomePage($IndexBannerInput: IndexBannerInput!) {
+  getBanners(IndexBannerInput: $IndexBannerInput) {
+    id
+    small {
+      id
+      url
+      originalName
+      presignedUrl {
+        url
+        expiresAt
+      }
+    }
+    medium {
+      id
+      url
+      originalName
+      presignedUrl {
+        url
+        expiresAt
+      }
+    }
+    large {
+      id
+      url
+      originalName
+      presignedUrl {
+        url
+        expiresAt
+      }
+    }
+    xlarge {
+      id
+      url
+      originalName
+      presignedUrl {
+        url
+        expiresAt
+      }
+    }
+  }
+}

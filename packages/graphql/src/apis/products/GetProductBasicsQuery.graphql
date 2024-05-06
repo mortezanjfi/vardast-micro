@@ -1,0 +1,15 @@
+query GetProductBasics($id: Int!) {
+  product(id: $id) {
+    id
+    slug
+    type
+    name
+    sku
+    isActive
+    description
+    title
+    metaDescription
+
+    status
+  }
+}

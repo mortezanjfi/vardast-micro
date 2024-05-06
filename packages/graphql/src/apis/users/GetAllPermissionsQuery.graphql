@@ -1,0 +1,19 @@
+query GetAllPermissions($indexPermissionInput: IndexPermissionInput) {
+  permissions(indexPermissionInput: $indexPermissionInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    to
+    from
+    data {
+      id
+      name
+      displayName
+      action
+      subject
+      field
+      conditions
+    }
+  }
+}

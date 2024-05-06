@@ -1,0 +1,16 @@
+mutation RemoveAttributeMutation($id: Int!) {
+  removeAttribute(id: $id) {
+    id
+    name
+    slug
+    type
+
+    values {
+      options
+      defaults
+    }
+    isPublic
+    isRequired
+    isFilterable
+  }
+}

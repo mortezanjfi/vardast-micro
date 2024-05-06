@@ -1,0 +1,22 @@
+query GetCity($id: Int, $slug: String) {
+  city(id: $id, slug: $slug) {
+    id
+    name
+    nameEn
+    slug
+    type
+    sort
+    isActive
+    areasCount
+    latitude
+    longitude
+    areas {
+      id
+      name
+      nameEn
+      slug
+      sort
+      isActive
+    }
+  }
+}

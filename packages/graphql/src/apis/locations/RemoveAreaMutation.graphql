@@ -1,0 +1,13 @@
+mutation RemoveAreaMutation($id: Int!) {
+  removeArea(id: $id) {
+    id
+    name
+    nameEn
+    municipalityDistrict
+    slug
+    sort
+    isActive
+    latitude
+    longitude
+  }
+}

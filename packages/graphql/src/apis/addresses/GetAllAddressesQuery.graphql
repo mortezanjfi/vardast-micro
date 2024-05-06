@@ -1,0 +1,64 @@
+query GetAllAddresses($indexAddressInput: IndexAddressInput!) {
+  addresses(indexAddressInput: $indexAddressInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    from
+    to
+    data {
+      id
+      relatedType
+      relatedId
+      title
+      address
+      postalCode
+      latitude
+      longitude
+      sort
+      isPublic
+      status
+      rejectionReason
+
+      country {
+        id
+        name
+        nameEn
+        slug
+        alphaTwo
+        iso
+        phonePrefix
+        sort
+        isActive
+        latitude
+        longitude
+        flagEmoji
+        provincesCount
+      }
+      city {
+        id
+        name
+        nameEn
+        slug
+        type
+        sort
+        isActive
+        latitude
+        longitude
+        areasCount
+      }
+      province {
+        id
+        name
+        nameEn
+        slug
+        path
+        sort
+        isActive
+        latitude
+        longitude
+        citiesCount
+      }
+    }
+  }
+}

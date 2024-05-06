@@ -1,0 +1,17 @@
+mutation LoginUser($loginInput: LoginInput!) {
+  login(loginInput: $loginInput) {
+    accessToken
+    accessTokenTtl
+    user {
+      id
+      roles {
+        id
+        name
+        isActive
+      }
+    }
+    abilities
+    refreshToken
+    refreshTokenTtl
+  }
+}

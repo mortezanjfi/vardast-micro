@@ -1,0 +1,88 @@
+.switch {
+  @apply me-1.5
+    inline-flex
+    h-6
+    w-10
+    cursor-pointer
+    touch-none
+    items-center
+    rounded-full
+    border-2
+    border-transparent
+    bg-alpha-300
+    ring-offset-2
+    ring-offset-alpha-700
+    transition
+    duration-200
+    data-[state="checked"]:bg-emerald-400
+    dark:bg-alpha-600
+    dark:data-[state="checked"]:bg-primary-400;
+  -webkit-tap-highlight-color: transparent;
+
+  &-thumb {
+    @apply block
+        h-5
+        w-5
+        origin-right
+        rounded-full
+        bg-white
+        shadow-md
+        transition-all
+        duration-300;
+  }
+
+  &:where([data-state="checked"]) {
+    & .switch-thumb {
+      @apply ms-4;
+    }
+  }
+
+  &-xs {
+    @apply h-4 w-7;
+    & .switch-thumb {
+      @apply h-3 w-3;
+    }
+  }
+  &-sm {
+    @apply h-5 w-8;
+    & .switch-thumb {
+      @apply h-4 w-4;
+    }
+
+    &:where([data-state="checked"]) {
+      & .switch-thumb {
+        @apply ms-3;
+      }
+    }
+  }
+  &-md {
+    @apply h-7 w-10;
+    & .switch-thumb {
+      @apply h-6 w-6;
+    }
+  }
+  &-lg {
+    @apply h-8 w-12;
+    & .switch-thumb {
+      @apply h-7 w-7;
+    }
+
+    &:where([data-state="checked"]) {
+      & .switch-thumb {
+        @apply ms-4;
+      }
+    }
+  }
+  &-xl {
+    @apply h-9 w-14;
+    & .switch-thumb {
+      @apply h-8 w-8;
+    }
+
+    &:where([data-state="checked"]) {
+      & .switch-thumb {
+        @apply ms-5;
+      }
+    }
+  }
+}

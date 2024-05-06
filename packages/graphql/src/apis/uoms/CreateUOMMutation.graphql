@@ -1,0 +1,9 @@
+mutation CreateUOMMutation($createUomInput: CreateUomInput!) {
+  createUom(createUomInput: $createUomInput) {
+    id
+    name
+    slug
+    symbol
+    isActive
+  }
+}

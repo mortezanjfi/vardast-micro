@@ -1,0 +1,18 @@
+{
+  "extends": "@vardast/tsconfig/base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "baseUrl": "./",
+    "paths": {
+      "@vardast/graphql/*": ["node_modules/@vardast/graphql/src/*.ts"]
+    }
+  },
+  "include": [
+    "src",
+    "env.js",
+    "next/types/**/*.ts",
+    "src/types/next-env.d.ts",
+    "../graphql/src/auth.type.ts"
+  ],
+  "exclude": ["node_modules"]
+}

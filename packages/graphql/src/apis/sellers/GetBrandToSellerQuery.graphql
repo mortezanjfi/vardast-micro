@@ -1,0 +1,28 @@
+query GetBrandToSellerQuery($indexTakeBrandToSeller: IndexTakeBrandToSeller) {
+  takeBrandToSeller(indexTakeBrandToSeller: $indexTakeBrandToSeller) {
+    total
+    perPage
+    currentPage
+    lastPage
+    from
+    to
+    data {
+      sum
+      rating
+      id
+      name
+      logoFile {
+        presignedUrl {
+          url
+        }
+      }
+      addresses {
+        id
+        city {
+          id
+          name
+        }
+      }
+    }
+  }
+}

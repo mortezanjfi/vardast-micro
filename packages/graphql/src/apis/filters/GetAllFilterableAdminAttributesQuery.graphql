@@ -1,0 +1,19 @@
+query GetAllFilterableAdminAttributesQuery(
+  $filterableAttributesInput: FilterableAttributesInput!
+) {
+  filterableAdminAttributes(
+    filterableAdminAttributes: $filterableAttributesInput
+  ) {
+    filters {
+      id
+      name
+      isPublic
+      isRequired
+      isFilterable
+      values {
+        options
+        defaults
+      }
+    }
+  }
+}

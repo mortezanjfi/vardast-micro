@@ -1,0 +1,16 @@
+mutation UpdateAttributeMutation($updateAttributeInput: UpdateAttributeInput!) {
+  updateAttribute(updateAttributeInput: $updateAttributeInput) {
+    id
+    name
+    slug
+    type
+
+    values {
+      options
+      defaults
+    }
+    isPublic
+    isRequired
+    isFilterable
+  }
+}

@@ -1,0 +1,5 @@
+query GetCountTotalEvent {
+  pastDurationEventsCount {
+    totalCount
+  }
+}

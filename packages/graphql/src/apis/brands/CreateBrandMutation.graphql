@@ -1,0 +1,7 @@
+mutation CreateBrandMutation($createBrandInput: CreateBrandInput!) {
+  createBrand(createBrandInput: $createBrandInput) {
+    id
+    name
+    slug
+  }
+}

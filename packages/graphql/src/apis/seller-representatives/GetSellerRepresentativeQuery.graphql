@@ -1,0 +1,45 @@
+query SellerRepresentative($id: Int!) {
+  sellerRepresentative(id: $id) {
+    id
+    role
+    title
+    isActive
+
+    seller {
+      id
+      name
+      bio
+      status
+      isPublic
+    }
+    user {
+      id
+      uuid
+      firstName
+      lastName
+      email
+      cellphone
+      telegramChatId
+      isCellphoneVerified
+      isEmailVerified
+      isTelegramVerified
+      username
+      mustChangePassword
+      lastPasswordChangeAt
+      language
+      timezone
+      status
+      suspensionReason
+      customDisplayRole
+      adminComments
+      lastLoginAt
+      lastLoginIP
+      lastFailedLoginAt
+      failedLoginAttempts
+      isLockedOut
+      lockedOutAt
+
+      fullName
+    }
+  }
+}

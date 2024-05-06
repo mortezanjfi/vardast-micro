@@ -1,0 +1,229 @@
+.btn {
+  --ring-width: 0px;
+  @apply relative
+    inline-flex
+    cursor-pointer
+    select-none
+    appearance-none
+    items-center
+    justify-center
+    gap-1.5
+    whitespace-nowrap
+    rounded
+    border-0
+    px-3.5
+    py-3
+    text-center
+    align-baseline
+    text-base
+    leading-none
+    transition-all
+    duration-200
+    ease-linear
+    focus:outline-none
+    focus-visible:outline-none;
+  -webkit-tap-highlight-color: transparent;
+
+  & > .icon {
+    width: 1em;
+    height: 1em;
+  }
+
+  &-xs {
+    @apply px-2.5
+        py-1.5
+        text-xs;
+  }
+  &-sm {
+    @apply px-2.5
+        py-1.5
+        text-sm;
+  }
+  &-md {
+    @apply gap-2
+        px-4
+        py-3.5
+        text-base;
+  }
+  &-lg {
+    @apply gap-2
+        px-5
+        py-4
+        text-lg;
+  }
+  &-xl {
+    @apply gap-3
+        px-6
+        py-5
+        text-xl;
+  }
+
+  &.btn-primary {
+    @apply bg-primary-600
+        text-white
+        ring-0
+        ring-primary-300/40
+        focus:bg-primary-700
+        focus:ring-4
+        focus-visible:bg-primary-700
+        focus-visible:ring-4
+        md:hover:bg-primary-700
+        dark:ring-primary-600/40;
+  }
+
+  &.btn-outline-primary {
+    @apply border border-primary-600
+        text-primary-600
+        ring-0
+        ring-primary-300/40
+        focus:bg-primary-200
+        focus:ring-4
+        focus-visible:bg-primary-200
+        focus-visible:ring-4
+        md:hover:bg-primary-200
+        dark:ring-primary-600/40;
+  }
+
+  &.btn-danger {
+    @apply bg-red-600
+        text-white
+        ring-0
+        ring-red-300/40
+        focus:bg-red-700
+        focus:ring-4
+        focus-visible:bg-red-700
+        focus-visible:ring-4
+        md:hover:bg-red-700
+        dark:ring-red-600/30;
+  }
+
+  &.btn-secondary {
+    --border-opacity: 0.1;
+    --border-color: rgba(theme(colors.alpha.700), var(--border-opacity));
+    @apply /*
+        */
+        border
+        border-alpha-200
+        bg-alpha-white
+        text-alpha
+        ring-0
+        ring-alpha-700/5 focus:ring-4 focus-visible:bg-alpha-50
+        focus-visible:ring-4
+        active:bg-alpha-50
+        md:hover:bg-alpha-50
+        dark:ring-alpha-300/30;
+
+    &:where(:hover, :focus, :focus-visible) {
+      --border-opacity: 0.2;
+    }
+  }
+
+  &.btn-ghost {
+    @apply /*
+        */
+        /*
+        */ bg-transparent text-primary
+        ring-0
+        focus-visible:bg-alpha-100
+        active:bg-alpha-100 md:hover:bg-alpha-100 dark:text-alpha-300
+        dark:focus-visible:bg-alpha-800/70
+        dark:md:hover:bg-alpha-800/70;
+  }
+
+  &.btn-link {
+    @apply border-none
+        bg-transparent
+        p-0
+        text-alpha-700
+        underline-offset-4
+        ring-0
+        focus:outline-none
+        focus-visible:outline-none
+        md:hover:underline
+        dark:text-alpha-300;
+  }
+
+  &.btn-disabled,
+  &[disabled] {
+    @apply cursor-not-allowed
+        opacity-50
+        shadow-none
+        ring-0
+        focus:shadow-none
+        focus:ring-0
+        focus-visible:shadow-none
+        focus-visible:ring-0
+        md:hover:shadow-none
+        md:hover:ring-0;
+  }
+
+  &.btn-loading,
+  &[loading] {
+    @apply cursor-progress;
+
+    &::after {
+      content: "";
+      width: 1.2em;
+      height: 1.2em;
+      border: 2px solid transparent;
+      border-top-color: currentColor;
+      border-radius: 50%;
+      animation: button-loading-spinner 1s ease infinite;
+      user-select: none;
+    }
+  }
+
+  &.btn-icon-only {
+    @apply p-3;
+
+    &.btn-xs {
+      @apply p-1;
+    }
+    &.btn-sm {
+      @apply p-1.5;
+    }
+    &.btn-md {
+      @apply p-2.5;
+    }
+    &.btn-lg {
+      @apply p-4;
+    }
+    &.btn-xl {
+      @apply p-5;
+    }
+  }
+}
+
+.btn-group {
+  @apply relative inline-flex -space-x-px space-x-reverse align-middle;
+
+  & > .btn {
+    @apply flex-1 rounded-none first:rounded-s last:rounded-e;
+
+    &:where(:focus, :focus-visible, :hover) {
+      z-index: 10;
+    }
+  }
+}
+
+.btn-group-vertical {
+  @apply relative inline-flex flex-col items-start justify-center -space-y-px space-y-reverse align-middle;
+
+  & > .btn {
+    @apply w-full flex-1 rounded-none first:rounded-t last:rounded-b;
+
+    &:where(:focus, :focus-visible, :hover) {
+      z-index: 10;
+    }
+  }
+}
+
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+
+  to {
+    transform: rotate(1turn);
+  }
+}

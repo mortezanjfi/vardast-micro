@@ -1,0 +1,55 @@
+query GetAllContactInfos($indexContactInfoInput: IndexContactInfoInput!) {
+  contactInfos(indexContactInfoInput: $indexContactInfoInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    from
+    to
+    data {
+      id
+      relatedType
+      relatedId
+      title
+      code
+      number
+      ext
+      type
+      sort
+      isPublic
+      status
+      rejectionReason
+
+      country {
+        id
+        name
+        nameEn
+        slug
+        alphaTwo
+        iso
+        phonePrefix
+        sort
+        isActive
+        latitude
+        longitude
+        flagEmoji
+        provincesCount
+      }
+      city {
+        id
+        name
+        nameEn
+        slug
+        alphaTwo
+        iso
+        phonePrefix
+        sort
+        isActive
+        latitude
+        longitude
+        flagEmoji
+        provincesCount
+      }
+    }
+  }
+}

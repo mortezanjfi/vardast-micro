@@ -1,0 +1,10 @@
+mutation CreateAttributeValueMutation(
+  $createAttributeValueInput: CreateAttributeValueInput!
+) {
+  createAttributeValue(createAttributeValueInput: $createAttributeValueInput) {
+    id
+    value
+    isVariant
+    sku
+  }
+}

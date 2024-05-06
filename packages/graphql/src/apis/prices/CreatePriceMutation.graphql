@@ -1,0 +1,16 @@
+mutation CreatePriceMutation($createPriceInput: CreatePriceInput!) {
+  createPrice(createPriceInput: $createPriceInput) {
+    id
+    type
+    isPublic
+
+    amount
+    seller {
+      id
+      name
+      bio
+      status
+      isPublic
+    }
+  }
+}

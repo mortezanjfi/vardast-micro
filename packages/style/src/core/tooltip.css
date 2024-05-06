@@ -1,0 +1,384 @@
+[data-n-tooltip] {
+  position: relative;
+}
+[data-n-tooltip]:after {
+  bottom: 100%;
+  content: attr(data-n-tooltip);
+  box-sizing: border-box;
+  font-style: normal;
+  text-align: center;
+  padding-inline: 1ch;
+  padding-block: 0.75ch;
+  font-size: theme(fontSize.sm);
+  line-height: theme(lineHeight.normal);
+  border-radius: theme(borderRadius.lg);
+  color: theme(colors.white);
+  transition: opacity 0.3s cubic-bezier(0.73, 0.01, 0, 1);
+  transition:
+    opacity 0.3s cubic-bezier(0.73, 0.01, 0, 1),
+    transform 0.3s cubic-bezier(0.73, 0.01, 0, 1);
+  transition:
+    opacity 0.3s cubic-bezier(0.73, 0.01, 0, 1),
+    transform 0.3s cubic-bezier(0.73, 0.01, 0, 1);
+  pointer-events: none;
+  z-index: 100000;
+  white-space: nowrap;
+  transform: translate(-50%, 12px);
+  max-width: 320px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+[data-n-tooltip]:after,
+[data-n-tooltip]:before {
+  position: absolute;
+  left: 50%;
+  opacity: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+[data-n-tooltip]:before {
+  top: -2px;
+  border-style: solid;
+  border-top-width: 4px;
+  border-right-width: 4px;
+  border-bottom-width: 4px;
+  border-left-width: 4px;
+  border-bottom-width: 0;
+  content: "";
+  width: 0;
+  height: 0;
+  transform: translate(-50%, calc(-50% - 6px));
+  transition: opacity 0.1s cubic-bezier(0.73, 0.01, 0, 1) 0s;
+  transition:
+    opacity 0.1s cubic-bezier(0.73, 0.01, 0, 1) 0s,
+    transform 0.6s cubic-bezier(0.73, 0.01, 0, 1) 0s;
+  transition:
+    opacity 0.1s cubic-bezier(0.73, 0.01, 0, 1) 0s,
+    transform 0.6s cubic-bezier(0.73, 0.01, 0, 1) 0s;
+  z-index: 110000;
+}
+[data-n-tooltip]:after {
+  background: theme(colors.alpha.900);
+}
+[data-n-tooltip]:before {
+  border-top-color: theme(colors.alpha.900);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+[data-n-tooltip][data-n-tooltip-config*="right"]:before {
+  border-top-color: transparent;
+  border-right-color: theme(colors.alpha.900);
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+[data-n-tooltip][data-n-tooltip-config*="bottom"]:before {
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: theme(colors.alpha.900);
+  border-left-color: transparent;
+}
+[data-n-tooltip][data-n-tooltip-config*="left"]:before {
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: theme(colors.alpha.900);
+}
+[data-n-tooltip]:focus:after,
+[data-n-tooltip]:focus:before,
+[data-n-tooltip]:hover:after,
+[data-n-tooltip]:hover:before {
+  opacity: 1;
+}
+[data-n-tooltip]:focus:before,
+[data-n-tooltip]:hover:before {
+  transition: opacity 0.1s cubic-bezier(0.73, 0.01, 0, 1) 0.1s;
+  transition:
+    opacity 0.1s cubic-bezier(0.73, 0.01, 0, 1) 0.1s,
+    transform 0.6s cubic-bezier(0.73, 0.01, 0, 1) 0.1s;
+  transition:
+    opacity 0.1s cubic-bezier(0.73, 0.01, 0, 1) 0.1s,
+    transform 0.6s cubic-bezier(0.73, 0.01, 0, 1) 0.1s;
+  transform: translate(-50%, calc(-50% - 2px));
+}
+[data-n-tooltip]:focus:after,
+[data-n-tooltip]:hover:after {
+  transform: translate(-50%, -6px);
+}
+[data-n-tooltip][data-n-tooltip-config*="right"]:before {
+  top: 50%;
+  right: -6px;
+  left: auto;
+  border-style: solid;
+  border-top-width: 4px;
+  border-right-width: 4px;
+  border-bottom-width: 4px;
+  border-left-width: 4px;
+  border-left-width: 0;
+  transform: translate(calc(-50% + 7px), -50%);
+}
+[data-n-tooltip][data-n-tooltip-config*="right"]:after {
+  top: 50%;
+  bottom: auto;
+  left: 100%;
+  transform: translate(-12px, -50%);
+}
+[data-n-tooltip][data-n-tooltip-config*="right"]:focus:before,
+[data-n-tooltip][data-n-tooltip-config*="right"]:hover:before {
+  transform: translate(calc(-50% + 3px), -50%);
+}
+[data-n-tooltip][data-n-tooltip-config*="right"]:focus:after,
+[data-n-tooltip][data-n-tooltip-config*="right"]:hover:after {
+  transform: translate(7px, -50%);
+}
+[data-n-tooltip][data-n-tooltip-config*="bottom"]:before {
+  top: auto;
+  bottom: -6px;
+  left: 50%;
+  border-style: solid;
+  border-top-width: 4px;
+  border-right-width: 4px;
+  border-bottom-width: 4px;
+  border-left-width: 4px;
+  border-top-width: 0;
+  transform: translate(-50%, calc(-50% + 6px));
+}
+[data-n-tooltip][data-n-tooltip-config*="bottom"]:after {
+  top: 100%;
+  bottom: auto;
+  left: 50%;
+  transform: translate(-50%, -12px);
+}
+[data-n-tooltip][data-n-tooltip-config*="bottom"]:focus:before,
+[data-n-tooltip][data-n-tooltip-config*="bottom"]:hover:before {
+  transform: translate(-50%, calc(-50% + 2px));
+}
+[data-n-tooltip][data-n-tooltip-config*="bottom"]:focus:after,
+[data-n-tooltip][data-n-tooltip-config*="bottom"]:hover:after {
+  transform: translate(-50%, 6px);
+}
+[data-n-tooltip][data-n-tooltip-config*="left"]:before {
+  top: 50%;
+  left: -2px;
+  border-style: solid;
+  border-top-width: 4px;
+  border-right-width: 4px;
+  border-bottom-width: 4px;
+  border-left-width: 4px;
+  border-right-width: 0;
+  width: 0;
+  height: 0;
+  transform: translate(calc(-50% - 8px), -50%);
+}
+[data-n-tooltip][data-n-tooltip-config*="left"]:after {
+  top: 50%;
+  right: 100%;
+  bottom: auto;
+  left: auto;
+  transform: translate(12px, -50%);
+}
+[data-n-tooltip][data-n-tooltip-config*="left"]:focus:after,
+[data-n-tooltip][data-n-tooltip-config*="left"]:hover:after {
+  transform: translate(-7px, -50%);
+}
+[data-n-tooltip][data-n-tooltip-config*="left"]:focus:before,
+[data-n-tooltip][data-n-tooltip-config*="left"]:hover:before {
+  transform: translate(calc(-50% - 3px), -50%);
+}
+[data-n-tooltip][data-n-tooltip-config*="multiline"]:after {
+  word-break: break-word;
+  white-space: normal;
+  min-width: 180px;
+  text-overflow: clip;
+}
+[data-n-tooltip][data-n-tooltip-config*="delay"]:before {
+  transition: opacity 0.2s cubic-bezier(0.73, 0.01, 0, 1) 0s;
+  transition:
+    opacity 0.2s cubic-bezier(0.73, 0.01, 0, 1) 0s,
+    transform 0.3s cubic-bezier(0.73, 0.01, 0, 1) 0s;
+  transition:
+    opacity 0.2s cubic-bezier(0.73, 0.01, 0, 1) 0s,
+    transform 0.3s cubic-bezier(0.73, 0.01, 0, 1) 0s;
+}
+[data-n-tooltip][data-n-tooltip-config*="delay"]:after {
+  transition: opacity 0.3s cubic-bezier(0.73, 0.01, 0, 1) 0s;
+  transition:
+    opacity 0.3s cubic-bezier(0.73, 0.01, 0, 1) 0s,
+    transform 0.3s cubic-bezier(0.73, 0.01, 0, 1) 0s;
+  transition:
+    opacity 0.3s cubic-bezier(0.73, 0.01, 0, 1) 0s,
+    transform 0.3s cubic-bezier(0.73, 0.01, 0, 1) 0s;
+}
+[data-n-tooltip][data-n-tooltip-config*="delay"]:focus:before,
+[data-n-tooltip][data-n-tooltip-config*="delay"]:hover:before {
+  transition: opacity 0.2s cubic-bezier(0.73, 0.01, 0, 1) 0.5s;
+  transition:
+    opacity 0.2s cubic-bezier(0.73, 0.01, 0, 1) 0.5s,
+    transform 0.6s cubic-bezier(0.73, 0.01, 0, 1) 0.5s;
+  transition:
+    opacity 0.2s cubic-bezier(0.73, 0.01, 0, 1) 0.5s,
+    transform 0.6s cubic-bezier(0.73, 0.01, 0, 1) 0.5s;
+}
+[data-n-tooltip][data-n-tooltip-config*="delay"]:focus:after,
+[data-n-tooltip][data-n-tooltip-config*="delay"]:hover:after {
+  transition: opacity 0.3s cubic-bezier(0.73, 0.01, 0, 1) 0.4s;
+  transition:
+    opacity 0.3s cubic-bezier(0.73, 0.01, 0, 1) 0.4s,
+    transform 0.3s cubic-bezier(0.73, 0.01, 0, 1) 0.4s;
+  transition:
+    opacity 0.3s cubic-bezier(0.73, 0.01, 0, 1) 0.4s,
+    transform 0.3s cubic-bezier(0.73, 0.01, 0, 1) 0.4s;
+}
+[data-n-tooltip][data-n-tooltip-config*="shadow"]:after {
+  box-shadow: theme(boxShadow.lg);
+}
+[data-n-tooltip][data-n-tooltip-config*="no-animation"]:after,
+[data-n-tooltip][data-n-tooltip-config*="no-animation"]:before {
+  transition: none;
+}
+[data-n-tooltip][data-n-tooltip-config*="no-arrow"]:before {
+  display: none;
+}
+[data-n-tooltip][data-n-tooltip-config*="square"]:after {
+  border-radius: 0;
+}
+[data-n-tooltip][data-n-tooltip-config*="invert"]:after {
+  color: theme(colors.alpha.800);
+  background: theme(colors.white);
+}
+[data-n-tooltip][data-n-tooltip-config*="invert"]:before {
+  border-top-color: theme(colors.white);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+[data-n-tooltip][data-n-tooltip-config*="invert"][data-n-tooltip-config*="right"]:before {
+  border-top-color: transparent;
+  border-right-color: theme(colors.white);
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+[data-n-tooltip][data-n-tooltip-config*="invert"][data-n-tooltip-config*="bottom"]:before {
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: theme(colors.white);
+  border-left-color: transparent;
+}
+[data-n-tooltip][data-n-tooltip-config*="invert"][data-n-tooltip-config*="left"]:before {
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: theme(colors.white);
+}
+[data-n-tooltip][data-n-tooltip-config*="success"]:after {
+  background: theme(colors.emerald.800);
+}
+[data-n-tooltip][data-n-tooltip-config*="success"]:before {
+  border-top-color: theme(colors.emerald.800);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+[data-n-tooltip][data-n-tooltip-config*="success"][data-n-tooltip-config*="right"]:before {
+  border-top-color: transparent;
+  border-right-color: theme(colors.emerald.800);
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+[data-n-tooltip][data-n-tooltip-config*="success"][data-n-tooltip-config*="bottom"]:before {
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: theme(colors.emerald.800);
+  border-left-color: transparent;
+}
+[data-n-tooltip][data-n-tooltip-config*="success"][data-n-tooltip-config*="left"]:before {
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: theme(colors.emerald.800);
+}
+[data-n-tooltip][data-n-tooltip-config*="info"]:after {
+  background: theme(colors.blue.600);
+}
+[data-n-tooltip][data-n-tooltip-config*="info"]:before {
+  border-top-color: theme(colors.blue.600);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+[data-n-tooltip][data-n-tooltip-config*="info"][data-n-tooltip-config*="right"]:before {
+  border-top-color: transparent;
+  border-right-color: theme(colors.blue.600);
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+[data-n-tooltip][data-n-tooltip-config*="info"][data-n-tooltip-config*="bottom"]:before {
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: theme(colors.blue.600);
+  border-left-color: transparent;
+}
+[data-n-tooltip][data-n-tooltip-config*="info"][data-n-tooltip-config*="left"]:before {
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: theme(colors.blue.600);
+}
+[data-n-tooltip][data-n-tooltip-config*="warning"]:after {
+  background: theme(colors.amber.600);
+}
+[data-n-tooltip][data-n-tooltip-config*="warning"]:before {
+  border-top-color: theme(colors.amber.600);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+[data-n-tooltip][data-n-tooltip-config*="warning"][data-n-tooltip-config*="right"]:before {
+  border-top-color: transparent;
+  border-right-color: theme(colors.amber.600);
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+[data-n-tooltip][data-n-tooltip-config*="warning"][data-n-tooltip-config*="bottom"]:before {
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: theme(colors.amber.600);
+  border-left-color: transparent;
+}
+[data-n-tooltip][data-n-tooltip-config*="warning"][data-n-tooltip-config*="left"]:before {
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: theme(colors.amber.600);
+}
+[data-n-tooltip][data-n-tooltip-config*="danger"]:after {
+  background: theme(colors.error.600);
+}
+[data-n-tooltip][data-n-tooltip-config*="danger"]:before {
+  border-top-color: theme(colors.error.600);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+[data-n-tooltip][data-n-tooltip-config*="danger"][data-n-tooltip-config*="right"]:before {
+  border-top-color: transparent;
+  border-right-color: theme(colors.error.600);
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+[data-n-tooltip][data-n-tooltip-config*="danger"][data-n-tooltip-config*="bottom"]:before {
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: theme(colors.error.600);
+  border-left-color: transparent;
+}
+[data-n-tooltip][data-n-tooltip-config*="danger"][data-n-tooltip-config*="left"]:before {
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: theme(colors.error.600);
+}
+[data-n-tooltip][data-n-tooltip=""]:after,
+[data-n-tooltip][data-n-tooltip=""]:before {
+  display: none;
+}

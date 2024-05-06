@@ -1,0 +1,58 @@
+version: "3.3"
+services:
+  next-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4050:3000"
+      - "4051:3001"
+      - "4052:3002"
+    # networks:
+    #   - myNet
+    deploy:
+      resources:
+        limits:
+          cpus: "3" # Limit to 2.5 CPU cores (5 times more)
+          memory: "2560M" # Limit to 2560 megabytes of RAM (5 times more)
+        reservations:
+          cpus: "2" # Reserve 1 CPU core (5 times more)
+          memory: "1280M" # Reserve 1280 megabytes of RAM (5 times more)
+
+
+  # next-app-client:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "4051:3000"
+  #   networks:
+  #     - myNet
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: "2.5" # Limit to 2.5 CPU cores (5 times more)
+  #         memory: "2560M" # Limit to 2560 megabytes of RAM (5 times more)
+  #       reservations:
+  #         cpus: "1" # Reserve 1 CPU core (5 times more)
+  #         memory: "1280M" # Reserve 1280 megabytes of RAM (5 times more)
+
+  # next-app-seller:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "4052:3000"
+  #   networks:
+  #     - myNet
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: "2.5" # Limit to 2.5 CPU cores (5 times more)
+  #         memory: "2560M" # Limit to 2560 megabytes of RAM (5 times more)
+  #       reservations:
+  #         cpus: "1" # Reserve 1 CPU core (5 times more)
+  #         memory: "1280M" # Reserve 1280 megabytes of RAM (5 times more)
+# networks:
+#   myNet:
+#     external: true

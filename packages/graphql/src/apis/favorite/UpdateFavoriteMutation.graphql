@@ -1,0 +1,3 @@
+mutation UpdateFavoriteMutation($UpdateFavoriteInput: UpdateFavoriteInput!) {
+  updateFavorite(updateFavoriteInput: $UpdateFavoriteInput)
+}

@@ -1,0 +1,60 @@
+.tag-field {
+  @apply relative
+    flex
+    flex-wrap
+    items-center
+    gap-1;
+
+  .tag-field-input {
+    @apply relative
+        z-10
+        flex-1
+        border-none
+        bg-transparent
+        focus:outline-none
+        focus-visible:outline-none;
+  }
+
+  .tag-input-placeholder {
+    @apply absolute z-0 text-alpha-400;
+  }
+
+  .tag-field-tags {
+    @apply flex
+        flex-wrap
+        items-center
+        gap-1;
+  }
+
+  .tag-item {
+    @apply flex
+        items-center
+        gap-1
+        whitespace-nowrap
+        rounded
+        bg-alpha-100
+        px-3
+        py-2
+        leading-none
+        text-alpha-700;
+
+    tag-item-title {
+    }
+
+    .tag-item-delete-button {
+      @apply flex
+        h-4
+        w-4
+        appearance-none
+        items-center
+        justify-center
+        rounded-sm
+        bg-transparent
+        hover:bg-white;
+
+      .icon {
+        @apply h-3 w-3;
+      }
+    }
+  }
+}

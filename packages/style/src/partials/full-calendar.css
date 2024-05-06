@@ -1,0 +1,49 @@
+.fc {
+  --fc-small-font-size: theme(fontSize.sm);
+  --fc-page-bg-color: #fff;
+  --fc-neutral-bg-color: rgba(208, 208, 208, 0.3);
+  --fc-neutral-text-color: theme(colors.alpha.700);
+  --fc-border-color: theme(colors.alpha.200);
+
+  --fc-button-text-color: theme(colors.alpha.700);
+  --fc-button-bg-color: white;
+  --fc-button-border-color: theme(colors.alpha.200);
+  --fc-button-hover-bg-color: theme(colors.alpha.200);
+  --fc-button-hover-border-color: theme(colors.alpha.300);
+  --fc-button-active-bg-color: theme(colors.alpha.200);
+  --fc-button-active-border-color: theme(colors.alpha.300);
+
+  --fc-event-bg-color: theme(colors.blue.500);
+  --fc-event-border-color: theme(colors.blue.500);
+  --fc-event-text-color: #fff;
+  --fc-event-selected-overlay-color: rgba(0, 0, 0, 0.25);
+
+  --fc-more-link-bg-color: #d0d0d0;
+  --fc-more-link-text-color: inherit;
+
+  --fc-event-resizer-thickness: 8px;
+  --fc-event-resizer-dot-total-width: 8px;
+  --fc-event-resizer-dot-border-width: 1px;
+
+  --fc-non-business-color: rgba(215, 215, 215, 0.3);
+  --fc-bg-event-color: rgb(143, 223, 130);
+  --fc-bg-event-opacity: 0.3;
+  --fc-highlight-color: rgba(188, 232, 241, 0.3);
+  --fc-today-bg-color: theme(colors.amber.100);
+  --fc-now-indicator-color: theme(colors.error.500);
+
+  --fc-daygrid-event-dot-width: 8px;
+
+  --fc-list-event-dot-width: 10px;
+  --fc-list-event-hover-bg-color: #f5f5f5;
+
+  & .fc-button-group {
+  }
+
+  & .fc-button {
+  }
+
+  & .fc-toolbar-title {
+    @apply !text-lg;
+  }
+}

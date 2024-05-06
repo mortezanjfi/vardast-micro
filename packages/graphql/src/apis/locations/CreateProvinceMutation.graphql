@@ -1,0 +1,13 @@
+mutation CreateProvince($createProvinceInput: CreateProvinceInput!) {
+  createProvince(createProvinceInput: $createProvinceInput) {
+    id
+    name
+    nameEn
+    slug
+    path
+    sort
+    isActive
+    latitude
+    longitude
+  }
+}

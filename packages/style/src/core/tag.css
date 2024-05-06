@@ -1,0 +1,97 @@
+.tag {
+  @apply relative inline-flex items-center whitespace-nowrap rounded align-baseline text-base font-normal leading-normal;
+  gap: 1ch;
+  padding-inline: 1ch;
+  padding-block: 0.45ch;
+
+  &-xs {
+    @apply text-xs;
+  }
+  &-sm {
+    @apply text-sm;
+  }
+  &-md {
+    @apply text-base;
+  }
+  &-lg {
+    @apply text-lg;
+  }
+  &-xl {
+    @apply text-xl;
+  }
+
+  &-dot {
+    &::before {
+      display: block;
+      content: "";
+      width: 0.75ch;
+      height: 0.75ch;
+      border-radius: theme(borderRadius.full);
+      background-color: currentColor;
+      opacity: 0.6;
+    }
+  }
+
+  &-avatar {
+    > .avatar {
+      width: 2ch;
+      height: 2ch;
+      border-radius: theme(borderRadius.full);
+    }
+  }
+
+  &-icon {
+    > .icon,
+    > svg {
+      width: 2ch;
+      height: 2ch;
+      opacity: 0.6;
+    }
+  }
+
+  &-close-button {
+    > button {
+      display: flex;
+      position: relative;
+      width: 2ch;
+      height: 2ch;
+      align-items: center;
+      justify-content: center;
+      border-style: none;
+      background: theme(backgroundColor.white / 0.2);
+      background-blend-mode: overlay;
+      border-radius: theme(borderRadius.full);
+      transition-property: theme(transitionProperty.DEFAULT);
+      transition-duration: theme(transitionDuration.200);
+
+      > svg {
+        width: 70%;
+        height: 70%;
+        color: currentColor;
+      }
+
+      &:hover {
+        background: theme(backgroundColor.white / 0.5);
+      }
+    }
+  }
+
+  &-gray {
+    @apply bg-alpha-100 text-alpha-700;
+  }
+  &-primary {
+    @apply bg-indigo-100 text-indigo-700;
+  }
+  &-danger {
+    @apply bg-red-50 text-red-900;
+  }
+  &-warning {
+    @apply bg-amber-100 text-amber-700;
+  }
+  &-success {
+    @apply bg-emerald-50 text-emerald-900;
+  }
+  &-info {
+    @apply bg-blue-100 text-blue-700;
+  }
+}

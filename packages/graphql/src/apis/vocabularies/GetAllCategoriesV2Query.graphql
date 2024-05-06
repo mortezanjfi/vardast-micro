@@ -1,0 +1,55 @@
+query GetAllCategoriesV2Query($indexCategoryInput: AllCategoryInput!) {
+  allCategoriesV2(indexCategoryInput: $indexCategoryInput) {
+    title
+    titleEn
+    slug
+    icon
+    sort
+    isActive
+    imageCategory {
+      file {
+        id
+        size
+        name
+        presignedUrl {
+          url
+        }
+      }
+    }
+    childrenCount
+    id
+    children {
+      id
+      title
+      titleEn
+      slug
+      icon
+      sort
+      isActive
+
+      childrenCount
+    }
+    parentCategory {
+      id
+      title
+      titleEn
+      slug
+      icon
+      sort
+      isActive
+
+      childrenCount
+    }
+    parentsChain {
+      id
+      title
+      titleEn
+      slug
+      icon
+      sort
+      isActive
+
+      childrenCount
+    }
+  }
+}

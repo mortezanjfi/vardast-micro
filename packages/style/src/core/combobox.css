@@ -1,0 +1,116 @@
+.combobox-list-container {
+  --border-opacity: 0.1;
+  --border-color: rgba(theme(colors.alpha.700), var(--border-opacity));
+  @apply !max-h-64
+    w-full
+    max-w-[var(--radix-popper-anchor-width)]
+    overflow-y-auto
+    rounded
+    bg-white
+    shadow-[0_0_0_1px_var(--border-color),0_1px_0_0_rgba(0,0,0,0.08),0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_-1px_rgba(0,0,0,0.1),0_20px_25px_-5px_rgb(0_0_0_/_0.1),_0_8px_10px_-6px_rgb(0_0_0_/_0.1)];
+}
+
+.combobox-popover {
+  @apply flex
+        h-full
+        w-full
+        flex-col
+        overflow-hidden
+        rounded-md;
+}
+
+.combobox-dialog {
+  @apply overflow-hidden p-0;
+}
+
+.combobox-command {
+  @apply [&_[cmdk-group-heading]]:px-2
+        [&_[cmdk-group-heading]]:font-medium
+        [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0
+        [&_[cmdk-group]]:px-2
+        [&_[cmdk-input-wrapper]_svg]:h-5
+        [&_[cmdk-input-wrapper]_svg]:w-5
+        [&_[cmdk-input]]:h-12
+        [&_[cmdk-item]]:px-2
+        [&_[cmdk-item]]:py-3
+        [&_[cmdk-item]_svg]:h-5
+        [&_[cmdk-item]_svg]:w-5;
+}
+
+.combobox-empty {
+  @apply py-6 text-center text-sm;
+}
+
+.combobox-group {
+  @apply /*   text-foreground */
+        /* [&_[cmdk-group-heading]]:text-muted-foreground  */
+        overflow-hidden
+        p-1
+        [&_[cmdk-group-heading]]:px-2
+        [&_[cmdk-group-heading]]:py-1.5
+        [&_[cmdk-group-heading]]:text-xs
+        [&_[cmdk-group-heading]]:font-medium;
+}
+
+.combobox-separator {
+  @apply -mx-1 h-px bg-alpha-200;
+}
+
+.combobox-shortcut {
+  @apply /* text-muted-foreground  */
+        ml-auto
+        text-xs
+        tracking-widest;
+}
+
+.combobox-search {
+  @apply flex
+        items-center
+        gap-2
+        border-b
+        px-3;
+}
+
+.combobox-search-icon {
+  @apply ms-2
+        h-4
+        w-4
+        shrink-0
+        opacity-50;
+}
+.combobox-search-input {
+  @apply flex
+        h-11
+        w-full
+        rounded-md
+        bg-transparent
+        py-3
+        text-sm
+        outline-none
+        disabled:cursor-not-allowed
+        disabled:opacity-50;
+}
+
+.combobox-list {
+  @apply max-h-[300px]
+        overflow-y-auto
+        overflow-x-hidden;
+}
+
+.listbox-item,
+.combobox-list-item {
+  @apply relative
+    flex
+    cursor-default
+    select-none
+    items-center
+    gap-1.5
+    rounded-sm
+    px-1
+    py-2
+    outline-none
+    data-[disabled]:pointer-events-none
+    data-[selected]:bg-alpha-100
+    data-[selected]:text-alpha-800
+    data-[disabled]:opacity-50;
+}

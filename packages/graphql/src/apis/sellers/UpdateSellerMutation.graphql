@@ -1,0 +1,79 @@
+mutation UpdateSellerMutation($updateSellerInput: UpdateSellerInput!) {
+  updateSeller(updateSellerInput: $updateSellerInput) {
+    id
+    name
+    bio
+
+    logoFile {
+      id
+      uuid
+      modelType
+      modelId
+      name
+      originalName
+      size
+      mimeType
+      disk
+      bucketName
+      orderColumn
+
+      presignedUrl {
+        url
+        expiresAt
+      }
+    }
+    contacts {
+      id
+      relatedType
+      relatedId
+      title
+      code
+      number
+      ext
+      type
+      sort
+      isPublic
+      status
+      rejectionReason
+    }
+    addresses {
+      id
+      relatedType
+      relatedId
+      title
+      address
+      postalCode
+      latitude
+      longitude
+      sort
+      isPublic
+      status
+      rejectionReason
+
+      city {
+        id
+        name
+        nameEn
+        slug
+        type
+        sort
+        isActive
+        latitude
+        longitude
+        areasCount
+      }
+      province {
+        id
+        name
+        nameEn
+        slug
+        path
+        sort
+        isActive
+        latitude
+        longitude
+        citiesCount
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+mutation RemoveBrandMutation($id: Int!) {
+  removeBrand(id: $id) {
+    id
+    name
+    slug
+  }
+}

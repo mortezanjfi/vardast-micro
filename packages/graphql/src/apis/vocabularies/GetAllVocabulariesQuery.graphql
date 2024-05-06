@@ -1,0 +1,17 @@
+query GetAllVocabularies($indexVocabularyInput: IndexVocabularyInput) {
+  vocabularies(indexCategoryInput: $indexVocabularyInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    to
+    from
+    data {
+      id
+      title
+      titleEn
+      slug
+      sort
+    }
+  }
+}

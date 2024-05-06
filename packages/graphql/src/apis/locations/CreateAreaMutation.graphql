@@ -1,0 +1,13 @@
+mutation CreateArea($createAreaInput: CreateAreaInput!) {
+  createArea(createAreaInput: $createAreaInput) {
+    id
+    name
+    nameEn
+    municipalityDistrict
+    slug
+    sort
+    isActive
+    latitude
+    longitude
+  }
+}

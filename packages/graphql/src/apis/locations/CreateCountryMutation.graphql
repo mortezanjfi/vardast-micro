@@ -1,0 +1,15 @@
+mutation CreateCountry($createCountryInput: CreateCountryInput!) {
+  createCountry(createCountryInput: $createCountryInput) {
+    id
+    name
+    nameEn
+    slug
+    alphaTwo
+    iso
+    phonePrefix
+    sort
+    isActive
+    latitude
+    longitude
+  }
+}

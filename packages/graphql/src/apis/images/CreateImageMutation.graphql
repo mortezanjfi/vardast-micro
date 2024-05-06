@@ -1,0 +1,20 @@
+mutation CreateImageMutation($createImageInput: CreateImageInput!) {
+  createImage(createImageInput: $createImageInput) {
+    id
+    sort
+    isPublic
+    file {
+      id
+      uuid
+      modelType
+      modelId
+      name
+      originalName
+      size
+      mimeType
+      disk
+      bucketName
+      orderColumn
+    }
+  }
+}

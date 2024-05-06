@@ -1,0 +1,61 @@
+@import "partials/app.css";
+@import "partials/full-calendar.css";
+@import "partials/create-product.css";
+
+@import "fonts.css";
+@import "tailwindcss/base";
+@import "base.css";
+@import "tailwindcss/components";
+@import "core/dialog.css";
+@import "core/dropdown.css";
+@import "core/form.css";
+@import "core/switch.css";
+@import "core/input.css";
+@import "core/avatar.css";
+@import "core/tooltip.css";
+@import "core/card.css";
+@import "core/button.css";
+@import "core/tag.css";
+@import "core/table.css";
+@import "core/checkbox.css";
+@import "core/toast.css";
+@import "core/combobox.css";
+@import "core/tabs.css";
+@import "core/select.css";
+@import "core/tag-input.css";
+@import "core/swiper/swiper.css";
+@import "core/swiper/pagination.css";
+@import "core/swiper/thumbs.css";
+@import "core/pdf/core.css";
+@import "core/pdf/default-layout.css";
+@import "tailwindcss/utilities";
+
+:root {
+  --safe-area-inset-top: env(safe-area-inset-top);
+  --safe-area-inset-right: env(safe-area-inset-right);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom);
+  --safe-area-inset-left: env(safe-area-inset-left);
+  --swiper-theme-color: theme(colors.primary.600) !important;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-select {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}

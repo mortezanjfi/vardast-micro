@@ -1,0 +1,257 @@
+input {
+  &::placeholder {
+    @apply text-alpha-400 dark:text-alpha-500;
+  }
+}
+
+.input-field {
+  --border-opacity: 0.1;
+  --border-color: rgba(theme(colors.alpha.700), var(--border-opacity));
+  @apply block
+          w-full
+        appearance-none
+    rounded
+    bg-alpha-100
+    bg-clip-padding
+    p-1
+    px-4
+    py-3.5
+    leading-normal
+    text-alpha-700
+    outline-none
+    ring-0
+    ring-primary-300/20
+    transition-all
+    duration-200
+    ease-linear
+    read-only:cursor-not-allowed
+    focus:outline-none
+    focus:ring-2
+    focus-visible:outline-none
+    focus-visible:ring-2
+    disabled:cursor-not-allowed
+    disabled:bg-alpha-50
+    dark:bg-alpha-800
+    dark:text-alpha-300
+    dark:shadow-none
+    dark:ring-primary-600/20;
+
+  &:where(:focus, :focus-visible) {
+    --border-opacity: 0.4;
+    --border-color: rgba(theme(colors.primary.600), var(--border-opacity));
+  }
+
+  &:where(select) {
+    --select-bg-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' stroke-width='2' stroke='%23667085' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none'%3E%3C/path%3E%3Cpath d='M6 9l6 6l6 -6'%3E%3C/path%3E%3C/svg%3E");
+    padding-inline-end: 3.75ch;
+    background-image: var(--select-bg-img);
+    background-repeat: no-repeat;
+    background-position: left 1.25ch center;
+    background-size: 1.5ch;
+  }
+}
+
+.input-addon {
+  --border-opacity: 0.1;
+  --border-color: rgba(theme(colors.alpha.700), var(--border-opacity));
+
+  @apply flex
+    items-center
+    whitespace-nowrap
+    rounded
+    bg-alpha-50
+    p-3
+    text-center
+    leading-normal
+    text-alpha-700
+    shadow-[0_0_0_1px_var(--border-color),0_1px_0_0_rgba(0,0,0,0.08),0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_-1px_rgba(0,0,0,0.1)]
+    dark:bg-alpha-800
+    dark:text-alpha-400
+    dark:shadow-none;
+
+  svg,
+  .icon {
+    @apply flex h-[1em] w-[1em] shrink-0;
+  }
+}
+
+.input-inset {
+  @apply relative
+    flex
+    w-full
+    rounded
+    bg-clip-padding;
+
+  .input-element {
+    @apply pointer-events-none
+        absolute
+        inset-y-0
+        right-0
+        z-20
+        flex
+        h-full
+        w-max
+        items-center
+        justify-center
+        whitespace-nowrap
+        p-3
+        text-alpha-400
+        dark:text-alpha-500;
+
+    &:has(button, a) {
+      @apply pointer-events-auto;
+    }
+
+    svg,
+    .icon {
+      @apply flex h-[1em] w-[1em] shrink-0;
+    }
+  }
+
+  &:has(.input-element) {
+    & .input-field {
+      & + .input-element {
+        @apply left-0 right-auto;
+      }
+    }
+  }
+
+  &:has(.input-element ~ .input-field) {
+    & .input-field {
+      @apply ps-[2.25em];
+    }
+  }
+
+  &:has(.input-field + .input-element) {
+    & .input-field {
+      @apply pe-[2.25em];
+    }
+  }
+}
+
+.input-inset {
+  @apply w-[1%]
+        min-w-0
+        flex-auto;
+
+  & .input-field {
+    @apply rounded-none;
+  }
+}
+
+.input-field {
+  @apply w-[1%]
+        min-w-0
+        flex-auto
+        focus:z-10
+        focus-visible:z-10;
+}
+
+.input-group {
+  @apply relative
+    flex
+    w-full
+    flex-wrap
+    items-stretch
+    space-x-px
+    rounded
+    bg-clip-padding;
+
+  > * {
+    @apply rounded-none first:rounded-s last:rounded-e;
+
+    &:last-child:has(.input-field) {
+      & .input-field {
+        @apply rounded-e;
+      }
+    }
+    &:first-child:has(.input-field) {
+      & .input-field {
+        @apply rounded-s;
+      }
+    }
+  }
+}
+
+.form-control {
+  @apply text-base;
+
+  &-xs {
+    @apply text-xs;
+  }
+  &-sm {
+    @apply text-sm;
+  }
+  &-md {
+    @apply text-lg;
+  }
+  &-lg {
+    @apply text-xl;
+  }
+  &-xl {
+    @apply text-2xl;
+  }
+
+  &-plaintext {
+    & .input-field {
+      padding-inline: 0;
+      @apply border-transparent
+            shadow-none
+            ring-0
+            focus:border-transparent
+            focus:shadow-none
+            focus:ring-0
+            focus-visible:border-transparent
+            focus-visible:shadow-none
+            focus-visible:ring-0;
+    }
+  }
+
+  &-rounded {
+    & .input-field {
+      @apply rounded-full;
+    }
+
+    &:has(.input-group) {
+      & .input-group {
+        > * {
+          @apply rounded-none first:rounded-s-full last:rounded-e-full;
+
+          &:last-child:has(.input-field) {
+            & .input-field {
+              @apply rounded-e-full;
+            }
+          }
+          &:first-child:has(.input-field) {
+            & .input-field {
+              @apply rounded-s-full;
+            }
+          }
+        }
+      }
+    }
+
+    &:has(.input-element) {
+      & .input-element {
+        &:first-child {
+          right: 1ch;
+        }
+        &:last-child {
+          left: 1ch;
+        }
+      }
+    }
+
+    &:has(.input-element ~ .input-field) {
+      & .input-field {
+        padding-inline-start: 5ch;
+      }
+    }
+
+    &:has(.input-field + .input-element) {
+      & .input-field {
+        padding-inline-end: 5ch;
+      }
+    }
+  }
+}

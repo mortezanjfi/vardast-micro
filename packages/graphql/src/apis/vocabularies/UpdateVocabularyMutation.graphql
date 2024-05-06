@@ -1,0 +1,11 @@
+mutation UpdateVocabularyMutation(
+  $updateVocabularyInput: UpdateVocabularyInput!
+) {
+  updateVocabulary(updateVocabularyInput: $updateVocabularyInput) {
+    id
+    title
+    titleEn
+    slug
+    sort
+  }
+}

@@ -1,0 +1,23 @@
+query GetProvince($id: Int, $slug: String) {
+  province(id: $id, slug: $slug) {
+    id
+    name
+    nameEn
+    slug
+    path
+    sort
+    isActive
+    latitude
+    longitude
+    cities {
+      id
+      name
+      nameEn
+      slug
+      type
+      sort
+      isActive
+      areasCount
+    }
+  }
+}

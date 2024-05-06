@@ -1,0 +1,62 @@
+query GetAllUsers($indexUserInput: IndexUserInput) {
+  users(indexUserInput: $indexUserInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    to
+    from
+    data {
+      id
+      uuid
+      firstName
+      lastName
+      email
+      cellphone
+      telegramChatId
+      isCellphoneVerified
+      isEmailVerified
+      isTelegramVerified
+      username
+      mustChangePassword
+      lastPasswordChangeAt
+      language
+      timezone
+      country {
+        id
+        name
+        phonePrefix
+      }
+      status
+      suspensionReason
+      customDisplayRole
+      adminComments
+      lastLoginAt
+      lastLoginIP
+      lastFailedLoginAt
+      failedLoginAttempts
+      isLockedOut
+      lockedOutAt
+
+      fullName
+      avatarFile {
+        id
+        uuid
+        modelType
+        modelId
+        name
+        originalName
+        size
+        mimeType
+        disk
+        bucketName
+        orderColumn
+
+        presignedUrl {
+          url
+          expiresAt
+        }
+      }
+    }
+  }
+}

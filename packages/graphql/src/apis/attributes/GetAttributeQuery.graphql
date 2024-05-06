@@ -1,0 +1,34 @@
+query GetAttribute($id: Int!, $slug: String) {
+  attribute(id: $id, slug: $slug) {
+    id
+    name
+    slug
+    type
+
+    values {
+      options
+      defaults
+    }
+    isPublic
+    isRequired
+    isFilterable
+    uom {
+      id
+      name
+      slug
+      symbol
+      isActive
+    }
+    categories {
+      id
+      title
+      titleEn
+      slug
+      icon
+      sort
+      isActive
+
+      childrenCount
+    }
+  }
+}

@@ -1,0 +1,6 @@
+query GetPastDurationEventsChart {
+  pastDurationEventsChart {
+    labels
+    data
+  }
+}

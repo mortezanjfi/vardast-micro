@@ -1,0 +1,11 @@
+mutation RemoveCategoryMutation($id: Int!) {
+  removeCategory(id: $id) {
+    id
+    title
+    titleEn
+    slug
+    icon
+    sort
+    isActive
+  }
+}

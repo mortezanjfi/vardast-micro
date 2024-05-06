@@ -1,0 +1,26 @@
+mutation UpdateBrandMutation($updateBrandInput: UpdateBrandInput!) {
+  updateBrand(updateBrandInput: $updateBrandInput) {
+    id
+    name
+    slug
+
+    logoFile {
+      id
+      uuid
+      modelType
+      modelId
+      name
+      originalName
+      size
+      mimeType
+      disk
+      bucketName
+      orderColumn
+
+      presignedUrl {
+        url
+        expiresAt
+      }
+    }
+  }
+}

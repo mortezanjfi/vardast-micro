@@ -1,0 +1,23 @@
+{
+  "name": "@vardast/middleware",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    "./*": "./src/*",
+    "./i18n": "./src/i18n.js"
+  },
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@vardast/eslint-config": "workspace:*",
+    "@vardast/prettier-config": "workspace:*",
+    "@vardast/tsconfig": "workspace:*"
+  },
+  "prettier": "@vardast/prettier-config"
+}

@@ -1,0 +1,455 @@
+query GetProduct($id: Int!) {
+  product(id: $id) {
+    id
+    slug
+    type
+    name
+    sku
+    isActive
+    description
+    title
+    metaDescription
+
+    rating
+    tag
+    status
+    images {
+      id
+      sort
+      isPublic
+      file {
+        id
+        uuid
+        modelType
+        modelId
+        name
+        originalName
+        size
+        mimeType
+        disk
+        bucketName
+        orderColumn
+
+        presignedUrl {
+          url
+          expiresAt
+        }
+      }
+    }
+    attributeValues {
+      id
+      value
+      isVariant
+      sku
+      attribute {
+        id
+        name
+        slug
+        type
+        isPublic
+        isRequired
+        isFilterable
+
+        uom {
+          id
+          name
+          slug
+          symbol
+          isActive
+        }
+        values {
+          options
+          defaults
+        }
+      }
+    }
+    category {
+      id
+      title
+      titleEn
+      slug
+      icon
+      sort
+      isActive
+
+      childrenCount
+      parentCategory {
+        id
+        title
+        titleEn
+        slug
+        icon
+        sort
+        isActive
+
+        childrenCount
+      }
+      parentsChain {
+        id
+        title
+        titleEn
+        slug
+        icon
+        sort
+        isActive
+
+        childrenCount
+      }
+    }
+    brand {
+      id
+      name
+      slug
+    }
+    uom {
+      id
+      name
+      slug
+      symbol
+      isActive
+    }
+    lowestPrice {
+      id
+      type
+      amount
+      isPublic
+      discount {
+        value
+        calculated_price
+        type
+      }
+      seller {
+        rating
+        id
+        name
+
+        logoFile {
+          presignedUrl {
+            url
+          }
+        }
+        contacts {
+          id
+          relatedType
+          relatedId
+          title
+          code
+          number
+          ext
+          type
+          sort
+          isPublic
+          status
+          rejectionReason
+
+          country {
+            id
+            name
+            nameEn
+            slug
+            alphaTwo
+            iso
+            phonePrefix
+            sort
+            isActive
+            latitude
+            longitude
+            flagEmoji
+            provincesCount
+          }
+        }
+        addresses {
+          id
+          relatedType
+          relatedId
+          title
+          address
+          postalCode
+          latitude
+          longitude
+          sort
+          isPublic
+          status
+          rejectionReason
+
+          city {
+            id
+            name
+            nameEn
+            slug
+            type
+            sort
+            isActive
+            latitude
+            longitude
+            areasCount
+          }
+          province {
+            id
+            name
+            nameEn
+            slug
+            path
+            sort
+            isActive
+            latitude
+            longitude
+            citiesCount
+          }
+        }
+      }
+    }
+    highestPrice {
+      id
+      type
+      amount
+      isPublic
+    }
+    publicOffers {
+      id
+      status
+      isPublic
+      isAvailable
+      createdAt
+      seller {
+        id
+        name
+
+        logoFile {
+          presignedUrl {
+            url
+          }
+        }
+        contacts {
+          id
+          relatedType
+          relatedId
+          title
+          code
+          number
+          ext
+          type
+          sort
+          isPublic
+          status
+          rejectionReason
+
+          country {
+            id
+            name
+            nameEn
+            slug
+            alphaTwo
+            iso
+            phonePrefix
+            sort
+            isActive
+            latitude
+            longitude
+            flagEmoji
+            provincesCount
+          }
+        }
+        addresses {
+          id
+          relatedType
+          relatedId
+          title
+          address
+          postalCode
+          latitude
+          longitude
+          sort
+          isPublic
+          status
+          rejectionReason
+
+          city {
+            id
+            name
+            nameEn
+            slug
+            type
+            sort
+            isActive
+            latitude
+            longitude
+            areasCount
+          }
+          province {
+            id
+            name
+            nameEn
+            slug
+            path
+            sort
+            isActive
+            latitude
+            longitude
+            citiesCount
+          }
+        }
+      }
+      lastPublicConsumerPrice {
+        id
+        type
+        amount
+        isPublic
+        createdAt
+        discount {
+          value
+          calculated_price
+          type
+        }
+        messagePrices {
+          id
+          message
+          type
+        }
+      }
+    }
+    offers {
+      id
+      status
+      isPublic
+      isAvailable
+
+      seller {
+        id
+        name
+
+        logoFile {
+          presignedUrl {
+            url
+          }
+        }
+        contacts {
+          id
+          relatedType
+          relatedId
+          title
+          code
+          number
+          ext
+          type
+          sort
+          isPublic
+          status
+          rejectionReason
+
+          country {
+            id
+            name
+            nameEn
+            slug
+            alphaTwo
+            iso
+            phonePrefix
+            sort
+            isActive
+            latitude
+            longitude
+            flagEmoji
+            provincesCount
+          }
+        }
+        addresses {
+          id
+          relatedType
+          relatedId
+          title
+          address
+          postalCode
+          latitude
+          longitude
+          sort
+          isPublic
+          status
+          rejectionReason
+
+          city {
+            id
+            name
+            nameEn
+            slug
+            type
+            sort
+            isActive
+            latitude
+            longitude
+            areasCount
+          }
+          province {
+            id
+            name
+            nameEn
+            slug
+            path
+            sort
+            isActive
+            latitude
+            longitude
+            citiesCount
+          }
+        }
+      }
+      lastPublicConsumerPrice {
+        id
+        type
+        amount
+        isPublic
+        discount {
+          value
+          calculated_price
+          type
+        }
+        messagePrices {
+          id
+          message
+          type
+        }
+      }
+    }
+    sameCategory {
+      title
+      id
+      name
+      rating
+      uom {
+        id
+        name
+        slug
+        symbol
+        isActive
+      }
+      images {
+        file {
+          presignedUrl {
+            url
+          }
+        }
+      }
+      lowestPrice {
+        amount
+        createdAt
+        discount {
+          value
+          calculated_price
+          type
+        }
+      }
+    }
+    prices {
+      id
+      type
+      amount
+      isPublic
+
+      seller {
+        id
+        name
+        bio
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+mutation CreateOfferMutation($createOfferInput: CreateOfferInput!) {
+  createOffer(createOfferInput: $createOfferInput) {
+    id
+    status
+    isPublic
+    isAvailable
+  }
+}

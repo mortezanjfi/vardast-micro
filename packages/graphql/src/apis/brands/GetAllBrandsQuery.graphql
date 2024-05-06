@@ -1,0 +1,46 @@
+query GetAllBrands($indexBrandInput: IndexBrandInput) {
+  brands(indexBrandInput: $indexBrandInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    from
+    to
+    data {
+      id
+      name
+      slug
+      rating
+      sum
+      status
+      addresses {
+        city {
+          name
+        }
+      }
+      logoFile {
+        id
+        uuid
+        modelType
+        modelId
+        name
+        originalName
+        size
+        mimeType
+        disk
+        bucketName
+        orderColumn
+        presignedUrl {
+          url
+          expiresAt
+        }
+      }
+      catalog {
+        id
+      }
+      priceList {
+        id
+      }
+    }
+  }
+}

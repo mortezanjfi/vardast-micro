@@ -1,0 +1,13 @@
+mutation UpdateCategoryMutation($updateCategoryInput: UpdateCategoryInput!) {
+  updateCategory(updateCategoryInput: $updateCategoryInput) {
+    id
+    title
+    titleEn
+    slug
+    icon
+    sort
+    isActive
+
+    childrenCount
+  }
+}

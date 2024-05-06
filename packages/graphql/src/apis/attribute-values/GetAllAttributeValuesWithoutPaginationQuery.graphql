@@ -1,0 +1,19 @@
+query GetAllAttributeValuesWithoutPagination(
+  $indexAttributeInput: IndexAttributeValueInput
+) {
+  attributeValuesWithoutPagination(indexAttributeInput: $indexAttributeInput) {
+    id
+    value
+    isVariant
+    sku
+    attribute {
+      id
+      name
+      slug
+      type
+      isPublic
+      isRequired
+      isFilterable
+    }
+  }
+}

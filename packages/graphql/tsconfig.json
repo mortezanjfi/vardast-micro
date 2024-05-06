@@ -1,0 +1,9 @@
+{
+  "extends": "@vardast/tsconfig/base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "baseUrl": "./src"
+  },
+  "include": ["src/*", "./codegen.ts"],
+  "exclude": ["node_modules"]
+}

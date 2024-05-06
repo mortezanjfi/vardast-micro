@@ -1,0 +1,110 @@
+query GetUser($id: Int, $uuid: String) {
+  user(id: $id, uuid: $uuid) {
+    id
+    uuid
+    firstName
+    lastName
+    email
+    cellphone
+    telegramChatId
+    isCellphoneVerified
+    isEmailVerified
+    isTelegramVerified
+    username
+    mustChangePassword
+    lastPasswordChangeAt
+    language
+    timezone
+    status
+    suspensionReason
+    customDisplayRole
+    adminComments
+    lastLoginAt
+    lastLoginIP
+    lastFailedLoginAt
+    failedLoginAttempts
+    isLockedOut
+    lockedOutAt
+
+    fullName
+    country {
+      id
+      name
+      nameEn
+      slug
+    }
+    roles {
+      id
+      name
+      displayName
+      description
+      isActive
+    }
+    permissions {
+      id
+      name
+      displayName
+      action
+      subject
+      field
+      conditions
+    }
+    displayRole {
+      id
+      name
+      displayName
+      description
+      isActive
+    }
+    seller {
+      id
+      name
+      bio
+      status
+      isPublic
+    }
+    sessions {
+      id
+      agent
+      loginIp
+      lastActiveIp
+      lastActivityAt
+      deletionReason
+
+      deletedAt
+    }
+    avatarFile {
+      id
+      uuid
+      modelType
+      modelId
+      name
+      originalName
+      size
+      mimeType
+      disk
+      bucketName
+      orderColumn
+
+      presignedUrl {
+        url
+        expiresAt
+      }
+    }
+    country {
+      id
+      name
+      nameEn
+      slug
+      alphaTwo
+      iso
+      phonePrefix
+      sort
+      isActive
+      latitude
+      longitude
+      flagEmoji
+      provincesCount
+    }
+  }
+}

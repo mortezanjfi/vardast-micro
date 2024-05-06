@@ -1,0 +1,97 @@
+.table {
+  --table-bg: theme(colors.transparent);
+  --table-text-color: theme(colors.alpha.700);
+  --table-accent-bg: theme(colors.transparent);
+  --table-striped-bg: theme(colors.alpha.50);
+  --table-border-color: theme(colors.alpha.200);
+  --table-border-width: 1px;
+
+  .dark & {
+    --table-bg: rgba(theme(colors.alpha.800), 0.1);
+    --table-accent-bg: rgba(theme(colors.alpha.800), 0.4);
+    --table-striped-bg: theme(colors.alpha.600);
+    --table-border-color: rgba(theme(colors.alpha.800), 0.8);
+    --table-text-color: theme(colors.alpha.400);
+  }
+
+  @apply w-full align-top;
+
+  & > :not(caption) > * > * {
+    @apply border-b
+        border-[var(--table-border-color)]
+        bg-[var(--table-bg)]
+        px-4
+        py-3
+        text-[var(--table-text-color)]
+        shadow-[inset_0_0_0_9999px_var(--table-accent-bg)];
+  }
+
+  & > :not(caption) > tr:last-child > td {
+    @apply border-b-0;
+  }
+
+  & > thead {
+    @apply align-bottom;
+    --table-text-color: theme(colors.alpha.600);
+    --table-accent-bg: theme(colors.alpha.50);
+
+    .dark & {
+      --table-text-color: theme(colors.alpha.600);
+      --table-accent-bg: rgba(theme(colors.alpha.900), 0.3);
+    }
+  }
+
+  & > thead {
+    vertical-align: inherit;
+  }
+
+  & th {
+    text-align: inherit;
+    text-align: -webkit-match-parent;
+  }
+
+  &-striped {
+    & > tbody > tr:nth-of-type(even) > * {
+      --table-accent-bg: var(--table-striped-bg);
+      /* color: var(--table-striped-color); */
+    }
+  }
+
+  &-striped-columns {
+    & > :not(caption) > tr > :nth-child(2n) {
+      --table-accent-bg: var(--table-striped-bg);
+      /* color: var(--table-striped-color); */
+    }
+  }
+
+  &-sm {
+    & > :not(caption) > * > * {
+      @apply px-3 py-2;
+    }
+  }
+
+  &-bordered {
+    > :not(caption) > * {
+      border-width: var(--table-border-width) 0;
+
+      > * {
+        border-width: 0 var(--table-border-width);
+      }
+    }
+  }
+
+  &-borderless {
+    > :not(caption) > * > * {
+      border-bottom-width: 0;
+    }
+
+    > :not(:first-child) {
+      border-top-width: 0;
+    }
+  }
+}
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}

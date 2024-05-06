@@ -1,0 +1,7 @@
+mutation RemovePriceMutation($id: Int!) {
+  removePrice(id: $id) {
+    id
+    type
+    isPublic
+  }
+}

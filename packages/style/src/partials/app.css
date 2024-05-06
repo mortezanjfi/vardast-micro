@@ -1,0 +1,203 @@
+.app {
+  @apply flex
+    h-auto
+    min-h-screen
+    flex-col
+    bg-alpha-50
+    lg:h-screen
+    dark:bg-alpha-900;
+}
+
+.app-inner {
+  @apply flex h-auto flex-1 overflow-hidden;
+}
+
+.app-content {
+  @apply relative
+    flex
+    h-auto
+    w-full
+    flex-col
+    overflow-auto
+    overscroll-contain
+    px-4
+    py-4
+    pb-[calc(var(--safe-area-inset-bottom)+120px)]
+    pt-[calc(var(--safe-area-inset-top)+20px)]
+    lg:py-6;
+}
+
+.app-sidebar {
+  @apply fixed
+    top-0
+    z-50
+    h-full
+    flex-shrink-0
+    translate-x-80
+    bg-alpha-100
+    bg-opacity-90
+    backdrop-blur-sm
+    transition
+    duration-200
+    lg:sticky
+    lg:translate-x-0
+    dark:bg-alpha-950
+    dark:bg-opacity-10;
+
+  &.open {
+    @apply translate-x-0;
+  }
+
+  .app-sidebar-inner {
+    @apply relative flex h-full;
+  }
+}
+
+.app-navigation {
+  @apply z-10
+    w-80
+    flex-shrink-0
+    border-l
+    border-alpha-100
+    py-5
+    transition-all
+    dark:border-alpha-800
+    dark:border-opacity-40;
+
+  .app-navigation-container {
+    @apply flex flex-1 flex-col gap-8 overflow-y-auto;
+  }
+  .app-navigation-section {
+    &-list {
+      @apply flex flex-col gap-1;
+    }
+    &-label {
+      @apply py-2
+        text-sm
+        font-medium
+        text-alpha-600
+        dark:text-alpha-500;
+    }
+  }
+  .app-navigation-item {
+    > span {
+      @apply flex
+          w-full
+          items-center
+          gap-2
+          rounded
+          px-2
+          py-3
+          leading-normal
+          text-alpha-700
+          hover:bg-alpha-200
+          hover:bg-opacity-50
+          dark:text-alpha-400
+          dark:hover:bg-alpha-800
+          dark:hover:bg-opacity-30;
+    }
+
+    .app-navigation-item-link {
+      @apply flex flex-1 items-center gap-2;
+
+      .icon {
+        @apply h-5
+        w-5
+        text-alpha-400
+        dark:text-alpha-600;
+      }
+    }
+
+    .app-navigation-item-arrow {
+      @apply mr-auto
+            flex
+            h-6
+            w-6
+            items-center
+            justify-center
+            text-alpha-500
+            focus:outline-none
+            focus-visible:outline-none
+            dark:text-alpha-600;
+    }
+
+    &:has(.active),
+    &.active {
+      > span {
+        @apply bg-alpha-200
+              font-medium
+              text-alpha-800
+              dark:bg-alpha-800
+              dark:bg-opacity-50
+              dark:text-alpha-200;
+      }
+
+      .app-navigation-item-link {
+        .icon {
+          @apply text-alpha-700
+                  dark:text-alpha-300;
+        }
+      }
+      .app-navigation-item-arrow {
+        @apply rotate-180;
+      }
+      .app-navigation-item-children {
+        @apply flex;
+      }
+    }
+
+    &.has-child.open {
+      .app-navigation-item-arrow {
+        @apply rotate-180;
+      }
+      .app-navigation-item-children {
+        @apply flex;
+      }
+    }
+
+    .app-navigation-item-children {
+      @apply ms-4
+        hidden
+        flex-col
+        border-s
+        border-alpha-300
+        pt-3
+        dark:border-alpha-700;
+
+      .app-navigation-item-children-item {
+        .app-navigation-item-children-item-link {
+          @apply flex
+            w-full
+            items-center
+            space-x-2
+            space-x-reverse
+            rounded
+            px-2
+            py-3
+            leading-normal
+            text-alpha-600
+            before:-ms-3
+            before:me-3
+            before:block
+            before:h-2
+            before:w-2
+            before:rounded-full
+            before:bg-alpha-300
+            hover:text-alpha-700
+            dark:text-alpha-500
+            dark:before:bg-alpha-700
+            dark:hover:text-alpha-400;
+
+          &.active {
+            @apply text-alpha-700 before:bg-primary-600 dark:text-alpha-400;
+          }
+        }
+      }
+    }
+  }
+}
+
+[data-radix-popper-content-wrapper] {
+  width: 100%;
+  max-width: var(--radix-popper-anchor-width);
+}

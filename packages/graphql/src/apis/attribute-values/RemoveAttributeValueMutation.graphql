@@ -1,0 +1,8 @@
+mutation RemoveAttributeValueMutation($id: Int!) {
+  removeAttributeValue(id: $id) {
+    id
+    value
+    isVariant
+    sku
+  }
+}

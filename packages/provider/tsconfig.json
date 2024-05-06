@@ -1,0 +1,22 @@
+{
+  "extends": "@vardast/tsconfig/base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "paths": {
+      "@vardast/ui/*": ["node_modules/@vardast/ui/src/*"],
+      "@vardast/hook/*": ["node_modules/@vardast/hook/src/*"],
+      "@vardast/lib/*": ["node_modules/@vardast/lib/src/*"],
+      "@vardast/query/*": ["node_modules/@vardast/query/src/*"],
+      "@vardast/asset/*": ["node_modules/@vardast/asset/src/*"],
+      "@vardast/graphql/generated": [
+        "node_modules/@vardast/graphql/src/generated.ts"
+      ]
+    }
+  },
+  "include": ["*.ts", "src", "shared", "providers"],
+  "exclude": ["node_modules"]
+}

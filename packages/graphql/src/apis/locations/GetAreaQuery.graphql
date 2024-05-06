@@ -1,0 +1,12 @@
+query GetArea($id: Int, $slug: String) {
+  area(id: $id, slug: $slug) {
+    id
+    name
+    nameEn
+    slug
+    sort
+    isActive
+    latitude
+    longitude
+  }
+}

@@ -1,0 +1,43 @@
+query GetVocabulary($id: Int, $slug: String) {
+  vocabulary(id: $id, slug: $slug) {
+    id
+    title
+    titleEn
+    slug
+    sort
+
+    categories {
+      id
+      title
+      titleEn
+      slug
+      icon
+      sort
+      isActive
+      description
+      childrenCount
+      productsCount
+      imageCategory {
+        file {
+          id
+          size
+          name
+          presignedUrl {
+            url
+          }
+        }
+      }
+      parentCategory {
+        id
+        title
+        titleEn
+        slug
+        icon
+        sort
+        isActive
+
+        childrenCount
+      }
+    }
+  }
+}

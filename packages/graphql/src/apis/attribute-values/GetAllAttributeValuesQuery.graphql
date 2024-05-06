@@ -1,0 +1,16 @@
+query GetAllAttributeValues($indexAttributeInput: IndexAttributeValueInput) {
+  attributeValues(indexAttributeInput: $indexAttributeInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    from
+    to
+    data {
+      id
+      value
+      isVariant
+      sku
+    }
+  }
+}

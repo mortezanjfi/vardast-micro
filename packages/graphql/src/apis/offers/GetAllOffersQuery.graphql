@@ -1,0 +1,44 @@
+query GetAllOffers($indexOfferInput: IndexOfferInput) {
+  offers(indexOfferInput: $indexOfferInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    from
+    to
+    data {
+      id
+      status
+      isPublic
+      isAvailable
+
+      seller {
+        id
+        name
+      }
+      product {
+        id
+        slug
+        type
+        name
+        sku
+        status
+        isActive
+        description
+        title
+        metaDescription
+      }
+      lastPublicConsumerPrice {
+        id
+        type
+        amount
+        isPublic
+        discount {
+          value
+          calculated_price
+          type
+        }
+      }
+    }
+  }
+}

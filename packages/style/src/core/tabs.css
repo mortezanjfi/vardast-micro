@@ -1,0 +1,64 @@
+.tabs {
+  --highlight-color: theme(colors.primary.600);
+  @apply flex;
+
+  &[data-orientation="horizontal"] {
+    @apply flex-col;
+  }
+
+  &[data-orientation="vertical"] {
+    @apply flex-row;
+  }
+}
+
+.tab-list {
+  --border-color: transparent;
+  @apply flex;
+
+  &[aria-orientation="horizontal"] {
+    .tab {
+      @apply border-b-0.5 border-[var(--border-color)];
+    }
+  }
+
+  &[aria-orientation="vertical"] {
+    @apply flex-col;
+    .tab {
+      @apply border-e-2 border-[var(--border-color)];
+    }
+  }
+}
+
+.tab {
+  @apply relative
+    cursor-default
+    p-3
+    text-alpha-700
+    outline-none
+    transition;
+
+  &[data-hovered],
+  &:focus {
+    @apply text-alpha-800;
+  }
+
+  &[aria-selected="true"] {
+    --border-color: var(--highlight-color);
+    @apply text-primary;
+  }
+
+  &[aria-selected="false"] {
+    --border-color: theme(colors.alpha.200);
+  }
+
+  &[aria-disabled] {
+    @apply text-alpha-500;
+
+    &[aria-selected="true"] {
+      --border-color: theme(colors.alpha.300);
+    }
+  }
+}
+
+.tab-panel {
+}

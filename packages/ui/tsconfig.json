@@ -1,0 +1,19 @@
+{
+  "extends": "@vardast/tsconfig/base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@vardast/graphql/generated": [
+        "node_modules/@vardast/graphql/src/generated.ts"
+      ],
+      "@@vardast/tailwind-config": ["node_modules/@vardast/tailwind-config/*"]
+    }
+  },
+  "include": ["*.ts", "src", "src"],
+  "exclude": ["node_modules"]
+}

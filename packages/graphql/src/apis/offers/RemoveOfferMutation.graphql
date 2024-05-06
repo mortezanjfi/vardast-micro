@@ -1,0 +1,3 @@
+mutation RemoveOffer($offerId: Int, $productId: Int) {
+  removeOffer(offerId: $offerId, productId: $productId)
+}

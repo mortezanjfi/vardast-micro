@@ -1,0 +1,11 @@
+html[lang="fa"] {
+  direction: rtl;
+  @apply h-full;
+}
+html {
+  @apply bg-alpha-100 md:bg-alpha-white;
+}
+
+body {
+  @apply h-full overflow-hidden bg-alpha-100 font-iranYekan antialiased md:overflow-auto md:bg-alpha-white;
+}

@@ -1,0 +1,17 @@
+mutation LoginWithOTP($LoginOTPInput: LoginOTPInput!) {
+  loginWithOtp(LoginOTPInput: $LoginOTPInput) {
+    accessToken
+    accessTokenTtl
+    user {
+      id
+      roles {
+        id
+        name
+        isActive
+      }
+    }
+    abilities
+    refreshToken
+    refreshTokenTtl
+  }
+}

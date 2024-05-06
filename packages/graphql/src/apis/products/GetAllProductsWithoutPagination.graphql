@@ -1,0 +1,67 @@
+query GetAllProductsWithoutPagination {
+  productsWithoutPagination {
+    id
+    slug
+    name
+    sku
+    isActive
+    updatedAt
+    status
+    brand {
+      name
+      id
+    }
+    category {
+      id
+      title
+      titleEn
+      slug
+    }
+    createdBy {
+      id
+      uuid
+      fullName
+    }
+    images {
+      id
+      sort
+      isPublic
+      file {
+        id
+        uuid
+        modelType
+        modelId
+        name
+        originalName
+        size
+        mimeType
+        disk
+        bucketName
+        orderColumn
+
+        presignedUrl {
+          url
+          expiresAt
+        }
+      }
+    }
+    lowestPrice {
+      id
+      type
+      amount
+      isPublic
+      discount {
+        value
+        calculated_price
+        type
+      }
+    }
+    uom {
+      id
+      name
+      slug
+      symbol
+      isActive
+    }
+  }
+}

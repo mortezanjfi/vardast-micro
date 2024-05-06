@@ -1,0 +1,67 @@
+.select-field {
+  @apply flex
+    items-center
+    text-start
+    data-[placeholder]:text-alpha-400
+    dark:data-[placeholder]:text-alpha-500;
+
+  .select-field-arrow {
+    @apply ms-auto
+        h-4
+        w-4
+        shrink-0
+        text-alpha-500
+        dark:text-alpha-600;
+  }
+}
+
+.select-list-container {
+  --border-opacity: 0.1;
+  --border-color: rgba(theme(colors.alpha.700), var(--border-opacity));
+  @apply !max-h-64
+    w-full
+    max-w-[var(--radix-popper-anchor-width)]
+    overflow-y-auto
+    rounded
+    bg-white
+    shadow-[0_0_0_1px_var(--border-color),0_1px_0_0_rgba(0,0,0,0.08),0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_-1px_rgba(0,0,0,0.1)]
+    dark:bg-alpha-800;
+}
+
+.select-list-inner {
+  @apply px-2
+    py-2;
+}
+
+.select-list-item {
+  @apply m-1
+    flex
+    cursor-default
+    items-center
+    gap-1.5
+    rounded
+    px-3
+    py-2
+    text-alpha-700
+    outline-none
+    hover:bg-alpha-100
+    focus:bg-alpha-100
+    data-[state="checked"]:font-bold
+    data-[state="checked"]:text-primary-600
+    dark:text-alpha-300
+    dark:hover:bg-alpha-900/80
+    dark:focus:bg-alpha-900/80
+    dark:data-[state="checked"]:text-primary-500;
+}
+
+.select-list-selected-item-indicator {
+  @apply flex
+    h-4
+    w-4
+    items-center
+    justify-center;
+
+  .icon {
+    @apply h-4 w-4;
+  }
+}

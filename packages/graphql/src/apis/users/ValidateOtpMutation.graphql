@@ -1,0 +1,7 @@
+mutation ValidateOtpMutation($ValidateOtpInput: ValidateOtpInput!) {
+  validateOtp(ValidateOtpInput: $ValidateOtpInput) {
+    validationKey
+    nextState
+    message
+  }
+}

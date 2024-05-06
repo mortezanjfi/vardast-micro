@@ -1,0 +1,17 @@
+query GetAllRoles {
+  roles {
+    total
+    perPage
+    currentPage
+    lastPage
+    to
+    from
+    data {
+      id
+      name
+      displayName
+      description
+      isActive
+    }
+  }
+}

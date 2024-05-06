@@ -1,0 +1,17 @@
+mutation UpdateCountryMutation($updateCountryInput: UpdateCountryInput!) {
+  updateCountry(updateCountryInput: $updateCountryInput) {
+    id
+    name
+    nameEn
+    slug
+    alphaTwo
+    iso
+    phonePrefix
+    sort
+    isActive
+    latitude
+    longitude
+    flagEmoji
+    provincesCount
+  }
+}

@@ -1,0 +1,6 @@
+query GetPriceChart($chartInput: ChartInput!) {
+  priceChart(chartInput: $chartInput) {
+    data
+    labels
+  }
+}

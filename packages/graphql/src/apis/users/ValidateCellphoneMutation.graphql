@@ -1,0 +1,10 @@
+mutation ValidateCellphoneMutation(
+  $ValidateCellphoneInput: ValidateCellphoneInput!
+) {
+  validateCellphone(ValidateCellphoneInput: $ValidateCellphoneInput) {
+    validationKey
+    remainingSeconds
+    nextState
+    message
+  }
+}

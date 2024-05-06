@@ -1,0 +1,14 @@
+query GetAllProvinces($indexProvinceInput: IndexProvinceInput) {
+  provinces(indexProvinceInput: $indexProvinceInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    to
+    from
+    data {
+      id
+      name
+    }
+  }
+}

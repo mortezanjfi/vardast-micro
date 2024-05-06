@@ -1,0 +1,13 @@
+mutation CreateCity($createCityInput: CreateCityInput!) {
+  createCity(createCityInput: $createCityInput) {
+    id
+    name
+    nameEn
+    slug
+    type
+    sort
+    isActive
+    latitude
+    longitude
+  }
+}

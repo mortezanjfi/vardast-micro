@@ -1,0 +1,33 @@
+{
+  "extends": "@vardast/tsconfig/base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "paths": {
+      "@vardast/ui/*": ["node_modules/@vardast/ui/src/*"],
+      "@vardast/asset/*": ["node_modules/@vardast/asset/src/*"],
+      "@vardast/util/*": ["node_modules/@vardast/util/src/*"],
+      "@vardast/hook/*": ["node_modules/@vardast/hook/src/*"],
+      "@vardast/type/*": ["node_modules/@vardast/type/src/*"],
+      "@vardast/provider/*": ["node_modules/@vardast/provider/src/*"],
+      "@vardast/query/*": ["node_modules/@vardast/query/src/*"],
+      "@vardast/graphql/generated": [
+        "node_modules/@vardast/graphql/src/generated.ts"
+      ],
+      "@vardast/graphql/auth.type": [
+        "node_modules/@vardast/graphql/src/auth.type.ts"
+      ]
+    }
+  },
+  "include": [
+    "*.ts",
+    "src",
+    "shared",
+    "types/next-auth.d.ts",
+    "../provider/src/PublicProvider.tsx"
+  ],
+  "exclude": ["node_modules"]
+}

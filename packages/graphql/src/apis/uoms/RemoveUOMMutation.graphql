@@ -1,0 +1,9 @@
+mutation RemoveUOMMutation($id: Int!) {
+  removeUom(id: $id) {
+    id
+    name
+    slug
+    symbol
+    isActive
+  }
+}

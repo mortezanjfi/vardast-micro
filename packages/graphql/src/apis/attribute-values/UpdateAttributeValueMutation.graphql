@@ -1,0 +1,31 @@
+mutation UpdateAttributeValueMutation(
+  $updateAttributeValueInput: UpdateAttributeValueInput!
+) {
+  updateAttributeValue(updateAttributeValueInput: $updateAttributeValueInput) {
+    id
+    value
+    isVariant
+    sku
+    attribute {
+      id
+      name
+      slug
+      type
+      isPublic
+      isRequired
+      isFilterable
+
+      values {
+        options
+        defaults
+      }
+      uom {
+        id
+        name
+        slug
+        symbol
+        isActive
+      }
+    }
+  }
+}

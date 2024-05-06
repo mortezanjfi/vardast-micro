@@ -1,0 +1,17 @@
+query GetAllUOMs($indexUomInput: IndexUomInput) {
+  uoms(indexUomInput: $indexUomInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    to
+    from
+    data {
+      id
+      name
+      slug
+      symbol
+      isActive
+    }
+  }
+}

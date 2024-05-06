@@ -1,0 +1,36 @@
+{
+  "extends": "@vardast/tsconfig/base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "target": "ES6",
+    "lib": ["dom", "dom.iterable", "esnext", "ES6"],
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "downlevelIteration": true,
+    "baseUrl": "./",
+    "paths": {
+      "@vardast/graphql/*": ["node_modules/@vardast/graphql/src/*.ts"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "src/**/*",
+    "../../apps/vardast-admin/src/graphqlRequestClientAdmin.ts"
+  ],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,101 @@
+query GetMyProfileSeller(
+  $searchSellerRepresentativeInput: SearchSellerRepresentativeInput!
+) {
+  myProfileSeller(
+    searchSellerRepresentativeInput: $searchSellerRepresentativeInput
+  ) {
+    id
+    name
+    bio
+    tag
+    rating
+    status
+    isPublic
+    isBlueTik
+    createdAt
+    updatedAt
+    sum
+    logoFile {
+      id
+      presignedUrl {
+        url
+      }
+    }
+    myProduct {
+      id
+      status
+      isPublic
+      isAvailable
+      inventory
+      createdAt
+      updatedAt
+      lastPublicConsumerPrice {
+        id
+        amount
+        discount {
+          value
+          calculated_price
+          type
+        }
+      }
+      product {
+        rating
+        id
+        slug
+        name
+        sku
+        isActive
+        status
+        techNum
+        status
+        category {
+          id
+          title
+          slug
+        }
+        images {
+          id
+          sort
+          isPublic
+          file {
+            id
+            presignedUrl {
+              url
+            }
+          }
+        }
+        lowestPrice {
+          id
+          type
+          amount
+          isPublic
+          discount {
+            value
+            calculated_price
+            type
+          }
+        }
+        myPrice {
+          id
+          type
+          amount
+          isPublic
+        }
+        highestPrice {
+          id
+          type
+          amount
+          isPublic
+          createdAt
+        }
+        uom {
+          id
+          name
+          slug
+          symbol
+          isActive
+        }
+      }
+    }
+  }
+}

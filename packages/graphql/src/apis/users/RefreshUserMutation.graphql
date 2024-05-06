@@ -1,0 +1,12 @@
+mutation RefreshUserMutation($refreshInput: RefreshInput!) {
+  refresh(refreshInput: $refreshInput) {
+    accessToken
+    accessTokenTtl
+    refreshToken
+    refreshTokenTtl
+    abilities
+    user {
+      id
+    }
+  }
+}

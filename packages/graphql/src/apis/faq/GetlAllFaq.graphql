@@ -1,0 +1,7 @@
+query GetAllFaq {
+  faqs {
+    id
+    question
+    answer
+  }
+}

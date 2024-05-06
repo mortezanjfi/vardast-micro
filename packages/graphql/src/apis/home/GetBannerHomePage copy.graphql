@@ -1,0 +1,12 @@
+query GetAllBlogs($indexBlogInput: IndexBlogInput!) {
+  getAllBlogs(indexBlogInput: $indexBlogInput) {
+    data {
+      id
+      image_url
+      title
+      description
+      url
+      date
+    }
+  }
+}

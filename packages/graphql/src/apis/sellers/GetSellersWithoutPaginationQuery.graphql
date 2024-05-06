@@ -1,0 +1,9 @@
+query GetSellersWithoutPagination($indexSellerInput: IndexSellerInput) {
+  sellersWithoutPagination(indexSellerInput: $indexSellerInput) {
+    id
+    name
+    bio
+    status
+    isPublic
+  }
+}

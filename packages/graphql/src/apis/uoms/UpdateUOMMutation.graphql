@@ -1,0 +1,9 @@
+mutation UpdateUOMMutation($updateUomInput: UpdateUomInput!) {
+  updateUom(updateUomInput: $updateUomInput) {
+    id
+    name
+    slug
+    symbol
+    isActive
+  }
+}

@@ -1,0 +1,13 @@
+mutation UpdateAreaMutation($updateAreaInput: UpdateAreaInput!) {
+  updateArea(updateAreaInput: $updateAreaInput) {
+    id
+    name
+    nameEn
+    municipalityDistrict
+    slug
+    sort
+    isActive
+    latitude
+    longitude
+  }
+}

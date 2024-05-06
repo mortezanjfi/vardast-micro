@@ -1,0 +1,63 @@
+query GetAllCategories($indexCategoryInput: IndexCategoryInput) {
+  categories(indexCategoryInput: $indexCategoryInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    to
+    from
+    data {
+      title
+      titleEn
+      slug
+      icon
+      sort
+      isActive
+      imageCategory {
+        file {
+          id
+          size
+          name
+          presignedUrl {
+            url
+          }
+        }
+      }
+      childrenCount
+      id
+      children {
+        id
+        title
+        titleEn
+        slug
+        icon
+        sort
+        isActive
+
+        childrenCount
+      }
+      parentCategory {
+        id
+        title
+        titleEn
+        slug
+        icon
+        sort
+        isActive
+
+        childrenCount
+      }
+      parentsChain {
+        id
+        title
+        titleEn
+        slug
+        icon
+        sort
+        isActive
+
+        childrenCount
+      }
+    }
+  }
+}

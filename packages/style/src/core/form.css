@@ -1,0 +1,19 @@
+.form-field {
+  @apply relative flex flex-col gap-1.5;
+}
+.form-label {
+  @apply inline-block
+    text-sm
+    font-medium
+    text-alpha-600
+    dark:text-alpha-400;
+}
+.form-control {
+}
+.form-message {
+  @apply text-sm text-alpha-500;
+
+  &.error {
+    @apply text-red-600;
+  }
+}

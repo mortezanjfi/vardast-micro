@@ -1,0 +1,31 @@
+mutation RemoveUserMutation($id: Int!) {
+  removeUser(id: $id) {
+    id
+    uuid
+    firstName
+    lastName
+    email
+    cellphone
+    telegramChatId
+    isCellphoneVerified
+    isEmailVerified
+    isTelegramVerified
+    username
+    mustChangePassword
+    lastPasswordChangeAt
+    language
+    timezone
+    status
+    suspensionReason
+    customDisplayRole
+    adminComments
+    lastLoginAt
+    lastLoginIP
+    lastFailedLoginAt
+    failedLoginAttempts
+    isLockedOut
+    lockedOutAt
+
+    fullName
+  }
+}

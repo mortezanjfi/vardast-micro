@@ -1,0 +1,9 @@
+query GetUOM($id: Int!) {
+  uom(id: $id) {
+    id
+    name
+    slug
+    symbol
+    isActive
+  }
+}

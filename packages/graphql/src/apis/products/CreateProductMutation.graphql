@@ -1,0 +1,92 @@
+mutation CreateProductMutation($createProductInput: CreateProductInput!) {
+  createProduct(createProductInput: $createProductInput) {
+    id
+    slug
+    name
+    sku
+    isActive
+
+    status
+    images {
+      id
+      sort
+      isPublic
+      file {
+        id
+        uuid
+        modelType
+        modelId
+        name
+        originalName
+        size
+        mimeType
+        disk
+        bucketName
+        orderColumn
+      }
+    }
+    createdBy {
+      id
+      uuid
+      firstName
+      lastName
+      email
+      cellphone
+      telegramChatId
+      isCellphoneVerified
+      isEmailVerified
+      isTelegramVerified
+      username
+      mustChangePassword
+      lastPasswordChangeAt
+      language
+      timezone
+      status
+      suspensionReason
+      customDisplayRole
+      adminComments
+      lastLoginAt
+      lastLoginIP
+      lastFailedLoginAt
+      failedLoginAttempts
+      isLockedOut
+      lockedOutAt
+
+      fullName
+    }
+    prices {
+      id
+      type
+      isPublic
+    }
+    attributeValues {
+      id
+      value
+      isVariant
+      sku
+    }
+    category {
+      id
+      title
+      titleEn
+      slug
+      icon
+      sort
+      isActive
+
+      childrenCount
+    }
+    brand {
+      id
+      name
+      slug
+    }
+    uom {
+      id
+      name
+      slug
+      symbol
+      isActive
+    }
+  }
+}

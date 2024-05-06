@@ -1,0 +1,37 @@
+query GetAllSellersCount($indexSellerInput: IndexSellerInput) {
+  sellers(indexSellerInput: $indexSellerInput) {
+    data {
+      id
+      bannerFile {
+        id
+        presignedUrl {
+          url
+        }
+      }
+      logoFile {
+        id
+        presignedUrl {
+          url
+        }
+      }
+      name
+      brands {
+        id
+        logoFile {
+          id
+          presignedUrl {
+            url
+          }
+        }
+      }
+      addresses {
+        city {
+          id
+          name
+        }
+      }
+      rating
+      sum
+    }
+  }
+}

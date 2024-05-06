@@ -1,0 +1,14 @@
+mutation RemoveProvinceMutation($id: Int!) {
+  removeProvince(id: $id) {
+    id
+    name
+    nameEn
+    slug
+    path
+    sort
+    isActive
+    latitude
+    longitude
+    citiesCount
+  }
+}

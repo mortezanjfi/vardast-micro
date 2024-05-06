@@ -1,0 +1,9 @@
+query GetAllUomsWithoutPagination {
+  uomsWithoutPagination {
+    id
+    name
+    slug
+    symbol
+    isActive
+  }
+}

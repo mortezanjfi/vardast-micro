@@ -1,0 +1,22 @@
+query GetAllCountries($indexCountryInput: IndexCountryInput) {
+  countries(indexCountryInput: $indexCountryInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    to
+    from
+    data {
+      id
+      name
+      nameEn
+      slug
+      alphaTwo
+      iso
+      isActive
+      sort
+      phonePrefix
+      provincesCount
+    }
+  }
+}
