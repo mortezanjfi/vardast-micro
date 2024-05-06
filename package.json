@@ -9,7 +9,7 @@
   "packageManager": "pnpm@8.7.4",
   "scripts": {
     "postinstall": "pnpm lint:ws",
-    "build": "turbo build",
+    "build": "pnpm predev && turbo build",
     "clean": "git clean -xdf node_modules && pnpm run clean:all",
     "clean:all": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
     "clean:workspaces": "turbo clean",
