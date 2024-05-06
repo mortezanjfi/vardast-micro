@@ -8,8 +8,8 @@ services:
       - "4050:3000"
       - "4051:3001"
       - "4052:3002"
-    # networks:
-    #   - myNet
+    networks:
+      - myNet
     deploy:
       resources:
         limits:
@@ -18,7 +18,6 @@ services:
         reservations:
           cpus: "2" # Reserve 1 CPU core (5 times more)
           memory: "1280M" # Reserve 1280 megabytes of RAM (5 times more)
-
 
   # next-app-client:
   #   build:
@@ -53,6 +52,6 @@ services:
   #       reservations:
   #         cpus: "1" # Reserve 1 CPU core (5 times more)
   #         memory: "1280M" # Reserve 1280 megabytes of RAM (5 times more)
-# networks:
-#   myNet:
-#     external: true
+networks:
+  myNet:
+    external: true
