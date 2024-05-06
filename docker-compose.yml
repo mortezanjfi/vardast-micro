@@ -13,11 +13,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "3" # Limit to 2.5 CPU cores (5 times more)
-          memory: "2560M" # Limit to 2560 megabytes of RAM (5 times more)
+          cpus: "6" # Limit to 2.5 CPU cores (5 times more)
+          memory: "5020M" # Limit to 2560 megabytes of RAM (5 times more)
         reservations:
-          cpus: "2" # Reserve 1 CPU core (5 times more)
-          memory: "1280M" # Reserve 1280 megabytes of RAM (5 times more)
+          cpus: "4" # Reserve 1 CPU core (5 times more)
+          memory: "2560M" # Reserve 1280 megabytes of RAM (5 times more)
 
   # next-app-client:
   #   build:
