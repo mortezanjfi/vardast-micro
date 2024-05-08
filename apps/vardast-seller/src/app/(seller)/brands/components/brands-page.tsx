@@ -2,6 +2,8 @@
 
 import { useCallback, useMemo } from "react"
 import { useQuery } from "@tanstack/react-query"
+import BrandOrSellerCard from "@vardast/component/BrandOrSellerCard"
+import BrandsOrSellersContainer from "@vardast/component/BrandsOrSellersContainer"
 import NotFoundMessage from "@vardast/component/NotFound"
 import {
   Brand,
@@ -11,9 +13,6 @@ import {
 import { getMyProfileBrandsSellerQueryFns } from "@vardast/query/queryFns/getMyProfileBrandsSellerQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { Session } from "next-auth"
-
-import BrandOrSellerCard from "@/app/components/BrandOrSellerCard"
-import BrandsOrSellersContainer from "@/app/components/BrandsOrSellersContainer"
 
 interface BrandsPageProps {
   isMobileView: boolean

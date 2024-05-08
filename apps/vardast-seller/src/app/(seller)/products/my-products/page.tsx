@@ -18,7 +18,7 @@ type SearchIndexProps = {
 }
 
 async function MyProductsPage({ params: { slug } }: SearchIndexProps) {
-  const isMobileView = CheckIsMobileView()
+  const isMobileView = await CheckIsMobileView()
   const queryClient = getQueryClient()
   const session = await getServerSession(authOptions)
 

@@ -3,7 +3,14 @@
 import { useEffect, useState } from "react"
 import { useDebouncedState } from "@mantine/hooks"
 import { useQuery } from "@tanstack/react-query"
+import CategoryFilter from "@vardast/component/category-filter"
+import DesktopMobileViewOrganizer from "@vardast/component/DesktopMobileViewOrganizer"
 import NotFoundMessage from "@vardast/component/NotFound"
+import { ProductCardSkeleton } from "@vardast/component/product-card"
+import ProductListContainer, {
+  ProductContainerType
+} from "@vardast/component/ProductListContainer"
+import VocabularyFilter from "@vardast/component/vocabulary-filter"
 import {
   GetMyProfileSellerQuery,
   InputMaybe,
@@ -18,13 +25,6 @@ import { Loader2, LucideSearch, LucideX } from "lucide-react"
 import { Session } from "next-auth"
 
 import ProductCard from "@/app/(seller)/products/components/product-card"
-import CategoryFilter from "@/app/components/category-filter"
-import DesktopMobileViewOrganizer from "@/app/components/DesktopMobileViewOrganizer"
-import { ProductCardSkeleton } from "@/app/components/product-card"
-import ProductListContainer, {
-  ProductContainerType
-} from "@/app/components/ProductListContainer"
-import VocabularyFilter from "@/app/components/vocabulary-filter"
 
 interface ProductListProps {
   isMobileView: boolean

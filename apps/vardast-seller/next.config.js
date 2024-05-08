@@ -62,11 +62,6 @@ const nextConfig = {
         permanent: true
       },
       {
-        source: "/seller-panel/products",
-        destination: "/seller-panel/products/all-products",
-        permanent: true
-      },
-      {
         source: "/seller",
         destination: "/sellers",
         permanent: true

@@ -1,10 +1,10 @@
 "use client"
 
+import ProductsHeader from "@vardast/component/search-header"
 import { SearchSellerRepresentativeInput } from "@vardast/graphql/generated"
 import { Session } from "next-auth"
 
 import ProductList from "@/app/(seller)/products/components/product-list"
-import ProductsHeader from "@/app/components/search-header"
 
 interface ProductsPageProps {
   isMobileView: boolean

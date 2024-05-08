@@ -43,10 +43,7 @@ export const ProductsFilter = ({
             </div>
             <div className="flex gap-5">
               <p>کالای شما در میان نتایج وجود ندارد؟</p>
-              <Link
-                className="text-blue-600 underline"
-                href={"/seller-panel/products/new"}
-              >
+              <Link className="text-blue-600 underline" href={"/products/new"}>
                 افزودن کالا
               </Link>
             </div>

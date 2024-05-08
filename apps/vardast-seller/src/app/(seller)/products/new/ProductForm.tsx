@@ -137,7 +137,7 @@ const ProductForm = ({ isMobile }: ProductFormProps) => {
                 duration: 2000,
                 variant: "success"
               })
-              router.replace("/seller-panel/products/my-products")
+              router.replace("/products/my-products")
               return
             })
           }

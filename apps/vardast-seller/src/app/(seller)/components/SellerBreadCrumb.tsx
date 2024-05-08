@@ -59,52 +59,39 @@ const SelllerBreadcrumb = ({
         aria-label="breadcrumb"
       >
         <HomeIcon className="h-4 w-4" />
-        {pathname.split("/")[1] === "seller-panel" && (
-          <li className="flex items-end align-middle leading-none">
-            <Link
-              href="/seller-panel"
-              aria-current={pathname === "/" ? "page" : "false"}
+        <li className="flex items-end align-middle leading-none">
+          <Link href="/" aria-current={pathname === "/" ? "page" : "false"}>
+            <div
+              title={process.env.NEXT_PUBLIC_TITLE}
+              className="text-alpha-600"
             >
-              <div
-                title={process.env.NEXT_PUBLIC_TITLE}
-                className="text-alpha-600"
-              >
-                خانه
-              </div>
-            </Link>
-          </li>
-        )}
+              خانه
+            </div>
+          </Link>
+        </li>
         {breadcrumbs &&
-          breadcrumbs.map(
-            (crumb, idx) =>
-              crumb.path !== "/seller-panel" && (
-                <li
-                  key={idx}
-                  className="flex items-end align-middle leading-none"
-                >
-                  {/* {(idx !== breadcrumbs.length && idx > 0) ||
+          breadcrumbs.map((crumb, idx) => (
+            <li key={idx} className="flex items-end align-middle leading-none">
+              {/* {(idx !== breadcrumbs.length && idx > 0) ||
                 (pathname.split("/")[1] === "admin" && ( */}
-                  {idx !== breadcrumbs.length &&
-                    crumb.label !== "all-products" && (
-                      <span className="mx-1 text-alpha-400">/</span>
-                    )}
-                  <Link href={crumb.path} passHref prefetch={false}>
-                    <div
-                      title={crumb.label}
-                      aria-current={crumb.isCurrent ? "page" : "false"}
-                      className={
-                        idx < breadcrumbs.length - 1
-                          ? "text-alpha-600"
-                          : "text-primary"
-                      }
-                    >
-                      {crumb.label !== "all-products" &&
-                        t(`common:${crumb.label}`)}
-                    </div>
-                  </Link>
-                </li>
-              )
-          )}
+              {idx !== breadcrumbs.length && crumb.label !== "all-products" && (
+                <span className="mx-1 text-alpha-400">/</span>
+              )}
+              <Link href={crumb.path} passHref prefetch={false}>
+                <div
+                  title={crumb.label}
+                  aria-current={crumb.isCurrent ? "page" : "false"}
+                  className={
+                    idx < breadcrumbs.length - 1
+                      ? "text-alpha-600"
+                      : "text-primary"
+                  }
+                >
+                  {crumb.label !== "all-products" && t(`common:${crumb.label}`)}
+                </div>
+              </Link>
+            </li>
+          ))}
       </ol>
     </div>
   )

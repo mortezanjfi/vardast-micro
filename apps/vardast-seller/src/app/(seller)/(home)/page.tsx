@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const SellerHome = async () => {
   const session = await getServerSession(authOptions)
   const queryClient = getQueryClient()
-  const isMobileView = CheckIsMobileView()
+  const isMobileView = await CheckIsMobileView()
 
   await queryClient.prefetchQuery(
     [QUERY_FUNCTIONS_KEY.GET_M_PROFILE_SELLER],

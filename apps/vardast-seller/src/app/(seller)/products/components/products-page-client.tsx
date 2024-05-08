@@ -2,6 +2,10 @@
 
 import { useQuery } from "@tanstack/react-query"
 import Breadcrumb from "@vardast/component/Breadcrumb"
+// import ProductDescription from "@/app/(public)/(purchaser)/product/components/product-description"
+import DesktopCategoriesCardsSection from "@vardast/component/DesktopCategoriesCardsSection"
+import ProductList from "@vardast/component/product-list"
+import ProductsHeader from "@vardast/component/search-header"
 import {
   GetCategoryQuery,
   GetCategoryQueryVariables,
@@ -10,11 +14,6 @@ import {
 import { getCategoryQueryFn } from "@vardast/query/queryFns/categoryQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import useTranslation from "next-translate/useTranslation"
-
-// import ProductDescription from "@/app/(public)/(purchaser)/product/components/product-description"
-import DesktopCategoriesCardsSection from "@/app/components/DesktopCategoriesCardsSection"
-import ProductList from "@/app/components/product-list"
-import ProductsHeader from "@/app/components/search-header"
 
 interface ProductsPageProps {
   isMobileView: boolean

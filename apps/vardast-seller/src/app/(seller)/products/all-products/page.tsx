@@ -17,7 +17,7 @@ async function ManageProductPage({
   params: { slug }
   // searchParams
 }: SearchIndexProps) {
-  const isMobileView = CheckIsMobileView()
+  const isMobileView = await CheckIsMobileView()
   const queryClient = getQueryClient()
 
   const args: IndexProductInput = {}

@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const BrandsIndex = async () => {
-  const isMobileView = CheckIsMobileView()
+  const isMobileView = await CheckIsMobileView()
   const session = await getServerSession(authOptions)
   const queryClient = getQueryClient()
 

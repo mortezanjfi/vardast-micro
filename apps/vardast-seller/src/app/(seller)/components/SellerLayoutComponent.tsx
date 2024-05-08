@@ -2,6 +2,7 @@
 
 import { ReactNode, Suspense, useState } from "react"
 import { useQuery } from "@tanstack/react-query"
+import Search from "@vardast/component/search"
 import Sidebar from "@vardast/component/Sidebar"
 import { GetMyProfileSellerQuery } from "@vardast/graphql/generated"
 import { _sellerSidebarMenu } from "@vardast/lib/constants"
@@ -22,7 +23,6 @@ import { Session } from "next-auth"
 import { signOut } from "next-auth/react"
 
 import SelllerBreadcrumb from "@/app/(seller)/components/SellerBreadCrumb"
-import Search from "@/app/components/search"
 
 type SellerLayoutComponentProps = {
   children: ReactNode
@@ -113,11 +113,7 @@ const SellerLayoutComponent = ({
                         <Button
                           onClick={() =>
                             signOut({
-                              callbackUrl:
-                                process.env.NEXT_PUBLIC_PROJECT_NAME_FOR ===
-                                "seller"
-                                  ? "/"
-                                  : "/profile"
+                              callbackUrl: "/"
                             })
                           }
                           variant="ghost"

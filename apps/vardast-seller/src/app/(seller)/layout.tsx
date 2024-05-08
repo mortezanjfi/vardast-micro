@@ -1,22 +1,21 @@
-// import { redirect } from "next/navigation"
+import { redirect } from "next/navigation"
 // import { getServerSession } from "next-auth"
 
-import { redirect } from "next/navigation"
 import { authOptions } from "@vardast/auth/authOptions"
+// import { authOptions } from "@vardast/auth/authOptions"
+import MobileScrollProvider from "@vardast/component/header/MobileScrollProvider"
+import { SearchActionModal } from "@vardast/component/search"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 import { getServerSession } from "next-auth"
 
 import SellerLayoutComponent from "@/app/(seller)/components/SellerLayoutComponent"
-// import { authOptions } from "@vardast/auth/authOptions"
-import MobileScrollProvider from "@/app/components/header/MobileScrollProvider"
-import { SearchActionModal } from "@/app/components/search"
 
 export default async function PublicLayout({
   children
 }: {
   children: React.ReactNode
 }) {
-  const isMobileView = CheckIsMobileView()
+  const isMobileView = await CheckIsMobileView()
 
   const session = await getServerSession(authOptions)
 
@@ -39,5 +38,5 @@ export default async function PublicLayout({
     )
   }
 
-  return redirect("/auth/signin/seller-panel")
+  return redirect("/authentication/signin")
 }

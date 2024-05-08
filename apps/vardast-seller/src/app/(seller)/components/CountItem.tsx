@@ -1,8 +1,7 @@
 import { digitsEnToFa } from "@persian-tools/persian-tools"
+import { ColorEnum } from "@vardast/type/Enums"
 import { ISellerMobileAnalyzeProps } from "@vardast/type/Seller"
 import clsx from "clsx"
-
-import { ColorEnum } from "@/app/components/desktop/DesktopHeader"
 
 export const CountItem = ({
   isMobileView,

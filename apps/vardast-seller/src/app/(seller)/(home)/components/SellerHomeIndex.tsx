@@ -17,6 +17,7 @@ import { _seller_card_Items, _seller_menu_item } from "@vardast/lib/constants"
 import { getCountTotalEventQueryFns } from "@vardast/query/queryFns/getCountTotalEventQueryFns"
 import { getMyProfileSellerQueryFns } from "@vardast/query/queryFns/getMyProfileSellerQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
+import { ColorEnum } from "@vardast/type/Enums"
 import { ISellerMobileAnalyzeProps } from "@vardast/type/Seller"
 import { Session } from "next-auth"
 
@@ -24,7 +25,6 @@ import { CountItem } from "@/app/(seller)/components/CountItem"
 import { DesktopMenuCard } from "@/app/(seller)/components/DesktopMenuCard"
 import { SellerHomeItem } from "@/app/(seller)/components/SellerHomeItem"
 import SellerPastDurationEventsChart from "@/app/(seller)/components/SellerPastDurationEventsChart"
-import { ColorEnum } from "@/app/components/desktop/DesktopHeader"
 
 type SellerHomeIndexType = {
   session: Session | null

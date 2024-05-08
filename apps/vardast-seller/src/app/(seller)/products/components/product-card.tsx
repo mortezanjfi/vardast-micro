@@ -5,6 +5,8 @@ import Image from "next/image"
 import { PlayIcon, TrashIcon } from "@heroicons/react/24/solid"
 import { useQueryClient } from "@tanstack/react-query"
 import Link from "@vardast/component/Link"
+import PriceTitle from "@vardast/component/PriceTitle"
+import { ProductContainerType } from "@vardast/component/ProductListContainer"
 import {
   Product,
   ThreeStateSupervisionStatuses,
@@ -22,8 +24,6 @@ import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 
 import CreatePriceModal from "@/app/(seller)/products/components/CreatePriceModal"
-import PriceTitle from "@/app/components/PriceTitle"
-import { ProductContainerType } from "@/app/components/ProductListContainer"
 
 interface ProductCardProps {
   product: Product
@@ -60,7 +60,7 @@ export const ProductCardSkeleton = ({
               width={400}
               height={400 / ratio}
               layout="fixed"
-              onLoadingComplete={({ naturalWidth, naturalHeight }) => {
+              onLoad={({ naturalWidth, naturalHeight }) => {
                 setRatio(naturalWidth / naturalHeight)
               }}
               objectFit="contain"
@@ -108,7 +108,7 @@ const ProductCard = forwardRef(
       useState<boolean>(false)
     const productContainerRef = useRef<HTMLDivElement>(null)
     const [imageContainerHeight, setImageContainerHeight] = useState(146)
-    const onLoadingCompletedImage = () => {
+    const onLoaddImage = () => {
       const div = productContainerRef.current
       if (div) {
         div.className = div.className + " opacity-100"
@@ -201,7 +201,7 @@ const ProductCard = forwardRef(
                     alt={product.name}
                     fill
                     className="object-contain"
-                    onLoadingComplete={onLoadingCompletedImage}
+                    onLoad={onLoaddImage}
                   />
                 ) : (
                   <Image
@@ -209,7 +209,7 @@ const ProductCard = forwardRef(
                     alt={product.name}
                     fill
                     className="object-contain"
-                    onLoadingComplete={onLoadingCompletedImage}
+                    onLoad={onLoaddImage}
                   />
                 )}
               </div>
