@@ -6,7 +6,9 @@ import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import { DevicePhoneMobileIcon, PhoneIcon } from "@heroicons/react/24/solid"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import CardAvatar from "@vardast/component/CardAvatar"
+import SellerInfo from "@vardast/component/desktop/SellerInfo"
 import Link from "@vardast/component/Link"
+import PriceTitle from "@vardast/component/PriceTitle"
 import {
   ContactInfoTypes,
   EventTrackerSubjectTypes,
@@ -27,8 +29,6 @@ import { useSession } from "next-auth/react"
 
 import { messageVariants } from "@/app/(public)/(purchaser)/product/components/MobileProductOfferItem"
 import { AddressItem } from "@/app/(public)/(purchaser)/product/components/seller-contact-modal"
-import SellerInfo from "@/app/components/desktop/SellerInfo"
-import PriceTitle from "@/app/components/PriceTitle"
 
 type Props = {
   offer: Offer

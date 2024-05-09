@@ -70,7 +70,7 @@ const CategoryListItem = ({
           height={isSubCategory ? 900 : 1600}
           className="h-full w-full"
           loading="eager"
-          onLoadingComplete={() => {
+          onLoad={() => {
             const div =
               typeof window !== "undefined" &&
               document?.getElementById(`category-image-${id}`)

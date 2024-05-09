@@ -15,7 +15,6 @@ import {
   Squares2X2Icon as SolidSquares2X2Icon,
   UserCircleIcon as SolidUserCircleIcon
 } from "@heroicons/react/24/solid"
-import { QueryClientConfig } from "@tanstack/react-query"
 import {
   ISellerDesktopAnalyzeProps,
   ISellerMobileAnalyzeProps
@@ -127,30 +126,30 @@ export const _sellerSidebarMenu: NavigationType[] = [
     items: [
       {
         title: "خانه",
-        path: "/seller-panel",
+        path: "",
         icon: "home"
       },
       {
         title: "کالا",
-        path: "/seller-panel/products",
+        path: "/products",
         icon: "package",
         abilities: "gql.products.product.index",
         items: [
           {
             title: "لیست کالاهای وردست",
-            path: "/seller-panel/products/all-products",
+            path: "/products/all-products",
             icon: "package",
             abilities: "gql.products.product.index"
           },
           {
             title: "ثبت کالای جدید",
-            path: "/seller-panel/products/new",
+            path: "/products/new",
             icon: "package",
             abilities: "gql.products.product.index"
           },
           {
             title: "مدیریت کالاهای من",
-            path: "/seller-panel/products/my-products",
+            path: "/products/my-products",
             icon: "package",
             abilities: "gql.products.offer.index.mine"
           }
@@ -158,12 +157,12 @@ export const _sellerSidebarMenu: NavigationType[] = [
       },
       {
         title: "دسته بندی‌های من",
-        path: "/seller-panel/categories",
+        path: "/categories",
         icon: "layers"
       },
       {
         title: "برندهای من",
-        path: "/seller-panel/brands",
+        path: "/brands",
         icon: "layers"
       }
     ]
@@ -330,31 +329,31 @@ export const _seller_menu_item: ISellerMobileAnalyzeProps[] = [
     id: "9",
     Icon: CubeIcon,
     title: "مدیریت کالاهای من",
-    href: "/seller-panel/products/my-products"
+    href: "/products/my-products"
   },
   {
     id: "5",
     Icon: Squares2X2Icon,
     title: "دسته‌بندی‌های من",
-    href: "/seller-panel/categories"
+    href: "/categories"
   },
   {
     id: "6",
     Icon: HomeModernIcon,
     title: "برند‌های من",
-    href: "/seller-panel/brands"
+    href: "/brands"
   },
   {
     id: "4",
     Icon: ListBulletIcon,
     title: "افزودن کالا به لیست من",
-    href: "/seller-panel/products/all-products"
+    href: "/products/all-products"
   },
   {
     id: "7",
     Icon: PlusCircleIcon,
     title: "افزودن کالای جدید در وردست",
-    href: "/seller-panel/products/new"
+    href: "/products/new"
   },
   {
     id: "8",
@@ -370,17 +369,17 @@ export const _seller_card_Items: ISellerDesktopAnalyzeProps[] = [
     listItems: [
       {
         listText: "لیست کالاهای وردست",
-        href: "/seller-panel/products/all-products",
+        href: "/products/all-products",
         id: "10/3"
       },
       {
         listText: "ثبت کالای جدید",
-        href: "/seller-panel/products/new",
+        href: "/products/new",
         id: "10/2"
       },
       {
         listText: "مدیریت کالاهای من",
-        href: "/seller-panel/products/my-products",
+        href: "/products/my-products",
         id: "10/1"
       }
     ],
@@ -392,12 +391,12 @@ export const _seller_card_Items: ISellerDesktopAnalyzeProps[] = [
     listItems: [
       {
         listText: "دسته بندی‌های من",
-        href: "/seller-panel/categories",
+        href: "/categories",
         id: "11/1"
       },
       {
         listText: "برندهای من",
-        href: "/seller-panel/brands",
+        href: "/brands",
         id: "11/2"
       }
     ],

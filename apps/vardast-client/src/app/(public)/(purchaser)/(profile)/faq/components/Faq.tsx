@@ -3,11 +3,10 @@
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/solid"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { useQuery } from "@tanstack/react-query"
+import FilterBlock from "@vardast/component/filter-block"
 import { GetAllFaqQuery } from "@vardast/graphql/generated"
 import { getAllFaqQueryFns } from "@vardast/query/queryFns/getAllFaqQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
-
-import FilterBlock from "@/app/components/filter-block"
 
 const Faq = ({ isMobileView }: { isMobileView?: boolean }) => {
   const faqs = useQuery<GetAllFaqQuery>({

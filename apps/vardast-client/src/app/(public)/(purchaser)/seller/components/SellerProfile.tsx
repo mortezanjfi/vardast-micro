@@ -2,6 +2,10 @@
 
 import { useContext, useEffect, useMemo } from "react"
 import { useQuery } from "@tanstack/react-query"
+import BrandOrSellerProfile, {
+  BrandOrSellerProfileTab,
+  TabTitleWithExtraData
+} from "@vardast/component/BrandOrSellerProfile"
 import {
   EntityTypeEnum,
   EventTrackerTypes,
@@ -20,10 +24,6 @@ import {
   IBrandOrSellerProfile,
   ProductsTab
 } from "@/app/(public)/(purchaser)/brand/components/BrandProfile"
-import BrandOrSellerProfile, {
-  BrandOrSellerProfileTab,
-  TabTitleWithExtraData
-} from "@/app/components/BrandOrSellerProfile"
 
 export enum SellerProfileTabEnum {
   // eslint-disable-next-line no-unused-vars

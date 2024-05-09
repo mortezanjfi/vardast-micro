@@ -3,8 +3,17 @@
 import { useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useInfiniteQuery } from "@tanstack/react-query"
+import BrandOrSellerCard, {
+  BrandOrSellerCardSkeleton
+} from "@vardast/component/BrandOrSellerCard"
+import BrandsOrSellersContainer, {
+  BrandContainerType
+} from "@vardast/component/BrandsOrSellersContainer"
+import DesktopMobileViewOrganizer from "@vardast/component/DesktopMobileViewOrganizer"
+import InfiniteScrollPagination from "@vardast/component/InfiniteScrollPagination"
 import NoResult from "@vardast/component/NoResult"
 import NotFoundMessage from "@vardast/component/NotFound"
+import { checkLimitPageByCondition } from "@vardast/component/product-list"
 import {
   GetAllSellersQuery,
   IndexBrandInput,
@@ -17,15 +26,6 @@ import { Button } from "@vardast/ui/button"
 import SellersSort, {
   SellerSortStatic
 } from "@/app/(public)/(purchaser)/sellers/components/SellerSort"
-import BrandOrSellerCard, {
-  BrandOrSellerCardSkeleton
-} from "@/app/components/BrandOrSellerCard"
-import BrandsOrSellersContainer, {
-  BrandContainerType
-} from "@/app/components/BrandsOrSellersContainer"
-import DesktopMobileViewOrganizer from "@/app/components/DesktopMobileViewOrganizer"
-import InfiniteScrollPagination from "@/app/components/InfiniteScrollPagination"
-import { checkLimitPageByCondition } from "@/app/components/product-list"
 
 type SellersListProps = {
   limitPage?: number

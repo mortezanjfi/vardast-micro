@@ -8,30 +8,15 @@
     "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
-      "@asset/*": [
-        "../../apps/vardast-admin/node_modules/@vardast/asset/src/*",
-        "../../apps/vardast-client/node_modules/@vardast/asset/src/*",
-        "../../apps/vardast-seller/node_modules/@vardast/asset/src/*"
-      ],
       "@vardast/asset/*": [
         "../../apps/vardast-admin/node_modules/@vardast/asset/src/*",
         "../../apps/vardast-client/node_modules/@vardast/asset/src/*",
         "../../apps/vardast-seller/node_modules/@vardast/asset/src/*"
       ],
-      "@auth/*": [
-        "../../apps/vardast-admin/node_modules/@vardast/auth/src/*",
-        "../../apps/vardast-client/node_modules/@vardast/auth/src/*",
-        "../../apps/vardast-seller/node_modules/@vardast/auth/src/*"
-      ],
       "@vardast/auth/*": [
         "../../apps/vardast-admin/node_modules/@vardast/auth/src/*",
         "../../apps/vardast-client/node_modules/@vardast/auth/src/*",
         "../../apps/vardast-seller/node_modules/@vardast/auth/src/*"
-      ],
-      "@component/*": [
-        "../../apps/vardast-admin/node_modules/@vardast/component/src/*",
-        "../../apps/vardast-client/node_modules/@vardast/component/src/*",
-        "../../apps/vardast-seller/node_modules/@vardast/component/src/*"
       ],
       "@vardast/component/*": [
         "../../apps/vardast-admin/node_modules/@vardast/component/src/*",
@@ -48,90 +33,45 @@
         "../../apps/vardast-client/node_modules/@vardast/graphql/src/auth.type.ts",
         "../../apps/vardast-seller/node_modules/@vardast/graphql/src/auth.type.ts"
       ],
-      "@hook/*": [
-        "../../apps/vardast-admin/node_modules/@vardast/hook/src/*",
-        "../../apps/vardast-client/node_modules/@vardast/hook/src/*",
-        "../../apps/vardast-seller/node_modules/@vardast/hook/src/*"
-      ],
       "@vardast/hook/*": [
         "../../apps/vardast-admin/node_modules/@vardast/hook/src/*",
         "../../apps/vardast-client/node_modules/@vardast/hook/src/*",
         "../../apps/vardast-seller/node_modules/@vardast/hook/src/*"
-      ],
-      "@lib/*": [
-        "../../apps/vardast-admin/node_modules/@vardast/lib/src/*",
-        "../../apps/vardast-client/node_modules/@vardast/lib/src/*",
-        "../../apps/vardast-seller/node_modules/@vardast/lib/src/*"
       ],
       "@vardast/lib/*": [
         "../../apps/vardast-admin/node_modules/@vardast/lib/src/*",
         "../../apps/vardast-client/node_modules/@vardast/lib/src/*",
         "../../apps/vardast-seller/node_modules/@vardast/lib/src/*"
       ],
-      "@middleware/*": [
-        "../../apps/vardast-admin/node_modules/@vardast/middleware/src/*",
-        "../../apps/vardast-client/node_modules/@vardast/middleware/src/*",
-        "../../apps/vardast-seller/node_modules/@vardast/middleware/src/*"
-      ],
       "@vardast/middleware/*": [
         "../../apps/vardast-admin/node_modules/@vardast/middleware/src/*",
         "../../apps/vardast-client/node_modules/@vardast/middleware/src/*",
         "../../apps/vardast-seller/node_modules/@vardast/middleware/src/*"
-      ],
-      "@provider/*": [
-        "../../apps/vardast-admin/node_modules/@vardast/provider/src/*",
-        "../../apps/vardast-client/node_modules/@vardast/provider/src/*",
-        "../../apps/vardast-seller/node_modules/@vardast/provider/src/*"
       ],
       "@vardast/provider/*": [
         "../../apps/vardast-admin/node_modules/@vardast/provider/src/*",
         "../../apps/vardast-client/node_modules/@vardast/provider/src/*",
         "../../apps/vardast-seller/node_modules/@vardast/provider/src/*"
       ],
-      "@query/*": [
-        "../../apps/vardast-admin/node_modules/@vardast/query/src/*",
-        "../../apps/vardast-client/node_modules/@vardast/query/src/*",
-        "../../apps/vardast-seller/node_modules/@vardast/query/src/*"
-      ],
       "@vardast/query/*": [
         "../../apps/vardast-admin/node_modules/@vardast/query/src/*",
         "../../apps/vardast-client/node_modules/@vardast/query/src/*",
         "../../apps/vardast-seller/node_modules/@vardast/query/src/*"
-      ],
-      "@type/*": [
-        "../../apps/vardast-admin/node_modules/@vardast/type/src/*",
-        "../../apps/vardast-client/node_modules/@vardast/type/src/*",
-        "../../apps/vardast-seller/node_modules/@vardast/type/src/*"
       ],
       "@vardast/type/*": [
         "../../apps/vardast-admin/node_modules/@vardast/type/src/*",
         "../../apps/vardast-client/node_modules/@vardast/type/src/*",
         "../../apps/vardast-seller/node_modules/@vardast/type/src/*"
       ],
-      "@ui/*": [
-        "../../apps/vardast-admin/node_modules/@vardast/ui/src/*",
-        "../../apps/vardast-client/node_modules/@vardast/ui/src/*",
-        "../../apps/vardast-seller/node_modules/@vardast/ui/src/*"
-      ],
       "@vardast/ui/*": [
         "../../apps/vardast-admin/node_modules/@vardast/ui/src/*",
         "../../apps/vardast-client/node_modules/@vardast/ui/src/*",
         "../../apps/vardast-seller/node_modules/@vardast/ui/src/*"
       ],
-      "@util/*": [
-        "../../apps/vardast-admin/node_modules/@vardast/util/src/*",
-        "../../apps/vardast-client/node_modules/@vardast/util/src/*",
-        "../../apps/vardast-seller/node_modules/@vardast/util/src/*"
-      ],
       "@vardast/util/*": [
         "../../apps/vardast-admin/node_modules/@vardast/util/src/*",
         "../../apps/vardast-client/node_modules/@vardast/util/src/*",
         "../../apps/vardast-seller/node_modules/@vardast/util/src/*"
-      ],
-      "@style/*": [
-        "../../apps/vardast-admin/node_modules/@vardast/style/src/*",
-        "../../apps/vardast-client/node_modules/@vardast/style/src/*",
-        "../../apps/vardast-seller/node_modules/@vardast/style/src/*"
       ],
       "@vardast/style/*": [
         "../../apps/vardast-admin/node_modules/@vardast/style/src/*",
@@ -143,11 +83,6 @@
         "../../apps/vardast-client/src/*",
         "../../apps/vardast-seller/src/*"
       ]
-    },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
+    }
   }
 }

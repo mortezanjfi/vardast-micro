@@ -1,9 +1,11 @@
 import { UseQueryResult } from "@tanstack/react-query"
+import ProductCard, {
+  ProductCardSkeleton
+} from "@vardast/component/product-card"
+import ProductListContainer from "@vardast/component/ProductListContainer"
 import { GetAllProductsQuery, Product } from "@vardast/graphql/generated"
 
 import MobileHomeSection from "@/app/(public)/(purchaser)/(home)/components/MobileHomeSection"
-import ProductCard, { ProductCardSkeleton } from "@/app/components/product-card"
-import ProductListContainer from "@/app/components/ProductListContainer"
 
 const MobileHomeNewestProducts = ({
   allProductsQuery

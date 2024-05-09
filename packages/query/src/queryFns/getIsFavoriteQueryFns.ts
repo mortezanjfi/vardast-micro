@@ -24,7 +24,7 @@ export const getIsFavoriteQueryFns = async ({
       }
     },
     {
-      authorization: `Bearer ${accessToken}`
+      authorization: `Bearer ${accessToken ?? ""}`
     }
   )
 }

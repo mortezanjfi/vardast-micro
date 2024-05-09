@@ -2,12 +2,12 @@
 
 import { notFound } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
+import SearchHeader from "@vardast/component/search-header"
 import { GetCategoryQuery } from "@vardast/graphql/generated"
 import { getCategoryQueryFn } from "@vardast/query/queryFns/categoryQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 
 import CategoriesList from "@/app/(public)/(purchaser)/category/components/CategoriesList"
-import SearchHeader from "@/app/components/search-header"
 
 interface CategoriesListProps {
   categoryId: string

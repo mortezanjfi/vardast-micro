@@ -59,10 +59,7 @@ const UserMenu = () => {
                 <Button
                   onClick={() =>
                     signOut({
-                      callbackUrl:
-                        process.env.NEXT_PUBLIC_PROJECT_NAME_FOR === "seller"
-                          ? "/"
-                          : "/profile"
+                      callbackUrl: "/profile"
                     })
                   }
                   variant="ghost"

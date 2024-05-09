@@ -210,13 +210,7 @@ const SigninForm = () => {
         setErrors(null)
         setLoginErrors(null)
         setMessage(message as string)
-        // await session.update(session)
         router.replace(`/auth/redirect${returnedUrl ? "/" + returnedUrl : ""}`)
-        // if (process.env.NEXT_PUBLIC_PROJECT_NAME_FOR === "seller") {
-        //   router.replace("/")
-        // } else {
-        //   router.back()
-        // }
       }
     } catch (error) {
       console.log("ValidateOtpMutation error: ", error)

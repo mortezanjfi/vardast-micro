@@ -3,6 +3,8 @@
 import { useCallback, useRef, useState } from "react"
 import Image from "next/image"
 import { useQuery } from "@tanstack/react-query"
+import FavoriteIcon from "@vardast/component/FavoriteIcon"
+import ShareIcon from "@vardast/component/ShareIcon"
 import {
   EntityTypeEnum,
   GetIsFavoriteQuery,
@@ -20,8 +22,6 @@ import { Navigation, Pagination, Thumbs, Zoom } from "swiper/modules"
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react"
 
 import { BulletSwiper } from "@/app/(public)/(purchaser)/(home)/components/MobileHomeSlider"
-import FavoriteIcon from "@/app/components/FavoriteIcon"
-import ShareIcon from "@/app/components/ShareIcon"
 
 interface ProductImagesProps {
   isMobileView: boolean

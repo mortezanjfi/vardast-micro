@@ -56,10 +56,10 @@ export const authOptions: AuthOptions = {
     strategy: "jwt"
   },
   secret: process.env.NEXTAUTH_SECRET,
-  pages: {
-    signIn: "/auth/signin",
-    signOut: "/"
-  },
+  // pages: {
+  //   signIn: "/authentication/signin",
+  //   signOut: "/"
+  // },
   logger: AuthLogger(),
   providers: [
     CredentialsProvider({

@@ -60,7 +60,7 @@ export const ProductCardSkeleton = ({
               width={400}
               height={400 / ratio}
               layout="fixed"
-              onLoad={({ naturalWidth, naturalHeight }) => {
+              onLoad={({ naturalWidth, naturalHeight }: any) => {
                 setRatio(naturalWidth / naturalHeight)
               }}
               objectFit="contain"

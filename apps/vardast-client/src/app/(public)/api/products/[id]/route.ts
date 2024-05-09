@@ -16,6 +16,7 @@ export async function GET(
         id: +id,
         accessToken: session?.accessToken
       })
+
       if (data.product.id && data.product.name) {
         return NextResponse.json(data, { status: 200 })
       }

@@ -1,12 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import ProductCard from "@vardast/component/product-card"
+import ProductListContainer from "@vardast/component/ProductListContainer"
 import { Product } from "@vardast/graphql/generated"
 import { getProductQueryFn } from "@vardast/query/queryFns/productQueryFns"
 import { LucideLoader2, LucidePackageX } from "lucide-react"
-
-import ProductCard from "@/app/components/product-card"
-import ProductListContainer from "@/app/components/ProductListContainer"
 
 const FavoritesComponent = () => {
   const [favoritesList, setFavoritesList] = useState<Product[]>([])

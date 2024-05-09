@@ -41,7 +41,6 @@
     "@vardast/util": "workspace:*",
     "@vardast/asset": "workspace:*",
     "@vardast/lib": "workspace:*",
-    "@vardast/middleware": "workspace:*",
     "@vardast/type": "workspace:*",
     "@vardast/query": "workspace:*",
     "@vardast/ui": "workspace:*",
@@ -81,6 +80,7 @@
   "devDependencies": {
     "@vardast/eslint-config": "workspace:*",
     "@vardast/prettier-config": "workspace:*",
+    "@vardast/middleware": "workspace:*",
     "@vardast/tsconfig": "workspace:*"
   },
   "eslintConfig": {

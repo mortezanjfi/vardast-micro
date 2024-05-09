@@ -26,9 +26,9 @@ export default function FavoriteIcon({
   type,
   entityId
 }: Props) {
+  const { data: session } = useSession()
   const pathname = usePathname()
   const router = useRouter()
-  const { data: session } = useSession()
   const createEventTrackerMutation = useUpdateFavoriteMutation(
     graphqlRequestClient(session),
     {

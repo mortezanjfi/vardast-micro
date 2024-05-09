@@ -17,7 +17,7 @@ export const getMyProfileCategoriesSellerQueryFns = async ({
       }
     },
     {
-      authorization: `Bearer ${accessToken}`
+      authorization: `Bearer ${accessToken ?? ""}`
     }
   )
 }

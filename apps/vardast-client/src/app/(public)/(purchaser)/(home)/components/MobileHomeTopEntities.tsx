@@ -1,6 +1,10 @@
 "use client"
 
 import { useState } from "react"
+import SwiperNavigationButton, {
+  SwiperButtonAction,
+  SwiperButtonsDirection
+} from "@vardast/component/SwiperNavigationButton"
 import { Brand, Seller } from "@vardast/graphql/generated"
 import clsx from "clsx"
 import { useInView } from "react-intersection-observer"
@@ -9,10 +13,6 @@ import { Swiper as SwiperClass } from "swiper/types"
 
 import BigSliderItem from "@/app/(public)/(purchaser)/(home)/components/BigSliderItem"
 import MobileHomeSection from "@/app/(public)/(purchaser)/(home)/components/MobileHomeSection"
-import SwiperNavigationButton, {
-  SwiperButtonAction,
-  SwiperButtonsDirection
-} from "@/app/components/SwiperNavigationButton"
 
 export type QueryTypes = Seller[] | Brand[]
 

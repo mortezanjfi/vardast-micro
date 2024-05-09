@@ -1,14 +1,13 @@
 // import { redirect } from "next/navigation"
 // import { getServerSession } from "next-auth"
 
+import DesktopFooter from "@vardast/component/desktop/DesktopFooter"
+import DesktopHeader from "@vardast/component/desktop/DesktopHeader"
+import { SearchActionModal } from "@vardast/component/search"
 import PublicProvider from "@vardast/provider/PublicProvider"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
-// import { authOptions } from "@vardast/auth/authOptions"
 import SellerContactModal from "@/app/(public)/(purchaser)/product/components/seller-contact-modal"
-import DesktopFooterV2 from "@/app/components/desktop/DesktopFooterV2"
-import DesktopHeader from "@/app/components/desktop/DesktopHeader"
-import { SearchActionModal } from "@/app/components/search"
 
 export default async function PublicLayout({
   children
@@ -24,15 +23,16 @@ export default async function PublicLayout({
       {isMobileView ? (
         children
       ) : (
-        <div className="flex h-full flex-col overflow-y-scroll">
+        <>
           {process.env.NEXT_PUBLIC_PROJECT_NAME_FOR === "user" && (
             <DesktopHeader />
           )}
+          <div className="h-[92px] w-full bg-transparent"></div>
           <div className="flex flex-col">{children}</div>
           {process.env.NEXT_PUBLIC_PROJECT_NAME_FOR === "user" && (
-            <DesktopFooterV2 />
+            <DesktopFooter />
           )}
-        </div>
+        </>
       )}
     </PublicProvider>
   )

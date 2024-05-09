@@ -16,5 +16,12 @@
     "node_modules",
     "old-to-delete",
     "src/stories/**/*.ts"
-  ]
+  ],
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  }
 }

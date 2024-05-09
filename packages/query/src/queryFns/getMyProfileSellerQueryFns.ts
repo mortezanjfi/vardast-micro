@@ -23,7 +23,7 @@ export const getMyProfileSellerQueryFns = async (
       }
     },
     {
-      authorization: `Bearer ${accessToken}`
+      authorization: `Bearer ${accessToken ?? ""}`
     }
   )
 }

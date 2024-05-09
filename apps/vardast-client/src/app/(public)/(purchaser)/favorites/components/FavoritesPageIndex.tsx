@@ -4,8 +4,17 @@ import { useEffect, useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
+import BrandOrSellerCard, {
+  BrandOrSellerCardSkeleton
+} from "@vardast/component/BrandOrSellerCard"
+import { TabTitleWithExtraData } from "@vardast/component/BrandOrSellerProfile"
+import BrandsOrSellersContainer from "@vardast/component/BrandsOrSellersContainer"
 import Loading from "@vardast/component/Loading"
 import NotFoundIcon from "@vardast/component/not-found-icon"
+import ProductCard, {
+  ProductCardSkeleton
+} from "@vardast/component/product-card"
+import ProductListContainer from "@vardast/component/ProductListContainer"
 import {
   Brand,
   EntityTypeEnum,
@@ -22,14 +31,6 @@ import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@vardast/ui/tabs"
 import clsx from "clsx"
 import { useSession } from "next-auth/react"
-
-import BrandOrSellerCard, {
-  BrandOrSellerCardSkeleton
-} from "@/app/components/BrandOrSellerCard"
-import { TabTitleWithExtraData } from "@/app/components/BrandOrSellerProfile"
-import BrandsOrSellersContainer from "@/app/components/BrandsOrSellersContainer"
-import ProductCard, { ProductCardSkeleton } from "@/app/components/product-card"
-import ProductListContainer from "@/app/components/ProductListContainer"
 
 export const NotFoundItems = ({ text = "کالا" }) => {
   return (

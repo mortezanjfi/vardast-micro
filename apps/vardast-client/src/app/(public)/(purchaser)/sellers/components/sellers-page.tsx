@@ -5,6 +5,7 @@ import { notFound } from "next/navigation"
 import { useDebouncedState } from "@mantine/hooks"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import Breadcrumb from "@vardast/component/Breadcrumb"
+import { checkLimitPageByCondition } from "@vardast/component/product-list"
 import {
   GetAllSellersQuery,
   IndexSellerInput
@@ -18,7 +19,6 @@ import { Loader2, LucideSearch, LucideX } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
 import SellersList from "@/app/(public)/(purchaser)/sellers/components/SellersList"
-import { checkLimitPageByCondition } from "@/app/components/product-list"
 
 interface SellersPageProps {
   isMobileView: boolean

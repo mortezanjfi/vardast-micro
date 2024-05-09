@@ -13,15 +13,14 @@ import {
 } from "@heroicons/react/24/outline"
 import { UserCircleIcon } from "@heroicons/react/24/solid"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import Link from "@vardast/component/Link"
-import clsx from "clsx"
-import { useSession } from "next-auth/react"
-
 import {
   ColorEnum,
   StatusUserAlternatives,
   UserStatusItem
-} from "@/app/components/desktop/DesktopHeader"
+} from "@vardast/component/desktop/DesktopHeader"
+import Link from "@vardast/component/Link"
+import clsx from "clsx"
+import { useSession } from "next-auth/react"
 
 enum ProfileIconVariantStatusEnum {
   ACTIVE_WHITE = ColorEnum.ALPHA,

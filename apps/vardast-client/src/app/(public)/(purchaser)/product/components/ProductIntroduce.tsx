@@ -2,12 +2,12 @@
 
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import Link from "@vardast/component/Link"
+import PriceTitle from "@vardast/component/PriceTitle"
 import { Product } from "@vardast/graphql/generated"
 import slugify from "@vardast/util/persian-slugify"
 import { formatDistanceToNow } from "date-fns"
 
 import ProductSectionContainer from "@/app/(public)/(purchaser)/product/components/ProductSectionContainer"
-import PriceTitle from "@/app/components/PriceTitle"
 
 interface IProductIntroduce {
   product: Product

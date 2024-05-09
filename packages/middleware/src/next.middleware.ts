@@ -3,7 +3,7 @@ import { pathToRegexp } from "path-to-regexp"
 
 import i18n from "./i18n.mjs"
 
-export default async function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const locale = request.nextUrl.locale || i18n.defaultLocale
   request.nextUrl.searchParams.set("lang", locale)
   request.nextUrl.href = request.nextUrl.href.replace(`/${locale}`, "")
@@ -27,6 +27,25 @@ export default async function middleware(request: NextRequest) {
           301
         )
       }
+    }
+  }
+
+  if (
+    request.nextUrl.pathname.startsWith("/authentication/api") ||
+    request.nextUrl.pathname.startsWith("/authentication/redirect") ||
+    request.nextUrl.pathname.startsWith("/authentication/signout") ||
+    request.nextUrl.pathname.startsWith("/authentication/signin") ||
+    request.nextUrl.pathname.startsWith("/authentication/request-seller")
+  ) {
+    const data = await fetch(`http://localhost:3000${request.nextUrl.pathname}`)
+    if (data && data.status === 200) {
+      const res = await data.text()
+      return NextResponse.json(res, {
+        status: 200,
+        headers: {
+          "Content-Type": "text/html; charset=utf-8"
+        }
+      })
     }
   }
 
@@ -128,14 +147,4 @@ export default async function middleware(request: NextRequest) {
   }
 
   return NextResponse.rewrite(request.nextUrl.href)
-}
-
-export const config = {
-  matcher: [
-    "/product/:path*",
-    "/products/:path*",
-    "/brand/:path*",
-    "/category/:path*",
-    "/seller/:path*"
-  ]
 }

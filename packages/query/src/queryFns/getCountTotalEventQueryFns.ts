@@ -12,7 +12,7 @@ export const getCountTotalEventQueryFns = async (
     GetCountTotalEventDocument,
     {},
     {
-      authorization: `Bearer ${accessToken}`
+      authorization: `Bearer ${accessToken ?? ""}`
     }
   )
 }

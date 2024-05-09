@@ -17,7 +17,7 @@ export const getBrandQueryFn = async ({
       id: +id
     },
     {
-      authorization: `Bearer ${accessToken}`
+      authorization: `Bearer ${accessToken ?? ""}`
     }
   )
 }

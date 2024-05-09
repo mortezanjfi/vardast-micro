@@ -1,11 +1,10 @@
 // import { redirect } from "next/navigation"
 // import { getServerSession } from "next-auth"
 
-import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
-
 // import { authOptions } from "@vardast/auth/authOptions"
-import MobileScrollProvider from "@/app/components/header/MobileScrollProvider"
-import MobileNavigation from "@/app/components/mobile-navigation"
+import MobileScrollProvider from "@vardast/component/header/MobileScrollProvider"
+import MobileNavigation from "@vardast/component/mobile-navigation"
+import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
 export default async function PublicLayout({
   children

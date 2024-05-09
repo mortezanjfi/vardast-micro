@@ -31,15 +31,12 @@
   "editor.rulers": [80],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
-    "source.fixAll": "always"
+    "source.fixAll": "always",
+    "source.organizeImports": "explicit"
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "typescript.tsdk": "node_modules/typescript/lib",
-  "cSpell.words": [
-    "clsx",
-    "tsbuildinfo",
-    "vardast"
-  ],
+  "cSpell.words": ["clsx", "tsbuildinfo", "vardast"],
   "tailwindCSS.experimental.classRegex": [
     ["tv\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],

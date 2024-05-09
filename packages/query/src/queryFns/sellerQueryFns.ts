@@ -17,7 +17,7 @@ export const getSellerQueryFn = async ({
       id: +id
     },
     {
-      authorization: `Bearer ${accessToken}`
+      authorization: `Bearer ${accessToken ?? ""}`
     }
   )
 }

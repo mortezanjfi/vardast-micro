@@ -6,15 +6,14 @@ import Breadcrumb from "@vardast/component/Breadcrumb"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
+// import BrandHeader from "@/app/(public)/(pages)/brand/components/primary-header"
+import ProductList from "@vardast/component/product-list"
 import { GetBrandQuery, IndexProductInput } from "@vardast/graphql/generated"
 import { getBrandQueryFn } from "@vardast/query/queryFns/brandQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { LucideWarehouse } from "lucide-react"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
-
-// import BrandHeader from "@/app/(public)/(pages)/brand/components/primary-header"
-import ProductList from "@/app/components/product-list"
 
 interface BrandPageProps {
   isMobileView: boolean

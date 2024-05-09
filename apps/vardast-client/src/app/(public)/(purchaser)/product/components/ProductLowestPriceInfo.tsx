@@ -3,7 +3,9 @@ import { usePathname, useRouter } from "next/navigation"
 import { DevicePhoneMobileIcon } from "@heroicons/react/24/outline"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import CardAvatar from "@vardast/component/CardAvatar"
+import DiscountBadge from "@vardast/component/DiscountBadge"
 import Link from "@vardast/component/Link"
+import PriceTitle from "@vardast/component/PriceTitle"
 import {
   ContactInfoTypes,
   EventTrackerSubjectTypes,
@@ -20,8 +22,6 @@ import { PhoneIcon } from "lucide-react"
 import { Session } from "next-auth"
 
 import { AddressItem } from "@/app/(public)/(purchaser)/product/components/seller-contact-modal"
-import DiscountBadge from "@/app/components/DiscountBadge"
-import PriceTitle from "@/app/components/PriceTitle"
 
 type ProductLowestPriceInfoProps = {
   lowestPrice: Price

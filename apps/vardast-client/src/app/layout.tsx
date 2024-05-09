@@ -2,7 +2,6 @@
 import "@vardast/style/globals.css"
 
 import { Metadata, Viewport } from "next"
-import Script from "next/script"
 import startupImage from "@vardast/lib/startupImage"
 import NextAuthProvider from "@vardast/provider/NextAuthProvider"
 import NextThemeProvider from "@vardast/provider/NextThemeProvider"
@@ -27,10 +26,7 @@ export const metadata: Metadata = {
     title: process.env.NEXT_PUBLIC_TITLE,
     startupImage
   },
-  manifest:
-    process.env.NEXT_PUBLIC_PROJECT_NAME_FOR === "seller"
-      ? "/manifest.seller.json"
-      : "/manifest.json",
+  manifest: "/manifest.json",
   formatDetection: {
     email: false,
     address: false,
@@ -63,34 +59,9 @@ export default async function AdminLayout({
   return (
     <RadixDirectionProvider>
       <html lang={lang} suppressHydrationWarning>
-        <head>
-          {process.env.NEXT_PUBLIC_PROJECT_NAME_FOR === "user" && (
-            <>
-              <link rel="canonical" href="https://www.vardast.com/" />
-              <Script async id="google-tag-manager" strategy="afterInteractive">
-                {`<!-- Google Tag Manager -->
-              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-MHFGSPC9');
-              <!-- End Google Tag Manager -->
-              `}
-              </Script>
-            </>
-          )}
-        </head>
         <body>
-          {(process.env.NEXT_PUBLIC_PROJECT_NAME_FOR === "seller" ||
-            !isMobileView) && (
-            <NextTopLoader
-              color={
-                process.env.NEXT_PUBLIC_PROJECT_NAME_FOR === "seller"
-                  ? myColors.secondary[600]
-                  : myColors.primary[600]
-              }
-              showSpinner={false}
-            />
+          {!isMobileView && (
+            <NextTopLoader color={myColors.primary[600]} showSpinner={false} />
           )}
           <NextAuthProvider>
             <ReactQueryProvider>
@@ -104,16 +75,14 @@ export default async function AdminLayout({
               </NextThemeProvider>
             </ReactQueryProvider>
           </NextAuthProvider>
-          {process.env.NEXT_PUBLIC_PROJECT_NAME_FOR === "user" && (
-            <noscript>
-              <iframe
-                src="https://www.googletagmanager.com/ns.html?id=GTM-MHFGSPC9"
-                height="0"
-                width="0"
-                style={{ display: "none", visibility: "hidden" }}
-              ></iframe>
-            </noscript>
-          )}
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=GTM-MHFGSPC9"
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+            ></iframe>
+          </noscript>
         </body>
       </html>
     </RadixDirectionProvider>

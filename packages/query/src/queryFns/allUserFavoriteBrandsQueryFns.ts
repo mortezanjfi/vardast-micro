@@ -17,7 +17,7 @@ export const allUserFavoriteBrandsQueryFns = async ({
       }
     },
     {
-      authorization: `Bearer ${accessToken}`
+      authorization: `Bearer ${accessToken ?? ""}`
     }
   )
 }

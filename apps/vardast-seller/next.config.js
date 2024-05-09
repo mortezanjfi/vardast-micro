@@ -41,9 +41,44 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // {
+      //   source: `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}`,
+      //   destination: `${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/signin`,
+      //   permanent: true
+      // },
+      // {
+      //   source: `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/:path*`,
+      //   destination: `${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/:path*`,
+      //   permanent: true
+      // },
+      // {
+      //   source: "/authentication/signin",
+      //   destination: `${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/signin`,
+      //   permanent: true
+      // },
+      // {
+      //   source: "/authentication/signout",
+      //   destination: `${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/signout`,
+      //   permanent: true
+      // },
+      // {
+      //   source: "/authentication/request-seller",
+      //   destination: `${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/request-seller`,
+      //   permanent: true
+      // },
+      // {
+      //   source: "/authentication/redirect",
+      //   destination: `${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/redirect`,
+      //   permanent: true
+      // },
+      // {
+      //   source: `/api/auth/:path*`,
+      //   destination: `${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/api/auth/:path*`,
+      //   permanent: true
+      // },
       {
-        source: "/my-api",
-        destination: "https://dev.api.vardast.ir/graphql",
+        source: "/authentication",
+        destination: "/authentication/signin",
         permanent: true
       },
       {

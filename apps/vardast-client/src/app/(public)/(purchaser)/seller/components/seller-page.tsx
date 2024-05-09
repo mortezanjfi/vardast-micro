@@ -5,6 +5,7 @@ import Breadcrumb from "@vardast/component/Breadcrumb"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
+import ProductList from "@vardast/component/product-list"
 import {
   GetSellerQuery,
   IndexProductInput,
@@ -15,7 +16,6 @@ import { getSellerQueryFn } from "@vardast/query/queryFns/sellerQueryFns"
 import { useSession } from "next-auth/react"
 
 import SellerHeader from "@/app/(public)/(purchaser)/seller/components/seller-header"
-import ProductList from "@/app/components/product-list"
 
 interface SellerPageProps {
   isMobileView: boolean

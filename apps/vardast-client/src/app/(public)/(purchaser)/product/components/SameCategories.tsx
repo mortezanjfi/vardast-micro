@@ -1,9 +1,10 @@
 "use client"
 
-import ProductSectionContainer from "@/app/(public)/(purchaser)/product/components/ProductSectionContainer"
 import ProductSlider, {
   ProductSliderProps
-} from "@/app/components/ProductSlider"
+} from "@vardast/component/ProductSlider"
+
+import ProductSectionContainer from "@/app/(public)/(purchaser)/product/components/ProductSectionContainer"
 
 const SameCategories = ({
   products,

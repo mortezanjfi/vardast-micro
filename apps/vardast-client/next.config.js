@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+const path = require("path")
 
 const withPlugins = require("next-compose-plugins")
 const nextTranslate = require("next-translate-plugin")
@@ -7,6 +8,10 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 })
 
 const nextConfig = {
+  experimental: {
+    // this includes files from the monorepo base two directories up
+    outputFileTracingRoot: path.join(__dirname, "../../")
+  },
   reactStrictMode: true,
 
   /** Enables hot reloading for local packages without a build step */
@@ -59,11 +64,6 @@ const nextConfig = {
       {
         source: "/brand",
         destination: "/brands",
-        permanent: true
-      },
-      {
-        source: "/seller-panel/products",
-        destination: "/seller-panel/products/all-products",
         permanent: true
       },
       {

@@ -24,10 +24,7 @@ export default async function AdminLayout({
 
   if (session.error === "RefreshAccessTokenError") {
     signOut({
-      callbackUrl:
-        process.env.NEXT_PUBLIC_PROJECT_NAME_FOR === "seller"
-          ? "/seller-panel"
-          : "/profile"
+      callbackUrl: "/"
     })
   }
 

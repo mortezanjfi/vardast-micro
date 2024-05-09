@@ -27,7 +27,7 @@ export const getAllCategoriesQueryFn = async ({
       }
     },
     {
-      authorization: `Bearer ${accessToken}`
+      authorization: `Bearer ${accessToken ?? ""}`
     }
   )
 }

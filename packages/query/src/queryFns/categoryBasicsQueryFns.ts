@@ -20,7 +20,7 @@ export const getCategoryBasicsQueryFn = async ({
       id: +id
     },
     {
-      authorization: `Bearer ${accessToken}`
+      authorization: `Bearer ${accessToken ?? ""}`
     }
   )
 }

@@ -5,7 +5,21 @@ import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
+import BrandOrSellerCard, {
+  BrandOrSellerCardSkeleton
+} from "@vardast/component/BrandOrSellerCard"
+import BrandOrSellerProfile, {
+  BrandOrSellerProfileTab,
+  TabTitleWithExtraData
+} from "@vardast/component/BrandOrSellerProfile"
+import BrandsOrSellersContainer from "@vardast/component/BrandsOrSellersContainer"
+import InfiniteScrollPagination from "@vardast/component/InfiniteScrollPagination"
 import Link from "@vardast/component/Link"
+import ProductCard, {
+  ProductCardSkeleton
+} from "@vardast/component/product-card"
+import { checkLimitPageByCondition } from "@vardast/component/product-list"
+import ProductListContainer from "@vardast/component/ProductListContainer"
 import {
   Brand,
   EntityTypeEnum,
@@ -38,19 +52,6 @@ import {
 import clsx from "clsx"
 import { Session } from "next-auth"
 import { useSession } from "next-auth/react"
-
-import BrandOrSellerCard, {
-  BrandOrSellerCardSkeleton
-} from "@/app/components/BrandOrSellerCard"
-import BrandOrSellerProfile, {
-  BrandOrSellerProfileTab,
-  TabTitleWithExtraData
-} from "@/app/components/BrandOrSellerProfile"
-import BrandsOrSellersContainer from "@/app/components/BrandsOrSellersContainer"
-import InfiniteScrollPagination from "@/app/components/InfiniteScrollPagination"
-import ProductCard, { ProductCardSkeleton } from "@/app/components/product-card"
-import { checkLimitPageByCondition } from "@/app/components/product-list"
-import ProductListContainer from "@/app/components/ProductListContainer"
 
 export interface IBrandOrSellerProfile {
   isMobileView: boolean

@@ -62,7 +62,7 @@ const ProfileSellerForm = ({ isMobileView }: { isMobileView: boolean }) => {
           variant: "success"
         })
         router.refresh()
-        router.replace("/seller-panel")
+        router.replace("/")
       }
     }
   )

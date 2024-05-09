@@ -198,7 +198,7 @@ const BrandOrSellerProfile = ({
           }
           setOpenTabName(value)
         }}
-        className="sticky left-0 right-0 top-0 h-full bg-alpha-white md:mt md:w-full"
+        className="sticky left-0 right-0 top-0 h-full bg-alpha-white md:w-full md:pt"
       >
         <SegmentsList wrap className="border-b pb">
           {tabs.map(({ title, value }) => (

@@ -5,6 +5,10 @@ import Image from "next/image"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
 import Link from "@vardast/component/Link"
+import SwiperNavigationButton, {
+  SwiperButtonAction,
+  SwiperButtonsDirection
+} from "@vardast/component/SwiperNavigationButton"
 import { GetAllBlogsQuery } from "@vardast/graphql/generated"
 import convertToPersianDate from "@vardast/util/convertToPersianDate"
 import clsx from "clsx"
@@ -14,10 +18,6 @@ import { Swiper as SwiperClass } from "swiper/types"
 
 import MobileHomeSection from "@/app/(public)/(purchaser)/(home)/components/MobileHomeSection"
 import { ICategoryListLoader } from "@/app/(public)/(purchaser)/category/components/CategoryListLoader"
-import SwiperNavigationButton, {
-  SwiperButtonAction,
-  SwiperButtonsDirection
-} from "@/app/components/SwiperNavigationButton"
 
 const MobileHomeTopBlogs = ({
   getAllBlogsQuery,

@@ -22,10 +22,6 @@ const ProfileSellerPage = async () => {
     return redirect("/auth/signin")
   }
 
-  if (session?.profile.roles.some((role) => role?.name === "seller")) {
-    return redirect("/seller-panel")
-  }
-
   return <ProfileSellerForm isMobileView={isMobileView} />
 }
 

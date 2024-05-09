@@ -5,6 +5,10 @@ import Image from "next/image"
 import { MapPinIcon } from "@heroicons/react/24/outline"
 import { UseQueryResult } from "@tanstack/react-query"
 import Link from "@vardast/component/Link"
+import SwiperNavigationButton, {
+  SwiperButtonAction,
+  SwiperButtonsDirection
+} from "@vardast/component/SwiperNavigationButton"
 import { GetAllSellersCountQuery } from "@vardast/graphql/generated"
 import clsx from "clsx"
 import { useInView } from "react-intersection-observer"
@@ -13,10 +17,6 @@ import { Swiper as SwiperClass } from "swiper/types"
 
 import MobileHomeSection from "@/app/(public)/(purchaser)/(home)/components/MobileHomeSection"
 import { ICategoryListLoader } from "@/app/(public)/(purchaser)/category/components/CategoryListLoader"
-import SwiperNavigationButton, {
-  SwiperButtonAction,
-  SwiperButtonsDirection
-} from "@/app/components/SwiperNavigationButton"
 
 type Props = {
   allSellersCount: UseQueryResult<GetAllSellersCountQuery>
