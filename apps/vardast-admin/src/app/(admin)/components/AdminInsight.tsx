@@ -28,7 +28,7 @@ const AdminInsight = () => {
 
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-      <Link href="/admin/products">
+      <Link href="/products">
         <div className="card flex flex-col gap-2 rounded p-4">
           <div className="font-bold text-alpha-400">کالاها</div>
           {products.isLoading ? (
@@ -42,7 +42,7 @@ const AdminInsight = () => {
           )}
         </div>
       </Link>
-      <Link href="/admin">
+      <Link href="/">
         <div className="card flex flex-col gap-2 rounded p-4">
           <div className="font-bold text-alpha-400">برندها</div>
           {brands.isLoading ? (
@@ -56,7 +56,7 @@ const AdminInsight = () => {
           )}
         </div>
       </Link>
-      <Link href="/admin/users">
+      <Link href="/users">
         <div className="card flex flex-col gap-2 rounded p-4">
           <div className="font-bold text-alpha-400">کاربران</div>
           {users.isLoading ? (
@@ -70,7 +70,7 @@ const AdminInsight = () => {
           )}
         </div>
       </Link>
-      <Link href="/admin/sellers">
+      <Link href="/sellers">
         <div className="card flex flex-col gap-2 rounded p-4">
           <div className="font-bold text-alpha-400">فروشندگان</div>
           {sellers.isLoading ? (
@@ -84,7 +84,7 @@ const AdminInsight = () => {
           )}
         </div>
       </Link>
-      <Link href="/admin/vocabularies">
+      <Link href="/vocabularies">
         <div className="card flex flex-col gap-2 rounded p-4">
           <div className="font-bold text-alpha-400">دسته‌بندی‌ها</div>
           {allCategoriesQuery.isLoading ? (

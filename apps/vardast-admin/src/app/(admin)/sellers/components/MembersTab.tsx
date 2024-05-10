@@ -58,9 +58,7 @@ const MembersTab = ({ representatives, sellerId }: MembersTabProps) => {
                     <tr
                       key={representative.id}
                       onClick={() =>
-                        router.push(
-                          `/admin/users/${representative?.user?.uuid}`
-                        )
+                        router.push(`/users/${representative?.user?.uuid}`)
                       }
                     >
                       <td>

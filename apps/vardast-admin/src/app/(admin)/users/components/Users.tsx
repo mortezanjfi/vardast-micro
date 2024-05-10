@@ -83,7 +83,7 @@ const Users = () => {
       <Card className=" table-responsive mt-8 rounded">
         <PageHeader title={t("common:users_index_title")}>
           {session?.abilities.includes("gql.users.user.store") && (
-            <Link href="/admin/users/new">
+            <Link href="/users/new">
               <Button size="medium">
                 {t("common:add_entity", { entity: t("common:user") })}
               </Button>
@@ -108,7 +108,7 @@ const Users = () => {
                     user && (
                       <tr
                         key={user.uuid}
-                        onClick={() => router.push(`/admin/users/${user.uuid}`)}
+                        onClick={() => router.push(`/users/${user.uuid}`)}
                       >
                         <td>
                           <Avatar size="small">

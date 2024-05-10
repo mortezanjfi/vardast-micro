@@ -9,7 +9,7 @@ const CreateBrandPage = async () => {
   const session = await getServerSession(authOptions)
 
   if (!session?.abilities?.includes("gql.products.brand.store")) {
-    redirect("/admin")
+    redirect("/")
   }
 
   return <BrandForm />

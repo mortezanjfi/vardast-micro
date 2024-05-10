@@ -36,7 +36,7 @@ const AddressesTab = ({
             className="mr-auto"
             onClick={() =>
               router.push(
-                `/admin/addresses/new?type=${relatedType}&id=${relatedId}&fallback=${pathname}`
+                `/addresses/new?type=${relatedType}&id=${relatedId}&fallback=${pathname}`
               )
             }
           >
@@ -66,7 +66,7 @@ const AddressesTab = ({
                       key={address.id}
                       onClick={() =>
                         router.push(
-                          `/admin/addresses/${address.id}?fallback=${pathname}`
+                          `/addresses/${address.id}?fallback=${pathname}`
                         )
                       }
                     >

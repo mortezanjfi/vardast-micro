@@ -12,7 +12,7 @@ const AreasPage = async ({
   const session = await getServerSession(authOptions)
 
   if (!session?.abilities?.includes("gql.base.location.area.index")) {
-    redirect("/admin")
+    redirect("/")
   }
 
   // const countrySlug = params.countrySlug as string

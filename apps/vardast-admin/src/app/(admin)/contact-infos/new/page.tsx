@@ -14,13 +14,13 @@ const CreateContactInfoPage = async ({
   searchParams: { id, type, fallback }
 }: CreateContactInfoPageProps) => {
   if (!id || !type || !fallback) {
-    redirect(fallback ? fallback[0] : "/admin/contact-infos")
+    redirect(fallback ? fallback[0] : "/contact-infos")
   }
 
   const session = await getServerSession(authOptions)
 
   if (!session?.abilities?.includes("gql.users.contact_info.store")) {
-    redirect("/admin")
+    redirect("/")
   }
 
   return (

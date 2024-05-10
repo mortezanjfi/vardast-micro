@@ -109,7 +109,7 @@ const Sellers = () => {
           titleContainerClasses="border-b-2 border-primary-600 py-2"
         >
           {session?.abilities.includes("gql.products.seller.store") && (
-            <Link href="/admin/sellers/new">
+            <Link href="/sellers/new">
               <Button size="medium">
                 <LucidePlus size="14.4" />
 
@@ -211,7 +211,7 @@ const Sellers = () => {
                             {" "}
                             <Link
                               target="_blank"
-                              href={`/admin/sellers/${seller.id}`}
+                              href={`//sellers/${seller.id}`}
                             >
                               <span className="tag cursor-pointer text-blue-500">
                                 {" "}

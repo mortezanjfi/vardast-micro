@@ -13,7 +13,7 @@ const ProductsIndex = async () => {
   const session = await getServerSession(authOptions)
 
   if (!session?.abilities?.includes("gql.products.product.index")) {
-    redirect("/admin")
+    redirect("/")
   }
 
   return <Products />

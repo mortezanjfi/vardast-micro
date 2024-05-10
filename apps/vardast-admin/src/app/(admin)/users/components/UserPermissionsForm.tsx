@@ -68,7 +68,7 @@ const UserPermissionsForm = ({
         duration: 2000,
         variant: "success"
       })
-      router.push("/admin/users")
+      router.push("/users")
     }
   })
 

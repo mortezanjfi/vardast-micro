@@ -37,7 +37,7 @@ const ContactInfosTab = ({
             className="mr-auto"
             onClick={() =>
               router.push(
-                `/admin/contact-infos/new?type=${relatedType}&id=${relatedId}&fallback=${pathname}`
+                `/contact-infos/new?type=${relatedType}&id=${relatedId}&fallback=${pathname}`
               )
             }
           >
@@ -65,7 +65,7 @@ const ContactInfosTab = ({
                       key={contactInfo.id}
                       onClick={() =>
                         router.push(
-                          `/admin/contact-infos/${contactInfo.id}?fallback=${pathname}`
+                          `/contact-infos/${contactInfo.id}?fallback=${pathname}`
                         )
                       }
                     >

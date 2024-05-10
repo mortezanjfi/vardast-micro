@@ -12,7 +12,7 @@ const OfferEditPage = async ({
   const session = await getServerSession(authOptions)
 
   if (!session?.abilities?.includes("gql.products.offer.update.mine")) {
-    redirect("/admin")
+    redirect("/")
   }
 
   return uuid && <OfferEdit uuid={uuid} />

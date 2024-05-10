@@ -38,5 +38,5 @@ export default async function PublicLayout({
     )
   }
 
-  return redirect("/authentication/signin")
+  return redirect("/auth/signin")
 }

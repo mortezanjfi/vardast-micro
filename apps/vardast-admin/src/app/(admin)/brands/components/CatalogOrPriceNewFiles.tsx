@@ -200,7 +200,7 @@ export const CatalogOrPriceNewFiles = ({
             variant="secondary"
             type="reset"
             onClick={() => {
-              router.push("/admin/brands")
+              router.push("/brands")
             }}
           >
             {t("common:cancel")}

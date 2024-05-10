@@ -12,7 +12,7 @@ const ProductEditPage = async ({
   const session = await getServerSession(authOptions)
 
   if (!session?.abilities?.includes("gql.products.product.moderated_update")) {
-    redirect("/admin")
+    redirect("/")
   }
 
   return uuid && <ProductEdit id={uuid} />

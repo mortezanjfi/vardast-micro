@@ -94,7 +94,7 @@ const OfferForm = ({ offer }: OfferFormProps) => {
           duration: 2000,
           variant: "success"
         })
-        router.push("/admin/offers")
+        router.push("/offers")
       }
     }
   )
@@ -112,7 +112,7 @@ const OfferForm = ({ offer }: OfferFormProps) => {
           duration: 2000,
           variant: "success"
         })
-        router.push("/admin/offers")
+        router.push("/offers")
       }
     }
   )

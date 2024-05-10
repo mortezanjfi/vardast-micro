@@ -52,7 +52,7 @@ const UOMForm = ({ uom }: UOMFormProps) => {
         duration: 2000,
         variant: "success"
       })
-      router.push("/admin/uoms")
+      router.push("/uoms")
     }
   })
   const updateUOMMutation = useUpdateUomMutation(graphqlRequestClientAdmin, {
@@ -67,7 +67,7 @@ const UOMForm = ({ uom }: UOMFormProps) => {
         duration: 2000,
         variant: "success"
       })
-      router.push("/admin/uoms")
+      router.push("/uoms")
     }
   })
 

@@ -77,7 +77,7 @@ const SellerForm = ({ seller }: SellerFormProps) => {
           duration: 2000,
           variant: "success"
         })
-        router.push("/admin/sellers")
+        router.push("/sellers")
       }
     }
   )
@@ -95,7 +95,7 @@ const SellerForm = ({ seller }: SellerFormProps) => {
           duration: 2000,
           variant: "success"
         })
-        router.push("/admin/sellers")
+        router.push("/sellers")
       }
     }
   )
@@ -218,9 +218,7 @@ const SellerForm = ({ seller }: SellerFormProps) => {
               {admin && (
                 <div className="col-span-full">
                   <Link
-                    href={
-                      admin?.user?.uuid ? `/admin/users/${admin.user.uuid}` : ""
-                    }
+                    href={admin?.user?.uuid ? `/users/${admin.user.uuid}` : ""}
                     prefetch={false}
                   >
                     <div className="flex items-center">

@@ -76,7 +76,7 @@ const BrandForm = ({ brand }: BrandFormProps) => {
           duration: 2000,
           variant: "success"
         })
-        router.push("/admin/brands")
+        router.push("/brands")
       }
     }
   )
@@ -94,7 +94,7 @@ const BrandForm = ({ brand }: BrandFormProps) => {
           duration: 2000,
           variant: "success"
         })
-        router.push("/admin/brands")
+        router.push("/brands")
       }
     }
   )

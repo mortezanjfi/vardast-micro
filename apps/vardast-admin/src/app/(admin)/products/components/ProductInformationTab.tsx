@@ -565,7 +565,7 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
             variant="secondary"
             type="reset"
             onClick={() => {
-              router.push("/admin/products")
+              router.push("/products")
             }}
           >
             {t("common:cancel")}

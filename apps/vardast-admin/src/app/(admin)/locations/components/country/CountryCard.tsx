@@ -80,7 +80,7 @@ const CountryCard = ({
           {getFlagEmoji(alphaTwo)}
         </span>
         <Link
-          href={`/admin/locations/country/${slug}`}
+          href={`//locations/country/${slug}`}
           className="font-bold text-alpha-800 underline-offset-2 hover:text-alpha-900 hover:underline dark:text-alpha-400 dark:hover:text-alpha-300"
         >
           {name}

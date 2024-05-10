@@ -12,7 +12,7 @@ const BrandEditPage = async ({
   const session = await getServerSession(authOptions)
 
   if (!session?.abilities?.includes("gql.products.seller.update")) {
-    redirect("/admin")
+    redirect("/")
   }
 
   return uuid && <SellerEdit uuid={uuid} />

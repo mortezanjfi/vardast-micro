@@ -16,7 +16,7 @@ const AddressEditPage = async ({
   const session = await getServerSession(authOptions)
 
   if (!session?.abilities?.includes("gql.users.address.update")) {
-    redirect("/admin")
+    redirect("/")
   }
 
   return (

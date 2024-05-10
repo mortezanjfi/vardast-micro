@@ -8,7 +8,7 @@ const CreateOfferPage = async () => {
   const session = await getServerSession(authOptions)
 
   if (!session?.abilities?.includes("gql.products.offer.store.mine")) {
-    redirect("/admin")
+    redirect("/")
   }
 
   return <OfferForm />

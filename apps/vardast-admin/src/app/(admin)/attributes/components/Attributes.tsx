@@ -84,7 +84,7 @@ const Attributes = () => {
           titleContainerClasses="border-b-2 border-primary-600 py-2"
         >
           {session?.abilities.includes("gql.products.attribute.store") && (
-            <Link href="/admin/attributes/new">
+            <Link href="/attributes/new">
               <Button size="medium">
                 <LucidePlus size="14.4" />
                 {t("common:add_entity", { entity: t("common:attribute") })}
@@ -113,7 +113,7 @@ const Attributes = () => {
                       <tr
                         key={attribute.id}
                         onClick={() =>
-                          router.push(`/admin/attributes/${attribute.id}`)
+                          router.push(`/attributes/${attribute.id}`)
                         }
                       >
                         <td>

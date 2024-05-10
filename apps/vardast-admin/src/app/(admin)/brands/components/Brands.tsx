@@ -137,7 +137,7 @@ const Brands = () => {
           titleContainerClasses="border-b-2 border-primary-600 py-2"
         >
           {session?.abilities.includes("gql.products.brand.store") && (
-            <Link href="/admin/brands/new">
+            <Link href="/brands/new">
               <Button size="medium">
                 <LucidePlus size="14.4" />
 
@@ -170,6 +170,7 @@ const Brands = () => {
                   <th>{t("common:operation")}</th>
                 </tr>
               </thead>
+              overflow-x-auto border--0.5
               <tbody className="border">
                 {brands.data?.brands.data.map(
                   (brand, index) =>
@@ -251,10 +252,7 @@ const Brands = () => {
                         </td>
 
                         <td className=" border-r-0.5">
-                          <Link
-                            target="_blank"
-                            href={`/admin/brands/${brand.id}`}
-                          >
+                          <Link target="_blank" href={`/brands/${brand.id}`}>
                             <span className="tag cursor-pointer text-blue-500">
                               {" "}
                               {t("common:edit")}

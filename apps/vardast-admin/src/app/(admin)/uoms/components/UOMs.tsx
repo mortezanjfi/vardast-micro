@@ -39,7 +39,7 @@ const UOMs = () => {
     <>
       <PageHeader title={t("common:uoms_index_title")}>
         {session?.abilities?.includes("gql.products.uom.store") && (
-          <Link href="/admin/uoms/new">
+          <Link href="/uoms/new">
             <Button size="medium">
               {t("common:add_entity", { entity: t("common:uom") })}
             </Button>
@@ -61,7 +61,7 @@ const UOMs = () => {
                 uom && (
                   <tr
                     key={uom.id}
-                    onClick={() => router.push(`/admin/uoms/${uom.id}`)}
+                    onClick={() => router.push(`/uoms/${uom.id}`)}
                   >
                     <td>
                       <span className="font-medium text-alpha-800">

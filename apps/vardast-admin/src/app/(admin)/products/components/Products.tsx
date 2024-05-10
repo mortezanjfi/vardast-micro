@@ -142,7 +142,7 @@ const Products = () => {
           titleContainerClasses="border-b-2 border-primary-600 py-2"
         >
           {session?.abilities.includes("gql.products.product.store") && (
-            <Link href="/admin/products/new">
+            <Link href="/products/new">
               <Button size="medium">
                 <LucidePlus size="14.4" />
                 افزودن کالای جدید
@@ -263,7 +263,7 @@ const Products = () => {
                           <div className="flex gap-2">
                             <Link
                               target="_blank"
-                              href={`/admin/products/${product.id}`}
+                              href={`//products/${product.id}`}
                             >
                               <span className="tag cursor-pointer text-blue-500">
                                 {t("common:edit")}

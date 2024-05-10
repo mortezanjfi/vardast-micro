@@ -28,7 +28,7 @@ const VocabularyCard = ({
     <div className="card flex items-center gap-3 rounded px-4 py-4 pe-2">
       <div className="flex items-center gap-2">
         <Link
-          href={`/admin/vocabularies/${slug}`}
+          href={`//vocabularies/${slug}`}
           className="flex items-center gap-1 font-bold text-alpha-800 underline-offset-2 hover:text-alpha-900 hover:underline dark:text-alpha-400 dark:hover:text-alpha-300"
         >
           <LucideFolderClosed className="h-6 w-6 text-alpha-500 dark:text-alpha-700" />

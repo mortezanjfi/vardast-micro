@@ -8,7 +8,7 @@ const ProductCreatePage = async () => {
   const session = await getServerSession(authOptions)
 
   if (!session?.abilities?.includes("gql.products.product.store")) {
-    redirect("/admin")
+    redirect("/")
   }
 
   return <ProductFormNew />

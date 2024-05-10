@@ -8,7 +8,7 @@ const VocabulariesPage = async () => {
   const session = await getServerSession(authOptions)
 
   if (!session?.abilities?.includes("gql.base.taxonomy.vocabulary.index")) {
-    redirect("/admin")
+    redirect("/")
   }
 
   return <Vocabularies />

@@ -89,7 +89,7 @@ const UserForm = ({ user }: Props) => {
         duration: 2000,
         variant: "success"
       })
-      router.push("/admin/users")
+      router.push("/users")
     }
   })
   const updateUserMutation = useUpdateUserMutation(graphqlRequestClientAdmin, {
@@ -104,7 +104,7 @@ const UserForm = ({ user }: Props) => {
         duration: 2000,
         variant: "success"
       })
-      router.push("/admin/users")
+      router.push("/users")
     }
   })
 

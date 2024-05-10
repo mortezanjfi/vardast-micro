@@ -8,7 +8,7 @@ const UsersIndex = async () => {
   const session = await getServerSession(authOptions)
 
   if (!session?.abilities?.includes("gql.users.user.index")) {
-    redirect("/admin")
+    redirect("/")
   }
 
   return <Users />

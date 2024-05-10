@@ -14,13 +14,13 @@ const CreateAddressPage = async ({
   searchParams: { id, type, fallback }
 }: CreateAddressPageProps) => {
   if (!id || !type || !fallback) {
-    redirect(fallback ? fallback[0] : "/admin/addresses")
+    redirect(fallback ? fallback[0] : "/addresses")
   }
 
   const session = await getServerSession(authOptions)
 
   if (!session?.abilities?.includes("gql.users.address.store")) {
-    redirect("/admin")
+    redirect("/")
   }
 
   return (

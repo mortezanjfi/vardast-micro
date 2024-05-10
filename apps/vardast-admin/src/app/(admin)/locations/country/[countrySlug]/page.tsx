@@ -12,7 +12,7 @@ const ProvincesPage = async ({
   const session = await getServerSession(authOptions)
 
   if (!session?.abilities?.includes("gql.base.location.province.index")) {
-    redirect("/admin")
+    redirect("/")
   }
 
   const countrySlug = params.countrySlug as string

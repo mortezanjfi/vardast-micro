@@ -128,7 +128,7 @@ const ProductForm = ({ product }: ProductFormProps) => {
           duration: 2000,
           variant: "success"
         })
-        router.push("/admin/products")
+        router.push("/products")
       }
     }
   )
@@ -158,7 +158,7 @@ const ProductForm = ({ product }: ProductFormProps) => {
           duration: 2000,
           variant: "success"
         })
-        router.push("/admin/products")
+        router.push("/products")
       }
     }
   )

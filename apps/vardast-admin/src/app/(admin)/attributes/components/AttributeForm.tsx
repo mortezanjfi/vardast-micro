@@ -91,7 +91,7 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
         if (categoryId) {
           router.back()
         } else {
-          router.push("/admin/attributes")
+          router.push("/attributes")
         }
       }
     }
@@ -111,7 +111,7 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
           duration: 2000,
           variant: "success"
         })
-        router.push("/admin/attributes")
+        router.push("/attributes")
       }
     }
   )

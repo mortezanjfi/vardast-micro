@@ -7,13 +7,9 @@ RUN npm i -g pnpm@8.7.4 ts-node turbo
 
 USER root
 
-ARG PROJECT_NAME_ADMIN=@vardast/admin
-ARG PROJECT_NAME_CLIENT=@vardast/client
-ARG PROJECT_NAME_SELLER=@vardast/seller
-
-ARG PROJECT_DIR_NAME_ADMIN=vardast-admin
-ARG PROJECT_DIR_NAME_CLIENT=vardast-client
-ARG PROJECT_DIR_NAME_SELLER=vardast-seller
+ARG PROJECT_NAME_ADMIN=vardast-admin
+ARG PROJECT_NAME_AUTH=authentication
+ARG PROJECT_NAME_SELLER=vardast-seller
 
 FROM base AS builder
 RUN apk add --no-cache libc6-compat
@@ -23,7 +19,7 @@ WORKDIR /app
 COPY . .
  
 # Generate a partial monorepo with a pruned lockfile for a target workspace.
-RUN turbo prune ${PROJECT_NAME_ADMIN} ${PROJECT_NAME_CLIENT} ${PROJECT_NAME_SELLER} --docker
+RUN turbo prune ${PROJECT_NAME_ADMIN} ${PROJECT_NAME_SELLER} ${PROJECT_NAME_AUTH} --docker
 
 # Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
@@ -34,12 +30,13 @@ WORKDIR /app
 # First install the dependencies (as they change less often)
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/full/ .
+COPY --from=builder /app/create-auth.js .
+RUN pnpm create-auth
 # COPY --from=builder /app/out/pnpm-lock ./pnpm-lock
 RUN pnpm install
  
-RUN cp apps/${PROJECT_DIR_NAME_ADMIN}/.env.example apps/${PROJECT_DIR_NAME_ADMIN}/.env
-RUN cp apps/${PROJECT_DIR_NAME_CLIENT}/.env.example apps/${PROJECT_DIR_NAME_CLIENT}/.env
-RUN cp apps/${PROJECT_DIR_NAME_SELLER}/.env.example apps/${PROJECT_DIR_NAME_SELLER}/.env
+RUN cp apps/${PROJECT_NAME_ADMIN}/.env.example apps/${PROJECT_NAME_ADMIN}/.env
+RUN cp apps/${PROJECT_NAME_SELLER}/.env.example apps/${PROJECT_NAME_SELLER}/.env
 
 # Build the project
 RUN pnpm build

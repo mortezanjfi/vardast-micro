@@ -8,7 +8,7 @@ const LocationsIndex = async () => {
   const session = await getServerSession(authOptions)
 
   if (!session?.abilities?.includes("gql.base.location.country.index")) {
-    redirect("/admin")
+    redirect("/")
   }
 
   return <Countries />

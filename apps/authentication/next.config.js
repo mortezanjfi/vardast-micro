@@ -7,7 +7,6 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 })
 
 const nextConfig = {
-  // basePath: process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH,
   reactStrictMode: true,
 
   /** Enables hot reloading for local packages without a build step */
@@ -42,8 +41,8 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}`,
-        destination: `/signin`,
+        source: ["/auth"],
+        destination: "/auth/signin",
         permanent: true
       }
     ]

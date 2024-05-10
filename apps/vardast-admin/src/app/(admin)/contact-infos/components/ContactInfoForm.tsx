@@ -89,7 +89,7 @@ const ContactInfoForm = ({
           duration: 2000,
           variant: "success"
         })
-        router.push(fallback ? fallback : "/admin/contact-infos")
+        router.push(fallback ? fallback : "/contact-infos")
       }
     }
   )
@@ -108,7 +108,7 @@ const ContactInfoForm = ({
           duration: 2000,
           variant: "success"
         })
-        router.push(fallback ? fallback : "/admin/contact-infos")
+        router.push(fallback ? fallback : "/contact-infos")
       }
     }
   )

@@ -1,7 +1,5 @@
 "use client"
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
 import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import { zodResolver } from "@hookform/resolvers/zod"
 import Card from "@vardast/component/Card"
@@ -53,6 +51,8 @@ import {
   LucideChevronsUpDown
 } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
@@ -88,7 +88,7 @@ const AddressForm = ({
           duration: 2000,
           variant: "success"
         })
-        router.push(fallback ? fallback : "/admin/addresses")
+        router.push(fallback ? fallback : "/addresses")
       }
     }
   )
@@ -107,7 +107,7 @@ const AddressForm = ({
           duration: 2000,
           variant: "success"
         })
-        router.push(fallback ? fallback : "/admin/addresses")
+        router.push(fallback ? fallback : "/addresses")
       }
     }
   )

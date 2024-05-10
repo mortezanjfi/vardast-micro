@@ -132,7 +132,7 @@ const Offers = () => {
           titleContainerClasses="border-b-2 border-primary-600 py-2"
         >
           {session?.abilities.includes("gql.products.offer.store") && (
-            <Link href="/admin/offers/new">
+            <Link href="/offers/new">
               <Button size="medium">
                 <LucidePlus size="14.4" />
                 {t("common:add_entity", { entity: t("common:offers") })}
@@ -164,7 +164,7 @@ const Offers = () => {
                     offer && (
                       <tr
                         key={offer.id}
-                        onClick={() => router.push(`/admin/offers/${offer.id}`)}
+                        onClick={() => router.push(`/offers/${offer.id}`)}
                       >
                         <td>
                           <span className="">
@@ -233,10 +233,7 @@ const Offers = () => {
                           )}
                         </td>
                         <td>
-                          <Link
-                            target="_blank"
-                            href={`/admin/offers/${offer.id}`}
-                          >
+                          <Link target="_blank" href={`//offers/${offer.id}`}>
                             <span className="tag cursor-pointer text-blue-500">
                               {" "}
                               {t("common:edit")}

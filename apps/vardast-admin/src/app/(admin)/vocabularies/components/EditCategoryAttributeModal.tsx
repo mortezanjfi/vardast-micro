@@ -95,7 +95,7 @@ const EditCategoryAttributeModal = ({
             </DialogTitle>
             <Link
               className="flex justify-center"
-              href={`/admin/attributes/new/${
+              href={`//attributes/new/${
                 modalsOpen?.category?.id ? modalsOpen?.category?.id : ""
               }`}
             >
@@ -201,7 +201,7 @@ const AttributeItem = ({ category }: AttributeItemFormProps) => {
       <form className="py-4" onSubmit={form.handleSubmit(onSubmit)} noValidate>
         <div className="flex items-center gap-6">
           <Link
-            href={`/admin/attributes/${category?.id}`}
+            href={`//attributes/${category?.id}`}
             target="_blank"
             className="flex flex-1 flex-col"
           >

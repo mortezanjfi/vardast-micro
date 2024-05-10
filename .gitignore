@@ -103,3 +103,7 @@ public/workbox-*
 
 .next_auth_secret
 .next_auth_secret
+
+
+# auth
+apps/**/src/app/(authentication)

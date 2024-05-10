@@ -12,7 +12,7 @@ const UOMEditPage = async ({
   const session = await getServerSession(authOptions)
 
   if (!session?.abilities?.includes("gql.products.uom.update")) {
-    redirect("/admin")
+    redirect("/")
   }
 
   return uuid && <UOMEdit uuid={uuid} />
