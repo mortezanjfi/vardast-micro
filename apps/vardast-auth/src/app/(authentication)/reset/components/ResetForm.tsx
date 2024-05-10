@@ -58,7 +58,7 @@ const ResetForm = (_: Props) => {
 
         if (nextState === "LOGIN") {
           router.replace(
-            `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/signin`
+            `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}signin`
           )
         }
 
@@ -94,7 +94,7 @@ const ResetForm = (_: Props) => {
 
         if (nextState === "LOGIN") {
           router.replace(
-            `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/signin`
+            `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}signin`
           )
         }
         setPageLoading(false)
@@ -118,7 +118,7 @@ const ResetForm = (_: Props) => {
 
         if (nextState === "LOGIN") {
           router.replace(
-            `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/signin`
+            `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}signin`
           )
         }
 

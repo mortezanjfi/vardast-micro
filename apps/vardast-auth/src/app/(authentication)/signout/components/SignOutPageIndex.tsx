@@ -7,7 +7,7 @@ import { signOut } from "next-auth/react"
 export default function SignOutPageIndex() {
   useEffect(() => {
     signOut({
-      callbackUrl: `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/`
+      callbackUrl: `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}`
     })
   }, [])
 

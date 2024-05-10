@@ -47,7 +47,7 @@ export default async function AdminLayout({
               showSpinner={false}
             />
           )}
-          <NextAuthProvider>
+          <NextAuthProvider basePath={`${process.env.NEXTAUTH_URL}/api/auth`}>
             <ReactQueryProvider>
               <NextThemeProvider>
                 <RouteChangeProvider>{children}</RouteChangeProvider>

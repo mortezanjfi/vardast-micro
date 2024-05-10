@@ -1,5 +1,7 @@
 import withMobileHeader from "@vardast/component/withMobileHeader"
 
+// import { getServerSession } from "next-auth"
+
 import SigninForm from "@/app/(authentication)/signin/[...slug]/components/SigninForm"
 
 const SigninPage = async () => {

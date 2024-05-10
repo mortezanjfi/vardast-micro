@@ -7,7 +7,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 })
 
 const nextConfig = {
-  basePath: process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH,
+  // basePath: process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH,
   reactStrictMode: true,
 
   /** Enables hot reloading for local packages without a build step */
@@ -15,7 +15,20 @@ const nextConfig = {
     "@vardast/auth",
     "@vardast/ui",
     "@vardast/validators",
-    "@vardast/graphql"
+    "@vardast/graphql",
+    "@vardast/tsconfig",
+    "@vardast/asset",
+    "@vardast/auth",
+    "@vardast/component",
+    "@vardast/hook",
+    "@vardast/lib",
+    "@vardast/middleware",
+    "@vardast/provider",
+    "@vardast/query",
+    "@vardast/type",
+    "@vardast/ui",
+    "@vardast/util",
+    "@vardast/style"
   ],
   webpack: (config) => {
     config.resolve.alias.canvas = false
@@ -26,6 +39,15 @@ const nextConfig = {
   // experimental: {
   //   serverActions: true
   // },
+  async redirects() {
+    return [
+      {
+        source: `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}`,
+        destination: `/signin`,
+        permanent: true
+      }
+    ]
+  },
   images: {
     dangerouslyAllowSVG: true,
     domains: [

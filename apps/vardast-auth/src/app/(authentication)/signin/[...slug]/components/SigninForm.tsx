@@ -45,7 +45,7 @@ enum LoginOptions {
 const SigninForm = () => {
   const pathname = usePathname()
   const returnedUrl = pathname
-    .replace(`${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/signin`, "")
+    .replace(`${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}signin`, "")
     .split("/")
     .filter(Boolean)
     .join("/")
@@ -79,7 +79,7 @@ const SigninForm = () => {
 
           if (nextState === "LOGIN") {
             router.replace(
-              `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/signin${returnedUrl ? "/" + returnedUrl : ""}`
+              `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}signin${returnedUrl ? "/" + returnedUrl : ""}`
             )
           }
 
@@ -124,7 +124,7 @@ const SigninForm = () => {
             setMessage(message as string)
             // await session.update(session)
             router.replace(
-              `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/redirect${returnedUrl ? "/" + returnedUrl : ""}`
+              `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}redirect${returnedUrl ? "/" + returnedUrl : ""}`
             )
           }
         } catch (error) {
@@ -211,7 +211,7 @@ const SigninForm = () => {
         setLoginErrors(null)
         setMessage(message as string)
         router.replace(
-          `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/redirect${returnedUrl ? "/" + returnedUrl : ""}`
+          `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}redirect${returnedUrl ? "/" + returnedUrl : ""}`
         )
       }
     } catch (error) {
@@ -441,8 +441,8 @@ const SigninForm = () => {
             )}
             {formState === LoginOptions.PASSWORD && (
               <Button
+                className="block"
                 type="submit"
-                block
                 form="login-username"
                 disabled={pageLoading || form.formState.isSubmitting}
                 loading={pageLoading || form.formState.isSubmitting}
@@ -452,8 +452,8 @@ const SigninForm = () => {
             )}
             {formState === LoginOptions.OTP && (
               <Button
+                className="block"
                 type="submit"
-                block
                 form="login-cellphone"
                 disabled={
                   validateCellphoneMutation.isLoading ||
@@ -471,6 +471,7 @@ const SigninForm = () => {
             {formState === LoginOptions.VERIFY_OTP && (
               <>
                 <Button
+                  className="block"
                   onClick={() => {
                     onSubmitStepOne({
                       cellphone: formStepOne.watch("cellphone")
@@ -480,14 +481,13 @@ const SigninForm = () => {
                   disabled={secondsLeft > 0}
                   variant="ghost"
                   type="button"
-                  block
                 >
                   ارسال مجدد رمز یکبار مصرف
                 </Button>
                 <Button
+                  className="block"
                   type="submit"
                   form="verify-otp-form"
-                  block
                   disabled={
                     validateOtpMutation.isLoading ||
                     validateCellphoneMutation.isLoading ||

@@ -61,7 +61,7 @@ const SingupForm = (_: Props) => {
 
         if (nextState === "LOGIN") {
           router.push(
-            `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/signin`
+            `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}signin`
           )
         }
 
@@ -95,7 +95,7 @@ const SingupForm = (_: Props) => {
 
         if (nextState === "LOGIN") {
           router.push(
-            `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/signin`
+            `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}signin`
           )
         }
       }
@@ -114,9 +114,7 @@ const SingupForm = (_: Props) => {
       }
 
       if (nextState === "LOGIN") {
-        router.push(
-          `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/signin`
-        )
+        router.push(`${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}signin`)
       }
 
       if (nextState === "LOGGED_IN") {

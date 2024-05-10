@@ -11,9 +11,7 @@ const ProfileSellerPage = async () => {
   const isMobileView = await CheckIsMobileView()
 
   if (!session) {
-    return redirect(
-      `${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/signin`
-    )
+    return redirect(`${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}signin`)
   }
 
   return <ProfileSellerForm isMobileView={isMobileView} />

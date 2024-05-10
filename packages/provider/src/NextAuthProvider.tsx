@@ -4,14 +4,9 @@ import { SessionProvider } from "next-auth/react"
 
 type Props = {
   children: React.ReactNode
+  basePath: string
 }
 
-export default function NextAuthProvider({ children }: Props) {
-  return (
-    <SessionProvider
-      basePath={`${process.env.NEXT_PUBLIC_AUTHENTICATION_BASE_PATH}/api/auth`}
-    >
-      {children}
-    </SessionProvider>
-  )
+export default function NextAuthProvider({ basePath, children }: Props) {
+  return <SessionProvider basePath={basePath}>{children}</SessionProvider>
 }
