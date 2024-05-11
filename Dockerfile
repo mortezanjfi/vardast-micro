@@ -37,6 +37,7 @@ RUN pnpm install
  
 RUN cp apps/${PROJECT_NAME_ADMIN}/.env.example${BUILD_MODE} apps/${PROJECT_NAME_ADMIN}/.env
 RUN cp apps/${PROJECT_NAME_SELLER}/.env.example${BUILD_MODE} apps/${PROJECT_NAME_SELLER}/.env
+RUN cp packages/graphql/.env.example${BUILD_MODE} packages/graphql/.env
 
 # Build the project
 RUN pnpm build
