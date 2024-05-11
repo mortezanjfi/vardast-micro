@@ -1,6 +1,6 @@
 version: "3.3"
 services:
-  next-app:
+  front-vardast-micro:
     build:
       context: .
       dockerfile: Dockerfile
