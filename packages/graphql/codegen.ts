@@ -1,8 +1,13 @@
 import type { CodegenConfig } from "@graphql-codegen/cli"
+import { config as dotenvConfig } from "dotenv"
+
+dotenvConfig()
+
+console.log({ bib: process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT })
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: "https://gateway.vardast.com/graphql",
+  schema: process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT,
   documents: "src/**/*graphql",
   ignoreNoDocuments: true,
   generates: {

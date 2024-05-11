@@ -10,6 +10,7 @@ USER root
 ARG PROJECT_NAME_AUTHENTICATION=authentication
 ARG PROJECT_NAME_ADMIN=vardast-admin
 ARG PROJECT_NAME_SELLER=vardast-seller
+ARG BUILD_MODE
 
 FROM base AS builder
 RUN apk add --no-cache libc6-compat
@@ -34,9 +35,8 @@ RUN pnpm create-auth
 # COPY --from=builder /app/out/pnpm-lock ./pnpm-lock
 RUN pnpm install
  
-RUN cp apps/${PROJECT_NAME_ADMIN}/.env.example apps/${PROJECT_NAME_ADMIN}/.env
-RUN cp apps/${PROJECT_NAME_SELLER}/.env.example apps/${PROJECT_NAME_SELLER}/.env
-RUN cp apps/${PROJECT_NAME_AUTHENTICATION}/.env.example apps/${PROJECT_NAME_AUTHENTICATION}/.env
+RUN cp apps/${PROJECT_NAME_ADMIN}/.env.example${BUILD_MODE} apps/${PROJECT_NAME_ADMIN}/.env
+RUN cp apps/${PROJECT_NAME_SELLER}/.env.example${BUILD_MODE} apps/${PROJECT_NAME_SELLER}/.env
 
 # Build the project
 RUN pnpm build
