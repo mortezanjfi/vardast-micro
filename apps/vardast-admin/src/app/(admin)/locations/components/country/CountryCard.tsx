@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import Link from "@vardast/component/Link"
@@ -21,6 +20,7 @@ import clsx from "clsx"
 import { LucideEdit, LucideMoreVertical, LucideTrash } from "lucide-react"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
+import { useState } from "react"
 
 type CountryCardProps = {
   onDeleteTriggered: (_: Country) => void
@@ -80,7 +80,7 @@ const CountryCard = ({
           {getFlagEmoji(alphaTwo)}
         </span>
         <Link
-          href={`//locations/country/${slug}`}
+          href={`/locations/country/${slug}`}
           className="font-bold text-alpha-800 underline-offset-2 hover:text-alpha-900 hover:underline dark:text-alpha-400 dark:hover:text-alpha-300"
         >
           {name}

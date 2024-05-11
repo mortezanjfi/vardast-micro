@@ -1,7 +1,5 @@
 "use client"
 
-import { useState } from "react"
-import { notFound } from "next/navigation"
 import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "@vardast/component/Link"
@@ -34,6 +32,8 @@ import zodI18nMap from "@vardast/util/zodErrorMap"
 import { ClientError } from "graphql-request"
 import { LucideAlertOctagon } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
+import { notFound } from "next/navigation"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
@@ -95,7 +95,7 @@ const EditCategoryAttributeModal = ({
             </DialogTitle>
             <Link
               className="flex justify-center"
-              href={`//attributes/new/${
+              href={`/attributes/new/${
                 modalsOpen?.category?.id ? modalsOpen?.category?.id : ""
               }`}
             >
@@ -201,7 +201,7 @@ const AttributeItem = ({ category }: AttributeItemFormProps) => {
       <form className="py-4" onSubmit={form.handleSubmit(onSubmit)} noValidate>
         <div className="flex items-center gap-6">
           <Link
-            href={`//attributes/${category?.id}`}
+            href={`/attributes/${category?.id}`}
             target="_blank"
             className="flex flex-1 flex-col"
           >

@@ -233,7 +233,7 @@ const Offers = () => {
                           )}
                         </td>
                         <td>
-                          <Link target="_blank" href={`//offers/${offer.id}`}>
+                          <Link target="_blank" href={`/offers/${offer.id}`}>
                             <span className="tag cursor-pointer text-blue-500">
                               {" "}
                               {t("common:edit")}

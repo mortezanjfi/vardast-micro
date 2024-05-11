@@ -77,7 +77,7 @@ const ProvinceCard = ({
       ])}
     >
       <Link
-        href={`//locations/country/${countrySlug}/province/${slug}`}
+        href={`/locations/country/${countrySlug}/province/${slug}`}
         className="font-bold text-alpha-800 underline-offset-2 hover:text-alpha-900 hover:underline dark:text-alpha-400 dark:hover:text-alpha-300"
       >
         {name}

@@ -211,7 +211,7 @@ const Sellers = () => {
                             {" "}
                             <Link
                               target="_blank"
-                              href={`//sellers/${seller.id}`}
+                              href={`/sellers/${seller.id}`}
                             >
                               <span className="tag cursor-pointer text-blue-500">
                                 {" "}

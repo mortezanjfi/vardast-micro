@@ -55,28 +55,8 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: "/my-api",
-        destination: "https://dev.api.vardast.ir/graphql",
-        permanent: true
-      },
-      {
-        source: "/product",
-        destination: "/products",
-        permanent: true
-      },
-      {
-        source: "/categories",
-        destination: "/category",
-        permanent: true
-      },
-      {
-        source: "/brand",
-        destination: "/brands",
-        permanent: true
-      },
-      {
-        source: "/seller",
-        destination: "/sellers",
+        source: "/auth",
+        destination: "/auth/signin",
         permanent: true
       }
     ]

@@ -263,7 +263,7 @@ const Products = () => {
                           <div className="flex gap-2">
                             <Link
                               target="_blank"
-                              href={`//products/${product.id}`}
+                              href={`/products/${product.id}`}
                             >
                               <span className="tag cursor-pointer text-blue-500">
                                 {t("common:edit")}
