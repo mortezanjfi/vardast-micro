@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - BUILD_MODE=example
+        - BUILD_MODE=example.stage
     ports:
       - "4051:3001"
       - "4052:3002"
