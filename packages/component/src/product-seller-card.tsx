@@ -3,12 +3,11 @@
 import { forwardRef, Ref, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
-import Link from "@vardast/component/Link"
 import { Product } from "@vardast/graphql/generated"
+import { ICategoryListLoader } from "@vardast/type/Loader"
 import clsx from "clsx"
 
-import { ICategoryListLoader } from "@/app/(public)/(purchaser)/category/components/CategoryListLoader"
-
+import Link from "./Link"
 import PriceTitle from "./PriceTitle"
 import { ProductContainerType } from "./ProductListContainer"
 import Rating from "./Rating"

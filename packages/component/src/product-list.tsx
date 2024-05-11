@@ -10,9 +10,6 @@ import {
 import { useDebouncedState } from "@mantine/hooks"
 import { CheckedState } from "@radix-ui/react-checkbox"
 import { useInfiniteQuery, UseQueryResult } from "@tanstack/react-query"
-import LoadingFailed from "@vardast/component/LoadingFailed"
-import NoResult from "@vardast/component/NoResult"
-import NotFoundMessage from "@vardast/component/NotFound"
 import {
   FilterAttribute,
   GetAllProductsQuery,
@@ -44,9 +41,12 @@ import DesktopMobileViewOrganizer from "./DesktopMobileViewOrganizer"
 import FiltersContainer from "./filters-container"
 import InfiniteScrollPagination from "./InfiniteScrollPagination"
 import ItemsCount from "./ItemsCount"
+import LoadingFailed from "./LoadingFailed"
 import MobileCategoriesFilter from "./mobile-categories-filter"
 import MobileFilterableAttributes from "./mobile-filterable-attributes"
 import MobileSortFilter from "./mobile-sort-filter"
+import NoResult from "./NoResult"
+import NotFoundMessage from "./NotFound"
 import ProductCard, { ProductCardSkeleton } from "./product-card"
 import ProductSort from "./product-sort"
 import ProductListContainer, {

@@ -4,9 +4,9 @@ import Image from "next/image"
 import { usePathname } from "next/navigation"
 import logoHorizontal from "@vardast/asset/logo-horizontal-v1-persian-light-bg.svg"
 import logoSign from "@vardast/asset/sign.svg"
-import Link from "@vardast/component/Link"
 import clsx from "clsx"
 
+import Link from "./Link"
 import Search from "./search"
 
 interface HeaderProps {

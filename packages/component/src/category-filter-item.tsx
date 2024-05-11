@@ -1,7 +1,8 @@
 "use client"
 
-import Link from "@vardast/component/Link"
 import { Category } from "@vardast/graphql/generated"
+
+import Link from "./Link"
 
 interface CategoryFilterItemProps {
   category: Category

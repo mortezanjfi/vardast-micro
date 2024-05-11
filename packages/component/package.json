@@ -20,6 +20,7 @@
     "@vardast/asset": "workspace:*",
     "@vardast/query": "workspace:*",
     "@vardast/type": "workspace:*",
+    "@vardast/lib": "workspace:*",
     "@vardast/provider": "workspace:*",
     "@vardast/util": "workspace:*",
     "@vardast/graphql": "workspace:*",

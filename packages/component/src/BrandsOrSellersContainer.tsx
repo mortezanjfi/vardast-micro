@@ -1,7 +1,6 @@
 import { ReactElement, useState } from "react"
+import { ICategoryListLoader } from "@vardast/type/Loader"
 import clsx from "clsx"
-
-import { ICategoryListLoader } from "@/app/(public)/(purchaser)/category/components/CategoryListLoader"
 
 export enum BrandContainerType {
   // eslint-disable-next-line no-unused-vars

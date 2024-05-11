@@ -9,8 +9,6 @@ import {
   useDebouncedState,
   useLocalStorage
 } from "@mantine/hooks"
-import Link from "@vardast/component/Link"
-import Progress from "@vardast/component/Progress"
 import { useGetSuggestQuery } from "@vardast/graphql/generated"
 import { PublicContext } from "@vardast/provider/PublicProvider"
 import graphqlRequestClientWithoutToken from "@vardast/query/queryClients/graphqlRequestClientWithoutToken"
@@ -20,6 +18,9 @@ import clsx from "clsx"
 import { AnimatePresence, motion } from "framer-motion"
 import { useAtom } from "jotai"
 import { Loader2, LucideSearch, LucideTrash, LucideX } from "lucide-react"
+
+import Link from "./Link"
+import Progress from "./Progress"
 
 interface ILatestSearchType {
   query: string

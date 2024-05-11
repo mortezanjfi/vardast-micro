@@ -1,10 +1,11 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import Progress from "@vardast/component/Progress"
 import { Button, ButtonProps } from "@vardast/ui/button"
 import { AnimatePresence, motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
+
+import Progress from "./Progress"
 
 type Props = {
   title: string

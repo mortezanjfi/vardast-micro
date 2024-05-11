@@ -2,8 +2,6 @@
 
 import { useContext, useEffect, useRef } from "react"
 import { usePathname, useRouter } from "next/navigation"
-import Link from "@vardast/component/Link"
-import Progress from "@vardast/component/Progress"
 import {
   EventTrackerSubjectTypes,
   useCreateEventTrackerMutation
@@ -21,6 +19,8 @@ import { useAtom, useSetAtom } from "jotai"
 import { ArrowRight } from "lucide-react"
 import { useSession } from "next-auth/react"
 
+import Link from "./Link"
+import Progress from "./Progress"
 import Search from "./search"
 
 type Props = {}

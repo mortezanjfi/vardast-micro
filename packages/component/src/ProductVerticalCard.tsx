@@ -1,12 +1,12 @@
 import { forwardRef, Ref, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
-import Link from "@vardast/component/Link"
 import { Product } from "@vardast/graphql/generated"
 import slugify from "@vardast/util/persian-slugify"
 import clsx from "clsx"
 import { formatDistanceToNow } from "date-fns"
 
+import Link from "./Link"
 import PriceTitle from "./PriceTitle"
 
 interface ProductVerticalCardProps {

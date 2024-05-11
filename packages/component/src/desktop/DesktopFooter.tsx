@@ -6,7 +6,8 @@ import logoHorizontal from "@vardast/asset/logo-horizontal-v2-persian-dark-bg-wh
 import myket from "@vardast/asset/myket.svg"
 import telegramColorful from "@vardast/asset/telegramColorful.svg"
 import whatsAppColorful from "@vardast/asset/whatsAppColorful.svg"
-import Link from "@vardast/component/Link"
+
+import Link from "../Link"
 
 type Props = {}
 

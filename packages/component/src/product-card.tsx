@@ -3,10 +3,10 @@
 import { forwardRef, Ref, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
-import Link from "@vardast/component/Link"
 import { Product, useCreateOfferMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
 import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
+import { ICategoryListLoader } from "@vardast/type/Loader"
 import { Button } from "@vardast/ui/button"
 import { checkSellerRedirectUrl } from "@vardast/util/checkSellerRedirectUrl"
 import clsx from "clsx"
@@ -15,8 +15,7 @@ import { faIR } from "date-fns/locale"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 
-import { ICategoryListLoader } from "@/app/(public)/(purchaser)/category/components/CategoryListLoader"
-
+import Link from "./Link"
 import PriceTitle from "./PriceTitle"
 import { ProductContainerType } from "./ProductListContainer"
 

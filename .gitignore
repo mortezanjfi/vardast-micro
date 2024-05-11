@@ -106,4 +106,4 @@ public/workbox-*
 
 
 # auth
-apps/**/src/app/(authentication)
+apps/vardast*/src/app/(authentication)

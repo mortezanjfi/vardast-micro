@@ -1,9 +1,9 @@
 import Image from "next/image"
 import { MapPinIcon } from "@heroicons/react/24/outline"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import Link from "@vardast/component/Link"
 import { Seller } from "@vardast/graphql/generated"
 
+import Link from "./Link"
 import Rating from "./Rating"
 
 interface SellerCardProps {

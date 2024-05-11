@@ -1,7 +1,8 @@
 import Image from "next/image"
-import Link from "@vardast/component/Link"
 import { Seller } from "@vardast/graphql/generated"
 import { MapPinIcon } from "lucide-react"
+
+import Link from "../Link"
 
 type SellerInfoProps = { seller: Seller; classNames?: string | undefined }
 

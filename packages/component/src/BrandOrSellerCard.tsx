@@ -2,12 +2,11 @@ import { forwardRef, Ref, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { MapPinIcon } from "@heroicons/react/24/outline"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import Link from "@vardast/component/Link"
 import { Brand, Seller } from "@vardast/graphql/generated"
+import { ICategoryListLoader } from "@vardast/type/Loader"
 import { checkSellerRedirectUrl } from "@vardast/util/checkSellerRedirectUrl"
 
-import { ICategoryListLoader } from "@/app/(public)/(purchaser)/category/components/CategoryListLoader"
-
+import Link from "./Link"
 import { RatingSkeleton } from "./Rating"
 
 export const BrandOrSellerCardSkeleton = () => {

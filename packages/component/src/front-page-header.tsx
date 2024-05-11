@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation"
 import { PopoverArrow } from "@radix-ui/react-popover"
-import Link from "@vardast/component/Link"
 import { useGetVocabularyQuery } from "@vardast/graphql/generated"
 import graphqlRequestClientWithoutToken from "@vardast/query/queryClients/graphqlRequestClientWithoutToken"
 import { Button } from "@vardast/ui/button"
@@ -11,6 +10,8 @@ import slugify from "@vardast/util/persian-slugify"
 import { LucideChevronDown } from "lucide-react"
 import { Session } from "next-auth"
 import { signOut } from "next-auth/react"
+
+import Link from "./Link"
 
 type Props = {
   session: Session | null

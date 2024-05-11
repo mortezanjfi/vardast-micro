@@ -3,11 +3,12 @@
 import { notFound } from "next/navigation"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import { useQuery } from "@tanstack/react-query"
-import Breadcrumb, { CrumbItemProps } from "@vardast/component/Breadcrumb"
 import { GetCategoryQuery } from "@vardast/graphql/generated"
 import { getCategoryQueryFn } from "@vardast/query/queryFns/categoryQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { BreadcrumbList, ItemList, WithContext } from "schema-dts"
+
+import Breadcrumb, { CrumbItemProps } from "./Breadcrumb"
 
 interface SearchHeaderProps {
   selectedCategoryId: number

@@ -14,7 +14,20 @@ const nextConfig = {
     "@vardast/auth",
     "@vardast/ui",
     "@vardast/validators",
-    "@vardast/graphql"
+    "@vardast/graphql",
+    "@vardast/tsconfig",
+    "@vardast/asset",
+    "@vardast/auth",
+    "@vardast/component",
+    "@vardast/hook",
+    "@vardast/lib",
+    "@vardast/middleware",
+    "@vardast/provider",
+    "@vardast/query",
+    "@vardast/type",
+    "@vardast/ui",
+    "@vardast/util",
+    "@vardast/style"
   ],
   webpack: (config) => {
     config.resolve.alias.canvas = false

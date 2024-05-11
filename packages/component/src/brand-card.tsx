@@ -1,8 +1,8 @@
 import Image from "next/image"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import Link from "@vardast/component/Link"
 import { Brand } from "@vardast/graphql/generated"
 
+import Link from "./Link"
 import Rating from "./Rating"
 
 interface BrandCardProps {
