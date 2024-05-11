@@ -46,42 +46,42 @@ export const _sidebarMenu: NavigationType[] = [
     items: [
       {
         title: "خانه",
-        path: "/admin",
+        path: "/",
         icon: "home"
       },
       {
         title: "کالاها",
-        path: "/admin/products",
+        path: "/products",
         icon: "package",
         abilities: "gql.products.product.index",
         items: [
           {
             title: "تمام کالاها",
-            path: "/admin/products",
+            path: "/products",
             icon: "package",
             abilities: "gql.products.product.index"
           },
           {
             title: "پیشنهادات",
-            path: "/admin/offers",
+            path: "/offers",
             icon: "package",
             abilities: "gql.products.offer.index.mine"
           },
           {
             title: "مشخصه‌ها",
-            path: "/admin/attributes",
+            path: "/attributes",
             icon: "layers",
             abilities: "gql.products.attribute.index"
           },
           {
             title: "برندها",
-            path: "/admin/brands",
+            path: "/brands",
             icon: "fingerprint",
             abilities: "gql.products.brand.index"
           },
           {
             title: "واحدهای اندازه‌گیری",
-            path: "/admin/uoms",
+            path: "/uoms",
             icon: "ruler",
             abilities: "gql.products.uom.index"
           }
@@ -89,7 +89,7 @@ export const _sidebarMenu: NavigationType[] = [
       },
       {
         title: "فروشندگان",
-        path: "/admin/sellers",
+        path: "/sellers",
         icon: "store",
         abilities: "gql.products.seller.index"
       }
@@ -101,19 +101,19 @@ export const _sidebarMenu: NavigationType[] = [
     items: [
       {
         title: "دسته‌بندی‌ها",
-        path: "/admin/vocabularies",
+        path: "/vocabularies",
         icon: "layout-grid",
         abilities: "gql.base.taxonomy.vocabulary.index"
       },
       {
         title: "مناطق جغرافیایی",
-        path: "/admin/locations",
+        path: "/locations",
         icon: "map",
         abilities: "gql.base.location.country.index"
       },
       {
         title: "کاربران",
-        path: "/admin/users",
+        path: "/users",
         icon: "users",
         abilities: "gql.users.user.index"
       }

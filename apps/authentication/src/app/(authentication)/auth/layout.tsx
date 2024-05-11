@@ -9,7 +9,7 @@ export default async function PublicLayout({
 }: {
   children: React.ReactNode
 }) {
-  const isMobileView = CheckIsMobileView()
+  const isMobileView = await CheckIsMobileView()
 
   return (
     <>

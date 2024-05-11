@@ -16,14 +16,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const ProfileSellerPage = async () => {
   const session = await getServerSession(authOptions)
-  const isMobileView = CheckIsMobileView()
+  const isMobileView = await CheckIsMobileView()
 
   if (!session) {
     return redirect("/auth/signin")
-  }
-
-  if (session?.profile.roles.some((role) => role?.name === "seller")) {
-    return redirect("/seller-panel")
   }
 
   return <ProfileSellerForm isMobileView={isMobileView} />
