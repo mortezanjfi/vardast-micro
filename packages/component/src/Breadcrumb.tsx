@@ -3,10 +3,9 @@
 import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
 import { HomeIcon } from "@heroicons/react/24/outline"
+import useTranslation from "next-translate/useTranslation"
 
 import Link from "./Link"
-
-// import useTranslation from "next-translate/useTranslation"
 
 export interface CrumbItemProps {
   label: string
@@ -17,12 +16,17 @@ export interface CrumbItemProps {
 interface BreadcrumbProps {
   dynamic?: boolean
   items?: CrumbItemProps[]
+  isMobileView?: boolean
 }
 
-const Breadcrumb = ({ items, dynamic = true }: BreadcrumbProps) => {
+const Breadcrumb = ({
+  items,
+  dynamic = true,
+  isMobileView
+}: BreadcrumbProps) => {
   const pathname = usePathname()
   const [breadcrumbs, setBreadcrumbs] = useState<CrumbItemProps[]>()
-
+  const { t } = useTranslation()
   useEffect(() => {
     let tempBreadcrumbs
 
@@ -37,7 +41,7 @@ const Breadcrumb = ({ items, dynamic = true }: BreadcrumbProps) => {
         const href = "/" + pathArray.slice(0, index + 1).join("/")
         return {
           path: href,
-          label: path,
+          label: +path > 0 ? path : t(`common:${path}`),
           isCurrent: index === pathArray.length - 1
         }
       })
@@ -51,21 +55,25 @@ const Breadcrumb = ({ items, dynamic = true }: BreadcrumbProps) => {
   return (
     <div role="presentation">
       <ol
-        className="hide-scrollbar flex items-end gap-1 overflow-y-auto whitespace-nowrap px py-6 pr align-middle text-sm leading-none"
+        className="hide-scrollbar flex items-end gap-1 overflow-y-auto whitespace-nowrap border-b px py-4 pr align-middle text-sm leading-none sm:border-b-0 sm:px-0 sm:py-8"
         aria-label="breadcrumb"
       >
-        <HomeIcon className="h-4 w-4" />
+        <Link href="/" aria-current={pathname === "/" ? "page" : "false"}>
+          <HomeIcon className="h-4 w-4" />
+        </Link>
         {/* {pathname.split("/")[1] === "admin" && ( */}
-        <li className="flex items-end align-middle leading-none">
-          <Link href="/" aria-current={pathname === "/" ? "page" : "false"}>
-            <div
-              title={process.env.NEXT_PUBLIC_TITLE}
-              className="text-alpha-600"
-            >
-              وردست
-            </div>
-          </Link>
-        </li>
+        {!isMobileView ? (
+          <li className="flex items-end align-middle leading-none">
+            <Link href="/" aria-current={pathname === "/" ? "page" : "false"}>
+              <div
+                title={process.env.NEXT_PUBLIC_TITLE}
+                className="text-alpha-600"
+              >
+                وردست
+              </div>
+            </Link>
+          </li>
+        ) : null}
         {/* )} */}
         {breadcrumbs &&
           breadcrumbs.map((crumb, idx) => (
@@ -85,6 +93,7 @@ const Breadcrumb = ({ items, dynamic = true }: BreadcrumbProps) => {
                       : "text-primary"
                   }
                 >
+                  {/* {t(`common:${crumb.label}`)} */}
                   {crumb.label}
                 </div>
               </Link>

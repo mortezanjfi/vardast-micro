@@ -21,7 +21,9 @@ export default async function PublicLayout({
           )}
         </>
       ) : (
-        children
+        <div className="flex h-full w-full items-center justify-center">
+          {children}
+        </div>
       )}
     </>
   )

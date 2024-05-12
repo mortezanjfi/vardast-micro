@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
@@ -10,6 +9,7 @@ import {
   useGetAllVocabulariesQuery,
   Vocabulary
 } from "@vardast/graphql/generated"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 

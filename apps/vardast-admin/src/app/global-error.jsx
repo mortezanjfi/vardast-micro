@@ -1,18 +1,5 @@
 "use client"
 
-import { useEffect } from "react"
-import Error from "next/error"
+import GlobalError from "@vardast/component/errors/global-error.jsx"
 
-export default function GlobalError({ error }) {
-  useEffect(() => {
-    console.log(error)
-  }, [error])
-
-  return (
-    <html>
-      <body>
-        <Error />
-      </body>
-    </html>
-  )
-}
+export default GlobalError

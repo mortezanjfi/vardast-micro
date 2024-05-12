@@ -2,11 +2,11 @@
 
 import { ChangeEvent, useRef, useState } from "react"
 import Image from "next/image"
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useBecomeASellerMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
 import { uploadPaths } from "@vardast/lib/uploadPaths"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
 import {

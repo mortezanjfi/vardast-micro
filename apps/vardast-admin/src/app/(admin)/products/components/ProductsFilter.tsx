@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import { useDebouncedState } from "@mantine/hooks"
 import Card from "@vardast/component/Card"
 import {
   useGetAllBrandsWithoutPaginationQuery,
   useGetAllCategoriesV2Query
 } from "@vardast/graphql/generated"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
 import {

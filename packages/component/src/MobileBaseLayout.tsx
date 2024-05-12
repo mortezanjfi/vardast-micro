@@ -1,5 +1,4 @@
 import React, { PropsWithChildren } from "react"
-import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 import clsx from "clsx"
 
 interface IMobileBaseLayout extends PropsWithChildren {
@@ -9,12 +8,14 @@ interface IMobileBaseLayout extends PropsWithChildren {
   spaceLess?: boolean
   fullHeight?: boolean
   extraPadding?: boolean
+  isMobileView?: boolean
   background?: boolean
   container?: boolean
   gap?: boolean
+  isAuth?: boolean
 }
 
-const MobileBaseLayout: React.FC<IMobileBaseLayout> = async ({
+const MobileBaseLayout: React.FC<IMobileBaseLayout> = ({
   noStyle,
   limitWidth,
   bgWhite,
@@ -24,10 +25,10 @@ const MobileBaseLayout: React.FC<IMobileBaseLayout> = async ({
   fullHeight,
   background,
   gap,
-  children
+  children,
+  isMobileView,
+  isAuth
 }) => {
-  const isMobileView = await CheckIsMobileView()
-
   if (isMobileView) {
     return (
       <div
@@ -54,14 +55,20 @@ const MobileBaseLayout: React.FC<IMobileBaseLayout> = async ({
   return (
     <div
       className={clsx(
-        "m-auto flex h-full w-full flex-1 flex-col",
+        "flex h-full w-full flex-1 flex-col",
         spaceLess ? "" : "gap p",
         limitWidth ? "max-w-md" : "w-full",
         background && "bg-[url('/images/background.svg')]",
         extraPadding && "py-20"
       )}
     >
-      <div className={clsx(container && "mx-auto w-full md:container")}>
+      <div
+        className={clsx(
+          container && "mx-auto w-full md:container",
+          isAuth &&
+            "flex h-full w-full items-center justify-center md:container"
+        )}
+      >
         {children}
       </div>
     </div>

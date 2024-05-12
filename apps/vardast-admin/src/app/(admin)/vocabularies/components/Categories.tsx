@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { notFound } from "next/navigation"
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import { UseQueryResult } from "@tanstack/react-query"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
@@ -13,6 +12,7 @@ import {
   GetCategoryQuery,
   useGetVocabularyQuery
 } from "@vardast/graphql/generated"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 import { Button } from "@vardast/ui/button"
 import { Session } from "next-auth"
 import useTranslation from "next-translate/useTranslation"

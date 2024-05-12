@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   Uom,
@@ -10,6 +9,7 @@ import {
   useUpdateUomMutation
 } from "@vardast/graphql/generated"
 import { useToast } from "@vardast/hook/use-toast"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
 import {

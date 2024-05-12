@@ -11,6 +11,7 @@ const Layout: React.FC<PropsWithChildren> = async ({ children }) => {
         <MobileBaseLayout
           extraPadding={!isMobileView}
           background={!isMobileView}
+          isMobileView={isMobileView}
           bgWhite={isMobileView}
         >
           {children}

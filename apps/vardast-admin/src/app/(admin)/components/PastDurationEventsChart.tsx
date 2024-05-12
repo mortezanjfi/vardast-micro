@@ -1,8 +1,8 @@
 "use client"
 
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import Card from "@vardast/component/Card"
 import { useGetPastDurationEventsChartQuery } from "@vardast/graphql/generated"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 import {
   BarElement,
   CategoryScale,

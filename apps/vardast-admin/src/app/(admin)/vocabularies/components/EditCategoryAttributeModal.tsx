@@ -1,6 +1,7 @@
 "use client"
 
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
+import { useState } from "react"
+import { notFound } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "@vardast/component/Link"
 import Loading from "@vardast/component/Loading"
@@ -11,6 +12,7 @@ import {
   useUpdateAttributeMutation
 } from "@vardast/graphql/generated"
 import { useToast } from "@vardast/hook/use-toast"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
 import {
@@ -32,8 +34,6 @@ import zodI18nMap from "@vardast/util/zodErrorMap"
 import { ClientError } from "graphql-request"
 import { LucideAlertOctagon } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
-import { notFound } from "next/navigation"
-import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 

@@ -1,6 +1,5 @@
 "use client"
 
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import Link from "@vardast/component/Link"
 import {
@@ -10,6 +9,7 @@ import {
   useGetAllSellersQuery,
   useGetAllUsersQuery
 } from "@vardast/graphql/generated"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 
 const AdminInsight = () => {
   const users = useGetAllUsersQuery(graphqlRequestClientAdmin)

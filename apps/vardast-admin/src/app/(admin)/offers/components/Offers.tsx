@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
@@ -18,6 +17,7 @@ import {
   ThreeStateSupervisionStatuses,
   useGetAllOffersQuery
 } from "@vardast/graphql/generated"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Button } from "@vardast/ui/button"
 import { LucideCheck, LucidePlus, LucideX } from "lucide-react"

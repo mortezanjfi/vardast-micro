@@ -3,7 +3,6 @@
 import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useDebouncedState } from "@mantine/hooks"
 import Card from "@vardast/component/Card"
@@ -14,6 +13,7 @@ import {
   useGetProvinceQuery
 } from "@vardast/graphql/generated"
 import { uploadPaths } from "@vardast/lib/uploadPaths"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
 import {

@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { useRouter } from "next/navigation"
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useDebouncedState } from "@mantine/hooks"
 import Card from "@vardast/component/Card"
@@ -10,6 +9,7 @@ import {
   useGetAllCategoriesV2Query,
   useGetAllUomsWithoutPaginationQuery
 } from "@vardast/graphql/generated"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
 import {

@@ -30,25 +30,6 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  if (
-    request.nextUrl.pathname.startsWith("/authentication/api") ||
-    request.nextUrl.pathname.startsWith("/authentication/redirect") ||
-    request.nextUrl.pathname.startsWith("/authentication/signout") ||
-    request.nextUrl.pathname.startsWith("/authentication/signin") ||
-    request.nextUrl.pathname.startsWith("/authentication/request-seller")
-  ) {
-    const data = await fetch(`http://localhost:3000${request.nextUrl.pathname}`)
-    if (data && data.status === 200) {
-      const res = await data.text()
-      return NextResponse.json(res, {
-        status: 200,
-        headers: {
-          "Content-Type": "text/html; charset=utf-8"
-        }
-      })
-    }
-  }
-
   const productsPathRegexp = pathToRegexp("/products/:slug1/:slug2?")
   const productsPathRegexpText = productsPathRegexp.exec(
     request.nextUrl.pathname

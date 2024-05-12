@@ -1,10 +1,10 @@
 "use client"
 
 import { notFound } from "next/navigation"
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import { Offer, useGetOfferQuery } from "@vardast/graphql/generated"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 
 import OfferForm from "@/app/(admin)/offers/components/OfferForm"
 

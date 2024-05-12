@@ -25,8 +25,9 @@ const NavigationItem = (props: Props) => {
   }
 
   const isActive = (linkPath: string): boolean => {
-    const currentPathModified = pathname.split("/").slice(2).join("/")
-    const linkPathModified = linkPath?.split("/").slice(2).join("/")
+    const currentPathModified = pathname.split("/").slice(1).join("/")
+    const linkPathModified = linkPath?.split("/").slice(1).join("/")
+
     return linkPathModified === currentPathModified
       ? true
       : linkPathModified !== "" &&

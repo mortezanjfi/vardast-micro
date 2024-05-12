@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import { useQueryClient } from "@tanstack/react-query"
 import {
   AttributeValue,
@@ -9,6 +8,7 @@ import {
   useRemoveAttributeValueMutation
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import {
   AlertDialog,

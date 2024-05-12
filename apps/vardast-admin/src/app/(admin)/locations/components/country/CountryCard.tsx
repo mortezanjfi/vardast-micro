@@ -1,10 +1,11 @@
 "use client"
 
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
+import { useState } from "react"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import Link from "@vardast/component/Link"
 import { Country, useUpdateCountryMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 import { Button } from "@vardast/ui/button"
 import {
   DropdownMenu,
@@ -20,7 +21,6 @@ import clsx from "clsx"
 import { LucideEdit, LucideMoreVertical, LucideTrash } from "lucide-react"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
-import { useState } from "react"
 
 type CountryCardProps = {
   onDeleteTriggered: (_: Country) => void

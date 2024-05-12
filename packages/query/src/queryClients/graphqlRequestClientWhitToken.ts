@@ -22,9 +22,9 @@ const requestMiddleware: RequestMiddleware = async (request) => {
   }
 }
 
-const graphqlRequestClientAdmin = new GraphQLClient(
+const graphqlRequestClientWhitToken = new GraphQLClient(
   process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT as string,
   { requestMiddleware }
 )
 
-export default graphqlRequestClientAdmin
+export default graphqlRequestClientWhitToken

@@ -1,11 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
 import { useCreateCountryMutation } from "@vardast/graphql/generated"
 import { useToast } from "@vardast/hook/use-toast"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 import { Button } from "@vardast/ui/button"
 import {
   Dialog,

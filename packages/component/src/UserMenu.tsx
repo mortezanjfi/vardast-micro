@@ -59,7 +59,7 @@ const UserMenu = () => {
                 <Button
                   onClick={() =>
                     signOut({
-                      callbackUrl: "/profile"
+                      callbackUrl: "/auth/signin"
                     })
                   }
                   variant="ghost"

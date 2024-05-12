@@ -2,7 +2,7 @@
 
 import { headers } from "next/headers"
 
-export const CheckIsMobileView = () => {
+export const CheckIsMobileView = async () => {
   // call the function and assign the headers to a constant
   const headersList = headers()
   const userAgent = headersList.get("user-agent")

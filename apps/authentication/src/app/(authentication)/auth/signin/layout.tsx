@@ -9,8 +9,10 @@ const Layout: React.FC<PropsWithChildren> = async ({ children }) => {
     <MobileBaseLayout
       extraPadding={!isMobileView}
       background={!isMobileView}
-      fullHeight={isMobileView}
+      fullHeight={true}
       bgWhite={isMobileView}
+      isAuth={true}
+      isMobileView={isMobileView}
     >
       {children}
     </MobileBaseLayout>

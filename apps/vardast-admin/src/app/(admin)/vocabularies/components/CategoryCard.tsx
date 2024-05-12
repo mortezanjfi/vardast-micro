@@ -2,9 +2,9 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { Category, useGetCategoryQuery } from "@vardast/graphql/generated"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 import { Button } from "@vardast/ui/button"
 import {
   DropdownMenu,

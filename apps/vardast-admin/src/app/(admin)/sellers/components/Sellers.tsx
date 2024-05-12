@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react"
 import Image from "next/image"
 import { notFound } from "next/navigation"
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { UseQueryResult } from "@tanstack/react-query"
 import Card from "@vardast/component/Card"
@@ -16,6 +15,7 @@ import {
   ThreeStateSupervisionStatuses,
   useGetAllSellersQuery
 } from "@vardast/graphql/generated"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Button } from "@vardast/ui/button"
 import { LucidePlus, LucideWarehouse } from "lucide-react"

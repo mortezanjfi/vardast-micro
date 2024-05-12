@@ -2,7 +2,7 @@ import { redirect } from "next/navigation"
 import { authOptions } from "@vardast/auth/authOptions"
 import { getServerSession } from "next-auth"
 
-import { ProductFormNew } from "@/app/(admin)/products/components/ProductFormNew"
+import ProductForm from "@/app/(admin)/products/components/ProductForm"
 
 const ProductCreatePage = async () => {
   const session = await getServerSession(authOptions)
@@ -11,7 +11,7 @@ const ProductCreatePage = async () => {
     redirect("/")
   }
 
-  return <ProductFormNew />
+  return <ProductForm />
 }
 
 export default ProductCreatePage

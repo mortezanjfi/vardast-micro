@@ -1,9 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import { Area, useUpdateAreaMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 import { Button } from "@vardast/ui/button"
 import {
   DropdownMenu,

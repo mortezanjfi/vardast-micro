@@ -2,12 +2,12 @@
 
 import { useContext, useState } from "react"
 import { notFound } from "next/navigation"
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
 import PageHeader from "@vardast/component/PageHeader"
 import { City, useGetProvinceQuery } from "@vardast/graphql/generated"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 import { useSession } from "next-auth/react"
 
 import DeleteCityModal from "@/app/(admin)/locations/components/city/DeleteCityModal"

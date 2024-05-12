@@ -20,7 +20,8 @@
     "downlevelIteration": true,
     "baseUrl": "./",
     "paths": {
-      "@vardast/graphql/*": ["node_modules/@vardast/graphql/src/*.ts"]
+      "@vardast/graphql/*": ["node_modules/@vardast/graphql/src/*.ts"],
+      "@vardast/auth/*": ["node_modules/@vardast/auth/src/*.ts"]
     },
     "plugins": [
       {
@@ -28,9 +29,6 @@
       }
     ]
   },
-  "include": [
-    "src/**/*",
-    "../../apps/vardast-admin/src/graphqlRequestClientAdmin.ts"
-  ],
+  "include": ["src/**/*", "src/queryClients/graphqlRequestClientWhitToken.ts"],
   "exclude": ["node_modules"]
 }

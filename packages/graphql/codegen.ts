@@ -3,7 +3,7 @@ import { config as dotenvConfig } from "dotenv"
 
 dotenvConfig()
 
-console.log({ bib: process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT })
+console.log({ remote: process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT })
 
 const config: CodegenConfig = {
   overwrite: true,

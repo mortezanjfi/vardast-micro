@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
-import graphqlRequestClientAdmin from "@/graphqlRequestClientAdmin"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
@@ -16,6 +15,7 @@ import {
   useGetAllUsersQuery,
   UserStatusesEnum
 } from "@vardast/graphql/generated"
+import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Avatar, AvatarFallback, AvatarImage } from "@vardast/ui/avatar"
 import { Button } from "@vardast/ui/button"
