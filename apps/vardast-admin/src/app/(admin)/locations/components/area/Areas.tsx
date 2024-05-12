@@ -7,7 +7,7 @@ import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
 import PageHeader from "@vardast/component/PageHeader"
 import { Area, useGetCityQuery } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { useSession } from "next-auth/react"
 
 import DeleteAreaModal from "@/app/(admin)/locations/components/area/DeleteAreaModal"
@@ -27,7 +27,7 @@ const Areas = ({ citySlug }: Props) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const [areaToDelete, setAreaToDelete] = useState<Area>()
   const { isLoading, error, data } = useGetCityQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       slug: citySlug
     }

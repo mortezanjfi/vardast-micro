@@ -8,7 +8,7 @@ import {
   useCreateCityMutation
 } from "@vardast/graphql/generated"
 import { useToast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import {
   Dialog,
@@ -49,20 +49,23 @@ const CreateCity = ({ provinceId }: Props) => {
   const [open, setOpen] = useState(false)
 
   const queryClient = useQueryClient()
-  const createCityMutation = useCreateCityMutation(graphqlRequestClientAdmin, {
-    onSuccess: () => {
-      form.reset()
-      queryClient.invalidateQueries({ queryKey: ["GetProvince"] })
-      setOpen(false)
-      toast({
-        description: t("common:entity_added_successfully", {
-          entity: t("common:city")
-        }),
-        duration: 2000,
-        variant: "success"
-      })
+  const createCityMutation = useCreateCityMutation(
+    graphqlRequestClientWithToken,
+    {
+      onSuccess: () => {
+        form.reset()
+        queryClient.invalidateQueries({ queryKey: ["GetProvince"] })
+        setOpen(false)
+        toast({
+          description: t("common:entity_added_successfully", {
+            entity: t("common:city")
+          }),
+          duration: 2000,
+          variant: "success"
+        })
+      }
     }
-  })
+  )
 
   const CreateCitySchema = z.object({
     name: persianInputSchema,

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import { Offer, useGetOfferQuery } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 
 import OfferForm from "@/app/(admin)/offers/components/OfferForm"
 
@@ -14,7 +14,7 @@ type Props = {
 
 const OfferEdit = ({ uuid }: Props) => {
   const { isLoading, error, data } = useGetOfferQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       id: +uuid
     },

@@ -6,7 +6,7 @@ import LoadingFailed from "@vardast/component/LoadingFailed"
 // import useTranslation from "next-translate/useTranslation"
 
 import { Attribute, useGetAttributeQuery } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 
 import AttributeForm from "@/app/(admin)/attributes/components/AttributeForm"
 
@@ -18,7 +18,7 @@ type Props = {
 const AttributeEdit = ({ uuid, categoryId }: Props) => {
   // const { t } = useTranslation()
   const { isLoading, error, data } = useGetAttributeQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       id: +uuid
     },

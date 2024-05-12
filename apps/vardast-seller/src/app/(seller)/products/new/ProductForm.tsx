@@ -19,7 +19,7 @@ import {
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
 import { uploadPaths } from "@vardast/lib/uploadPaths"
-import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
@@ -48,7 +48,6 @@ import {
   LucideCheck,
   LucideChevronsUpDown
 } from "lucide-react"
-import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 import { useFieldArray, useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
@@ -68,17 +67,16 @@ const ProductForm = ({ isMobile }: ProductFormProps) => {
   const [brandDialog, setBrandDialog] = useState(false)
   const [categoryQuery, setCategoryQuery] = useDebouncedState("", 500)
   const [categoryQueryTemp, setCategoryQueryTemp] = useState("")
-  const { data: session } = useSession()
 
   const [brandsQuery, setBrandsQuery] = useDebouncedState("", 500)
   const [brandsQueryTemp, setBrandsQueryTemp] = useState("")
 
   const createImageMutation = useCreateImageMutation(
-    graphqlRequestClient(session)
+    graphqlRequestClientWithToken
   )
 
   const createAttributeValueMutation = useCreateAttributeValueMutation(
-    graphqlRequestClient(session),
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)
@@ -97,7 +95,7 @@ const ProductForm = ({ isMobile }: ProductFormProps) => {
   )
 
   const createProductMutation = useCreateProductFromSellerMutation(
-    graphqlRequestClient(session),
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)
@@ -192,7 +190,7 @@ const ProductForm = ({ isMobile }: ProductFormProps) => {
   })
 
   const attributesQuery = useGetAttributesOfACategoryQuery(
-    graphqlRequestClient(session),
+    graphqlRequestClientWithToken,
     {
       id: form.watch("categoryId")
     },
@@ -201,13 +199,13 @@ const ProductForm = ({ isMobile }: ProductFormProps) => {
     }
   )
 
-  const categories = useGetAllCategoriesV2Query(graphqlRequestClient(session), {
+  const categories = useGetAllCategoriesV2Query(graphqlRequestClientWithToken, {
     indexCategoryInput: {
       name: categoryQuery
     }
   })
   const brands = useGetAllBrandsWithoutPaginationQuery(
-    graphqlRequestClient(session),
+    graphqlRequestClientWithToken,
     {
       indexBrandInput: {
         perPage: 10,
@@ -216,7 +214,7 @@ const ProductForm = ({ isMobile }: ProductFormProps) => {
     }
   )
   const uoms = useGetAllUomsWithoutPaginationQuery(
-    graphqlRequestClient(session)
+    graphqlRequestClientWithToken
   )
 
   const onSubmit = (data: CreateProductType) => {

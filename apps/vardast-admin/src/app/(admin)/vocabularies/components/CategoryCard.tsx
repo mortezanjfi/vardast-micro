@@ -4,7 +4,7 @@ import { useState } from "react"
 import Image from "next/image"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { Category, useGetCategoryQuery } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import {
   DropdownMenu,
@@ -51,7 +51,7 @@ const CategoryCard = ({
   const [dropDownMenuOpen, setDropDownMenuOpen] = useState(false)
 
   const getCategoryQuery = useGetCategoryQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       id: category.id
     },

@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Area, useUpdateAreaMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import {
   DropdownMenu,
@@ -34,18 +34,21 @@ const AreaCard = ({ show, area, onDeleteTriggered }: AreaCardProps) => {
   const { name, isActive } = area
   const [active, setActive] = useState<boolean>(isActive)
 
-  const updateAreaMutation = useUpdateAreaMutation(graphqlRequestClientAdmin, {
-    onSuccess: () => {
-      toast({
-        description: t("common:entity_updated_successfully", {
-          entity: t("common:area")
-        }),
-        duration: 2000,
-        variant: "success"
-      })
-      setActive((value) => !value)
+  const updateAreaMutation = useUpdateAreaMutation(
+    graphqlRequestClientWithToken,
+    {
+      onSuccess: () => {
+        toast({
+          description: t("common:entity_updated_successfully", {
+            entity: t("common:area")
+          }),
+          duration: 2000,
+          variant: "success"
+        })
+        setActive((value) => !value)
+      }
     }
-  })
+  )
 
   const toggleActive = () => {
     const oldActiveMode = active

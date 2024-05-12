@@ -22,7 +22,7 @@ import {
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
 import { uploadPaths } from "@vardast/lib/uploadPaths"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
@@ -101,9 +101,11 @@ const ProductForm = ({ product }: ProductFormProps) => {
   const [brandsQuery, setBrandsQuery] = useDebouncedState("", 500)
   const [brandsQueryTemp, setBrandsQueryTemp] = useState("")
 
-  const createImageMutation = useCreateImageMutation(graphqlRequestClientAdmin)
+  const createImageMutation = useCreateImageMutation(
+    graphqlRequestClientWithToken
+  )
   const createProductMutation = useCreateProductMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)
@@ -133,7 +135,7 @@ const ProductForm = ({ product }: ProductFormProps) => {
     }
   )
   const updateProductMutation = useUpdateProductMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)
@@ -205,13 +207,13 @@ const ProductForm = ({ product }: ProductFormProps) => {
 
   const name = form.watch("name")
 
-  const categories = useGetAllCategoriesV2Query(graphqlRequestClientAdmin, {
+  const categories = useGetAllCategoriesV2Query(graphqlRequestClientWithToken, {
     indexCategoryInput: {
       name: categoryQuery
     }
   })
   const brands = useGetAllBrandsWithoutPaginationQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       indexBrandInput: {
         perPage: 10,
@@ -220,16 +222,18 @@ const ProductForm = ({ product }: ProductFormProps) => {
     }
   )
 
-  // const productsVocabulary = useGetVocabularyQuery(graphqlRequestClientAdmin, {
+  // const productsVocabulary = useGetVocabularyQuery(graphqlRequestClientWithToken, {
   //   slug: "product_categories"
   // })
-  // const categories = useGetAllCategoriesV2Query(graphqlRequestClientAdmin, {
+  // const categories = useGetAllCategoriesV2Query(graphqlRequestClientWithToken, {
   //   indexCategoryInput: {
   //     // vocabularyId: productsVocabulary.data?.vocabulary.id
   //   }
   // })
-  // const brands = useGetAllBrandsWithoutPaginationQuery(graphqlRequestClientAdmin)
-  const uoms = useGetAllUomsWithoutPaginationQuery(graphqlRequestClientAdmin)
+  // const brands = useGetAllBrandsWithoutPaginationQuery(graphqlRequestClientWithToken)
+  const uoms = useGetAllUomsWithoutPaginationQuery(
+    graphqlRequestClientWithToken
+  )
 
   // const attributes = useFieldArray({
   //   name: "attributes",

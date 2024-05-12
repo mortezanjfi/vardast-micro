@@ -5,7 +5,7 @@ import { digitsEnToFa } from "@persian-tools/persian-tools"
 import Link from "@vardast/component/Link"
 import { Province, useUpdateProvinceMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import {
   DropdownMenu,
@@ -40,7 +40,7 @@ const ProvinceCard = ({
   const [active, setActive] = useState(isActive)
 
   const updateProvinceMutation = useUpdateProvinceMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onSuccess: () => {
         toast({

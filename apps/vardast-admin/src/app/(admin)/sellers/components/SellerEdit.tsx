@@ -11,7 +11,7 @@ import {
   SellerRepresentative,
   useGetSellerQuery
 } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@vardast/ui/tabs"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
@@ -29,7 +29,7 @@ const SellerEdit = ({ uuid }: Props) => {
   const { t } = useTranslation()
   const { data: session } = useSession()
   const { isLoading, error, data } = useGetSellerQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       id: +uuid
     },

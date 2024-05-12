@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
 import { useCreateProvinceMutation } from "@vardast/graphql/generated"
 import { useToast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import {
   Dialog,
@@ -47,7 +47,7 @@ const CreateProvince = ({ countryId }: Props) => {
 
   const queryClient = useQueryClient()
   const createProvinceMutation = useCreateProvinceMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onSuccess: () => {
         form.reset()

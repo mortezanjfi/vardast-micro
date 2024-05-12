@@ -9,7 +9,7 @@ import {
   useGetAllCategoriesV2Query,
   useGetAllUomsWithoutPaginationQuery
 } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
 import {
@@ -77,7 +77,7 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
 
   //queries for drop down items
   const brands = useGetAllBrandsWithoutPaginationQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       indexBrandInput: {
         name: brandsQuery
@@ -85,12 +85,14 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
     }
   )
 
-  const categories = useGetAllCategoriesV2Query(graphqlRequestClientAdmin, {
+  const categories = useGetAllCategoriesV2Query(graphqlRequestClientWithToken, {
     indexCategoryInput: {
       name: categoryQuery
     }
   })
-  const uoms = useGetAllUomsWithoutPaginationQuery(graphqlRequestClientAdmin)
+  const uoms = useGetAllUomsWithoutPaginationQuery(
+    graphqlRequestClientWithToken
+  )
 
   const submit = (data: any) => {
     console.log(data)

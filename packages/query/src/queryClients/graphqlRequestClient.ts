@@ -1,8 +1,8 @@
 import { Session } from "@vardast/graphql/src/auth.type"
 import { GraphQLClient } from "graphql-request"
 
-const getRequestMiddleware: any = async (session: Session | null) => {
-  return async (request: any) => {
+const getRequestMiddleware =
+  (session: Session | null) => async (request: any) => {
     const token = session?.accessToken || null
 
     try {
@@ -14,7 +14,6 @@ const getRequestMiddleware: any = async (session: Session | null) => {
       throw new Error(`${error}`)
     }
   }
-}
 
 const graphqlRequestClient = (session: Session | null) =>
   new GraphQLClient(process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT as string, {

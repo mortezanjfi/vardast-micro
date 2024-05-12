@@ -4,7 +4,7 @@ import { notFound } from "next/navigation"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import { Product, useGetProductQuery } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 
 import ProductForm from "@/app/(admin)/products/components/ProductForm"
 
@@ -14,7 +14,7 @@ type Props = {
 
 const ProductEdit = ({ id }: Props) => {
   const { isLoading, error, data } = useGetProductQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       id: +id
     },

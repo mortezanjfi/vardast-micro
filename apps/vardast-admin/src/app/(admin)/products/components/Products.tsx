@@ -12,7 +12,7 @@ import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
 import PageHeader from "@vardast/component/PageHeader"
 import { useGetAllProductsQuery } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Button } from "@vardast/ui/button"
 import { setDefaultOptions } from "date-fns"
@@ -92,7 +92,7 @@ const Products = () => {
   })
 
   const data = useGetAllProductsQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       indexProductInput: {
         page: currentPage,

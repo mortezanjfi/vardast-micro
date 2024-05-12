@@ -8,7 +8,7 @@ import {
   useRemoveAttributeValueMutation
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import {
   AlertDialog,
@@ -41,7 +41,7 @@ const AttributeSection = ({
   const queryClient = useQueryClient()
 
   const removeAttributeValueMutation = useRemoveAttributeValueMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onSuccess: () => {
         toast({

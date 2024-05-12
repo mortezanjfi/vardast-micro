@@ -4,7 +4,7 @@ import { notFound } from "next/navigation"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import { ContactInfo, useGetContactInfoQuery } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 
 import ContactInfoForm from "@/app/(admin)/contact-infos/components/ContactInfoForm"
 
@@ -15,7 +15,7 @@ type ContactInfoEditProps = {
 
 const ContactInfoEdit = ({ uuid, fallback }: ContactInfoEditProps) => {
   const { isLoading, error, data } = useGetContactInfoQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       id: +uuid
     }

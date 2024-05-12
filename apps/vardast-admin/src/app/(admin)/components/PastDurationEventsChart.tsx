@@ -2,7 +2,7 @@
 
 import Card from "@vardast/component/Card"
 import { useGetPastDurationEventsChartQuery } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import {
   BarElement,
   CategoryScale,
@@ -20,7 +20,7 @@ type Props = {}
 
 const PastDurationEventsChart = (_: Props) => {
   const { data, isLoading } = useGetPastDurationEventsChartQuery(
-    graphqlRequestClientAdmin
+    graphqlRequestClientWithToken
   )
 
   return (

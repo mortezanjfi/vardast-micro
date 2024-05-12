@@ -11,7 +11,7 @@ import {
   useCreatePriceMutation
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
@@ -67,7 +67,7 @@ const CreatePriceModal = ({
   const queryClient = useQueryClient()
 
   const createPriceMutation = useCreatePriceMutation(
-    graphqlRequestClient(session),
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)
@@ -90,7 +90,7 @@ const CreatePriceModal = ({
   )
 
   const amountAfterDiscount = useCalculatePriceQuery(
-    graphqlRequestClient(session),
+    graphqlRequestClientWithToken,
     {
       amount: form.getValues("amount")?.toString() || (tempAmount as string),
       valueDiscount: discountTemp.toString()

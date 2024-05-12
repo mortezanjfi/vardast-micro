@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
 import { useCreateAreaMutation } from "@vardast/graphql/generated"
 import { useToast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import {
   Dialog,
@@ -46,20 +46,23 @@ const CreateArea = ({ cityId }: Props) => {
   const [open, setOpen] = useState(false)
 
   const queryClient = useQueryClient()
-  const createAreaMutation = useCreateAreaMutation(graphqlRequestClientAdmin, {
-    onSuccess: () => {
-      form.reset()
-      queryClient.invalidateQueries({ queryKey: ["GetCity"] })
-      setOpen(false)
-      toast({
-        description: t("common:entity_added_successfully", {
-          entity: t("common:area")
-        }),
-        duration: 2000,
-        variant: "success"
-      })
+  const createAreaMutation = useCreateAreaMutation(
+    graphqlRequestClientWithToken,
+    {
+      onSuccess: () => {
+        form.reset()
+        queryClient.invalidateQueries({ queryKey: ["GetCity"] })
+        setOpen(false)
+        toast({
+          description: t("common:entity_added_successfully", {
+            entity: t("common:area")
+          }),
+          duration: 2000,
+          variant: "success"
+        })
+      }
     }
-  })
+  )
 
   const CreateAreaSchema = z.object({
     name: persianInputSchema,

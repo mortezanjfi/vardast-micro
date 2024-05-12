@@ -11,7 +11,7 @@ import {
   useGetUserQuery,
   User
 } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@vardast/ui/tabs"
 import useTranslation from "next-translate/useTranslation"
 
@@ -27,7 +27,7 @@ type Props = {
 const UserEdit = ({ uuid }: Props) => {
   const { t } = useTranslation()
   const { isLoading, error, data } = useGetUserQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       uuid
     },

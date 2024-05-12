@@ -2,7 +2,7 @@
 
 import Card from "@vardast/component/Card"
 import { useGetPastDurationEventsChartQuery } from "@vardast/graphql/generated"
-import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -13,7 +13,6 @@ import {
   Title,
   Tooltip
 } from "chart.js"
-import { useSession } from "next-auth/react"
 import { Line } from "react-chartjs-2"
 
 ChartJS.register(
@@ -28,14 +27,13 @@ ChartJS.register(
 type Props = {}
 
 export const SellerPastDurationEventsChart = (_: Props) => {
-  const { data: session } = useSession()
-  const { data, isLoading } = useGetPastDurationEventsChartQuery(
-    graphqlRequestClient(session)
+  const useGetPastDurationQuery = useGetPastDurationEventsChartQuery(
+    graphqlRequestClientWithToken
   )
 
   return (
     <Card title="تعداد نمایش اطلاعات تماس شما">
-      {isLoading && (
+      {useGetPastDurationQuery.isLoading && (
         <div className="animate-pulse">
           <div className="mt-4 flex items-baseline space-x-6 space-x-reverse">
             <div className="h-72 w-full rounded-t-lg bg-alpha-200 dark:bg-alpha-700"></div>
@@ -48,7 +46,7 @@ export const SellerPastDurationEventsChart = (_: Props) => {
           </div>
         </div>
       )}
-      {data && (
+      {useGetPastDurationQuery.data && (
         <Line
           id="seller-chart"
           // options={{
@@ -72,14 +70,14 @@ export const SellerPastDurationEventsChart = (_: Props) => {
             }
           }}
           data={{
-            labels: data.pastDurationEventsChart.labels,
+            labels: useGetPastDurationQuery.data.pastDurationEventsChart.labels,
             datasets: [
               {
                 // lin: 10.49,
                 label: "تعداد نمایش",
                 backgroundColor: "#1d4ed8",
                 // borderRadius: 10,
-                data: data.pastDurationEventsChart.data
+                data: useGetPastDurationQuery.data.pastDurationEventsChart.data
               }
             ]
           }}

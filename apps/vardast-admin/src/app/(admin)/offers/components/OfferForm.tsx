@@ -12,7 +12,7 @@ import {
   useUpdateOfferMutation
 } from "@vardast/graphql/generated"
 import { useToast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
@@ -69,7 +69,7 @@ const OfferForm = ({ offer }: OfferFormProps) => {
   const statuses = enumToKeyValueObject(ThreeStateSupervisionStatuses)
 
   const sellers = useGetSellersWithoutPaginationQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       indexSellerInput: {
         status: ThreeStateSupervisionStatuses.Confirmed
@@ -77,11 +77,11 @@ const OfferForm = ({ offer }: OfferFormProps) => {
     }
   )
   const products = useGetAllProductsWithoutPaginationQuery(
-    graphqlRequestClientAdmin
+    graphqlRequestClientWithToken
   )
 
   const createOfferMutation = useCreateOfferMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)
@@ -99,7 +99,7 @@ const OfferForm = ({ offer }: OfferFormProps) => {
     }
   )
   const updateOfferMutation = useUpdateOfferMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)

@@ -11,7 +11,7 @@ import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
 import PageHeader from "@vardast/component/PageHeader"
 import { useGetAllAttributesQuery } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Button } from "@vardast/ui/button"
 import { LucideCheck, LucidePlus, LucideX } from "lucide-react"
@@ -62,7 +62,7 @@ const Attributes = () => {
     resolver: zodResolver(filterSchema)
   })
 
-  const attributes = useGetAllAttributesQuery(graphqlRequestClientAdmin, {
+  const attributes = useGetAllAttributesQuery(graphqlRequestClientWithToken, {
     indexAttributeInput: {
       page: currentPage
     }

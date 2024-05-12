@@ -9,7 +9,7 @@ import {
   useGetAllUsersQuery
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
@@ -73,7 +73,7 @@ const CreateMemberModal = ({
 
   const queryClient = useQueryClient()
   const createMemberMutation = useCreateSellerRepresentativeMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)
@@ -94,7 +94,7 @@ const CreateMemberModal = ({
       }
     }
   )
-  const users = useGetAllUsersQuery(graphqlRequestClientAdmin)
+  const users = useGetAllUsersQuery(graphqlRequestClientWithToken)
 
   const CreateMemberSchema = z.object({
     userId: z.number(),

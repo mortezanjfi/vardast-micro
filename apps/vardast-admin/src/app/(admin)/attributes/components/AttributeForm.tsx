@@ -13,7 +13,7 @@ import {
   useUpdateAttributeMutation
 } from "@vardast/graphql/generated"
 import { useToast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
@@ -75,7 +75,7 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
   const attributeTypes = enumToKeyValueObject(AttributeTypesEnum)
 
   const createAttributeMutation = useCreateAttributeMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)
@@ -98,7 +98,7 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
   )
 
   const updateAttributeMutation = useUpdateAttributeMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)
@@ -187,17 +187,19 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
     }
   }
 
-  // const productsVocabulary = useGetVocabularyQuery(graphqlRequestClientAdmin, {
+  // const productsVocabulary = useGetVocabularyQuery(graphqlRequestClientWithToken, {
   //   slug: "product_categories"
   // })
 
-  const categories = useGetAllCategoriesV2Query(graphqlRequestClientAdmin, {
+  const categories = useGetAllCategoriesV2Query(graphqlRequestClientWithToken, {
     indexCategoryInput: {
       // vocabularyId: productsVocabulary.data?.vocabulary.id
     }
   })
 
-  const uoms = useGetAllUomsWithoutPaginationQuery(graphqlRequestClientAdmin)
+  const uoms = useGetAllUomsWithoutPaginationQuery(
+    graphqlRequestClientWithToken
+  )
 
   return (
     <Form {...form}>

@@ -13,14 +13,13 @@ import {
   useRemoveOfferMutation
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { ICategoryListLoader } from "@vardast/type/Loader"
 import { Button } from "@vardast/ui/button"
 import { checkSellerRedirectUrl } from "@vardast/util/checkSellerRedirectUrl"
 import clsx from "clsx"
 import { ClientError } from "graphql-request"
-import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 
 import CreatePriceModal from "@/app/(seller)/products/components/CreatePriceModal"
@@ -101,7 +100,6 @@ const ProductCard = forwardRef(
     ref: Ref<HTMLAnchorElement> | undefined
   ) => {
     const queryClient = useQueryClient()
-    const { data: session } = useSession()
 
     const { t } = useTranslation()
     const [createPriceModalOpen, setCreatePriceModalOpen] =
@@ -116,7 +114,7 @@ const ProductCard = forwardRef(
     }
 
     const removeOfferMutation = useRemoveOfferMutation(
-      graphqlRequestClient(session),
+      graphqlRequestClientWithToken,
       {
         onError: (errors: ClientError) => {
           toast({

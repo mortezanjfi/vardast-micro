@@ -9,16 +9,16 @@ import {
   useGetAllSellersQuery,
   useGetAllUsersQuery
 } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 
 const AdminInsight = () => {
-  const users = useGetAllUsersQuery(graphqlRequestClientAdmin)
-  const products = useGetAllProductsQuery(graphqlRequestClientAdmin)
-  const sellers = useGetAllSellersQuery(graphqlRequestClientAdmin)
-  const brands = useGetAllBrandsQuery(graphqlRequestClientAdmin)
+  const users = useGetAllUsersQuery(graphqlRequestClientWithToken)
+  const products = useGetAllProductsQuery(graphqlRequestClientWithToken)
+  const sellers = useGetAllSellersQuery(graphqlRequestClientWithToken)
+  const brands = useGetAllBrandsQuery(graphqlRequestClientWithToken)
 
   const allCategoriesQuery = useGetAllCategoriesV2Query(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       indexCategoryInput: {
         // vocabularyId: 1

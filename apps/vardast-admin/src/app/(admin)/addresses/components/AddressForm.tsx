@@ -15,7 +15,7 @@ import {
   useUpdateAddressMutation
 } from "@vardast/graphql/generated"
 import { useToast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
@@ -75,7 +75,7 @@ const AddressForm = ({
   const [errors, setErrors] = useState<ClientError>()
 
   const createAddressMutation = useCreateAddressMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)
@@ -94,7 +94,7 @@ const AddressForm = ({
   )
 
   const updateAddressMutation = useUpdateAddressMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)
@@ -147,13 +147,13 @@ const AddressForm = ({
     }
   })
 
-  const countries = useGetAllCountriesQuery(graphqlRequestClientAdmin, {
+  const countries = useGetAllCountriesQuery(graphqlRequestClientWithToken, {
     indexCountryInput: {
       isActive: true
     }
   })
   const provinces = useGetCountryQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       id: form.watch("countryId")
     },
@@ -162,7 +162,7 @@ const AddressForm = ({
     }
   )
   const cities = useGetProvinceQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       id: form.watch("provinceId")
     },

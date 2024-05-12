@@ -15,7 +15,7 @@ import {
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
 import { uploadPaths } from "@vardast/lib/uploadPaths"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
@@ -77,36 +77,42 @@ const UserForm = ({ user }: Props) => {
 
   const token = session?.accessToken || null
 
-  const createUserMutation = useCreateUserMutation(graphqlRequestClientAdmin, {
-    onError: (errors: ClientError) => {
-      setErrors(errors)
-    },
-    onSuccess: () => {
-      toast({
-        description: t("common:entity_added_successfully", {
-          entity: t("common:user")
-        }),
-        duration: 2000,
-        variant: "success"
-      })
-      router.push("/users")
+  const createUserMutation = useCreateUserMutation(
+    graphqlRequestClientWithToken,
+    {
+      onError: (errors: ClientError) => {
+        setErrors(errors)
+      },
+      onSuccess: () => {
+        toast({
+          description: t("common:entity_added_successfully", {
+            entity: t("common:user")
+          }),
+          duration: 2000,
+          variant: "success"
+        })
+        router.push("/users")
+      }
     }
-  })
-  const updateUserMutation = useUpdateUserMutation(graphqlRequestClientAdmin, {
-    onError: (errors: ClientError) => {
-      setErrors(errors)
-    },
-    onSuccess: () => {
-      toast({
-        description: t("common:entity_updated_successfully", {
-          entity: t("common:user")
-        }),
-        duration: 2000,
-        variant: "success"
-      })
-      router.push("/users")
+  )
+  const updateUserMutation = useUpdateUserMutation(
+    graphqlRequestClientWithToken,
+    {
+      onError: (errors: ClientError) => {
+        setErrors(errors)
+      },
+      onSuccess: () => {
+        toast({
+          description: t("common:entity_updated_successfully", {
+            entity: t("common:user")
+          }),
+          duration: 2000,
+          variant: "success"
+        })
+        router.push("/users")
+      }
     }
-  })
+  )
 
   const statuses = enumToKeyValueObject(UserStatusesEnum)
   const languages = enumToKeyValueObject(UserLanguagesEnum)
@@ -254,7 +260,7 @@ const UserForm = ({ user }: Props) => {
     }
   }
 
-  const countries = useGetAllCountriesQuery(graphqlRequestClientAdmin, {
+  const countries = useGetAllCountriesQuery(graphqlRequestClientWithToken, {
     indexCountryInput: {
       isActive: true
     }

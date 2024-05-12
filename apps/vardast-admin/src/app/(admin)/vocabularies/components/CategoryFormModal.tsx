@@ -13,7 +13,7 @@ import {
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
 import { uploadPaths } from "@vardast/lib/uploadPaths"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
 import {
@@ -84,7 +84,7 @@ const CategoryFormModal = ({
   const queryClient = useQueryClient()
 
   const allCategoriesQuery = useGetAllCategoriesV2Query(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       indexCategoryInput: {
         name: categoryQuery
@@ -103,7 +103,7 @@ const CategoryFormModal = ({
   )
 
   const createCategoryMutation = useCreateCategoryMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onSuccess: () => {
         form.reset()
@@ -132,7 +132,7 @@ const CategoryFormModal = ({
     }
   )
   const updateCategoryMutation = useUpdateCategoryMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onSuccess: () => {
         form.reset()

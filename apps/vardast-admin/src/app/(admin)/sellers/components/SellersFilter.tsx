@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useState } from "react"
 import { useDebouncedState } from "@mantine/hooks"
 import Card from "@vardast/component/Card"
 import { useGetAllBrandsWithoutPaginationQuery } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
 import {
@@ -58,7 +58,7 @@ export const SellersFilter = ({
   const [brandDialog, setBrandDialog] = useState(false)
 
   const brands = useGetAllBrandsWithoutPaginationQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       indexBrandInput: {
         name: brandsQuery

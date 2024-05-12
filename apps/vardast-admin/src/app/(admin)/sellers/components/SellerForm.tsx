@@ -14,7 +14,7 @@ import {
 } from "@vardast/graphql/generated"
 import { useToast } from "@vardast/hook/use-toast"
 import { uploadPaths } from "@vardast/lib/uploadPaths"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@vardast/ui/avatar"
 import { Button } from "@vardast/ui/button"
@@ -64,7 +64,7 @@ const SellerForm = ({ seller }: SellerFormProps) => {
   const statuses = enumToKeyValueObject(ThreeStateSupervisionStatuses)
 
   const createSellerMutation = useCreateSellerMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)
@@ -82,7 +82,7 @@ const SellerForm = ({ seller }: SellerFormProps) => {
     }
   )
   const updateSellerMutation = useUpdateSellerMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)

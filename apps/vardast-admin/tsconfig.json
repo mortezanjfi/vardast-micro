@@ -7,7 +7,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "../../packages/query/src/queryClients/graphqlRequestClientAdmin.ts",
+    "../../packages/query/src/queryClients/graphqlRequestClientWithToken.ts",
     "../../packages/ui/src/type/react-aria-toast.d.ts"
   ],
   "exclude": [

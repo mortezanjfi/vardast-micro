@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { Product, useRemoveOfferMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import {
   AlertDialog,
@@ -16,7 +16,6 @@ import {
 import { Button } from "@vardast/ui/button"
 import { ClientError } from "graphql-request"
 import { LucideAlertOctagon } from "lucide-react"
-import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 
 type RemoveProductModalProps = {
@@ -33,10 +32,9 @@ const RemoveProductModal = ({
   const { t } = useTranslation()
   // const [errors, setErrors] = useState<ClientError>()
   const queryClient = useQueryClient()
-  const { data: session } = useSession()
 
   const removeOfferMutation = useRemoveOfferMutation(
-    graphqlRequestClient(session),
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         toast({

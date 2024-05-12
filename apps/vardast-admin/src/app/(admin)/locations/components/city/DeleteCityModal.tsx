@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { City, useRemoveCityMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import {
   AlertDialog,
@@ -29,22 +29,25 @@ const DeleteCityModal = ({ cityToDelete, open, onOpenChange }: Props) => {
   const [errors, setErrors] = useState<ClientError>()
   const queryClient = useQueryClient()
 
-  const removeCityMutation = useRemoveCityMutation(graphqlRequestClientAdmin, {
-    onSuccess: () => {
-      toast({
-        description: t("common:entity_removed_successfully", {
-          entity: `${t(`common:city`)}`
-        }),
-        duration: 2000,
-        variant: "success"
-      })
-      onOpenChange(false)
-      queryClient.invalidateQueries({ queryKey: ["GetProvince"] })
-    },
-    onError: (errors: ClientError) => {
-      setErrors(errors)
+  const removeCityMutation = useRemoveCityMutation(
+    graphqlRequestClientWithToken,
+    {
+      onSuccess: () => {
+        toast({
+          description: t("common:entity_removed_successfully", {
+            entity: `${t(`common:city`)}`
+          }),
+          duration: 2000,
+          variant: "success"
+        })
+        onOpenChange(false)
+        queryClient.invalidateQueries({ queryKey: ["GetProvince"] })
+      },
+      onError: (errors: ClientError) => {
+        setErrors(errors)
+      }
     }
-  })
+  )
 
   if (!cityToDelete) return <></>
 

@@ -5,7 +5,7 @@ import {
   useGetAllBrandsWithoutPaginationQuery,
   useGetAllCategoriesV2Query
 } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
 import {
@@ -58,13 +58,13 @@ export const ProductsFilter = ({
 
   const { t } = useTranslation()
 
-  const categories = useGetAllCategoriesV2Query(graphqlRequestClientAdmin, {
+  const categories = useGetAllCategoriesV2Query(graphqlRequestClientWithToken, {
     indexCategoryInput: {
       name: categoryQuery
     }
   })
   const brands = useGetAllBrandsWithoutPaginationQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       indexBrandInput: {
         name: brandsQuery

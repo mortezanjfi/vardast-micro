@@ -10,10 +10,9 @@ import {
   useUpdateFavoriteMutation
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import { ClientError } from "graphql-request"
-import { useSession } from "next-auth/react"
 
 type Props = {
   isFavoriteQuery: UseQueryResult<GetIsFavoriteQuery, unknown>
@@ -26,11 +25,10 @@ export default function FavoriteIcon({
   type,
   entityId
 }: Props) {
-  const { data: session } = useSession()
   const pathname = usePathname()
   const router = useRouter()
   const createEventTrackerMutation = useUpdateFavoriteMutation(
-    graphqlRequestClient(session),
+    graphqlRequestClientWithToken,
     {
       onSuccess: () => {
         isFavoriteQuery.refetch()

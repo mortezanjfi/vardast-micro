@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { Offer, useRemoveOfferMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import {
   AlertDialog,
@@ -34,7 +34,7 @@ const OfferDeleteModal = ({
   const queryClient = useQueryClient()
 
   const removeOfferMutation = useRemoveOfferMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)

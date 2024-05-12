@@ -13,7 +13,7 @@ import {
 } from "@vardast/graphql/generated"
 import { useToast } from "@vardast/hook/use-toast"
 import { uploadPaths } from "@vardast/lib/uploadPaths"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
 import {
@@ -60,7 +60,7 @@ const BrandForm = ({ brand }: BrandFormProps) => {
   const token = session?.accessToken || null
 
   const createBrandMutation = useCreateBrandMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)
@@ -81,7 +81,7 @@ const BrandForm = ({ brand }: BrandFormProps) => {
     }
   )
   const updateBrandMutation = useUpdateBrandMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)

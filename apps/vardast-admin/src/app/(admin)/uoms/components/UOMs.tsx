@@ -8,7 +8,7 @@ import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
 import PageHeader from "@vardast/component/PageHeader"
 import { useGetAllUoMsQuery } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
@@ -22,7 +22,7 @@ const UOMs = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
 
   const { isLoading, error, data } = useGetAllUoMsQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       indexUomInput: {
         page: currentPage

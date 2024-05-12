@@ -4,7 +4,7 @@ import { notFound } from "next/navigation"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import { Address, useGetAddressQuery } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 
 import AddressForm from "@/app/(admin)/addresses/components/AddressForm"
 
@@ -15,7 +15,7 @@ type AddressEditProps = {
 
 const AddressEdit = ({ uuid, fallback }: AddressEditProps) => {
   const { isLoading, error, data } = useGetAddressQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       id: +uuid
     }

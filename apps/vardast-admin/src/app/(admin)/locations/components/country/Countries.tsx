@@ -6,7 +6,7 @@ import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
 import PageHeader from "@vardast/component/PageHeader"
 import { Country, useGetAllCountriesQuery } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 
@@ -24,7 +24,7 @@ const Countries = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const [countryToDelete, setCountryToDelete] = useState<Country>()
   const { isLoading, error, data } = useGetAllCountriesQuery(
-    graphqlRequestClientAdmin
+    graphqlRequestClientWithToken
   )
 
   if (isLoading) return <Loading />

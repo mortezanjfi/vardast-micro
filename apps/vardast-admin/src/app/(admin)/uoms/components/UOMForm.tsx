@@ -9,7 +9,7 @@ import {
   useUpdateUomMutation
 } from "@vardast/graphql/generated"
 import { useToast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
 import {
@@ -40,36 +40,42 @@ const UOMForm = ({ uom }: UOMFormProps) => {
   const router = useRouter()
   const [errors, setErrors] = useState<ClientError>()
 
-  const createUOMMutation = useCreateUomMutation(graphqlRequestClientAdmin, {
-    onError: (errors: ClientError) => {
-      setErrors(errors)
-    },
-    onSuccess: () => {
-      toast({
-        description: t("common:entity_added_successfully", {
-          entity: t("common:uom")
-        }),
-        duration: 2000,
-        variant: "success"
-      })
-      router.push("/uoms")
+  const createUOMMutation = useCreateUomMutation(
+    graphqlRequestClientWithToken,
+    {
+      onError: (errors: ClientError) => {
+        setErrors(errors)
+      },
+      onSuccess: () => {
+        toast({
+          description: t("common:entity_added_successfully", {
+            entity: t("common:uom")
+          }),
+          duration: 2000,
+          variant: "success"
+        })
+        router.push("/uoms")
+      }
     }
-  })
-  const updateUOMMutation = useUpdateUomMutation(graphqlRequestClientAdmin, {
-    onError: (errors: ClientError) => {
-      setErrors(errors)
-    },
-    onSuccess: () => {
-      toast({
-        description: t("common:entity_updated_successfully", {
-          entity: t("common:uom")
-        }),
-        duration: 2000,
-        variant: "success"
-      })
-      router.push("/uoms")
+  )
+  const updateUOMMutation = useUpdateUomMutation(
+    graphqlRequestClientWithToken,
+    {
+      onError: (errors: ClientError) => {
+        setErrors(errors)
+      },
+      onSuccess: () => {
+        toast({
+          description: t("common:entity_updated_successfully", {
+            entity: t("common:uom")
+          }),
+          duration: 2000,
+          variant: "success"
+        })
+        router.push("/uoms")
+      }
     }
-  })
+  )
 
   z.setErrorMap(zodI18nMap)
   const CreateUOMSchema = z.object({

@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { Country, useRemoveCountryMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import {
   AlertDialog,
@@ -30,7 +30,7 @@ const DeleteCountryModal = ({ countryToDelete, open, onOpenChange }: Props) => {
   const queryClient = useQueryClient()
 
   const removeCountryMutation = useRemoveCountryMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onSuccess: () => {
         toast({

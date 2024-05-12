@@ -13,7 +13,7 @@ import {
   useGetProvinceQuery
 } from "@vardast/graphql/generated"
 import { uploadPaths } from "@vardast/lib/uploadPaths"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
 import {
@@ -132,14 +132,14 @@ const BrandInformationForm = ({
 
   // Get the index of the current active tab
 
-  const categories = useGetAllCategoriesV2Query(graphqlRequestClientAdmin, {
+  const categories = useGetAllCategoriesV2Query(graphqlRequestClientWithToken, {
     indexCategoryInput: {
       name: categoryQuery
     }
   })
-  const provinces = useGetAllProvincesQuery(graphqlRequestClientAdmin)
+  const provinces = useGetAllProvincesQuery(graphqlRequestClientWithToken)
   const cities = useGetProvinceQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       id: form.watch("provinceId")
     },

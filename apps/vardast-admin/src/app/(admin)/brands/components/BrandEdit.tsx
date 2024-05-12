@@ -4,7 +4,7 @@ import { notFound } from "next/navigation"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import { Brand, useGetBrandQuery } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 
 import BrandForm from "@/app/(admin)/brands/components/OldBrandForm"
 
@@ -14,7 +14,7 @@ type Props = {
 
 const BrandEdit = ({ uuid }: Props) => {
   const { isLoading, error, data } = useGetBrandQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       id: +uuid
     },

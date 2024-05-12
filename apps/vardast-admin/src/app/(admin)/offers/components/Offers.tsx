@@ -17,7 +17,7 @@ import {
   ThreeStateSupervisionStatuses,
   useGetAllOffersQuery
 } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Button } from "@vardast/ui/button"
 import { LucideCheck, LucidePlus, LucideX } from "lucide-react"
@@ -107,7 +107,7 @@ const Offers = () => {
   }
 
   const data = useGetAllOffersQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       indexOfferInput: queryParams
     },

@@ -5,7 +5,7 @@ import {
   ThreeStateSupervisionStatuses,
   useGetAllSellersQuery
 } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
 import {
@@ -50,7 +50,7 @@ export const OffersFilter = ({
 
   const { t } = useTranslation()
 
-  const sellers = useGetAllSellersQuery(graphqlRequestClientAdmin, {
+  const sellers = useGetAllSellersQuery(graphqlRequestClientWithToken, {
     indexSellerInput: {
       name: sellersQuery
     }

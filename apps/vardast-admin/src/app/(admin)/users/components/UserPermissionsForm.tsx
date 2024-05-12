@@ -12,7 +12,7 @@ import {
   useUpdateUserMutation
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
 import { Checkbox } from "@vardast/ui/checkbox"
@@ -45,9 +45,9 @@ const UserPermissionsForm = ({
   const { t } = useTranslation()
   const router = useRouter()
   const [errors, setErrors] = useState<ClientError>()
-  const { data: roles } = useGetAllRolesQuery(graphqlRequestClientAdmin)
+  const { data: roles } = useGetAllRolesQuery(graphqlRequestClientWithToken)
   const { data: permissions } = useGetAllPermissionsQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       indexPermissionInput: {
         page: 1,
@@ -56,21 +56,24 @@ const UserPermissionsForm = ({
     }
   )
 
-  const updateUserMutation = useUpdateUserMutation(graphqlRequestClientAdmin, {
-    onError: (errors: ClientError) => {
-      setErrors(errors)
-    },
-    onSuccess: () => {
-      toast({
-        description: t("common:entity_updated_successfully", {
-          entity: t("common:user")
-        }),
-        duration: 2000,
-        variant: "success"
-      })
-      router.push("/users")
+  const updateUserMutation = useUpdateUserMutation(
+    graphqlRequestClientWithToken,
+    {
+      onError: (errors: ClientError) => {
+        setErrors(errors)
+      },
+      onSuccess: () => {
+        toast({
+          description: t("common:entity_updated_successfully", {
+            entity: t("common:user")
+          }),
+          duration: 2000,
+          variant: "success"
+        })
+        router.push("/users")
+      }
     }
-  })
+  )
 
   const currentUserRoles: number[] = userRoles.reduce<number[]>((acc, item) => {
     acc.push(item.id)

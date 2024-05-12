@@ -12,7 +12,7 @@ import {
   useRemoveImageMutation
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
 import { ClientError } from "graphql-request"
@@ -176,7 +176,7 @@ const Dropzone = ({
     ClientError,
     Exact<{ id: number }>,
     unknown
-  > = useRemoveImageMutation(graphqlRequestClient(session), {
+  > = useRemoveImageMutation(graphqlRequestClientWithToken, {
     onError: (errors: ClientError) => {
       setErrors(errors)
     },

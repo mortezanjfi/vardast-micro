@@ -58,6 +58,11 @@ const nextConfig = {
         source: "/auth",
         destination: "/auth/signin",
         permanent: true
+      },
+      {
+        source: "/products",
+        destination: "/products/all-products",
+        permanent: true
       }
     ]
   },

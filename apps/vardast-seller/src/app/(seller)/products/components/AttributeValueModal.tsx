@@ -12,7 +12,7 @@ import {
   AttributeValue,
   useGetAttributesOfACategoryQuery
 } from "@vardast/graphql/generated"
-import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
 import {
@@ -46,7 +46,6 @@ import {
   SelectValue
 } from "@vardast/ui/select"
 import { LucideCheck, LucideChevronsUpDown } from "lucide-react"
-import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
@@ -73,8 +72,6 @@ const AttributeValueModal = ({
   const [selectAttribute, setSelectAttribute] = useState<
     Attribute | undefined
   >()
-  const { data: session } = useSession()
-
   const AttributeValueFormSchema = z.object({
     attributeId: z.number(),
     value: z.string()
@@ -82,7 +79,7 @@ const AttributeValueModal = ({
   type AttributeValueForm = TypeOf<typeof AttributeValueFormSchema>
 
   const attributes = useGetAttributesOfACategoryQuery(
-    graphqlRequestClient(session),
+    graphqlRequestClientWithToken,
     {
       id: categoryId
     }

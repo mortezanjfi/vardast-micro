@@ -6,7 +6,7 @@ import {
   Province,
   useGetCountryWithCitiesQuery
 } from "@vardast/graphql/generated"
-import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import { Checkbox } from "@vardast/ui/checkbox"
 import { Dialog, DialogContent, DialogTrigger } from "@vardast/ui/dialog"
@@ -20,16 +20,14 @@ import {
   LucideX,
   Search
 } from "lucide-react"
-import { useSession } from "next-auth/react"
 
 const LocationSelector = () => {
-  const { data: session } = useSession()
   const [selectedProvince, setSelectedProvince] = useState<Province | null>(
     null
   )
   const [selectedCities, setSelectedCities] = useState<City[] | []>([])
   const countryQuery = useGetCountryWithCitiesQuery(
-    graphqlRequestClient(session),
+    graphqlRequestClientWithToken,
     {
       slug: "iran-islamic-republic-of"
     },

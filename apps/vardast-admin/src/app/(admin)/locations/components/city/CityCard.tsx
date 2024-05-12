@@ -5,7 +5,7 @@ import { digitsEnToFa } from "@persian-tools/persian-tools"
 import Link from "@vardast/component/Link"
 import { City, useUpdateCityMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import {
   DropdownMenu,
@@ -42,18 +42,21 @@ const CityCard = ({
 
   const [active, setActive] = useState(isActive)
 
-  const updateCityMutation = useUpdateCityMutation(graphqlRequestClientAdmin, {
-    onSuccess: () => {
-      toast({
-        description: t("common:entity_updated_successfully", {
-          entity: t("common:city")
-        }),
-        duration: 2000,
-        variant: "success"
-      })
-      setActive((value) => !value)
+  const updateCityMutation = useUpdateCityMutation(
+    graphqlRequestClientWithToken,
+    {
+      onSuccess: () => {
+        toast({
+          description: t("common:entity_updated_successfully", {
+            entity: t("common:city")
+          }),
+          duration: 2000,
+          variant: "success"
+        })
+        setActive((value) => !value)
+      }
     }
-  })
+  )
 
   const toggleActive = () => {
     const oldActiveMode = active

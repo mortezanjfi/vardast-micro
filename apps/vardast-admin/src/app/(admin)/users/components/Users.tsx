@@ -15,7 +15,7 @@ import {
   useGetAllUsersQuery,
   UserStatusesEnum
 } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Avatar, AvatarFallback, AvatarImage } from "@vardast/ui/avatar"
 import { Button } from "@vardast/ui/button"
@@ -67,7 +67,7 @@ const Users = () => {
     resolver: zodResolver(filterSchema)
   })
 
-  const users = useGetAllUsersQuery(graphqlRequestClientAdmin, {
+  const users = useGetAllUsersQuery(graphqlRequestClientWithToken, {
     indexUserInput: {
       page: currentPage
     }

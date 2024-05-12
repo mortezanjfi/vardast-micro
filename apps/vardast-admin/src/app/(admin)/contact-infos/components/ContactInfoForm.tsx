@@ -16,7 +16,7 @@ import {
   useUpdateContactInfoMutation
 } from "@vardast/graphql/generated"
 import { useToast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
@@ -76,7 +76,7 @@ const ContactInfoForm = ({
   const [errors, setErrors] = useState<ClientError>()
 
   const createContactInfoMutation = useCreateContactInfoMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)
@@ -95,7 +95,7 @@ const ContactInfoForm = ({
   )
 
   const updateContactInfoMutation = useUpdateContactInfoMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)
@@ -148,13 +148,13 @@ const ContactInfoForm = ({
     }
   })
 
-  const countries = useGetAllCountriesQuery(graphqlRequestClientAdmin, {
+  const countries = useGetAllCountriesQuery(graphqlRequestClientWithToken, {
     indexCountryInput: {
       isActive: true
     }
   })
   const provinces = useGetCountryQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       id: form.watch("countryId")
     },
@@ -163,7 +163,7 @@ const ContactInfoForm = ({
     }
   )
   const cities = useGetProvinceQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       id: form.watch("provinceId")
     },

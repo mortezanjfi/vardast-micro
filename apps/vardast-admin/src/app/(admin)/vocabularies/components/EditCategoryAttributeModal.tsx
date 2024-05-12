@@ -12,7 +12,7 @@ import {
   useUpdateAttributeMutation
 } from "@vardast/graphql/generated"
 import { useToast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
 import {
@@ -71,7 +71,7 @@ const EditCategoryAttributeModal = ({
   const { t } = useTranslation()
 
   const uetAllFilterableAdminAttributesQuery =
-    useGetAllFilterableAdminAttributesQuery(graphqlRequestClientAdmin, {
+    useGetAllFilterableAdminAttributesQuery(graphqlRequestClientWithToken, {
       filterableAttributesInput: {
         categoryId: modalsOpen?.category?.id ?? 0
       }
@@ -159,7 +159,7 @@ const AttributeItem = ({ category }: AttributeItemFormProps) => {
   })
 
   const updateAttributeMutation = useUpdateAttributeMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)

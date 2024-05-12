@@ -16,7 +16,7 @@ import {
   ThreeStateSupervisionStatuses,
   useGetAllBrandsQuery
 } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Button } from "@vardast/ui/button"
 import { LucidePlus, LucideWarehouse } from "lucide-react"
@@ -93,7 +93,7 @@ const Brands = () => {
   })
 
   const brands = useGetAllBrandsQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       indexBrandInput: {
         page: currentPage,

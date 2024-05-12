@@ -4,7 +4,7 @@ import { notFound } from "next/navigation"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import { Uom, useGetUomQuery } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 
 import UOMForm from "@/app/(admin)/uoms/components/UOMForm"
 
@@ -14,7 +14,7 @@ type Props = {
 
 const UOMEdit = ({ uuid }: Props) => {
   const { isLoading, error, data } = useGetUomQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       id: +uuid
     },

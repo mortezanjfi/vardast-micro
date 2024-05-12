@@ -41,7 +41,7 @@ const Search: React.FC<ISearch> = ({ isMobileView }) => {
         <div
           className={clsx([
             "fixed inset-0 z-20 h-full w-full bg-alpha-800 transition duration-200",
-            open ? "visible opacity-50" : "invisible opacity-0"
+            open ? "visible opacity-50" : "invisible hidden opacity-0"
           ])}
         ></div>
       )}

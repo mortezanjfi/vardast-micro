@@ -79,12 +79,12 @@ const Sidebar = ({
             >
               {/* <OrganizationMenu /> */}
               {!isAdmin && !isUserProfile && (
-                <>
+                <Link href="/">
                   <div>
                     <Image src={logo} alt={`وردست`} />
                   </div>
                   <hr />
-                </>
+                </Link>
               )}
               {isUserProfile && session?.profile?.status && (
                 <div className="flex flex-col divide-y bg-alpha-white px-6">

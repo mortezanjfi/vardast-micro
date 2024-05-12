@@ -10,7 +10,7 @@ import Link from "@vardast/component/Link"
 import { useBecomeASellerMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
 import { uploadPaths } from "@vardast/lib/uploadPaths"
-import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
 import {
@@ -40,7 +40,7 @@ const ProfileSellerForm = ({ isMobileView }: { isMobileView: boolean }) => {
   const token = session?.accessToken || null
 
   const becomeASellerMutation = useBecomeASellerMutation(
-    graphqlRequestClient(session),
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         ;(

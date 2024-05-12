@@ -29,6 +29,6 @@
       }
     ]
   },
-  "include": ["src/**/*", "src/queryClients/graphqlRequestClientWhitToken.ts"],
+  "include": ["src/**/*", "src/queryClients/graphqlRequestClientWithToken.ts"],
   "exclude": ["node_modules"]
 }

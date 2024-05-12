@@ -16,7 +16,7 @@ import {
   useUpdateAttributeValueMutation
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
@@ -85,13 +85,13 @@ const AttributeValueModal = ({
 
   const queryClient = useQueryClient()
   const attributes = useGetAttributesOfACategoryQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       id: categoryId
     }
   )
   const createAttributeValueMutation = useCreateAttributeValueMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)
@@ -113,7 +113,7 @@ const AttributeValueModal = ({
     }
   )
   const updateAttributeValueMutation = useUpdateAttributeValueMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)

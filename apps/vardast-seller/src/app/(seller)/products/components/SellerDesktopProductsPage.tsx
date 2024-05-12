@@ -17,11 +17,10 @@ import {
   useGetAllProductsQuery
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Button } from "@vardast/ui/button"
 import { checkSellerRedirectUrl } from "@vardast/util/checkSellerRedirectUrl"
-import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
@@ -64,10 +63,9 @@ export const SellerDesktopProductsPage = ({}: Props) => {
     resolver: zodResolver(filterSchema),
     defaultValues: { query: "" }
   })
-  const { data: session } = useSession()
 
   const data = useGetAllProductsQuery(
-    graphqlRequestClient(session),
+    graphqlRequestClientWithToken,
     {
       indexProductInput: {
         page: currentPage,
@@ -85,7 +83,7 @@ export const SellerDesktopProductsPage = ({}: Props) => {
   )
 
   const createOfferMutation = useCreateOfferMutation(
-    graphqlRequestClient(session),
+    graphqlRequestClientWithToken,
     {
       onError: () => {
         toast({

@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { Brand, useRemoveBrandMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import {
   AlertDialog,
@@ -34,7 +34,7 @@ const BrandDeleteModal = ({
   const queryClient = useQueryClient()
 
   const removeBrandMutation = useRemoveBrandMutation(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
         setErrors(errors)

@@ -12,7 +12,7 @@ import {
   GetCategoryQuery,
   useGetVocabularyQuery
 } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import { Session } from "next-auth"
 import useTranslation from "next-translate/useTranslation"
@@ -84,7 +84,7 @@ const Categories = ({ slug, session }: Props) => {
   }
 
   const vocabularyQuery = useGetVocabularyQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       slug: slug
     },

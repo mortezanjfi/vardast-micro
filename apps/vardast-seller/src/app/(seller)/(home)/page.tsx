@@ -4,7 +4,6 @@ import { authOptions } from "@vardast/auth/authOptions"
 import withMobileHeader from "@vardast/component/withMobileHeader"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
-import { getCountTotalEventQueryFns } from "@vardast/query/queryFns/getCountTotalEventQueryFns"
 import { getMyProfileSellerQueryFns } from "@vardast/query/queryFns/getMyProfileSellerQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
@@ -31,9 +30,9 @@ const SellerHome = async () => {
       })
   )
 
-  await queryClient.prefetchQuery([QUERY_FUNCTIONS_KEY.GET_COUNT_EVENT], () =>
-    getCountTotalEventQueryFns(session?.accessToken)
-  )
+  // await queryClient.prefetchQuery([QUERY_FUNCTIONS_KEY.GET_COUNT_EVENT], () =>
+  //   getCountTotalEventQueryFns(session?.accessToken)
+  // )
 
   const dehydratedState = dehydrate(queryClient)
 

@@ -5,14 +5,13 @@ import Image from "next/image"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import { Product, useCreateOfferMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ICategoryListLoader } from "@vardast/type/Loader"
 import { Button } from "@vardast/ui/button"
 import { checkSellerRedirectUrl } from "@vardast/util/checkSellerRedirectUrl"
 import clsx from "clsx"
 import { formatDistanceToNow, setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
-import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 
 import Link from "./Link"
@@ -96,7 +95,6 @@ const ProductCard = forwardRef(
     }: ProductCardProps,
     ref: Ref<HTMLAnchorElement> | undefined
   ) => {
-    const { data: session } = useSession()
     const { t } = useTranslation()
     const productContainerRef = useRef<HTMLDivElement>(null)
     const [imageContainerHeight, setImageContainerHeight] = useState(146)
@@ -113,7 +111,7 @@ const ProductCard = forwardRef(
     })
 
     const createOfferMutation = useCreateOfferMutation(
-      graphqlRequestClient(session),
+      graphqlRequestClientWithToken,
       {
         onError: () => {
           toast({

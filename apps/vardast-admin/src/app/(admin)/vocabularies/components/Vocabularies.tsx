@@ -9,7 +9,7 @@ import {
   useGetAllVocabulariesQuery,
   Vocabulary
 } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 
@@ -25,7 +25,7 @@ const Vocabularies = () => {
   const [vocabularyToDelete, setVocabularyToDelete] = useState<Vocabulary>()
 
   const { isLoading, error, data } = useGetAllVocabulariesQuery(
-    graphqlRequestClientAdmin
+    graphqlRequestClientWithToken
   )
 
   if (isLoading) return <Loading />

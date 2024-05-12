@@ -7,7 +7,7 @@ import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
 import PageHeader from "@vardast/component/PageHeader"
 import { Province, useGetCountryQuery } from "@vardast/graphql/generated"
-import graphqlRequestClientAdmin from "@vardast/query/queryClients/graphqlRequestClientWhitToken"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { useSession } from "next-auth/react"
 
 import DeleteProvinceModal from "@/app/(admin)/locations/components/province/DeleteProvinceModal"
@@ -27,7 +27,7 @@ const Provinces = ({ countrySlug }: Props) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const [provinceToDelete, setProvinceToDelete] = useState<Province>()
   const { isLoading, error, data } = useGetCountryQuery(
-    graphqlRequestClientAdmin,
+    graphqlRequestClientWithToken,
     {
       slug: countrySlug
     }

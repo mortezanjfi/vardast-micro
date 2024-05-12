@@ -8,7 +8,7 @@ import {
   useRemoveAttributeValueMutation
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import {
   AlertDialog,
@@ -20,7 +20,6 @@ import {
 import { Button } from "@vardast/ui/button"
 import { ClientError } from "graphql-request"
 import { LucideAlertOctagon } from "lucide-react"
-import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 
 type AttributeSectionProps = {
@@ -40,10 +39,9 @@ const AttributeSection = ({
   const [errors, setErrors] = useState<ClientError>()
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const queryClient = useQueryClient()
-  const { data: session } = useSession()
 
   const removeAttributeValueMutation = useRemoveAttributeValueMutation(
-    graphqlRequestClient(session),
+    graphqlRequestClientWithToken,
     {
       onSuccess: () => {
         toast({
