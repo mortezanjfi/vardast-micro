@@ -222,7 +222,7 @@ export const SellerDesktopMyProducts = ({
                             )}
                           </td>
                           <td className="border-r-0.5">
-                            {product.lastPublicConsumerPrice?.discount?.[0]
+                            {product.lastPublicConsumerPrice?.discount?.at(0)
                               .value ? (
                               <span>
                                 {
