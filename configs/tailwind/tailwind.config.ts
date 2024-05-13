@@ -11,12 +11,7 @@ import {
 } from "./themes"
 
 const tailwind = {
-  content: [
-    "./src/**/*.{html,js,ts,jsx,tsx}",
-    "../../packages/components/**/*.{ts,tsx}",
-    "../../packages/ui/**/*.{ts,tsx}",
-    "./src/pages/**/*.{ts,tsx}"
-  ],
+  content: ["./src/**/*.{ts,tsx}"],
   safelist: [
     "bg-error-50",
     "border-error-100",

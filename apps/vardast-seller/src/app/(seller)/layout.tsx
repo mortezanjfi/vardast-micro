@@ -1,6 +1,5 @@
-import { redirect } from "next/navigation"
 // import { getServerSession } from "next-auth"
-
+import { redirect } from "next/navigation"
 import { authOptions } from "@vardast/auth/authOptions"
 // import { authOptions } from "@vardast/auth/authOptions"
 import MobileScrollProvider from "@vardast/component/header/MobileScrollProvider"
@@ -26,7 +25,6 @@ export default async function PublicLayout({
     return (
       <>
         <SearchActionModal isMobileView={isMobileView} />
-
         {isMobileView ? (
           <MobileScrollProvider>{children}</MobileScrollProvider>
         ) : (

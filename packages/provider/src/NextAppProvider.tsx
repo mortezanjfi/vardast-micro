@@ -34,9 +34,9 @@ export default async function NextAppProvider({
   })
 
   return (
-    <RadixDirectionProvider>
-      <html lang={lang} suppressHydrationWarning>
-        <body>
+    <html lang={lang} suppressHydrationWarning>
+      <body>
+        <RadixDirectionProvider>
           <NextAuthProvider>
             <ReactQueryProvider>
               <NextThemeProvider>
@@ -45,8 +45,8 @@ export default async function NextAppProvider({
               </NextThemeProvider>
             </ReactQueryProvider>
           </NextAuthProvider>
-        </body>
-      </html>
-    </RadixDirectionProvider>
+        </RadixDirectionProvider>
+      </body>
+    </html>
   )
 }

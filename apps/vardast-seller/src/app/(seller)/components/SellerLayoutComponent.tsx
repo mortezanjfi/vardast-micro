@@ -2,6 +2,7 @@
 
 import { ReactNode, Suspense, useState } from "react"
 import { useQuery } from "@tanstack/react-query"
+import Search from "@vardast/component/search"
 import Sidebar from "@vardast/component/Sidebar"
 import { GetMyProfileSellerQuery } from "@vardast/graphql/generated"
 import { _sellerSidebarMenu } from "@vardast/lib/constants"
@@ -56,8 +57,10 @@ const SellerLayoutComponent = ({
         />
 
         <div className="flex w-full flex-col">
-          <div className="flex max-h-24 !min-h-24 w-full justify-between border-b px-7 py-5">
-            <div className="">{/* <Search isMobileView={false} /> */}</div>
+          <div className="flex max-h-24 !min-h-24 w-full justify-between gap-x-6 border-b px-7 py-5">
+            <div className="flex-1">
+              <Search isMobileView={false} />
+            </div>
 
             <div className="h-full">
               <NavigationMenu className="h-full">

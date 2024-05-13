@@ -4,6 +4,7 @@ import { useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
+import Card from "@vardast/component/Card"
 import Link from "@vardast/component/Link"
 import {
   useValidateCellphoneMutation,
@@ -42,7 +43,7 @@ enum LoginOptions {
   VERIFY_OTP = "VERIFY_OTP"
 }
 
-const SigninForm = () => {
+const SigninFormContent = () => {
   const pathname = usePathname()
   const returnedUrl = pathname
     .replace("/auth/signin", "")
@@ -535,7 +536,11 @@ const SigninForm = () => {
               {formState !== LoginOptions.VERIFY_OTP && (
                 <div className="text-sm">
                   ورود شما به معنای پذیرش
-                  <Link href="/privacy" className="text-primary underline">
+                  <Link
+                    target="_blank"
+                    href={`${process.env.NEXT_PUBLIC_VARDAST}/privacy`}
+                    className="text-primary underline"
+                  >
                     {" "}
                     شرایط و قوانین وردست{" "}
                   </Link>
@@ -564,6 +569,17 @@ const Circle = ({ solid }: { solid?: boolean }) => {
         )}
       ></span>
     </span>
+  )
+}
+
+const SigninForm = ({ isMobileView }) => {
+  if (isMobileView) {
+    return <SigninFormContent />
+  }
+  return (
+    <Card>
+      <SigninFormContent />
+    </Card>
   )
 }
 

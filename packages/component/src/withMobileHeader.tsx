@@ -1,6 +1,6 @@
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
-import MobileHeader, { IModalHeader } from "./MobileHeader"
+import MobileHeader, { IModalHeader } from "./header/MobileHeader"
 
 function withMobileHeader<T>(
   Component: React.FC<T>,

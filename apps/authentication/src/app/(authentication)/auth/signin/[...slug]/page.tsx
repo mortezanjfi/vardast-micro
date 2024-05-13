@@ -1,4 +1,3 @@
-import Card from "@vardast/component/Card"
 import withMobileHeader from "@vardast/component/withMobileHeader"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
@@ -16,13 +15,7 @@ const SigninPage = async () => {
   //   redirect("/admin")
   // }
 
-  return isMobileView ? (
-    <SigninForm />
-  ) : (
-    <Card className="mx-auto flex w-1/3 flex-col">
-      <SigninForm />
-    </Card>
-  )
+  return <SigninForm isMobileView={isMobileView} />
 }
 
 export default withMobileHeader(SigninPage, {

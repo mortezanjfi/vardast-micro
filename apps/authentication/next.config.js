@@ -57,7 +57,9 @@ const nextConfig = {
       "vardast.com",
       "blog.vardast.com",
       "storage",
-      "trustseal.enamad.ir"
+      "trustseal.enamad.ir",
+      "storage.vardast.ir",
+      "storage.vardast.com"
     ],
     path: `${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}`
   },
