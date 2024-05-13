@@ -2,7 +2,7 @@ version: "3.3"
 services:
   front-vardast-micro:
     build:
-      dockerfile: ../Dockerfile
+      dockerfile: Dockerfile
       args:
         - BUILD_MODE=example
     ports:
