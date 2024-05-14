@@ -404,6 +404,142 @@ importers:
         specifier: workspace:*
         version: link:../../configs/typescript
 
+  apps/vardast-client:
+    dependencies:
+      '@fullcalendar/core':
+        specifier: ^6.1.8
+        version: 6.1.11
+      '@fullcalendar/daygrid':
+        specifier: ^6.1.8
+        version: 6.1.11(@fullcalendar/core@6.1.11)
+      '@fullcalendar/react':
+        specifier: ^6.1.8
+        version: 6.1.11(@fullcalendar/core@6.1.11)(react-dom@18.2.0)(react@18.2.0)
+      '@fullcalendar/timegrid':
+        specifier: ^6.1.8
+        version: 6.1.11(@fullcalendar/core@6.1.11)
+      '@persian-tools/persian-tools':
+        specifier: ^3.5.0
+        version: 3.5.2
+      '@react-pdf-viewer/core':
+        specifier: 3.12.0
+        version: 3.12.0(pdfjs-dist@3.4.120)(react-dom@18.2.0)(react@18.2.0)
+      '@react-pdf-viewer/default-layout':
+        specifier: ^3.12.0
+        version: 3.12.0(pdfjs-dist@3.4.120)(react-dom@18.2.0)(react@18.2.0)
+      '@vardast/asset':
+        specifier: workspace:*
+        version: link:../../packages/asset
+      '@vardast/auth':
+        specifier: workspace:*
+        version: link:../../packages/auth
+      '@vardast/component':
+        specifier: workspace:*
+        version: link:../../packages/component
+      '@vardast/graphql':
+        specifier: workspace:*
+        version: link:../../packages/graphql
+      '@vardast/hook':
+        specifier: workspace:*
+        version: link:../../packages/hook
+      '@vardast/lib':
+        specifier: workspace:*
+        version: link:../../packages/lib
+      '@vardast/provider':
+        specifier: workspace:*
+        version: link:../../packages/provider
+      '@vardast/query':
+        specifier: workspace:*
+        version: link:../../packages/query
+      '@vardast/style':
+        specifier: workspace:*
+        version: link:../../packages/style
+      '@vardast/tailwind-config':
+        specifier: workspace:*
+        version: link:../../configs/tailwind
+      '@vardast/type':
+        specifier: workspace:*
+        version: link:../../packages/type
+      '@vardast/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      '@vardast/util':
+        specifier: workspace:*
+        version: link:../../packages/util
+      '@vardast/validators':
+        specifier: workspace:*
+        version: link:../../packages/validators
+      axios:
+        specifier: ^1.6.2
+        version: 1.6.8
+      axios-logger:
+        specifier: ^2.7.0
+        version: 2.8.0
+      chart.js:
+        specifier: ^4.3.3
+        version: 4.4.2
+      core:
+        specifier: 'link: @fullcalendar/core'
+        version: 'link: @fullcalendar/core'
+      eslint-config-next:
+        specifier: 14.0.4
+        version: 14.0.4(eslint@8.57.0)(typescript@5.4.5)
+      express:
+        specifier: ^4.18.2
+        version: 4.19.2
+      libphonenumber-js:
+        specifier: ^1.10.41
+        version: 1.10.61
+      next-compose-plugins:
+        specifier: ^2.2.1
+        version: 2.2.1
+      next-pwa:
+        specifier: ^5.6.0
+        version: 5.6.0(@babel/core@7.24.4)(next@14.2.3)(webpack@5.91.0)
+      nextjs:
+        specifier: ^0.0.3
+        version: 0.0.3
+      nextjs-toploader:
+        specifier: ^1.6.4
+        version: 1.6.12(next@14.2.3)(react-dom@18.2.0)(react@18.2.0)
+      pdfjs-dist:
+        specifier: 3.4.120
+        version: 3.4.120(encoding@0.1.13)
+      react-chartjs-2:
+        specifier: ^5.2.0
+        version: 5.2.0(chart.js@4.4.2)(react@18.2.0)
+      react-intersection-observer:
+        specifier: ^9.5.3
+        version: 9.8.2(react-dom@18.2.0)(react@18.2.0)
+      schema-dts:
+        specifier: ^1.1.2
+        version: 1.1.2(typescript@5.4.5)
+      sharp:
+        specifier: ^0.32.5
+        version: 0.32.6
+      swiper:
+        specifier: ^11.0.5
+        version: 11.1.1
+      swr:
+        specifier: ^2.2.1
+        version: 2.2.5(react@18.2.0)
+      use-sync-external-store:
+        specifier: ^1.2.0
+        version: 1.2.2(react@18.2.0)
+    devDependencies:
+      '@vardast/eslint-config':
+        specifier: workspace:*
+        version: link:../../configs/eslint
+      '@vardast/middleware':
+        specifier: workspace:*
+        version: link:../../packages/middleware
+      '@vardast/prettier-config':
+        specifier: workspace:*
+        version: link:../../configs/prettier
+      '@vardast/tsconfig':
+        specifier: workspace:*
+        version: link:../../configs/typescript
+
   apps/vardast-seller:
     dependencies:
       '@fullcalendar/core':
@@ -809,6 +945,9 @@ importers:
       '@vardast/ui':
         specifier: workspace:*
         version: link:../ui
+      '@vardast/util':
+        specifier: workspace:*
+        version: link:../util
     devDependencies:
       '@vardast/eslint-config':
         specifier: workspace:*

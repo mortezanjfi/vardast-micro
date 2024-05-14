@@ -9,6 +9,7 @@
     "paths": {
       "@vardast/ui/*": ["node_modules/@vardast/ui/src/*"],
       "@vardast/hook/*": ["node_modules/@vardast/hook/src/*"],
+      "@vardast/util/*": ["node_modules/@vardast/util/src/*"],
       "@vardast/lib/*": ["node_modules/@vardast/lib/src/*"],
       "@vardast/query/*": ["node_modules/@vardast/query/src/*"],
       "@vardast/asset/*": ["node_modules/@vardast/asset/src/*"],

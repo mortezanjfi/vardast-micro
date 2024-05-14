@@ -1,4 +1,5 @@
 import Image from "next/image"
+import sellerBlankImage from "@vardast/asset/images/seller-blank.png"
 import { Seller } from "@vardast/graphql/generated"
 import { MapPinIcon } from "lucide-react"
 
@@ -13,8 +14,7 @@ const SellerInfo = ({ seller, classNames }: SellerInfoProps) => {
         <div className="relative h-[66px] w-[66px]">
           <Image
             src={
-              (seller.logoFile?.presignedUrl.url as string) ||
-              " /images/seller-blank.png"
+              (seller.logoFile?.presignedUrl.url as string) || sellerBlankImage
             }
             // src="/images/frame.png"
             fill

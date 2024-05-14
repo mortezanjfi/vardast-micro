@@ -19,6 +19,9 @@
     "incremental": true,
     "downlevelIteration": true,
     "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "plugins": [
       {
         "name": "next"
@@ -28,6 +31,7 @@
   "include": [
     "src/**/*",
     "*.ts",
+    "**/*.svg",
     "types",
     "utils",
     "providers",
@@ -36,8 +40,7 @@
     "hooks",
     "lib",
     "middlewares",
-    "src/queryFns",
-    "../components/src/withMobileHeader.tsx"
+    "src/queryFns"
   ],
   "exclude": ["node_modules"]
 }

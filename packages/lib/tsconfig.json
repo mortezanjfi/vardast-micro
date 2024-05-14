@@ -40,8 +40,7 @@
     "hooks",
     "lib",
     "middlewares",
-    "src/queryFns",
-    "../component/src/withMobileHeader.tsx"
+    "src/queryFns"
   ],
   "exclude": ["node_modules"]
 }

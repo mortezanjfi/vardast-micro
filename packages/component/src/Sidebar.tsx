@@ -11,12 +11,13 @@ import {
 import { WalletIcon } from "@heroicons/react/24/solid"
 import { useClickOutside } from "@mantine/hooks"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
+import beSellerImage from "@vardast/asset/images/be-seller.png"
 import logo from "@vardast/asset/logo-horizontal-v2-persian-light-bg.svg"
 import { NavigationType } from "@vardast/type/Navigation"
 import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
 import { SetStateAction } from "jotai"
-import { signIn, signOut, useSession } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 
 import Link from "./Link"
 import Navigation from "./Navigation"
@@ -155,24 +156,13 @@ const Sidebar = ({
                   </>
                 </Button> */}
                     {session ? (
-                      <Button
-                        onClick={() =>
-                          signOut({
-                            callbackUrl:
-                              process.env.NEXT_PUBLIC_PROJECT_NAME_FOR ===
-                              "seller"
-                                ? "/"
-                                : "/profile"
-                          })
-                        }
-                        variant="ghost"
-                        className="justify-start !px-0.5 text-start"
+                      <Link
+                        href="/auth/signout"
+                        className="btn-ghost btn justify-start !px-0.5 text-start"
                       >
-                        <>
-                          <ArrowLeftStartOnRectangleIcon className="icon" />
-                          خروج از حساب کاربری
-                        </>
-                      </Button>
+                        <ArrowLeftStartOnRectangleIcon className="icon" />
+                        خروج از حساب کاربری
+                      </Link>
                     ) : (
                       <Button
                         onClick={() => signIn()}
@@ -202,7 +192,7 @@ const Sidebar = ({
                   >
                     <div className="w-full">
                       <Image
-                        src={"/images/be-seller.png"}
+                        src={beSellerImage}
                         alt={"be-seller"}
                         width={360}
                         height={120}

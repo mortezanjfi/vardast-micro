@@ -206,6 +206,7 @@ query GetProduct($id: Int!) {
       isPublic
     }
     publicOffers {
+      url
       id
       status
       isPublic

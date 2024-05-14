@@ -39,9 +39,7 @@
     "hooks",
     "lib",
     "middlewares",
-    "src/queryFns",
-    "../component/src/withMobileHeader.tsx",
-    "../graphql/src/auth.type.ts"
+    "src/queryFns"
   ],
   "exclude": ["node_modules"]
 }

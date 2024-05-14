@@ -17,6 +17,7 @@
   "dependencies": {
     "@vardast/ui": "workspace:*",
     "@vardast/hook": "workspace:*",
+    "@vardast/util": "workspace:*",
     "@vardast/style": "workspace:*",
     "@vardast/lib": "workspace:*",
     "@vardast/asset": "workspace:*",

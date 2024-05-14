@@ -3,6 +3,8 @@
 import { forwardRef, Ref, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
+import blankImage from "@vardast/asset/images/blank.png"
+import frameLessImage from "@vardast/asset/images/frameLess.png"
 import { Product } from "@vardast/graphql/generated"
 import { ICategoryListLoader } from "@vardast/type/Loader"
 import clsx from "clsx"
@@ -42,7 +44,7 @@ export const ProductSellerCardSkeleton = ({
         >
           <div className="w-full">
             <Image
-              src={"/images/frameLess.png"}
+              src={frameLessImage}
               alt="skeleton"
               width={400}
               height={400 / ratio}
@@ -146,7 +148,7 @@ const ProductSellerCard = forwardRef(
               />
             ) : (
               <Image
-                src={"/images/blank.png"}
+                src={blankImage}
                 alt={product.name}
                 fill
                 className="object-contain"

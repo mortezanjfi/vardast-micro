@@ -12,6 +12,7 @@ query GetAddress($id: Int!) {
     isPublic
     status
     rejectionReason
+
     country {
       id
       name

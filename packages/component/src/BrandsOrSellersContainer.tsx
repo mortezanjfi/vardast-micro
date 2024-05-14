@@ -1,10 +1,12 @@
+/* eslint-disable no-unused-vars */
 import { ReactElement, useState } from "react"
 import { ICategoryListLoader } from "@vardast/type/Loader"
 import clsx from "clsx"
 
 export enum BrandContainerType {
-  // eslint-disable-next-line no-unused-vars
-  Brands_Page_List = "brand-page-list"
+  DEFAULT,
+  Brands_Page_List = "brand-page-list",
+  Brand_Or_Seller_Profile = "brand-or-seller-profile"
 }
 interface IBrandsOrSellersContainer {
   type?: BrandContainerType
@@ -22,13 +24,18 @@ const BrandsOrSellersContainer: React.FC<IBrandsOrSellersContainer> = ({
 }) => {
   const [selectedItemId, setSelectedItemId] =
     useState<ICategoryListLoader>(null)
+
+  const classNameByType = {
+    DEFAULT: "grid grid-cols-3 gap p pb-5 md:grid-cols-4 lg:grid-cols-5",
+    [BrandContainerType.Brands_Page_List]:
+      "grid  grid-cols-3 gap divide-alpha-200 p pb-5 sm:gap-0 sm:divide-y md:grid-cols-4  md:px-0 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6",
+    [BrandContainerType.Brand_Or_Seller_Profile]:
+      "grid grid-cols-3 gap p pb-5 md:grid-cols-4 lg:grid-cols-5 md:gap-0 grid w-full grid-cols-1 divide-y divide-alpha-200  sm:grid-cols-3 md:grid-cols-2 md:divide-none md:px-0 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+  }
+
   return (
     <div
-      className={clsx(
-        type === BrandContainerType.Brands_Page_List
-          ? " grid grid-cols-3 gap divide-alpha-200 p px-6 pb-5 sm:gap-0 sm:divide-y  md:grid-cols-4 md:px-0 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6"
-          : "grid grid-cols-3 gap p pb-5 md:grid-cols-4 lg:grid-cols-5"
-      )}
+      className={clsx(type ? classNameByType[type] : classNameByType.DEFAULT)}
     >
       {CardLoader &&
         [...Array(3)].map((_, loader) => (

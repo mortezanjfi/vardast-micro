@@ -4,12 +4,10 @@ import { usePathname } from "next/navigation"
 import { PopoverArrow } from "@radix-ui/react-popover"
 import { useGetVocabularyQuery } from "@vardast/graphql/generated"
 import graphqlRequestClientWithoutToken from "@vardast/query/queryClients/graphqlRequestClientWithoutToken"
-import { Button } from "@vardast/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@vardast/ui/popover"
 import slugify from "@vardast/util/persian-slugify"
 import { LucideChevronDown } from "lucide-react"
 import { Session } from "next-auth"
-import { signOut } from "next-auth/react"
 
 import Link from "./Link"
 
@@ -80,11 +78,17 @@ const FrontPageHeader = ({ session }: Props) => {
         ) ? (
           <>
             {session.profile?.roles.some((role) => role?.name === "admin") ? (
-              <Link href="/admin" className="btn btn-md btn-primary block">
+              <Link
+                href={process.env.NEXT_PUBLIC_ADMIN_VARDAST}
+                className="btn btn-md btn-primary block"
+              >
                 ورود به پنل ادمین
               </Link>
             ) : (
-              <Link href="/" className="btn btn-md btn-primary block">
+              <Link
+                href={process.env.NEXT_PUBLIC_SELLER_VARDAST}
+                className="btn btn-md btn-primary block"
+              >
                 ورود به پنل فروشنده
               </Link>
             )}
@@ -97,16 +101,9 @@ const FrontPageHeader = ({ session }: Props) => {
           )
         )}
         {session?.user && (
-          <Button
-            variant={"danger"}
-            onClick={() =>
-              signOut({
-                callbackUrl: "/profile"
-              })
-            }
-          >
+          <Link className="btn btn-danger" href="/auth/signout">
             خروج
-          </Button>
+          </Link>
         )}
       </div>
     </div>

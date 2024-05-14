@@ -41,6 +41,49 @@ type NavbarItem = {
   id: number
 }
 
+export const _profileSidebarMenu: NavigationType[] = [
+  {
+    title: "پرکاربردها",
+    items: [
+      {
+        title: "خلاصه فعالیت",
+        icon: "home",
+        path: "/profile"
+      },
+      {
+        title: "سفارشات",
+        icon: "list",
+        path: "/profile/orders"
+      },
+      {
+        title: "پروژه ها",
+        icon: "folder-open",
+        path: "/profile/projects"
+      },
+      {
+        title: "سبد کالا",
+        icon: "shopping-cart",
+        path: "/profile/basket"
+      },
+      {
+        title: "علاقه مندی ها",
+        icon: "bookmark",
+        path: "/profile/favorites"
+      },
+      {
+        title: "بازدیدهای اخیر",
+        icon: "clock",
+        path: "/profile/recently"
+      },
+      {
+        title: "اطلاعات حساب کاربری",
+        icon: "user",
+        path: "/profile/info"
+      }
+    ]
+  }
+]
+
 export const _sidebarMenu: NavigationType[] = [
   {
     items: [

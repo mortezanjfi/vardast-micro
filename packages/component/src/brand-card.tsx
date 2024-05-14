@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
+import blankImage from "@vardast/asset/images/blank.png"
 import { Brand } from "@vardast/graphql/generated"
 
 import Link from "./Link"
@@ -46,7 +47,7 @@ const BrandCard = ({ brand }: BrandCardProps) => {
               />
             ) : (
               <Image
-                src={"/images/blank.png"}
+                src={blankImage}
                 alt={brand?.name}
                 fill
                 sizes="(max-width: 640px) 33vw, 10vw"

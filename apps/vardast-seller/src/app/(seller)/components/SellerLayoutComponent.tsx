@@ -2,6 +2,7 @@
 
 import { ReactNode, Suspense, useState } from "react"
 import { useQuery } from "@tanstack/react-query"
+import Link from "@vardast/component/Link"
 import Search from "@vardast/component/search"
 import Sidebar from "@vardast/component/Sidebar"
 import { GetMyProfileSellerQuery } from "@vardast/graphql/generated"
@@ -20,7 +21,6 @@ import {
 } from "@vardast/ui/navigation-menu"
 import { LucideLogOut, LucideMenu } from "lucide-react"
 import { Session } from "next-auth"
-import { signOut } from "next-auth/react"
 
 import SelllerBreadcrumb from "@/app/(seller)/components/SellerBreadCrumb"
 
@@ -109,18 +109,13 @@ const SellerLayoutComponent = ({
                     <NavigationMenuTrigger></NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <NavigationMenuLink className="md: z-50 flex w-48 justify-center text-nowrap bg-alpha-white p-2">
-                        <Button
-                          onClick={() =>
-                            signOut({
-                              callbackUrl: "/"
-                            })
-                          }
-                          variant="ghost"
-                          className="justify-start text-start"
+                        <Link
+                          href="/auth/signout"
+                          className="btn btn-ghost justify-start text-start"
                         >
                           خروج
                           <LucideLogOut className="icon" />
-                        </Button>
+                        </Link>
                       </NavigationMenuLink>
                     </NavigationMenuContent>
                   </NavigationMenuItem>

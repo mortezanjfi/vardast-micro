@@ -38,7 +38,8 @@
     "src/@core/types/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "**/*.svg"
   ],
   "exclude": [
     "node_modules",

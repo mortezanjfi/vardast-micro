@@ -13,6 +13,7 @@ query GetAllCategories($indexCategoryInput: IndexCategoryInput) {
       icon
       sort
       isActive
+      productsCount
       imageCategory {
         file {
           id

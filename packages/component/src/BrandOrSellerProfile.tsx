@@ -7,6 +7,7 @@ import { MapPinIcon } from "@heroicons/react/24/outline"
 import { CheckBadgeIcon } from "@heroicons/react/24/solid"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
+import sellerUserImage from "@vardast/asset/images/seller-user.png"
 import {
   EntityTypeEnum,
   GetBrandQuery,
@@ -133,7 +134,7 @@ const BrandOrSellerProfile = ({
                     />
                   ) : (
                     <Image
-                      src={"/images/seller-user.png"}
+                      src={sellerUserImage}
                       alt="seller"
                       fill
                       className="rounded-full object-contain"

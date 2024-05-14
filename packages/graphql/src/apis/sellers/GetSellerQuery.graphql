@@ -7,6 +7,12 @@ query GetSeller($id: Int!) {
     brandsCount
     categoriesCount
     rating
+    bannerFile {
+      presignedUrl {
+        url
+      }
+    }
+
     logoFile {
       id
       uuid

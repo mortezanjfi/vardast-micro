@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { MapPinIcon } from "@heroicons/react/24/outline"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
+import sellerBlankImage from "@vardast/asset/images/seller-blank.png"
 import { Seller } from "@vardast/graphql/generated"
 
 import Link from "./Link"
@@ -47,7 +48,7 @@ const SellerCard = ({ seller }: SellerCardProps) => {
               />
             ) : (
               <Image
-                src={"/images/seller-blank.png"}
+                src={sellerBlankImage}
                 alt={seller.name}
                 fill
                 sizes="(max-width: 640px) 33vw, 10vw"

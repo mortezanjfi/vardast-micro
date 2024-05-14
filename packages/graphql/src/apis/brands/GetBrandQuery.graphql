@@ -8,6 +8,11 @@ query GetBrand($id: Int!) {
     rating
     sellersCount
     categoriesCount
+    bannerFile {
+      presignedUrl {
+        url
+      }
+    }
     catalog {
       id
       uuid

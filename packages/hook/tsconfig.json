@@ -44,9 +44,7 @@
     "hooks",
     "lib",
     "middlewares",
-    "src/queryFns",
-    "../component/src/withMobileHeader.tsx",
-    "../provider/src/use-route-change.ts"
+    "src/queryFns"
   ],
   "exclude": ["node_modules"]
 }

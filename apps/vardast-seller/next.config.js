@@ -51,8 +51,7 @@ const nextConfig = {
       "trustseal.enamad.ir",
       "storage.vardast.ir",
       "storage.vardast.com"
-    ],
-    path: `${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}`
+    ]
   },
   async redirects() {
     return [

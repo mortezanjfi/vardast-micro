@@ -155,7 +155,8 @@ const DesktopHeader = (_: DesktopHeaderProps) => {
                                 <NavigationMenuLink className="flex w-full justify-start text-nowrap bg-alpha-white px-4 py-2 md:z-50">
                                   <Link
                                     prefetch={false}
-                                    href="/admin"
+                                    target="_blank"
+                                    href={process.env.NEXT_PUBLIC_ADMIN_VARDAST}
                                     className="btn !text-alpha"
                                   >
                                     ورود به پنل ادمین

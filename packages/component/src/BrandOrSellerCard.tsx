@@ -2,6 +2,8 @@ import { forwardRef, Ref, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { MapPinIcon } from "@heroicons/react/24/outline"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
+import frameLessImage from "@vardast/asset/images/frameLess.png"
+import sellerBlankImage from "@vardast/asset/images/seller-blank.png"
 import { Brand, Seller } from "@vardast/graphql/generated"
 import { ICategoryListLoader } from "@vardast/type/Loader"
 import { checkSellerRedirectUrl } from "@vardast/util/checkSellerRedirectUrl"
@@ -18,7 +20,7 @@ export const BrandOrSellerCardSkeleton = () => {
             className={`relative row-span-4 w-full transform transition-all sm:!h-32 sm:py md:!h-40 lg:!h-60 lg:w-full`}
           >
             <Image
-              src={"/images/frameLess.png"}
+              src={frameLessImage}
               alt="skeleton"
               fill
               className="animated-card object-contain"
@@ -41,7 +43,7 @@ export const BrandOrSellerCardSkeleton = () => {
           >
             <div className="relative w-full">
               <Image
-                src={"/images/frameLess.png"}
+                src={frameLessImage}
                 alt="skeleton"
                 fill
                 className="animated-card object-contain"
@@ -120,7 +122,7 @@ const BrandOrSellerCard = forwardRef(
                 />
               ) : (
                 <Image
-                  src={"/images/seller-blank.png"}
+                  src={sellerBlankImage}
                   alt={content.name}
                   fill
                   className="object-contain"

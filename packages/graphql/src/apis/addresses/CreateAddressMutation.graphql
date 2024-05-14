@@ -12,6 +12,7 @@ mutation CreateAddressMutation($createAddressInput: CreateAddressInput!) {
     isPublic
     status
     rejectionReason
+
     country {
       id
       name

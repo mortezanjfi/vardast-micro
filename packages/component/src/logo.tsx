@@ -1,9 +1,10 @@
 import Image from "next/image"
+import logoTypeImage from "@vardast/asset/images/logo-type.png"
 
 const Logo = () => {
   return (
     <Image
-      src="/images/logo-type.png"
+      src={logoTypeImage}
       alt="..."
       loading="lazy"
       width={1315}

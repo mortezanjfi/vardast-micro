@@ -3,6 +3,7 @@
 import { createContext, useEffect, useState } from "react"
 import Image from "next/image"
 import { useQuery } from "@tanstack/react-query"
+import rotationImage from "@vardast/asset/images/rotation.png"
 import {
   EventTrackerTypes,
   GetBrandQuery,
@@ -135,12 +136,7 @@ const PublicProvider = ({ isMobileView, children }: PublicProviderProps) => {
       (orientation === "landscape-primary" ||
         orientation === "landscape-secondary") ? (
         <div className="flex h-full w-full flex-col items-center justify-center gap bg-primary text-white">
-          <Image
-            src="/images/rotation.png"
-            alt="rotate"
-            width={150}
-            height={150}
-          />
+          <Image src={rotationImage} alt="rotate" width={150} height={150} />
           <p>لطفاً گوشی خود را عمودی نگه دارید.</p>
         </div>
       ) : (

@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import sameProductImage from "@vardast/asset/images/same-product.png"
 import { Product } from "@vardast/graphql/generated"
 
 import ProductCard from "./product-card"
@@ -34,7 +35,7 @@ const ProductSlider = ({
                 {hasExtraItem.title}
               </h3> */}
               <Image
-                src={"/images/same-product.png"}
+                src={sameProductImage}
                 alt={"same-product"}
                 width={isMobileView ? 120 : 230}
                 height={isMobileView ? 120 : 230}
