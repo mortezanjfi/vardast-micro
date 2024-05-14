@@ -94,6 +94,9 @@ const SigninFormContent = () => {
             startCountdown(remainingSeconds as number)
             setMessage(message as string)
             setFormState(LoginOptions.VERIFY_OTP)
+            setMessage(null)
+            setErrors(null)
+            setLoginErrors(null)
           }
         } catch (error) {
           console.log("ValidateCellphoneMutation error: ", error)
@@ -114,7 +117,7 @@ const SigninFormContent = () => {
           const { message } = data.validateOtp
           formStepOne.getValues()
           const callback = await signIn("credentials", {
-            cellphone: formStepOne.getValues().cellphone,
+            cellphone: digitsFaToEn(formStepOne.getValues().cellphone),
             signInType: "otp",
             validationKey,
             redirect: false
@@ -443,6 +446,9 @@ const SigninFormContent = () => {
                           <Button
                             onClick={() => {
                               setFormState(LoginOptions.OTP)
+                              setMessage(null)
+                              setErrors(null)
+                              setLoginErrors(null)
                               formStepTwo.reset()
                             }}
                             size={"xsmall"}
@@ -461,7 +467,7 @@ const SigninFormContent = () => {
                             {secondsLeft && secondsLeft > 0
                               ? digitsEnToFa(secondsLeft)
                               : digitsEnToFa(0)}{" "}
-                            ثانیه ثانیه
+                            ثانیه
                           </p>
                         </div>
                       </FormItem>
@@ -477,6 +483,9 @@ const SigninFormContent = () => {
                   <div
                     onClick={() => {
                       setFormState(LoginOptions.OTP)
+                      setMessage(null)
+                      setErrors(null)
+                      setLoginErrors(null)
                     }}
                     className="flex cursor-pointer items-center gap-x-2"
                   >
@@ -488,6 +497,9 @@ const SigninFormContent = () => {
                   <div
                     onClick={() => {
                       setFormState(LoginOptions.PASSWORD)
+                      setMessage(null)
+                      setErrors(null)
+                      setLoginErrors(null)
                     }}
                     className="flex cursor-pointer items-center gap-x-2"
                   >

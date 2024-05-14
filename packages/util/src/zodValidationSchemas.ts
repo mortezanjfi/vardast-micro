@@ -25,7 +25,7 @@ export const cellphoneNumberSchema = z
     message: "شماره موبایل صحیح نیست"
   })
 
-export const otpSchema = z.string().refine((data) => `${digitsFaToEn(data)}`, {
+export const otpSchema = z.string().refine((data) => digitsFaToEn(`${data}`), {
   message: "رمز یکبار مصرف صحیح نیست"
 })
 
