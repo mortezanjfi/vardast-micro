@@ -41,6 +41,8 @@ RUN cp apps/${PROJECT_NAME_SELLER}/.env.${BUILD_MODE} apps/${PROJECT_NAME_SELLER
 RUN cp apps/${PROJECT_NAME_CLIENT}/.env.${BUILD_MODE} apps/${PROJECT_NAME_CLIENT}/.env
 RUN cp packages/graphql/.env.${BUILD_MODE} packages/graphql/.env
 
+RUN rm -f apps/authentication
+
 # Build the project
 RUN pnpm build
  
