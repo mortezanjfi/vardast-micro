@@ -43,7 +43,7 @@ export const BrandOrSellerCardSkeleton = () => {
           >
             <div className="relative w-full">
               <Image
-                src={frameLessImage}
+                src={"/images/frameLess.png"}
                 alt="skeleton"
                 fill
                 className="animated-card object-contain"
@@ -98,7 +98,7 @@ const BrandOrSellerCard = forwardRef(
           setSelectedItemId && setSelectedItemId(content.id)
         }}
         prefetch={false}
-        className="relative overflow-hidden rounded bg-alpha-white transition hover:z-10 md:h-auto md:rounded-none md:ring-1 md:!ring-alpha-200 md:hover:shadow-lg"
+        className="relative overflow-hidden rounded bg-alpha-white transition hover:z-10 md:h-auto md:rounded-none md:ring-2 md:!ring-alpha-200 md:hover:shadow-lg"
       >
         {content.id === selectedItemId && (
           <div className="absolute left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center bg-alpha-white bg-opacity-50">

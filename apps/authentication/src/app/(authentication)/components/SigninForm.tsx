@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { digitsEnToFa } from "@persian-tools/persian-tools"
+import { digitsEnToFa, digitsFaToEn } from "@persian-tools/persian-tools"
 import Card from "@vardast/component/Card"
 import Link from "@vardast/component/Link"
 import {
@@ -24,10 +24,13 @@ import {
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
 import zodI18nMap from "@vardast/util/zodErrorMap"
-import { cellphoneNumberSchema } from "@vardast/util/zodValidationSchemas"
+import {
+  cellphoneNumberSchema,
+  otpSchema
+} from "@vardast/util/zodValidationSchemas"
 import clsx from "clsx"
 import { ClientError } from "graphql-request"
-import { LucideAlertOctagon } from "lucide-react"
+import { LucideAlertOctagon, LucideX } from "lucide-react"
 import { signIn } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
@@ -152,7 +155,7 @@ const SigninFormContent = () => {
   })
 
   const SignupFormStepTwoSchema = z.object({
-    otp: z.string()
+    otp: otpSchema
   })
   type SignupFormStepTwoType = TypeOf<typeof SignupFormStepTwoSchema>
 
@@ -165,7 +168,7 @@ const SigninFormContent = () => {
     validateCellphoneMutation.mutate({
       ValidateCellphoneInput: {
         countryId: 244,
-        cellphone,
+        cellphone: digitsFaToEn(cellphone),
         validationType: ValidationTypes.Login
       }
     })
@@ -175,7 +178,7 @@ const SigninFormContent = () => {
     const { otp } = data
     validateOtpMutation.mutate({
       ValidateOtpInput: {
-        token: otp,
+        token: digitsFaToEn(otp),
         validationKey,
         validationType: ValidationTypes.Login
       }
@@ -204,7 +207,7 @@ const SigninFormContent = () => {
     try {
       const { username, password } = data
       const callback = await signIn("credentials", {
-        username,
+        username: digitsFaToEn(username),
         password,
         signInType: "username",
         redirect: false
@@ -277,12 +280,12 @@ const SigninFormContent = () => {
       {!errors && message && (
         <div className="p">
           <Alert variant="success">
-            <AlertDescription>{message}</AlertDescription>
+            <AlertDescription>{digitsEnToFa(message)}</AlertDescription>
           </Alert>
         </div>
       )}
       <div className="flex h-full flex-col justify-center">
-        <div className="flex flex-col gap-y-6 overflow-y-auto px-3 md:items-center md:pt">
+        <div className="flex flex-col gap-y-6 overflow-y-auto px-3 md:pt">
           {formState === LoginOptions.VERIFY_OTP ? (
             <>
               <h3 className="font-semibold">لطفا کد تایید را وارد کنید.</h3>
@@ -294,7 +297,16 @@ const SigninFormContent = () => {
             </>
           ) : (
             <>
-              <h3 className="font-semibold">ورود | ثبت‌نام</h3>
+              <div className="flex w-full items-center justify-between">
+                <h3 className="font-semibold">ورود | ثبت‌نام</h3>
+                <Button
+                  variant={"ghost"}
+                  onClick={() => router.back()}
+                  iconOnly
+                >
+                  <LucideX className="icon h-6 w-6 text-alpha-black" />
+                </Button>
+              </div>
               <div className="text-md flex flex-col gap-y-2">
                 <p className="text-alpha-800">سلام!</p>
                 <p className="text-alpha-800">
@@ -325,9 +337,15 @@ const SigninFormContent = () => {
                       <FormItem>
                         <FormControl>
                           <Input
+                            type="tel"
+                            inputMode="numeric"
+                            className="placeholder:text-right"
                             placeholder={t("common:cellphone")}
-                            type="text"
                             {...field}
+                            onChange={(e) =>
+                              e.target.value.length <= 11 &&
+                              field.onChange(digitsEnToFa(e.target.value))
+                            }
                           />
                         </FormControl>
                         <FormMessage />
@@ -377,9 +395,13 @@ const SigninFormContent = () => {
                           <Input
                             type="tel"
                             inputMode="numeric"
-                            dir="rtl"
+                            className="placeholder:text-right"
                             placeholder={t("common:cellphone")}
                             {...field}
+                            onChange={(e) =>
+                              e.target.value.length <= 11 &&
+                              field.onChange(digitsEnToFa(e.target.value))
+                            }
                           />
                         </FormControl>
                         <FormMessage />
@@ -407,9 +429,13 @@ const SigninFormContent = () => {
                           <Input
                             type="tel"
                             inputMode="numeric"
-                            dir="rtl"
+                            className="placeholder:text-right"
                             placeholder={t("common:otp")}
                             {...field}
+                            onChange={(e) =>
+                              e.target.value.length <= 5 &&
+                              field.onChange(digitsEnToFa(e.target.value))
+                            }
                           />
                         </FormControl>
                         <FormMessage />
@@ -432,8 +458,10 @@ const SigninFormContent = () => {
                               "text-succuss"
                             )}
                           >
-                            {secondsLeft && secondsLeft > 0 ? secondsLeft : 0}{" "}
-                            ثانیه
+                            {secondsLeft && secondsLeft > 0
+                              ? digitsEnToFa(secondsLeft)
+                              : digitsEnToFa(0)}{" "}
+                            ثانیه ثانیه
                           </p>
                         </div>
                       </FormItem>

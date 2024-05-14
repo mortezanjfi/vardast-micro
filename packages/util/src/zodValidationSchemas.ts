@@ -1,4 +1,7 @@
-import { phoneNumberValidator } from "@persian-tools/persian-tools"
+import {
+  digitsFaToEn,
+  phoneNumberValidator
+} from "@persian-tools/persian-tools"
 import { z } from "zod"
 
 import { persianCharactersValidator } from "./persianCharactersValidator"
@@ -18,9 +21,13 @@ export const jsonSchema: z.ZodType<Json> = z.lazy(() =>
 
 export const cellphoneNumberSchema = z
   .string()
-  .refine((data) => phoneNumberValidator(data), {
+  .refine((data) => phoneNumberValidator(`${digitsFaToEn(data)}`), {
     message: "شماره موبایل صحیح نیست"
   })
+
+export const otpSchema = z.string().refine((data) => `${digitsFaToEn(data)}`, {
+  message: "رمز یکبار مصرف صحیح نیست"
+})
 
 export const slugInputSchema = z
   .string()

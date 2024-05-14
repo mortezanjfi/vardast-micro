@@ -1,12 +1,13 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 import { MapPinIcon } from "@heroicons/react/24/outline"
 import { CheckBadgeIcon } from "@heroicons/react/24/solid"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
+import blankImage from "@vardast/asset/images/blank.png"
 import sellerUserImage from "@vardast/asset/images/seller-user.png"
 import {
   EntityTypeEnum,
@@ -24,8 +25,10 @@ import convertToPersianDate from "@vardast/util/convertToPersianDate"
 import clsx from "clsx"
 import { setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
+import useTranslation from "next-translate/useTranslation"
 import { useQueryState } from "next-usequerystate"
 
+import Breadcrumb from "./Breadcrumb"
 import FavoriteIcon from "./FavoriteIcon"
 import ShareIcon from "./ShareIcon"
 
@@ -79,10 +82,9 @@ const BrandOrSellerProfile = ({
   isMobileView
 }: IBrandOrSellerProfile) => {
   if (!data) notFound()
-  const [imageContainerHeight, setImageContainerHeight] = useState(80)
   const [openTabName, setOpenTabName] = useQueryState("tab")
-  const productContainerRef = useRef<HTMLDivElement>(null)
   const [activeTab, setActiveTab] = useState<string>("")
+  const { t } = useTranslation()
   // const [bioMoreFlag, setBioMoreFlag] = useState(false)
 
   // const onOpenCategories = () => {
@@ -96,99 +98,107 @@ const BrandOrSellerProfile = ({
 
   useEffect(() => {
     setActiveTab(openTabName || tabs[0].value)
-    const div = productContainerRef.current
-    if (div) {
-      setImageContainerHeight(div.clientWidth)
-    }
   }, [openTabName, tabs])
 
   const isSellerQuery = () => type === EntityTypeEnum.Seller
 
   return (
-    <div className="flex h-full flex-col md:flex-row">
-      <div className="flex flex-col justify-start md:w-1/3">
-        <div className="flex flex-col gap-y bg-alpha-white px py-5">
-          <div className="grid grid-cols-9 items-center justify-center">
-            <div></div>
-            <div className="col-span-7 flex flex-col items-center justify-center">
-              <div className="relative w-[35vw] rounded-full border-2 border-alpha-400 p-0.5 md:h-full md:w-full">
-                {isSellerQuery() && (data as SellerQuery).isBlueTik && (
-                  <>
-                    <CheckBadgeIcon className="w-h-7 absolute right-1 top-0 z-20 h-7 -translate-y-1 translate-x-1 text-info" />
-                    <span className="absolute right-2 top-1 h-3 w-3 rounded-full bg-alpha-white"></span>
-                  </>
-                )}
-                <div
-                  ref={productContainerRef}
-                  style={{
-                    height: imageContainerHeight
-                  }}
-                  className="relative z-10 h-full"
-                >
-                  {data?.logoFile?.presignedUrl.url ? (
-                    <Image
-                      src={data?.logoFile?.presignedUrl.url as string}
-                      alt="seller"
-                      fill
-                      className="rounded-full object-contain"
-                    />
-                  ) : (
-                    <Image
-                      src={sellerUserImage}
-                      alt="seller"
-                      fill
-                      className="rounded-full object-contain"
-                    />
+    <div className="flex h-full flex-col bg-alpha-white md:gap-9">
+      {!isMobileView && (
+        <div className="border-b-2 bg-alpha-white">
+          <Breadcrumb
+            isMobileView={isMobileView}
+            dynamic={false}
+            items={[
+              {
+                label: t(isSellerQuery() ? "common:sellers" : "common:brands"),
+                path: "/brands",
+                isCurrent: false
+              },
+              {
+                label: data.name,
+                path: `
+                ${
+                  isSellerQuery() ? `sellers/${data.id}` : `brands/${data.id}`
+                }`,
+                // path: `/brand/${brandQuery?.data.brand.id}/${brandQuery?.data.brand.name}`,
+                isCurrent: true
+              }
+            ]}
+          />
+        </div>
+      )}
+      <div className="w-full md:flex md:gap-9">
+        <div className="relative flex flex-col justify-start overflow-hidden md:w-[250px] md:min-w-[200px] md:flex-shrink-0 md:justify-center md:rounded-2xl md:border-2">
+          <div className="flex flex-col gap-y bg-alpha-white px py-5 md:py-9">
+            <div className="grid h-full grid-cols-9 items-center justify-center gap-y bg-alpha-white px py-5 md:flex md:py-9">
+              <div></div>
+
+              <div className="col-span-7 flex flex-col items-center justify-center">
+                <div className="rounded-full border-2 border-alpha-400 p-0.5 md:h-full">
+                  {isSellerQuery() && (data as SellerQuery).isBlueTik && (
+                    <>
+                      <CheckBadgeIcon className="w-h-7 absolute right-1 top-0 z-20 h-7 -translate-y-1 translate-x-1 text-info" />
+                      <span className="absolute right-2 top-1 h-3 w-3 rounded-full bg-alpha-white"></span>
+                    </>
                   )}
-                </div>
-              </div>
-              {(!isMobileView || isSellerQuery()) && (
-                <div className="flex flex-col items-center gap-y-2 pt">
-                  <p>{data.name}</p>
-                  {data?.addresses?.length > 0 &&
-                    data.addresses[0].city.name && (
-                      <p className="flex h-4 items-center gap-x-1 py-1 text-xs text-alpha-600">
-                        <MapPinIcon className="h-3 w-3 text-alpha-600" />
-                        {data.addresses[0].city.name}
-                      </p>
+                  <div className="aspect-square">
+                    {data?.logoFile?.presignedUrl.url ? (
+                      <Image
+                        src={data?.logoFile?.presignedUrl.url as string}
+                        alt="seller"
+                        width={100}
+                        height={100}
+                        className="h-full w-full rounded-full object-contain"
+                      />
+                    ) : (
+                      <Image
+                        src={sellerUserImage}
+                        alt="seller"
+                        width={100}
+                        height={100}
+                        className="h-full w-full rounded-full object-contain"
+                      />
                     )}
+                  </div>
                 </div>
-              )}
-            </div>
-            <div className="flex h-full flex-col justify-start">
-              <FavoriteIcon
-                entityId={+slug[0]}
-                isFavoriteQuery={isFavoriteQuery}
-                type={type}
-              />
-              <ShareIcon name={data.name} />
+                {(!isMobileView || isSellerQuery()) && (
+                  <div className="flex flex-col items-center gap-y-2 pt">
+                    <p>{data.name}</p>
+                    {data?.addresses?.length > 0 &&
+                      data.addresses[0].city.name && (
+                        <p className="flex h-4 items-center gap-x-1 py-1 text-xs text-alpha-600">
+                          <MapPinIcon className="h-3 w-3 text-alpha-600" />
+                          {data.addresses[0].city.name}
+                        </p>
+                      )}
+                  </div>
+                )}
+              </div>
+              <div className="hidden md:block"></div>
+              <div className="left-3 top-3 flex h-full flex-col justify-start md:absolute">
+                <FavoriteIcon
+                  entityId={+slug[0]}
+                  isFavoriteQuery={isFavoriteQuery}
+                  type={type}
+                />
+                <ShareIcon name={data.name} />
+              </div>
             </div>
           </div>
         </div>
+        {!isMobileView && (
+          <div className="relative hidden aspect-auto w-full overflow-hidden rounded-2xl md:col-span-9 md:block">
+            <Image
+              src={`${data.bannerFile?.presignedUrl.url || blankImage}`}
+              className="h-full w-full object-cover"
+              alt="banner"
+              fill
+            />
+          </div>
+        )}
       </div>
-      {/* {data.bio && (
-        <div className="relative flex flex-col items-start bg-alpha-white p-6 pt-0">
-          <h4>معرفی</h4>
-          <p
-            className={clsx(
-              "text-justify text-sm leading-6",
-              !bioMoreFlag && "line-clamp-2"
-            )}
-          >
-            {data.bio}
-          </p>
-          {!bioMoreFlag && (
-            <div className="absolute bottom-1.5 left-0 right-0 h-28 bg-opacity-30 bg-gradient-to-t from-alpha-white"></div>
-          )}
-          <Button
-            onClick={onOpenCategories}
-            variant="link"
-            className="!mt-2 mr-auto !text-primary"
-          >
-            {bioMoreFlag ? "بستن" : "مشاهده بیشتر"}
-          </Button>
-        </div>
-      )} */}
+
       <Segments
         value={activeTab}
         onValueChange={(value) => {
@@ -199,9 +209,9 @@ const BrandOrSellerProfile = ({
           }
           setOpenTabName(value)
         }}
-        className="sticky left-0 right-0 top-0 h-full bg-alpha-white md:w-full md:pt"
+        className="sticky left-0 right-0 top-0 h-full flex-col  gap-9 bg-alpha-white sm:flex md:mt md:w-full md:overflow-visible"
       >
-        <SegmentsList wrap className="border-b pb">
+        <SegmentsList wrap className="border-b pb  md:border-b-2 md:pb-5">
           {tabs.map(({ title, value }) => (
             <SegmentsListItem
               key={value}

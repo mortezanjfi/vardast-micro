@@ -3,7 +3,6 @@
 import { useQuery } from "@tanstack/react-query"
 import Breadcrumb from "@vardast/component/Breadcrumb"
 // import ProductDescription from "@/app/(public)/(purchaser)/product/components/product-description"
-import DesktopCategoriesCardsSection from "@vardast/component/DesktopCategoriesCardsSection"
 import ProductList from "@vardast/component/product-list"
 import ProductsHeader from "@vardast/component/search-header"
 import {
@@ -76,12 +75,6 @@ const ProductsPage = ({
       )}
 
       <div className="flex flex-col gap-9">
-        {!isMobileView && (
-          <DesktopCategoriesCardsSection
-            getCategoryQuery={getCategoryQuery}
-            selectedCategoryId={selectedCategoryId}
-          />
-        )}
         <ProductList
           getCategoryQuery={getCategoryQuery}
           hasSearch={hasSearch}

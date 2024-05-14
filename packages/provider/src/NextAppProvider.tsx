@@ -1,6 +1,7 @@
 import "@vardast/style/globals.css"
 
-import { Viewport } from "next"
+import { Metadata, Viewport } from "next"
+import startupImage from "@vardast/lib/startupImage"
 import { myColors } from "@vardast/tailwind-config/themes"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 import { CheckIsTwa } from "@vardast/util/checkIsTwa"
@@ -24,6 +25,24 @@ export const viewport: Viewport = {
   viewportFit: "cover",
   minimumScale: 1
 }
+export const metadata: Metadata = {
+  title: {
+    template: `${process.env.NEXT_PUBLIC_TITLE} | %s`,
+    default: process.env.NEXT_PUBLIC_TITLE as string
+  },
+  appleWebApp: {
+    capable: true,
+    title: process.env.NEXT_PUBLIC_TITLE,
+    startupImage
+  },
+  manifest: "/manifest.json",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false
+  }
+}
+
 export default async function NextAppProvider({
   children
 }: {

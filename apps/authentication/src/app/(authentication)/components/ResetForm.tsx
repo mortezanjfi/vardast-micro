@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { digitsEnToFa, digitsFaToEn } from "@persian-tools/persian-tools"
 import {
   usePasswordResetMutation,
   useValidateCellphoneMutation,
@@ -23,7 +24,10 @@ import {
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
 import zodI18nMap from "@vardast/util/zodErrorMap"
-import { cellphoneNumberSchema } from "@vardast/util/zodValidationSchemas"
+import {
+  cellphoneNumberSchema,
+  otpSchema
+} from "@vardast/util/zodValidationSchemas"
 import clsx from "clsx"
 import { ClientError } from "graphql-request"
 import { LucideAlertOctagon } from "lucide-react"
@@ -133,7 +137,7 @@ const ResetForm = (_: Props) => {
   })
 
   const PasswordResetFormStepTwoSchema = z.object({
-    otp: z.string()
+    otp: otpSchema
   })
   type PasswordResetFormStepTwoType = TypeOf<
     typeof PasswordResetFormStepTwoSchema
@@ -160,7 +164,7 @@ const ResetForm = (_: Props) => {
     validateCellphoneMutation.mutate({
       ValidateCellphoneInput: {
         countryId: 244,
-        cellphone,
+        cellphone: digitsFaToEn(cellphone),
         validationType: ValidationTypes.PasswordReset
       }
     })
@@ -170,7 +174,7 @@ const ResetForm = (_: Props) => {
     const { otp } = data
     validateOtpMutation.mutate({
       ValidateOtpInput: {
-        token: otp,
+        token: digitsFaToEn(otp),
         validationKey,
         validationType: ValidationTypes.PasswordReset
       }
@@ -210,7 +214,7 @@ const ResetForm = (_: Props) => {
 
       {!errors && message && (
         <Alert variant="success">
-          <AlertDescription>{message}</AlertDescription>
+          <AlertDescription>{digitsEnToFa(message)}</AlertDescription>
         </Alert>
       )}
 
@@ -234,9 +238,15 @@ const ResetForm = (_: Props) => {
                         <FormLabel>{t("common:cellphone")}</FormLabel>
                         <FormControl>
                           <Input
+                            type="tel"
+                            inputMode="numeric"
+                            className="placeholder:text-right"
                             placeholder={t("common:cellphone")}
-                            type="text"
                             {...field}
+                            onChange={(e) =>
+                              e.target.value.length <= 11 &&
+                              field.onChange(digitsEnToFa(e.target.value))
+                            }
                           />
                         </FormControl>
                         <FormMessage />
@@ -280,9 +290,15 @@ const ResetForm = (_: Props) => {
                         <FormLabel>{t("common:otp")}</FormLabel>
                         <FormControl>
                           <Input
+                            type="tel"
+                            inputMode="numeric"
+                            className="placeholder:text-right"
                             placeholder={t("common:otp")}
-                            type="text"
                             {...field}
+                            onChange={(e) =>
+                              e.target.value.length <= 5 &&
+                              field.onChange(digitsEnToFa(e.target.value))
+                            }
                           />
                         </FormControl>
                         <FormMessage />
@@ -305,7 +321,9 @@ const ResetForm = (_: Props) => {
                               "text-succuss"
                             )}
                           >
-                            {secondsLeft && secondsLeft > 0 ? secondsLeft : 0}{" "}
+                            {secondsLeft && secondsLeft > 0
+                              ? digitsEnToFa(secondsLeft)
+                              : digitsEnToFa(0)}{" "}
                             ثانیه
                           </p>
                         </div>

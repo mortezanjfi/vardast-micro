@@ -7,6 +7,8 @@ import { breakpoints } from "@vardast/tailwind-config/themes"
 import { ICategoryListLoader } from "@vardast/type/Loader"
 import clsx from "clsx"
 
+import CategoryListItem from "@/app/(client)/category/components/CategoryListItem"
+
 // import CategoryListItem from "./CategoryListItem"
 
 type DesktopCategoriesCardsSectionProps = {
@@ -91,7 +93,7 @@ const DesktopCategoriesCardsSection = ({
                     key={children.id}
                     className={clsx("h-44 w-full", !showMoreFlag && "hidden")}
                   >
-                    {/* <CategoryListItem
+                    <CategoryListItem
                       isSubCategory
                       className="!min-h-full min-w-full !rounded-2xl !bg-alpha-50 outline outline-1 outline-alpha-400 sm:max-h-full sm:max-w-full"
                       title={children?.title}
@@ -110,7 +112,7 @@ const DesktopCategoriesCardsSection = ({
                       href={encodeURI(
                         `/products/${children.id}/${children.title}`
                       )}
-                    /> */}
+                    />
                   </div>
                 )
             )}

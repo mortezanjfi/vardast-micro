@@ -167,7 +167,8 @@ const HomeIndex = ({ isMobileView }: HomeIndexProps) => {
     )
   }
 
-  const downloadPdf = () => {
+  const downloadPdf = (e) => {
+    e.preventDefault()
     setLocalStoragePdf(true)
     if (!!session.data) {
       // createEventTrackerDownloadPdfMutation.mutate({
@@ -207,7 +208,10 @@ const HomeIndex = ({ isMobileView }: HomeIndexProps) => {
           )}
         >
           <Button
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation()
+              e.nativeEvent.preventDefault()
+              e.nativeEvent.stopImmediatePropagation()
               setLocalStoragePdf()
               setDownloadPdfModal(false)
             }}
