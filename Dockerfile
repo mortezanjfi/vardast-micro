@@ -9,6 +9,7 @@ USER root
 
 ARG PROJECT_NAME_AUTHENTICATION=authentication
 ARG PROJECT_NAME_ADMIN=vardast-admin
+ARG PROJECT_NAME_CLIENT=vardast-admin
 ARG PROJECT_NAME_SELLER=vardast-seller
 ARG BUILD_MODE
 
@@ -20,7 +21,7 @@ WORKDIR /app
 COPY . .
  
 # Generate a partial monorepo with a pruned lockfile for a target workspace.
-RUN turbo prune ${PROJECT_NAME_ADMIN} ${PROJECT_NAME_SELLER} ${PROJECT_NAME_AUTHENTICATION} --docker
+RUN turbo prune ${PROJECT_NAME_ADMIN} ${PROJECT_NAME_SELLER} ${PROJECT_NAME_AUTHENTICATION} ${PROJECT_NAME_CLIENT} --docker
 
 # Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
@@ -37,6 +38,7 @@ RUN pnpm install
  
 RUN cp apps/${PROJECT_NAME_ADMIN}/.env.${BUILD_MODE} apps/${PROJECT_NAME_ADMIN}/.env
 RUN cp apps/${PROJECT_NAME_SELLER}/.env.${BUILD_MODE} apps/${PROJECT_NAME_SELLER}/.env
+RUN cp apps/${PROJECT_NAME_CLIENT}/.env.${BUILD_MODE} apps/${PROJECT_NAME_CLIENT}/.env
 RUN cp packages/graphql/.env.${BUILD_MODE} packages/graphql/.env
 
 # Build the project
