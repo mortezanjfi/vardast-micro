@@ -33,7 +33,7 @@ WORKDIR /app
 COPY --from=builder /app/out/full/ .
 COPY --from=builder /app/create-auth.js .
 RUN pnpm create-auth
-RUN rm -f apps/authentication
+RUN rm -rf apps/authentication
 
 # COPY --from=builder /app/out/pnpm-lock ./pnpm-lock
 RUN pnpm install
