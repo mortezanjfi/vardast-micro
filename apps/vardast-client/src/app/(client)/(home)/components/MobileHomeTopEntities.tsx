@@ -5,7 +5,7 @@ import SwiperNavigationButton, {
   SwiperButtonAction,
   SwiperButtonsDirection
 } from "@vardast/component/SwiperNavigationButton"
-import { Brand, Seller } from "@vardast/graphql/generated"
+import { GetAllBrandsCountQuery } from "@vardast/graphql/generated"
 import clsx from "clsx"
 import { useInView } from "react-intersection-observer"
 import { Swiper, SwiperSlide } from "swiper/react"
@@ -14,23 +14,21 @@ import { Swiper as SwiperClass } from "swiper/types"
 import BigSliderItem from "@/app/(client)/(home)/components/BigSliderItem"
 import MobileHomeSection from "@/app/(client)/(home)/components/MobileHomeSection"
 
-export type QueryTypes = Seller[] | Brand[]
-
-type Props<T extends QueryTypes> = {
-  query?: T
+type Props = {
+  query?: GetAllBrandsCountQuery["brands"]["data"]
   title: string
   __typename: "Seller" | "Brand"
   centeredSlides?: boolean
   isMobileView?: boolean
 }
 
-const MobileHomeTopEntities = <T extends QueryTypes>({
+const MobileHomeTopEntities = ({
   query,
   title,
   centeredSlides,
   isMobileView,
   __typename
-}: Props<T>) => {
+}: Props) => {
   const [swiperRef, setSwiperRef] = useState<SwiperClass>()
 
   const { ref: refNext, inView: inViewNext } = useInView({ threshold: 0.1 })

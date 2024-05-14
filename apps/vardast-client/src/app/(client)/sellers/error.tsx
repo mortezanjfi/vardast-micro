@@ -2,9 +2,8 @@
 
 import { useEffect } from "react"
 import Image from "next/image"
+import sadFace from "@vardast/asset/sad-face.svg"
 import { Button } from "@vardast/ui/button"
-
-import sadFace from "@/assets/sad-face.svg"
 
 export default function Error({
   error,

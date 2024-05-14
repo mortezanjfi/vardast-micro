@@ -12,12 +12,11 @@ import {
   Squares2X2Icon
 } from "@heroicons/react/24/solid"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
+import logo from "@vardast/asset/logo-horizontal-v1-persian-light-bg.svg"
 import Link from "@vardast/component/Link"
 import { _about_items } from "@vardast/lib/constants"
 import { PublicContext } from "@vardast/provider/PublicProvider"
 import { useAtom } from "jotai"
-
-import logo from "@/assets/logo-horizontal-v1-persian-light-bg.svg"
 
 const AboutPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
   const { appVersion } = useContext(PublicContext)
