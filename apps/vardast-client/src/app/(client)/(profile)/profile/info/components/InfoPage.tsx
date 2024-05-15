@@ -1,22 +1,29 @@
 "use client"
 
+import { useSession } from "next-auth/react"
+
 import PageTitle from "@/app/(client)/(profile)/components/PageTitle"
-import FamilyNameSection from "@/app/(client)/(profile)/profile/info/components/FamilyNameSection"
-import MobileNumberSection from "@/app/(client)/(profile)/profile/info/components/MobileNumberSection"
-import NameSection from "@/app/(client)/(profile)/profile/info/components/NameSection"
+import UpdateInfoItem from "@/app/(client)/(profile)/profile/info/components/UpdateInfoItem"
 
 type InfoPageProps = { title: string }
 
 const InfoPage = ({ title }: InfoPageProps) => {
+  const { data: session } = useSession()
+
   return (
     <div className="flex h-full w-full flex-col gap-9">
-      {/* dialog for changing name */}
       <PageTitle title={title} />
-      <div className="w-full divide-alpha-200 border-b border-alpha-200 bg-alpha-white text-alpha-500 md:grid md:grid-cols-2 md:grid-rows-2">
-        <NameSection />
-        <FamilyNameSection />
-        <MobileNumberSection />
-        <div className="flex h-28 items-center justify-between"></div>
+      <div className="w-full gap-x border-alpha-200 bg-alpha-white text-alpha-500 md:grid md:grid-cols-2 md:grid-rows-2">
+        <UpdateInfoItem
+          title="نام"
+          name="firstName"
+          value={session?.profile?.firstName || ""}
+        />
+        <UpdateInfoItem
+          title="نام خانوادگی"
+          name="lastName"
+          value={session?.profile?.lastName || ""}
+        />
       </div>
     </div>
   )

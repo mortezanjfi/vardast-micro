@@ -67,6 +67,8 @@
   "choose_entity": "{{ entity }} را انتخاب کنید",
   "choose_entity_file": "انتخاب فایل {{ entity }}",
   "city": "شهر",
+  "firstName": "نام",
+  "lastName": "نام خانوادگی",
   "code": "کد",
   "collapse": "بستن",
   "collapse_all": "بستن همه",

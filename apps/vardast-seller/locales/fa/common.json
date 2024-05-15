@@ -11,6 +11,8 @@
   "parent_category": "دسته‌بندی والد",
   "notice": "توجه",
   "topic": "موضوع",
+  "firstName": "نام",
+  "lastName": "نام خانوادگی",
   "orderId": "شماره سفارش",
   "message": "متن پیام",
   "bio": "درباره",

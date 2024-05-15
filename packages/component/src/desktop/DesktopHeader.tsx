@@ -119,41 +119,44 @@ const DesktopHeader = (_: DesktopHeaderProps) => {
                           onPointerLeave={(event) => event.preventDefault()}
                         >
                           <div className="bg-alpha-white py-4">
-                            <Link prefetch={false} href={"/profile"}>
-                              <div className="flex items-center gap-2 px-4 py-2">
-                                <Avatar className="rounded-full border border-secondary">
-                                  <AvatarImage
-                                    src={
-                                      session?.profile?.avatarFile
-                                        ?.url as string
-                                    }
-                                    alt="seller"
-                                  />
+                            <NavigationMenuLink>
+                              <Link prefetch={false} href={"/profile/info"}>
+                                <div className="flex items-center gap-2 px-4 py-2">
+                                  <Avatar className="rounded-full border border-secondary">
+                                    <AvatarImage
+                                      src={
+                                        session?.profile?.avatarFile
+                                          ?.url as string
+                                      }
+                                      alt="seller"
+                                    />
 
-                                  <AvatarFallback>
-                                    {session?.profile?.firstName &&
-                                      session?.profile?.lastName?.[0]}
-                                  </AvatarFallback>
-                                </Avatar>
-                                <div className="flex flex-col">
-                                  {session?.profile?.fullName &&
-                                  session?.profile?.fullName !== "null null" ? (
-                                    <h4 className="truncate font-semibold">
-                                      {session?.profile?.fullName}
-                                    </h4>
-                                  ) : (
-                                    "کاربر وردست"
-                                  )}
-                                  <p className="text-sm font-semibold text-alpha-400">
-                                    {session?.profile?.cellphone
-                                      ? digitsEnToFa(
-                                          session?.profile?.cellphone
-                                        )
-                                      : digitsEnToFa("09123456789")}
-                                  </p>
+                                    <AvatarFallback>
+                                      {session?.profile?.firstName &&
+                                        session?.profile?.lastName?.[0]}
+                                    </AvatarFallback>
+                                  </Avatar>
+                                  <div className="flex flex-col">
+                                    {session?.profile?.fullName &&
+                                    session?.profile?.fullName !==
+                                      "null null" ? (
+                                      <h4 className="truncate font-semibold">
+                                        {session?.profile?.fullName}
+                                      </h4>
+                                    ) : (
+                                      "کاربر وردست"
+                                    )}
+                                    <p className="text-sm font-semibold text-alpha-400">
+                                      {session?.profile?.cellphone
+                                        ? digitsEnToFa(
+                                            session?.profile?.cellphone
+                                          )
+                                        : digitsEnToFa("09123456789")}
+                                    </p>
+                                  </div>
                                 </div>
-                              </div>
-                            </Link>
+                              </Link>
+                            </NavigationMenuLink>
                             {status === "authenticated" &&
                               session?.profile?.roles.some(
                                 (role) => role?.name === "admin"
