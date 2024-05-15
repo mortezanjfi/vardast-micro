@@ -7,6 +7,7 @@ import Breadcrumb, { CrumbItemProps } from "@vardast/component/Breadcrumb"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
+import ProductDescription from "@vardast/component/product-description"
 import {
   Brand,
   EventTrackerTypes,
@@ -38,7 +39,6 @@ import {
 
 import BrandName from "@/app/(client)/product/components/BrandName"
 import ProductAttributes from "@/app/(client)/product/components/product-attributes"
-import ProductDescription from "@/app/(client)/product/components/product-description"
 import ProductImages from "@/app/(client)/product/components/product-images"
 import ProductOffers from "@/app/(client)/product/components/product-offers"
 import ProductInfo from "@/app/(client)/product/components/ProductInfo"

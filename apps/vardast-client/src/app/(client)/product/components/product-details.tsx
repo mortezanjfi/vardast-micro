@@ -1,5 +1,6 @@
+import ProductSectionContainer from "@vardast/component/ProductSectionContainer"
+
 import { GroupedAttributes } from "@/app/(client)/product/components/ProductPage"
-import ProductSectionContainer from "@/app/(client)/product/components/ProductSectionContainer"
 
 type ProductDetailsProps = {
   attributes: GroupedAttributes[]

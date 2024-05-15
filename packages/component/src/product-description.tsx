@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 
-import ProductSectionContainer from "@/app/(client)/product/components/ProductSectionContainer"
+import ProductSectionContainer from "./ProductSectionContainer"
 
 type ProductDescriptionProps = {
   description: string

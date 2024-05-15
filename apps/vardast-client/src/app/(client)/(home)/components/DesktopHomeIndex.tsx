@@ -1,6 +1,9 @@
 "use client"
 
 import { useState } from "react"
+import CategoryCircleItem, {
+  CategoryCircleItemLoader
+} from "@vardast/component/category/CategoryCircleItem"
 import { Brand, Category } from "@vardast/graphql/generated"
 import clsx from "clsx"
 
@@ -11,9 +14,6 @@ import MobileHomeSection from "@/app/(client)/(home)/components/MobileHomeSectio
 import MobileHomeSlider from "@/app/(client)/(home)/components/MobileHomeSlider"
 import MobileHomeTopBlogs from "@/app/(client)/(home)/components/MobileHomeTopBlogs"
 import MobileHomeTopEntities from "@/app/(client)/(home)/components/MobileHomeTopEntities"
-import CategoryCircleItem, {
-  CategoryCircleItemLoader
-} from "@/app/(client)/category/components/CategoryCircleItem"
 
 const DesktopHomeIndex = ({
   getVocabularyQueryFcQuery,

@@ -5,7 +5,7 @@ import { Category, GetVocabularyQuery } from "@vardast/graphql/generated"
 
 import CategoryCircleItem, {
   CategoryCircleItemLoader
-} from "@/app/(client)/category/components/CategoryCircleItem"
+} from "./CategoryCircleItem"
 
 const CategorySegment = ({
   getVocabularyQueryFcQuery

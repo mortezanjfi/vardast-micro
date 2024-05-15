@@ -6,9 +6,12 @@ import { GetVocabularyQuery } from "@vardast/graphql/generated"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { getVocabularyQueryFn } from "@vardast/query/queryFns/vocabularyQueryFns"
 
-import CategoriesList from "@/app/(seller)/categories/components/CategoriesList"
+import CategoriesList from "./CategoriesList"
 
-const VocabulariesPage = () => {
+type VocabulariesPageProps = {
+  isMobileView: boolean
+}
+const VocabulariesPage = ({ isMobileView }: VocabulariesPageProps) => {
   const { data, isLoading } = useQuery<GetVocabularyQuery>({
     queryKey: [
       QUERY_FUNCTIONS_KEY.VOCABULARY_QUERY_KEY,
@@ -24,6 +27,7 @@ const VocabulariesPage = () => {
 
   return (
     <CategoriesList
+      isMobileView={isMobileView}
       data={data?.vocabulary.categories.slice(0, 14)}
       isLoading={isLoading}
     />

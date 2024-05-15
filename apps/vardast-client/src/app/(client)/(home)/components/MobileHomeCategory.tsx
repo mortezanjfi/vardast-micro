@@ -1,10 +1,10 @@
 "use client"
 
 import { UseQueryResult } from "@tanstack/react-query"
+import CategorySegment from "@vardast/component/category/CategorySegment"
 import { GetVocabularyQuery } from "@vardast/graphql/generated"
 
 import MobileHomeSection from "@/app/(client)/(home)/components/MobileHomeSection"
-import CategorySegment from "@/app/(client)/category/components/CategorySegment"
 
 const MobileHomeCategory = ({
   getVocabularyQueryFcQuery

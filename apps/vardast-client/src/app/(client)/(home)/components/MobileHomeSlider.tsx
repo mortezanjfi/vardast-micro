@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { UseQueryResult } from "@tanstack/react-query"
+import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
 import Link from "@vardast/component/Link"
 import { Banner, GetBannerHomePageQuery } from "@vardast/graphql/generated"
 import useWindowSize from "@vardast/hook/use-window-size"
@@ -10,8 +11,6 @@ import { breakpoints } from "@vardast/tailwind-config/themes"
 import clsx from "clsx"
 import { Autoplay } from "swiper/modules"
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react"
-
-import { ICategoryListLoader } from "@/app/(client)/category/components/CategoryListLoader"
 
 const chooseBannerImageSize = (banner: Banner, width: number) => {
   if (width >= breakpoints["2xl"]) {

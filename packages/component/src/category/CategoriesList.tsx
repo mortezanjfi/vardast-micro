@@ -2,9 +2,9 @@
 
 import { GetCategoryQuery } from "@vardast/graphql/generated"
 
-import CategoryListContainer from "@/app/(client)/category/components/CategoryListContainer"
-import CategoryListItem from "@/app/(client)/category/components/CategoryListItem"
-import CategorySkeleton from "@/app/(client)/category/components/CategorySkeleton"
+import CategoryListContainer from "./CategoryListContainer"
+import CategoryListItem from "./CategoryListItem"
+import CategorySkeleton from "./CategorySkeleton"
 
 interface CategoriesListProps {
   isMobileView?: boolean

@@ -1,17 +1,29 @@
 "use client"
 
-import React, { PropsWithChildren, useState } from "react"
-import Link from "@vardast/component/Link"
+import React, { ReactElement, useState } from "react"
 
-const CategoryListContainer: React.FC<
-  PropsWithChildren<{
-    isSubcategory?: boolean
-    description?: string
-    href?: string
-  }>
-> = ({ isSubcategory, description, href, children }) => {
+import Link from "../Link"
+import { ICategoryListLoader } from "./CategoryListLoader"
+
+interface ICategoryListContainer {
+  isSubcategory?: boolean
+  description?: string
+  href?: string
+  children(_: {
+    selectedItemId: ICategoryListLoader
+    setSelectedItemId: (_?: any) => void
+  }): ReactElement
+}
+
+const CategoryListContainer: React.FC<ICategoryListContainer> = ({
+  isSubcategory,
+  description,
+  href,
+  children
+}) => {
   const [more] = useState(false)
-
+  const [selectedItemId, setSelectedItemId] =
+    useState<ICategoryListLoader>(null)
   return (
     <>
       {description && (
@@ -44,7 +56,7 @@ const CategoryListContainer: React.FC<
             : "grid-rows-2 md:grid-rows-1"
         }  mt-6 gap-4 divide-alpha-200 p-6 pt-0`}
       >
-        {children}
+        {children({ selectedItemId, setSelectedItemId })}
       </ul>
     </>
   )

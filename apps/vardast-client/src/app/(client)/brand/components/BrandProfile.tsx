@@ -15,6 +15,8 @@ import BrandOrSellerProfile, {
 import BrandsOrSellersContainer, {
   BrandContainerType
 } from "@vardast/component/BrandsOrSellersContainer"
+import CategoryListContainer from "@vardast/component/category/CategoryListContainer"
+import CategoryListItem from "@vardast/component/category/CategoryListItem"
 import CategoriesSort, {
   CategoriesSortStatic
 } from "@vardast/component/desktop/CategoriesSort"
@@ -53,8 +55,6 @@ import { Session } from "next-auth"
 import { useSession } from "next-auth/react"
 
 import BrandSort from "@/app/(client)/brands/components/BrandSort"
-import CategoryListContainer from "@/app/(client)/category/components/CategoryListContainer"
-import CategoryListItem from "@/app/(client)/category/components/CategoryListItem"
 import SellersSort, {
   SellerSortStatic
 } from "@/app/(client)/sellers/components/SellerSort"

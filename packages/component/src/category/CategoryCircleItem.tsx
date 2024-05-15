@@ -2,11 +2,11 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import Link from "@vardast/component/Link"
 import { Category } from "@vardast/graphql/generated"
 import clsx from "clsx"
 
-import { ICategoryListLoader } from "@/app/(client)/category/components/CategoryListLoader"
+import Link from "../Link"
+import { ICategoryListLoader } from "./CategoryListLoader"
 
 type Props = {
   data: Category

@@ -15,6 +15,7 @@ import { Line } from "react-chartjs-2"
 
 import "chart.js/auto"
 
+import ProductSectionContainer from "@vardast/component/ProductSectionContainer"
 import { ChartEnum, useGetPriceChartQuery } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
@@ -22,8 +23,6 @@ import { myColors } from "@vardast/tailwind-config/themes"
 import { ToggleGroup, ToggleGroupItem } from "@vardast/ui/toggle-group"
 import convertToPersianDate from "@vardast/util/convertToPersianDate"
 import clsx from "clsx"
-
-import ProductSectionContainer from "@/app/(client)/product/components/ProductSectionContainer"
 
 ChartJS.register(
   CategoryScale,

@@ -4,10 +4,9 @@ import { useState } from "react"
 import Image from "next/image"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import CardAvatar from "@vardast/component/CardAvatar"
+import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
 import Link from "@vardast/component/Link"
 import clsx from "clsx"
-
-import { ICategoryListLoader } from "@/app/(client)/category/components/CategoryListLoader"
 
 export type SliderItemProps = {
   data: {

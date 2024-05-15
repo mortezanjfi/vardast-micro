@@ -7,7 +7,7 @@ import { breakpoints } from "@vardast/tailwind-config/themes"
 import { ICategoryListLoader } from "@vardast/type/Loader"
 import clsx from "clsx"
 
-import CategoryListItem from "@/app/(client)/category/components/CategoryListItem"
+import CategoryListItem from "./CategoryListItem"
 
 // import CategoryListItem from "./CategoryListItem"
 

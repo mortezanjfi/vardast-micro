@@ -1,11 +1,11 @@
 import { forwardRef, Ref } from "react"
 import Image from "next/image"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
-import Link from "@vardast/component/Link"
 import { checkSellerRedirectUrl } from "@vardast/util/checkSellerRedirectUrl"
 import clsx from "clsx"
 
-import { ICategoryListLoader } from "@/app/(client)/category/components/CategoryListLoader"
+import Link from "../Link"
+import { ICategoryListLoader } from "./CategoryListLoader"
 
 interface IVocabularyItem {
   ref?: Ref<HTMLAnchorElement> | undefined

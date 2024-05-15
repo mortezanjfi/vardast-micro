@@ -1,11 +1,10 @@
 "use client"
 
 import { useState } from "react"
+import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
 import Link from "@vardast/component/Link"
 import { ISellerMobileAnalyzeProps } from "@vardast/type/Seller"
 import clsx from "clsx"
-
-import { ICategoryListLoader } from "@/app/(seller)/categories/components/CategoryListLoader"
 
 export const SellerHomeItem = ({
   Icon,

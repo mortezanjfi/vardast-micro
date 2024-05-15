@@ -5,7 +5,7 @@ import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
-import ProductsPage from "@/app/(seller)/products/components/products-page-client"
+import ProductsPage from "@/app/(seller)/products/components/products-page"
 import { SellerDesktopProductsPage } from "@/app/(seller)/products/components/SellerDesktopProductsPage"
 
 type SearchIndexProps = {

@@ -6,7 +6,8 @@
     "src/@core/types/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "../../packages/component/src/category/DesktopCategoriesCardsSection.tsx"
   ],
   "exclude": [
     "node_modules",

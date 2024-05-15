@@ -9,7 +9,7 @@ import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 import { getServerSession } from "next-auth"
 
-import ProductsPage from "@/app/(seller)/products/components/products-page"
+import ProductsPageIndex from "@/app/(seller)/products/components/my-products-page-index"
 import { SellerDesktopMyProducts } from "@/app/(seller)/products/components/SellerDesktopMyProducts"
 
 type SearchIndexProps = {
@@ -35,7 +35,7 @@ async function MyProductsPage({ params: { slug } }: SearchIndexProps) {
     <>
       <ReactQueryHydrate state={dehydratedState}>
         {isMobileView ? (
-          <ProductsPage
+          <ProductsPageIndex
             session={session}
             slug={slug}
             args={args}

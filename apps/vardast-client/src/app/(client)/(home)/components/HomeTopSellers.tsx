@@ -4,6 +4,7 @@ import { useMemo, useState } from "react"
 import Image from "next/image"
 import { MapPinIcon } from "@heroicons/react/24/outline"
 import { UseQueryResult } from "@tanstack/react-query"
+import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
 import Link from "@vardast/component/Link"
 import SwiperNavigationButton, {
   SwiperButtonAction,
@@ -16,7 +17,6 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import { Swiper as SwiperClass } from "swiper/types"
 
 import MobileHomeSection from "@/app/(client)/(home)/components/MobileHomeSection"
-import { ICategoryListLoader } from "@/app/(client)/category/components/CategoryListLoader"
 
 type Props = {
   allSellersCount: UseQueryResult<GetAllSellersCountQuery>

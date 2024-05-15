@@ -1,7 +1,7 @@
 {
-  "name": "پنل فروش وردست",
-  "short_name": "وردست فروشنده",
-  "description": "مدیریت فروش وردست",
+  "name": "وردست",
+  "short_name": "وردست",
+  "description": "دستیار خرید و فروش مصالح و تجهیزات ساختمانی",
   "icons": [
     {
       "src": "images/pwa/windows11/SmallTile.scale-100.png",

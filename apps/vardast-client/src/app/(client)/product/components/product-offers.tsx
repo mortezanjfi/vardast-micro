@@ -2,11 +2,11 @@
 
 import { useState } from "react"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
+import ProductSectionContainer from "@vardast/component/ProductSectionContainer"
 import { Offer, Uom } from "@vardast/graphql/generated"
 
 import DesktopProductOfferItem from "@/app/(client)/product/components/DesktopProductOfferItem"
 import MobileProductOfferItem from "@/app/(client)/product/components/MobileProductOfferItem"
-import ProductSectionContainer from "@/app/(client)/product/components/ProductSectionContainer"
 
 type ProductOffersProps = {
   isMobileView: boolean

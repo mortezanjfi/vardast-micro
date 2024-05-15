@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo } from "react"
 import { useQuery } from "@tanstack/react-query"
+import CategoriesList from "@vardast/component/category/CategoriesList"
 import NotFoundMessage from "@vardast/component/NotFound"
 import {
   Category,
@@ -10,8 +11,6 @@ import {
 import { getMyProfileCategoriesSellerQueryFns } from "@vardast/query/queryFns/getMyProfileCategoriesSellerQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { Session } from "next-auth"
-
-import CategoriesList from "@/app/(seller)/categories/components/CategoriesList"
 
 interface CategoriesListProps {
   session: Session | null
