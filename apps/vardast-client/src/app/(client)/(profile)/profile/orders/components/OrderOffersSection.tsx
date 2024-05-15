@@ -6,7 +6,7 @@ import OrderProductCard, {
   OrderProductCardSkeleton
 } from "@/app/(client)/(profile)/profile/orders/components/OrderProductCard"
 import OrderProductListContainer from "@/app/(client)/(profile)/profile/orders/components/OrderProductListContainer"
-import { NotFoundItems } from "@/app/(public)/(purchaser)/favorites/components/FavoritesPageIndex"
+import { NotFoundItems } from "@/app/(client)/favorites/components/FavoritesPageIndex"
 
 type OrderOffersSectionProps = {}
 

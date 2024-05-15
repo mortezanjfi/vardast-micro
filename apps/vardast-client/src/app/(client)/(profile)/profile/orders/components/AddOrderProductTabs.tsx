@@ -1,12 +1,12 @@
 "use client"
 
 import { Dispatch, SetStateAction, useMemo } from "react"
+import { TabTitleWithExtraData } from "@vardast/component/BrandOrSellerProfile"
 
 import AddOrderProductOrganizer from "@/app/(client)/(profile)/profile/orders/components/AddOrderProductOrganizer"
 import OrderManualTabContent from "@/app/(client)/(profile)/profile/orders/components/OrderManualTabContent"
 import { OrderProductTabContent } from "@/app/(client)/(profile)/profile/orders/components/OrderProductTabContent"
 import UploadTabContent from "@/app/(client)/(profile)/profile/orders/components/UploadTabContent"
-import { TabTitleWithExtraData } from "@/app/(public)/components/BrandOrSellerProfile"
 
 export type AddOrderProductTab = {
   value: string

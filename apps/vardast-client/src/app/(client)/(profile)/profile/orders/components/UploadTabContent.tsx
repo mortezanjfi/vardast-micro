@@ -2,11 +2,10 @@
 import { ChangeEvent, useRef, useState } from "react"
 import Dropzone from "@vardast/component/Dropzone"
 import { Image } from "@vardast/graphql/generated"
+import { uploadPaths } from "@vardast/lib/uploadPaths"
 import { Button } from "@vardast/ui/button"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
-
-import { uploadPaths } from "@core/lib/uploadPaths"
 
 type UploadTabContentProps = {}
 

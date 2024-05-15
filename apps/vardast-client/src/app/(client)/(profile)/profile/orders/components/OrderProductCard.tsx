@@ -13,7 +13,10 @@ import Image from "next/image"
 import { TrashIcon } from "@heroicons/react/24/outline"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import Link from "@vardast/component/Link"
+import PriceTitle from "@vardast/component/PriceTitle"
+import { ProductContainerType } from "@vardast/component/ProductListContainer"
 import { Product } from "@vardast/graphql/generated"
+import { ICategoryListLoader } from "@vardast/type/Loader"
 import { Button } from "@vardast/ui/button"
 import { checkSellerRedirectUrl } from "@vardast/util/checkSellerRedirectUrl"
 import clsx from "clsx"
@@ -23,9 +26,6 @@ import useTranslation from "next-translate/useTranslation"
 
 import ProductDeleteModal from "@/app/(client)/(profile)/profile/orders/components/ProductDeleteModal"
 import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/components/DetailsWithTitle"
-import { ICategoryListLoader } from "@/app/(public)/(purchaser)/category/components/CategoryListLoader"
-import PriceTitle from "@/app/(public)/components/PriceTitle"
-import { ProductContainerType } from "@/app/(public)/components/ProductListContainer"
 
 interface OrderProductCardProps {
   isDefault?: boolean
