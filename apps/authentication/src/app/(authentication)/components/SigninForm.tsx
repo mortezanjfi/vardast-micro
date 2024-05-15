@@ -398,8 +398,7 @@ const SigninFormContent = () => {
                           <Input
                             type="tel"
                             inputMode="numeric"
-                            className="placeholder:text-right"
-                            placeholder={t("common:cellphone")}
+                            placeholder={digitsEnToFa("09*********")}
                             {...field}
                             onChange={(e) =>
                               e.target.value.length <= 11 &&

@@ -253,7 +253,7 @@ const MobileCategoriesFilter = ({
       open={CategoriesFilterVisibility}
       onOpenChange={setCategoriesFilterVisibility}
     >
-      <DialogContent className="max-w-screen h-screen max-h-screen w-screen rounded-none">
+      <DialogContent className="h-full max-h-full w-screen max-w-screen rounded-none">
         <div>
           <div className="sticky top-0 border-b border-alpha-200 bg-white p-4">
             <div className="flex items-center gap-2">
