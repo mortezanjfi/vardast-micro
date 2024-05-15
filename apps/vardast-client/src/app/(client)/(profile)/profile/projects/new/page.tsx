@@ -1,41 +1,38 @@
 import { Metadata } from "next"
-import { redirect } from "next/navigation"
 import { dehydrate } from "@tanstack/react-query"
-import { authOptions } from "@vardast/auth/authOptions"
 import withMobileHeader from "@vardast/component/withMobileHeader"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
-import { getServerSession } from "next-auth"
 
-import ProfileIndex from "../components"
+import ProjectForm from "@/app/(client)/(profile)/profile/projects/components/ProjectForm"
 
 // set dynamic metadata
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "حساب کاربری"
+    title: "افزودن پروژه"
   }
 }
 
 const ProfilePage = async () => {
   const isMobileView = await CheckIsMobileView()
-  const session = await getServerSession(authOptions)
   const queryClient = getQueryClient()
 
-  if (!session) {
-    redirect("/auth/signin/profile")
-  }
+  // if (!isMobileView) {
+  //   redirect("/")
+  // }
 
   const dehydratedState = dehydrate(queryClient)
 
-  if (isMobileView) {
-    return (
-      <ReactQueryHydrate state={dehydratedState}>
-        <ProfileIndex />
-      </ReactQueryHydrate>
-    )
-  }
-  redirect("/profile/info")
+  return (
+    <ReactQueryHydrate state={dehydratedState}>
+      {!isMobileView && (
+        <ProjectForm
+          title={(await generateMetadata()).title?.toString() as string}
+        />
+      )}
+    </ReactQueryHydrate>
+  )
 }
 
-export default withMobileHeader(ProfilePage, { title: "حساب کاربری" })
+export default withMobileHeader(ProfilePage, { title: "افزودن پروژه" })

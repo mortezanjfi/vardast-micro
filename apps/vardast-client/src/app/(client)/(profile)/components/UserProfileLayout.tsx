@@ -1,11 +1,11 @@
 "use client"
 
-import { ReactNode, Suspense, useState } from "react"
 import Breadcrumb from "@vardast/component/Breadcrumb"
 import Sidebar from "@vardast/component/Sidebar"
 import { _profileSidebarMenu } from "@vardast/lib/constants"
 import { Button } from "@vardast/ui/button"
 import { LucideMenu } from "lucide-react"
+import { ReactNode, Suspense, useState } from "react"
 
 type UserProfileLayoutProps = {
   children: ReactNode
@@ -35,14 +35,14 @@ const UserProfileLayout = ({
             </Button>
             <div className="flex-1 overflow-y-auto">
               <Suspense>
-                <Breadcrumb dynamic={true} isMobileView={isMobileView} />
+                <Breadcrumb dynamic isMobileView={isMobileView} />
               </Suspense>
             </div>
           </div>
 
-          <div className="app-inner gap-8">
+          <div className="app-inner gap-3.5 pb-5">
             <Sidebar
-              isUserProfile={true}
+              isUserProfile
               open={sidebarOpen}
               onOpenChanged={setSidebarOpen}
               menus={_profileSidebarMenu}

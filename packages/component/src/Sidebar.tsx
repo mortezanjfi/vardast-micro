@@ -11,13 +11,11 @@ import {
 import { WalletIcon } from "@heroicons/react/24/solid"
 import { useClickOutside } from "@mantine/hooks"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
-import beSellerImage from "@vardast/asset/images/be-seller.png"
 import logo from "@vardast/asset/logo-horizontal-v2-persian-light-bg.svg"
 import { NavigationType } from "@vardast/type/Navigation"
-import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
 import { SetStateAction } from "jotai"
-import { signIn, useSession } from "next-auth/react"
+import { useSession } from "next-auth/react"
 
 import Link from "./Link"
 import Navigation from "./Navigation"
@@ -40,7 +38,7 @@ const Sidebar = ({
 }: SidebarProps) => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const { data: session } = useSession()
+  const { data: session, status: sessionStatus } = useSession()
   // const [isOpen, setIsOpen] = useState<boolean>(false)
   const productContainerRef = useRef<HTMLAnchorElement>(null)
   const ref = useClickOutside(() => {
@@ -80,7 +78,7 @@ const Sidebar = ({
             >
               {/* <OrganizationMenu /> */}
               {!isAdmin && !isUserProfile && (
-                <Link href="/">
+                <Link prefetch={false} href="/">
                   <div>
                     <Image src={logo} alt={`وردست`} />
                   </div>
@@ -110,7 +108,7 @@ const Sidebar = ({
                         </p>
                       </div>
                     </div>
-                    <Link href={"/profile/info"}>
+                    <Link prefetch={false} href={"/profile/info"}>
                       <PencilSquareIcon height={20} width={20} />
                     </Link>
                   </div>
@@ -155,24 +153,34 @@ const Sidebar = ({
                       : t("common:switch_dark_mode_on")}
                   </>
                 </Button> */}
-                    {session ? (
-                      <Link
-                        href="/auth/signout"
-                        className="btn-ghost btn justify-start !px-0.5 text-start"
-                      >
-                        <ArrowLeftStartOnRectangleIcon className="icon" />
-                        خروج از حساب کاربری
-                      </Link>
-                    ) : (
-                      <Button
-                        onClick={() => signIn()}
-                        variant="ghost"
-                        className="justify-start !px-0.5 text-start !text-success"
-                      >
-                        <ArrowRightEndOnRectangleIcon className="icon" />
-                        ورود به حساب کاربری
-                      </Button>
-                    )}
+                    {sessionStatus !== "loading" &&
+                      (session ? (
+                        <Link
+                          prefetch={false}
+                          href="/auth/signout"
+                          className="btn-ghost btn justify-start !px-0.5 text-start"
+                        >
+                          <ArrowLeftStartOnRectangleIcon
+                            width={24}
+                            height={24}
+                            className="icon"
+                          />
+                          خروج از حساب کاربری
+                        </Link>
+                      ) : (
+                        <Link
+                          prefetch={false}
+                          href="/auth/signin"
+                          className="btn-ghost btn justify-start !px-0.5 text-start !text-success"
+                        >
+                          <ArrowRightEndOnRectangleIcon
+                            width={24}
+                            height={24}
+                            className="icon"
+                          />
+                          ورود به حساب کاربری
+                        </Link>
+                      ))}
                   </div>
                 )}
               </div>
@@ -183,7 +191,7 @@ const Sidebar = ({
                   <UserMenu />
                 </Suspense>
               )}
-              {isUserProfile && (
+              {/* {isUserProfile && (
                 <div className="bg-alpha-white px-6 pt">
                   <Link
                     href={process.env.NEXT_PUBLIC_SELLER_VARDAST as string}
@@ -201,7 +209,7 @@ const Sidebar = ({
                     </div>
                   </Link>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>
