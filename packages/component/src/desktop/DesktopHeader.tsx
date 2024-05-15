@@ -59,7 +59,7 @@ const DesktopHeader = (_: DesktopHeaderProps) => {
   const pathname = usePathname()
 
   return (
-    <header className="fixed left-0 right-0 top-0 z-30 h-[92px] border-b bg-alpha-white px-6">
+    <header className="fixed left-0 right-0 top-0 z-30 h-[92px] border-b bg-alpha-white px-6 sm:px-0">
       <div className="container grid grid-cols-12 grid-rows-2 items-center gap-y py-7 md:grid-rows-1 md:gap-x-12">
         <Link
           href="/"

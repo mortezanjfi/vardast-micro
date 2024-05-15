@@ -88,7 +88,7 @@ export const breakpoints = {
 export const containerPaddings = {
   DEFAULT: "0px",
   md: "20px",
-  xl: "32px",
+  xl: "20px",
   "2xl": "20px"
 }
 export const containerScreens = {
@@ -96,7 +96,7 @@ export const containerScreens = {
   sm: "640px",
   md: "768px",
   lg: "1024px",
-  xl: "1280px",
+  xl: "1336px",
   "2xl": "1536px",
   "3xl": "1676px"
 }

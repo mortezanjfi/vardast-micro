@@ -12,6 +12,7 @@ import * as LabelPrimitive from "@radix-ui/react-label"
 import { Slot } from "@radix-ui/react-slot"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { cva, VariantProps } from "class-variance-authority"
+import clsx from "clsx"
 import {
   Controller,
   ControllerProps,
@@ -147,6 +148,8 @@ FormLabel.displayName = "FormLabel"
 
 export interface FormControlProps
   extends VariantProps<typeof formControlVariants> {
+  toggleInputGroup?: string
+  toggleInsetInputGroup?: string
   prefixAddon?: ReactNode
   suffixAddon?: ReactNode
   prefixElement?: ReactNode
@@ -159,6 +162,8 @@ const FormControl = forwardRef<
 >(
   (
     {
+      toggleInsetInputGroup,
+      toggleInputGroup,
       prefixAddon,
       prefixElement,
       suffixElement,
@@ -183,9 +188,9 @@ const FormControl = forwardRef<
         )}
         dir={dir}
       >
-        <div className="input-group">
+        <div className={clsx("input-group", toggleInputGroup)}>
           {prefixAddon && <div className="input-addon">{prefixAddon}</div>}
-          <div className="input-inset">
+          <div className={clsx("input-inset", toggleInsetInputGroup)}>
             {prefixElement && (
               <div className="input-element">{prefixElement}</div>
             )}

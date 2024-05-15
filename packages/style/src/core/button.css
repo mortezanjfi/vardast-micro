@@ -53,8 +53,8 @@
   }
   &-xl {
     @apply gap-3
-        px-6
-        py-5
+        px-5
+        py-4
         text-xl;
   }
 
@@ -84,6 +84,18 @@
         dark:ring-primary-600/40;
   }
 
+  &.btn-outline-blue {
+    @apply border border-blue-600
+        text-blue-600
+        ring-0
+        ring-blue-300/40
+        focus:bg-blue-200
+        focus:ring-4
+        focus-visible:bg-blue-200
+        focus-visible:ring-4
+        md:hover:bg-blue-200
+        dark:ring-blue-600/40;
+  }
   &.btn-danger {
     @apply bg-red-600
         text-white
@@ -116,6 +128,19 @@
     &:where(:hover, :focus, :focus-visible) {
       --border-opacity: 0.2;
     }
+  }
+
+  &.btn-full-secondary {
+    @apply bg-secondary-600
+    text-white
+    ring-0
+    ring-secondary-300/40
+    focus:bg-secondary-700
+    focus:ring-4
+    focus-visible:bg-secondary-700
+    focus-visible:ring-4
+    md:hover:bg-secondary-700
+    dark:ring-secondary-600/40;
   }
 
   &.btn-ghost {
@@ -189,7 +214,7 @@
       @apply p-4;
     }
     &.btn-xl {
-      @apply p-5;
+      @apply p-4;
     }
   }
 }

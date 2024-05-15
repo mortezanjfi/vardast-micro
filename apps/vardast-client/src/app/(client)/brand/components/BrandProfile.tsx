@@ -744,7 +744,7 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
 
   const brandQuery = useQuery<GetBrandQuery>(
     [QUERY_FUNCTIONS_KEY.BRAND_QUERY_KEY, { id: +slug[0] }],
-    () => getBrandQueryFn({ id: +slug[0], accessToken: session?.accessToken }),
+    () => getBrandQueryFn({ id: +slug[0] }),
     {
       keepPreviousData: true
     }

@@ -3,14 +3,15 @@
 import { forwardRef } from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
-import type { VariantProps } from "class-variance-authority"
-import { cva } from "class-variance-authority"
+import { cva, type VariantProps } from "class-variance-authority"
 
 const buttonVariants = cva("btn", {
   variants: {
     variant: {
       primary: "btn-primary",
       "outline-primary": "btn-outline-primary",
+      "outline-blue": "btn-outline-blue",
+      "full-secondary": "btn-full-secondary",
       secondary: "btn-secondary",
       danger: "btn-danger",
       ghost: "btn-ghost",

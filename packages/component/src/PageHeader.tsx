@@ -1,4 +1,7 @@
+import clsx from "clsx"
+
 interface PageHeaderProps {
+  pageHeaderClasses?: string
   children?: React.ReactNode
   title: string
   slot?: React.ReactNode
@@ -8,6 +11,7 @@ interface PageHeaderProps {
 }
 
 function PageHeader({
+  pageHeaderClasses,
   children,
   title,
   titleClasses = "text-3xl",
@@ -15,7 +19,7 @@ function PageHeader({
   titleContainerClasses = ""
 }: PageHeaderProps) {
   return (
-    <div className="mb-6 flex flex-col  gap-6 ">
+    <div className={clsx("mb-6 flex flex-col  gap-6 ", pageHeaderClasses)}>
       {/* <button className="btn-sm btn">
         <ChevronRight className="icon" />
         <span>مناطق جغرافیایی</span>

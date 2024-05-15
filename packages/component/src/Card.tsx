@@ -1,6 +1,7 @@
 import { ReactNode } from "react"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { cva, VariantProps } from "class-variance-authority"
+import clsx from "clsx"
 
 const cardVariants = cva("card rounded p-4", {
   variants: {
@@ -11,6 +12,7 @@ const cardVariants = cva("card rounded p-4", {
 })
 
 interface CardProps extends VariantProps<typeof cardVariants> {
+  titleClass?: string
   className?: string
   title?: string
   description?: string
@@ -18,6 +20,7 @@ interface CardProps extends VariantProps<typeof cardVariants> {
 }
 
 const Card = ({
+  titleClass,
   title,
   description,
   template,
@@ -31,7 +34,11 @@ const Card = ({
       {...props}
     >
       <div>
-        {title && <h2 className="font-medium text-alpha-800">{title}</h2>}
+        {title && (
+          <h2 className={clsx("font-medium text-alpha-800", titleClass)}>
+            {title}
+          </h2>
+        )}
         {description && <p className="text-sm text-alpha-500">{description}</p>}
       </div>
       <div>{children}</div>

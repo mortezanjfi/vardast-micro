@@ -3,7 +3,6 @@
 import { useContext, useState } from "react"
 // import { useParams } from "next/navigation"
 import * as Checkbox from "@radix-ui/react-checkbox"
-import * as Dialog from "@radix-ui/react-dialog"
 import * as Label from "@radix-ui/react-label"
 import {
   Attribute,
@@ -14,6 +13,7 @@ import {
 import { PublicContext } from "@vardast/provider/PublicProvider"
 import graphqlRequestClientWithoutToken from "@vardast/query/queryClients/graphqlRequestClientWithoutToken"
 import { Button } from "@vardast/ui/button"
+import { Dialog, DialogContent } from "@vardast/ui/dialog"
 import { useAtom } from "jotai"
 import { LucideArrowRight, LucideCheck, LucideChevronLeft } from "lucide-react"
 
@@ -150,8 +150,12 @@ const MobileFilterableAttributes = ({
   )
 
   return (
-    <Dialog.Root open={filtersVisibility} onOpenChange={setFiltersVisibility}>
-      <Dialog.Content className="fixed inset-0 z-40 h-[calc(100%-calc(64px+var(--safe-area-inset-bottom)))] overflow-y-auto overscroll-contain bg-white">
+    <Dialog
+      modal={false}
+      open={filtersVisibility}
+      onOpenChange={setFiltersVisibility}
+    >
+      <DialogContent className="max-w-screen h-screen max-h-screen w-screen rounded-none">
         <div>
           <div className="sticky top-0 border-b border-alpha-200 bg-white p-4">
             <div className="flex items-center gap-2">
@@ -214,8 +218,8 @@ const MobileFilterableAttributes = ({
             )}
           </div>
         </div>
-      </Dialog.Content>
-    </Dialog.Root>
+      </DialogContent>
+    </Dialog>
   )
 }
 

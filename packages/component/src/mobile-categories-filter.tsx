@@ -3,7 +3,6 @@
 import { useContext, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import * as Checkbox from "@radix-ui/react-checkbox"
-import * as Dialog from "@radix-ui/react-dialog"
 import * as Label from "@radix-ui/react-label"
 import { useQuery } from "@tanstack/react-query"
 import {
@@ -21,6 +20,7 @@ import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { getVocabularyQueryFn } from "@vardast/query/queryFns/vocabularyQueryFns"
 import { RequireAtLeastOne } from "@vardast/type/RequireAtLeastOne"
 import { Button } from "@vardast/ui/button"
+import { Dialog, DialogContent } from "@vardast/ui/dialog"
 import { useAtom } from "jotai"
 import { LucideArrowRight, LucideCheck, LucideChevronLeft } from "lucide-react"
 
@@ -248,11 +248,12 @@ const MobileCategoriesFilter = ({
   }, [CategoriesFilterVisibility, categoryId])
 
   return (
-    <Dialog.Root
+    <Dialog
+      modal={false}
       open={CategoriesFilterVisibility}
       onOpenChange={setCategoriesFilterVisibility}
     >
-      <Dialog.Content className="fixed inset-0 z-40 h-full overflow-y-auto overscroll-contain bg-white">
+      <DialogContent className="max-w-screen h-screen max-h-screen w-screen rounded-none">
         <div>
           <div className="sticky top-0 border-b border-alpha-200 bg-white p-4">
             <div className="flex items-center gap-2">
@@ -336,8 +337,8 @@ const MobileCategoriesFilter = ({
               )}
           </div>
         </div>
-      </Dialog.Content>
-    </Dialog.Root>
+      </DialogContent>
+    </Dialog>
   )
 }
 

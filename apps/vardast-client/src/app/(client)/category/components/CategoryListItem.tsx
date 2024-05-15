@@ -20,21 +20,6 @@ interface IVocabularyItem {
   href: string
 }
 
-export const CategoryListItemSkeleton = () => {
-  return (
-    <div className="relative hidden w-full md:block">
-      <div className="hide-scrollbar relative flex items-stretch gap-3 overflow-x-hidden overflow-y-hidden rounded-2xl bg-alpha-50 px">
-        {[...Array(8)].map((_, index) => (
-          <div
-            key={`desktop-home-category-${index}`}
-            className="h-44 w-44"
-          ></div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 const CategoryListItem = forwardRef(
   (
     {
@@ -74,9 +59,11 @@ const CategoryListItem = forwardRef(
           } flex flex-col gap-y-0.5 px-3`}
         >
           <p className="text-sm font-semibold">{title}</p>
-          <p className="text-xs text-primary">{`${digitsEnToFa(
-            addCommas(productsCount ? productsCount : 0)
-          )} کالا`}</p>
+          {productsCount && (
+            <p className="text-xs text-primary">{`${digitsEnToFa(
+              addCommas(productsCount)
+            )} کالا`}</p>
+          )}
         </div>
         <div
           id={`category-image-${id}`}
@@ -92,7 +79,7 @@ const CategoryListItem = forwardRef(
             height={isSubCategory ? 900 : 1600}
             className="h-full w-full"
             loading="eager"
-            onLoad={() => {
+            onLoadingComplete={() => {
               const div =
                 typeof window !== "undefined" &&
                 document?.getElementById(`category-image-${id}`)

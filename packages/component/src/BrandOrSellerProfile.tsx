@@ -143,23 +143,17 @@ const BrandOrSellerProfile = ({
                     </>
                   )}
                   <div className="aspect-square">
-                    {data?.logoFile?.presignedUrl.url ? (
-                      <Image
-                        src={data?.logoFile?.presignedUrl.url as string}
-                        alt="seller"
-                        width={100}
-                        height={100}
-                        className="h-full w-full rounded-full object-contain"
-                      />
-                    ) : (
-                      <Image
-                        src={sellerUserImage}
-                        alt="seller"
-                        width={100}
-                        height={100}
-                        className="h-full w-full rounded-full object-contain"
-                      />
-                    )}
+                    <Image
+                      src={
+                        data?.logoFile?.presignedUrl.url
+                          ? data?.logoFile?.presignedUrl.url
+                          : sellerUserImage
+                      }
+                      alt="seller"
+                      width={100}
+                      height={100}
+                      className="h-full w-full rounded-full object-contain"
+                    />
                   </div>
                 </div>
                 {(!isMobileView || isSellerQuery()) && (
@@ -190,7 +184,11 @@ const BrandOrSellerProfile = ({
         {!isMobileView && (
           <div className="relative hidden aspect-auto w-full overflow-hidden rounded-2xl md:col-span-9 md:block">
             <Image
-              src={`${data.bannerFile?.presignedUrl.url || blankImage}`}
+              src={
+                data.bannerFile?.presignedUrl.url
+                  ? `${data.bannerFile?.presignedUrl.url}`
+                  : blankImage
+              }
               className="h-full w-full object-cover"
               alt="banner"
               fill

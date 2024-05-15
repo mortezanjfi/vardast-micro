@@ -37,6 +37,22 @@
   --swiper-theme-color: theme(colors.primary.600) !important;
 }
 
+/* ::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(155, 155, 155, 0.5);
+  border-radius: 20px;
+  border: transparent;
+}
+
+input::-webkit-calendar-picker-indicator {
+  display: none !important;
+} */
+
 * {
   -webkit-tap-highlight-color: transparent;
 }

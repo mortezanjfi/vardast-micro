@@ -18,10 +18,10 @@ export async function middleware(request: NextRequest) {
     )
     if (data && data.status === 200) {
       const res = await data.json()
-      if (!name || name !== encodeURI(res.product.name)) {
+      if (!name || name !== encodeURI(res.product.name.trim())) {
         return NextResponse.redirect(
           new URL(
-            `/product/${res.product.id}/${res.product.name}`,
+            `/product/${res.product.id}/${res.product.name.trim()}`,
             request.url
           ),
           301
@@ -42,11 +42,11 @@ export async function middleware(request: NextRequest) {
     )
     if (data && data.status === 200) {
       const res = await data.json()
-      if (!title || title !== encodeURI(res.category.title)) {
+      if (!title || title !== encodeURI(res.category.title.trim())) {
         request.nextUrl.searchParams.delete("lang")
         return NextResponse.redirect(
           new URL(
-            `/products/${res.category.id}/${res.category.title}?${request.nextUrl.searchParams}`,
+            `/products/${res.category.id}/${res.category.title.trim()}?${request.nextUrl.searchParams}`,
             request.url
           ),
           301
@@ -65,11 +65,11 @@ export async function middleware(request: NextRequest) {
     )
     if (data && data.status === 200) {
       const res = await data.json()
-      if (!title || title !== encodeURI(res.brand.name)) {
+      if (!title || title !== encodeURI(res.brand.name.trim())) {
         request.nextUrl.searchParams.delete("lang")
         return NextResponse.redirect(
           new URL(
-            `/brand/${res.brand.id}/${res.brand.name}?${request.nextUrl.searchParams}`,
+            `/brand/${res.brand.id}/${res.brand.name.trim()}?${request.nextUrl.searchParams}`,
             request.url
           ),
           301
@@ -88,11 +88,11 @@ export async function middleware(request: NextRequest) {
     )
     if (data && data.status === 200) {
       const res = await data.json()
-      if (!title || title !== encodeURI(res.seller.name)) {
+      if (!title || title !== encodeURI(res.seller.name.trim())) {
         request.nextUrl.searchParams.delete("lang")
         return NextResponse.redirect(
           new URL(
-            `/seller/${res.seller.id}/${res.seller.name}?${request.nextUrl.searchParams}`,
+            `/seller/${res.seller.id}/${res.seller.name.trim()}?${request.nextUrl.searchParams}`,
             request.url
           ),
           301
@@ -114,11 +114,11 @@ export async function middleware(request: NextRequest) {
 
     if (data && data.status === 200) {
       const res = await data.json()
-      if (!title || title !== encodeURI(res.category.title)) {
+      if (!title || title !== encodeURI(res.category.title.trim())) {
         request.nextUrl.searchParams.delete("lang")
         return NextResponse.redirect(
           new URL(
-            `/category/${res.category.id}/${res.category.title}?${request.nextUrl.searchParams}`,
+            `/category/${res.category.id}/${res.category.title.trim()}?${request.nextUrl.searchParams}`,
             request.url
           ),
           301

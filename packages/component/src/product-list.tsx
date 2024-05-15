@@ -7,13 +7,13 @@ import {
   useRouter,
   useSearchParams
 } from "next/navigation"
+import { XMarkIcon } from "@heroicons/react/24/solid"
 import { useDebouncedState } from "@mantine/hooks"
 import { CheckedState } from "@radix-ui/react-checkbox"
-import { useInfiniteQuery, UseQueryResult } from "@tanstack/react-query"
+import { useInfiniteQuery } from "@tanstack/react-query"
 import {
   FilterAttribute,
   GetAllProductsQuery,
-  GetCategoryQuery,
   IndexProductInput,
   InputMaybe,
   Product,
@@ -26,6 +26,7 @@ import { getAllProductsQueryFn } from "@vardast/query/queryFns/allProductsQueryF
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { Button } from "@vardast/ui/button"
 import { Input } from "@vardast/ui/input"
+import clsx from "clsx"
 import { ClientError } from "graphql-request"
 import { useSetAtom } from "jotai"
 import {
@@ -55,7 +56,7 @@ import ProductListContainer, {
 import VocabularyFilter from "./vocabulary-filter"
 
 interface ProductListProps {
-  getCategoryQuery?: UseQueryResult<GetCategoryQuery, unknown>
+  desktopSideBarClass?: string
   isMobileView: boolean
   args: IndexProductInput
   selectedCategoryIds: InputMaybe<number[]> | undefined
@@ -73,7 +74,7 @@ export const checkLimitPageByCondition = (condition: boolean, result: any[]) =>
   condition ? result.length + 1 : undefined
 
 const ProductList = ({
-  getCategoryQuery,
+  desktopSideBarClass,
   isMobileView,
   args,
   selectedCategoryIds,
@@ -102,6 +103,7 @@ const ProductList = ({
   const [categoryIdsFilter, setCategoryIdsFilter] = useState<
     (typeof args)["categoryIds"]
   >(args["categoryIds"] || [])
+
   const {
     categoriesFilterVisibilityAtom,
     sortFilterVisibilityAtom,
@@ -113,6 +115,8 @@ const ProductList = ({
   const setSortFilterVisibility = useSetAtom(sortFilterVisibilityAtom)
   const setFiltersVisibility = useSetAtom(filtersVisibilityAtom)
 
+  const brandName = searchParams.get("brandName")
+  const sellerName = searchParams.get("sellerName")
   const getFilterableAttributesQuery = useGetAllFilterableAttributesBasicsQuery(
     graphqlRequestClientWithoutToken,
     {
@@ -142,6 +146,7 @@ const ProductList = ({
     ({ pageParam = 1 }) => {
       return getAllProductsQueryFn({
         ...args,
+        brandId: args.brandId,
         query,
         page: pageParam,
         attributes: filterAttributes,
@@ -273,10 +278,33 @@ const ProductList = ({
     push(pathname + "?" + params.toString())
   }
 
+  const removeBrandOrSellerFilter = () => {
+    const params = new URLSearchParams(searchParams as any)
+    const paramsKeys = params.keys()
+    const paramsToDelete: string[] = []
+    for (const key of paramsKeys) {
+      if (
+        key.includes("brandId") ||
+        key.includes("brandName") ||
+        key.includes("sellerId") ||
+        key.includes("sellerName")
+      ) {
+        paramsToDelete.push(key)
+      }
+    }
+    paramsToDelete.forEach((key) => params.delete(key))
+    push(pathname + "?" + params.toString())
+  }
+
   // if (!allProductsQuery.data) notFound()
 
   const DesktopSidebar = (
-    <div className="sticky top-40 h-fit border-2 border-alpha-200 bg-alpha-white px-4 py-4 md:w-[250px] md:min-w-[200px] md:rounded md:bg-inherit">
+    <div
+      className={clsx(
+        "top-40 h-fit border-2 border-alpha-200 bg-alpha-white px-4 py-4 md:sticky md:w-[250px] md:min-w-[200px] md:rounded md:bg-inherit",
+        desktopSideBarClass
+      )}
+    >
       {hasSearch && (
         <div className="relative flex transform items-center rounded-lg border-alpha-200 bg-alpha-100 pr-2 transition-all">
           {queryTemp !== query ? (
@@ -318,9 +346,9 @@ const ProductList = ({
           </Button>
         </div>
       )}
-      <div className="flex flex-col gap-9">
-        <div className=" flex items-center border-b-2 border-b-alpha-200 py-4">
-          <strong>فیلترها</strong>
+      <div className="flex flex-col ">
+        <div className=" flex items-center border-b-2 border-b-alpha-200 py-6">
+          <strong className="font-semibold">فیلترها</strong>
           {filterAttributes.length > 0 && (
             <Button
               size="small"
@@ -338,8 +366,27 @@ const ProductList = ({
           !sellerId && (
             <CategoryFilter selectedCategoryId={selectedCategoryIds[0]} />
           )} */}
+        {(brandName || sellerName) && (
+          <div className="flex w-full items-center justify-between border-b-2 border-b-alpha-200 py-6">
+            <span className="font-semibold">
+              {brandName ? "برند" : "فروشنده"}
+            </span>
+            <Button
+              noStyle
+              className={clsx([
+                "flex gap-2 rounded-lg  border border-alpha-300 bg-alpha-100  px-3 py-2 text-sm "
+              ])}
+              onClick={() => {
+                removeBrandOrSellerFilter()
+              }}
+            >
+              {brandName ? brandName : sellerName}
+              <XMarkIcon width={16} height={16} />
+            </Button>
+          </div>
+        )}
 
-        {brandId && (
+        {brandId && isMobileView && (
           <BrandOrSellerCategoryFilter
             categoryIdsFilter={categoryIdsFilter}
             onCategoryIdsFilterChanged={onCategoryIdsFilterChanged}
@@ -347,14 +394,13 @@ const ProductList = ({
           />
         )}
 
-        {sellerId && (
+        {sellerId && isMobileView && (
           <BrandOrSellerCategoryFilter
             categoryIdsFilter={categoryIdsFilter}
             onCategoryIdsFilterChanged={onCategoryIdsFilterChanged}
             sellerId={sellerId}
           />
         )}
-
         {selectedCategoryIds &&
           selectedCategoryIds.length === 1 &&
           selectedCategoryIds[0] !== 0 && (
@@ -364,7 +410,6 @@ const ProductList = ({
               onFilterAttributesChanged={onFilterAttributesChanged}
             />
           )}
-
         {!selectedCategoryIds && !brandId && !sellerId && <VocabularyFilter />}
       </div>
     </div>
@@ -381,10 +426,10 @@ const ProductList = ({
           push(pathname + "?" + params.toString())
         }}
       />
-      {getCategoryQuery?.data?.category.productsCount && (
+      {allProductsQuery.data?.pages[0].products.total && (
         <ItemsCount
           countItemTitle={"product"}
-          itemCount={getCategoryQuery?.data?.category.productsCount as number}
+          itemCount={allProductsQuery.data?.pages[0].products.total as number}
         />
       )}
     </div>

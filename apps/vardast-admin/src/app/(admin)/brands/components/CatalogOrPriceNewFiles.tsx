@@ -4,6 +4,7 @@ import Card from "@vardast/component/Card"
 import PageHeader from "@vardast/component/PageHeader"
 import { Brand } from "@vardast/graphql/generated"
 import { Button } from "@vardast/ui/button"
+import { formatFileSize } from "@vardast/util/formatFileSize"
 import { LucidePlus } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 import { z } from "zod"
@@ -35,12 +36,6 @@ type CatalogOrPriceNewFilesProps = {
   setNewBrandData: Dispatch<SetStateAction<NewBrandType | undefined>>
 }
 
-export const formatFileSize = (bytes: number): string => {
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB"]
-  if (bytes === 0) return "0 Byte"
-  const i = Math.floor(Math.log(bytes) / Math.log(1024))
-  return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sizes[i]}`
-}
 export const CatalogOrPriceNewFiles = ({
   activeTab,
   setActiveTab,

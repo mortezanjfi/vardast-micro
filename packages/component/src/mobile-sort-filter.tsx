@@ -2,10 +2,10 @@
 
 import { useContext } from "react"
 import { useMediaQuery } from "@mantine/hooks"
-import * as Dialog from "@radix-ui/react-dialog"
 import { ProductSortablesEnum } from "@vardast/graphql/generated"
 import { PublicContext } from "@vardast/provider/PublicProvider"
 import { Button } from "@vardast/ui/button"
+import { Dialog, DialogContent } from "@vardast/ui/dialog"
 import clsx from "clsx"
 import { useAtom } from "jotai"
 import { LucideArrowRight } from "lucide-react"
@@ -27,11 +27,12 @@ const MobileSortFilter = ({ sort, onSortChanged }: MobileSortFilterProps) => {
 
   return (
     isTabletOrMobile && (
-      <Dialog.Root
+      <Dialog
+        modal={false}
         open={sortFilterVisibility}
         onOpenChange={setSortFilterVisibility}
       >
-        <Dialog.Content className="fixed inset-0 z-30 h-[calc(100%-calc(64px+var(--safe-area-inset-bottom)))] overflow-y-auto overscroll-contain bg-white">
+        <DialogContent className="max-w-screen h-screen max-h-screen w-screen rounded-none">
           <div>
             <div className="sticky top-0 border-b border-alpha-200 bg-white p-4">
               <div className="flex items-center gap-2">
@@ -91,8 +92,8 @@ const MobileSortFilter = ({ sort, onSortChanged }: MobileSortFilterProps) => {
               </div>
             </div>
           </div>
-        </Dialog.Content>
-      </Dialog.Root>
+        </DialogContent>
+      </Dialog>
     )
   )
 }
