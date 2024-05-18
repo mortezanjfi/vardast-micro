@@ -25,6 +25,7 @@ import {
 import { Input } from "@vardast/ui/input"
 import { ClientError } from "graphql-request"
 import { LucideAlertOctagon } from "lucide-react"
+import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
@@ -45,6 +46,7 @@ const UpdateInfoItemModal = ({
   setOpen
 }: UpdateInfoItemModalProps) => {
   const { t } = useTranslation()
+  const session = useSession()
   const [errors, setErrors] = useState<ClientError>()
 
   const createUserMutation = useUpdateProfileMutation(
@@ -54,6 +56,7 @@ const UpdateInfoItemModal = ({
         setErrors(errors)
       },
       onSuccess: () => {
+        session.update()
         toast({
           description: `${title} با موفقیت به‌روزرسانی شد`,
           duration: 2000,
