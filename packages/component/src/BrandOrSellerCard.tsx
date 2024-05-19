@@ -97,7 +97,6 @@ const BrandOrSellerCard = forwardRef(
         onClick={() => {
           setSelectedItemId && setSelectedItemId(content.id)
         }}
-        prefetch={false}
         className="relative overflow-hidden rounded bg-alpha-white transition hover:z-10 md:h-auto md:rounded-none md:ring-2 md:!ring-alpha-200 md:hover:shadow-lg"
       >
         {content.id === selectedItemId && (

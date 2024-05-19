@@ -63,7 +63,6 @@ const DesktopHeader = (_: DesktopHeaderProps) => {
       <div className="container grid grid-cols-12 grid-rows-2 items-center gap-y py-7 md:grid-rows-1 md:gap-x-12">
         <Link
           href="/"
-          prefetch={false}
           className="relative col-span-4 row-start-1 flex h-full items-center md:col-span-3 lg:col-span-3"
         >
           <Image
@@ -89,7 +88,6 @@ const DesktopHeader = (_: DesktopHeaderProps) => {
               <div className="col-span-2">
                 <Link
                   href={process.env.NEXT_PUBLIC_SELLER_VARDAST as string}
-                  prefetch={false}
                   target="_blank"
                   className="btn flex h-full !bg-secondary text-sm font-semibold text-white"
                 >
@@ -120,7 +118,7 @@ const DesktopHeader = (_: DesktopHeaderProps) => {
                         >
                           <div className="bg-alpha-white py-4">
                             <NavigationMenuLink>
-                              <Link prefetch={false} href={"/profile/info"}>
+                              <Link href={"/profile/info"}>
                                 <div className="flex items-center gap-2 px-4 py-2">
                                   <Avatar className="rounded-full border border-secondary">
                                     <AvatarImage
@@ -163,7 +161,6 @@ const DesktopHeader = (_: DesktopHeaderProps) => {
                               ) && (
                                 <NavigationMenuLink className="flex w-full justify-start text-nowrap bg-alpha-white px-4 py-2 md:z-50">
                                   <Link
-                                    prefetch={false}
                                     target="_blank"
                                     href={process.env.NEXT_PUBLIC_ADMIN_VARDAST}
                                     className="btn !text-alpha"
@@ -174,7 +171,6 @@ const DesktopHeader = (_: DesktopHeaderProps) => {
                               )}
                             <NavigationMenuLink className="flex w-full justify-start text-nowrap bg-alpha-white px-4 py-2 md:z-50">
                               <Link
-                                prefetch={false}
                                 href="/auth/signout"
                                 className="btn !text-error"
                               >

@@ -1,30 +1,28 @@
 import { Metadata } from "next"
 
-import ProjectForm from "@/app/(client)/(profile)/profile/projects/components/ProjectForm"
+import ProjectForm from "@/app/(client)/(profile)/profile/projects/components/project/ProjectForm"
 
-export async function generateMetadata(): Promise<Metadata> {
+interface ProductIndexProps {
+  params: { uuid: string }
+}
+
+export async function generateMetadata(
+  { params }: ProductIndexProps
+  // parent: ResolvingMetadata
+): Promise<Metadata> {
   return {
-    title: "ویرایش پروژه"
+    title: params.uuid === "new" ? "افزودن پروژه" : "ویرایش پروژه"
   }
 }
-const ProjectEdit = async ({
-  params: { uuid }
-}: {
-  params: { uuid: string }
-}) => {
-  // const session = await getServerSession(authOptions)
 
-  // if (!session?.abilities?.includes("gql.products.brand.update")) {
-  //   redirect("/admin")
-  // }
-
+const ProjectEdit = async ({ params }: ProductIndexProps) => {
+  const isNew = params.uuid === "new"
   return (
-    uuid && (
-      <ProjectForm
-        uuid={uuid}
-        title={(await generateMetadata()).title?.toString() as string}
-      />
-    )
+    <ProjectForm
+      isNew={isNew}
+      uuid={params.uuid}
+      title={(await generateMetadata({ params })).title?.toString() as string}
+    />
   )
 }
 

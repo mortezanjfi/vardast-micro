@@ -1,7 +1,10 @@
 /* eslint-disable no-unused-vars */
 "use client"
 
-import { Dispatch, SetStateAction, useState } from "react"
+import { useState } from "react"
+import { useQueryClient } from "@tanstack/react-query"
+import { useRemoveAddressProjectMutation } from "@vardast/graphql/generated"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import {
   AlertDialog,
@@ -15,28 +18,47 @@ import { ClientError } from "graphql-request"
 import { LucideAlertOctagon } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
-type ProjectDeleteModalProps = {
-  open: boolean
-  onOpenChange: Dispatch<SetStateAction<boolean>>
-  projectToDelete: any
-}
+import {
+  ProjectAddressCartProps,
+  SELECTED_ITEM_TYPE
+} from "@/app/(client)/(profile)/profile/projects/components/address/ProjectAddressesTab"
 
-const ProjectDeleteModal = ({
-  open,
-  onOpenChange,
-  projectToDelete
-}: ProjectDeleteModalProps) => {
+const AddressDeleteModal = ({
+  selectedAddresses,
+  onCloseModal,
+  uuid
+}: ProjectAddressCartProps) => {
   const { t } = useTranslation()
   const [errors, setErrors] = useState<ClientError>()
+  const queryClient = useQueryClient()
+
+  const removeAddressProjectMutation = useRemoveAddressProjectMutation(
+    graphqlRequestClientWithToken,
+    {
+      onError: (errors: ClientError) => {
+        setErrors(errors)
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["FindOneProject"]
+        })
+        onCloseModal()
+      }
+    }
+  )
 
   const onDelete = () => {
-    console.log("delete")
+    removeAddressProjectMutation.mutate({
+      addressId: +selectedAddresses?.data.id,
+      projectId: +uuid
+    })
   }
 
-  console.log(projectToDelete)
-
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
+    <AlertDialog
+      open={selectedAddresses?.type === SELECTED_ITEM_TYPE.DELETE}
+      onOpenChange={onCloseModal}
+    >
       <AlertDialogContent>
         <div className="flex">
           <div className="me-6 flex-1 shrink-0">
@@ -66,14 +88,14 @@ const ProjectDeleteModal = ({
               {t(
                 "common:are_you_sure_you_want_to_delete_x_entity_this_action_cannot_be_undone_and_all_associated_data_will_be_permanently_removed",
                 {
-                  entity: `${t(`common:project`)}`,
-                  name: projectToDelete?.name
+                  entity: `${t(`common:address`)}`,
+                  name: selectedAddresses?.data?.title
                 }
               )}
             </p>
             <AlertDialogFooter>
               <div className="flex items-center gap-2">
-                <Button variant="ghost" onClick={() => onOpenChange(false)}>
+                <Button variant="ghost" onClick={onCloseModal}>
                   {t("common:cancel")}
                 </Button>
                 <Button variant="danger" onClick={() => onDelete()}>
@@ -88,4 +110,4 @@ const ProjectDeleteModal = ({
   )
 }
 
-export default ProjectDeleteModal
+export default AddressDeleteModal

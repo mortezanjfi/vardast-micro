@@ -1,0 +1,54 @@
+mutation CreateProject($createProjectInput: CreateProjectInput!) {
+  createProject(createProjectInput: $createProjectInput) {
+    id
+    name
+    address {
+      id
+      address {
+        id
+        userId
+        title
+        delivery_contact
+        delivery_name
+        address
+        postalCode
+        status
+        createdAt
+      }
+    }
+    user {
+      id
+      user {
+        id
+        uuid
+        firstName
+        lastName
+        email
+        cellphone
+        telegramChatId
+        isCellphoneVerified
+        isEmailVerified
+        isTelegramVerified
+        username
+        password
+        mustChangePassword
+        lastPasswordChangeAt
+        language
+        timezone
+        status
+        suspensionReason
+        customDisplayRole
+        adminComments
+        lastLoginAt
+        lastLoginIP
+        lastFailedLoginAt
+        failedLoginAttempts
+        isLockedOut
+        lockedOutAt
+        createdAt
+        updatedAt
+        fullName
+      }
+    }
+  }
+}

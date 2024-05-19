@@ -1,11 +1,17 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useQueryClient } from "@tanstack/react-query"
 import {
+  CreateAddressProjectInput,
+  UpdateProjectAddressInput,
+  useAssignAddressProjectMutation,
   useGetAllProvincesQuery,
-  useGetProvinceQuery
+  useGetProvinceQuery,
+  useUpdateProjectAddressMutation
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
+import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
 import {
   Command,
@@ -32,51 +38,53 @@ import {
 import { Input } from "@vardast/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@vardast/ui/popover"
 import zodI18nMap from "@vardast/util/zodErrorMap"
-import { LucideCheck, LucideChevronsUpDown } from "lucide-react"
+import { ClientError } from "graphql-request"
+import {
+  LucideAlertOctagon,
+  LucideCheck,
+  LucideChevronsUpDown
+} from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-import { Address } from "@/app/(client)/(profile)/profile/projects/components/ProjectAddressesTab"
+import {
+  ProjectAddressCartProps,
+  SELECTED_ITEM_TYPE
+} from "@/app/(client)/(profile)/profile/projects/components/address/ProjectAddressesTab"
 
-type AddressModalProps = {
-  open: boolean
-  activeTab: string
-  onOpenChange: Dispatch<SetStateAction<boolean>>
-  setAddresses: Dispatch<SetStateAction<Address[]>>
-}
-export const ModalSchema = z.object({
+export const AddAddressModalFormSchema = z.object({
   title: z.string(),
-  postalAddress: z.string(),
   provinceId: z.number(),
   cityId: z.number(),
-  postalCode: z.coerce.number(),
-  transfereeName: z.string(),
-  transfereeFamilyName: z.string(),
-  transfereeNumber: z.coerce.number()
+  postalCode: z.string(),
+  address: z.string(),
+  delivery_name: z.string(),
+  delivery_contact: z.string()
 })
 
-export type CatalogModalType = TypeOf<typeof ModalSchema>
+export type AddAddressModalFormType = TypeOf<typeof AddAddressModalFormSchema>
 
 export const AddressModal = ({
-  onOpenChange,
-  open,
-  setAddresses
-}: AddressModalProps) => {
+  onCloseModal,
+  selectedAddresses,
+  uuid
+}: ProjectAddressCartProps) => {
   const { t } = useTranslation()
-
+  const [errors, setErrors] = useState<ClientError>()
   const [provinceDialog, setProvinceDialog] = useState(false)
   const [provinceQueryTemp, setProvinceQueryTemp] = useState("")
   const [cityDialog, setCityDialog] = useState(false)
+  const queryClient = useQueryClient()
 
-  const form = useForm<CatalogModalType>({
-    resolver: zodResolver(ModalSchema),
-    defaultValues: {}
+  const form = useForm<AddAddressModalFormType>({
+    resolver: zodResolver(AddAddressModalFormSchema)
   })
 
   z.setErrorMap(zodI18nMap)
 
   const provinces = useGetAllProvincesQuery(graphqlRequestClientWithToken)
+
   const cities = useGetProvinceQuery(
     graphqlRequestClientWithToken,
     {
@@ -87,42 +95,101 @@ export const AddressModal = ({
     }
   )
 
-  const submit = (data: any) => {
-    data.id = new Date().getTime()
-    setAddresses((prev) => [...prev, data])
-    onOpenChange(false)
-    console.log(data)
+  const assignAddressProjectMutation = useAssignAddressProjectMutation(
+    graphqlRequestClientWithToken,
+    {
+      onError: (errors: ClientError) => {
+        setErrors(errors)
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["FindOneProject"]
+        })
+        onCloseModal()
+      }
+    }
+  )
+
+  const updateProjectAddressMutation = useUpdateProjectAddressMutation(
+    graphqlRequestClientWithToken,
+    {
+      onError: (errors: ClientError) => {
+        setErrors(errors)
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["FindOneProject"]
+        })
+        onCloseModal()
+      }
+    }
+  )
+
+  const onSubmit = (data: any) => {
+    if (selectedAddresses?.data) {
+      return updateProjectAddressMutation.mutate({
+        updateProjectAddressInput: {
+          ...(data as UpdateProjectAddressInput),
+          addressId: selectedAddresses?.data.id,
+          projectId: +uuid
+        }
+      })
+    }
+    assignAddressProjectMutation.mutate({
+      createAddressProjectInput: data as CreateAddressProjectInput,
+      projectId: +uuid
+    })
   }
 
   useEffect(() => {
-    form.reset()
-  }, [form, open])
+    if (
+      selectedAddresses?.type === SELECTED_ITEM_TYPE.EDIT &&
+      selectedAddresses?.data
+    ) {
+      form.setValue("title", selectedAddresses?.data.title)
+      form.setValue("provinceId", +selectedAddresses?.data.province.id)
+      form.setValue("cityId", +selectedAddresses?.data.city.id)
+      form.setValue("postalCode", selectedAddresses?.data.postalCode)
+      form.setValue("address", selectedAddresses?.data.address)
+      form.setValue("delivery_name", selectedAddresses?.data.delivery_name)
+      form.setValue(
+        "delivery_contact",
+        selectedAddresses?.data.delivery_contact
+      )
+    }
+    return () => form.reset()
+  }, [selectedAddresses, selectedAddresses?.data])
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      open={
+        selectedAddresses?.type === SELECTED_ITEM_TYPE.ADD ||
+        selectedAddresses?.type === SELECTED_ITEM_TYPE.EDIT
+      }
+      onOpenChange={onCloseModal}
+    >
       <DialogContent className="gap-7">
         <DialogHeader className="border-b pb">
           <DialogTitle>
-            {" "}
             {t("common:add_new_entity", { entity: t("common:address") })}
           </DialogTitle>
         </DialogHeader>
-        {/* {errors && (
-            <Alert variant="danger">
-              <LucideAlertOctagon />
-              <AlertTitle>خطا</AlertTitle>
-              <AlertDescription>
-                {(
-                  errors.response.errors?.at(0)?.extensions
-                    .displayErrors as string[]
-                ).map((error) => (
-                  <p key={error}>{error}</p>
-                ))}
-              </AlertDescription>
-            </Alert>
-          )} */}
+        {errors && (
+          <Alert variant="danger">
+            <LucideAlertOctagon />
+            <AlertTitle>خطا</AlertTitle>
+            <AlertDescription>
+              {(
+                errors.response.errors?.at(0)?.extensions
+                  .displayErrors as string[]
+              ).map((error) => (
+                <p key={error}>{error}</p>
+              ))}
+            </AlertDescription>
+          </Alert>
+        )}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(submit)}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid w-full grid-cols-2 grid-rows-6 gap-y-5">
               <div className="col-span-2 grid grid-cols-2 gap-x-7">
                 <div className="col-span-2">
@@ -340,7 +407,7 @@ export const AddressModal = ({
                 <div className="col-span-2">
                   <FormField
                     control={form.control}
-                    name="postalAddress"
+                    name="address"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>{t("common:postal-address")}</FormLabel>
@@ -357,25 +424,12 @@ export const AddressModal = ({
                 <div>
                   <FormField
                     control={form.control}
-                    name="transfereeName"
+                    name="delivery_name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>نام تحویل گیرنده</FormLabel>
-                        <FormControl>
-                          <Input type="text" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div>
-                  <FormField
-                    control={form.control}
-                    name="transfereeFamilyName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>نام خانوادگی تحویل گیرنده</FormLabel>
+                        <FormLabel>
+                          {t("common:transferee-name-family")}
+                        </FormLabel>
                         <FormControl>
                           <Input type="text" {...field} />
                         </FormControl>
@@ -389,7 +443,7 @@ export const AddressModal = ({
                 <div className="col-span-1">
                   <FormField
                     control={form.control}
-                    name="transfereeNumber"
+                    name="delivery_contact"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>{t("common:transferee-number")}</FormLabel>
@@ -410,7 +464,7 @@ export const AddressModal = ({
                   className="py-2"
                   variant="ghost"
                   onClick={() => {
-                    onOpenChange(false)
+                    onCloseModal()
                   }}
                 >
                   انصراف

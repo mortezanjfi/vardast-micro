@@ -77,7 +77,7 @@ const SelllerBreadcrumb = ({
               {idx !== breadcrumbs.length && crumb.label !== "all-products" && (
                 <span className="mx-1 text-alpha-400">/</span>
               )}
-              <Link href={crumb.path} passHref prefetch={false}>
+              <Link href={crumb.path} passHref>
                 <div
                   title={crumb.label}
                   aria-current={crumb.isCurrent ? "page" : "false"}

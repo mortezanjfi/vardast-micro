@@ -296,7 +296,6 @@ const MobileNavigation = (_: Props) => {
                       key={id}
                       href={href}
                       className={`group inline-flex h-full flex-col items-center justify-center gap-y-0.5 pb-2`}
-                      prefetch={false}
                     >
                       <ShowedIcon
                         className={mergeClasses(

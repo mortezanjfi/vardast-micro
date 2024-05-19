@@ -2,21 +2,16 @@
 
 import { useState } from "react"
 import { FolderOpenIcon } from "@heroicons/react/24/solid"
+import Link from "@vardast/component/Link"
+import Loading from "@vardast/component/Loading"
 import PageHeader from "@vardast/component/PageHeader"
-import { Button } from "@vardast/ui/button"
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem
-} from "@vardast/ui/command"
-import { Popover, PopoverContent, PopoverTrigger } from "@vardast/ui/popover"
-import { LucideChevronDown } from "lucide-react"
+import { Project, useMyProjectsQuery } from "@vardast/graphql/generated"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import useTranslation from "next-translate/useTranslation"
 
 import PageTitle from "@/app/(client)/(profile)/components/PageTitle"
-import ProjectCard from "@/app/(client)/(profile)/profile/projects/components/ProjectCard"
-import ProjectDeleteModal from "@/app/(client)/(profile)/profile/projects/components/ProjectDeleteModal"
+import ProjectCard from "@/app/(client)/(profile)/profile/projects/components/project/ProjectCard"
+import ProjectDeleteModal from "@/app/(client)/(profile)/profile/projects/components/project/ProjectDeleteModal"
 
 type ProjectsPageProps = { title: string }
 const statuses = [
@@ -35,24 +30,13 @@ const ProjectsPage = ({ title }: ProjectsPageProps) => {
   const { t } = useTranslation()
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const [projectToDelete, setProjectToDelete] = useState<{}>()
-
-  // eslint-disable-next-line no-unused-vars
-  const [projects, setProjects] = useState([
+  const myProjectsQuery = useMyProjectsQuery(
+    graphqlRequestClientWithToken,
+    undefined,
     {
-      id: 1234,
-      name: "test",
-      transferee: "test person",
-      address: "test address",
-      transfereeNum: "09121111111"
-    },
-    {
-      id: 4321,
-      name: "test",
-      transferee: "test person",
-      address: "test address",
-      transfereeNum: "09121111111"
+      refetchOnMount: "always"
     }
-  ])
+  )
 
   return (
     <div className="flex h-full w-full flex-col ">
@@ -62,7 +46,7 @@ const ProjectsPage = ({ title }: ProjectsPageProps) => {
         onOpenChange={setDeleteModalOpen}
       />
       <PageTitle title={title} />
-      <div className="flex w-full gap-5 border-b border-alpha-200 pb-5">
+      {/* <div className="flex w-full gap-5 border-b border-alpha-200 pb-5">
         <Popover>
           <PopoverTrigger asChild>
             <Button
@@ -87,16 +71,16 @@ const ProjectsPage = ({ title }: ProjectsPageProps) => {
                   <CommandItem
                     value={st.value}
                     key={st.status}
-                    // onSelect={(value) => {
-                    //   form.setValue("logoStatus", value)
-                    // }}
+                    onSelect={(value) => {
+                      form.setValue("logoStatus", value)
+                    }}
                   >
-                    {/* <LucideCheck
+                    <LucideCheck
                       className={mergeClasses(
                         "mr-2 h-4 w-4",
                         st.value === field.value ? "opacity-100" : "opacity-0"
                       )}
-                    /> */}
+                    />
                     {st.status}
                   </CommandItem>
                 ))}
@@ -129,16 +113,16 @@ const ProjectsPage = ({ title }: ProjectsPageProps) => {
                   <CommandItem
                     value={st.value}
                     key={st.status}
-                    // onSelect={(value) => {
-                    //   form.setValue("logoStatus", value)
-                    // }}
+                    onSelect={(value) => {
+                      form.setValue("logoStatus", value)
+                    }}
                   >
-                    {/* <LucideCheck
+                    <LucideCheck
                       className={mergeClasses(
                         "mr-2 h-4 w-4",
                         st.value === field.value ? "opacity-100" : "opacity-0"
                       )}
-                    /> */}
+                    />
                     {st.status}
                   </CommandItem>
                 ))}
@@ -146,7 +130,7 @@ const ProjectsPage = ({ title }: ProjectsPageProps) => {
             </Command>
           </PopoverContent>
         </Popover>{" "}
-      </div>
+      </div> */}
       <PageHeader
         pageHeaderClasses="border-b py-5 !mb-0"
         title={
@@ -155,20 +139,23 @@ const ProjectsPage = ({ title }: ProjectsPageProps) => {
         titleClasses="text-[14px] font-normal "
         containerClass="items-center"
       >
-        {" "}
-        <Button variant="primary" size="medium">
+        <Link className="btn-primary btn btn-md" href="/profile/projects/new">
           {t("common:add_new_entity", {
-            entity: t("common:address")
+            entity: t("common:project")
           })}
-        </Button>
+        </Link>
       </PageHeader>
       <div className="w-full">
-        {projects.length > 0 ? (
+        {myProjectsQuery.isFetching && myProjectsQuery.isLoading ? (
+          <div className="flex h-full items-center justify-center pt-6">
+            <Loading hideMessage />
+          </div>
+        ) : myProjectsQuery.data?.myProjects?.length > 0 ? (
           <div className="flex flex-col">
-            {projects.map((project, index) => (
+            {myProjectsQuery.data?.myProjects?.map((project) => (
               <ProjectCard
-                key={index}
-                project={project}
+                key={project.id}
+                project={project as Project}
                 setProjectToDelete={setProjectToDelete}
                 setDeleteModalOpen={setDeleteModalOpen}
               />

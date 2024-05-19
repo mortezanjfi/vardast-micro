@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction, useState } from "react"
+import { useState } from "react"
+import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { Button } from "@vardast/ui/button"
 import {
   DropdownMenu,
@@ -11,28 +12,25 @@ import { LucideEdit, LucideMoreVertical, LucideTrash } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
 import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/components/DetailsWithTitle"
-import { Colleague } from "@/app/(client)/(profile)/profile/projects/components/ProjectColleaguesTab"
+import {
+  ProjectUser,
+  SELECTED_ITEM,
+  SELECTED_ITEM_TYPE
+} from "@/app/(client)/(profile)/profile/projects/components/user/ProjectUsersTab"
 
-type ProjectColleagueCartProps = {
-  setColleagueToDelete: Dispatch<SetStateAction<Colleague | undefined>>
-  colleague: Colleague
-  setDeleteModalOpen: Dispatch<SetStateAction<boolean>>
-  setColleagueModalOpen: Dispatch<SetStateAction<boolean>>
+type ProjectUserCartProps = {
+  user: ProjectUser
+  onOpenModal: (selectedUsersData: SELECTED_ITEM) => void
 }
 
-const ProjectColleagueCart = ({
-  setColleagueToDelete,
-  colleague,
-  setDeleteModalOpen,
-  setColleagueModalOpen
-}: ProjectColleagueCartProps) => {
+const ProjectUserCart = ({ user, onOpenModal }: ProjectUserCartProps) => {
   const { t } = useTranslation()
   const [dropDownMenuOpen, setDropDownMenuOpen] = useState(false)
 
   return (
     <div className="flex flex-col border-b py-5">
       <div className="flex w-full justify-between">
-        <span className="text-base font-semibold">{colleague.name}</span>
+        <span className="text-base font-semibold">{user?.fullName}</span>
         <DropdownMenu
           modal={false}
           open={dropDownMenuOpen}
@@ -45,9 +43,12 @@ const ProjectColleagueCart = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem
-              onSelect={() => {
-                setColleagueModalOpen(true)
-              }}
+              onSelect={() =>
+                onOpenModal({
+                  type: SELECTED_ITEM_TYPE.EDIT,
+                  data: user
+                })
+              }
             >
               <LucideEdit className="dropdown-menu-item-icon" />
               <span>{t("common:edit")}</span>
@@ -57,8 +58,10 @@ const ProjectColleagueCart = ({
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onSelect={() => {
-                  setColleagueToDelete(colleague)
-                  setDeleteModalOpen(true)
+                  onOpenModal({
+                    type: SELECTED_ITEM_TYPE.DELETE,
+                    data: user
+                  })
                 }}
                 className="danger"
               >
@@ -70,10 +73,13 @@ const ProjectColleagueCart = ({
         </DropdownMenu>
       </div>
       <div className="flex flex-col">
-        <DetailsWithTitle title={"شماره تماس"} text={colleague.cellPhone} />
+        <DetailsWithTitle
+          title={t("شماره تماس")}
+          text={digitsEnToFa(user?.cellphone)}
+        />
       </div>
     </div>
   )
 }
 
-export default ProjectColleagueCart
+export default ProjectUserCart

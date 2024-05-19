@@ -137,7 +137,6 @@ export default function PwaNotification({ isMobileView }: Props) {
             </div>
             <div className="flex justify-center gap-x-6 border-t py-6">
               <Link
-                prefetch={false}
                 href="http://cafebazaar.ir/app/?id=com.vardast.twa&ref=share"
                 target="_blank"
                 className="w-36 rounded border"
@@ -150,7 +149,6 @@ export default function PwaNotification({ isMobileView }: Props) {
                 />
               </Link>
               <Link
-                prefetch={false}
                 href="https://myket.ir/app/com.vardast.twa"
                 target="_blank"
                 className="w-36 rounded border"

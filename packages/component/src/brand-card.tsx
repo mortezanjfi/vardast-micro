@@ -23,7 +23,6 @@ const BrandCard = ({ brand }: BrandCardProps) => {
   return (
     <Link
       href={`/brand/${brand?.id}/${brand?.name}`}
-      prefetch={false}
       className="relative overflow-hidden rounded bg-alpha-white transition hover:z-10 md:h-auto md:rounded-none md:hover:shadow-lg"
     >
       <div className="flex h-full w-full flex-col lg:px-4">

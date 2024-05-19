@@ -39,7 +39,6 @@ export const AddressItem = ({
             href={`https://www.google.com/maps/search/?api=1&query=${address?.latitude},${address?.longitude}`}
             target="_blank"
             className="text-left text-lg font-semibold text-info underline"
-            prefetch={false}
           >
             نمایش روی نقشه
           </Link>

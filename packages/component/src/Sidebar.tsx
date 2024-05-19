@@ -78,7 +78,7 @@ const Sidebar = ({
             >
               {/* <OrganizationMenu /> */}
               {!isAdmin && !isUserProfile && (
-                <Link prefetch={false} href="/">
+                <Link href="/">
                   <div>
                     <Image src={logo} alt={`وردست`} />
                   </div>
@@ -108,7 +108,7 @@ const Sidebar = ({
                         </p>
                       </div>
                     </div>
-                    <Link prefetch={false} href={"/profile/info"}>
+                    <Link href={"/profile/info"}>
                       <PencilSquareIcon height={20} width={20} />
                     </Link>
                   </div>
@@ -156,7 +156,6 @@ const Sidebar = ({
                     {sessionStatus !== "loading" &&
                       (session ? (
                         <Link
-                          prefetch={false}
                           href="/auth/signout"
                           className="btn-ghost btn justify-start !px-0.5 text-start"
                         >
@@ -169,7 +168,6 @@ const Sidebar = ({
                         </Link>
                       ) : (
                         <Link
-                          prefetch={false}
                           href="/auth/signin"
                           className="btn-ghost btn justify-start !px-0.5 text-start !text-success"
                         >

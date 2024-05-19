@@ -1,0 +1,5 @@
+mutation UpdateProjectUser($updateProjectUserInput: UpdateProjectUserInput!) {
+  updateProjectUser(updateProjectUserInput: $updateProjectUserInput) {
+    id
+  }
+}

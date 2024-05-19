@@ -1,7 +1,10 @@
 /* eslint-disable no-unused-vars */
 "use client"
 
-import { Dispatch, SetStateAction, useState } from "react"
+import { useState } from "react"
+import { useQueryClient } from "@tanstack/react-query"
+import { useRemoveUserProjectMutation } from "@vardast/graphql/generated"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import {
   AlertDialog,
@@ -15,28 +18,47 @@ import { ClientError } from "graphql-request"
 import { LucideAlertOctagon } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
-import { Colleague } from "@/app/(client)/(profile)/profile/projects/components/ProjectColleaguesTab"
+import {
+  ProjectUserCartProps,
+  SELECTED_ITEM_TYPE
+} from "@/app/(client)/(profile)/profile/projects/components/user/ProjectUsersTab"
 
-type ColleagueDeleteModalProps = {
-  colleagueToDelete: Colleague | undefined
-  open: boolean
-  onOpenChange: Dispatch<SetStateAction<boolean>>
-}
-
-const ColleagueDeleteModal = ({
-  colleagueToDelete,
-  open,
-  onOpenChange
-}: ColleagueDeleteModalProps) => {
+const UserDeleteModal = ({
+  selectedUsers,
+  onCloseModal,
+  uuid
+}: ProjectUserCartProps) => {
   const { t } = useTranslation()
   const [errors, setErrors] = useState<ClientError>()
+  const queryClient = useQueryClient()
+
+  const removeUserProjectMutation = useRemoveUserProjectMutation(
+    graphqlRequestClientWithToken,
+    {
+      onError: (errors: ClientError) => {
+        setErrors(errors)
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["FindOneProject"]
+        })
+        onCloseModal()
+      }
+    }
+  )
 
   const onDelete = () => {
-    console.log("delete")
+    removeUserProjectMutation.mutate({
+      userId: +selectedUsers?.data.id,
+      projectId: +uuid
+    })
   }
 
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
+    <AlertDialog
+      open={selectedUsers?.type === SELECTED_ITEM_TYPE.DELETE}
+      onOpenChange={onCloseModal}
+    >
       <AlertDialogContent>
         <div className="flex">
           <div className="me-6 flex-1 shrink-0">
@@ -66,14 +88,14 @@ const ColleagueDeleteModal = ({
               {t(
                 "common:are_you_sure_you_want_to_delete_x_entity_this_action_cannot_be_undone_and_all_associated_data_will_be_permanently_removed",
                 {
-                  entity: `${t(`common:colleague`)}`,
-                  name: colleagueToDelete?.name
+                  entity: `${t(`common:user`)}`,
+                  name: selectedUsers?.data?.fullName
                 }
               )}
             </p>
             <AlertDialogFooter>
               <div className="flex items-center gap-2">
-                <Button variant="ghost" onClick={() => onOpenChange(false)}>
+                <Button variant="ghost" onClick={onCloseModal}>
                   {t("common:cancel")}
                 </Button>
                 <Button variant="danger" onClick={() => onDelete()}>
@@ -88,4 +110,4 @@ const ColleagueDeleteModal = ({
   )
 }
 
-export default ColleagueDeleteModal
+export default UserDeleteModal

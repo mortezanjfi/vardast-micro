@@ -51,14 +51,14 @@ export const _profileSidebarMenu: NavigationType[] = [
         path: "/profile/info"
       },
       {
-        title: "سفارشات",
-        icon: "list",
-        path: "/profile/orders"
-      },
-      {
         title: "پروژه ها",
         icon: "folder-open",
         path: "/profile/projects"
+      },
+      {
+        title: "سفارشات",
+        icon: "list",
+        path: "/profile/orders"
       },
       {
         title: "سبد کالا",

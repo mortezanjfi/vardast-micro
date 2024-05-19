@@ -152,7 +152,6 @@ const OrderProductCard = forwardRef(
             "flex flex-col border-b py-4",
             !isDefault && "!border-none"
           )}
-          prefetch={false}
         >
           <div className="flex w-full gap-5">
             {product.id === selectedItemId && (

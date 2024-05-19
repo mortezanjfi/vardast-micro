@@ -65,7 +65,6 @@ const NavigationItem = (props: Props) => {
               return (
                 <li key={idx} className="app-navigation-item-children-item">
                   <Link
-                    prefetch={false}
                     href={menuChildren.path as string}
                     className={clsx([
                       "app-navigation-item-children-item-link",

@@ -15,17 +15,17 @@ import { ClientError } from "graphql-request"
 import { LucideAlertOctagon } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
-type AddressDeleteModalProps = {
-  addressToDelete: any
+type ProjectDeleteModalProps = {
   open: boolean
   onOpenChange: Dispatch<SetStateAction<boolean>>
+  projectToDelete: any
 }
 
-const AddressDeleteModal = ({
-  addressToDelete,
+const ProjectDeleteModal = ({
   open,
-  onOpenChange
-}: AddressDeleteModalProps) => {
+  onOpenChange,
+  projectToDelete
+}: ProjectDeleteModalProps) => {
   const { t } = useTranslation()
   const [errors, setErrors] = useState<ClientError>()
 
@@ -64,8 +64,8 @@ const AddressDeleteModal = ({
               {t(
                 "common:are_you_sure_you_want_to_delete_x_entity_this_action_cannot_be_undone_and_all_associated_data_will_be_permanently_removed",
                 {
-                  entity: `${t(`common:address`)}`,
-                  name: addressToDelete?.title
+                  entity: `${t(`common:project`)}`,
+                  name: projectToDelete?.name
                 }
               )}
             </p>
@@ -86,4 +86,4 @@ const AddressDeleteModal = ({
   )
 }
 
-export default AddressDeleteModal
+export default ProjectDeleteModal

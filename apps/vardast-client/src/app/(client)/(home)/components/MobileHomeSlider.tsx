@@ -126,7 +126,6 @@ const MobileHomeSlider = ({
               return (
                 <SwiperSlide key={banner.id} className={sliderClass}>
                   <Link
-                    prefetch={false}
                     onClick={() => {
                       responsiveImage.url && setSelectedItemId(banner.id)
                     }}

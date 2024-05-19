@@ -121,7 +121,6 @@ const ProductSellerCard = forwardRef(
             : "overflow-hidden"
           // product.id === selectedItemId && "!border-y border-primary"
         )}
-        prefetch={false}
       >
         {product.id === selectedItemId && (
           <div className="absolute left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center bg-alpha-white bg-opacity-50">
