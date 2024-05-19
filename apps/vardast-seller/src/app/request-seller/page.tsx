@@ -5,7 +5,7 @@ import withMobileHeader from "@vardast/component/withMobileHeader"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 import { getServerSession } from "next-auth"
 
-import ProfileSellerForm from "@/app/(authentication)/components/ProfileSellerForm"
+import ProfileSellerForm from "@/app/request-seller/components/ProfileSellerForm"
 
 // set dynamic metadata
 export async function generateMetadata(): Promise<Metadata> {
@@ -19,7 +19,11 @@ const ProfileSellerPage = async () => {
   const isMobileView = await CheckIsMobileView()
 
   if (!session) {
-    return redirect("/auth/signin")
+    return redirect("/auth/signin/request-seller")
+  }
+
+  if (session?.profile?.roles.some((role) => role?.name === "seller")) {
+    return redirect("/")
   }
 
   return <ProfileSellerForm isMobileView={isMobileView} />

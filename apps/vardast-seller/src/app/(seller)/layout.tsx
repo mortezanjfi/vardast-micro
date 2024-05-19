@@ -18,23 +18,24 @@ export default async function PublicLayout({
 
   const session = await getServerSession(authOptions)
 
-  if (
-    !!session &&
-    !!session?.profile?.roles.some((role) => role?.name === "seller")
-  ) {
-    return (
-      <>
-        <SearchActionModal isMobileView={isMobileView} />
-        {isMobileView ? (
-          <MobileScrollProvider>{children}</MobileScrollProvider>
-        ) : (
-          <SellerLayoutComponent session={session}>
-            {children}
-          </SellerLayoutComponent>
-        )}
-      </>
-    )
+  if (!!session) {
+    if (session?.profile?.roles.some((role) => role?.name === "seller")) {
+      return (
+        <>
+          <SearchActionModal isMobileView={isMobileView} />
+          {isMobileView ? (
+            <MobileScrollProvider>{children}</MobileScrollProvider>
+          ) : (
+            <SellerLayoutComponent session={session}>
+              {children}
+            </SellerLayoutComponent>
+          )}
+        </>
+      )
+    } else {
+      return redirect("/request-seller")
+    }
+  } else {
+    return redirect("/auth/signin")
   }
-
-  return redirect("/auth/signin")
 }
