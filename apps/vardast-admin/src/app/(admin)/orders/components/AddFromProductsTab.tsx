@@ -7,6 +7,7 @@ import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
 import logoHorizontal from "@vardast/asset/logo-horizontal-v2-persian-light-bg.svg"
 import Card from "@vardast/component/Card"
+import { ProductsFilter } from "@vardast/component/desktop/ProductsFilter"
 import Link from "@vardast/component/Link"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
@@ -24,8 +25,6 @@ import { checkSellerRedirectUrl } from "@vardast/util/checkSellerRedirectUrl"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
-
-import { ProductsFilter } from "@/app/(seller)/products/components/ProductsFilter"
 
 type Props = {}
 const filterSchema = z.object({ query: z.string() })
@@ -54,7 +53,7 @@ const getContentByApiStatus = (
 
 export type ProductNameSearchFilter = TypeOf<typeof filterSchema>
 
-export const SellerDesktopProductsPage = ({}: Props) => {
+export const AddFromProductsTab = ({}: Props) => {
   const { t } = useTranslation()
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [loadingBtn, setLoadingBtn] = useState<number>()

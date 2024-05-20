@@ -1,4 +1,5 @@
 import { dehydrate } from "@tanstack/react-query"
+import { AddFromProducts } from "@vardast/component/desktop/AddFromProducts"
 import withMobileHeader from "@vardast/component/withMobileHeader"
 import { IndexProductInput } from "@vardast/graphql/generated"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
@@ -6,7 +7,6 @@ import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
 import ProductsPage from "@/app/(seller)/products/components/products-page"
-import { SellerDesktopProductsPage } from "@/app/(seller)/products/components/SellerDesktopProductsPage"
 
 type SearchIndexProps = {
   params: { slug: Array<string | number> }
@@ -77,7 +77,7 @@ async function ManageProductPage({
           isMobileView={isMobileView}
         />
       ) : (
-        <SellerDesktopProductsPage />
+        <AddFromProducts />
       )}
     </ReactQueryHydrate>
   )

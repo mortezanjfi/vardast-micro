@@ -55,7 +55,7 @@ const AddOrderProductOrganizer = ({
           }
           setOpenTabName(value)
         }}
-        className="sticky left-0 right-0 top-0 h-full flex-col bg-alpha-white sm:flex md:mt md:w-full"
+        className="sticky left-0 right-0 top-0 h-full flex-col bg-alpha-white sm:flex md:mt-5 md:w-full"
       >
         <SegmentsList wrap className="border-b pb  md:border-b-2 md:pb-5">
           {tabs.map(({ title, value }) => (
