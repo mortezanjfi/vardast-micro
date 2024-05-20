@@ -2,7 +2,7 @@ import OrderInfoCard from "@vardast/component/desktop/OrderInfoCard"
 
 import OrderProductsList from "@/app/(admin)/orders/components/OrderProductsList"
 import OrderSubmit from "@/app/(admin)/orders/components/OrderSubmit"
-import UploadedFIles from "@/app/(admin)/orders/components/UploadedFIles"
+import UploadedFiles from "@/app/(admin)/orders/components/UploadedFIles"
 
 type Props = { uuid: string }
 
@@ -11,7 +11,7 @@ function OrderDetail({ uuid }: Props) {
     <div className="flex w-full flex-col gap-9">
       <OrderInfoCard isAdmin={true} />
       <OrderProductsList />
-      <UploadedFIles />
+      <UploadedFiles />
       <OrderSubmit uuid={uuid} />
     </div>
   )

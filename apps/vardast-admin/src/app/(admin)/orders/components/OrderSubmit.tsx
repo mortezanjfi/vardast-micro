@@ -18,7 +18,7 @@ function OrderSubmit({ uuid }: OrderSubmitProps) {
         </p>
         <Button
           onClick={() => {
-            router.push(`/orders/${uuid}/addOrderProduct`)
+            router.push(`/orders/${uuid}/add-order-product`)
           }}
           variant="primary"
         >

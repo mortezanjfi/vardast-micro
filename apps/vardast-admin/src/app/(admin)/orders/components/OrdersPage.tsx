@@ -1,10 +1,10 @@
 "use client"
 
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import useTranslation from "next-translate/useTranslation"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
@@ -82,7 +82,7 @@ function OrdersPage({}: Props) {
                     key={order.id}
                     className="cursor-pointer"
                     onClick={() => {
-                      router.push(`/orders/${order.id}/orderDetail`)
+                      router.push(`/orders/${order.id}/order-detail`)
                     }}
                   >
                     <td className="w-4">

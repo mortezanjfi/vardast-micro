@@ -32,7 +32,7 @@ function UploadedFiles({}: UploadedFilesProps) {
                     <span>{digitsEnToFa(index + 1)}</span>
                   </td>
                   <td>{order.file}</td>
-                  <td>
+                  <td className=" border-r-0.5">
                     <span className="text- cursor-pointer text-blue-500">
                       نمایش
                     </span>
