@@ -1,7 +1,6 @@
 import { PropsWithChildren } from "react"
 
-import OrderInfoCard from "@/app/(client)/(profile)/profile/orders/components/OrderInfoCard"
-
+import OrderInfoCard from "@vardast/component/desktop/OrderInfoCard"
 interface IOrderInnerLayoutLayout extends PropsWithChildren {
   uuid: string
   isMobileView: boolean
