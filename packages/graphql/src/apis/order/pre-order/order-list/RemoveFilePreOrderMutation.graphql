@@ -1,3 +1,0 @@
-mutation RemoveFilePreOrder($id: Float!) {
-  removeFilePreOrder(id: $id)
-}

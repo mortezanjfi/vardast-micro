@@ -1,4 +1,4 @@
-query PreOrders($indexPreOrderInput: IndexPreOrderInput! {
+query PreOrders($indexPreOrderInput: IndexPreOrderInput!) {
   preOrders(indexPreOrderInput: $indexPreOrderInput) {
     total
     perPage

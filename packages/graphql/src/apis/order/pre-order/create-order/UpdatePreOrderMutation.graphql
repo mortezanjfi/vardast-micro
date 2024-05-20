@@ -1,7 +1,5 @@
-mutation UpdatePreOrder($updatePreOrderInput: !UpdatePreOrderInput) {
-  updatePreOrder(
-    updatePreOrderInput: $updatePreOrderInput
-  ) {
+mutation UpdatePreOrder($updatePreOrderInput: UpdatePreOrderInput!) {
+  updatePreOrder(updatePreOrderInput: $updatePreOrderInput) {
     id
     project {
       name

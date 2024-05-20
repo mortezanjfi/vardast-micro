@@ -1,0 +1,3 @@
+mutation RemoveFilePreOrder($id: Int!) {
+  removeFilePreOrder(id: $id)
+}
