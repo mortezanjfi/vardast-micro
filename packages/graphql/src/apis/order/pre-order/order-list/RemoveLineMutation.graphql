@@ -1,0 +1,3 @@
+mutation RemoveLine($id: Float!) {
+  removeline(id: $id)
+}

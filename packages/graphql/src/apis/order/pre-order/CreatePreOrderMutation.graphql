@@ -1,0 +1,25 @@
+mutation CreatePreOrder($createPreOrderInput: CreatePreOrderInput!) {
+  createPreOrder(createPreOrderInput: $createPreOrderInput) {
+    id
+    project {
+      name
+    }
+    request_date
+    expire_date
+    shipping_address
+    descriptions
+    lines {
+      id
+      item_name
+      attribuite
+      uom
+      brand
+      qty
+      descriptions
+      created_at
+    }
+    files {
+      id
+    }
+  }
+}

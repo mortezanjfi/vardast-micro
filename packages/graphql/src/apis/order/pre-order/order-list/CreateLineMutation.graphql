@@ -1,0 +1,48 @@
+mutation CreateLine($createLineInput: CreateLineInput!) {
+  createline(createLineInput: $createLineInput) {
+    id
+    project {
+      name
+    }
+    descriptions
+    request_date
+    expire_date
+    payment_methods
+    shipping_address
+    lines {
+      id
+      userId
+      item_name
+      attribuite
+      uom
+      brand
+      qty
+      descriptions
+      type
+      status
+    }
+    files {
+      id
+      file {
+        id
+        uuid
+        modelType
+        modelId
+        name
+        originalName
+        size
+        mimeType
+        url
+        disk
+        bucketName
+        orderColumn
+        createdAt
+        updatedAt
+        presignedUrl {
+          url
+          expiresAt
+        }
+      }
+    }
+  }
+}

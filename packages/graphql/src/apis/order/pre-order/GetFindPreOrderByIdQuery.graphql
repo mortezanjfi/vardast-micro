@@ -1,0 +1,63 @@
+mutation FindPreOrderById($id: Float!) {
+  findPreOrderById(id: $id) {
+    id
+    project {
+      name
+    }
+    request_date
+    expire_date
+    shipping_address
+    payment_methods
+    descriptions
+    status
+    deleted_at
+    lines {
+      id
+      userId
+      item_name
+      attribuite
+      uom
+      brand
+      qty
+      descriptions
+      type
+      status
+    }
+    files {
+      id
+      file {
+        presignedUrl {
+          url
+          expiresAt
+        }
+      }
+    }
+    offers {
+      id
+      userId
+      request_name
+      total
+      type
+      status
+      offerLine {
+        id
+        fi_price
+        tax_price
+        total_price
+        type
+        line {
+          id
+          userId
+          item_name
+          attribuite
+          uom
+          brand
+          qty
+          descriptions
+          type
+          status
+        }
+      }
+    }
+  }
+}
