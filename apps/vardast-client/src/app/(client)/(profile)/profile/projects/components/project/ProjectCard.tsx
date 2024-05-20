@@ -37,13 +37,15 @@ const ProjectCard = ({
         <div className="flex flex-col items-start gap">
           <DetailsWithTitle
             title="همکاران پروژه"
-            text={project?.user.map((user) => user.user.fullName).join("، ")}
+            text={project?.user
+              .map((user) => `- ${user.user.fullName}`)
+              .join("\n")}
           />
           <DetailsWithTitle
             title="آدرس ها"
             text={project?.address
-              .map((address) => address.address.address)
-              .join("، ")}
+              .map((address) => `- ${address.address.address}`)
+              .join("\n")}
           />
         </div>
       </div>

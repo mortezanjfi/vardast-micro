@@ -8,6 +8,7 @@ import {
   useCreateProjectMutation,
   useUpdateProjectMutation
 } from "@vardast/graphql/generated"
+import { toast } from "@vardast/hook/use-toast"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import {
@@ -20,6 +21,7 @@ import {
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
 import zodI18nMap from "@vardast/util/zodErrorMap"
+import { ClientError } from "graphql-request/build/esm/types"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
@@ -51,8 +53,32 @@ const ProjectInfoTab = ({
   const createProjectMutation = useCreateProjectMutation(
     graphqlRequestClientWithToken,
     {
+      onError: (errors: ClientError) => {
+        toast({
+          description: (
+            errors.response.errors?.at(0)?.extensions.displayErrors as string[]
+          )
+            .map((error) => error)
+            .join(" "),
+          duration: 2000,
+          variant: "danger"
+        })
+      },
       onSuccess: (data) => {
-        router.push(`/profile/projects/${data.createProject.id}`)
+        if (data?.createProject?.id) {
+          toast({
+            description: "پروژه با موفقیت اضافه شد",
+            duration: 2000,
+            variant: "success"
+          })
+          router.push(`/profile/projects/${data.createProject.id}`)
+        } else {
+          toast({
+            description: "خطا درایجاد پروژه",
+            duration: 2000,
+            variant: "danger"
+          })
+        }
       }
     }
   )
