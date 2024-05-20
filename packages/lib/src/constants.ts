@@ -83,6 +83,11 @@ export const _sidebarMenu: NavigationType[] = [
         icon: "home"
       },
       {
+        title: "سفارشات",
+        icon: "list",
+        path: "/orders"
+      },
+      {
         title: "کالاها",
         icon: "package",
         abilities: "gql.products.product.index",
