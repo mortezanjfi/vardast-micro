@@ -2,6 +2,8 @@ query GetBrand($id: Int!) {
   brand(id: $id) {
     id
     name
+    name_fa
+    name_en
     slug
     bio
     sum

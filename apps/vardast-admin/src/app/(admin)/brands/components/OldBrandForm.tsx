@@ -101,8 +101,8 @@ const BrandForm = ({ brand }: BrandFormProps) => {
 
   z.setErrorMap(zodI18nMap)
   const CreateBrandSchema = z.object({
-    name: z.string(),
-    slug: z.string(),
+    name_fa: z.string(),
+    name_en: z.string(),
     email: z.string().email().optional(),
     logoFileUuid: z.string().optional(),
     phone: z.string().optional(),
@@ -118,13 +118,13 @@ const BrandForm = ({ brand }: BrandFormProps) => {
   const form = useForm<CreateBrandType>({
     resolver: zodResolver(CreateBrandSchema),
     defaultValues: {
-      name: brand?.name,
-      slug: brand?.slug || undefined,
-      logoFileUuid: brand?.logoFile?.uuid
+      name_fa: brand?.name_fa,
+      name_en: brand?.name_en || undefined
+      // logoFileUuid: brand?.logoFile?.uuid
     }
   })
 
-  const name = form.watch("name")
+  const name_fa = form.watch("name_fa")
 
   const onLogoFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -222,22 +222,22 @@ const BrandForm = ({ brand }: BrandFormProps) => {
   }
 
   function onSubmit(data: CreateBrandType) {
-    const { name, slug, logoFileUuid } = data
+    const { name_fa, name_en, logoFileUuid } = data
 
-    if (brand?.name) {
+    if (brand) {
       updateBrandMutation.mutate({
         updateBrandInput: {
           id: brand.id,
-          name,
-          slug,
+          name_fa,
+          name_en,
           logoFileUuid
         }
       })
     } else {
       createBrandMutation.mutate({
         createBrandInput: {
-          name,
-          slug,
+          name_fa,
+          name_en,
           logoFileUuid
         }
       })
@@ -263,8 +263,8 @@ const BrandForm = ({ brand }: BrandFormProps) => {
       <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
         <div className="mb-6 mt-8 flex items-end justify-between">
           <h2 className="text-xl font-black text-alpha-800 lg:text-3xl">
-            {name
-              ? name
+            {name_fa
+              ? name_fa
               : t("common:new_entity", { entity: t("common:producer") })}
           </h2>
           <Button
@@ -281,10 +281,10 @@ const BrandForm = ({ brand }: BrandFormProps) => {
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               <FormField
                 control={form.control}
-                name="name"
+                name="name_fa"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("common:name")}</FormLabel>
+                    <FormLabel>{t("common:name_fa")}</FormLabel>
                     <FormControl>
                       <Input type="text" {...field} />
                     </FormControl>
@@ -294,10 +294,10 @@ const BrandForm = ({ brand }: BrandFormProps) => {
               />
               <FormField
                 control={form.control}
-                name="slug"
+                name="name_en"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("common:slug")}</FormLabel>
+                    <FormLabel>{t("common:name_en")}</FormLabel>
                     <FormControl>
                       <Input type="text" {...field} />
                     </FormControl>
@@ -307,63 +307,65 @@ const BrandForm = ({ brand }: BrandFormProps) => {
               />
             </div>
           </Card>
-          <Card template="1/2" title={t("common:logo")}>
-            <div className="flex items-end gap-6">
-              <Input
-                type="file"
-                onChange={(e) => onLogoFileChange(e)}
-                className="hidden"
-                accept="image/*"
-                ref={logoFileFieldRef}
-              />
-              <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
-                {logoPreview || brand?.logoFile ? (
-                  <Image
-                    src={
-                      logoPreview ||
-                      (brand?.logoFile?.presignedUrl.url as string)
-                    }
-                    fill
-                    alt="..."
-                    className="object-contain p-3"
-                  />
-                ) : (
-                  <LucideWarehouse
-                    className="h-8 w-8 text-alpha-400"
-                    strokeWidth={1.5}
-                  />
-                )}
-              </div>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="secondary"
-                  type="button"
-                  onClick={() => {
-                    logoFileFieldRef.current?.click()
-                  }}
-                >
-                  {logoFile
-                    ? logoFile.name
-                    : t("common:choose_entity_file", {
-                        entity: t("common:logo")
-                      })}
-                </Button>
-                {logoPreview && (
+          {brand && (
+            <Card template="1/2" title={t("common:logo")}>
+              <div className="flex items-end gap-6">
+                <Input
+                  type="file"
+                  onChange={(e) => onLogoFileChange(e)}
+                  className="hidden"
+                  accept="image/*"
+                  ref={logoFileFieldRef}
+                />
+                <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
+                  {logoPreview || brand?.logoFile ? (
+                    <Image
+                      src={
+                        logoPreview ||
+                        (brand?.logoFile?.presignedUrl.url as string)
+                      }
+                      fill
+                      alt="..."
+                      className="object-contain p-3"
+                    />
+                  ) : (
+                    <LucideWarehouse
+                      className="h-8 w-8 text-alpha-400"
+                      strokeWidth={1.5}
+                    />
+                  )}
+                </div>
+                <div className="flex items-center gap-2">
                   <Button
-                    variant="danger"
-                    iconOnly
+                    variant="secondary"
+                    type="button"
                     onClick={() => {
-                      form.setValue("logoFileUuid", "")
-                      setLogoFile(null)
-                      setLogoPreview("")
+                      logoFileFieldRef.current?.click()
                     }}
                   >
-                    <LucideTrash className="icon" />
+                    {logoFile
+                      ? logoFile.name
+                      : t("common:choose_entity_file", {
+                          entity: t("common:logo")
+                        })}
                   </Button>
-                )}
+                  {logoPreview && (
+                    <Button
+                      variant="danger"
+                      iconOnly
+                      onClick={() => {
+                        form.setValue("logoFileUuid", "")
+                        setLogoFile(null)
+                        setLogoPreview("")
+                      }}
+                    >
+                      <LucideTrash className="icon" />
+                    </Button>
+                  )}
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          )}
           {brand && (
             <Card template="1/2" title={t("common:catalog")}>
               <div className="flex items-end gap-6">

@@ -144,6 +144,8 @@
   "logout": "خروج",
   "meta_description": "توضیحات صفحه",
   "name": "نام",
+  "name_fa": "نام فارسی",
+  "name_en": "نام انگلیسی",
   "new": "جدید",
   "new_entity": "{{ entity }} جدید",
   "new_password": "کلمه عبور جدید",
