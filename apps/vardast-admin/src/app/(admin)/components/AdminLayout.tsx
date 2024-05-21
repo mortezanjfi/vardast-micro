@@ -15,17 +15,17 @@ const AdminLayoutComponent = ({ children }: AdminLayoutComponentProps) => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
 
   return (
-    <div className="app h-full overflow-y-scroll md:overflow-y-auto">
-      <div className="app-inner">
-        <Sidebar
-          isAdmin={true}
-          menus={_sidebarMenu}
-          open={sidebarOpen}
-          onOpenChanged={setSidebarOpen}
-        />
-        <div className="app-content">
-          <div className="mx-auto flex w-full flex-col">
-            <div className="mb-3 flex items-center gap-2">
+    <div className="md:app w-full bg-alpha-50">
+      <div className=" hide-scrollbar h-full w-full flex-col overflow-y-scroll  pb-8 lg:container md:overflow-y-auto">
+        <div className="app-inner gap-3 pb-5 pt">
+          <Sidebar
+            open={sidebarOpen}
+            onOpenChanged={setSidebarOpen}
+            menus={_sidebarMenu}
+            isAdmin={true}
+          />
+          <div className="flex w-full flex-col">
+            <div className="flex items-center gap-2 pr-6">
               <Button
                 onClick={() => setSidebarOpen(true)}
                 variant="ghost"
@@ -36,36 +36,11 @@ const AdminLayoutComponent = ({ children }: AdminLayoutComponentProps) => {
               </Button>
               <div className="flex-1 overflow-y-auto">
                 <Suspense>
-                  <Breadcrumb />
+                  <Breadcrumb dynamic />
                 </Suspense>
               </div>
-              {/* <form autoComplete="off" action="" className="mr-auto">
-                <div className="form-control form-control-sm">
-                  <div className="input-group">
-                    <div className="input-inset">
-                      <div className="input-element">
-                        <LucideSearch />
-                      </div>
-                      <input
-                        type="text"
-                        className="input-field"
-                        placeholder="جستجو..."
-                        autoComplete="off"
-                        name="search"
-                        tabIndex={-1}
-                        role="presentation"
-                      />
-                      <div className="input-element" dir="ltr">
-                        <span className="font-sans text-sm text-alpha-400">
-                          ⌘K
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </form> */}
-            </div>
-            <div className="mx-auto w-full">{children}</div>
+            </div>{" "}
+            {children}
           </div>
         </div>
       </div>
