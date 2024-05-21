@@ -1,7 +1,7 @@
 import { useState } from "react"
+import AddPriceModal from "@vardast/component/desktop/AddPriceModal"
 import { Product } from "@vardast/graphql/generated"
 
-import AddPriceModal from "@/app/(client)/(profile)/profile/orders/components/AddPriceModal"
 import OrderProductCard, {
   OrderProductCardSkeleton
 } from "@/app/(client)/(profile)/profile/orders/components/OrderProductCard"
@@ -209,9 +209,14 @@ const OrderOffersSection = ({}: OrderOffersSectionProps) => {
   //   { id: 2, name: "هزینه حمل" }
   // ]
 
+  const submit = (data: any) => {
+    console.log(data)
+    setOpen(false)
+  }
+
   return (
     <>
-      <AddPriceModal setOpen={setOpen} open={open} />
+      <AddPriceModal submitFunction={submit} setOpen={setOpen} open={open} />
       {!OfferProducts.length ? (
         <OrderProductListContainer>
           {() => (

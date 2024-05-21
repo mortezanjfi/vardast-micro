@@ -3,10 +3,10 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { PlusIcon } from "@heroicons/react/24/solid"
+import AllOrderDeleteModal from "@vardast/component/desktop/AllOrderDeleteModal"
 import { Button } from "@vardast/ui/button"
 
 import PageTitle from "@/app/(client)/(profile)/components/PageTitle"
-import AllOrderDeleteModal from "@/app/(client)/(profile)/profile/orders/components/AllOrderDeleteModal"
 import OrderOffersSection from "@/app/(client)/(profile)/profile/orders/components/OrderOffersSection"
 
 type AddOrderOfferProps = { uuid: string; title: string }
@@ -15,10 +15,17 @@ function AddOrderOffer({ title, uuid }: AddOrderOfferProps) {
   const router = useRouter()
   const [open, onOpenChange] = useState<boolean>(false)
 
+  const onDelete = () => {
+    console.log("delete")
+  }
   return (
     <>
       {" "}
-      <AllOrderDeleteModal open={open} onOpenChange={onOpenChange} />
+      <AllOrderDeleteModal
+        onDelete={onDelete}
+        open={open}
+        onOpenChange={onOpenChange}
+      />
       <div className="flex h-full w-full flex-col gap-5">
         <PageTitle title={title} />
         <div className="flex items-center justify-between border-b py-5">
