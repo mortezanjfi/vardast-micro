@@ -86,7 +86,7 @@ function OrderProductsList({}: OrderProductsListProps) {
           {fakeData.map(
             (order, index) =>
               order && (
-                <tr key={order.id} className="cursor-pointer">
+                <tr key={order.id}>
                   <td className="w-4">
                     <span>{digitsEnToFa(index + 1)}</span>
                   </td>

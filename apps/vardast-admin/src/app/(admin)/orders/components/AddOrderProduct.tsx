@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@vardast/ui/button"
 import { Checkbox } from "@vardast/ui/checkbox"
@@ -24,7 +25,7 @@ type AddOrderProductProps = { uuid: string }
 function AddOrderProduct({ uuid }: AddOrderProductProps) {
   const [ProductIds, setProductIds] = useState<number[]>([])
   const [expensexId, setExpensesId] = useState<number[]>([])
-
+  const router = useRouter()
   const additionalExpenses = [
     { id: 1, name: "انبارداری" },
     { id: 2, name: "بارگیری" },
@@ -55,7 +56,7 @@ function AddOrderProduct({ uuid }: AddOrderProductProps) {
   return (
     <CardContainer title="افزودن کالا به سفارش">
       <div className="flex flex-col ">
-        <p className="border-b py-5">
+        <p className="border-b pb-5">
           کالاها و هزینه های جانبی را از یک یا ترکیبی از روش های زیر انتخاب کرده
           و به لیست کالاهای سفارش اضافه کنید
         </p>
@@ -67,7 +68,7 @@ function AddOrderProduct({ uuid }: AddOrderProductProps) {
           </p>
         </div>
         {additionalExpenses.length && (
-          <div className=" py-5">
+          <div className="pt-5">
             <Form {...form}>
               <form
                 className="flex flex-col gap-5"
@@ -130,8 +131,14 @@ function AddOrderProduct({ uuid }: AddOrderProductProps) {
                     </FormItem>
                   )}
                 />
-                <div className="flex flex-row-reverse border-t py-5">
-                  <Button type="submit" variant="primary">
+                <div className="flex flex-row-reverse border-t pt-5">
+                  <Button
+                    onClick={() => {
+                      router.push(`/orders/${uuid}/add-price`)
+                    }}
+                    type="submit"
+                    variant="primary"
+                  >
                     افزودن قیمت
                   </Button>
                 </div>
