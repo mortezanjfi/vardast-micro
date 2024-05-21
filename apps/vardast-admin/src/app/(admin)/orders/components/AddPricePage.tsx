@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation"
 import { PlusIcon } from "@heroicons/react/24/solid"
 import AddPriceModal from "@vardast/component/desktop/AddPriceModal"
 import AllOrderDeleteModal from "@vardast/component/desktop/AllOrderDeleteModal"
+import RemoveProductModal from "@vardast/component/desktop/RemoveProductModal"
+import { Product } from "@vardast/graphql/src/generated"
 import { Button } from "@vardast/ui/button"
 import useTranslation from "next-translate/useTranslation"
 
@@ -17,8 +19,10 @@ const AddPricePage = ({ uuid }: AddPricePageProps) => {
   const router = useRouter()
   const { t } = useTranslation()
   const [open, onOpenChange] = useState<boolean>(false)
-  const [priceModalOpen, setPriceModalOpen] = useState<boolean>(false)
-
+  const [addPriceModalOpen, setAddPriceModalOpen] = useState<boolean>(false)
+  const [removeProductModalOpen, setRemoveProductModalOpen] =
+    useState<boolean>(false)
+  const [productToDelete, setProductToDelete] = useState<Product | unknown>()
   const onDelete = () => {
     console.log("delete")
   }
@@ -45,11 +49,22 @@ const AddPricePage = ({ uuid }: AddPricePageProps) => {
 
   const submit = (data: any) => {
     console.log(data)
-    setPriceModalOpen(false)
+    setAddPriceModalOpen(false)
+  }
+
+  const adminRemoveOfferMutation = () => {
+    console.log("delete")
   }
 
   return (
     <>
+      <RemoveProductModal
+        isAdmin={true}
+        adminRemoveOfferMutation={adminRemoveOfferMutation}
+        productToDelet={productToDelete as Product}
+        open={removeProductModalOpen}
+        onOpenChange={setRemoveProductModalOpen}
+      />
       <AllOrderDeleteModal
         onDelete={onDelete}
         open={open}
@@ -57,8 +72,8 @@ const AddPricePage = ({ uuid }: AddPricePageProps) => {
       />
       <AddPriceModal
         submitFunction={submit}
-        setOpen={setPriceModalOpen}
-        open={priceModalOpen}
+        setOpen={setAddPriceModalOpen}
+        open={addPriceModalOpen}
       />
       <CardContainer title="افزودن قیمت">
         <div className="flex items-center justify-between border-b py-5">
@@ -145,7 +160,7 @@ const AddPricePage = ({ uuid }: AddPricePageProps) => {
                         <div className="flex gap-2">
                           <span
                             onClick={() => {
-                              setPriceModalOpen(true)
+                              setAddPriceModalOpen(true)
                             }}
                             className="tag cursor-pointer text-blue-500"
                           >
@@ -156,11 +171,13 @@ const AddPricePage = ({ uuid }: AddPricePageProps) => {
 
                           <span
                             className="tag cursor-pointer text-error"
-                            // onClick={(e) => {
-                            //   e.stopPropagation()
-                            //   setDeleteModalOpen(true)
-                            //   setBrandToDelete(brand as Brand)
-                            // }}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              e.nativeEvent.preventDefault()
+                              e.nativeEvent.stopImmediatePropagation()
+                              setProductToDelete(product as unknown)
+                              setRemoveProductModalOpen(true)
+                            }}
                           >
                             {t("common:delete")}
                           </span>
