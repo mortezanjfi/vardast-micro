@@ -20,12 +20,20 @@ type AdminAddOrderProductTabsProps = {
 const AdminAddOrderProductTabs = ({
   setProductIds
 }: AdminAddOrderProductTabsProps) => {
+  const adminCreateOfferMutation = () => {
+    console.log("admin offer created")
+  }
   const tabs: AddOrderProductTab[] = useMemo(
     () => [
       {
         value: "انتخاب از کالا",
         title: <TabTitleWithExtraData title="انتخاب از سبد کالا" />,
-        Content: () => <AddFromProducts isAdmin={true} />
+        Content: () => (
+          <AddFromProducts
+            adminCreateOfferMutation={adminCreateOfferMutation}
+            isAdmin={true}
+          />
+        )
       },
       {
         value: "افزودن دستی کالا",

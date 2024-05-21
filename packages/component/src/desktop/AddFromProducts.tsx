@@ -4,13 +4,14 @@ import { useMemo, useState } from "react"
 import Image from "next/image"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
-import { UseQueryResult } from "@tanstack/react-query"
+import { UseMutationResult, UseQueryResult } from "@tanstack/react-query"
 import logoHorizontal from "@vardast/asset/logo-horizontal-v2-persian-light-bg.svg"
 import {
-  useCreateOfferMutation,
+  CreateOfferInput,
+  CreateOfferMutation,
+  Exact,
   useGetAllProductsQuery
 } from "@vardast/graphql/generated"
-import { toast } from "@vardast/hook/use-toast"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Button } from "@vardast/ui/button"
@@ -27,7 +28,18 @@ import LoadingFailed from "../LoadingFailed"
 import NoResult from "../NoResult"
 import Pagination from "../Pagination"
 
-type Props = { isAdmin?: boolean }
+type Props = {
+  isAdmin?: boolean
+  sellerCreateOfferMutation?: UseMutationResult<
+    CreateOfferMutation,
+    unknown,
+    Exact<{
+      createOfferInput: CreateOfferInput
+    }>,
+    unknown
+  >
+  adminCreateOfferMutation?: Function
+}
 const filterSchema = z.object({ query: z.string() })
 
 const renderedListStatus = {
@@ -54,7 +66,11 @@ const getContentByApiStatus = (
 
 export type ProductNameSearchFilter = TypeOf<typeof filterSchema>
 
-export const AddFromProducts = ({ isAdmin }: Props) => {
+export const AddFromProducts = ({
+  isAdmin,
+  sellerCreateOfferMutation,
+  adminCreateOfferMutation
+}: Props) => {
   const { t } = useTranslation()
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [loadingBtn, setLoadingBtn] = useState<number>()
@@ -79,28 +95,6 @@ export const AddFromProducts = ({ isAdmin }: Props) => {
           page: currentPage
         }
       ]
-    }
-  )
-
-  const createOfferMutation = useCreateOfferMutation(
-    graphqlRequestClientWithToken,
-    {
-      onError: () => {
-        toast({
-          description: t("common:entity_added_error", {
-            entity: t("common:offer")
-          }),
-          duration: 2000,
-          variant: "danger"
-        })
-      },
-      onSuccess: () => {
-        toast({
-          description: "کالای شما با موفقیت اضافه شد",
-          duration: 2000,
-          variant: "success"
-        })
-      }
     }
   )
 
@@ -228,22 +222,32 @@ export const AddFromProducts = ({ isAdmin }: Props) => {
                             size="xsmall"
                             type="button"
                             loading={
-                              loadingBtn === product.id &&
-                              createOfferMutation.isLoading
+                              loadingBtn === product.id && !isAdmin
+                                ? sellerCreateOfferMutation.isLoading
+                                : false
                             }
-                            disabled={createOfferMutation.isLoading}
+                            disabled={
+                              !isAdmin
+                                ? sellerCreateOfferMutation.isLoading
+                                : false
+                            }
                             onClick={(e) => {
                               e.stopPropagation()
                               e.nativeEvent.preventDefault()
                               e.nativeEvent.stopImmediatePropagation()
                               setLoadingBtn(product.id)
-                              createOfferMutation.mutate({
-                                createOfferInput: {
-                                  isAvailable: true,
-                                  isPublic: true,
-                                  productId: product.id
-                                }
-                              })
+
+                              {
+                                isAdmin
+                                  ? adminCreateOfferMutation()
+                                  : sellerCreateOfferMutation.mutate({
+                                      createOfferInput: {
+                                        isAvailable: true,
+                                        isPublic: true,
+                                        productId: product.id
+                                      }
+                                    })
+                              }
                             }}
                           >
                             {t("common:add_entity", {
