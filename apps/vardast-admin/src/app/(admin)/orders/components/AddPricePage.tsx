@@ -89,7 +89,7 @@ const AddPricePage = ({ uuid }: AddPricePageProps) => {
               variant="outline-primary"
               className="px-4 py-2"
               onClick={() => {
-                router.push(`/profile/orders/${uuid}/add-order-products`)
+                router.push(`/orders/${uuid}/add-order-product`)
               }}
             >
               <PlusIcon width={20} height={20} />
@@ -196,6 +196,17 @@ const AddPricePage = ({ uuid }: AddPricePageProps) => {
           setCurrentPage(page)
         }}
       /> */}
+        </div>
+        <div className="flex flex-row-reverse border-t pt-5">
+          <Button
+            className="py-2"
+            onClick={() => {
+              router.push(`/orders`)
+            }}
+            variant="primary"
+          >
+            ثبت نهایی سفارش
+          </Button>
         </div>
       </CardContainer>
     </>
