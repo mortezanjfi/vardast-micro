@@ -7,7 +7,7 @@ import logoSign from "@vardast/asset/sign.svg"
 import clsx from "clsx"
 
 import Link from "./Link"
-import Search from "./search"
+import Search from "./Search"
 
 interface HeaderProps {
   isMobileView: boolean
