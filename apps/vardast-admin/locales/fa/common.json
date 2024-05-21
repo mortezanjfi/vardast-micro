@@ -314,5 +314,8 @@
   "orderDetail": "جزییات سفارش",
   "project-address": "آدرس پروژه",
   "shipping-address": "آدرس محل تحویل",
-  "pay-method-description": "توضیحات روش پرداخت"
+  "pay-method-description": "توضیحات روش پرداخت",
+  "add-order-product": "افزودن کالا به سفارش",
+  "order-detail": "جزییات سفارش",
+  "add-price": "پیشنهاد قیمت"
 }
