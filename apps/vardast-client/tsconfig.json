@@ -39,9 +39,7 @@
     "src/@core/types/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "../../packages/component/src/desktop/OrderManualTabContent.tsx",
-    "../../packages/component/src/desktop/AddOrderProductOrganizer.tsx"
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

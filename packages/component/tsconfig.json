@@ -39,8 +39,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "**/*.svg",
-    "src/desktop/OrderManualTabContent.tsx"
+    "**/*.svg"
   ],
   "exclude": [
     "node_modules",
