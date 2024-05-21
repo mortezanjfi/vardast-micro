@@ -13,12 +13,12 @@ import { OrdersFilter } from "@/app/(admin)/orders/components/OrdersFilter"
 
 type Props = {}
 const filterSchema = z.object({
-  projectCode: z.string(),
-  purchaserName: z.string(),
-  projectName: z.string(),
-  personInChargeId: z.number(),
-  fileStatus: z.string(),
-  orderStatus: z.string()
+  projectCode: z.string().optional(),
+  purchaserName: z.string().optional(),
+  projectName: z.string().optional(),
+  personInChargeId: z.number().optional(),
+  fileStatus: z.string().optional(),
+  orderStatus: z.string().optional()
 })
 
 export type FilterFields = TypeOf<typeof filterSchema>
