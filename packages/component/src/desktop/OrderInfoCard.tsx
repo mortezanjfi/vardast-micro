@@ -33,7 +33,7 @@ const OrderInfoCard = async ({ isAdmin, uuid }: OrderInfoCardProps) => {
     <Card
       title={t("common:order-info")}
       className="h-fit"
-      titleClass="text-base pb-5 pt-2"
+      titleClass="text-base pb-2 border-b-2 border-primary-600"
     >
       <div className="flex flex-col gap-4 pt-5">
         <div className="flex gap-5">
