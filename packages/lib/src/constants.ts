@@ -102,7 +102,7 @@ export const _sidebarMenu: NavigationType[] = [
       {
         title: "برندها",
         path: "/brands",
-        icon: "fingerprint",
+        icon: "factory",
         abilities: "gql.products.brand.index"
       },
       {
