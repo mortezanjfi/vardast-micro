@@ -6,7 +6,7 @@ import DesktopFooter from "@vardast/component/desktop/DesktopFooter"
 import DesktopHeader from "@vardast/component/desktop/DesktopHeader"
 import MobileScrollProvider from "@vardast/component/header/MobileScrollProvider"
 import MobileNavigation from "@vardast/component/mobile-navigation"
-import { SearchActionModal } from "@vardast/component/src/Search"
+import { SearchActionModal } from "@vardast/component/Search"
 import PublicProvider from "@vardast/provider/PublicProvider"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
