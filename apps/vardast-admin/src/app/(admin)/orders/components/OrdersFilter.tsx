@@ -175,7 +175,7 @@ export const OrdersFilter = ({
                 name="personInChargeId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("common:project")}</FormLabel>
+                    <FormLabel>مسوول سفارش</FormLabel>
                     <Popover
                       modal
                       open={personInchargeDialog}
