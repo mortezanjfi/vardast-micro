@@ -17,9 +17,11 @@ function UploadedFiles({}: UploadedFilesProps) {
       <table className="table border-collapse border">
         <thead>
           <tr>
-            <th>{t("common:row")}</th>
-            <th>{t("common:entity_name", { entity: t("common:file") })}</th>
-            <th>{t("common:operation")}</th>
+            <th className="border">{t("common:row")}</th>
+            <th className="border">
+              {t("common:entity_name", { entity: t("common:file") })}
+            </th>
+            <th className="border">{t("common:operation")}</th>
           </tr>
         </thead>
         <tbody>
@@ -27,12 +29,12 @@ function UploadedFiles({}: UploadedFilesProps) {
             (order, index) =>
               order && (
                 <tr key={order.id}>
-                  <td>
+                  <td className="border">
                     {" "}
                     <span>{digitsEnToFa(index + 1)}</span>
                   </td>
-                  <td>{order.file}</td>
-                  <td>
+                  <td className="border">{order.file}</td>
+                  <td className="border">
                     <span className="text- cursor-pointer text-blue-500">
                       نمایش
                     </span>

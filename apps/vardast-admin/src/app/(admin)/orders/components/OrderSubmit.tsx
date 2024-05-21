@@ -17,6 +17,7 @@ function OrderSubmit({ uuid }: OrderSubmitProps) {
           سفارش اضافه کنید.
         </p>
         <Button
+          className="py-2"
           onClick={() => {
             router.push(`/orders/${uuid}/add-order-product`)
           }}

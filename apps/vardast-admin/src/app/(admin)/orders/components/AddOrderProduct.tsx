@@ -133,6 +133,7 @@ function AddOrderProduct({ uuid }: AddOrderProductProps) {
                 />
                 <div className="flex flex-row-reverse border-t pt-5">
                   <Button
+                    className="py-2"
                     onClick={() => {
                       router.push(`/orders/${uuid}/add-price`)
                     }}

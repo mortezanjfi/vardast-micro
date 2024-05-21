@@ -131,15 +131,15 @@ export const AddFromProducts = ({
             )}
             <table
               className={clsx(
-                "table-hover table",
+                "table-hover table border-collapse border",
                 isAdmin && "hide-scrollbar h-72 overflow-y-auto"
               )}
             >
               <thead>
                 <tr>
-                  <th>{t("common:title")}</th>
-                  <th>{t("common:unit")}</th>
-                  <th>{t("common:price")}</th>
+                  <th className="border">{t("common:title")}</th>
+                  <th className="border">{t("common:unit")}</th>
+                  <th className="border">{t("common:price")}</th>
                   {/* <th>{t("common:updated")}</th> */}
                   <th></th>
                 </tr>
@@ -149,7 +149,7 @@ export const AddFromProducts = ({
                   (product) =>
                     product && (
                       <tr key={product.id}>
-                        <td className="flex gap-2">
+                        <td className="flex gap-2 border">
                           <div className="relative aspect-square h-12 w-12 overflow-hidden rounded">
                             <Image
                               src={
@@ -174,10 +174,10 @@ export const AddFromProducts = ({
                             <span>{product.sku}</span>
                           </div>
                         </td>
-                        <td className="w-[159px] border-r-0.5">
+                        <td className="w-[159px] border">
                           <div>{product.uom.name}</div>
                         </td>
-                        <td className="w-[159px] border-r-0.5">
+                        <td className="w-[159px] border">
                           <div className="flex flex-col">
                             <div className="text-success-600">
                               {product.highestPrice ? (
@@ -214,8 +214,8 @@ export const AddFromProducts = ({
                           </div>
                         </td>
                         {/* column for updated date */}
-                        {/* <td className="w-[159px] border-r-0.5"></td> */}
-                        <td className="w-[159px] border-r-0.5">
+                        {/* <td className="w-[159px] border"></td> */}
+                        <td className="w-[159px] border">
                           {" "}
                           <Button
                             variant="secondary"
