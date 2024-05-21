@@ -1,6 +1,7 @@
 "use client"
 
 import { Dispatch, SetStateAction, useState } from "react"
+import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
 import Link from "@vardast/component/Link"
 import { Button } from "@vardast/ui/button"
 import {
@@ -12,8 +13,6 @@ import {
 } from "@vardast/ui/dropdown-menu"
 import { LucideEdit, LucideMoreVertical, LucideTrash } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
-
-import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/components/DetailsWithTitle"
 
 type ProjectCardProps = {
   project: any

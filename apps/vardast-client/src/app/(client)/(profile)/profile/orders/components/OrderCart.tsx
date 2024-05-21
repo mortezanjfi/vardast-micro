@@ -3,6 +3,7 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { useRouter } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
+import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
 import { Button } from "@vardast/ui/button"
 import {
   DropdownMenu,
@@ -15,7 +16,6 @@ import { Dot, LucideMoreVertical, LucideTrash } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
 import { Order } from "@/app/(client)/(profile)/profile/orders/components/OrdersPage"
-import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/components/DetailsWithTitle"
 
 type OrderCardProps = {
   order: Order

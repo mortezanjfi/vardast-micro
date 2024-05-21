@@ -1,9 +1,8 @@
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import Card from "@vardast/component/Card"
+import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
-
-import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/components/DetailsWithTitle"
 
 type OfferCardProps = { offer: any; isVardast: boolean }
 

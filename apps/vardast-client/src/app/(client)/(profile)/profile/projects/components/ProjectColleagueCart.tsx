@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react"
+import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
 import { Button } from "@vardast/ui/button"
 import {
   DropdownMenu,
@@ -10,7 +11,6 @@ import {
 import { LucideEdit, LucideMoreVertical, LucideTrash } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
-import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/components/DetailsWithTitle"
 import { Colleague } from "@/app/(client)/(profile)/profile/projects/components/ProjectColleaguesTab"
 
 type ProjectColleagueCartProps = {

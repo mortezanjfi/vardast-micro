@@ -12,6 +12,7 @@ import {
 import Image from "next/image"
 import { TrashIcon } from "@heroicons/react/24/outline"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
+import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
 import Link from "@vardast/component/Link"
 import PriceTitle from "@vardast/component/PriceTitle"
 import { ProductContainerType } from "@vardast/component/ProductListContainer"
@@ -25,7 +26,6 @@ import { faIR } from "date-fns/locale"
 import useTranslation from "next-translate/useTranslation"
 
 import ProductDeleteModal from "@/app/(client)/(profile)/profile/orders/components/ProductDeleteModal"
-import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/components/DetailsWithTitle"
 
 interface OrderProductCardProps {
   isDefault?: boolean
