@@ -7,9 +7,9 @@ import { Button } from "@vardast/ui/button"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 
-type UploadTabContentProps = {}
+import { OrderProductTabContentProps } from "@/app/(client)/(profile)/profile/orders/components/AddOrderProductTabs"
 
-function UploadTabContent({}: UploadTabContentProps) {
+function UploadTabContent({}: OrderProductTabContentProps) {
   const { t } = useTranslation()
   const { data: session } = useSession()
   const token = session?.accessToken || null
@@ -44,10 +44,8 @@ function UploadTabContent({}: UploadTabContentProps) {
   }
   return (
     <div className="flex w-full flex-col gap-5 py-5">
-      {" "}
       <Dropzone
         isPreOrder={true}
-        // existingImages
         uploadPath={uploadPaths.productImages}
         onAddition={(file) => {
           setImages((prevImages) => [

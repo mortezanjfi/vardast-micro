@@ -11,7 +11,7 @@ import Link from "@vardast/component/Link"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
-import Pagination from "@vardast/component/Pagination"
+import Pagination from "@vardast/component/table/Pagination"
 import {
   useCreateOfferMutation,
   useGetAllProductsQuery

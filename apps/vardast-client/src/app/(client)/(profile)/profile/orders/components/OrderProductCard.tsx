@@ -10,7 +10,6 @@ import {
   useState
 } from "react"
 import Image from "next/image"
-import { TrashIcon } from "@heroicons/react/24/outline"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import Link from "@vardast/component/Link"
 import PriceTitle from "@vardast/component/PriceTitle"
@@ -24,10 +23,10 @@ import { formatDistanceToNow, setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
 import useTranslation from "next-translate/useTranslation"
 
-import ProductDeleteModal from "@/app/(client)/(profile)/profile/orders/components/ProductDeleteModal"
+import { OrderProductTabContentProps } from "@/app/(client)/(profile)/profile/orders/components/AddOrderProductTabs"
 import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/components/DetailsWithTitle"
 
-interface OrderProductCardProps {
+interface OrderProductCardProps extends OrderProductTabContentProps {
   isDefault?: boolean
   hasDefaultButton?: boolean
   setOpen?: Dispatch<SetStateAction<boolean>>
@@ -94,7 +93,7 @@ const OrderProductCard = forwardRef(
       hasDefaultButton = true,
       product,
       selectedItemId,
-      setProductIds,
+      addProductLine,
       isOffer,
       setOpen
     }: OrderProductCardProps,
@@ -103,8 +102,7 @@ const OrderProductCard = forwardRef(
     const { t } = useTranslation()
     const productContainerRef = useRef<HTMLDivElement>(null)
     const [imageContainerHeight, setImageContainerHeight] = useState(146)
-    const [productToDelete, setProductToDelete] = useState<Product>()
-    const [open, onOpenChange] = useState<boolean>(false)
+    // const [open, onOpenChange] = useState<boolean>(false)
 
     const onLoadingCompletedImage = () => {
       const div = productContainerRef.current
@@ -129,17 +127,13 @@ const OrderProductCard = forwardRef(
       ? product.lowestPrice?.discount
       : null
 
-    const addProduct = (id: number) => {
-      if (setProductIds) setProductIds((prev) => [...prev, id])
-    }
-
     return (
       <>
-        <ProductDeleteModal
+        {/* <ProductDeleteModal
           productToDelete={productToDelete}
           open={open}
           onOpenChange={onOpenChange}
-        />
+        /> */}
         <Link
           ref={ref}
           href={checkSellerRedirectUrl(
@@ -306,7 +300,6 @@ const OrderProductCard = forwardRef(
                   e.stopPropagation()
                   e.nativeEvent.preventDefault()
                   e.nativeEvent.stopImmediatePropagation()
-                  console.log(product.id)
                   if (setOpen) setOpen(true)
                 }}
               >
@@ -319,29 +312,18 @@ const OrderProductCard = forwardRef(
                   e.stopPropagation()
                   e.nativeEvent.preventDefault()
                   e.nativeEvent.stopImmediatePropagation()
-                  console.log(product.id)
-                  addProduct(product.id)
+                  addProductLine({
+                    brand: product.brand.name,
+                    descriptions: product.description,
+                    item_name: product.name,
+                    uom: product.uom.name
+                  })
                 }}
                 className="py-3"
               >
                 {t("common:add-to_entity", { entity: t("common:order") })}
               </Button>
             ) : null}
-            {isOffer && (
-              <Button
-                variant="secondary"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  e.nativeEvent.preventDefault()
-                  e.nativeEvent.stopImmediatePropagation()
-                  setProductToDelete(product)
-                  onOpenChange(true)
-                  console.log("trash")
-                }}
-              >
-                <TrashIcon width={24} height={24} className="text-alpha-800" />
-              </Button>
-            )}
           </div>
         </Link>
       </>

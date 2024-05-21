@@ -3,6 +3,8 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useFindPreOrderByIdQuery } from "@vardast/graphql/generated"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import { Checkbox } from "@vardast/ui/checkbox"
 import {
@@ -19,14 +21,21 @@ import { TypeOf, z } from "zod"
 
 import PageTitle from "@/app/(client)/(profile)/components/PageTitle"
 import AddOrderProductTabs from "@/app/(client)/(profile)/profile/orders/components/AddOrderProductTabs"
-import MoreInfo from "@/app/(client)/(profile)/profile/orders/components/MoreInfo"
 
 type AddOrderProductsProps = { uuid: string; title: string }
 
 function AddOrderProducts({ title, uuid }: AddOrderProductsProps) {
   const [ProductIds, setProductIds] = useState<number[]>([])
-  const [expensexId, setExpensesId] = useState<number[]>([])
+  const [expensesId, setExpensesId] = useState<number[]>([])
   const router = useRouter()
+
+  const findPreOrderByIdQuery = useFindPreOrderByIdQuery(
+    graphqlRequestClientWithToken,
+    {
+      id: +uuid
+    }
+  )
+
   const additionalExpenses = [
     { id: 1, name: "انبارداری" },
     { id: 2, name: "بارگیری" },
@@ -46,7 +55,7 @@ function AddOrderProducts({ title, uuid }: AddOrderProductsProps) {
   const form = useForm<OrderType>({
     resolver: zodResolver(OrderSchema),
     defaultValues: {
-      expensesIds: expensexId,
+      expensesIds: expensesId,
       productId: ProductIds
     }
   })
@@ -58,8 +67,13 @@ function AddOrderProducts({ title, uuid }: AddOrderProductsProps) {
   }
 
   return (
+    // <OrderInnerLayout
+    //   findPreOrderByIdQuery={findPreOrderByIdQuery}
+    //   isMobileView={false}
+    //   uuid={uuid}
+    // >
     <div className="flex h-full w-full flex-col gap-5">
-      <PageTitle title={title} />
+      <PageTitle title={title} backButtonUrl="/profile/orders" />
       <div className="flex flex-col gap-2 border-b py-5">
         <span className=" pb-2 text-lg font-semibold">
           افزودن کالا و هزینه جانبی
@@ -69,8 +83,7 @@ function AddOrderProducts({ title, uuid }: AddOrderProductsProps) {
           زیر انتخاب کرده و پس از تایید، قیمت گذاری کنید.
         </p>
       </div>
-      <AddOrderProductTabs setProductIds={setProductIds} />
-      <MoreInfo />
+      <AddOrderProductTabs uuid={uuid} />
       <div className="flex flex-col gap-2 border-b py-5">
         <span className=" pb-2 text-lg font-semibold">هزینه های جانبی </span>
         <p className="text-sm">
@@ -112,17 +125,17 @@ function AddOrderProducts({ title, uuid }: AddOrderProductsProps) {
                                             ...prev,
                                             item.id
                                           ])
-                                          console.log(expensexId)
+                                          console.log(expensesId)
                                         } else {
                                           field.onChange(
                                             field.value?.filter(
                                               (value) => value !== item.id
                                             )
                                           )
-                                          expensexId.filter(
+                                          expensesId.filter(
                                             (value) => value !== item.id
                                           )
-                                          console.log(expensexId)
+                                          console.log(expensesId)
                                         }
                                       }}
                                     />
@@ -148,6 +161,7 @@ function AddOrderProducts({ title, uuid }: AddOrderProductsProps) {
         </div>
       )}
     </div>
+    // </OrderInnerLayout>
   )
 }
 

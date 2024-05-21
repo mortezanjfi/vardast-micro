@@ -24,7 +24,7 @@ input {
     transition-all
     duration-200
     ease-linear
-    read-only:cursor-not-allowed
+    /* read-only:cursor-not-allowed */
     focus:outline-none
     focus:ring-2
     focus-visible:outline-none

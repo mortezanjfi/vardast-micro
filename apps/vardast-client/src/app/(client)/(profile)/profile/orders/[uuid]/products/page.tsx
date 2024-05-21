@@ -1,10 +1,10 @@
 import { Metadata } from "next"
 
-import AddOrderInfo from "@/app/(client)/(profile)/profile/orders/components/AddOrderInfo"
+import AddOrderProducts from "@/app/(client)/(profile)/profile/orders/components/AddOrderProducts"
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "ثبت سفارش جدید"
+    title: "افزودن کالا به سفارش"
   }
 }
 const ProjectEdit = async ({
@@ -12,14 +12,8 @@ const ProjectEdit = async ({
 }: {
   params: { uuid: string }
 }) => {
-  // const session = await getServerSession(authOptions)
-
-  // if (!session?.abilities?.includes("gql.products.brand.update")) {
-  //   redirect("/admin")
-  // }
-
   return (
-    <AddOrderInfo
+    <AddOrderProducts
       uuid={uuid}
       title={(await generateMetadata()).title?.toString() as string}
     />

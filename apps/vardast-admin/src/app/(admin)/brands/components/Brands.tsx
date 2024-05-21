@@ -11,6 +11,7 @@ import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
 import PageHeader from "@vardast/component/PageHeader"
+import Pagination from "@vardast/component/table/Pagination"
 import {
   Brand,
   ThreeStateSupervisionStatuses,
@@ -28,7 +29,6 @@ import { TypeOf, z } from "zod"
 // import { BrandFileUpload } from "@/app/admin/brands/components/BrandFileUpload"
 import BrandDeleteModal from "@/app/(admin)/brands/components/BrandDeleteModal"
 import { BrandFilter } from "@/app/(admin)/brands/components/BrandFilter"
-import Pagination from "@/app/(admin)/components/Pagination"
 
 export const checkBooleanByString = (str: string) => {
   if (str === "false") {

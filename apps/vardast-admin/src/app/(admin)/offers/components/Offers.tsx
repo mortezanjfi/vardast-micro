@@ -11,6 +11,7 @@ import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
 import PageHeader from "@vardast/component/PageHeader"
+import Pagination from "@vardast/component/table/Pagination"
 import {
   GetOfferQuery,
   Offer,
@@ -27,7 +28,6 @@ import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
 import { checkBooleanByString } from "@/app/(admin)/brands/components/Brands"
-import Pagination from "@/app/(admin)/components/Pagination"
 import OfferDeleteModal from "@/app/(admin)/offers/components/OfferDeleteModal"
 import { OffersFilter } from "@/app/(admin)/offers/components/OffersFilter"
 

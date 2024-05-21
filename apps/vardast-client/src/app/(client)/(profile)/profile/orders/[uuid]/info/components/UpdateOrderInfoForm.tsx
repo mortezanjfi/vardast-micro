@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 "use client"
 
-import { useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LucideCheck, LucideChevronsUpDown } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
@@ -11,6 +11,15 @@ import { TypeOf, z } from "zod"
 import "chart.js/auto"
 
 import { useRouter } from "next/navigation"
+import {
+  ExpireTypes,
+  PaymentMethodEnum,
+  UpdatePreOrderInput,
+  useFindPreOrderByIdQuery,
+  useMyProjectsQuery,
+  useUpdatePreOrderMutation
+} from "@vardast/graphql/generated"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
 import {
@@ -28,32 +37,27 @@ import {
   FormLabel,
   FormMessage
 } from "@vardast/ui/form"
-import { Input } from "@vardast/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@vardast/ui/popover"
 import { Textarea } from "@vardast/ui/textarea"
 import { ToggleGroup, ToggleGroupItem } from "@vardast/ui/toggle-group"
+import { enumToKeyValueObject } from "@vardast/util/enumToKeyValueObject"
 import zodI18nMap from "@vardast/util/zodErrorMap"
 import clsx from "clsx"
 
-type AddOrderInfoFormProps = { uuid: string }
+type UpdateOrderInfoFormProps = { uuid: string }
+export type CreateOrderInfoType = TypeOf<typeof CreateOrderInfoSchema>
 
 const CreateOrderInfoSchema = z.object({
   projectId: z.number(),
-  expire: z.string(),
+  expire_date: z.string(),
   addressId: z.number(),
-  pay: z.string(),
-  payDescription: z.string(),
-  orderDescription: z.string()
+  payment_methods: z.string(),
+  descriptions: z.string().optional()
 })
 
-export enum PayMethod {
-  CASH = "CASH",
-  CREDIT = "CREDIT"
-}
+const expireTypes = enumToKeyValueObject(ExpireTypes)
 
-export type CreateOrderInfoType = TypeOf<typeof CreateOrderInfoSchema>
-
-const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
+const UpdateOrderInfoForm = ({ uuid }: UpdateOrderInfoFormProps) => {
   const { t } = useTranslation()
   const router = useRouter()
   const [projectDialog, setProjectDialog] = useState(false)
@@ -65,29 +69,64 @@ const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
   const [expireDialog, setExpireDialog] = useState(false)
   const [expireQueryTemp, setExpireQueryTemp] = useState("")
 
-  const [value, setValue] = useState<PayMethod>(PayMethod.CASH)
+  const [value, setValue] = useState<PaymentMethodEnum>(PaymentMethodEnum.Cash)
+
+  const findPreOrderByIdQuery = useFindPreOrderByIdQuery(
+    graphqlRequestClientWithToken,
+    {
+      id: +uuid
+    }
+  )
+
+  const updatePreOrderMutation = useUpdatePreOrderMutation(
+    graphqlRequestClientWithToken,
+    {
+      onSuccess: () => {
+        router.push(`/profile/orders/${uuid}/products`)
+      }
+    }
+  )
+
+  const myProjectsQuery = useMyProjectsQuery(
+    graphqlRequestClientWithToken,
+    undefined,
+    {
+      refetchOnMount: "always"
+    }
+  )
 
   const form = useForm<CreateOrderInfoType>({
     resolver: zodResolver(CreateOrderInfoSchema)
   })
+
   z.setErrorMap(zodI18nMap)
 
-  const projects = [
-    { id: 1, name: "test" },
-    { id: 2, name: "test2" }
-  ]
-  const addresses = [
-    { id: 1, name: "test" },
-    { id: 2, name: "test2" }
-  ]
-  const expireTime = ["1 روز", "1 ماه", "1 هفته"]
+  const addresses = useMemo(
+    () =>
+      form.watch("projectId")
+        ? myProjectsQuery.data?.myProjects.find(
+            (project) => project.id === form.watch("projectId")
+          )?.address
+        : [],
+    [form.watch("projectId")]
+  )
 
-  const submit = (data: any) => {
-    console.log(data)
-
-    router.push(`/profile/orders/${uuid}/addOrderProducts
-    `)
+  const submit = (data: CreateOrderInfoType) => {
+    updatePreOrderMutation.mutate({
+      updatePreOrderInput: { ...data, id: +uuid } as UpdatePreOrderInput
+    })
   }
+
+  useEffect(() => {
+    if (findPreOrderByIdQuery?.data?.findPreOrderById) {
+      const defaultValue = findPreOrderByIdQuery?.data.findPreOrderById
+      form.setValue("addressId", defaultValue?.address?.id)
+      form.setValue("descriptions", defaultValue?.descriptions)
+      form.setValue("expire_date", defaultValue?.expire_date)
+      form.setValue("payment_methods", defaultValue?.payment_methods)
+      form.setValue("projectId", defaultValue?.project?.id)
+    }
+  }, [findPreOrderByIdQuery.data])
 
   return (
     <Form {...form}>
@@ -108,18 +147,21 @@ const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
-                        disabled={projects.length < 0}
+                        // disabled={myProjectsQuery.data?.myProjects.length === 0}
                         noStyle
                         role="combobox"
                         className="input-field flex items-center text-start"
                       >
-                        {field.value
-                          ? projects.find(
-                              (project) => project && project.id === field.value
-                            )?.name
-                          : t("common:choose_entity", {
-                              entity: t("common:project")
-                            })}
+                        <span className="inline-block max-w-full truncate">
+                          {field.value
+                            ? myProjectsQuery.data?.myProjects.find(
+                                (project) =>
+                                  project && project.id === field.value
+                              )?.name
+                            : t("common:choose_entity", {
+                                entity: t("common:project")
+                              })}
+                        </span>
                         <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
                       </Button>
                     </FormControl>
@@ -127,7 +169,7 @@ const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
                   <PopoverContent className="!z-[9999]" asChild>
                     <Command>
                       <CommandInput
-                        loading={projects.length < 0}
+                        loading={myProjectsQuery.data?.myProjects.length === 0}
                         value={projectQueryTemp}
                         onValueChange={(newQuery) => {
                           // setProvinceQuery(newQuery)
@@ -143,7 +185,7 @@ const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
                         })}
                       </CommandEmpty>
                       <CommandGroup>
-                        {projects.map(
+                        {myProjectsQuery.data?.myProjects.map(
                           (project) =>
                             project && (
                               <CommandItem
@@ -152,7 +194,7 @@ const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
                                 onSelect={(value) => {
                                   form.setValue(
                                     "projectId",
-                                    projects.find(
+                                    myProjectsQuery.data?.myProjects.find(
                                       (project) =>
                                         project &&
                                         project.name.toLowerCase() === value
@@ -184,7 +226,7 @@ const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
 
           <FormField
             control={form.control}
-            name="expire"
+            name="expire_date"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>زمان اعتبار سفارش</FormLabel>
@@ -196,16 +238,17 @@ const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
-                        disabled={addresses.length < 0}
                         noStyle
                         role="combobox"
                         className="input-field flex items-center text-start"
                       >
-                        {field.value
-                          ? expireTime.find(
-                              (time) => time && time === field.value
-                            )
-                          : "زمان اعتبار سفارش را انتخاب کنید"}
+                        <span className="inline-block max-w-full truncate">
+                          {field.value
+                            ? Object.values(expireTypes).find(
+                                (time) => time && time === field.value
+                              )
+                            : "زمان اعتبار سفارش را انتخاب کنید"}
+                        </span>
                         <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
                       </Button>
                     </FormControl>
@@ -213,7 +256,7 @@ const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
                   <PopoverContent className="!z-[9999]" asChild>
                     <Command>
                       <CommandInput
-                        loading={expireTime.length < 0}
+                        loading={Object.values(expireTypes).length === 0}
                         value={expireQueryTemp}
                         onValueChange={(newQuery) => {
                           // setProvinceQuery(newQuery)
@@ -227,7 +270,7 @@ const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
                         })}
                       </CommandEmpty>
                       <CommandGroup>
-                        {expireTime.map(
+                        {Object.values(expireTypes).map(
                           (time, index) =>
                             time && (
                               <CommandItem
@@ -235,13 +278,15 @@ const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
                                 key={index}
                                 onSelect={(value) => {
                                   form.setValue(
-                                    "expire",
-                                    expireTime.find(
+                                    "expire_date",
+                                    Object.values(expireTypes).find(
                                       (time) =>
-                                        time && time.toLowerCase() === value
+                                        time &&
+                                        time.toLowerCase() ===
+                                          value.toLowerCase()
                                     ) || ""
                                   )
-                                  setAddressDialog(false)
+                                  setExpireDialog(false)
                                 }}
                               >
                                 <LucideCheck
@@ -279,18 +324,21 @@ const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
-                        disabled={addresses.length < 0}
+                        disabled={addresses.length === 0}
                         noStyle
                         role="combobox"
-                        className="input-field flex items-center text-start"
+                        className="input-field flex items-center"
                       >
-                        {field.value
-                          ? addresses.find(
-                              (address) => address && address.id === field.value
-                            )?.name
-                          : t("common:choose_entity", {
-                              entity: t("common:address")
-                            })}
+                        <span className="inline-block max-w-full truncate">
+                          {field.value
+                            ? addresses.find(
+                                (address) =>
+                                  address && address.id === field.value
+                              )?.address.address
+                            : t("common:choose_entity", {
+                                entity: t("common:address")
+                              })}
+                        </span>
                         <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
                       </Button>
                     </FormControl>
@@ -298,7 +346,7 @@ const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
                   <PopoverContent className="!z-[9999]" asChild>
                     <Command>
                       <CommandInput
-                        loading={addresses.length < 0}
+                        loading={addresses.length === 0}
                         value={addressQueryTemp}
                         onValueChange={(newQuery) => {
                           // setProvinceQuery(newQuery)
@@ -318,15 +366,17 @@ const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
                           (address) =>
                             address && (
                               <CommandItem
-                                value={address.name}
+                                value={`${address.address.id}`}
                                 key={address.id}
                                 onSelect={(value) => {
                                   form.setValue(
                                     "addressId",
                                     addresses.find(
                                       (address) =>
-                                        address &&
-                                        address.name.toLowerCase() === value
+                                        address?.address?.id &&
+                                        String(
+                                          address.address.id
+                                        ).toLowerCase() === value
                                     )?.id || 0
                                   )
                                   setAddressDialog(false)
@@ -340,7 +390,7 @@ const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
                                       : "opacity-0"
                                   )}
                                 />
-                                {address.name}
+                                {address.address.address}
                               </CommandItem>
                             )
                         )}
@@ -355,7 +405,7 @@ const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
 
           <FormField
             control={form.control}
-            name="pay"
+            name="payment_methods"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>روش پرداخت</FormLabel>
@@ -364,29 +414,29 @@ const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
                     className="input-field grid grid-cols-2 p-0.5"
                     type="single"
                     value={field.value || value}
-                    onValueChange={(value: PayMethod) => {
-                      form.setValue("pay", value)
+                    onValueChange={(value: PaymentMethodEnum) => {
+                      form.setValue("payment_methods", value)
                       setValue(value)
                     }}
-                    defaultValue={PayMethod.CASH}
+                    defaultValue={PaymentMethodEnum.Cash}
                   >
                     <ToggleGroupItem
                       className={clsx(
                         "h-full rounded-xl p-0.5 text-alpha-500",
-                        value === PayMethod.CASH &&
+                        value === PaymentMethodEnum.Cash &&
                           "!bg-alpha-white !text-alpha-black shadow-lg"
                       )}
-                      value={PayMethod.CASH}
+                      value={PaymentMethodEnum.Cash}
                     >
                       نقدی
                     </ToggleGroupItem>
                     <ToggleGroupItem
                       className={clsx(
                         "h-full rounded-xl p-0.5 text-alpha-500",
-                        value === PayMethod.CREDIT &&
+                        value === PaymentMethodEnum.Credit &&
                           "!bg-alpha-white !text-alpha-black shadow-lg"
                       )}
-                      value={PayMethod.CREDIT}
+                      value={PaymentMethodEnum.Credit}
                     >
                       اعتباری
                     </ToggleGroupItem>
@@ -396,26 +446,11 @@ const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
             )}
           />
 
-          <div className="col-span-2">
-            <FormField
-              control={form.control}
-              name="payDescription"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>توضیحات روش پرداخت</FormLabel>
-                  <FormControl>
-                    <Input type="text" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
           <div className="col-span-3">
             {" "}
             <FormField
               control={form.control}
-              name="orderDescription"
+              name="descriptions"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>توضیحات سفارش</FormLabel>
@@ -438,4 +473,4 @@ const AddOrderInfoForm = ({ uuid }: AddOrderInfoFormProps) => {
   )
 }
 
-export default AddOrderInfoForm
+export default UpdateOrderInfoForm

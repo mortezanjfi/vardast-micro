@@ -1,8 +1,26 @@
-mutation FindPreOrderById($id: Float!) {
+query FindPreOrderById($id: Float!) {
   findPreOrderById(id: $id) {
     id
     project {
       name
+      id
+    }
+    address {
+      id
+      userId
+      title
+      delivery_contact
+      delivery_name
+      address
+      city {
+        id
+      }
+      province {
+        id
+      }
+      postalCode
+      status
+      createdAt
     }
     request_date
     expire_date

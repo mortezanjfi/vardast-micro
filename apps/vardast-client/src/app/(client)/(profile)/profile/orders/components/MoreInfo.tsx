@@ -1,26 +1,17 @@
-import { useEffect, useState } from "react"
-import { useSearchParams } from "next/navigation"
 import { InformationCircleIcon } from "@heroicons/react/24/solid"
-import { Button } from "@vardast/ui/button"
+import Link from "@vardast/component/Link"
+import { clsx } from "clsx"
 
-type MoreInfoProps = {}
+import { AddOrderProductOrganizerTab } from "@/app/(client)/(profile)/profile/orders/components/AddOrderProductOrganizer"
+import { AddOrderProductTabsEnum } from "@/app/(client)/(profile)/profile/orders/components/AddOrderProductTabs"
 
-const MoreInfo = ({}: MoreInfoProps) => {
-  const searchParams = useSearchParams()
-  const tabs = [
-    "انتخاب از سبد کالا",
-    "سفارش از طریق آپلود فایل",
-    "افزودن دستی کالا"
-  ]
+type MoreInfoProps = {
+  tabs: AddOrderProductOrganizerTab[]
+  onTabValueChange: (value: string) => void
+  activeTab: AddOrderProductTabsEnum
+}
 
-  const [activeTab, setActiveTab] = useState<string | null>(null)
-
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams as any)
-    const activeTabFromParams = params.get("tab")
-    setActiveTab(activeTabFromParams)
-  }, [searchParams])
-
+const MoreInfo = ({ activeTab, tabs, onTabValueChange }: MoreInfoProps) => {
   return (
     <div className="mt-5 py-5">
       <div className="rounded-lg bg-alpha-100 p-6">
@@ -40,29 +31,19 @@ const MoreInfo = ({}: MoreInfoProps) => {
           </div>
           <div className="flex gap-2">
             {tabs.map((tab, index) => {
-              if (!activeTab && tab !== "انتخاب از سبد کالا") {
-                return (
-                  <Button
-                    key={index}
-                    className="rounded-full"
-                    variant="outline-blue"
-                  >
-                    {tab}
-                  </Button>
-                )
-              } else if (activeTab && tab !== activeTab) {
-                return (
-                  <Button
-                    key={index}
-                    className="rounded-full"
-                    variant="outline-blue"
-                  >
-                    {tab}
-                  </Button>
-                )
-              } else {
-                return null
-              }
+              return (
+                <Link
+                  key={index}
+                  href="#"
+                  onClick={() => onTabValueChange(tab.value)}
+                  className={clsx(
+                    "btn btn-outline-blue rounded-full",
+                    activeTab === tab.value && "bg-info-100"
+                  )}
+                >
+                  {tab.title}
+                </Link>
+              )
             })}
           </div>
         </div>

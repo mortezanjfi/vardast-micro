@@ -3,6 +3,7 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { useRouter } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
+import { PreOrder } from "@vardast/graphql/generated"
 import { Button } from "@vardast/ui/button"
 import {
   DropdownMenu,
@@ -14,17 +15,16 @@ import {
 import { Dot, LucideMoreVertical, LucideTrash } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
-import { Order } from "@/app/(client)/(profile)/profile/orders/components/OrdersPage"
 import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/components/DetailsWithTitle"
 
 type OrderCardProps = {
-  order: Order
+  preOrder: PreOrder
   setOrderToDelete: Dispatch<SetStateAction<{} | undefined>>
   setDeleteModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const OrderCard = ({
-  order,
+  preOrder,
   setOrderToDelete,
   setDeleteModalOpen
 }: OrderCardProps) => {
@@ -37,38 +37,40 @@ const OrderCard = ({
       {" "}
       <div className="flex flex-col gap-4 py-7">
         <div className="flex items-center gap-9">
-          <span className="text-base font-semibold">{order.name}</span>
+          {/* <span className="text-base font-semibold">{preOrder.name}</span> */}
           <div className="tag tag-success">
             <Dot />
-            <span>{order.status}</span>
+            <span>{preOrder.status}</span>
           </div>
           <Button
             variant="secondary"
             className="tag"
             onClick={() => {
-              console.log(order.id)
-              router.push(`/profile/orders/${order.id}/offers`)
+              router.push(`/profile/orders/${preOrder.id}/offers`)
             }}
           >
             <span>{t("common:price-offer")}</span>
             <span className="flex h-[19px] w-[19px] flex-col items-center justify-evenly rounded-full  bg-error-500 text-alpha-white">
-              {order.offer.total}
+              {preOrder.offersNum}
             </span>
           </Button>
         </div>
         <div className="flex items-center gap-9">
-          <DetailsWithTitle title={"کد سفارش"} text={order.title} />
-          <DetailsWithTitle title={"پروژه"} text={order.name} />
+          <DetailsWithTitle title={"کد سفارش"} text={preOrder.uuid} />
+          <DetailsWithTitle title={"پروژه"} text={preOrder.project.name} />
           <DetailsWithTitle
             title={t("common:submition-time")}
             text={
-              order.createdAt
+              preOrder.request_date
                 ? digitsEnToFa(
-                    new Date(order.createdAt).toLocaleDateString("fa-IR", {
-                      year: "numeric",
-                      month: "2-digit",
-                      day: "2-digit"
-                    })
+                    new Date(preOrder.request_date).toLocaleDateString(
+                      "fa-IR",
+                      {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit"
+                      }
+                    )
                   )
                 : ""
             }
@@ -76,9 +78,9 @@ const OrderCard = ({
           <DetailsWithTitle
             title={t("common:order-expire-time")}
             text={
-              order.expiresAt
+              preOrder.expire_date
                 ? digitsEnToFa(
-                    new Date(order.expiresAt).toLocaleDateString("fa-IR", {
+                    new Date(preOrder.expire_date).toLocaleDateString("fa-IR", {
                       year: "numeric",
                       month: "2-digit",
                       day: "2-digit"
@@ -104,7 +106,7 @@ const OrderCard = ({
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onSelect={() => {
-                setOrderToDelete(order)
+                setOrderToDelete(preOrder)
                 setDeleteModalOpen(true)
               }}
               className="danger"

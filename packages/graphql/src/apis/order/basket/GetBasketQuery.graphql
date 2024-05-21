@@ -1,0 +1,85 @@
+query GetBasketQuery {
+  favorites(favoritesInput: { type: BASKET }) {
+    id
+    error
+    product {
+      id
+      slug
+      type
+      name
+      sku
+      techNum
+      status
+      isActive
+      description
+      title
+      metaDescription
+      sort
+      tag
+      rating
+      rank
+      parentId
+      brand {
+        id
+        name
+        name_en
+        status
+        sum
+        slug
+        rating
+        sellersCount
+        categoriesCount
+        bio
+        createdAt
+        updatedAt
+      }
+      category {
+        id
+        title
+        titleEn
+        slug
+        description
+        url
+        icon
+        sort
+        isActive
+        createdAt
+        updatedAt
+        childrenCount
+        productsCount
+      }
+      uom {
+        id
+        name
+        slug
+        symbol
+        isActive
+      }
+      images {
+        id
+        sort
+        isPublic
+        file {
+          id
+          uuid
+          modelType
+          modelId
+          name
+          originalName
+          size
+          mimeType
+          url
+          disk
+          bucketName
+          orderColumn
+          createdAt
+          updatedAt
+          presignedUrl {
+            url
+            expiresAt
+          }
+        }
+      }
+    }
+  }
+}
