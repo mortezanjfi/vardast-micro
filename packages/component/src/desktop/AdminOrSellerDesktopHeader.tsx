@@ -5,8 +5,14 @@ import { usePathname } from "next/navigation"
 import { UserIcon } from "@heroicons/react/24/outline"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import logoHorizontal from "@vardast/asset/logo-horizontal-v2-persian-light-bg.svg"
-import Link from "@vardast/component/Link"
-import Loading from "@vardast/component/Loading"
+import { UserStatusesEnum } from "@vardast/graphql/generated"
+import { ColorEnum } from "@vardast/type/Enums"
+import { Avatar, AvatarFallback, AvatarImage } from "@vardast/ui/avatar"
+import clsx from "clsx"
+import { useSession } from "next-auth/react"
+
+import Link from "../Link"
+import Loading from "../Loading"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,15 +20,10 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger
-} from "@vardast/component/navigation-menu"
-import Search from "@vardast/component/Search"
-import { UserStatusesEnum } from "@vardast/graphql/generated"
-import { ColorEnum } from "@vardast/type/Enums"
-import { Avatar, AvatarFallback, AvatarImage } from "@vardast/ui/avatar"
-import clsx from "clsx"
-import { useSession } from "next-auth/react"
+} from "../navigation-menu"
+import Search from "../Search"
 
-type AdminDesktopHeaderProps = {}
+type AdminOrSellerDesktopHeaderProps = {}
 
 export const StatusUserAlternatives = {
   [UserStatusesEnum.NotActivated]: {
@@ -53,7 +54,7 @@ export const UserStatusItem = ({
   )
 }
 
-const AdminDesktopHeader = (_: AdminDesktopHeaderProps) => {
+const AdminOrSellerDesktopHeader = (_: AdminOrSellerDesktopHeaderProps) => {
   const { data: session, status } = useSession()
   const pathname = usePathname()
 
@@ -172,4 +173,4 @@ const AdminDesktopHeader = (_: AdminDesktopHeaderProps) => {
   )
 }
 
-export default AdminDesktopHeader
+export default AdminOrSellerDesktopHeader

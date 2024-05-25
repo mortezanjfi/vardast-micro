@@ -6,13 +6,20 @@ import logoHorizontal from "@vardast/asset/logo-horizontal-v2-persian-dark-bg-wh
 import myket from "@vardast/asset/myket.svg"
 import telegramColorful from "@vardast/asset/telegramColorful.svg"
 import whatsAppColorful from "@vardast/asset/whatsAppColorful.svg"
-import Link from "@vardast/component/Link"
+import clsx from "clsx"
 
-type Props = {}
+import Link from "../Link"
 
-export default function AdminDesktopFooter({}: Props) {
+type Props = { isAdmin?: boolean }
+
+export default function AdminOrSellerDesktopFooter({ isAdmin }: Props) {
   return (
-    <footer className="bg-secondary text-alpha-white">
+    <footer
+      className={clsx(
+        " text-alpha-white",
+        isAdmin ? "bg-secondary" : "bg-primary"
+      )}
+    >
       <div className="container mx-auto flex flex-col items-center justify-center gap-y-7 px-6 py-9">
         <div className="w-[150px]">
           <Image

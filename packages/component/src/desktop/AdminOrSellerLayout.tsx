@@ -1,17 +1,22 @@
 "use client"
 
 import { ReactNode, Suspense, useState } from "react"
-import Breadcrumb from "@vardast/component/Breadcrumb"
-import Sidebar from "@vardast/component/Sidebar"
-import { _sidebarMenu } from "@vardast/lib/constants"
+import { NavigationType } from "@vardast/type/src/Navigation"
 import { Button } from "@vardast/ui/button"
 import { LucideMenu } from "lucide-react"
 
-type AdminLayoutComponentProps = {
+import Breadcrumb from "../Breadcrumb"
+import Sidebar from "../Sidebar"
+
+type AdminOrSellerLayoutComponentProps = {
+  menu: NavigationType[]
   children: ReactNode
 }
 
-const AdminLayoutComponent = ({ children }: AdminLayoutComponentProps) => {
+const AdminOrSellerLayoutComponent = ({
+  children,
+  menu
+}: AdminOrSellerLayoutComponentProps) => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
 
   return (
@@ -21,7 +26,7 @@ const AdminLayoutComponent = ({ children }: AdminLayoutComponentProps) => {
           <Sidebar
             open={sidebarOpen}
             onOpenChanged={setSidebarOpen}
-            menus={_sidebarMenu}
+            menus={menu}
             isAdmin={true}
           />
           <div className="flex w-full flex-col">
@@ -48,4 +53,4 @@ const AdminLayoutComponent = ({ children }: AdminLayoutComponentProps) => {
   )
 }
 
-export default AdminLayoutComponent
+export default AdminOrSellerLayoutComponent
