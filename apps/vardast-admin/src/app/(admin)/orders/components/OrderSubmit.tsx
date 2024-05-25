@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation"
 import { Button } from "@vardast/ui/button"
 
-import CardContainer from "@/app/(admin)/orders/components/CardContainer"
+import CardContainer from "@vardast/component/desktop/CardContainer"
 
 type OrderSubmitProps = { uuid: string }
 

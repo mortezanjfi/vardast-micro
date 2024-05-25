@@ -1,5 +1,6 @@
 import { ReactNode } from "react"
-import Card from "@vardast/component/Card"
+
+import Card from "../Card"
 
 type Props = { children: ReactNode; title?: string }
 

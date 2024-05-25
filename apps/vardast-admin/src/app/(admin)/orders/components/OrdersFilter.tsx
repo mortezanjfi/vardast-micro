@@ -2,6 +2,7 @@
 
 import { Dispatch, SetStateAction, useState } from "react"
 import { useDebouncedState } from "@mantine/hooks"
+import CardContainer from "@vardast/component/desktop/CardContainer"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
 import {
@@ -26,8 +27,6 @@ import clsx from "clsx"
 import { LucideCheck, LucideChevronsUpDown } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 import { UseFormReturn } from "react-hook-form"
-
-import CardContainer from "@/app/(admin)/orders/components/CardContainer"
 
 type OrdersFilterProps = {
   form: UseFormReturn<

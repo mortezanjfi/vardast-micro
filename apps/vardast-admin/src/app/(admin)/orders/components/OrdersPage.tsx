@@ -4,11 +4,11 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
+import CardContainer from "@vardast/component/desktop/CardContainer"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-import CardContainer from "@/app/(admin)/orders/components/CardContainer"
 import { OrdersFilter } from "@/app/(admin)/orders/components/OrdersFilter"
 
 type Props = {}
@@ -88,21 +88,9 @@ function OrdersPage({}: Props) {
                     <td className="w-4">
                       <span>{digitsEnToFa(index + 1)}</span>
                     </td>
-                    <td>
-                      <span className="font-medium text-alpha-800">
-                        {order.projectCode}
-                      </span>
-                    </td>
-                    <td>
-                      <span className="font-medium text-alpha-800">
-                        {order.purchaser}
-                      </span>
-                    </td>
-                    <td>
-                      <span className="font-medium text-alpha-800">
-                        {order.projectName}
-                      </span>
-                    </td>
+                    <td>{order.projectCode}</td>
+                    <td>{order.purchaser}</td>
+                    <td>{order.projectName}</td>
                     <td>
                       {digitsEnToFa(
                         new Date(order.dateOfSubmission).toLocaleDateString(

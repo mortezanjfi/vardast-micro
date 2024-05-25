@@ -6,12 +6,11 @@ import { useRouter } from "next/navigation"
 import { PlusIcon } from "@heroicons/react/24/solid"
 import AddPriceModal from "@vardast/component/desktop/AddPriceModal"
 import AllOrderDeleteModal from "@vardast/component/desktop/AllOrderDeleteModal"
+import CardContainer from "@vardast/component/desktop/CardContainer"
 import RemoveProductModal from "@vardast/component/desktop/RemoveProductModal"
 import { Product } from "@vardast/graphql/src/generated"
 import { Button } from "@vardast/ui/button"
 import useTranslation from "next-translate/useTranslation"
-
-import CardContainer from "@/app/(admin)/orders/components/CardContainer"
 
 type AddPricePageProps = { uuid: string }
 

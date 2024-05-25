@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import CardContainer from "@vardast/component/desktop/CardContainer"
 import { Button } from "@vardast/ui/button"
 import { Checkbox } from "@vardast/ui/checkbox"
 import {
@@ -18,7 +19,6 @@ import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
 import AdminAddOrderProductTabs from "@/app/(admin)/orders/components/AdminAddOrderProductTabs"
-import CardContainer from "@/app/(admin)/orders/components/CardContainer"
 
 type AddOrderProductProps = { uuid: string }
 

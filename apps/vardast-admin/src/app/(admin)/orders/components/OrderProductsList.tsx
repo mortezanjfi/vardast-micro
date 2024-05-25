@@ -1,7 +1,7 @@
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import useTranslation from "next-translate/useTranslation"
 
-import CardContainer from "@/app/(admin)/orders/components/CardContainer"
+import CardContainer from "@vardast/component/desktop/CardContainer"
 
 type OrderProductsListProps = {}
 

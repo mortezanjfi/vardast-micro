@@ -1,7 +1,6 @@
 import { digitsEnToFa } from "@persian-tools/persian-tools"
+import CardContainer from "@vardast/component/desktop/CardContainer"
 import useTranslation from "next-translate/useTranslation"
-
-import CardContainer from "@/app/(admin)/orders/components/CardContainer"
 
 type UploadedFilesProps = {}
 
