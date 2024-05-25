@@ -1,24 +1,12 @@
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import useTranslation from "next-translate/useTranslation"
 
-import CardContainer from "@vardast/component/desktop/CardContainer"
+import CardContainer from "./CardContainer"
 
-type OrderProductsListProps = {}
+type OrderProductsListProps = { data: any }
 
-function OrderProductsList({}: OrderProductsListProps) {
+function OrderProductsList({ data }: OrderProductsListProps) {
   const { t } = useTranslation()
-  const fakeData = [
-    {
-      id: 3,
-      product_sku: "Innovative AI Development",
-      productName: "test",
-      brand: "test brand",
-      unit: "60",
-      value: 4,
-      attributes: ["test", "test2"],
-      purchaserPrice: { basePrice: 300, tax: 40, total: 340 }
-    }
-  ]
 
   return (
     <CardContainer title="لیست کالاها">
@@ -91,7 +79,7 @@ function OrderProductsList({}: OrderProductsListProps) {
         </thead>
 
         <tbody>
-          {fakeData.map(
+          {data.map(
             (order, index) =>
               order && (
                 <tr key={order.id}>
