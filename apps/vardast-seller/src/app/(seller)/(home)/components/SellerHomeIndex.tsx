@@ -132,7 +132,7 @@ const SellerHomeIndex = ({ session, isMobileView }: SellerHomeIndexType) => {
         </div>
       ) : (
         <div className="flex flex-1 flex-col gap-7">
-          <div className="grid grid-cols-4 gap-7 bg-alpha-white">
+          <div className="grid grid-cols-4 gap-7 ">
             {_analyze_cards.map((item) => (
               <CountItem key={item.id} {...item} />
             ))}
