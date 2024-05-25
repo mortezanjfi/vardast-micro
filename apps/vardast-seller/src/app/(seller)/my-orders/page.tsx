@@ -14,7 +14,7 @@ const fakeData = [
   }
 ]
 const page = async () => {
-  return <SellerOrdersPage data={fakeData} />
+  return <SellerOrdersPage isMyOrderPage={true} data={fakeData} />
 }
 
 export default page

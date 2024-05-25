@@ -14,7 +14,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@vardast/ui/popover"
 import { LucideChevronDown } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
-type Props = {}
+type Props = { isMyOrderPage?: boolean; data: any }
 const statuses = [
   {
     status: "دارد",
@@ -26,24 +26,12 @@ const statuses = [
     value: ""
   }
 ]
-const fakeData = [
-  {
-    id: 3,
-    projectName: "Innovative AI Development",
-    personInCharge: "Jane Doe",
-    dateOfSubmission: "2023-11-01",
-    dateOfExpiry: "2024-11-01",
-    hasFile: true,
-    status: false,
-    projectCode: "AI-DEV-001",
-    purchaser: "Tech Solutions Inc."
-  }
-]
-function SellerOrdersPage({}: Props) {
+
+function SellerOrdersPage({ isMyOrderPage, data }: Props) {
   const { t } = useTranslation()
   const router = useRouter()
   return (
-    <CardContainer title="لیست سفارشات">
+    <CardContainer title={isMyOrderPage ? "لیست سفارشات من" : "لیست سفارشات"}>
       <div className="flex w-full gap-5 border-b border-alpha-200 pb-5">
         <Popover>
           <PopoverTrigger asChild>
@@ -149,8 +137,8 @@ function SellerOrdersPage({}: Props) {
         </thead>
 
         <tbody className="border-collapse border">
-          {fakeData.map(
-            (order, index) =>
+          {data.map(
+            (order: any, index: number) =>
               order && (
                 <tr
                   key={order.id}
