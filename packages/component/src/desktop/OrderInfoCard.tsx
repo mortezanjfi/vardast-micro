@@ -1,5 +1,3 @@
-"use client"
-
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
@@ -148,7 +146,7 @@ const OrderInfoCard = async ({ isAdmin, uuid }: OrderInfoCardProps) => {
             {/*توضیحات*/}
             {isAdmin && (
               <DetailsWithTitle
-                title={t("common:description")}
+                title="توضیحات سفارش"
                 text={orderInfo.orderDescription}
               />
             )}
