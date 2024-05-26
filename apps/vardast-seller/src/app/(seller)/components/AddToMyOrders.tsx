@@ -1,18 +1,27 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import CardContainer from "@vardast/component/desktop/CardContainer"
 import SellerAdminConfirmationModal from "@vardast/component/desktop/SellerAdminConfirmationModal"
+import { Button } from "@vardast/ui/button"
 import { Checkbox } from "@vardast/ui/checkbox"
 
 type Props = {}
 
 function AddToMyOrders({}: Props) {
+  const router = useRouter()
   const [isResponsible, setIsResponsible] = useState<boolean>(false)
   const [open, onOpenChange] = useState<boolean>(false)
 
   const submit = () => {
     console.log("submit")
+    onOpenChange(false)
+  }
+
+  const submitPage = () => {
+    console.log(isResponsible)
+    router.push("/my-orders")
   }
   return (
     <>
@@ -47,6 +56,18 @@ function AddToMyOrders({}: Props) {
           </div>
         </div>
       </CardContainer>
+      <div className="flex flex-row-reverse border-t pt-5">
+        <Button
+          onClick={() => {
+            submitPage()
+          }}
+          className="py-2"
+          type="submit"
+          variant="primary"
+        >
+          تایید و ادامه
+        </Button>
+      </div>
     </>
   )
 }

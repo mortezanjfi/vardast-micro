@@ -144,7 +144,9 @@ function SellerOrdersPage({ isMyOrderPage, data }: Props) {
                   key={order.id}
                   className="cursor-pointer"
                   onClick={() => {
-                    router.push(`/orders/${order.id}/order-detail`)
+                    isMyOrderPage
+                      ? router.push(`/my-orders/${order.id}/order-detail`)
+                      : router.push(`/orders/${order.id}/order-detail`)
                   }}
                 >
                   <td className="w-4 border">
