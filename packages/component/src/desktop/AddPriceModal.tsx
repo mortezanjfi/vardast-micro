@@ -22,6 +22,7 @@ import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
 type AddPriceModalProps = {
+  productId?: number
   submitFunction: (data: any) => void
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
@@ -29,6 +30,7 @@ type AddPriceModalProps = {
 const CreatePriceSchema = z.object({ price: z.coerce.number() })
 type CreatePriceType = TypeOf<typeof CreatePriceSchema>
 const AddPriceModal = ({
+  productId,
   open,
   setOpen,
   submitFunction

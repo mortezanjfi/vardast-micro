@@ -16,7 +16,7 @@ type Props = {
   content: string
   open: boolean
   onOpenChange: Dispatch<SetStateAction<boolean>>
-  setIsResponsible: Dispatch<SetStateAction<boolean>>
+  setIsResponsible?: Dispatch<SetStateAction<boolean>>
 }
 
 function SellerAdminConfirmationModal({
@@ -45,7 +45,8 @@ function SellerAdminConfirmationModal({
             <Button
               variant="ghost"
               onClick={() => {
-                onOpenChange(false), setIsResponsible(false)
+                onOpenChange(false)
+                if (setIsResponsible) setIsResponsible(false)
               }}
             >
               {t("common:cancel")}
