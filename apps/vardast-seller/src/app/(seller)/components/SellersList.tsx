@@ -72,6 +72,7 @@ function SellersList({ sellersData, uuid }: Props) {
             <div className="flex flex-col gap-7">
               <div className="flex w-full flex-row-reverse">
                 <Button
+                  className="py-2"
                   onClick={(e) => {
                     console.log("test")
                     e.stopPropagation()
