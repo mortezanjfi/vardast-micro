@@ -1,7 +1,6 @@
 // import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
 import { authOptions } from "@vardast/auth/authOptions"
-import AdminOrSellerDesktopFooter from "@vardast/component/desktop/AdminOrSellerDesktopFooter"
 import AdminOrSellerDesktopHeader from "@vardast/component/desktop/AdminOrSellerDesktopHeader"
 import AdminOrSellerLayoutComponent from "@vardast/component/desktop/AdminOrSellerLayout"
 // import { authOptions } from "@vardast/auth/authOptions"
@@ -40,7 +39,7 @@ export default async function PublicLayout({
                 {children}
               </MobileBaseLayout>
             </AdminOrSellerLayoutComponent>
-            <AdminOrSellerDesktopFooter isAdmin={false} />
+            {/* <AdminOrSellerDesktopFooter isAdmin={false} /> */}
           </>
         )}
       </>
