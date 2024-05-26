@@ -146,6 +146,7 @@
   "logout": "خروج",
   "meta_description": "توضیحات صفحه",
   "name": "نام",
+  "details": "جزئیات",
   "new": "جدید",
   "new_entity": "{{ entity }} جدید",
   "new_password": "کلمه عبور جدید",

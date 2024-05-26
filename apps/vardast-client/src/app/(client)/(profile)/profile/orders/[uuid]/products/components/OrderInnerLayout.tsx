@@ -4,15 +4,15 @@ import { PropsWithChildren } from "react"
 import { UseQueryResult } from "@tanstack/react-query"
 import { FindPreOrderByIdQuery } from "@vardast/graphql/generated"
 
-import OrderInfoCard from "@/app/(client)/(profile)/profile/orders/components/OrderInfoCard"
+import OrderInfoCard from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderInfoCard"
 
-export interface IOrderInnerLayoutLayout extends PropsWithChildren {
+export interface IOrderProductsInnerLayout extends PropsWithChildren {
   uuid: string
   isMobileView: boolean
   findPreOrderByIdQuery: UseQueryResult<FindPreOrderByIdQuery, unknown>
 }
 
-const OrderInnerLayout: React.FC<IOrderInnerLayoutLayout> = ({
+const OrderProductsInnerLayout: React.FC<IOrderProductsInnerLayout> = ({
   children,
   isMobileView,
   findPreOrderByIdQuery,
@@ -30,4 +30,4 @@ const OrderInnerLayout: React.FC<IOrderInnerLayoutLayout> = ({
   )
 }
 
-export default OrderInnerLayout
+export default OrderProductsInnerLayout

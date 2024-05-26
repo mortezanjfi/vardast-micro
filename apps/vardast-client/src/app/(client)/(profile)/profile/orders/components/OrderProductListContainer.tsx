@@ -3,15 +3,7 @@ import { ReactElement, useState } from "react"
 import { ICategoryListLoader } from "@vardast/type/Loader"
 import clsx from "clsx"
 
-export enum ProductContainerType {
-  PHOTO = "photo",
-  LARGE_LIST = "large-list",
-  PRODUCT_PAGE_LIST = "product-page-list",
-  SMALL_LIST = "small-list"
-}
-
 interface IOrderProductListContainer {
-  type?: ProductContainerType
   CardLoader?: React.FC
 
   children(_: {
@@ -21,14 +13,13 @@ interface IOrderProductListContainer {
 }
 
 const OrderProductListContainer: React.FC<IOrderProductListContainer> = ({
-  type = ProductContainerType.LARGE_LIST,
   CardLoader,
   children
 }) => {
   const [selectedItemId, setSelectedItemId] =
     useState<ICategoryListLoader>(null)
   return (
-    <div className={clsx("flex flex-col bg-alpha-white")}>
+    <div className={clsx("flex flex-col gap-6 bg-alpha-white")}>
       {CardLoader &&
         [...Array(3)].map((loader) => (
           <CardLoader key={`product-card-loader-${loader}`} />

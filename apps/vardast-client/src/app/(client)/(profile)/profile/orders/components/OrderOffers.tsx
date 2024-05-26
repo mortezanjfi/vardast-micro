@@ -2,12 +2,13 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { MultiTypeOrder } from "@vardast/graphql/generated"
 import { Button } from "@vardast/ui/button"
 import useTranslation from "next-translate/useTranslation"
 
 import PageTitle from "@/app/(client)/(profile)/components/PageTitle"
+import OrderProductCard from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductCard"
 import CollapsibleOfferCart from "@/app/(client)/(profile)/profile/orders/components/CollapsibleOfferCart"
-import OrderProductCard from "@/app/(client)/(profile)/profile/orders/components/OrderProductCard"
 import VardastDialog from "@/app/(client)/(profile)/profile/orders/components/VardastDialog"
 import OfferCard from "@/app/(client)/(profile)/profile/orders/OfferCard"
 
@@ -244,9 +245,10 @@ const OrderOffers = ({ title, uuid }: OrderOffersProps) => {
                 >
                   <div className="col-span-2">
                     <OrderProductCard
-                      isDefault={false}
-                      hasDefaultButton={false}
-                      product={product as any}
+                      line={{
+                        item_name: product.name,
+                        type: MultiTypeOrder.Product
+                      }}
                     />
                   </div>
                   <OfferCard offer={product.offerDetails} isVardast={false} />

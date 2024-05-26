@@ -1,10 +1,10 @@
 import { useState } from "react"
-import { Product } from "@vardast/graphql/generated"
+import { MultiTypeOrder } from "@vardast/graphql/generated"
 
-import AddPriceModal from "@/app/(client)/(profile)/profile/orders/components/AddPriceModal"
 import OrderProductCard, {
   OrderProductCardSkeleton
-} from "@/app/(client)/(profile)/profile/orders/components/OrderProductCard"
+} from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductCard"
+import AddPriceModal from "@/app/(client)/(profile)/profile/orders/components/AddPriceModal"
 import OrderProductListContainer from "@/app/(client)/(profile)/profile/orders/components/OrderProductListContainer"
 import { NotFoundItems } from "@/app/(client)/favorites/components/FavoritesPageIndex"
 
@@ -230,14 +230,11 @@ const OrderOffersSection = ({}: OrderOffersSectionProps) => {
                 (product) =>
                   product && (
                     <OrderProductCard
-                      setOpen={setOpen}
-                      isOffer={true}
-                      selectedItemId={selectedItemId}
-                      setSelectedItemId={setSelectedItemId}
                       key={product.id}
-                      product={product as Product}
-                      isDefault={false}
-                      hasDefaultButton={false}
+                      line={{
+                        item_name: product.name,
+                        type: MultiTypeOrder.Product
+                      }}
                     />
                   )
               )}

@@ -10,6 +10,7 @@ query PreOrders($indexPreOrderInput: IndexPreOrderInput!) {
       id
       request_date
       expire_date
+      expire_time
       shipping_address
       payment_methods
       offersNum

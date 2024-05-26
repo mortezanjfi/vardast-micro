@@ -3,7 +3,10 @@
 import { useMemo } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { TabTitleWithExtraData } from "@vardast/component/BrandOrSellerProfile"
-import { useCreateLineMutation } from "@vardast/graphql/generated"
+import {
+  CreateLineInput,
+  useCreateLineMutation
+} from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import zodI18nMap from "@vardast/util/zodErrorMap"
@@ -11,26 +14,28 @@ import { ClientError } from "graphql-request"
 import { useForm, UseFormReturn } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-import AddOrderProductOrganizer from "@/app/(client)/(profile)/profile/orders/components/AddOrderProductOrganizer"
-import OrderManualTabContent from "@/app/(client)/(profile)/profile/orders/components/OrderManualTabContent"
-import { OrderProductTabContent } from "@/app/(client)/(profile)/profile/orders/components/OrderProductTabContent"
-import UploadTabContent from "@/app/(client)/(profile)/profile/orders/components/UploadTabContent"
+import OrderProductsOrganizer from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductsOrganizer"
+import { OrderExtraPriceTabContent } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/tabs/OrderExtraPriceTabContent"
+import OrderManualTabContent from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/tabs/OrderManualTabContent"
+import { OrderProductTabContent } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/tabs/OrderProductTabContent"
+import UploadTabContent from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/tabs/UploadTabContent"
 
-export type AddOrderProductTab = {
+type OrderProductsTabType = {
   value: string
   title: JSX.Element
   Content: () => JSX.Element
   className?: string | undefined
 }
 
-type AddOrderProductTabsProps = {
+type OrderProductsTabsProps = {
   uuid: string
 }
 
-export enum AddOrderProductTabsEnum {
+export enum OrderProductsTabsEnum {
   ORDER_PRODUCT_TAB = "ORDER_PRODUCT_TAB",
   ORDER_MANUAL_TAB = "ORDER_MANUAL_TAB",
-  UPLOAD_TAB_CONTENT = "UPLOAD_TAB_CONTENT"
+  UPLOAD_TAB_CONTENT = "UPLOAD_TAB_CONTENT",
+  EXTRA_PRICE = "EXTRA_PRICE"
 }
 
 export const CreateOrderLineSchema = z.object({
@@ -39,17 +44,21 @@ export const CreateOrderLineSchema = z.object({
   descriptions: z.string().optional(),
   item_name: z.string(),
   qty: z.string().optional(),
-  uom: z.string()
+  uom: z.string(),
+  type: z.string().optional()
 })
 
-export type CreateOrderLineType = TypeOf<typeof CreateOrderLineSchema>
+export type CreateOrderLineType = TypeOf<typeof CreateOrderLineSchema> & {
+  type?: CreateLineInput["type"]
+}
 
 export interface OrderProductTabContentProps {
   addProductLine: (productLine: CreateOrderLineType) => void
   form: UseFormReturn<CreateOrderLineType>
+  uuid?: string
 }
 
-const AddOrderProductTabs = ({ uuid }: AddOrderProductTabsProps) => {
+const OrderProductsTabs = ({ uuid }: OrderProductsTabsProps) => {
   const form = useForm<CreateOrderLineType>({
     resolver: zodResolver(CreateOrderLineSchema)
   })
@@ -74,7 +83,7 @@ const AddOrderProductTabs = ({ uuid }: AddOrderProductTabsProps) => {
         )
         form.reset(clearObject)
         toast({
-          title: "کالا با موفقیت اضافه شد",
+          title: "آیتم مورد نظر شما با موفقیت به سفارش اضافه شد",
           duration: 5000,
           variant: "success"
         })
@@ -100,29 +109,34 @@ const AddOrderProductTabs = ({ uuid }: AddOrderProductTabsProps) => {
     form
   }
 
-  const tabs: AddOrderProductTab[] = useMemo(
+  const tabs: OrderProductsTabType[] = useMemo(
     () => [
       {
-        value: AddOrderProductTabsEnum.ORDER_PRODUCT_TAB,
+        value: OrderProductsTabsEnum.ORDER_PRODUCT_TAB,
         title: <TabTitleWithExtraData title="انتخاب از سبد کالا" />,
         Content: () => <OrderProductTabContent {...tabProps} />
       },
       {
-        value: AddOrderProductTabsEnum.ORDER_MANUAL_TAB,
+        value: OrderProductsTabsEnum.ORDER_MANUAL_TAB,
         title: <TabTitleWithExtraData title="افزودن دستی کالا" />,
         Content: () => <OrderManualTabContent {...tabProps} />
       },
       {
-        value: AddOrderProductTabsEnum.UPLOAD_TAB_CONTENT,
+        value: OrderProductsTabsEnum.UPLOAD_TAB_CONTENT,
         title: <TabTitleWithExtraData title="سفارش از طریق آپلود فایل" />,
         Content: () => <UploadTabContent {...tabProps} />
+      },
+      {
+        value: OrderProductsTabsEnum.EXTRA_PRICE,
+        title: <TabTitleWithExtraData title="هزینه های جانبی" />,
+        Content: () => <OrderExtraPriceTabContent {...tabProps} />
       }
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
-  return <AddOrderProductOrganizer tabs={tabs} isMobileView={false} />
+  return <OrderProductsOrganizer tabs={tabs} isMobileView={false} />
 }
 
-export default AddOrderProductTabs
+export default OrderProductsTabs

@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 
-import AddOrderProducts from "@/app/(client)/(profile)/profile/orders/components/AddOrderProducts"
+import OrderProductsPageIndex from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductsPageIndex"
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -13,7 +13,7 @@ const ProjectEdit = async ({
   params: { uuid: string }
 }) => {
   return (
-    <AddOrderProducts
+    <OrderProductsPageIndex
       uuid={uuid}
       title={(await generateMetadata()).title?.toString() as string}
     />

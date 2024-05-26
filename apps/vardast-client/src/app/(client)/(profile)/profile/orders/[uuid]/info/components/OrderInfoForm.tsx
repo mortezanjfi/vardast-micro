@@ -2,23 +2,19 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { LucideCheck, LucideChevronsUpDown } from "lucide-react"
-import useTranslation from "next-translate/useTranslation"
-import { useForm } from "react-hook-form"
-import { TypeOf, z } from "zod"
-
-import "chart.js/auto"
-
 import { useRouter } from "next/navigation"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useQueryClient } from "@tanstack/react-query"
 import {
   ExpireTypes,
   PaymentMethodEnum,
+  PreOrderStates,
   UpdatePreOrderInput,
   useFindPreOrderByIdQuery,
   useMyProjectsQuery,
   useUpdatePreOrderMutation
 } from "@vardast/graphql/generated"
+import { toast } from "@vardast/hook/use-toast"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
@@ -40,11 +36,15 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@vardast/ui/popover"
 import { Textarea } from "@vardast/ui/textarea"
 import { ToggleGroup, ToggleGroupItem } from "@vardast/ui/toggle-group"
-import { enumToKeyValueObject } from "@vardast/util/enumToKeyValueObject"
 import zodI18nMap from "@vardast/util/zodErrorMap"
 import clsx from "clsx"
+import { ClientError } from "graphql-request"
+import { LucideCheck, LucideChevronsUpDown } from "lucide-react"
+import useTranslation from "next-translate/useTranslation"
+import { useForm } from "react-hook-form"
+import { TypeOf, z } from "zod"
 
-type UpdateOrderInfoFormProps = { uuid: string }
+type OrderInfoFormProps = { uuid: string }
 export type CreateOrderInfoType = TypeOf<typeof CreateOrderInfoSchema>
 
 const CreateOrderInfoSchema = z.object({
@@ -55,11 +55,26 @@ const CreateOrderInfoSchema = z.object({
   descriptions: z.string().optional()
 })
 
-const expireTypes = enumToKeyValueObject(ExpireTypes)
+const ExpireTypesFa = {
+  [ExpireTypes.OneDay]: {
+    value: ExpireTypes.OneDay,
+    name_fa: "یک روز"
+  },
+  [ExpireTypes.TwoDays]: {
+    value: ExpireTypes.TwoDays,
+    name_fa: "دو روز"
+  },
+  [ExpireTypes.ThreeDays]: {
+    value: ExpireTypes.ThreeDays,
+    name_fa: "سه روز"
+  }
+}
 
-const UpdateOrderInfoForm = ({ uuid }: UpdateOrderInfoFormProps) => {
+const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
   const { t } = useTranslation()
   const router = useRouter()
+  const queryClient = useQueryClient()
+
   const [projectDialog, setProjectDialog] = useState(false)
   const [projectQueryTemp, setProjectQueryTemp] = useState("")
 
@@ -81,8 +96,34 @@ const UpdateOrderInfoForm = ({ uuid }: UpdateOrderInfoFormProps) => {
   const updatePreOrderMutation = useUpdatePreOrderMutation(
     graphqlRequestClientWithToken,
     {
+      onError: (errors: ClientError) => {
+        ;(
+          errors.response.errors?.at(0)?.extensions.displayErrors as string[]
+        ).map((error) =>
+          toast({
+            description: error,
+            duration: 5000,
+            variant: "danger"
+          })
+        )
+      },
       onSuccess: () => {
-        router.push(`/profile/orders/${uuid}/products`)
+        queryClient.invalidateQueries({
+          queryKey: ["FindPreOrderById"]
+        })
+        if (
+          findPreOrderByIdQuery?.data?.findPreOrderById?.status ===
+          PreOrderStates.Created
+        ) {
+          router.push(`/profile/orders/${uuid}/products`)
+        } else {
+          router.push(`/profile/orders`)
+        }
+        toast({
+          title: "اطلاعات سفارش با موفقیت به سفارش اضافه شد",
+          duration: 5000,
+          variant: "success"
+        })
       }
     }
   )
@@ -108,7 +149,7 @@ const UpdateOrderInfoForm = ({ uuid }: UpdateOrderInfoFormProps) => {
             (project) => project.id === form.watch("projectId")
           )?.address
         : [],
-    [form.watch("projectId")]
+    [form.watch("projectId"), form.watch("addressId")]
   )
 
   const submit = (data: CreateOrderInfoType) => {
@@ -118,7 +159,7 @@ const UpdateOrderInfoForm = ({ uuid }: UpdateOrderInfoFormProps) => {
   }
 
   useEffect(() => {
-    if (findPreOrderByIdQuery?.data?.findPreOrderById) {
+    if (findPreOrderByIdQuery.data?.findPreOrderById) {
       const defaultValue = findPreOrderByIdQuery?.data.findPreOrderById
       form.setValue("addressId", defaultValue?.address?.id)
       form.setValue("descriptions", defaultValue?.descriptions)
@@ -126,7 +167,7 @@ const UpdateOrderInfoForm = ({ uuid }: UpdateOrderInfoFormProps) => {
       form.setValue("payment_methods", defaultValue?.payment_methods)
       form.setValue("projectId", defaultValue?.project?.id)
     }
-  }, [findPreOrderByIdQuery.data])
+  }, [findPreOrderByIdQuery.data, addresses])
 
   return (
     <Form {...form}>
@@ -244,9 +285,7 @@ const UpdateOrderInfoForm = ({ uuid }: UpdateOrderInfoFormProps) => {
                       >
                         <span className="inline-block max-w-full truncate">
                           {field.value
-                            ? Object.values(expireTypes).find(
-                                (time) => time && time === field.value
-                              )
+                            ? ExpireTypesFa[field.value as ExpireTypes]?.name_fa
                             : "زمان اعتبار سفارش را انتخاب کنید"}
                         </span>
                         <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
@@ -256,7 +295,6 @@ const UpdateOrderInfoForm = ({ uuid }: UpdateOrderInfoFormProps) => {
                   <PopoverContent className="!z-[9999]" asChild>
                     <Command>
                       <CommandInput
-                        loading={Object.values(expireTypes).length === 0}
                         value={expireQueryTemp}
                         onValueChange={(newQuery) => {
                           // setProvinceQuery(newQuery)
@@ -270,37 +308,26 @@ const UpdateOrderInfoForm = ({ uuid }: UpdateOrderInfoFormProps) => {
                         })}
                       </CommandEmpty>
                       <CommandGroup>
-                        {Object.values(expireTypes).map(
-                          (time, index) =>
-                            time && (
-                              <CommandItem
-                                value={time}
-                                key={index}
-                                onSelect={(value) => {
-                                  form.setValue(
-                                    "expire_date",
-                                    Object.values(expireTypes).find(
-                                      (time) =>
-                                        time &&
-                                        time.toLowerCase() ===
-                                          value.toLowerCase()
-                                    ) || ""
-                                  )
-                                  setExpireDialog(false)
-                                }}
-                              >
-                                <LucideCheck
-                                  className={mergeClasses(
-                                    "mr-2 h-4 w-4",
-                                    time === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {time}
-                              </CommandItem>
-                            )
-                        )}
+                        {Object.values(ExpireTypesFa).map((item, index) => (
+                          <CommandItem
+                            value={item.value}
+                            key={index}
+                            onSelect={(value) => {
+                              form.setValue("expire_date", value?.toUpperCase())
+                              setExpireDialog(false)
+                            }}
+                          >
+                            <LucideCheck
+                              className={mergeClasses(
+                                "mr-2 h-4 w-4",
+                                item.value === field.value?.toUpperCase()
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              )}
+                            />
+                            {item.name_fa}
+                          </CommandItem>
+                        ))}
                       </CommandGroup>
                     </Command>
                   </PopoverContent>
@@ -324,14 +351,14 @@ const UpdateOrderInfoForm = ({ uuid }: UpdateOrderInfoFormProps) => {
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
-                        disabled={addresses.length === 0}
+                        disabled={addresses?.length === 0}
                         noStyle
                         role="combobox"
                         className="input-field flex items-center"
                       >
                         <span className="inline-block max-w-full truncate">
                           {field.value
-                            ? addresses.find(
+                            ? addresses?.find(
                                 (address) =>
                                   address && address.id === field.value
                               )?.address.address
@@ -346,7 +373,7 @@ const UpdateOrderInfoForm = ({ uuid }: UpdateOrderInfoFormProps) => {
                   <PopoverContent className="!z-[9999]" asChild>
                     <Command>
                       <CommandInput
-                        loading={addresses.length === 0}
+                        loading={addresses?.length === 0}
                         value={addressQueryTemp}
                         onValueChange={(newQuery) => {
                           // setProvinceQuery(newQuery)
@@ -362,7 +389,7 @@ const UpdateOrderInfoForm = ({ uuid }: UpdateOrderInfoFormProps) => {
                         })}
                       </CommandEmpty>
                       <CommandGroup>
-                        {addresses.map(
+                        {addresses?.map(
                           (address) =>
                             address && (
                               <CommandItem
@@ -371,7 +398,7 @@ const UpdateOrderInfoForm = ({ uuid }: UpdateOrderInfoFormProps) => {
                                 onSelect={(value) => {
                                   form.setValue(
                                     "addressId",
-                                    addresses.find(
+                                    addresses?.find(
                                       (address) =>
                                         address?.address?.id &&
                                         String(
@@ -447,7 +474,6 @@ const UpdateOrderInfoForm = ({ uuid }: UpdateOrderInfoFormProps) => {
           />
 
           <div className="col-span-3">
-            {" "}
             <FormField
               control={form.control}
               name="descriptions"
@@ -464,8 +490,21 @@ const UpdateOrderInfoForm = ({ uuid }: UpdateOrderInfoFormProps) => {
           </div>
         </div>
         <div className="flex flex-row-reverse py-5">
-          <Button type="submit" variant="primary">
-            افزودن کالا به سفارش
+          <Button
+            disabled={
+              findPreOrderByIdQuery.isFetching ||
+              findPreOrderByIdQuery.isLoading ||
+              updatePreOrderMutation.isLoading
+            }
+            loading={updatePreOrderMutation.isLoading}
+            type="submit"
+            variant="primary"
+          >
+            {findPreOrderByIdQuery?.data?.findPreOrderById?.status ===
+            PreOrderStates.Created
+              ? "افزودن"
+              : "ویرایش"}{" "}
+            اطلاعات سفارش
           </Button>
         </div>
       </form>
@@ -473,4 +512,4 @@ const UpdateOrderInfoForm = ({ uuid }: UpdateOrderInfoFormProps) => {
   )
 }
 
-export default UpdateOrderInfoForm
+export default OrderInfoForm

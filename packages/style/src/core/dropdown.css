@@ -61,6 +61,17 @@
         @apply text-red-400 dark:text-red-600;
       }
     }
+
+    &.primary {
+      @apply text-primary-600
+      hover:bg-primary-50/50
+      dark:text-primary-500
+      dark:hover:bg-primary-800/10;
+
+      & .dropdown-menu-item-icon {
+        @apply text-primary-400 dark:text-primary-600;
+      }
+    }
   }
 
   & .dropdown-menu-item-icon {

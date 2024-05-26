@@ -15,7 +15,7 @@ import {
 import { Input } from "@vardast/ui/input"
 import { Textarea } from "@vardast/ui/textarea"
 
-import { OrderProductTabContentProps } from "@/app/(client)/(profile)/profile/orders/components/AddOrderProductTabs"
+import { OrderProductTabContentProps } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductsTabs"
 
 const OrderManualTabContent = ({
   addProductLine,
@@ -121,7 +121,18 @@ const OrderManualTabContent = ({
         </div>
 
         <div className="flex flex-row-reverse py-5">
-          <Button type="submit" variant="primary">
+          <Button
+            disabled={
+              form.formState.isLoading ||
+              form.formState.isSubmitting ||
+              !form.watch("item_name") ||
+              !form.watch("brand") ||
+              !form.watch("uom")
+            }
+            loading={form.formState.isLoading || form.formState.isSubmitting}
+            type="submit"
+            variant="primary"
+          >
             افزودن کالا به سفارش
           </Button>
         </div>

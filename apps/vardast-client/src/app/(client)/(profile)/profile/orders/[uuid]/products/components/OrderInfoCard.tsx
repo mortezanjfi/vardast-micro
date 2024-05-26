@@ -4,13 +4,14 @@ import { digitsEnToFa } from "@persian-tools/persian-tools"
 import Card from "@vardast/component/Card"
 import useTranslation from "next-translate/useTranslation"
 
-import { IOrderInnerLayoutLayout } from "@/app/(client)/(profile)/profile/orders/components/OrderInnerLayout"
+import { IOrderProductsInnerLayout } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderInnerLayout"
+import { PaymentMethodEnumFa } from "@/app/(client)/(profile)/profile/orders/components/OrdersPage"
 import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/components/DetailsWithTitle"
 
-const OrderInfoCard = async ({
+const OrderInfoCard = ({
   findPreOrderByIdQuery,
   uuid
-}: IOrderInnerLayoutLayout) => {
+}: IOrderProductsInnerLayout) => {
   const { t } = useTranslation()
 
   const orderInfo = findPreOrderByIdQuery?.data?.findPreOrderById
@@ -24,7 +25,7 @@ const OrderInfoCard = async ({
       <div className="flex flex-col gap-4 pt-5">
         <div className="tag flex w-fit gap-2 border border-alpha-400 bg-alpha-50 px-4 py-1">
           <span> کدسفارش:</span>
-          <span>{uuid}</span>
+          <span>{digitsEnToFa(uuid)}</span>
         </div>
         <div className="grid grid-cols-3 flex-col 2xl:flex">
           <DetailsWithTitle
@@ -41,14 +42,14 @@ const OrderInfoCard = async ({
           />
           <DetailsWithTitle
             title={t("common:pay-method")}
-            text={orderInfo?.payment_methods}
+            text={PaymentMethodEnumFa[orderInfo?.payment_methods]?.name_fa}
           />
           <DetailsWithTitle
             title={t("common:order-expire-time")}
             text={
-              orderInfo?.expire_date
+              orderInfo?.expire_time
                 ? digitsEnToFa(
-                    new Date(orderInfo?.expire_date).toLocaleDateString(
+                    new Date(orderInfo?.expire_time).toLocaleDateString(
                       "fa-IR",
                       {
                         year: "numeric",

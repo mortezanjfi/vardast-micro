@@ -12,28 +12,28 @@ import { setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
 import { useQueryState } from "next-usequerystate"
 
-import { AddOrderProductTabsEnum } from "@/app/(client)/(profile)/profile/orders/components/AddOrderProductTabs"
+import { OrderProductsTabsEnum } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductsTabs"
 import MoreInfo from "@/app/(client)/(profile)/profile/orders/components/MoreInfo"
 
-export type AddOrderProductOrganizerTab = {
+export type OrderProductsOrganizerTab = {
   value: string
   title: JSX.Element
   Content: () => JSX.Element
   className?: string | undefined
 }
 
-interface IAddOrderProductOrganizer {
-  tabs: AddOrderProductOrganizerTab[]
+interface IOrderProductsOrganizer {
+  tabs: OrderProductsOrganizerTab[]
   isMobileView: boolean
 }
 
-const AddOrderProductOrganizer = ({
+const OrderProductsOrganizer = ({
   tabs,
   isMobileView
-}: IAddOrderProductOrganizer) => {
+}: IOrderProductsOrganizer) => {
   const [openTabName, setOpenTabName] = useQueryState("tab")
-  const [activeTab, setActiveTab] = useState<AddOrderProductTabsEnum>(
-    AddOrderProductTabsEnum.ORDER_PRODUCT_TAB
+  const [activeTab, setActiveTab] = useState<OrderProductsTabsEnum>(
+    OrderProductsTabsEnum.ORDER_PRODUCT_TAB
   )
 
   setDefaultOptions({
@@ -42,23 +42,23 @@ const AddOrderProductOrganizer = ({
   })
 
   const onTabValueChange = (value: string) => {
-    setActiveTab(value as AddOrderProductTabsEnum)
+    setActiveTab(value as OrderProductsTabsEnum)
     setOpenTabName(value)
   }
 
   useEffect(() => {
-    setActiveTab((openTabName || tabs[0].value) as AddOrderProductTabsEnum)
+    setActiveTab((openTabName || tabs[0].value) as OrderProductsTabsEnum)
   }, [openTabName, tabs])
 
   return (
     <>
-      <div className="bg-alpha-white pt md:pt-0">
+      <div className="bg-alpha-white">
         <Segments
           value={activeTab}
           onValueChange={onTabValueChange}
-          className="sticky left-0 right-0 top-0 h-full flex-col bg-alpha-white sm:flex md:mt md:w-full"
+          className="sticky left-0 right-0 top-0 h-full flex-col bg-alpha-white sm:flex md:w-full"
         >
-          <SegmentsList wrap className="border-b pb  md:border-b-2 md:pb-5">
+          <SegmentsList wrap className="border-b pb md:border-b-2 md:py-6">
             {tabs.map(({ title, value }) => (
               <SegmentsListItem
                 key={value}
@@ -89,7 +89,7 @@ const AddOrderProductOrganizer = ({
           </SegmentsList>
           {tabs.map(({ Content, className, ...props }) => (
             <SegmentsContent
-              className={clsx("flex-1", className)}
+              className={clsx("flex-1 pt-5", className)}
               key={props.value}
               value={props.value}
             >
@@ -107,4 +107,4 @@ const AddOrderProductOrganizer = ({
   )
 }
 
-export default AddOrderProductOrganizer
+export default OrderProductsOrganizer

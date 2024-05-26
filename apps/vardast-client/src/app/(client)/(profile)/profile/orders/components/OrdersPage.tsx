@@ -7,7 +7,9 @@ import Loading from "@vardast/component/Loading"
 import PageHeader from "@vardast/component/PageHeader"
 import Pagination from "@vardast/component/table/Pagination"
 import {
+  PaymentMethodEnum,
   PreOrder,
+  PreOrderStates,
   useCreatePreOrderMutation,
   usePreOrdersQuery
 } from "@vardast/graphql/generated"
@@ -20,6 +22,33 @@ import OrderCard from "@/app/(client)/(profile)/profile/orders/components/OrderC
 import OrderDeleteModal from "@/app/(client)/(profile)/profile/orders/components/OrderDeleteModal"
 
 type OrdersPageProps = { title: string }
+
+export const PreOrderStatesFa = {
+  [PreOrderStates.Created]: {
+    className: "tag-secondary",
+    name_fa: "ایجاد شده"
+  },
+  [PreOrderStates.PendingInfo]: {
+    className: "tag-warning",
+    name_fa: "در انتظار تایید اطلاعات"
+  },
+  [PreOrderStates.PendingLine]: {
+    className: "tag-warning",
+    name_fa: "در انتظار افزودن کالا"
+  },
+  [PreOrderStates.Verified]: { className: "tag-success", name_fa: "تایید شده" }
+}
+
+export const PaymentMethodEnumFa = {
+  [PaymentMethodEnum.Cash]: {
+    className: "",
+    name_fa: "نقدی"
+  },
+  [PaymentMethodEnum.Credit]: {
+    className: "",
+    name_fa: "غیر نقدی"
+  }
+}
 
 const OrdersPage = ({ title }: OrdersPageProps) => {
   const { t } = useTranslation()
@@ -98,13 +127,15 @@ const OrdersPage = ({ title }: OrdersPageProps) => {
                 setDeleteModalOpen={setDeleteModalOpen}
               />
             ))}
-            <Pagination
-              total={preOrdersQuery.data?.preOrders.lastPage ?? 0}
-              page={currentPage}
-              onChange={(page) => {
-                setCurrentPage(page)
-              }}
-            />
+            {preOrdersQuery.data?.preOrders?.lastPage > 1 && (
+              <Pagination
+                total={preOrdersQuery.data?.preOrders.lastPage ?? 0}
+                page={currentPage}
+                onChange={(page) => {
+                  setCurrentPage(page)
+                }}
+              />
+            )}
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center gap-5 py-7">

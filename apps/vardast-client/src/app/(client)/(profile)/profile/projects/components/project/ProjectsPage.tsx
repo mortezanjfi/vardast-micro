@@ -14,17 +14,17 @@ import ProjectCard from "@/app/(client)/(profile)/profile/projects/components/pr
 import ProjectDeleteModal from "@/app/(client)/(profile)/profile/projects/components/project/ProjectDeleteModal"
 
 type ProjectsPageProps = { title: string }
-const statuses = [
-  {
-    status: "دارد",
-    value: "true"
-  },
-  { status: "ندارد", value: "false" },
-  {
-    status: "همه",
-    value: ""
-  }
-]
+// const statuses = [
+//   {
+//     status: "دارد",
+//     value: "true"
+//   },
+//   { status: "ندارد", value: "false" },
+//   {
+//     status: "همه",
+//     value: ""
+//   }
+// ]
 
 const ProjectsPage = ({ title }: ProjectsPageProps) => {
   const { t } = useTranslation()

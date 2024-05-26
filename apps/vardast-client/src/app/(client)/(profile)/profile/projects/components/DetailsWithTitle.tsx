@@ -1,3 +1,5 @@
+"use client"
+
 import { ListBulletIcon } from "@heroicons/react/24/outline"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import clsx from "clsx"
@@ -28,7 +30,7 @@ export const DetailsWithTitle = ({
         </span>
       </div>
       <span className={clsx("whitespace-pre-wrap", textCustomStyle)}>
-        {digitsEnToFa(text)}
+        {text ? digitsEnToFa(`${text}`) : "-"}
       </span>
     </div>
   )
