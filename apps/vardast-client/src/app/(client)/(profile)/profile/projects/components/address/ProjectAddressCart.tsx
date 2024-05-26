@@ -75,7 +75,7 @@ const ProjectAddressCart = ({
         </DropdownMenu>
       </div>
       <div className="flex flex-col">
-        <DetailsWithTitle title={t("common:address")} text={address.title} />
+        <DetailsWithTitle title={t("common:address")} text={address.address} />
         <DetailsWithTitle
           title={t("common:transferee")}
           text={address.delivery_name}

@@ -140,7 +140,7 @@ const OrdersPage = ({ title }: OrdersPageProps) => {
         ) : (
           <div className="flex flex-col items-center justify-center gap-5 py-7">
             <ListBulletIcon width={64} height={64} className="text-alpha-400" />
-            <p>شما هنوز پروژه ای اضافه نکرده اید!</p>
+            <p>شما هنوز سفارشی اضافه نکرده اید!</p>
           </div>
         )}
       </div>

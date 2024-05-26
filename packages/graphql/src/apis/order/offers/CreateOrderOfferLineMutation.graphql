@@ -1,56 +1,5 @@
 mutation CreateOrderOfferLine($createLineOfferInput: CreateLineOfferInput!) {
   createOrderOfferLine(createLineOfferInput: $createLineOfferInput) {
     id
-    userId
-    request_name
-    total
-    type
-    status
-    created_at
-    deleted_at
-    preOrder {
-      id
-      request_date
-      expire_date
-      shipping_address
-      payment_methods
-      descriptions
-      hasFile
-      status
-      offersNum
-      uuid
-      deleted_at
-      lines {
-        id
-        userId
-        item_name
-        attribuite
-        uom
-        brand
-        qty
-        descriptions
-        type
-        status
-      }
-    }
-    offerLine {
-      id
-      fi_price
-      tax_price
-      total_price
-
-      line {
-        id
-        userId
-        item_name
-        attribuite
-        uom
-        brand
-        qty
-        descriptions
-
-        status
-      }
-    }
   }
 }

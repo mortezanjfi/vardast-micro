@@ -58,6 +58,7 @@ query FindPreOrderById($id: Float!) {
       total
       type
       status
+      created_at
       offerLine {
         id
         fi_price

@@ -1,6 +1,5 @@
 "use client"
 
-import { useRouter } from "next/navigation"
 import { useFindPreOrderByIdQuery } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 
@@ -11,7 +10,6 @@ import OrderProductsTabs from "@/app/(client)/(profile)/profile/orders/[uuid]/pr
 type OrderProductsPageIndexProps = { uuid: string; title: string }
 
 function OrderProductsPageIndex({ title, uuid }: OrderProductsPageIndexProps) {
-  const router = useRouter()
   const findPreOrderByIdQuery = useFindPreOrderByIdQuery(
     graphqlRequestClientWithToken,
     {

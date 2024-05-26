@@ -1,16 +1,16 @@
 import { Metadata } from "next"
 
-import OrderDetailPage from "@/app/(client)/(profile)/profile/orders/[uuid]/details/OrderDetailPage"
+import OrderDetailPage from "@/app/(client)/(profile)/profile/orders/[uuid]/components/OrderDetailPage"
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "تایید سفارش"
+    title: "ثبت قیمت"
   }
 }
 const ProjectEdit = async ({
-  params: { uuid }
+  params: { offerId, uuid }
 }: {
-  params: { uuid: string }
+  params: { offerId: string; uuid: string }
 }) => {
   // const session = await getServerSession(authOptions)
 
@@ -21,6 +21,7 @@ const ProjectEdit = async ({
   return (
     <OrderDetailPage
       uuid={uuid}
+      offerId={offerId}
       title={(await generateMetadata()).title?.toString() as string}
     />
   )

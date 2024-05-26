@@ -62,6 +62,27 @@ const ProductImages = ({
     }
   )
 
+  const isBasketQuery = useQuery<GetIsFavoriteQuery>(
+    [
+      QUERY_FUNCTIONS_KEY.GET_IS_FAVORITE,
+      {
+        entityId: product.id,
+        type: EntityTypeEnum.Basket,
+        accessToken: session?.accessToken
+      }
+    ],
+    () =>
+      getIsFavoriteQueryFns({
+        accessToken: session?.accessToken,
+        entityId: product.id,
+        type: EntityTypeEnum.Basket
+      }),
+    {
+      keepPreviousData: true,
+      enabled: !!session
+    }
+  )
+
   const handleSlideTo = useCallback((index: number) => {
     if (!sliderRef.current) return
     sliderRef.current?.swiper.slideTo(index)
@@ -245,6 +266,11 @@ const ProductImages = ({
               entityId={product.id}
               isFavoriteQuery={isFavoriteQuery}
               type={EntityTypeEnum.Product}
+            />
+            <FavoriteIcon
+              entityId={product.id}
+              isFavoriteQuery={isBasketQuery}
+              type={EntityTypeEnum.Basket}
             />
             <ShareIcon name={product.name} />
           </div>

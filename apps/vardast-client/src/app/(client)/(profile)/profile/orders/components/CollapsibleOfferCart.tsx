@@ -4,6 +4,7 @@ import { ReactNode, useState } from "react"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import * as Collapsible from "@radix-ui/react-collapsible"
 import Card from "@vardast/component/Card"
+import { OfferOrder, TypeOrderOffer } from "@vardast/graphql/generated"
 import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
 import { LucideChevronDown } from "lucide-react"
@@ -12,15 +13,28 @@ import useTranslation from "next-translate/useTranslation"
 import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/components/DetailsWithTitle"
 
 type CollapsibleOfferCartProps = {
-  index: number
   children: ReactNode
   openDefault?: boolean
-  offer: any
+  offerOrder: OfferOrder
+}
+
+export const TypeOrderOfferFa = {
+  [TypeOrderOffer.Vardast]: {
+    className: "text-primary",
+    name_fa: "وردست"
+  },
+  [TypeOrderOffer.Client]: {
+    className: "text-info",
+    name_fa: "خودم"
+  },
+  [TypeOrderOffer.Seller]: {
+    className: "text-secondary",
+    name_fa: "فروشنده"
+  }
 }
 
 const CollapsibleOfferCart = ({
-  index,
-  offer,
+  offerOrder,
   children,
   openDefault = false
 }: CollapsibleOfferCartProps) => {
@@ -35,23 +49,26 @@ const CollapsibleOfferCart = ({
               <div className="flex items-center justify-center rounded-md bg-alpha-500 p-2">
                 <div className="h-[8px] w-[8px] rounded-full bg-alpha-white" />
               </div>
-              <span>{`پیشنهاد شماره ${index + 1}`}</span>
+              <span>{`پیشنهاد شماره ${offerOrder?.id && digitsEnToFa(offerOrder?.id)}`}</span>
             </div>
             <DetailsWithTitle
-              textCustomStyle="text-primary-600"
+              textCustomStyle={TypeOrderOfferFa[offerOrder.type].className}
               title={t("common:offerer")}
-              text={offer.offerName}
+              text={TypeOrderOfferFa[offerOrder.type].name_fa}
             />
             <DetailsWithTitle
               title={t("common:offer-submition-time")}
               text={
-                offer.offerDate
+                offerOrder.created_at
                   ? digitsEnToFa(
-                      new Date(offer.offerDate).toLocaleDateString("fa-IR", {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit"
-                      })
+                      new Date(offerOrder.created_at).toLocaleDateString(
+                        "fa-IR",
+                        {
+                          year: "numeric",
+                          month: "2-digit",
+                          day: "2-digit"
+                        }
+                      )
                     )
                   : ""
               }

@@ -115,10 +115,17 @@ const OrderCard = ({
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <>
-            <Link href={`/profile/orders/${preOrder?.id}/details`}>
+            <Link href={`/profile/orders/${preOrder?.id}`}>
               <DropdownMenuItem className="primary">
                 <LucideEdit className="dropdown-menu-item-icon" />
                 <span>مشاهده جزئیات</span>
+              </DropdownMenuItem>
+            </Link>
+            <Link href={`/profile/orders/${preOrder?.id}/offers`}>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <LucideEdit className="dropdown-menu-item-icon" />
+                <span>قیمت گذاری</span>
               </DropdownMenuItem>
             </Link>
             <Link href={`/profile/orders/${preOrder?.id}/info`}>

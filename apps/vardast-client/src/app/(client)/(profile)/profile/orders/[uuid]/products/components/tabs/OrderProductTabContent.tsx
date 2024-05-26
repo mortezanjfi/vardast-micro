@@ -7,13 +7,12 @@ import OrderProductCard, {
   ACTION_BUTTON_TYPE,
   OrderProductCardSkeleton
 } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductCard"
+import OrderProductListContainer from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductListContainer"
 import { OrderProductTabContentProps } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductsTabs"
-import OrderProductListContainer from "@/app/(client)/(profile)/profile/orders/components/OrderProductListContainer"
 import { NotFoundItems } from "@/app/(client)/favorites/components/FavoritesPageIndex"
 
 export const OrderProductTabContent = ({
-  addProductLine,
-  form
+  addProductLine
 }: OrderProductTabContentProps) => {
   const getBasketQuery = useGetBasketQuery(graphqlRequestClientWithToken)
 
@@ -39,6 +38,7 @@ export const OrderProductTabContent = ({
                   addProductLine={addProductLine}
                   key={product.id}
                   line={{
+                    id: product.id,
                     item_name: product.name,
                     brand: product.brand.name,
                     uom: product.uom.name,

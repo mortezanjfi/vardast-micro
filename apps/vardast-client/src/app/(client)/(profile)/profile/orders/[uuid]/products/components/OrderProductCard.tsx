@@ -1,7 +1,10 @@
 "use client"
 
 import { forwardRef, Ref, useState } from "react"
-import { Line, MultiTypeOrder } from "@vardast/graphql/generated"
+import Image, { StaticImageData } from "next/image"
+import blankProductImageSrc from "@vardast/asset/product-blank.svg"
+import blankServiceImageSrc from "@vardast/asset/service-blank.svg"
+import { Line, MultiTypeOrder, PriceOfferDto } from "@vardast/graphql/generated"
 import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
 import { setDefaultOptions } from "date-fns"
@@ -20,21 +23,22 @@ export enum ACTION_BUTTON_TYPE {
 interface OrderProductCardProps {
   line: Pick<
     Line,
-    "brand" | "qty" | "item_name" | "uom" | "descriptions" | "type"
-  >
+    "brand" | "qty" | "item_name" | "uom" | "descriptions" | "type" | "id"
+  > & { price?: PriceOfferDto }
+  imageSrc?: string | StaticImageData
   actionButtonType?: ACTION_BUTTON_TYPE
   addProductLine?: OrderProductTabContentProps["addProductLine"]
 }
 
 export const OrderProductCardSkeleton = ({}: {}) => {
   return (
-    <div className="animated-card relative h-[200px] max-h-[200px] rounded px-6 sm:py sm:ring-2 sm:!ring-alpha-200"></div>
+    <div className="animated-card relative h-[300px] max-h-[300px] rounded px-6 sm:py sm:ring-2 sm:!ring-alpha-200"></div>
   )
 }
 
 const OrderProductCard = forwardRef(
   (
-    { line, addProductLine, actionButtonType }: OrderProductCardProps,
+    { line, addProductLine, actionButtonType, imageSrc }: OrderProductCardProps,
     ref: Ref<HTMLDivElement> | undefined
   ) => {
     const { t } = useTranslation()
@@ -68,7 +72,7 @@ const OrderProductCard = forwardRef(
       [ACTION_BUTTON_TYPE.ADD_PRODUCT_OFFER]: (
         <Button
           className="py-3"
-          variant="full-secondary"
+          variant={line?.price?.fi_price ? "secondary" : "full-secondary"}
           onClick={(e) => {
             e.stopPropagation()
             e.nativeEvent.preventDefault()
@@ -76,21 +80,47 @@ const OrderProductCard = forwardRef(
             if (setOpen) setOpen(true)
           }}
         >
-          {t("common:add_entity", { entity: t("common:price") })}
+          {line?.price?.fi_price
+            ? t("common:edit_entity", { entity: t("common:price") })
+            : t("common:add_entity", { entity: t("common:price") })}
         </Button>
       )
     }
 
     return (
       <>
-        <AddPriceModal setOpen={setOpen} open={open} />
+        {actionButtonType === ACTION_BUTTON_TYPE.ADD_PRODUCT_OFFER && (
+          <AddPriceModal
+            lineId={line.id}
+            setOpen={setOpen}
+            open={open}
+            fi_price={line?.price?.fi_price}
+          />
+        )}
         <div
           ref={ref}
           onClick={(e) => {
             e.preventDefault()
           }}
-          className={clsx("flex max-h-[200px] flex-col rounded border px-6 py")}
+          className={clsx("flex max-h-[300px] gap rounded")}
         >
+          <div
+            className={`relative flex aspect-square flex-shrink-0 transform flex-col items-center justify-center bg-center bg-no-repeat align-middle`}
+          >
+            <Image
+              src={
+                imageSrc
+                  ? imageSrc
+                  : line.type === MultiTypeOrder.Product
+                    ? blankProductImageSrc
+                    : blankServiceImageSrc
+              }
+              alt={line.item_name}
+              width={100}
+              height={100}
+              className="mb-auto object-contain"
+            />
+          </div>
           <div className="flex w-full flex-col">
             <h4
               title={line.item_name}
@@ -110,19 +140,44 @@ const OrderProductCard = forwardRef(
                   title={t("common:unit")}
                   text={line?.uom}
                 />
-                <DetailsWithTitle
-                  className="text-sm"
-                  title={t("common:value")}
-                  text={line?.qty}
-                />
               </>
             )}
+            {actionButtonType === ACTION_BUTTON_TYPE.ADD_PRODUCT_OFFER && (
+              <>
+                {line?.price?.fi_price && (
+                  <DetailsWithTitle
+                    className="text-sm"
+                    title={t("common:fi_price")}
+                    text={line?.price?.fi_price}
+                  />
+                )}
+                {line?.price?.tax_price && (
+                  <DetailsWithTitle
+                    className="text-sm"
+                    title={t("common:tax_price")}
+                    text={line?.price?.tax_price}
+                  />
+                )}
+                {line?.price?.total_price && (
+                  <DetailsWithTitle
+                    className="text-sm"
+                    title={t("common:total_price")}
+                    text={line?.price?.total_price}
+                  />
+                )}
+              </>
+            )}
+            <DetailsWithTitle
+              className="text-sm"
+              title={t("common:value")}
+              text={line?.qty}
+            />
+            {actionButtonType && (
+              <div className="flex w-full justify-end gap-5">
+                {actionButtonTypeAlternatives[actionButtonType]}
+              </div>
+            )}
           </div>
-          {actionButtonType && (
-            <div className="flex w-full justify-end gap-5">
-              {actionButtonTypeAlternatives[actionButtonType]}
-            </div>
-          )}
         </div>
       </>
     )

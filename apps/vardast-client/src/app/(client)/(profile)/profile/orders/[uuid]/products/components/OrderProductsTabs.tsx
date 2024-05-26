@@ -95,6 +95,7 @@ const OrderProductsTabs = ({ uuid }: OrderProductsTabsProps) => {
     createLineMutation.mutate({
       createLineInput: {
         ...createLineInput,
+        qty: createLineInput.qty || "1",
         item_name: createLineInput.item_name,
         preOrderId: +uuid
       }

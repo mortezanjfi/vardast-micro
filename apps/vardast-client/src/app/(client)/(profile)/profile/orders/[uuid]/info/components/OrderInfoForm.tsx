@@ -48,7 +48,7 @@ type OrderInfoFormProps = { uuid: string }
 export type CreateOrderInfoType = TypeOf<typeof CreateOrderInfoSchema>
 
 const CreateOrderInfoSchema = z.object({
-  projectId: z.number(),
+  projectId: z.string(),
   expire_date: z.string(),
   addressId: z.number(),
   payment_methods: z.string(),
@@ -146,7 +146,7 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
     () =>
       form.watch("projectId")
         ? myProjectsQuery.data?.myProjects.find(
-            (project) => project.id === form.watch("projectId")
+            (project) => project.id === +form.watch("projectId")
           )?.address
         : [],
     [form.watch("projectId"), form.watch("addressId")]
@@ -154,7 +154,11 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
 
   const submit = (data: CreateOrderInfoType) => {
     updatePreOrderMutation.mutate({
-      updatePreOrderInput: { ...data, id: +uuid } as UpdatePreOrderInput
+      updatePreOrderInput: {
+        ...data,
+        projectId: +data.projectId,
+        id: +uuid
+      } as UpdatePreOrderInput
     })
   }
 
@@ -165,9 +169,13 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
       form.setValue("descriptions", defaultValue?.descriptions)
       form.setValue("expire_date", defaultValue?.expire_date)
       form.setValue("payment_methods", defaultValue?.payment_methods)
-      form.setValue("projectId", defaultValue?.project?.id)
+      if (defaultValue?.project?.id) {
+        form.setValue("projectId", `${defaultValue?.project?.id}`)
+      }
     }
   }, [findPreOrderByIdQuery.data, addresses])
+
+  console.log({ bib: form.watch() })
 
   return (
     <Form {...form}>
@@ -197,7 +205,7 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
                           {field.value
                             ? myProjectsQuery.data?.myProjects.find(
                                 (project) =>
-                                  project && project.id === field.value
+                                  project && project.id === +field.value
                               )?.name
                             : t("common:choose_entity", {
                                 entity: t("common:project")
@@ -230,24 +238,17 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
                           (project) =>
                             project && (
                               <CommandItem
-                                value={project.name}
+                                value={`${project.id}`}
                                 key={project.id}
                                 onSelect={(value) => {
-                                  form.setValue(
-                                    "projectId",
-                                    myProjectsQuery.data?.myProjects.find(
-                                      (project) =>
-                                        project &&
-                                        project.name.toLowerCase() === value
-                                    )?.id || 0
-                                  )
+                                  form.setValue("projectId", value)
                                   setProjectDialog(false)
                                 }}
                               >
                                 <LucideCheck
                                   className={mergeClasses(
                                     "mr-2 h-4 w-4",
-                                    project.id === field.value
+                                    project.id === +field.value
                                       ? "opacity-100"
                                       : "opacity-0"
                                   )}
@@ -440,12 +441,11 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
                   <ToggleGroup
                     className="input-field grid grid-cols-2 p-0.5"
                     type="single"
-                    value={field.value || value}
+                    value={field.value}
                     onValueChange={(value: PaymentMethodEnum) => {
                       form.setValue("payment_methods", value)
                       setValue(value)
                     }}
-                    defaultValue={PaymentMethodEnum.Cash}
                   >
                     <ToggleGroupItem
                       className={clsx(

@@ -9,22 +9,21 @@ import PageTitle from "@/app/(client)/(profile)/components/PageTitle"
 import AllOrderDeleteModal from "@/app/(client)/(profile)/profile/orders/components/AllOrderDeleteModal"
 import OrderOffersSection from "@/app/(client)/(profile)/profile/orders/components/OrderOffersSection"
 
-type AddOrderOfferProps = { uuid: string; title: string }
+type AddOrderOfferProps = { uuid: string; offerId: string; title: string }
 
-function AddOrderOffer({ title, uuid }: AddOrderOfferProps) {
+function AddOrderOffer({ title, uuid, offerId }: AddOrderOfferProps) {
   const router = useRouter()
   const [open, onOpenChange] = useState<boolean>(false)
 
   return (
     <>
-      {" "}
       <AllOrderDeleteModal open={open} onOpenChange={onOpenChange} />
       <div className="flex h-full w-full flex-col gap-5">
         <PageTitle title={title} />
         <div className="flex items-center justify-between border-b py-5">
           <div className="flex flex-col gap-2  ">
             <span className=" pb-2 text-lg font-semibold">
-              لیست کالاهای سفارش{" "}
+              لیست کالاهای سفارش
             </span>
             <p className="text-sm">
               کالاها و هزینه های جانبی درخواستی خود را از یک یا ترکیبی از روش

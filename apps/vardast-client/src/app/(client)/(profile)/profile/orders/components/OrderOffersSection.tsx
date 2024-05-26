@@ -4,8 +4,7 @@ import { MultiTypeOrder } from "@vardast/graphql/generated"
 import OrderProductCard, {
   OrderProductCardSkeleton
 } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductCard"
-import AddPriceModal from "@/app/(client)/(profile)/profile/orders/components/AddPriceModal"
-import OrderProductListContainer from "@/app/(client)/(profile)/profile/orders/components/OrderProductListContainer"
+import OrderProductListContainer from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductListContainer"
 import { NotFoundItems } from "@/app/(client)/favorites/components/FavoritesPageIndex"
 
 type OrderOffersSectionProps = {}
@@ -211,7 +210,7 @@ const OrderOffersSection = ({}: OrderOffersSectionProps) => {
 
   return (
     <>
-      <AddPriceModal setOpen={setOpen} open={open} />
+      {/* <AddPriceModal setOpen={setOpen} open={open} /> */}
       {!OfferProducts.length ? (
         <OrderProductListContainer>
           {() => (
@@ -232,6 +231,7 @@ const OrderOffersSection = ({}: OrderOffersSectionProps) => {
                     <OrderProductCard
                       key={product.id}
                       line={{
+                        id: product.id,
                         item_name: product.name,
                         type: MultiTypeOrder.Product
                       }}
