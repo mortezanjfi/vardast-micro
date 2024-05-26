@@ -4,5 +4,6 @@ export const uploadPaths = {
   brandLogo: "product/brand/logos",
   sellerLogo: "product/seller/logos",
   brandCatalog: "brand/cataloge",
-  brandPriceList: "brand/priceList"
+  brandPriceList: "brand/priceList",
+  orderPriceList: "price/update"
 }

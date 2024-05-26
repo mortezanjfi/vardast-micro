@@ -1,0 +1,5 @@
+mutation CreateOrderOfferLine($createLineOfferInput: CreateLineOfferInput!) {
+  createOrderOfferLine(createLineOfferInput: $createLineOfferInput) {
+    id
+  }
+}

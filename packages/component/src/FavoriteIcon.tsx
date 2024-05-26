@@ -1,8 +1,11 @@
 "use client"
 
 import { usePathname, useRouter } from "next/navigation"
-import { BookmarkIcon as OutlineBookmarkIcon } from "@heroicons/react/24/outline"
-import { BookmarkIcon } from "@heroicons/react/24/solid"
+import {
+  BookmarkIcon as OutlineBookmarkIcon,
+  ShoppingCartIcon as OutlineShoppingCartIcon
+} from "@heroicons/react/24/outline"
+import { BookmarkIcon, ShoppingCartIcon } from "@heroicons/react/24/solid"
 import { UseQueryResult } from "@tanstack/react-query"
 import {
   EntityTypeEnum,
@@ -82,7 +85,13 @@ export default function FavoriteIcon({
       disabled={createEventTrackerMutation.isLoading}
       iconOnly
     >
-      {isFavoriteQuery.data?.isFavorite ? (
+      {type === EntityTypeEnum.Basket ? (
+        isFavoriteQuery.data?.isFavorite ? (
+          <ShoppingCartIcon className="h-6 w-6 text-primary" />
+        ) : (
+          <OutlineShoppingCartIcon className="h-6 w-6 text-alpha" />
+        )
+      ) : isFavoriteQuery.data?.isFavorite ? (
         <BookmarkIcon className="h-6 w-6 text-primary" />
       ) : (
         <OutlineBookmarkIcon className="h-6 w-6 text-alpha" />

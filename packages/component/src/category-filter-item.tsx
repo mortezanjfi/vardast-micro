@@ -17,7 +17,6 @@ const CategoryFilterItem = ({ category, slug }: CategoryFilterItemProps) => {
         className={`flex items-center gap-1 py-2 text-alpha-700 hover:text-primary-500 ${
           slug && +slug[0] === category.id && "text-primary"
         }`}
-        prefetch={false}
       >
         {category.title}
       </Link>

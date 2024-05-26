@@ -156,12 +156,13 @@ const SegmentsListItem = forwardRef(
 const SegmentsContent: React.FC<
   SegmentsContentProps & {
     isVisible?: boolean
+    id?: string
     className?: string
     style?: CSSProperties | undefined
   }
-> = ({ isVisible, style, className, children }) => {
+> = ({ isVisible, style, className, id, children }) => {
   return isVisible ? (
-    <div style={style} className={className}>
+    <div id={id ?? undefined} style={style} className={className}>
       {children}
     </div>
   ) : null

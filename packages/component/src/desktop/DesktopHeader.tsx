@@ -88,7 +88,6 @@ const DesktopHeader = (_: DesktopHeaderProps) => {
               <div className="col-span-2">
                 <Link
                   href={process.env.NEXT_PUBLIC_SELLER_VARDAST as string}
-                  prefetch={false}
                   target="_blank"
                   className="btn flex h-full !bg-secondary text-sm font-semibold text-white"
                 >
@@ -118,43 +117,50 @@ const DesktopHeader = (_: DesktopHeaderProps) => {
                           onPointerLeave={(event) => event.preventDefault()}
                         >
                           <div className="bg-alpha-white py-4">
-                            <div className="flex items-center gap-2 px-4 py-2">
-                              <Avatar className="rounded-full border border-secondary">
-                                <AvatarImage
-                                  src={
-                                    session?.profile?.avatarFile?.url as string
-                                  }
-                                  alt="seller"
-                                />
+                            <NavigationMenuLink>
+                              <Link href={"/profile/info"}>
+                                <div className="flex items-center gap-2 px-4 py-2">
+                                  <Avatar className="rounded-full border border-secondary">
+                                    <AvatarImage
+                                      src={
+                                        session?.profile?.avatarFile
+                                          ?.url as string
+                                      }
+                                      alt="seller"
+                                    />
 
-                                <AvatarFallback>
-                                  {session?.profile?.firstName &&
-                                    session?.profile?.lastName?.[0]}
-                                </AvatarFallback>
-                              </Avatar>
-                              <div className="flex flex-col">
-                                {session?.profile?.fullName &&
-                                session?.profile?.fullName !== "null null" ? (
-                                  <h4 className="truncate font-semibold">
-                                    {session?.profile?.fullName}
-                                  </h4>
-                                ) : (
-                                  "کاربر وردست"
-                                )}
-                                <p className="text-sm font-semibold text-alpha-400">
-                                  {session?.profile?.cellphone
-                                    ? digitsEnToFa(session?.profile?.cellphone)
-                                    : digitsEnToFa("09123456789")}
-                                </p>
-                              </div>
-                            </div>
+                                    <AvatarFallback>
+                                      {session?.profile?.firstName &&
+                                        session?.profile?.lastName?.[0]}
+                                    </AvatarFallback>
+                                  </Avatar>
+                                  <div className="flex flex-col">
+                                    {session?.profile?.fullName &&
+                                    session?.profile?.fullName !==
+                                      "null null" ? (
+                                      <h4 className="truncate font-semibold">
+                                        {session?.profile?.fullName}
+                                      </h4>
+                                    ) : (
+                                      "کاربر وردست"
+                                    )}
+                                    <p className="text-sm font-semibold text-alpha-400">
+                                      {session?.profile?.cellphone
+                                        ? digitsEnToFa(
+                                            session?.profile?.cellphone
+                                          )
+                                        : digitsEnToFa("09123456789")}
+                                    </p>
+                                  </div>
+                                </div>
+                              </Link>
+                            </NavigationMenuLink>
                             {status === "authenticated" &&
                               session?.profile?.roles.some(
                                 (role) => role?.name === "admin"
                               ) && (
                                 <NavigationMenuLink className="flex w-full justify-start text-nowrap bg-alpha-white px-4 py-2 md:z-50">
                                   <Link
-                                    prefetch={false}
                                     target="_blank"
                                     href={process.env.NEXT_PUBLIC_ADMIN_VARDAST}
                                     className="btn !text-alpha"
@@ -165,7 +171,6 @@ const DesktopHeader = (_: DesktopHeaderProps) => {
                               )}
                             <NavigationMenuLink className="flex w-full justify-start text-nowrap bg-alpha-white px-4 py-2 md:z-50">
                               <Link
-                                prefetch={false}
                                 href="/auth/signout"
                                 className="btn !text-error"
                               >

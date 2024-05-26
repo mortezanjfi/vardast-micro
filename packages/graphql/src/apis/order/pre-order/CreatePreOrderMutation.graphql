@@ -1,0 +1,5 @@
+mutation CreatePreOrder($createPreOrderInput: CreatePreOrderInput!) {
+  createPreOrder(createPreOrderInput: $createPreOrderInput) {
+    id
+  }
+}

@@ -1,0 +1,7 @@
+mutation CalculatePriceOfferLine($lineId: Float!, $fi_price: String!) {
+  calculatePriceOfferLine(lineId: $lineId, fi_price: $fi_price) {
+    fi_price
+    tax_price
+    total_price
+  }
+}

@@ -11,6 +11,7 @@ import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
 import PageHeader from "@vardast/component/PageHeader"
+import Pagination from "@vardast/component/table/Pagination"
 import { useGetAllProductsQuery } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
@@ -24,7 +25,6 @@ import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
 import { checkBooleanByString } from "@/app/(admin)/brands/components/Brands"
-import Pagination from "@/app/(admin)/components/Pagination"
 import { ProductsFilter } from "@/app/(admin)/products/components/ProductsFilter"
 
 const renderedListStatus = {

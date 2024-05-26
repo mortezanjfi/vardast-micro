@@ -1,6 +1,12 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState
+} from "react"
 import Image from "next/image"
 import { UseMutationResult, useQueryClient } from "@tanstack/react-query"
 import {
@@ -30,6 +36,10 @@ interface DropzoneProps {
   onDelete: (_: FilesWithPreview) => void
   withHeight?: boolean
   withText?: boolean
+  manualFileState?: [
+    FilesWithPreview[],
+    Dispatch<SetStateAction<FilesWithPreview[]>>
+  ]
 }
 export interface FilesWithPreview extends FileWithPath {
   preview: string
@@ -37,6 +47,7 @@ export interface FilesWithPreview extends FileWithPath {
   uuid?: string
   expiresAt?: string
 }
+
 const Dropzone = ({
   isPreOrder,
   maxFiles,
@@ -44,13 +55,18 @@ const Dropzone = ({
   uploadPath,
   onAddition,
   withHeight = true,
+  manualFileState,
   onDelete
 }: DropzoneProps) => {
   const { data: session } = useSession()
   const { t } = useTranslation()
-  const [files, setFiles] = useState<FilesWithPreview[]>([])
   const [errors, setErrors] = useState<ClientError>()
   const queryClient = useQueryClient()
+
+  const internalFileState = useState<FilesWithPreview[]>([])
+  const [files, setFiles] = manualFileState
+    ? manualFileState
+    : internalFileState
 
   const token = session?.accessToken || null
 

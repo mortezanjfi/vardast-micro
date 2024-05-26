@@ -2,18 +2,16 @@ import { PropsWithChildren } from "react"
 import MobileBaseLayout from "@vardast/component/MobileBaseLayout"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
+import UserProfileLayout from "@/app/(client)/(profile)/components/UserProfileLayout"
+
 const Layout: React.FC<PropsWithChildren> = async ({ children }) => {
   const isMobileView = await CheckIsMobileView()
-
   return (
-    <MobileBaseLayout
-      isMobileView={isMobileView}
-      extraPadding
-      background
-      bgWhite={isMobileView}
-    >
-      {children}
-    </MobileBaseLayout>
+    <UserProfileLayout isMobileView={isMobileView}>
+      <MobileBaseLayout bgWhite={true} container spaceLess>
+        {children}
+      </MobileBaseLayout>
+    </UserProfileLayout>
   )
 }
 export default Layout

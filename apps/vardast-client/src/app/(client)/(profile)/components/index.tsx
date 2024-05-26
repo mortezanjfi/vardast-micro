@@ -110,7 +110,6 @@ const ProfileIconItem = ({
   return (
     <Link
       onClick={onClick}
-      prefetch={false}
       href={href}
       className="flex w-full items-center justify-start gap-x-4 py-5"
     >

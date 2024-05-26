@@ -11,6 +11,7 @@ import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
 import PageHeader from "@vardast/component/PageHeader"
+import Pagination from "@vardast/component/table/Pagination"
 import {
   ThreeStateSupervisionStatuses,
   useGetAllSellersQuery
@@ -24,7 +25,6 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-import Pagination from "@/app/(admin)/components/Pagination"
 import { SellersFilter } from "@/app/(admin)/sellers/components/SellersFilter"
 
 const renderedListStatus = {

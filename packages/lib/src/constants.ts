@@ -46,19 +46,19 @@ export const _profileSidebarMenu: NavigationType[] = [
     title: "پرکاربردها",
     items: [
       {
-        title: "خلاصه فعالیت",
-        icon: "home",
-        path: "/profile"
-      },
-      {
-        title: "سفارشات",
-        icon: "list",
-        path: "/profile/orders"
+        title: "اطلاعات حساب کاربری",
+        icon: "user",
+        path: "/profile/info"
       },
       {
         title: "پروژه ها",
         icon: "folder-open",
         path: "/profile/projects"
+      },
+      {
+        title: "سفارشات",
+        icon: "list",
+        path: "/profile/orders"
       },
       {
         title: "سبد کالا",
@@ -69,16 +69,6 @@ export const _profileSidebarMenu: NavigationType[] = [
         title: "علاقه مندی ها",
         icon: "bookmark",
         path: "/profile/favorites"
-      },
-      {
-        title: "بازدیدهای اخیر",
-        icon: "clock",
-        path: "/profile/recently"
-      },
-      {
-        title: "اطلاعات حساب کاربری",
-        icon: "user",
-        path: "/profile/info"
       }
     ]
   }

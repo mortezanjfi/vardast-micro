@@ -60,7 +60,6 @@ export default function CategoryCircleItem({ data, isMobileView }: Props) {
       onClick={() => {
         setSelectedItemId(data.id)
       }}
-      prefetch={false}
       href={`${
         isMobileView
           ? `/category/${data.id}/${data.title}`

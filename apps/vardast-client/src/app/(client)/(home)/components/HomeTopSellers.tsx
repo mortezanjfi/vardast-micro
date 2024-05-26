@@ -171,7 +171,6 @@ const HomeTopSellers = ({
                               ? refPrev
                               : undefined
                         }
-                        prefetch={false}
                         onClick={() => {
                           setSelectedItemId(id)
                         }}

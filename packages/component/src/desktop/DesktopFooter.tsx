@@ -26,7 +26,6 @@ export default function DesktopFooter({}: Props) {
 
         <div className="flex items-center justify-center gap-x-2">
           <Link
-            prefetch={false}
             className="flex h-[40px] w-[40px] items-center justify-center rounded-lg border border-alpha-200 bg-alpha-white p-2 "
             href="https://www.instagram.com/vardastcom/?igsh=MW50dHRjeDJzY3Fqcg%3D%3D"
             target="_blank"
@@ -39,7 +38,6 @@ export default function DesktopFooter({}: Props) {
             />
           </Link>
           <Link
-            prefetch={false}
             className="flex h-[40px] w-[40px] items-center justify-center rounded-lg border border-alpha-200 bg-alpha-white p-2"
             href="https://t.me/+9890227272823"
             target="_blank"
@@ -52,7 +50,6 @@ export default function DesktopFooter({}: Props) {
             />
           </Link>
           <Link
-            prefetch={false}
             className="flex h-[40px] w-[40px] items-center justify-center rounded-lg border border-alpha-200 bg-alpha-white p-2"
             href="https://wa.me/+9890227272823"
             target="_blank"
@@ -65,7 +62,6 @@ export default function DesktopFooter({}: Props) {
             />
           </Link>
           <Link
-            prefetch={false}
             className="flex h-[40px] w-[40px] items-center justify-center rounded-lg border border-alpha-200 bg-alpha-white p-2 "
             href="https://www.aparat.com/vardast.com"
             target="_blank"
@@ -80,7 +76,6 @@ export default function DesktopFooter({}: Props) {
         </div>
         <div className="flex items-center justify-center gap-x-9">
           <Link
-            prefetch={false}
             className="w-[135px]"
             href="http://cafebazaar.ir/app/?id=com.vardast.twa&ref=share"
             target="_blank"
@@ -93,7 +88,6 @@ export default function DesktopFooter({}: Props) {
             />
           </Link>
           <Link
-            prefetch={false}
             className="w-[135px]"
             href="https://myket.ir/app/com.vardast.twa"
             target="_blank"
@@ -107,27 +101,14 @@ export default function DesktopFooter({}: Props) {
           </Link>
         </div>
         <div className="grid grid-cols-2 justify-center gap-9 text-center sm:flex">
-          <Link
-            prefetch={false}
-            href="https://blog.vardast.com"
-            target="_blank"
-          >
+          <Link href="https://blog.vardast.com" target="_blank">
             بلاگ وردست
           </Link>
-          <Link prefetch={false} href="/contact">
-            تماس با ما
-          </Link>
-          <Link prefetch={false} href="/about">
-            درباره ما
-          </Link>
-          <Link prefetch={false} href="/privacy">
-            قوانین و مقررات
-          </Link>
-          <Link prefetch={false} href="/faq">
-            سوالات متداول
-          </Link>
+          <Link href="/contact">تماس با ما</Link>
+          <Link href="/about">درباره ما</Link>
+          <Link href="/privacy">قوانین و مقررات</Link>
+          <Link href="/faq">سوالات متداول</Link>
           <Link
-            prefetch={false}
             href={process.env.NEXT_PUBLIC_SELLER_VARDAST as string}
             target="_blank"
           >

@@ -1,0 +1,5 @@
+mutation AssignUserProject($createUserProjectInput: CreateUserProjectInput!) {
+  assignUserProject(createUserProjectInput: $createUserProjectInput) {
+    id
+  }
+}

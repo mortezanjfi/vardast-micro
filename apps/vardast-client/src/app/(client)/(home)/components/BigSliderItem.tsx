@@ -28,7 +28,6 @@ const BigSliderItem = ({ data }: SliderItemProps) => {
       onClick={() => {
         setSelectedItemId(data.id)
       }}
-      prefetch={false}
       className={clsx(
         "flex h-full flex-col justify-between overflow-hidden rounded-2xl border bg-alpha-white shadow-lg",
         selectedItemId === data.id

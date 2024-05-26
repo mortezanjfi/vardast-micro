@@ -7,13 +7,12 @@ import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
 import PageHeader from "@vardast/component/PageHeader"
+import Pagination from "@vardast/component/table/Pagination"
 import { useGetAllUoMsQuery } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
-
-import Pagination from "@/app/(admin)/components/Pagination"
 
 const UOMs = () => {
   const { t } = useTranslation()

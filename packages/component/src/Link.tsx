@@ -47,7 +47,7 @@ interface LinkProps extends PropsWithChildren, React.ComponentProps<"a"> {
   /**
    * Prefetch the page in the background.
    * Any `<Link />` that is in the viewport (initially or through scroll) will be preloaded.
-   * Prefetch can be disabled by passing `prefetch={false}`. When `prefetch` is set to `false`, prefetching will still occur on hover. Pages using [Static Generation](/docs/basic-features/data-fetching/get-static-props.md) will preload `JSON` files with the data for faster page transitions. Prefetching is only enabled in production.
+   * Prefetch can be disabled by passing ``. When `prefetch` is set to `false`, prefetching will still occur on hover. Pages using [Static Generation](/docs/basic-features/data-fetching/get-static-props.md) will preload `JSON` files with the data for faster page transitions. Prefetching is only enabled in production.
    *
    * @defaultValue `true`
    */
@@ -115,7 +115,7 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
         }
         if (onClick) onClick(event)
       }}
-      prefetch={prefetch ?? undefined}
+      prefetch={prefetch ? prefetch : false}
       {...rest}
       ref={ref}
     />

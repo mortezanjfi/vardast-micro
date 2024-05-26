@@ -149,7 +149,6 @@ export const SellerDesktopMyProducts = ({
                             </div>
                             <div className="flex flex-col">
                               <Link
-                                prefetch={false}
                                 href={checkSellerRedirectUrl(
                                   `/product/${product.product.id}/${product.product.name}`
                                 )}

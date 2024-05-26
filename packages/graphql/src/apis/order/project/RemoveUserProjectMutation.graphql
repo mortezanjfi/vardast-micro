@@ -1,0 +1,5 @@
+mutation RemoveUserProject($userId: Float!, $projectId: Float!) {
+  removeUserProject(userId: $userId, projectId: $projectId) {
+    id
+  }
+}

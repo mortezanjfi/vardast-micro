@@ -1,0 +1,83 @@
+query FindPreOrderById($id: Float!) {
+  findPreOrderById(id: $id) {
+    id
+    project {
+      name
+      id
+    }
+    address {
+      id
+      userId
+      title
+      delivery_contact
+      delivery_name
+      address
+      city {
+        id
+      }
+      province {
+        id
+      }
+      postalCode
+      status
+      createdAt
+    }
+    request_date
+    expire_date
+    expire_time
+    shipping_address
+    payment_methods
+    descriptions
+    status
+    deleted_at
+    lines {
+      id
+      userId
+      item_name
+      attribuite
+      uom
+      brand
+      qty
+      descriptions
+      type
+      status
+    }
+    files {
+      id
+      file {
+        presignedUrl {
+          url
+          expiresAt
+        }
+      }
+    }
+    offers {
+      id
+      userId
+      request_name
+      total
+      type
+      status
+      created_at
+      offerLine {
+        id
+        fi_price
+        tax_price
+        total_price
+        type
+        line {
+          id
+          userId
+          item_name
+          attribuite
+          uom
+          brand
+          qty
+          descriptions
+          type
+          status
+        }
+      }
+    }
+  }
+}

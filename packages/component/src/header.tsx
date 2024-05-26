@@ -37,7 +37,7 @@ const Header = ({ isMobileView }: HeaderProps) => {
         ])}
       >
         <div className="flex items-center gap-4 lg:gap-8">
-          <Link href="/" prefetch={false}>
+          <Link href="/">
             <div className="relative h-8 lg:h-12">
               <Image
                 src={logoHorizontal}
