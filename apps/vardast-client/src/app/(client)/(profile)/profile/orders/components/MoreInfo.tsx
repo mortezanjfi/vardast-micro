@@ -2,13 +2,13 @@ import { InformationCircleIcon } from "@heroicons/react/24/solid"
 import Link from "@vardast/component/Link"
 import { clsx } from "clsx"
 
-import { AddOrderProductOrganizerTab } from "@/app/(client)/(profile)/profile/orders/components/AddOrderProductOrganizer"
-import { AddOrderProductTabsEnum } from "@/app/(client)/(profile)/profile/orders/components/AddOrderProductTabs"
+import { OrderProductsOrganizerTab } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductsOrganizer"
+import { OrderProductsTabsEnum } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductsTabs"
 
 type MoreInfoProps = {
-  tabs: AddOrderProductOrganizerTab[]
+  tabs: OrderProductsOrganizerTab[]
   onTabValueChange: (value: string) => void
-  activeTab: AddOrderProductTabsEnum
+  activeTab: OrderProductsTabsEnum
 }
 
 const MoreInfo = ({ activeTab, tabs, onTabValueChange }: MoreInfoProps) => {
