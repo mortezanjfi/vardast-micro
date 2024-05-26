@@ -170,7 +170,6 @@ const Brands = () => {
                   <th>{t("common:operation")}</th>
                 </tr>
               </thead>
-              overflow-x-auto border--0.5
               <tbody className="border">
                 {brands.data?.brands.data.map(
                   (brand, index) =>

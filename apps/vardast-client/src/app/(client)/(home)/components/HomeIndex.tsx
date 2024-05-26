@@ -28,8 +28,7 @@ import { useSession } from "next-auth/react"
 import DesktopHomeIndex from "@/app/(client)/(home)/components/DesktopHomeIndex"
 import MobileHomeIndex from "@/app/(client)/(home)/components/MobileHomeIndex"
 
-const pdfBlogUrl =
-  "blog.vardast.com/%d8%a2%d8%ae%d8%b1%db%8c%d9%86-%da%af%d8%b2%d8%a7%d8%b1%d8%b4-%d9%85%d8%b9%d8%a7%d9%85%d9%84%d8%a7%d8%aa-%d9%85%d8%b3%da%a9%d9%86-%d8%af%d8%b1-%d8%aa%d9%87%d8%b1%d8%a7%d9%86%d9%81%d8%b1%d9%88%d8%b1/"
+const pdfBlogUrl = "gateway.vardast.com/Gozareshmaskan1403.pdf"
 
 // const DesktopHomeIndex = dynamic(
 //   () => import("@/app/(client)/(home)/components/DesktopHomeIndex"),
