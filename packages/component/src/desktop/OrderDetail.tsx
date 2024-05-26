@@ -3,17 +3,27 @@ import { ReactNode } from "react"
 import OrderInfoCard from "./OrderInfoCard"
 import OrderProductsList from "./OrderProductsList"
 
+export enum OrderDetailPageType {
+  SELLER_ORDERS_DETAIL = "SELLER_ORDERS_DETAIL",
+  ADMIN_ORDER_DETAIL_PAGE = "ADMIN_ORDER_DETAIL_PAGE",
+  SELLER_MY_ORDERS_DETAIL = "SELLER_MY_ORDERS_DETAIL",
+  SELLER_ADD_OFFER_PRICE_PAGE = "  SELLER_ADD_OFFER_PRICE_PAGE"
+}
+
 type Props = {
+  type: OrderDetailPageType
+  AddOfferChildren?: ReactNode
   SellerChildren?: ReactNode
-  isAdmin?: boolean
   Adminchildren?: ReactNode
   data: any
+  SellerAddOfferPriceChildren?: ReactNode
 }
 
 const OrderDetail: React.FC<Props> = ({
-  isAdmin,
+  SellerAddOfferPriceChildren,
+  type,
   Adminchildren,
-
+  AddOfferChildren,
   SellerChildren,
   data
 }) => {
@@ -21,7 +31,12 @@ const OrderDetail: React.FC<Props> = ({
     <div className="flex w-full flex-col gap-9">
       <OrderInfoCard isAdmin={true} />
       <OrderProductsList data={data} />
-      {isAdmin ? Adminchildren : SellerChildren}
+      {type === OrderDetailPageType.SELLER_ORDERS_DETAIL && SellerChildren}
+      {type === OrderDetailPageType.ADMIN_ORDER_DETAIL_PAGE && Adminchildren}
+      {type === OrderDetailPageType.SELLER_ADD_OFFER_PRICE_PAGE &&
+        SellerAddOfferPriceChildren}
+
+      {type === OrderDetailPageType.SELLER_MY_ORDERS_DETAIL && AddOfferChildren}
     </div>
   )
 }

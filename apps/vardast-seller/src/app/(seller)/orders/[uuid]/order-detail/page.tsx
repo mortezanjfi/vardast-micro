@@ -1,4 +1,6 @@
-import OrderDetail from "@vardast/component/desktop/OrderDetail"
+import OrderDetail, {
+  OrderDetailPageType
+} from "@vardast/component/desktop/OrderDetail"
 
 import AddToMyOrders from "@/app/(seller)/components/AddToMyOrders"
 
@@ -18,9 +20,10 @@ const page = async ({ params: { uuid } }: { params: { uuid: string } }) => {
 
   return (
     <OrderDetail
-      isAdmin={false}
       data={fakeData}
       SellerChildren={<AddToMyOrders />}
+      type={OrderDetailPageType.SELLER_ORDERS_DETAIL}
+      SellerAddOfferPriceChildren={""}
     />
   )
 }

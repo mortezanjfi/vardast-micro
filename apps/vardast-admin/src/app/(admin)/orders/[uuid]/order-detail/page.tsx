@@ -1,4 +1,6 @@
-import OrderDetail from "@vardast/component/desktop/OrderDetail"
+import OrderDetail, {
+  OrderDetailPageType
+} from "@vardast/component/desktop/OrderDetail"
 
 import OrderSubmit from "@/app/(admin)/orders/components/OrderSubmit"
 import UploadedFiles from "@/app/(admin)/orders/components/UploadedFIles"
@@ -18,7 +20,7 @@ const page = async ({ params: { uuid } }: { params: { uuid: string } }) => {
   ]
   return (
     <OrderDetail
-      isAdmin={true}
+      type={OrderDetailPageType.ADMIN_ORDER_DETAIL_PAGE}
       data={fakeData}
       Adminchildren={
         <>
