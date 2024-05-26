@@ -1,0 +1,5 @@
+query FindOfferPreOrderById($id: Float!) {
+  findOfferPreOrderById(id: $id) {
+    id
+  }
+}
