@@ -213,8 +213,18 @@ export const _sellerSidebarMenu: NavigationType[] = [
     items: [
       {
         title: "خانه",
-        path: "",
+        path: "/",
         icon: "home"
+      },
+      {
+        title: "سفارشات",
+        icon: "list",
+        path: "/orders"
+      },
+      {
+        title: "سفارشات من",
+        icon: "list",
+        path: "/my-orders"
       },
       {
         title: "کالا",
