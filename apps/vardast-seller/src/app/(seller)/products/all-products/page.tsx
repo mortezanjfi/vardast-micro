@@ -4,7 +4,6 @@ import { IndexProductInput } from "@vardast/graphql/generated"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
-import useTranslation from "next-translate/useTranslation"
 
 import AllProductsIndexPage from "@/app/(seller)/products/all-products/AllProductsIndexPage"
 
@@ -19,7 +18,6 @@ async function ManageProductPage({
 }: SearchIndexProps) {
   const isMobileView = await CheckIsMobileView()
   const queryClient = getQueryClient()
-  const { t } = useTranslation()
   const args: IndexProductInput = {}
   // args["page"] =
   //   searchParams.page && +searchParams.page[0] > 0 ? +searchParams.page[0] : 1

@@ -1,3 +1,5 @@
+"use client"
+
 import { AddFromProducts } from "@vardast/component/desktop/AddFromProducts"
 import {
   IndexProductInput,
@@ -15,7 +17,11 @@ type SearchIndexProps = {
   args: IndexProductInput
 }
 
-function AllProductsIndexPage({ isMobileView, slug, args }: SearchIndexProps) {
+const AllProductsIndexPage = ({
+  isMobileView,
+  slug,
+  args
+}: SearchIndexProps) => {
   const { t } = useTranslation()
 
   const sellerCreateOfferMutation = useCreateOfferMutation(
