@@ -42,6 +42,7 @@ import { Input } from "@vardast/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@vardast/ui/popover"
 import { Textarea } from "@vardast/ui/textarea"
 import zodI18nMap from "@vardast/util/zodErrorMap"
+import { clsx } from "clsx"
 import { ClientError } from "graphql-request"
 import {
   LucideAlertOctagon,
@@ -283,7 +284,10 @@ const ProductForm = ({ isMobile }: ProductFormProps) => {
           </Alert>
         )}
         <form
-          className="flex h-full flex-1 flex-col"
+          className={clsx(
+            "flex h-full flex-1 flex-col bg-alpha-white md:rounded-lg md:p-5",
+            !isMobile && "card"
+          )}
           onSubmit={form.handleSubmit(onSubmit)}
           noValidate
         >

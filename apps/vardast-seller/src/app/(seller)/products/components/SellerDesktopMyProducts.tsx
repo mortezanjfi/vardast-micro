@@ -127,7 +127,7 @@ export const SellerDesktopMyProducts = ({
   )
 
   return (
-    <>
+    <div className="flex flex-col gap">
       <RemoveProductModal
         sellerRemoveOfferMutation={sellerRemoveOfferMutation}
         productToDelet={selectedProductForDelete as Product}
@@ -317,6 +317,6 @@ export const SellerDesktopMyProducts = ({
           </div>
         </Card>
       )}
-    </>
+    </div>
   )
 }

@@ -104,7 +104,7 @@ export const AddFromProducts = ({
   )
 
   return (
-    <>
+    <div className="flex flex-col gap">
       <ProductsFilter isAdmin={isAdmin} form={form} isMyProductsPage={false} />
       {renderedListStatus[getContentByApiStatus(data, !!productsLength)] || (
         <div
@@ -270,6 +270,6 @@ export const AddFromProducts = ({
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }

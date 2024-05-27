@@ -33,7 +33,10 @@ export const ProductsFilter = ({
 
   return (
     <div
-      className={clsx("flex flex-col gap-7 py-5", !isAdmin && "card rounded ")}
+      className={clsx(
+        "flex flex-col gap-7 py-5 md:px-5",
+        !isAdmin && "card rounded "
+      )}
     >
       {!isMyProductsPage && !isAdmin ? (
         <div className="flex justify-between">
