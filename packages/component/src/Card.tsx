@@ -33,7 +33,7 @@ const Card = ({
       className={mergeClasses(cardVariants({ template, className }))}
       {...props}
     >
-      <div>
+      <div className="flex">
         {title && (
           <h2 className={clsx("font-medium text-alpha-800", titleClass)}>
             {title}

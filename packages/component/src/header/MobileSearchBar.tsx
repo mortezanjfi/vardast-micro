@@ -2,7 +2,7 @@
 
 import useIsCurrentPath from "@vardast/hook/use-is-current-path"
 
-import Search from "../search"
+import Search from "../Search"
 
 interface MobileSearchBarProps {
   isMobileView: boolean

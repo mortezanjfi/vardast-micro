@@ -21,7 +21,7 @@ import { useSession } from "next-auth/react"
 
 import Link from "./Link"
 import Progress from "./Progress"
-import Search from "./search"
+import Search from "./Search"
 
 type Props = {}
 

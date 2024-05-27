@@ -3,6 +3,7 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { useRouter } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
+import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
 import Link from "@vardast/component/Link"
 import { PreOrder } from "@vardast/graphql/generated"
 import { Button } from "@vardast/ui/button"
@@ -18,7 +19,6 @@ import { LucideEdit, LucideMoreVertical, LucideTrash } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
 import { PreOrderStatesFa } from "@/app/(client)/(profile)/profile/orders/components/OrdersPage"
-import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/components/DetailsWithTitle"
 
 type OrderCardProps = {
   preOrder: PreOrder

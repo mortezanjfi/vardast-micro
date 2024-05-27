@@ -16,20 +16,18 @@ import { LucideAlertOctagon } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
 type AllOrderDeleteModalProps = {
+  onDelete: Function
   open: boolean
   onOpenChange: Dispatch<SetStateAction<boolean>>
 }
 
 const AllOrderDeleteModal = ({
   open,
-  onOpenChange
+  onOpenChange,
+  onDelete
 }: AllOrderDeleteModalProps) => {
   const { t } = useTranslation()
   const [errors, setErrors] = useState<ClientError>()
-
-  const onDelete = () => {
-    console.log("delete")
-  }
 
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>

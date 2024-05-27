@@ -32,7 +32,7 @@ const UserMenu = () => {
   return (
     <>
       {session && session.user && (
-        <div ref={ref} className={clsx(["w-full", open && "-mb-2"])}>
+        <div ref={ref} className={clsx(["w-full px-6 py-5", open && "-mb-2"])}>
           <div
             className={clsx([
               open ? "card -mx-2 flex flex-col gap-3 rounded p-2" : ""
