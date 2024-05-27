@@ -8,7 +8,11 @@ import useTranslation from "next-translate/useTranslation"
 import AddPriceModal from "./AddPriceModal"
 import CardContainer from "./CardContainer"
 
-type OrderProductsListProps = { hasExtraInfo?: boolean; data: any }
+type OrderProductsListProps = {
+  hasOperation?: boolean
+  hasExtraInfo?: boolean
+  data: any
+}
 
 const thClassName = "whitespace-nowrap border align-middle"
 const tdClassName = "border"
@@ -23,7 +27,11 @@ const TablePriceHead = ({ isVardast }: { isVardast?: boolean }) => {
   )
 }
 
-function OrderProductsList({ hasExtraInfo, data }: OrderProductsListProps) {
+function OrderProductsList({
+  hasOperation,
+  hasExtraInfo,
+  data
+}: OrderProductsListProps) {
   const { t } = useTranslation()
   const [open, setOpen] = useState<boolean>(false)
   const [productIdToEdit, setProdctIdToEdit] = useState<number>()
@@ -108,6 +116,11 @@ function OrderProductsList({ hasExtraInfo, data }: OrderProductsListProps) {
                         {Thead.children}
                       </th>
                     )
+                )}
+                {hasOperation && (
+                  <th colSpan={1} rowSpan={2} className={clsx(thClassName)}>
+                    {t("common:operation")}
+                  </th>
                 )}
               </tr>
               <tr>
@@ -196,7 +209,25 @@ function OrderProductsList({ hasExtraInfo, data }: OrderProductsListProps) {
                               addCommas(order.purchaserPrice.total)
                             )}
                           </td>
+                          <td className="border-x px-4 py-3">
+                            {digitsEnToFa(
+                              addCommas(order.purchaserPrice.total)
+                            )}
+                          </td>
                         </>
+                      )}
+                      {hasOperation && (
+                        <td className={clsx(tdClassName, "whitespace-nowrap")}>
+                          <span
+                            onClick={() => {
+                              setProdctIdToEdit(order.id)
+                              setOpen(true)
+                            }}
+                            className="cursor-pointer text-blue-500"
+                          >
+                            افزودن قیمت
+                          </span>
+                        </td>
                       )}
                     </tr>
                   )
