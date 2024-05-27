@@ -15,7 +15,7 @@ const ContactInfoEditPage = async ({
 }: ContactInfoEditPageProps) => {
   const session = await getServerSession(authOptions)
 
-  if (!session?.abilities?.includes("gql.users.contact_info.update")) {
+  if (!session?.abilities?.includes("gql.users.contact_info.index")) {
     redirect("/")
   }
 

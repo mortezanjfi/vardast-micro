@@ -14,7 +14,7 @@ const ProjectEdit = async ({
 }) => {
   // const session = await getServerSession(authOptions)
 
-  // if (!session?.abilities?.includes("gql.products.brand.update")) {
+  // if (!session?.abilities?.includes("gql.products.brand.index")) {
   //   redirect("/admin")
   // }
 

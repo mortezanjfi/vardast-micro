@@ -107,7 +107,7 @@ const Categories = ({ slug, session }: Props) => {
         />
       )}
       <PageHeader title={vocabularyQuery.data.vocabulary.title}>
-        {session?.abilities?.includes("gql.base.taxonomy.category.store") && (
+        {session?.abilities?.includes("gql.base.taxonomy.category.index") && (
           <Button
             size="medium"
             onClick={() =>

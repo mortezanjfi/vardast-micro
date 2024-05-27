@@ -45,7 +45,7 @@ const Provinces = ({ countrySlug }: Props) => {
         onOpenChange={setDeleteModalOpen}
       />
       <PageHeader title={data.country.name}>
-        {session?.abilities?.includes("gql.base.location.province.store") && (
+        {session?.abilities?.includes("gql.base.location.province.index") && (
           <CreateProvince countryId={data.country.id} />
         )}
       </PageHeader>

@@ -31,7 +31,7 @@ const ContactInfosTab = ({
 
   return (
     <>
-      {session?.abilities?.includes("gql.users.contact_info.store") && (
+      {session?.abilities?.includes("gql.users.contact_info.index") && (
         <div className="mb-6 flex items-end justify-between">
           <Button
             className="mr-auto"

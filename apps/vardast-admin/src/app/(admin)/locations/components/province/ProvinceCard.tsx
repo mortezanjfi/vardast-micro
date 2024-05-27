@@ -107,7 +107,7 @@ const ProvinceCard = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             {session?.abilities?.includes(
-              "gql.base.location.province.update"
+              "gql.base.location.province.index"
             ) && (
               <DropdownMenuItem>
                 <LucideEdit className="dropdown-menu-item-icon" />
@@ -115,7 +115,7 @@ const ProvinceCard = ({
               </DropdownMenuItem>
             )}
             {session?.abilities?.includes(
-              "gql.base.location.province.destroy"
+              "gql.base.location.province.index"
             ) && (
               <>
                 <DropdownMenuSeparator />

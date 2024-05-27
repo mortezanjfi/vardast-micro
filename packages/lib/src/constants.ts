@@ -121,7 +121,7 @@ export const _sidebarMenu: NavigationType[] = [
         title: "پیشنهادات",
         path: "/offers",
         icon: "package",
-        abilities: "gql.products.offer.index.mine"
+        abilities: "gql.products.offer.index.index"
       },
       {
         title: "مشخصه‌ها",
@@ -151,7 +151,7 @@ export const _sidebarMenu: NavigationType[] = [
       //       title: "پیشنهادات",
       //       path: "/offers",
       //       icon: "package",
-      //       abilities: "gql.products.offer.index.mine"
+      //       abilities: "gql.products.offer.index.index"
       //     },
       //     {
       //       title: "مشخصه‌ها",
@@ -248,7 +248,7 @@ export const _sellerSidebarMenu: NavigationType[] = [
             title: "مدیریت کالاهای من",
             path: "/products/my-products",
             icon: "package",
-            abilities: "gql.products.offer.index.mine"
+            abilities: "gql.products.offer.index.index"
           }
         ]
       },

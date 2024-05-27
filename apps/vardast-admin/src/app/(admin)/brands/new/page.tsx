@@ -8,7 +8,7 @@ import BrandForm from "@/app/(admin)/brands/components/OldBrandForm"
 const CreateBrandPage = async () => {
   const session = await getServerSession(authOptions)
 
-  if (!session?.abilities?.includes("gql.products.brand.store")) {
+  if (!session?.abilities?.includes("gql.products.brand.index")) {
     redirect("/")
   }
 

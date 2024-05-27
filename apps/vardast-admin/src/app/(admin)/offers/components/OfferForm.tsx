@@ -274,7 +274,7 @@ const OfferForm = ({ offer }: OfferFormProps) => {
             )}
           />
 
-          {session?.abilities?.includes("gql.products.offer.update") && (
+          {session?.abilities?.includes("gql.products.offer.index") && (
             <FormField
               control={form.control}
               name="sellerId"
@@ -354,7 +354,7 @@ const OfferForm = ({ offer }: OfferFormProps) => {
             />
           )}
 
-          {session?.abilities?.includes("gql.products.offer.update") && (
+          {session?.abilities?.includes("gql.products.offer.index") && (
             <FormField
               control={form.control}
               name="status"

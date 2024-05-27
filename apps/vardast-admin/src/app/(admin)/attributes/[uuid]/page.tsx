@@ -11,7 +11,7 @@ const AttributeEditPage = async ({
 }) => {
   const session = await getServerSession(authOptions)
 
-  if (!session?.abilities?.includes("gql.products.attribute.update")) {
+  if (!session?.abilities?.includes("gql.products.attribute.index")) {
     redirect("/")
   }
 

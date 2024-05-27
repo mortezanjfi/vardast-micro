@@ -15,7 +15,7 @@ const AddressEditPage = async ({
 }: AddressEditPageProps) => {
   const session = await getServerSession(authOptions)
 
-  if (!session?.abilities?.includes("gql.users.address.update")) {
+  if (!session?.abilities?.includes("gql.users.address.index")) {
     redirect("/")
   }
 

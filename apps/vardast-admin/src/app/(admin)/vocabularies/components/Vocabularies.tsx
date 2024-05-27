@@ -35,7 +35,7 @@ const Vocabularies = () => {
   return (
     <>
       <PageHeader title={t("common:vocabularies_index_title")}>
-        {session?.abilities?.includes("gql.base.taxonomy.vocabulary.store") && (
+        {session?.abilities?.includes("gql.base.taxonomy.vocabulary.index") && (
           <CreateVocavulary />
         )}
       </PageHeader>

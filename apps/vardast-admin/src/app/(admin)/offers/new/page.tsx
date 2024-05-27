@@ -7,7 +7,7 @@ import OfferForm from "../components/OfferForm"
 const CreateOfferPage = async () => {
   const session = await getServerSession(authOptions)
 
-  if (!session?.abilities?.includes("gql.products.offer.store.mine")) {
+  if (!session?.abilities?.includes("gql.products.offer.store.index")) {
     redirect("/")
   }
 

@@ -19,7 +19,7 @@ const CreateAddressPage = async ({
 
   const session = await getServerSession(authOptions)
 
-  if (!session?.abilities?.includes("gql.users.address.store")) {
+  if (!session?.abilities?.includes("gql.users.address.index")) {
     redirect("/")
   }
 

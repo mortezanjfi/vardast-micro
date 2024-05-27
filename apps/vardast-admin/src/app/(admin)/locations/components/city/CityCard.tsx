@@ -109,13 +109,13 @@ const CityCard = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            {session?.abilities?.includes("gql.base.location.city.update") && (
+            {session?.abilities?.includes("gql.base.location.city.index") && (
               <DropdownMenuItem>
                 <LucideEdit className="dropdown-menu-item-icon" />
                 <span>{t("common:edit")}</span>
               </DropdownMenuItem>
             )}
-            {session?.abilities?.includes("gql.base.location.city.destroy") && (
+            {session?.abilities?.includes("gql.base.location.city.index") && (
               <>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem

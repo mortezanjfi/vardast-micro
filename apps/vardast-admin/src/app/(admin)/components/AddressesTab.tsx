@@ -30,7 +30,7 @@ const AddressesTab = ({
 
   return (
     <>
-      {session?.abilities?.includes("gql.users.address.store") && (
+      {session?.abilities?.includes("gql.users.address.index") && (
         <div className="mb-6 flex items-end justify-between">
           <Button
             className="mr-auto"

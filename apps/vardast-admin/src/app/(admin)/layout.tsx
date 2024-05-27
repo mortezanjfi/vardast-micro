@@ -7,7 +7,6 @@ import MobileBaseLayout from "@vardast/component/MobileBaseLayout"
 import { SearchActionModal } from "@vardast/component/Search"
 import { _sidebarMenu } from "@vardast/lib/constants"
 import { getServerSession } from "next-auth"
-import { signOut } from "next-auth/react"
 
 // import { signOut } from "next-auth/react"
 
@@ -20,17 +19,18 @@ export default async function AdminLayout({
 }) {
   const session = await getServerSession(authOptions)
   if (
-    !session ||
-    (session && !session?.profile?.roles.some((role) => role?.name === "admin"))
+    !session.accessToken ||
+    (session.accessToken &&
+      !session?.profile?.roles.some((role) => role?.name === "admin"))
   ) {
     redirect("/auth/signin")
   }
 
-  if (session.error === "RefreshAccessTokenError") {
-    signOut({
-      callbackUrl: "/"
-    })
-  }
+  // if (session.error === "RefreshAccessTokenError") {
+  //   signOut({
+  //     callbackUrl: "/"
+  //   })
+  // }
 
   return (
     <>

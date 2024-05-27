@@ -7,7 +7,7 @@ import ProductForm from "@/app/(admin)/products/components/ProductForm"
 const ProductCreatePage = async () => {
   const session = await getServerSession(authOptions)
 
-  if (!session?.abilities?.includes("gql.products.product.store")) {
+  if (!session?.abilities?.includes("gql.products.product.index")) {
     redirect("/")
   }
 

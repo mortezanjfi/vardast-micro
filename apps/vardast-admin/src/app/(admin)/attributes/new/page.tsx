@@ -7,7 +7,7 @@ import AttributeForm from "../components/AttributeForm"
 const CreateAttributePage = async () => {
   const session = await getServerSession(authOptions)
 
-  if (!session?.abilities?.includes("gql.products.attribute.store")) {
+  if (!session?.abilities?.includes("gql.products.attribute.index")) {
     redirect("/")
   }
 

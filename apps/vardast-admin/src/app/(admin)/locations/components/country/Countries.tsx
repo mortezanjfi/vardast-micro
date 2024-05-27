@@ -39,7 +39,7 @@ const Countries = () => {
         onOpenChange={setDeleteModalOpen}
       />
       <PageHeader title={t("common:locations_index_title")}>
-        {session?.abilities?.includes("gql.base.location.country.store") && (
+        {session?.abilities?.includes("gql.base.location.country.index") && (
           <CreateCountry />
         )}
       </PageHeader>

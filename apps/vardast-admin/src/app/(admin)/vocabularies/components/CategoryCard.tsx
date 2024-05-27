@@ -162,7 +162,7 @@ const CategoryCard = ({
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               {session?.abilities?.includes(
-                "gql.base.taxonomy.category.update"
+                "gql.base.taxonomy.category.index"
               ) && (
                 <>
                   <DropdownMenuItem
@@ -179,7 +179,7 @@ const CategoryCard = ({
                 </>
               )}
               {session?.abilities?.includes(
-                "gql.base.taxonomy.category.destroy"
+                "gql.base.taxonomy.category.index"
               ) && (
                 <>
                   <DropdownMenuSeparator />

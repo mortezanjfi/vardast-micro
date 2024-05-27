@@ -19,7 +19,7 @@ const CreateContactInfoPage = async ({
 
   const session = await getServerSession(authOptions)
 
-  if (!session?.abilities?.includes("gql.users.contact_info.store")) {
+  if (!session?.abilities?.includes("gql.users.contact_info.index")) {
     redirect("/")
   }
 

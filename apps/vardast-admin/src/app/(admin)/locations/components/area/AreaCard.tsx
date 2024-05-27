@@ -91,13 +91,13 @@ const AreaCard = ({ show, area, onDeleteTriggered }: AreaCardProps) => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            {session?.abilities?.includes("gql.base.location.area.update") && (
+            {session?.abilities?.includes("gql.base.location.area.index") && (
               <DropdownMenuItem>
                 <LucideEdit className="dropdown-menu-item-icon" />
                 <span>{t("common:edit")}</span>
               </DropdownMenuItem>
             )}
-            {session?.abilities?.includes("gql.base.location.area.destroy") && (
+            {session?.abilities?.includes("gql.base.location.area.index") && (
               <>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem

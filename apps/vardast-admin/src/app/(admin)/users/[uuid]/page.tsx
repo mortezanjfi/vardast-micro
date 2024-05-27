@@ -11,7 +11,7 @@ const UserEditPage = async ({
 }) => {
   const session = await getServerSession(authOptions)
 
-  if (!session?.abilities?.includes("gql.users.user.update")) {
+  if (!session?.abilities?.includes("gql.users.user.index")) {
     redirect("/")
   }
   return uuid && <UserEdit uuid={uuid} />

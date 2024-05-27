@@ -7,7 +7,7 @@ import SellerForm from "../components/SellerForm"
 const CreateSellerPage = async () => {
   const session = await getServerSession(authOptions)
 
-  if (!session?.abilities?.includes("gql.products.seller.store")) {
+  if (!session?.abilities?.includes("gql.products.seller.index")) {
     redirect("/")
   }
 

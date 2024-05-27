@@ -44,7 +44,7 @@ const VocabularyCard = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             {session?.abilities?.includes(
-              "gql.base.taxonomy.vocabulary.update"
+              "gql.base.taxonomy.vocabulary.index"
             ) && (
               <DropdownMenuItem>
                 <LucideEdit className="dropdown-menu-item-icon" />
@@ -52,7 +52,7 @@ const VocabularyCard = ({
               </DropdownMenuItem>
             )}
             {session?.abilities?.includes(
-              "gql.base.taxonomy.vocabulary.destroy"
+              "gql.base.taxonomy.vocabulary.index"
             ) && (
               <>
                 <DropdownMenuSeparator />

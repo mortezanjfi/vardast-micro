@@ -7,7 +7,7 @@ import UserForm from "@/app/(admin)/users/components/UserForm"
 const CreateBrandPage = async () => {
   const session = await getServerSession(authOptions)
 
-  if (!session?.abilities?.includes("gql.users.user.store")) {
+  if (!session?.abilities?.includes("gql.users.user.index")) {
     redirect("/")
   }
 

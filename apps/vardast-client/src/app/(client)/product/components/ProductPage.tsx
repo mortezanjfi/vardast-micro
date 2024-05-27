@@ -337,7 +337,7 @@ const ProductPage = ({ id, isMobileView }: ProductPageProps) => {
         </div>
       </div>
       {/* {session?.abilities?.includes(
-        "gql.products.product.moderated_update"
+        "gql.products.product.index"
       ) && (
         <Link
           className="btn btn-secondary btn-lg m block"

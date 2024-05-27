@@ -83,7 +83,7 @@ const Attributes = () => {
           containerClass="items-center"
           titleContainerClasses="border-b-2 border-primary-600 py-2"
         >
-          {session?.abilities.includes("gql.products.attribute.store") && (
+          {session?.abilities.includes("gql.products.attribute.index") && (
             <Link href="/attributes/new">
               <Button size="medium">
                 <LucidePlus size="14.4" />

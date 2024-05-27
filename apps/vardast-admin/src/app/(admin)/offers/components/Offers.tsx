@@ -131,7 +131,7 @@ const Offers = () => {
           containerClass="items-center"
           titleContainerClasses="border-b-2 border-primary-600 py-2"
         >
-          {session?.abilities.includes("gql.products.offer.store") && (
+          {session?.abilities.includes("gql.products.offer.index") && (
             <Link href="/offers/new">
               <Button size="medium">
                 <LucidePlus size="14.4" />

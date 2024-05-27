@@ -29,7 +29,7 @@ const MembersTab = ({ representatives, sellerId }: MembersTabProps) => {
         onOpenChange={setCreateMemberModalOpen}
       />
       {session?.abilities?.includes(
-        "gql.products.seller_representative.store"
+        "gql.products.seller_representative.index"
       ) && (
         <div className="mb-6 flex items-end justify-between">
           <Button

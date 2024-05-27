@@ -37,7 +37,7 @@ const UOMs = () => {
   return (
     <>
       <PageHeader title={t("common:uoms_index_title")}>
-        {session?.abilities?.includes("gql.products.uom.store") && (
+        {session?.abilities?.includes("gql.products.uom.index") && (
           <Link href="/uoms/new">
             <Button size="medium">
               {t("common:add_entity", { entity: t("common:uom") })}

@@ -111,7 +111,7 @@ const CountryCard = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             {session?.abilities?.includes(
-              "gql.base.location.country.update"
+              "gql.base.location.country.index"
             ) && (
               <DropdownMenuItem>
                 <LucideEdit className="dropdown-menu-item-icon" />
@@ -119,7 +119,7 @@ const CountryCard = ({
               </DropdownMenuItem>
             )}
             {session?.abilities?.includes(
-              "gql.base.location.country.destroy"
+              "gql.base.location.country.index"
             ) && (
               <>
                 <DropdownMenuSeparator />

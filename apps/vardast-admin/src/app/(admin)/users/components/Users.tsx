@@ -82,7 +82,7 @@ const Users = () => {
       <UsersFilter form={form} />
       <Card className=" table-responsive mt-8 rounded">
         <PageHeader title={t("common:users_index_title")}>
-          {session?.abilities.includes("gql.users.user.store") && (
+          {session?.abilities.includes("gql.users.user.index") && (
             <Link href="/users/new">
               <Button size="medium">
                 {t("common:add_entity", { entity: t("common:user") })}

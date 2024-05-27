@@ -45,7 +45,7 @@ const Areas = ({ citySlug }: Props) => {
         onOpenChange={setDeleteModalOpen}
       />
       <PageHeader title={data.city.name}>
-        {session?.abilities?.includes("gql.base.location.area.store") && (
+        {session?.abilities?.includes("gql.base.location.area.index") && (
           <CreateArea cityId={data.city.id} />
         )}
       </PageHeader>
