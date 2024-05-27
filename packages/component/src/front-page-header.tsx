@@ -77,7 +77,7 @@ const FrontPageHeader = ({ session }: Props) => {
           (role) => role?.name === "admin" || role?.name === "seller"
         ) ? (
           <>
-            {session.profile?.roles.some((role) => role?.name === "admin") ? (
+            {session?.profile?.roles.some((role) => role?.name === "admin") ? (
               <Link
                 href={process.env.NEXT_PUBLIC_ADMIN_VARDAST}
                 className="btn btn-md btn-primary block"

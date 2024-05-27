@@ -172,12 +172,12 @@ export const authOptions: AuthOptions = {
         }
 
         if (trigger === "update" && session) {
-          token.userId = session.userId
-          token.abilities = session.abilities
-          token.accessToken = session.accessToken
-          token.accessTokenTtl = session.accessTokenTtl
-          token.refreshToken = session.refreshToken
-          token.refreshTokenTtl = session.refreshTokenTtl
+          token.userId = session?.userId
+          token.abilities = session?.abilities
+          token.accessToken = session?.accessToken
+          token.accessTokenTtl = session?.accessTokenTtl
+          token.refreshToken = session?.refreshToken
+          token.refreshTokenTtl = session?.refreshTokenTtl
           return token
         }
 
@@ -219,13 +219,13 @@ export const authOptions: AuthOptions = {
 
         const userInfo: GetWhoAmIQuery =
           await userClient.request(GetWhoAmIDocument)
-        session.accessToken = token.accessToken as string
-        session.accessTokenTtl = token.accessTokenTtl as number
-        session.refreshToken = token.refreshToken as string
-        session.refreshTokenTtl = token.refreshTokenTtl as number
-        session.profile = userInfo.whoAmI as any
-        session.abilities = token.abilities as string[]
-        session.error = token.error as string
+        session?.accessToken = token.accessToken as string
+        session?.accessTokenTtl = token.accessTokenTtl as number
+        session?.refreshToken = token.refreshToken as string
+        session?.refreshTokenTtl = token.refreshTokenTtl as number
+        session?.profile = userInfo.whoAmI as any
+        session?.abilities = token.abilities as string[]
+        session?.error = token.error as string
         // console.log("Session validate successfully: ", { session, token })
 
         return session

@@ -19,14 +19,14 @@ export default async function AdminLayout({
 }) {
   const session = await getServerSession(authOptions)
   if (
-    !session.accessToken ||
-    (session.accessToken &&
+    !session?.accessToken ||
+    (session?.accessToken &&
       !session?.profile?.roles.some((role) => role?.name === "admin"))
   ) {
     redirect("/auth/signin")
   }
 
-  // if (session.error === "RefreshAccessTokenError") {
+  // if (session?.error === "RefreshAccessTokenError") {
   //   signOut({
   //     callbackUrl: "/"
   //   })

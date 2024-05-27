@@ -150,7 +150,7 @@ const MobileNavigation = (_: Props) => {
   }
 
   const createEventTrackerMutation = useCreateEventTrackerMutation(
-    graphqlRequestClient(session.data),
+    graphqlRequestClient(session?.data),
     {
       onSuccess: () => {
         setOpen(true)
@@ -186,7 +186,7 @@ const MobileNavigation = (_: Props) => {
   )
 
   const showSellerContact = () => {
-    if (!!session.data) {
+    if (!!session?.data) {
       createEventTrackerMutation.mutate({
         createEventTrackerInput: {
           type,
@@ -255,11 +255,11 @@ const MobileNavigation = (_: Props) => {
                           onClick={showSellerContact}
                           loading={
                             createEventTrackerMutation.isLoading ||
-                            session.status === "loading"
+                            session?.status === "loading"
                           }
                           disabled={
                             createEventTrackerMutation.isLoading ||
-                            session.status === "loading" ||
+                            session?.status === "loading" ||
                             (!data?.contacts.length && !data?.addresses.length)
                           }
                           className="btn btn-md btn-primary

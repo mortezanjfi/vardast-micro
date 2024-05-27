@@ -169,7 +169,7 @@ const HomeIndex = ({ isMobileView }: HomeIndexProps) => {
   const downloadPdf = (e) => {
     e.preventDefault()
     setLocalStoragePdf(true)
-    if (!!session.data) {
+    if (!!session?.data) {
       // createEventTrackerDownloadPdfMutation.mutate({
       //   createEventTrackerInput: {
       //     type,

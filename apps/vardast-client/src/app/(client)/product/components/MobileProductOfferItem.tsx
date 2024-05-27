@@ -105,7 +105,7 @@ const MobileProductOfferItem = ({ hasContactButton, offer, uom }: Props) => {
   )
 
   const showSellerContact = () => {
-    if (!!session.data) {
+    if (!!session?.data) {
       createEventTrackerMutation.mutate({
         createEventTrackerInput: {
           type: EventTrackerTypes.ViewOffer,

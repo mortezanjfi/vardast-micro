@@ -21,8 +21,8 @@ export default async function PublicLayout({
   const session = await getServerSession(authOptions)
 
   if (
-    !session.accessToken ||
-    (session.accessToken &&
+    !session?.accessToken ||
+    (session?.accessToken &&
       !session?.profile?.roles.some((role) => role?.name === "seller"))
   ) {
     redirect("/auth/signin")

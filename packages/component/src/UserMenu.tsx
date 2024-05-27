@@ -31,7 +31,7 @@ const UserMenu = () => {
 
   return (
     <>
-      {session && session.user && (
+      {session && session?.user && (
         <div ref={ref} className={clsx(["w-full px-6 py-5", open && "-mb-2"])}>
           <div
             className={clsx([
@@ -78,33 +78,34 @@ const UserMenu = () => {
               className="flex w-full items-center gap-2 text-start outline-none focus-visible:outline-none"
             >
               <Avatar>
-                {session.profile?.avatarFile && (
+                {session?.profile?.avatarFile && (
                   <AvatarImage
-                    src={session.profile?.avatarFile.presignedUrl.url}
-                    alt={session.profile?.fullName || ""}
+                    src={session?.profile?.avatarFile.presignedUrl.url}
+                    alt={session?.profile?.fullName || ""}
                   />
                 )}
                 <AvatarFallback>
-                  {session.profile?.firstName && session.profile?.firstName[0]}
+                  {session?.profile?.firstName &&
+                    session?.profile?.firstName[0]}
                 </AvatarFallback>
               </Avatar>
               <div className="flex flex-1 flex-col truncate">
-                {session.profile?.fullName || session.profile?.email ? (
+                {session?.profile?.fullName || session?.profile?.email ? (
                   <>
-                    {session.profile?.fullName && (
+                    {session?.profile?.fullName && (
                       <span className="truncate font-medium text-alpha-800">
-                        {session.profile?.fullName}
+                        {session?.profile?.fullName}
                       </span>
                     )}
-                    {session.profile?.email && (
+                    {session?.profile?.email && (
                       <span className="truncate text-sm text-alpha-500">
-                        {session.profile?.email}
+                        {session?.profile?.email}
                       </span>
                     )}
                   </>
                 ) : (
                   <span className="truncate font-medium text-alpha-800">
-                    {session.profile?.cellphone}
+                    {session?.profile?.cellphone}
                   </span>
                 )}
               </div>

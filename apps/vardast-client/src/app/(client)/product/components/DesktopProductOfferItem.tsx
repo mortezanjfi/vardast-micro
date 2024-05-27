@@ -105,7 +105,7 @@ const DesktopProductOfferItem = ({ hasContactButton, offer, uom }: Props) => {
   )
 
   const showSellerContact = () => {
-    if (!!session.data) {
+    if (!!session?.data) {
       createEventTrackerMutation.mutate({
         createEventTrackerInput: {
           type: EventTrackerTypes.ViewOffer,

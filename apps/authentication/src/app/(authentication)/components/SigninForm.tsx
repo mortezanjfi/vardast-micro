@@ -131,7 +131,7 @@ const SigninFormContent = () => {
             setErrors(null)
             setLoginErrors(null)
             setMessage(message as string)
-            // await session.update(session)
+            // await session?.update(session)
 
             if (returnedUrl.startsWith("foreign/")) {
               window.location.href = `https://${decodedUrl}`
@@ -224,7 +224,7 @@ const SigninFormContent = () => {
         setErrors(null)
         setLoginErrors(null)
         setMessage(message as string)
-        // await session.update(session)
+        // await session?.update(session)
 
         if (returnedUrl.startsWith("foreign/")) {
           window.location.href = `https://${decodedUrl}`

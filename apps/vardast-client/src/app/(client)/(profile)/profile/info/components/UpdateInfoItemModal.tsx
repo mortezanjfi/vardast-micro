@@ -56,7 +56,7 @@ const UpdateInfoItemModal = ({
         setErrors(errors)
       },
       onSuccess: () => {
-        session.update()
+        session?.update()
         toast({
           description: `${title} با موفقیت به‌روزرسانی شد`,
           duration: 2000,

@@ -8,7 +8,7 @@ const Layout: React.FC<PropsWithChildren> = async ({ children }) => {
 
   // console.log({ session })
 
-  // if (!!session.accessToken) {
+  // if (!!session?.accessToken) {
   //   await signOut({
   //     callbackUrl: "/"
   //   })
