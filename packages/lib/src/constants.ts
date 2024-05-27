@@ -59,17 +59,17 @@ export const _profileSidebarMenu: NavigationType[] = [
         title: "سفارشات",
         icon: "list",
         path: "/profile/orders"
-      },
-      {
-        title: "سبد کالا",
-        icon: "shopping-cart",
-        path: "/profile/basket"
-      },
-      {
-        title: "علاقه مندی ها",
-        icon: "bookmark",
-        path: "/profile/favorites"
       }
+      // {
+      //   title: "سبد کالا",
+      //   icon: "shopping-cart",
+      //   path: "/profile/basket"
+      // }
+      // {
+      //   title: "علاقه مندی ها",
+      //   icon: "bookmark",
+      //   path: "/profile/favorites"
+      // }
     ]
   }
 ]

@@ -15,11 +15,13 @@ type VerifyOrderModalProps = {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
   onVerify: (_?: any) => void
+  description?: string
 }
 
 const VerifyOrderModal = ({
   open,
   setOpen,
+  description,
   onVerify
 }: VerifyOrderModalProps) => {
   const { t } = useTranslation()
@@ -29,21 +31,20 @@ const VerifyOrderModal = ({
       <AlertDialogContent>
         <div className="flex flex-col">
           <div className="flex flex-1 items-center gap">
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-red-50 text-red-600 dark:bg-red-800/20">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-red-50 text-warning dark:bg-red-800/20">
               <LucideAlertOctagon className="h-6 w-6" />
             </span>
-            <p className="my-4 leading-loose">
-              آیا از تایید اطلاعات اطمینان دارید؟
-            </p>
+            <h4 className="my-4 leading-loose">آیا مطمئن هستید؟</h4>
+            <p className="my-4 leading-loose">{description}</p>
           </div>
           <div>
             <AlertDialogFooter>
               <div className="flex items-center gap-2">
-                <Button variant="ghost" onClick={() => setOpen(false)}>
-                  {t("common:cancel")}
+                <Button variant="secondary" onClick={() => setOpen(false)}>
+                  {t("common:no")}
                 </Button>
-                <Button variant="danger" onClick={onVerify}>
-                  {t("common:sure")}
+                <Button variant="primary" onClick={onVerify}>
+                  {t("common:yes")}
                 </Button>
               </div>
             </AlertDialogFooter>

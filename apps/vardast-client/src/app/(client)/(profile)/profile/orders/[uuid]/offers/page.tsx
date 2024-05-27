@@ -20,10 +20,7 @@ const Page = async ({ params: { uuid } }: { params: { uuid: string } }) => {
 
   return (
     <ReactQueryHydrate state={dehydratedState}>
-      <OrderOffers
-        uuid={uuid}
-        title={(await generateMetadata()).title?.toString() as string}
-      />
+      <OrderOffers uuid={uuid} />
     </ReactQueryHydrate>
   )
 }

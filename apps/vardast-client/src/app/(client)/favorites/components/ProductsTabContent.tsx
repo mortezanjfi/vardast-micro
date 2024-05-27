@@ -22,10 +22,11 @@ export const ProductsTabContent = ({
   productQuery,
   session
 }: ProductsTabContentProps) => {
+  console.log({ productQuery })
+
   return (
     <>
-      {(productQuery.isFetching || productQuery.isLoading) &&
-      session?.accessToken ? (
+      {productQuery.isFetching && productQuery.isLoading ? (
         <ProductListContainer>
           {() => (
             <>
@@ -35,7 +36,7 @@ export const ProductsTabContent = ({
             </>
           )}
         </ProductListContainer>
-      ) : productQuery.data?.favorites.product.length ? (
+      ) : productQuery.data?.favorites?.product?.length ? (
         <ProductListContainer>
           {({ selectedItemId, setSelectedItemId }) => (
             <>

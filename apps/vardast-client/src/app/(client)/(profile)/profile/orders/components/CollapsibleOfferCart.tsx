@@ -10,12 +10,14 @@ import clsx from "clsx"
 import { LucideChevronDown } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
+import { OrderOfferStatusesFa } from "@/app/(client)/(profile)/profile/orders/components/OrdersPage"
 import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/components/DetailsWithTitle"
 
 type CollapsibleOfferCartProps = {
   children: ReactNode
   openDefault?: boolean
   offerOrder: OfferOrder
+  status?: "enable" | "disable"
 }
 
 export const TypeOrderOfferFa = {
@@ -25,7 +27,7 @@ export const TypeOrderOfferFa = {
   },
   [TypeOrderOffer.Client]: {
     className: "text-info",
-    name_fa: "خودم"
+    name_fa: "خریدار"
   },
   [TypeOrderOffer.Seller]: {
     className: "text-secondary",
@@ -36,6 +38,7 @@ export const TypeOrderOfferFa = {
 const CollapsibleOfferCart = ({
   offerOrder,
   children,
+  status,
   openDefault = false
 }: CollapsibleOfferCartProps) => {
   const [open, setOpen] = useState(openDefault)
@@ -43,25 +46,30 @@ const CollapsibleOfferCart = ({
   return (
     <Card>
       <Collapsible.Root open={open} onOpenChange={setOpen}>
-        <div className="flex items-center">
+        <div className={clsx("flex items-center", open && "border-b pb")}>
           <div className="flex items-center gap-10">
             <div className="flex gap-5">
-              <div className="flex items-center justify-center rounded-md bg-alpha-500 p-2">
+              <div
+                className={clsx(
+                  "flex items-center justify-center rounded-md p-2",
+                  status === "enable" ? "bg-info" : "bg-alpha-500"
+                )}
+              >
                 <div className="h-[8px] w-[8px] rounded-full bg-alpha-white" />
               </div>
               <span>{`پیشنهاد شماره ${offerOrder?.id && digitsEnToFa(offerOrder?.id)}`}</span>
             </div>
             <DetailsWithTitle
-              textCustomStyle={TypeOrderOfferFa[offerOrder.type].className}
+              textCustomStyle={TypeOrderOfferFa[offerOrder?.type]?.className}
               title={t("common:offerer")}
-              text={TypeOrderOfferFa[offerOrder.type].name_fa}
+              text={TypeOrderOfferFa[offerOrder?.type]?.name_fa}
             />
             <DetailsWithTitle
               title={t("common:offer-submition-time")}
               text={
-                offerOrder.created_at
+                offerOrder?.created_at
                   ? digitsEnToFa(
-                      new Date(offerOrder.created_at).toLocaleDateString(
+                      new Date(offerOrder?.created_at).toLocaleDateString(
                         "fa-IR",
                         {
                           year: "numeric",
@@ -73,6 +81,17 @@ const CollapsibleOfferCart = ({
                   : ""
               }
             />
+            {OrderOfferStatusesFa[offerOrder?.status] && (
+              <div
+                className={clsx(
+                  "tag",
+                  OrderOfferStatusesFa[offerOrder?.status]?.className
+                )}
+              >
+                {/* <Dot /> */}
+                <span>{OrderOfferStatusesFa[offerOrder?.status]?.name_fa}</span>
+              </div>
+            )}
           </div>
 
           <Collapsible.Trigger asChild>
@@ -84,7 +103,7 @@ const CollapsibleOfferCart = ({
           </Collapsible.Trigger>
         </div>
         <Collapsible.Content>
-          <div className="hide-scrollbar flex flex-col gap-5 overflow-y-auto  text-justify">
+          <div className="hide-scrollbar grid grid-cols-1 gap-5 divide-y divide-alpha-200 overflow-y-auto text-justify">
             {children}
           </div>
         </Collapsible.Content>

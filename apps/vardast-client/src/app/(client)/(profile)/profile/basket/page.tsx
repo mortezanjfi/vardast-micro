@@ -18,12 +18,12 @@ const Page = async () => {
   const queryClient = getQueryClient()
 
   if (isMobileView) {
-    redirect("/")
+    redirect("/profile")
   }
 
   const dehydratedState = dehydrate(queryClient)
 
-  return <ReactQueryHydrate state={dehydratedState}></ReactQueryHydrate>
+  return <ReactQueryHydrate state={dehydratedState}>basket</ReactQueryHydrate>
 }
 
 export default withMobileHeader(Page, { title: "سبد خرید" })

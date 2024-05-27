@@ -2,6 +2,10 @@
 "use client"
 
 import { Dispatch, SetStateAction, useState } from "react"
+import { useQueryClient } from "@tanstack/react-query"
+import { PreOrder, useRemovePreOrderMutation } from "@vardast/graphql/generated"
+import { toast } from "@vardast/hook/use-toast"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import {
   AlertDialog,
@@ -18,7 +22,7 @@ import useTranslation from "next-translate/useTranslation"
 type OrderDeleteModalProps = {
   open: boolean
   onOpenChange: Dispatch<SetStateAction<boolean>>
-  orderToDelete: any
+  orderToDelete: PreOrder
 }
 
 const OrderDeleteModal = ({
@@ -28,9 +32,43 @@ const OrderDeleteModal = ({
 }: OrderDeleteModalProps) => {
   const { t } = useTranslation()
   const [errors, setErrors] = useState<ClientError>()
+  const queryClient = useQueryClient()
+
+  const removePreOrderMutation = useRemovePreOrderMutation(
+    graphqlRequestClientWithToken,
+    {
+      onError: (errors: ClientError) => {
+        ;(
+          errors.response.errors?.at(0)?.extensions.displayErrors as string[]
+        ).map((error) =>
+          toast({
+            description: error,
+            duration: 5000,
+            variant: "danger"
+          })
+        )
+        setErrors(errors)
+      },
+      onSuccess: (data) => {
+        if (data.removePreOrder) {
+          queryClient.invalidateQueries({
+            queryKey: ["PreOrders"]
+          })
+          onOpenChange(false)
+          toast({
+            title: "سفارش شما حذف شد",
+            duration: 5000,
+            variant: "success"
+          })
+        }
+      }
+    }
+  )
 
   const onDelete = () => {
-    console.log("delete")
+    removePreOrderMutation.mutate({
+      id: orderToDelete.id
+    })
   }
 
   return (
@@ -65,7 +103,7 @@ const OrderDeleteModal = ({
                 "common:are_you_sure_you_want_to_delete_x_entity_this_action_cannot_be_undone_and_all_associated_data_will_be_permanently_removed",
                 {
                   entity: `${t(`common:order`)}`,
-                  name: orderToDelete?.name
+                  name: orderToDelete?.id
                 }
               )}
             </p>
@@ -74,7 +112,7 @@ const OrderDeleteModal = ({
                 <Button variant="ghost" onClick={() => onOpenChange(false)}>
                   {t("common:cancel")}
                 </Button>
-                <Button variant="danger" onClick={() => onDelete()}>
+                <Button variant="danger" onClick={onDelete}>
                   {t("common:delete")}
                 </Button>
               </div>

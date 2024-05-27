@@ -19,7 +19,11 @@ const OrderProductListContainer: React.FC<IOrderProductListContainer> = ({
   const [selectedItemId, setSelectedItemId] =
     useState<ICategoryListLoader>(null)
   return (
-    <div className={clsx("flex flex-col gap-6 bg-alpha-white")}>
+    <div
+      className={clsx(
+        "grid grid-cols-1 divide-y divide-alpha-200 bg-alpha-white"
+      )}
+    >
       {CardLoader &&
         [...Array(3)].map((loader) => (
           <CardLoader key={`product-card-loader-${loader}`} />

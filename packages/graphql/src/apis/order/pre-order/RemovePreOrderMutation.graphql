@@ -1,0 +1,3 @@
+mutation RemovePreOrder($id: Int!) {
+  removePreOrder(id: $id)
+}

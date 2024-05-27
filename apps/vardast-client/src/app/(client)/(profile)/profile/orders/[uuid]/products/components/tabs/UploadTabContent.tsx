@@ -57,25 +57,27 @@ function UploadTabContent({ uuid }: OrderProductTabContentProps) {
 
   return (
     <div className="flex w-full flex-col gap-5 py-5">
-      <Dropzone
-        manualFileState={[files, setFiles]}
-        isPreOrder={true}
-        uploadPath={uploadPaths.orderPriceList}
-        onAddition={(file) => {
-          setImages((prevImages) => [
-            ...prevImages,
-            {
-              uuid: file.uuid as string,
-              expiresAt: file.expiresAt as string
-            }
-          ])
-        }}
-        onDelete={(file) => {
-          setImages((images) =>
-            images.filter((image) => image.uuid !== file.uuid)
-          )
-        }}
-      />
+      <div className="p-0.5">
+        <Dropzone
+          manualFileState={[files, setFiles]}
+          uploadPath={uploadPaths.orderPriceList}
+          onAddition={(file) => {
+            setImages((prevImages) => [
+              ...prevImages,
+              {
+                uuid: file.uuid as string,
+                expiresAt: file.expiresAt as string
+              }
+            ])
+          }}
+          withHeight={false}
+          onDelete={(file) => {
+            setImages((images) =>
+              images.filter((image) => image.uuid !== file.uuid)
+            )
+          }}
+        />
+      </div>
       <div className="flex w-full justify-end">
         <Button
           type="button"

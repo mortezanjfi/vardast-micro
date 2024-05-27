@@ -2,6 +2,7 @@
 
 import { useMemo } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useQueryClient } from "@tanstack/react-query"
 import { TabTitleWithExtraData } from "@vardast/component/BrandOrSellerProfile"
 import {
   CreateLineInput,
@@ -59,6 +60,7 @@ export interface OrderProductTabContentProps {
 }
 
 const OrderProductsTabs = ({ uuid }: OrderProductsTabsProps) => {
+  const queryClient = useQueryClient()
   const form = useForm<CreateOrderLineType>({
     resolver: zodResolver(CreateOrderLineSchema)
   })
@@ -82,6 +84,9 @@ const OrderProductsTabs = ({ uuid }: OrderProductsTabsProps) => {
           Object.keys(form.getValues()).map((key) => [key, ""])
         )
         form.reset(clearObject)
+        queryClient.invalidateQueries({
+          queryKey: ["FindPreOrderById"]
+        })
         toast({
           title: "آیتم مورد نظر شما با موفقیت به سفارش اضافه شد",
           duration: 5000,

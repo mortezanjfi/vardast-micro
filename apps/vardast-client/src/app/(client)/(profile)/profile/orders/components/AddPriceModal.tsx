@@ -25,6 +25,7 @@ import {
   FormMessage
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
+import { Switch } from "@vardast/ui/switch"
 import { ClientError } from "graphql-request"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
@@ -51,16 +52,14 @@ const AddPriceModal = ({
   const queryClient = useQueryClient()
 
   const FormSchema = z.object({
-    fi_price: z.string()
+    fi_price: z.string(),
+    with_tax: z.boolean()
   })
 
   type FormSchemaType = TypeOf<typeof FormSchema>
 
   const form = useForm<FormSchemaType>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      fi_price: fi_price ?? ""
-    }
+    resolver: zodResolver(FormSchema)
   })
 
   const createOrderOfferLineMutation = useCreateOrderOfferLineMutation(
@@ -92,12 +91,22 @@ const AddPriceModal = ({
   )
 
   const calculatePriceOfferLineMutation = useCalculatePriceOfferLineMutation(
-    graphqlRequestClientWithToken
+    graphqlRequestClientWithToken,
+    {
+      onSuccess: (data) => {
+        form.setValue(
+          "fi_price",
+          data?.calculatePriceOfferLine?.fi_price || "0"
+        )
+        form.setValue("with_tax", +data?.calculatePriceOfferLine?.tax_price > 0)
+      }
+    }
   )
 
   const onSubmit = (data: FormSchemaType) => {
     calculatePriceOfferLineMutation.mutate({
       fi_price: data.fi_price,
+      with_tax: data.with_tax || false,
       lineId: +lineId
     })
   }
@@ -110,7 +119,7 @@ const AddPriceModal = ({
         offerOrderId: +offerId,
         lineId: +lineId,
         fi_price,
-        tax_price,
+        tax_price: form.watch("with_tax") ? tax_price : "0",
         total_price
       }
     })
@@ -161,21 +170,44 @@ const AddPriceModal = ({
                 </FormItem>
               )}
             />
-
+            <FormField
+              control={form.control}
+              name="with_tax"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="flex items-center gap-1">
+                    <FormControl>
+                      <Switch
+                        disabled={
+                          calculatePriceOfferLineMutation.isLoading ||
+                          createOrderOfferLineMutation.isLoading
+                        }
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormLabel noStyle>{t("common:tax")}</FormLabel>
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <div className="flex flex-col justify-center gap-5 rounded-lg border border-blue-300 bg-blue-50 px-5 py-7">
-              <div className="flex gap">
-                <h4>{t(`common:tax_price`)}:</h4>
-                <p className="font-semibold">
-                  {!calculatePriceOfferLineMutation.isLoading &&
-                    calculatePriceOfferLineMutation.data
-                      ?.calculatePriceOfferLine.tax_price &&
-                    digitsEnToFa(
+              {form.watch("with_tax") && (
+                <div className="flex gap">
+                  <h4>{t(`common:tax_price`)}:</h4>
+                  <p className="font-semibold">
+                    {!calculatePriceOfferLineMutation.isLoading &&
                       calculatePriceOfferLineMutation.data
-                        ?.calculatePriceOfferLine.tax_price
-                    )}
-                  {` (${t(`common:toman`)})`}
-                </p>
-              </div>
+                        ?.calculatePriceOfferLine.tax_price &&
+                      digitsEnToFa(
+                        calculatePriceOfferLineMutation.data
+                          ?.calculatePriceOfferLine.tax_price
+                      )}
+                    {` (${t(`common:toman`)})`}
+                  </p>
+                </div>
+              )}
               <div className="flex gap">
                 <h4>{t(`common:total_price`)}:</h4>
                 <p className="font-semibold">
@@ -194,7 +226,8 @@ const AddPriceModal = ({
               <Button
                 disabled={
                   calculatePriceOfferLineMutation.isLoading ||
-                  createOrderOfferLineMutation.isLoading
+                  createOrderOfferLineMutation.isLoading ||
+                  +form.watch("fi_price") < 1
                 }
                 loading={calculatePriceOfferLineMutation.isLoading}
                 type="submit"
@@ -207,7 +240,14 @@ const AddPriceModal = ({
                 disabled={
                   !calculatePriceOfferLineMutation.data ||
                   calculatePriceOfferLineMutation.isLoading ||
-                  createOrderOfferLineMutation.isLoading
+                  createOrderOfferLineMutation.isLoading ||
+                  !form.watch("fi_price") ||
+                  form.watch("fi_price") !==
+                    calculatePriceOfferLineMutation?.data
+                      ?.calculatePriceOfferLine?.fi_price ||
+                  form.watch("with_tax") !==
+                    !!+calculatePriceOfferLineMutation?.data
+                      ?.calculatePriceOfferLine?.tax_price
                 }
                 loading={createOrderOfferLineMutation.isLoading}
                 type="button"

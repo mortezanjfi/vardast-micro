@@ -18,13 +18,7 @@ const ProjectEdit = async ({
   //   redirect("/admin")
   // }
 
-  return (
-    <OrderDetailPage
-      uuid={uuid}
-      offerId={offerId}
-      title={(await generateMetadata()).title?.toString() as string}
-    />
-  )
+  return <OrderDetailPage uuid={uuid} offerId={offerId} />
 }
 
 export default ProjectEdit

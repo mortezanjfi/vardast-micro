@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
+import Link from "@vardast/component/Link"
 import {
   ExpireTypes,
   PaymentMethodEnum,
@@ -84,8 +85,6 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
   const [expireDialog, setExpireDialog] = useState(false)
   const [expireQueryTemp, setExpireQueryTemp] = useState("")
 
-  const [value, setValue] = useState<PaymentMethodEnum>(PaymentMethodEnum.Cash)
-
   const findPreOrderByIdQuery = useFindPreOrderByIdQuery(
     graphqlRequestClientWithToken,
     {
@@ -111,19 +110,7 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
         queryClient.invalidateQueries({
           queryKey: ["FindPreOrderById"]
         })
-        if (
-          findPreOrderByIdQuery?.data?.findPreOrderById?.status ===
-          PreOrderStates.Created
-        ) {
-          router.push(`/profile/orders/${uuid}/products`)
-        } else {
-          router.push(`/profile/orders`)
-        }
-        toast({
-          title: "اطلاعات سفارش با موفقیت به سفارش اضافه شد",
-          duration: 5000,
-          variant: "success"
-        })
+        router.push(`/profile/orders/${uuid}/products`)
       }
     }
   )
@@ -149,7 +136,7 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
             (project) => project.id === +form.watch("projectId")
           )?.address
         : [],
-    [form.watch("projectId"), form.watch("addressId")]
+    [form.watch("projectId"), form.watch("addressId"), router]
   )
 
   const submit = (data: CreateOrderInfoType) => {
@@ -163,23 +150,35 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
   }
 
   useEffect(() => {
-    if (findPreOrderByIdQuery.data?.findPreOrderById) {
-      const defaultValue = findPreOrderByIdQuery?.data.findPreOrderById
-      form.setValue("addressId", defaultValue?.address?.id)
-      form.setValue("descriptions", defaultValue?.descriptions)
-      form.setValue("expire_date", defaultValue?.expire_date)
-      form.setValue("payment_methods", defaultValue?.payment_methods)
+    if (
+      findPreOrderByIdQuery?.data?.findPreOrderById.status ===
+      PreOrderStates.Closed
+    ) {
+      router.push(`/profile/orders`)
+    } else if (findPreOrderByIdQuery?.data?.findPreOrderById) {
+      const defaultValue = findPreOrderByIdQuery?.data?.findPreOrderById
+      if (defaultValue?.address?.id) {
+        form.setValue("addressId", defaultValue?.address?.id)
+      }
+      if (defaultValue?.descriptions) {
+        form.setValue("descriptions", defaultValue?.descriptions)
+      }
+      if (defaultValue?.expire_date) {
+        form.setValue("expire_date", defaultValue?.expire_date)
+      }
+      if (defaultValue?.payment_methods) {
+        form.setValue("payment_methods", defaultValue?.payment_methods)
+      }
       if (defaultValue?.project?.id) {
         form.setValue("projectId", `${defaultValue?.project?.id}`)
       }
     }
-  }, [findPreOrderByIdQuery.data, addresses])
+  }, [findPreOrderByIdQuery?.data, addresses])
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(submit)}>
-        <span className="py-5 pb-2 text-lg font-semibold">اطلاعات سفارش</span>
-        <div className="grid grid-cols-3 grid-rows-3 gap-x-7 gap-y-5 border-b py-5">
+        <div className="grid grid-cols-3 grid-rows-3 gap-x-7 gap-y-5 border-b pb-4">
           <FormField
             control={form.control}
             name="projectId"
@@ -442,13 +441,13 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
                     value={field.value}
                     onValueChange={(value: PaymentMethodEnum) => {
                       form.setValue("payment_methods", value)
-                      setValue(value)
                     }}
                   >
                     <ToggleGroupItem
                       className={clsx(
                         "h-full rounded-xl p-0.5 text-alpha-500",
-                        value === PaymentMethodEnum.Cash &&
+                        form.watch("payment_methods") ===
+                          PaymentMethodEnum.Cash &&
                           "!bg-alpha-white !text-alpha-black shadow-lg"
                       )}
                       value={PaymentMethodEnum.Cash}
@@ -458,12 +457,13 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
                     <ToggleGroupItem
                       className={clsx(
                         "h-full rounded-xl p-0.5 text-alpha-500",
-                        value === PaymentMethodEnum.Credit &&
+                        form.watch("payment_methods") ===
+                          PaymentMethodEnum.Credit &&
                           "!bg-alpha-white !text-alpha-black shadow-lg"
                       )}
                       value={PaymentMethodEnum.Credit}
                     >
-                      اعتباری
+                      غیرنقدی
                     </ToggleGroupItem>
                   </ToggleGroup>
                 </FormControl>
@@ -487,7 +487,10 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
             />
           </div>
         </div>
-        <div className="flex flex-row-reverse py-5">
+        <div className="flex justify-end gap pt-4">
+          <Link className="btn btn-md btn-secondary" href="/profile/orders/">
+            بازگشت به سفارشات
+          </Link>
           <Button
             disabled={
               findPreOrderByIdQuery.isFetching ||
@@ -498,11 +501,7 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
             type="submit"
             variant="primary"
           >
-            {findPreOrderByIdQuery?.data?.findPreOrderById?.status ===
-            PreOrderStates.Created
-              ? "افزودن"
-              : "ویرایش"}{" "}
-            اطلاعات سفارش
+            تایید و ادامه
           </Button>
         </div>
       </form>

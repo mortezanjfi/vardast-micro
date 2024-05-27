@@ -1,15 +1,21 @@
 "use client"
 
-import { useFindPreOrderByIdQuery } from "@vardast/graphql/generated"
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
+import Link from "@vardast/component/Link"
+import {
+  PreOrderStates,
+  useFindPreOrderByIdQuery
+} from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 
-import PageTitle from "@/app/(client)/(profile)/components/PageTitle"
 import OrderProductsInnerLayout from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderInnerLayout"
 import OrderProductsTabs from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductsTabs"
 
-type OrderProductsPageIndexProps = { uuid: string; title: string }
+type OrderProductsPageIndexProps = { uuid: string }
 
-function OrderProductsPageIndex({ title, uuid }: OrderProductsPageIndexProps) {
+function OrderProductsPageIndex({ uuid }: OrderProductsPageIndexProps) {
+  const router = useRouter()
   const findPreOrderByIdQuery = useFindPreOrderByIdQuery(
     graphqlRequestClientWithToken,
     {
@@ -17,26 +23,34 @@ function OrderProductsPageIndex({ title, uuid }: OrderProductsPageIndexProps) {
     }
   )
 
+  useEffect(() => {
+    if (
+      findPreOrderByIdQuery?.data?.findPreOrderById.status ===
+      PreOrderStates.Closed
+    ) {
+      router.push(`/profile/orders`)
+    }
+  }, [])
+
   return (
-    <div className="flex h-full w-full flex-col gap-5">
-      <PageTitle title={title} backButtonUrl="/profile/orders" />
-      <OrderProductsInnerLayout
-        findPreOrderByIdQuery={findPreOrderByIdQuery}
-        isMobileView={false}
-        uuid={uuid}
-      >
-        <div className="flex flex-col gap-2 border-b pb-5">
-          <span className=" pb-2 text-lg font-semibold">
-            افزودن کالا و هزینه جانبی
-          </span>
-          <p className="text-sm">
-            کالاها و هزینه های جانبی درخواستی خود را از یک یا ترکیبی از روش های
-            زیر انتخاب کرده و پس از تایید، قیمت گذاری کنید.
-          </p>
-        </div>
-        <OrderProductsTabs uuid={uuid} />
-      </OrderProductsInnerLayout>
-    </div>
+    <OrderProductsInnerLayout
+      findPreOrderByIdQuery={findPreOrderByIdQuery}
+      isMobileView={false}
+      uuid={uuid}
+    >
+      <OrderProductsTabs uuid={uuid} />
+      <div className="mt-5 flex justify-end gap border-t pt-5">
+        <Link className="btn btn-md btn-secondary" href="/profile/orders/">
+          بازگشت به سفارشات
+        </Link>
+        <Link
+          href={`/profile/orders/${uuid}`}
+          className="btn btn-primary btn-md"
+        >
+          تایید و ادامه
+        </Link>
+      </div>
+    </OrderProductsInnerLayout>
   )
 }
 

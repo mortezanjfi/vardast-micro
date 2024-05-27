@@ -38,7 +38,7 @@ const OrderInfoCard = ({
           />
           <DetailsWithTitle
             title={t("common:entity_name", { entity: t("common:project") })}
-            text={orderInfo?.project.name}
+            text={orderInfo?.project?.name}
           />
           <DetailsWithTitle
             title={t("common:pay-method")}

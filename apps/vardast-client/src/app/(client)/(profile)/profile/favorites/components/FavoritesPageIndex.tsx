@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
 import {
   BrandOrSellerProfileTab,
@@ -75,6 +75,7 @@ const NotFoundItemsHelp = ({ text = "کالا" }) => {
 const FavoritesPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
   const { data: session, status } = useSession()
   const router = useRouter()
+  const pathname = usePathname()
   // const [type, setType] = useState<EntityTypeEnum>(EntityTypeEnum.Product)
   const [cacheFlag, setCacheFlag] = useState(false)
   // const router = useRouter()
@@ -124,7 +125,7 @@ const FavoritesPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
       setCacheFlag(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [pathname, session])
 
   // useEffect(() => {
   //   if (!session) {
@@ -161,7 +162,13 @@ const FavoritesPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
       }
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [session]
+    [
+      session,
+      productQuery?.data?.favorites,
+      brandQuery?.data?.favorites,
+      sellerQuery?.data?.favorites,
+      pathname
+    ]
   )
 
   if (status === "authenticated") {

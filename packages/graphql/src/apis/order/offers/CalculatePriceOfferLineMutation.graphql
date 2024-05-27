@@ -1,5 +1,13 @@
-mutation CalculatePriceOfferLine($lineId: Float!, $fi_price: String!) {
-  calculatePriceOfferLine(lineId: $lineId, fi_price: $fi_price) {
+mutation CalculatePriceOfferLine(
+  $lineId: Float!
+  $fi_price: String!
+  $with_tax: Boolean!
+) {
+  calculatePriceOfferLine(
+    lineId: $lineId
+    fi_price: $fi_price
+    with_tax: $with_tax
+  ) {
     fi_price
     tax_price
     total_price

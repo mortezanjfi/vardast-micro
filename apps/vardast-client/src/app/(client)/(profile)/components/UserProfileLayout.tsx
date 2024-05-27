@@ -1,11 +1,11 @@
 "use client"
 
+import { ReactNode, Suspense, useState } from "react"
 import Breadcrumb from "@vardast/component/Breadcrumb"
 import Sidebar from "@vardast/component/Sidebar"
 import { _profileSidebarMenu } from "@vardast/lib/constants"
 import { Button } from "@vardast/ui/button"
 import { LucideMenu } from "lucide-react"
-import { ReactNode, Suspense, useState } from "react"
 
 type UserProfileLayoutProps = {
   children: ReactNode
@@ -40,7 +40,7 @@ const UserProfileLayout = ({
             </div>
           </div>
 
-          <div className="app-inner gap-3.5 pb-5">
+          <div className="app-inner gap-6 pb-5">
             <Sidebar
               isUserProfile
               open={sidebarOpen}

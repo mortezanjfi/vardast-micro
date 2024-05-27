@@ -14,6 +14,7 @@ import {
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
 import { Textarea } from "@vardast/ui/textarea"
+import useTranslation from "next-translate/useTranslation"
 
 import { OrderProductTabContentProps } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductsTabs"
 
@@ -21,6 +22,8 @@ const OrderManualTabContent = ({
   addProductLine,
   form
 }: OrderProductTabContentProps) => {
+  const { t } = useTranslation()
+
   return (
     <Form {...form}>
       <form
@@ -122,6 +125,7 @@ const OrderManualTabContent = ({
 
         <div className="flex flex-row-reverse py-5">
           <Button
+            variant="outline-primary"
             disabled={
               form.formState.isLoading ||
               form.formState.isSubmitting ||
@@ -131,9 +135,9 @@ const OrderManualTabContent = ({
             }
             loading={form.formState.isLoading || form.formState.isSubmitting}
             type="submit"
-            variant="primary"
+            className="py-3"
           >
-            افزودن کالا به سفارش
+            {t("common:add-to_entity", { entity: t("common:order") })}
           </Button>
         </div>
       </form>

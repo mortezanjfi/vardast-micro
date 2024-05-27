@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useState } from "react"
 import { useRouter } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import Link from "@vardast/component/Link"
-import { PreOrder } from "@vardast/graphql/generated"
+import { PreOrder, PreOrderStates } from "@vardast/graphql/generated"
 import { Button } from "@vardast/ui/button"
 import {
   DropdownMenu,
@@ -22,7 +22,7 @@ import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/comp
 
 type OrderCardProps = {
   preOrder: PreOrder
-  setOrderToDelete: Dispatch<SetStateAction<{} | undefined>>
+  setOrderToDelete: Dispatch<SetStateAction<PreOrder>>
   setDeleteModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
@@ -49,20 +49,18 @@ const OrderCard = ({
             {/* <Dot /> */}
             <span>{PreOrderStatesFa[preOrder?.status].name_fa}</span>
           </div>
-          {preOrder?.offersNum > 0 && (
-            <Button
-              variant="secondary"
-              className="tag"
-              onClick={() => {
-                router.push(`/profile/orders/${preOrder?.id}/offers`)
-              }}
-            >
-              <span>{t("common:price-offer")}</span>
-              <span className="flex h-[19px] w-[19px] flex-col items-center justify-evenly rounded-full  bg-error-500 text-alpha-white">
-                {digitsEnToFa(preOrder?.offersNum)}
-              </span>
-            </Button>
-          )}
+          <Button
+            variant="secondary"
+            className="tag"
+            onClick={() => {
+              router.push(`/profile/orders/${preOrder?.id}/offers`)
+            }}
+          >
+            <span>{t("common:price-offer")}</span>
+            <span className="flex h-[19px] w-[19px] flex-col items-center justify-evenly rounded-full  bg-error-500 text-alpha-white">
+              {digitsEnToFa(preOrder?.offersNum)}
+            </span>
+          </Button>
         </div>
         <div className="flex items-center gap-9">
           <DetailsWithTitle title={"کد سفارش"} text={preOrder?.id} />
@@ -115,38 +113,17 @@ const OrderCard = ({
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <>
-            <Link href={`/profile/orders/${preOrder?.id}`}>
-              <DropdownMenuItem className="primary">
-                <LucideEdit className="dropdown-menu-item-icon" />
-                <span>مشاهده جزئیات</span>
-              </DropdownMenuItem>
-            </Link>
-            <Link href={`/profile/orders/${preOrder?.id}/offers`}>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <LucideEdit className="dropdown-menu-item-icon" />
-                <span>قیمت گذاری</span>
-              </DropdownMenuItem>
-            </Link>
-            <Link href={`/profile/orders/${preOrder?.id}/info`}>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <LucideEdit className="dropdown-menu-item-icon" />
-                <span>
-                  {t("common:edit_entity", { entity: t("common:order-info") })}
-                </span>
-              </DropdownMenuItem>
-            </Link>
-            <Link href={`/profile/orders/${preOrder?.id}/products`}>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <LucideEdit className="dropdown-menu-item-icon" />
-                <span>
-                  {t("common:edit_entity", { entity: t("common:products") })}
-                </span>
-              </DropdownMenuItem>
-            </Link>
-            <DropdownMenuSeparator />
+            {preOrder.status !== PreOrderStates.Closed && (
+              <>
+                <Link href={`/profile/orders/${preOrder?.id}/info`}>
+                  <DropdownMenuItem>
+                    <LucideEdit className="dropdown-menu-item-icon" />
+                    <span>{t("common:edit")}</span>
+                  </DropdownMenuItem>
+                </Link>
+                <DropdownMenuSeparator />
+              </>
+            )}
             <DropdownMenuItem
               onSelect={() => {
                 setOrderToDelete(preOrder)

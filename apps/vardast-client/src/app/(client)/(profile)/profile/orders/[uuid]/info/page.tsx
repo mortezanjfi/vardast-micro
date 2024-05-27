@@ -12,12 +12,7 @@ const ProjectEdit = async ({
 }: {
   params: { uuid: string }
 }) => {
-  return (
-    <OrderInfoPage
-      uuid={uuid}
-      title={(await generateMetadata()).title?.toString() as string}
-    />
-  )
+  return <OrderInfoPage uuid={uuid} />
 }
 
 export default ProjectEdit

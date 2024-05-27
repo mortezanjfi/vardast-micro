@@ -19,10 +19,9 @@ import {
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
-import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
 import { ClientError } from "graphql-request"
-import { ArrowUpFromLine, ImagePlus, LucideLoader2, Trash } from "lucide-react"
+import { LucideLoader2, PlusIcon, Trash } from "lucide-react"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 import { FileWithPath, useDropzone } from "react-dropzone"
@@ -49,7 +48,6 @@ export interface FilesWithPreview extends FileWithPath {
 }
 
 const Dropzone = ({
-  isPreOrder,
   maxFiles,
   existingImages,
   uploadPath,
@@ -69,8 +67,6 @@ const Dropzone = ({
     : internalFileState
 
   const token = session?.accessToken || null
-
-  console.log({ errors })
 
   const uploadFile = useCallback(
     (fileToUpload: FilesWithPreview) => {
@@ -221,22 +217,12 @@ const Dropzone = ({
         <input {...getInputProps()} />
         <div
           className={clsx([
-            " relative rounded border-dashed p-4 transition",
-            isDragActive && "bg-alpha-50 py-10",
-            !isPreOrder && "card"
+            "card relative rounded border-dashed p-4 transition",
+            isDragActive && "bg-alpha-50 py-10"
           ])}
         >
           {files?.length || existingImages?.length ? (
             <>
-              <Button
-                onClick={open}
-                type="button"
-                className="absolute bottom-0 left-0 z-10 m-2"
-              >
-                {isPreOrder
-                  ? "افزودن فایل"
-                  : t("common:add_entity", { entity: t("common:image") })}
-              </Button>
               <ul className="relative z-0 flex flex-wrap gap-8">
                 {existingImages &&
                   existingImages.map(
@@ -305,38 +291,25 @@ const Dropzone = ({
                     )}
                   </li>
                 ))}
+                <button
+                  onClick={open}
+                  type="button"
+                  className={
+                    "btn flex h-32 w-32 flex-col gap-1 overflow-hidden rounded border border-alpha-200"
+                  }
+                >
+                  <PlusIcon className="h-12 w-12 text-alpha-400" />
+                </button>
               </ul>
             </>
-          ) : isPreOrder ? (
-            <div className="flex gap-10">
-              <Button
-                size="xlarge"
-                className="flex flex-col gap-4 border-dashed"
-                variant="secondary"
-                type="button"
-                onClick={open}
-              >
-                <ArrowUpFromLine />
-                {t("common:upload_entity", {
-                  entity: t("common:file")
-                })}
-              </Button>
-              <div>
-                {" "}
-                <ul className=" list-disc text-sm text-alpha-500">
-                  <li>امکان آپلود چندین فایل به صورت همزمان وجود دارد.</li>
-                  <li>فایل ها می توانند PDF، Excel و عکس باشند.</li>
-                </ul>
-              </div>
-            </div>
           ) : (
             <div
               className={clsx(
-                "flex w-full flex-col items-center justify-center gap-1",
+                "flex w-full cursor-pointer flex-col items-center justify-center gap-1",
                 withHeight && "h-60"
               )}
             >
-              <ImagePlus className="h-12 w-12 text-alpha-400" />
+              <PlusIcon className="h-12 w-12 text-alpha-400" />
               <span className="font-medium text-alpha-800">
                 {t("common:add_images_dropzone_title")}
               </span>

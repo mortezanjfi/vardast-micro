@@ -21,8 +21,7 @@ export const SellersTabContent = ({
 }: SellersTabContentProps) => {
   return (
     <>
-      {(sellerQuery.isFetching || sellerQuery.isLoading) &&
-      session?.accessToken ? (
+      {sellerQuery.isFetching || sellerQuery.isLoading ? (
         <BrandsOrSellersContainer>
           {() => (
             <>

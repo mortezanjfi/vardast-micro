@@ -16,8 +16,7 @@ type BrandsTabContentProps = {
 const BrandsTabContent = ({ session, brandQuery }: BrandsTabContentProps) => {
   return (
     <>
-      {(brandQuery.isFetching || brandQuery.isLoading) &&
-      session?.accessToken ? (
+      {brandQuery.isFetching || brandQuery.isLoading ? (
         <BrandsOrSellersContainer>
           {() => (
             <>

@@ -52,52 +52,50 @@ const OrderProductsOrganizer = ({
 
   return (
     <>
-      <div className="bg-alpha-white">
-        <Segments
-          value={activeTab}
-          onValueChange={onTabValueChange}
-          className="sticky left-0 right-0 top-0 h-full flex-col bg-alpha-white sm:flex md:w-full"
-        >
-          <SegmentsList wrap className="border-b pb md:border-b-2 md:py-6">
-            {tabs.map(({ title, value }) => (
-              <SegmentsListItem
-                key={value}
-                noStyle
-                className={clsx("no-select")}
-                value={value}
-                style={{
-                  width:
-                    !isMobileView || tabs.length > 3
-                      ? "auto"
-                      : `${100 / tabs.length}%`
-                }}
-              >
-                <>
-                  <div
-                    className={clsx(
-                      "mx-1 cursor-pointer rounded-full border bg-alpha-white px-4 py-2.5 text-sm",
-                      value === activeTab
-                        ? "border-primary bg-primary text-alpha-white"
-                        : "border-alpha-300"
-                    )}
-                  >
-                    {title}
-                  </div>
-                </>
-              </SegmentsListItem>
-            ))}
-          </SegmentsList>
-          {tabs.map(({ Content, className, ...props }) => (
-            <SegmentsContent
-              className={clsx("flex-1 pt-5", className)}
-              key={props.value}
-              value={props.value}
+      <Segments
+        value={activeTab}
+        onValueChange={onTabValueChange}
+        className="sticky left-0 right-0 top-0 h-full flex-col bg-alpha-white sm:flex md:w-full"
+      >
+        <SegmentsList wrap className="!justify-start border-b pb md:py-6">
+          {tabs.map(({ title, value }) => (
+            <SegmentsListItem
+              key={value}
+              noStyle
+              className={clsx("no-select")}
+              value={value}
+              style={{
+                width:
+                  !isMobileView || tabs.length > 3
+                    ? "auto"
+                    : `${100 / tabs.length}%`
+              }}
             >
-              <Content />
-            </SegmentsContent>
+              <>
+                <div
+                  className={clsx(
+                    "mx-1 cursor-pointer rounded-full border bg-alpha-white px-4 py-2.5 text-sm",
+                    value === activeTab
+                      ? "border-primary bg-primary text-alpha-white"
+                      : "border-alpha-300"
+                  )}
+                >
+                  {title}
+                </div>
+              </>
+            </SegmentsListItem>
           ))}
-        </Segments>
-      </div>
+        </SegmentsList>
+        {tabs.map(({ Content, className, ...props }) => (
+          <SegmentsContent
+            className={clsx("flex-1", className)}
+            key={props.value}
+            value={props.value}
+          >
+            <Content />
+          </SegmentsContent>
+        ))}
+      </Segments>
       <MoreInfo
         tabs={tabs}
         activeTab={activeTab}

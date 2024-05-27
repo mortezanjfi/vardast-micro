@@ -1,5 +1,6 @@
 "use client"
 
+import NotFoundMessage from "@vardast/component/NotFound"
 import { MultiTypeOrder, useGetBasketQuery } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 
@@ -9,7 +10,6 @@ import OrderProductCard, {
 } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductCard"
 import OrderProductListContainer from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductListContainer"
 import { OrderProductTabContentProps } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductsTabs"
-import { NotFoundItems } from "@/app/(client)/favorites/components/FavoritesPageIndex"
 
 export const OrderProductTabContent = ({
   addProductLine
@@ -18,7 +18,7 @@ export const OrderProductTabContent = ({
 
   return (
     <>
-      {!getBasketQuery.data?.favorites.product.length ? (
+      {getBasketQuery.isLoading && getBasketQuery.isFetching ? (
         <OrderProductListContainer>
           {() => (
             <>
@@ -30,7 +30,7 @@ export const OrderProductTabContent = ({
         </OrderProductListContainer>
       ) : getBasketQuery.data?.favorites.product.length ? (
         <OrderProductListContainer>
-          {({ selectedItemId, setSelectedItemId }) => (
+          {() => (
             <>
               {getBasketQuery.data?.favorites.product.map((product) => (
                 <OrderProductCard
@@ -50,7 +50,7 @@ export const OrderProductTabContent = ({
           )}
         </OrderProductListContainer>
       ) : (
-        <NotFoundItems text="کالا" />
+        <NotFoundMessage text="کالایی به سبد خرید خود" />
       )}
     </>
   )
