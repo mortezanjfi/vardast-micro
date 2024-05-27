@@ -5,9 +5,9 @@ import useTranslation from "next-translate/useTranslation"
 import Card from "../Card"
 import { DetailsWithTitle } from "./DetailsWithTitle"
 
-type OrderInfoCardProps = { uuid?: string; isAdmin?: boolean }
+type OrderInfoCardProps = { uuid?: string }
 
-const OrderInfoCard = async ({ isAdmin, uuid }: OrderInfoCardProps) => {
+const OrderInfoCard = async ({ uuid }: OrderInfoCardProps) => {
   const { t } = useTranslation()
 
   const orderInfo = {
@@ -43,90 +43,91 @@ const OrderInfoCard = async ({ isAdmin, uuid }: OrderInfoCardProps) => {
             <span>{orderInfo.status}</span>
           </div>
         </div>
-        <div
-          className={clsx(
-            "grid grid-cols-3 flex-col 2xl:flex",
-            isAdmin && "grid-cols-4 2xl:grid"
-          )}
-        >
+        <div className={clsx("grid grid-cols-2 2xl:grid-cols-3")}>
           {/* نام خریدار */}
           <div className="flex flex-col">
             <DetailsWithTitle
+              textCustomStyle="whitespace-nowrap line-clamp-1"
               title={t("common:entity_name", { entity: t("common:purchaser") })}
               text={orderInfo.purchaserName}
             />
             {/* شماره تماس خریدار */}
             <DetailsWithTitle
+              textCustomStyle="whitespace-nowrap line-clamp-1"
               title={t("common:purchaser-number")}
               text={orderInfo.purchaserNumber}
             />
             {/* نام پروژه */}
             <DetailsWithTitle
+              textCustomStyle="whitespace-nowrap line-clamp-1"
               title={t("common:entity_name", { entity: t("common:project") })}
               text={orderInfo.name}
             />
-            {isAdmin && (
-              <>
-                {/*آدرس پروژه*/}
-                <DetailsWithTitle
-                  title={t("common:project-address")}
-                  text={orderInfo.projectAddress}
-                />
-                {/*تحویل گیرنده*/}
-                <DetailsWithTitle
-                  title={t("common:transferee")}
-                  text={orderInfo.transfereeName}
-                />
-                {/*شماره تماس تحویل گیرنده */}
-                <DetailsWithTitle
-                  title={t("common:transferee-number")}
-                  text={orderInfo.transfereeNumber}
-                />{" "}
-              </>
-            )}
+
+            <>
+              {/*آدرس پروژه*/}
+              <DetailsWithTitle
+                textCustomStyle="whitespace-nowrap line-clamp-1"
+                title={t("common:project-address")}
+                text={orderInfo.projectAddress}
+              />
+              {/*تحویل گیرنده*/}
+              <DetailsWithTitle
+                textCustomStyle="whitespace-nowrap line-clamp-1"
+                title={t("common:transferee")}
+                text={orderInfo.transfereeName}
+              />
+              {/*شماره تماس تحویل گیرنده */}
+              <DetailsWithTitle
+                textCustomStyle="whitespace-nowrap line-clamp-1"
+                title={t("common:transferee-number")}
+                text={orderInfo.transfereeNumber}
+              />{" "}
+            </>
           </div>
           {/*آدرس محل تحویل*/}
-          <div className={clsx(isAdmin && "col-span-3 flex flex-col")}>
-            {isAdmin && (
-              <>
-                <DetailsWithTitle
-                  title={t("common:shipping-address")}
-                  text={orderInfo.shippingAddress}
-                />{" "}
-                {/* زمان ثبت سفارش*/}
-                <DetailsWithTitle
-                  title={t("common:submition-time")}
-                  text={
-                    orderInfo.createdAt
-                      ? digitsEnToFa(
-                          new Date(orderInfo.createdAt).toLocaleDateString(
-                            "fa-IR",
-                            {
-                              year: "numeric",
-                              month: "2-digit",
-                              day: "2-digit"
-                            }
-                          )
+          <div className={clsx("flex flex-col 2xl:col-span-2")}>
+            <>
+              <DetailsWithTitle
+                textCustomStyle="whitespace-nowrap line-clamp-1"
+                title={t("common:shipping-address")}
+                text={orderInfo.shippingAddress}
+              />{" "}
+              {/* زمان ثبت سفارش*/}
+              <DetailsWithTitle
+                textCustomStyle="whitespace-nowrap line-clamp-1"
+                title={t("common:submition-time")}
+                text={
+                  orderInfo.createdAt
+                    ? digitsEnToFa(
+                        new Date(orderInfo.createdAt).toLocaleDateString(
+                          "fa-IR",
+                          {
+                            year: "numeric",
+                            month: "2-digit",
+                            day: "2-digit"
+                          }
                         )
-                      : ""
-                  }
-                />
-              </>
-            )}
+                      )
+                    : ""
+                }
+              />
+            </>
             {/*روش پرداخت */}
             <DetailsWithTitle
+              textCustomStyle="whitespace-nowrap line-clamp-1"
               title={t("common:pay-method")}
               text={orderInfo.payMethod}
             />
             {/* توضیحات روش پرداخت*/}
-            {isAdmin && (
-              <DetailsWithTitle
-                title={t("common:pay-method-description")}
-                text={orderInfo.payDescription}
-              />
-            )}{" "}
+            <DetailsWithTitle
+              textCustomStyle="whitespace-nowrap line-clamp-1"
+              title={t("common:pay-method-description")}
+              text={orderInfo.payDescription}
+            />
             {/*زمان اعتبار سفارش*/}
             <DetailsWithTitle
+              textCustomStyle="whitespace-nowrap line-clamp-1"
               title={t("common:order-expire-time")}
               text={
                 orderInfo.expiresAt
@@ -144,12 +145,11 @@ const OrderInfoCard = async ({ isAdmin, uuid }: OrderInfoCardProps) => {
               }
             />{" "}
             {/*توضیحات*/}
-            {isAdmin && (
-              <DetailsWithTitle
-                title="توضیحات سفارش"
-                text={orderInfo.orderDescription}
-              />
-            )}
+            <DetailsWithTitle
+              textCustomStyle="whitespace-nowrap line-clamp-1"
+              title="توضیحات سفارش"
+              text={orderInfo.orderDescription}
+            />
           </div>
         </div>
       </div>

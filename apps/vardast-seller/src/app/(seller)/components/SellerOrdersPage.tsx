@@ -117,82 +117,87 @@ function SellerOrdersPage({ isMyOrderPage, data }: Props) {
           </PopoverContent>
         </Popover>{" "}
       </div>
-      <table className="table-hover table">
-        <thead>
-          <tr>
-            <th className="border">{t("common:row")}</th>
-            <th className="border">
-              {" "}
-              {t("common:entity_code", { entity: t("common:order") })}
-            </th>
-            <th className="border">{t("common:purchaser")}</th>
-            <th className="border">
-              {t("common:entity_name", { entity: t("common:project") })}
-            </th>
-            <th className="border">{t("common:submition-time")}</th>
-            <th className="border">{t("common:order-expire-time")}</th>
+      <div className="overflow-x-auto">
+        <table className="table-hover table">
+          <thead>
+            <tr>
+              <th className="border">{t("common:row")}</th>
+              <th className="border">
+                {" "}
+                {t("common:entity_code", { entity: t("common:order") })}
+              </th>
+              <th className="border">{t("common:purchaser")}</th>
+              <th className="border">
+                {t("common:entity_name", { entity: t("common:project") })}
+              </th>
+              <th className="border">{t("common:submition-time")}</th>
+              <th className="border">{t("common:order-expire-time")}</th>
 
-            <th>{t("common:status")}</th>
-          </tr>
-        </thead>
+              <th>{t("common:status")}</th>
+            </tr>
+          </thead>
 
-        <tbody className="border-collapse border">
-          {data.map(
-            (order: any, index: number) =>
-              order && (
-                <tr
-                  key={order.id}
-                  className="cursor-pointer"
-                  onClick={() => {
-                    isMyOrderPage
-                      ? router.push(`/my-orders/${order.id}/order-detail`)
-                      : router.push(`/orders/${order.id}/order-detail`)
-                  }}
-                >
-                  <td className="w-4 border">
-                    <span>{digitsEnToFa(index + 1)}</span>
-                  </td>
-                  <td className="border">{order.projectCode}</td>
-                  <td className="border">{order.purchaser}</td>
-                  <td className="border">{order.projectName}</td>
-                  <td className="border">
-                    {digitsEnToFa(
-                      new Date(order.dateOfSubmission).toLocaleDateString(
-                        "fa-IR",
-                        {
-                          year: "numeric",
-                          month: "2-digit",
-                          day: "2-digit"
-                        }
-                      )
-                    )}
-                  </td>
-                  <td className="border">
-                    {digitsEnToFa(
-                      new Date(order.dateOfExpiry).toLocaleDateString("fa-IR", {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit"
-                      })
-                    )}
-                  </td>
+          <tbody className="border-collapse border">
+            {data.map(
+              (order: any, index: number) =>
+                order && (
+                  <tr
+                    key={order.id}
+                    className="cursor-pointer"
+                    onClick={() => {
+                      isMyOrderPage
+                        ? router.push(`/my-orders/${order.id}/order-detail`)
+                        : router.push(`/orders/${order.id}/order-detail`)
+                    }}
+                  >
+                    <td className="w-4 border">
+                      <span>{digitsEnToFa(index + 1)}</span>
+                    </td>
+                    <td className="border">{order.projectCode}</td>
+                    <td className="border">{order.purchaser}</td>
+                    <td className="border">{order.projectName}</td>
+                    <td className="border">
+                      {digitsEnToFa(
+                        new Date(order.dateOfSubmission).toLocaleDateString(
+                          "fa-IR",
+                          {
+                            year: "numeric",
+                            month: "2-digit",
+                            day: "2-digit"
+                          }
+                        )
+                      )}
+                    </td>
+                    <td className="border">
+                      {digitsEnToFa(
+                        new Date(order.dateOfExpiry).toLocaleDateString(
+                          "fa-IR",
+                          {
+                            year: "numeric",
+                            month: "2-digit",
+                            day: "2-digit"
+                          }
+                        )
+                      )}
+                    </td>
 
-                  <td className="border">
-                    {order.status ? (
-                      <span className="tag  tag-sm tag-success">
-                        {t("common:active")}
-                      </span>
-                    ) : (
-                      <span className="tag tag-sm tag-danger">
-                        {t("common:not-active")}
-                      </span>
-                    )}
-                  </td>
-                </tr>
-              )
-          )}
-        </tbody>
-      </table>
+                    <td className="border">
+                      {order.status ? (
+                        <span className="tag  tag-sm tag-success">
+                          {t("common:active")}
+                        </span>
+                      ) : (
+                        <span className="tag tag-sm tag-danger">
+                          {t("common:not-active")}
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                )
+            )}
+          </tbody>
+        </table>
+      </div>
       {/* <Pagination
           total={orders.data?.orders.lastPage ?? 0}
           page={currentPage}

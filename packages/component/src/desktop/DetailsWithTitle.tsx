@@ -18,7 +18,7 @@ export const DetailsWithTitle = ({
     <div className={clsx("flex items-center gap-2 py-1", className)}>
       <div className="flex items-center gap-2">
         <ListBulletIcon className="text-alpha-500" width={6} height={6} />
-        <span className="text-alpha-500">{title}:</span>
+        <span className="whitespace-nowrap text-alpha-500">{title}:</span>
       </div>
       <span className={textCustomStyle}>{text}</span>
     </div>

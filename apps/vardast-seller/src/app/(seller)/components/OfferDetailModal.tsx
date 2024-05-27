@@ -30,7 +30,7 @@ function OfferDetailModal({ selectedOfferId, open, onOpenChange }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="min-w-fit gap-7">
+      <DialogContent className="!w-fit !min-w-[50rem] max-w-full gap-7">
         <DialogHeader className="">
           <span>{t("common:details")}</span>
         </DialogHeader>

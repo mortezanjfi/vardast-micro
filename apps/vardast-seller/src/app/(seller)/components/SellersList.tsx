@@ -41,6 +41,8 @@ function SellersList({ sellersData, uuid }: Props) {
   const [selectedRow, setSelectedRow] = useState<number | null>(null)
   const form = useForm<ConfirmOffer>({ resolver: zodResolver(AddOfferSchema) })
 
+  const thClasses = "border align-middle"
+
   const submitModal = () => {
     console.log("done")
     router.push(`/my-orders`)
@@ -96,19 +98,21 @@ function SellersList({ sellersData, uuid }: Props) {
               <table className="table border-collapse border">
                 <thead>
                   <tr>
-                    <th className="border align-middle">{t("common:row")}</th>
-                    <th>
+                    <th className={thClasses}>{t("common:row")}</th>
+                    <th className={thClasses}>
                       {" "}
                       {t("common:entity_code", { entity: t("common:seller") })}
                     </th>
-                    <th>
+                    <th className={thClasses}>
                       {" "}
                       {t("common:entity_name", { entity: t("common:seller") })}
                     </th>
-                    <th>{t("common:invoice-number")}</th>
-                    <th>{t("common:invoice-total-price")}</th>
-                    <th>{t("common:choose-offer")}</th>
-                    <th>{t("common:operation")}</th>
+                    <th className={thClasses}>{t("common:invoice-number")}</th>
+                    <th className={thClasses}>
+                      {t("common:invoice-total-price")}
+                    </th>
+                    <th className={thClasses}>{t("common:choose-offer")}</th>
+                    <th className={thClasses}>{t("common:operation")}</th>
                   </tr>
                 </thead>
 

@@ -11,6 +11,7 @@ export enum OrderDetailPageType {
 }
 
 type Props = {
+  isAdmin?: boolean
   type: OrderDetailPageType
   AddOfferChildren?: ReactNode
   SellerChildren?: ReactNode
@@ -29,7 +30,7 @@ const OrderDetail: React.FC<Props> = ({
 }) => {
   return (
     <div className="flex w-full flex-col gap-9">
-      <OrderInfoCard isAdmin={true} />
+      <OrderInfoCard />
       <OrderProductsList data={data} />
       {type === OrderDetailPageType.SELLER_ORDERS_DETAIL && SellerChildren}
       {type === OrderDetailPageType.ADMIN_ORDER_DETAIL_PAGE && Adminchildren}

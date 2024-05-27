@@ -34,7 +34,7 @@ function AddToMyOrders({}: Props) {
       />
       <CardContainer title="انتخاب سفارش">
         {" "}
-        <div className="flex w-full items-center justify-between">
+        <div className="flex w-full flex-col justify-between gap-5 2xl:flex-row 2xl:items-center ">
           <p>
             در صورتی که مسئولیت این سفارش را می پذیرید، گزینه رو به رو را انتخاب
             کرده و تایید نمایید.
