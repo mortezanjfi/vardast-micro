@@ -43,11 +43,11 @@ const OrderCard = ({
           <div
             className={clsx(
               "tag",
-              PreOrderStatesFa[preOrder?.status].className
+              PreOrderStatesFa[preOrder?.status]?.className
             )}
           >
             {/* <Dot /> */}
-            <span>{PreOrderStatesFa[preOrder?.status].name_fa}</span>
+            <span>{PreOrderStatesFa[preOrder?.status]?.name_fa}</span>
           </div>
           <Button
             variant="secondary"

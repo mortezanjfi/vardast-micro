@@ -234,12 +234,12 @@ function SellerOrdersPage({
                         <div
                           className={clsx(
                             "tag",
-                            PreOrderStatesFa[preOrder?.status].className
+                            PreOrderStatesFa[preOrder?.status]?.className
                           )}
                         >
                           {/* <Dot /> */}
                           <span>
-                            {PreOrderStatesFa[preOrder?.status].name_fa}
+                            {PreOrderStatesFa[preOrder?.status]?.name_fa}
                           </span>
                         </div>
                       </td>

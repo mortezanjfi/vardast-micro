@@ -14,11 +14,11 @@ const SellerInfo = ({ seller, classNames }: SellerInfoProps) => {
         <div className="relative h-[66px] w-[66px]">
           <Image
             src={
-              (seller.logoFile?.presignedUrl.url as string) || sellerBlankImage
+              (seller?.logoFile?.presignedUrl.url as string) || sellerBlankImage
             }
             // src="/images/frame.png"
             fill
-            alt={seller.name}
+            alt={seller?.name}
             className="rounded-xl bg-white object-contain shadow-md"
           />
         </div>
@@ -26,23 +26,23 @@ const SellerInfo = ({ seller, classNames }: SellerInfoProps) => {
           <div className="flex h-9 items-center">
             <Link
               className=" text-base font-semibold text-blue-600"
-              href={`/seller/${seller.id}/${seller.name}`}
+              href={`/seller/${seller?.id}/${seller?.name}`}
             >
-              {seller.name}
+              {seller?.name}
             </Link>
           </div>
           <div className="flex h-9 items-center gap-x-2 text-alpha-600">
             {seller?.addresses && seller?.addresses.length > 0 && (
               <>
                 <MapPinIcon className="h-4 w-4 text-alpha-600" />
-                {seller?.addresses[0].province.name}
+                {seller?.addresses[0]?.province?.name}
               </>
             )}
           </div>
         </div>
       </div>
       {/* <div className="flex gap-1 text-sm text-alpha-500">
-        <Rating rating={seller.rating || (0 as number)} />
+        <Rating rating={seller?.rating || (0 as number)} />
         <hr className="h-full w-1 bg-alpha-200" />
         <span>رضایت مشتری:</span>
         <span className="text-success-600">90</span>

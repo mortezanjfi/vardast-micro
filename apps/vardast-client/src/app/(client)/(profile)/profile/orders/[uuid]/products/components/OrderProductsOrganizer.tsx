@@ -47,7 +47,7 @@ const OrderProductsOrganizer = ({
   }
 
   useEffect(() => {
-    setActiveTab((openTabName || tabs[0].value) as OrderProductsTabsEnum)
+    setActiveTab((openTabName || tabs[0]?.value) as OrderProductsTabsEnum)
   }, [openTabName, tabs])
 
   return (
