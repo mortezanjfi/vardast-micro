@@ -1,37 +1,36 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import CardContainer from "@vardast/component/desktop/CardContainer"
 import SellerAdminConfirmationModal from "@vardast/component/desktop/SellerAdminConfirmationModal"
 import { Button } from "@vardast/ui/button"
+import { Checkbox } from "@vardast/ui/checkbox"
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel
+  FormLabel,
+  FormMessage
 } from "@vardast/ui/form"
-import { RadioGroup, RadioGroupItem } from "@vardast/ui/radio-group"
-import { LucideCircle } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
 import OfferDetailModal from "@/app/(seller)/components/OfferDetailModal"
-import SubmitButton from "@/app/(seller)/components/SubmitButton"
 
 type Props = {
   uuid: string
   sellersData: any
-  // form: UseFormReturn<ConfirmOffer>
 }
+
 const AddOfferSchema = z.object({
-  offerId: z.coerce.string(),
-  confirmOffer: z.boolean()
+  offerId: z.number()
 })
+
 export type ConfirmOffer = TypeOf<typeof AddOfferSchema>
 function SellersList({ sellersData, uuid }: Props) {
   const { t } = useTranslation()
@@ -39,6 +38,7 @@ function SellersList({ sellersData, uuid }: Props) {
   const [open, setOpen] = useState<boolean>(false)
   const [selectedOfferId, setSelectedOfferId] = useState<number>()
   const [submitOpen, seSubmitOpen] = useState<boolean>(false)
+  const [selectedRow, setSelectedRow] = useState<number | null>(null)
   const form = useForm<ConfirmOffer>({ resolver: zodResolver(AddOfferSchema) })
 
   const submitModal = () => {
@@ -46,10 +46,16 @@ function SellersList({ sellersData, uuid }: Props) {
     router.push(`/my-orders`)
   }
 
-  const submitButton = (e) => {
+  const submitButton = (data: any) => {
+    console.log(data)
+
     console.log("test")
     seSubmitOpen(true)
   }
+
+  useEffect(() => {
+    form.setValue("offerId", selectedRow)
+  }, [selectedRow])
   // z.setErrorMap(zodI18nMap)
   return (
     <>
@@ -67,7 +73,10 @@ function SellersList({ sellersData, uuid }: Props) {
         onOpenChange={setOpen}
       />
       <Form {...form}>
-        <form className="flex flex-col gap-7">
+        <form
+          onSubmit={form.handleSubmit(submitButton)}
+          className="flex flex-col gap-7"
+        >
           <CardContainer title="لیست فروشندگان">
             <div className="flex flex-col gap-7">
               <div className="flex w-full flex-row-reverse">
@@ -138,28 +147,23 @@ function SellersList({ sellersData, uuid }: Props) {
                             <FormField
                               control={form.control}
                               name="offerId"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormControl>
-                                    <RadioGroup
-                                      onValueChange={(value) => {
-                                        console.log(value)
-                                      }}
-                                      // onValueChange={field.onChange}
-                                      // defaultValue={field.value}
-                                    >
-                                      <FormItem className="flex items-center space-x-3 space-y-0">
-                                        <FormControl>
-                                          <RadioGroupItem value={seller.id} />
-                                        </FormControl>
-                                        <FormLabel className="flex gap-3">
-                                          <LucideCircle />
-                                        </FormLabel>
-                                      </FormItem>
-                                    </RadioGroup>
-                                  </FormControl>
-                                </FormItem>
-                              )}
+                              render={({ field }) => {
+                                return (
+                                  <FormItem className="checkbox-field">
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={seller.id === selectedRow}
+                                        onCheckedChange={(checked) => {
+                                          setSelectedRow(seller.id)
+                                          console.log(selectedRow)
+
+                                          console.log(checked)
+                                        }}
+                                      />
+                                    </FormControl>
+                                  </FormItem>
+                                )
+                              }}
                             />
                           </td>
                           <td className="border">
@@ -191,37 +195,37 @@ function SellersList({ sellersData, uuid }: Props) {
               <FormField
                 control={form.control}
                 name="offerId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <RadioGroup
-                        onValueChange={(value) => {
-                          console.log(value)
-                        }}
-                        // onValueChange={field.onChange}
-                        // defaultValue={field.value}
-                      >
-                        <FormItem className="flex items-center space-x-3 space-y-0">
-                          <FormControl>
-                            <RadioGroupItem value="purchaser" />
-                          </FormControl>
-                          <FormLabel className="flex items-center gap-3">
-                            <LucideCircle />
-                            قیمت خریدار را به عنوان پایین ترین قیمت، تایید می
-                            کنم!
-                          </FormLabel>
-                        </FormItem>
-                      </RadioGroup>
-                    </FormControl>
-                  </FormItem>
-                )}
+                render={({ field }) => {
+                  return (
+                    <FormItem className="checkbox-field flex-col gap-2">
+                      <div className="flex gap-2">
+                        <FormControl>
+                          <Checkbox
+                            checked={selectedRow === 0}
+                            onCheckedChange={(checked) => {
+                              setSelectedRow(0)
+                              console.log(selectedRow)
+
+                              console.log(checked)
+                            }}
+                          />
+                        </FormControl>
+                        <FormLabel>
+                          قیمت خریدار را به عنوان پایین ترین قیمت، تایید می کنم!
+                        </FormLabel>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )
+                }}
               />
             </div>
           </CardContainer>
-          <SubmitButton
-            buttonText={"ارسال پیشنهاد به فروشنده"}
-            onClick={submitButton}
-          />
+          <div className="justify between flex flex-row-reverse border-t pt-5">
+            <Button className="py-2" type="submit" variant="primary">
+              "ارسال پیشنهاد به فروشنده"
+            </Button>
+          </div>
         </form>
       </Form>
     </>
