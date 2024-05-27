@@ -2,9 +2,13 @@
 
 import { Button } from "@vardast/ui/button"
 
-type Props = { buttonText: string; onClick?: Function }
+type Props = {
+  type?: "button" | "submit" | "reset"
+  buttonText: string
+  onClick?: Function
+}
 
-function SubmitButton({ buttonText, onClick }: Props) {
+function SubmitButton({ type = "submit", buttonText, onClick }: Props) {
   return (
     <div className="justify between flex flex-row-reverse border-t pt-5">
       <Button
@@ -12,10 +16,10 @@ function SubmitButton({ buttonText, onClick }: Props) {
           e.stopPropagation()
           e.nativeEvent.preventDefault()
           e.nativeEvent.stopImmediatePropagation()
-          onClick()
+          if (onClick) onClick()
         }}
         className="py-2"
-        type="submit"
+        type={type}
         variant="primary"
       >
         {buttonText}
