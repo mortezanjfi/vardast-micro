@@ -196,7 +196,7 @@ function SellerOrdersPage({
                           ? router.push(
                               `/my-orders/${preOrder.id}/order-detail`
                             )
-                          : router.push(`/orders/${preOrder.id}/order-detail`)
+                          : router.push(`/orders/${preOrder.id}`)
                       }}
                     >
                       <td className="w-4 border">
