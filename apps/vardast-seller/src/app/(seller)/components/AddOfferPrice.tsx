@@ -44,7 +44,11 @@ const AddOfferPrice = ({ uuid }: Props) => {
         onOpenChange={onOpenChange}
       />
       <div className="flex flex-col gap-9">
-        <OrderProductsList isSellerAddPricePage={true} data={fakeData} />
+        <OrderProductsList
+          hasOperation={true}
+          hasExtraInfo={true}
+          data={fakeData}
+        />
         <CardContainer title="افزودن فروشنده به لیست فروشندگان">
           <div className="flex w-full items-center justify-between">
             <p>
