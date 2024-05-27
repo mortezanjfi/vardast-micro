@@ -2,11 +2,11 @@
 
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import Card from "@vardast/component/Card"
+import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
 import useTranslation from "next-translate/useTranslation"
 
 import { IOrderProductsInnerLayout } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderInnerLayout"
 import { PaymentMethodEnumFa } from "@/app/(client)/(profile)/profile/orders/components/OrdersPage"
-import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/components/DetailsWithTitle"
 
 const OrderInfoCard = ({
   findPreOrderByIdQuery,

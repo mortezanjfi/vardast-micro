@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
 import { ProjectAddress } from "@vardast/graphql/generated"
 import { Button } from "@vardast/ui/button"
 import {
@@ -15,7 +16,6 @@ import {
   SELECTED_ITEM,
   SELECTED_ITEM_TYPE
 } from "@/app/(client)/(profile)/profile/projects/components/address/ProjectAddressesTab"
-import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/components/DetailsWithTitle"
 
 type ProjectAddressCartProps = {
   address: ProjectAddress

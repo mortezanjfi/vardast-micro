@@ -208,6 +208,11 @@ const OrderOffersSection = ({}: OrderOffersSectionProps) => {
   //   { id: 2, name: "هزینه حمل" }
   // ]
 
+  const submit = (data: any) => {
+    console.log(data)
+    setOpen(false)
+  }
+
   return (
     <>
       {/* <AddPriceModal setOpen={setOpen} open={open} /> */}

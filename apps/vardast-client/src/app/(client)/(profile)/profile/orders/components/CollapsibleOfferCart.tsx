@@ -4,6 +4,7 @@ import { ReactNode, useState } from "react"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import * as Collapsible from "@radix-ui/react-collapsible"
 import Card from "@vardast/component/Card"
+import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
 import { OfferOrder, TypeOrderOffer } from "@vardast/graphql/generated"
 import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
@@ -11,7 +12,6 @@ import { LucideChevronDown } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
 import { OrderOfferStatusesFa } from "@/app/(client)/(profile)/profile/orders/components/OrdersPage"
-import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/components/DetailsWithTitle"
 
 type CollapsibleOfferCartProps = {
   children: ReactNode

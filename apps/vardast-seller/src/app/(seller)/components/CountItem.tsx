@@ -28,7 +28,7 @@ export const CountItem = ({
           </div>
         </div>
       ) : (
-        <div className="flex items-center justify-between rounded-lg bg-alpha-50 p-7">
+        <div className="flex items-center justify-between rounded-lg bg-alpha-white p-7">
           <div className="flex flex-col justify-center gap-y-2">
             <p className="text-sm text-alpha-600">{title}</p>
             <p className="font-semibold">{digitsEnToFa(value ?? "0")}</p>

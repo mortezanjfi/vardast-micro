@@ -1,11 +1,8 @@
 "use client"
 
 import { Dispatch, SetStateAction } from "react"
-import { useQueryClient } from "@tanstack/react-query"
-import { Product, useRemoveOfferMutation } from "@vardast/graphql/generated"
-import { toast } from "@vardast/hook/use-toast"
-import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
-import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
+import { UseMutationResult } from "@tanstack/react-query"
+import { Exact, Product, RemoveOfferMutation } from "@vardast/graphql/generated"
 import {
   AlertDialog,
   AlertDialogContent,
@@ -19,53 +16,41 @@ import { LucideAlertOctagon } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
 type RemoveProductModalProps = {
+  isAdmin?: boolean
+  adminRemoveOfferMutation?: Function
+  sellerRemoveOfferMutation?: UseMutationResult<
+    RemoveOfferMutation,
+    ClientError,
+    Exact<{
+      offerId?: number
+      productId?: number
+    }>,
+    unknown
+  >
   productToDelet: Product
   open: boolean
   onOpenChange: Dispatch<SetStateAction<boolean>>
 }
 
 const RemoveProductModal = ({
+  isAdmin,
+  adminRemoveOfferMutation,
+  sellerRemoveOfferMutation,
   productToDelet,
   open,
   onOpenChange
 }: RemoveProductModalProps) => {
   const { t } = useTranslation()
   // const [errors, setErrors] = useState<ClientError>()
-  const queryClient = useQueryClient()
-
-  const removeOfferMutation = useRemoveOfferMutation(
-    graphqlRequestClientWithToken,
-    {
-      onError: (errors: ClientError) => {
-        toast({
-          description: (
-            errors?.response?.errors?.at(0)?.extensions
-              ?.displayErrors as string[]
-          )?.map((error) => error),
-          duration: 2000,
-          variant: "danger"
-        })
-      },
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: [QUERY_FUNCTIONS_KEY.GET_M_PROFILE_SELLER]
-        })
-        onOpenChange(false)
-        toast({
-          description: "کالا با موفقیت از لیست کالاهای شما حذف شد",
-          duration: 2000,
-          variant: "success"
-        })
-      }
-    }
-  )
 
   if (!productToDelet) return <></>
 
   const onDelete = () => {
-    removeOfferMutation.mutate({
-      productId: productToDelet.id
-    })
+    isAdmin
+      ? adminRemoveOfferMutation()
+      : sellerRemoveOfferMutation.mutate({
+          productId: productToDelet.id
+        })
   }
 
   return (

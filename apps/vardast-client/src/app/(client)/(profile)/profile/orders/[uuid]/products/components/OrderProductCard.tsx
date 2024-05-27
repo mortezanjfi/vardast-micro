@@ -4,6 +4,7 @@ import { forwardRef, Ref, useState } from "react"
 import Image, { StaticImageData } from "next/image"
 import blankProductImageSrc from "@vardast/asset/product-blank.svg"
 import blankServiceImageSrc from "@vardast/asset/service-blank.svg"
+import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
 import { Line, MultiTypeOrder, PriceOfferDto } from "@vardast/graphql/generated"
 import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
@@ -13,7 +14,6 @@ import useTranslation from "next-translate/useTranslation"
 
 import { OrderProductTabContentProps } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductsTabs"
 import AddPriceModal from "@/app/(client)/(profile)/profile/orders/components/AddPriceModal"
-import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/components/DetailsWithTitle"
 
 export enum ACTION_BUTTON_TYPE {
   ADD_PRODUCT_ORDER = "ADD_PRODUCT_ORDER",

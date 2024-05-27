@@ -4,6 +4,28 @@ query FindPreOrderById($id: Float!) {
     project {
       name
       id
+      address {
+        address {
+          id
+          userId
+          title
+          delivery_contact
+          delivery_name
+
+          address
+          postalCode
+        }
+      }
+    }
+    user {
+      id
+      firstName
+      lastName
+      email
+      cellphone
+      telegramChatId
+      username
+      fullName
     }
     address {
       id

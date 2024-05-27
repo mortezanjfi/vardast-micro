@@ -10,7 +10,7 @@ import {
   useLocalStorage
 } from "@mantine/hooks"
 import { useGetSuggestQuery } from "@vardast/graphql/generated"
-import { PublicContext } from "@vardast/provider/src/PublicProvider"
+import { PublicContext } from "@vardast/provider/PublicProvider"
 import graphqlRequestClientWithoutToken from "@vardast/query/queryClients/graphqlRequestClientWithoutToken"
 import { Button } from "@vardast/ui/button"
 import { Input } from "@vardast/ui/input"
@@ -41,7 +41,7 @@ const Search: React.FC<ISearch> = ({ isMobileView }) => {
         <div
           className={clsx([
             "fixed inset-0 z-20 h-full w-full bg-alpha-800 transition duration-200",
-            open ? "visible opacity-50" : "invisible opacity-0"
+            open ? "visible opacity-50" : "invisible hidden opacity-0"
           ])}
         ></div>
       )}

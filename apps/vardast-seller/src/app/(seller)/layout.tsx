@@ -1,13 +1,14 @@
 // import { getServerSession } from "next-auth"
-import { redirect } from "next/navigation"
 import { authOptions } from "@vardast/auth/authOptions"
+import AdminOrSellerDesktopHeader from "@vardast/component/desktop/AdminOrSellerDesktopHeader"
+import AdminOrSellerLayoutComponent from "@vardast/component/desktop/AdminOrSellerLayout"
 // import { authOptions } from "@vardast/auth/authOptions"
 import MobileScrollProvider from "@vardast/component/header/MobileScrollProvider"
-import { SearchActionModal } from "@vardast/component/search"
+import MobileBaseLayout from "@vardast/component/MobileBaseLayout"
+import { SearchActionModal } from "@vardast/component/Search"
+import { _sellerSidebarMenu } from "@vardast/lib/constants"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 import { getServerSession } from "next-auth"
-
-import SellerLayoutComponent from "@/app/(seller)/components/SellerLayoutComponent"
 
 export default async function PublicLayout({
   children
@@ -18,24 +19,29 @@ export default async function PublicLayout({
 
   const session = await getServerSession(authOptions)
 
-  if (!!session) {
-    if (session?.profile?.roles.some((role) => role?.name === "seller")) {
-      return (
-        <>
-          <SearchActionModal isMobileView={isMobileView} />
-          {isMobileView ? (
-            <MobileScrollProvider>{children}</MobileScrollProvider>
-          ) : (
-            <SellerLayoutComponent session={session}>
-              {children}
-            </SellerLayoutComponent>
-          )}
-        </>
-      )
-    } else {
-      return redirect("/request-seller")
-    }
-  } else {
-    return redirect("/auth/signin")
+  if (
+    !!session &&
+    !!session?.profile?.roles.some((role) => role?.name === "seller")
+  ) {
+    return (
+      <>
+        <SearchActionModal isMobileView={isMobileView} />
+        {isMobileView ? (
+          <MobileScrollProvider>{children}</MobileScrollProvider>
+        ) : (
+          <>
+            <AdminOrSellerDesktopHeader />
+            <div className="h-[92px] w-full bg-transparent"></div>
+            <AdminOrSellerLayoutComponent menu={_sellerSidebarMenu}>
+              {" "}
+              <MobileBaseLayout bgWhite={false} container spaceLess>
+                {children}
+              </MobileBaseLayout>
+            </AdminOrSellerLayoutComponent>
+            {/* <AdminOrSellerDesktopFooter isAdmin={false} /> */}
+          </>
+        )}
+      </>
+    )
   }
 }

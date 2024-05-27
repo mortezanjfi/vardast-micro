@@ -1,11 +1,15 @@
 import { redirect } from "next/navigation"
 import { authOptions } from "@vardast/auth/authOptions"
+import AdminOrSellerDesktopFooter from "@vardast/component/desktop/AdminOrSellerDesktopFooter"
+import AdminOrSellerDesktopHeader from "@vardast/component/desktop/AdminOrSellerDesktopHeader"
+import AdminOrSellerLayoutComponent from "@vardast/component/desktop/AdminOrSellerLayout"
+import MobileBaseLayout from "@vardast/component/MobileBaseLayout"
+import { SearchActionModal } from "@vardast/component/Search"
+import { _sidebarMenu } from "@vardast/lib/constants"
 import { getServerSession } from "next-auth"
 import { signOut } from "next-auth/react"
 
 // import { signOut } from "next-auth/react"
-
-import AdminLayoutComponent from "@/app/(admin)/components/AdminLayout"
 
 export const dynamic = "force-dynamic"
 
@@ -28,5 +32,18 @@ export default async function AdminLayout({
     })
   }
 
-  return <AdminLayoutComponent>{children}</AdminLayoutComponent>
+  return (
+    <>
+      <SearchActionModal isMobileView={false} />
+      <AdminOrSellerDesktopHeader />
+      <div className="h-[92px] w-full bg-transparent"></div>
+      <AdminOrSellerLayoutComponent menu={_sidebarMenu}>
+        {" "}
+        <MobileBaseLayout bgWhite={false} container spaceLess>
+          {children}
+        </MobileBaseLayout>
+      </AdminOrSellerLayoutComponent>
+      <AdminOrSellerDesktopFooter isAdmin={true} />
+    </>
+  )
 }

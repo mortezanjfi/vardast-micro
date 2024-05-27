@@ -1,7 +1,6 @@
 "use client"
 
-import { Dispatch, Suspense, useEffect, useRef } from "react"
-import Image from "next/image"
+import { Dispatch, useEffect, useRef } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
 import {
   ArrowLeftStartOnRectangleIcon,
@@ -11,7 +10,6 @@ import {
 import { WalletIcon } from "@heroicons/react/24/solid"
 import { useClickOutside } from "@mantine/hooks"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
-import logo from "@vardast/asset/logo-horizontal-v2-persian-light-bg.svg"
 import { NavigationType } from "@vardast/type/Navigation"
 import clsx from "clsx"
 import { SetStateAction } from "jotai"
@@ -19,7 +17,6 @@ import { useSession } from "next-auth/react"
 
 import Link from "./Link"
 import Navigation from "./Navigation"
-import UserMenu from "./UserMenu"
 
 type SidebarProps = {
   isUserProfile?: boolean
@@ -61,9 +58,8 @@ const Sidebar = ({
       <div
         ref={ref}
         className={clsx(
-          "app-sidebar bg-alpha-white",
-          open ? "open z-50" : "",
-          isUserProfile && "z-20 overflow-hidden rounded-2xl border"
+          "app-sidebar z-20 overflow-hidden rounded-2xl border bg-alpha-white",
+          open ? "open z-50" : ""
         )}
       >
         <div className="app-sidebar-inner">
@@ -71,20 +67,9 @@ const Sidebar = ({
           <div className="app-navigation">
             <div
               className={clsx(
-                "flex h-full flex-col gap-9 px-4",
-                isUserProfile && " !gap-0 divide-y-8 divide-alpha-50 md:px-0",
-                isAdmin && "justify-between"
+                "flex h-full flex-col !gap-0 divide-y-8 divide-alpha-50 px-4 md:px-0"
               )}
             >
-              {/* <OrganizationMenu /> */}
-              {!isAdmin && !isUserProfile && (
-                <Link href="/">
-                  <div>
-                    <Image src={logo} alt={`وردست`} />
-                  </div>
-                  <hr />
-                </Link>
-              )}
               {isUserProfile && session?.profile?.status && (
                 <div className="flex flex-col divide-y bg-alpha-white px-6">
                   <div className="flex items-center py-5">
@@ -131,83 +116,41 @@ const Sidebar = ({
                   </div>
                 </div>
               )}
-              <div className="flex flex-col px-6 py">
+              <div className="flex flex-col px-6">
                 <div className="app-navigation-container bg-alpha-white">
                   <Navigation menus={menus} />
                 </div>{" "}
-                {isUserProfile && (
-                  <div className="flex flex-col gap-1">
-                    {/* <Button
-                  onClick={() => toggleTeheme()}
-                  variant="ghost"
-                  className="justify-start text-start"
-                >
-                  <>
-                    {theme === "dark" ? (
-                      <LucideSun className="icon" />
+                <div className="flex flex-col gap-1 border-b ">
+                  {sessionStatus !== "loading" &&
+                    (session ? (
+                      <Link
+                        prefetch={false}
+                        href="/auth/signout"
+                        className="btn-ghost btn justify-start !px-2 py-4 text-start"
+                      >
+                        <ArrowLeftStartOnRectangleIcon
+                          width={24}
+                          height={24}
+                          className="icon"
+                        />
+                        خروج از حساب کاربری
+                      </Link>
                     ) : (
-                      <LucideMoon className="icon" />
-                    )}
-                    {theme === "dark"
-                      ? t("common:switch_dark_mode_off")
-                      : t("common:switch_dark_mode_on")}
-                  </>
-                </Button> */}
-                    {sessionStatus !== "loading" &&
-                      (session ? (
-                        <Link
-                          href="/auth/signout"
-                          className="btn-ghost btn justify-start !px-0.5 text-start"
-                        >
-                          <ArrowLeftStartOnRectangleIcon
-                            width={24}
-                            height={24}
-                            className="icon"
-                          />
-                          خروج از حساب کاربری
-                        </Link>
-                      ) : (
-                        <Link
-                          href="/auth/signin"
-                          className="btn-ghost btn justify-start !px-0.5 text-start !text-success"
-                        >
-                          <ArrowRightEndOnRectangleIcon
-                            width={24}
-                            height={24}
-                            className="icon"
-                          />
-                          ورود به حساب کاربری
-                        </Link>
-                      ))}
-                  </div>
-                )}
-              </div>
-
-              {/* admin side bar */}
-              {isAdmin && (
-                <Suspense>
-                  <UserMenu />
-                </Suspense>
-              )}
-              {/* {isUserProfile && (
-                <div className="bg-alpha-white px-6 pt">
-                  <Link
-                    href={process.env.NEXT_PUBLIC_SELLER_VARDAST as string}
-                    ref={productContainerRef}
-                    className={`relative flex flex-shrink-0 transform flex-col items-center justify-center rounded-xl bg-center bg-no-repeat align-middle transition-all duration-1000 ease-out`}
-                  >
-                    <div className="w-full">
-                      <Image
-                        src={beSellerImage}
-                        alt={"be-seller"}
-                        width={360}
-                        height={120}
-                        className="h-full w-full rounded-xl"
-                      />
-                    </div>
-                  </Link>
+                      <Link
+                        prefetch={false}
+                        href="/auth/signin"
+                        className="btn-ghost btn justify-start !px-2 py-4 text-start !text-success"
+                      >
+                        <ArrowRightEndOnRectangleIcon
+                          width={24}
+                          height={24}
+                          className="icon"
+                        />
+                        ورود به حساب کاربری
+                      </Link>
+                    ))}
                 </div>
-              )} */}
+              </div>
             </div>
           </div>
         </div>

@@ -21,7 +21,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger
 } from "../navigation-menu"
-import Search from "../search"
+import Search from "../Search"
 
 type DesktopHeaderProps = {}
 

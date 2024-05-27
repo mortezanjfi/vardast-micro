@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
+import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
 import { Button } from "@vardast/ui/button"
 import {
   DropdownMenu,
@@ -11,7 +12,6 @@ import {
 import { LucideEdit, LucideMoreVertical, LucideTrash } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
-import { DetailsWithTitle } from "@/app/(client)/(profile)/profile/projects/components/DetailsWithTitle"
 import {
   ProjectUser,
   SELECTED_ITEM,

@@ -1,12 +1,18 @@
 import { dehydrate } from "@tanstack/react-query"
+import { AddFromProducts } from "@vardast/component/desktop/AddFromProducts"
 import withMobileHeader from "@vardast/component/withMobileHeader"
-import { IndexProductInput } from "@vardast/graphql/generated"
+import {
+  IndexProductInput,
+  useCreateOfferMutation
+} from "@vardast/graphql/generated"
+import { toast } from "@vardast/hook/use-toast"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
+import useTranslation from "next-translate/useTranslation"
 
 import ProductsPage from "@/app/(seller)/products/components/products-page"
-import { SellerDesktopProductsPage } from "@/app/(seller)/products/components/SellerDesktopProductsPage"
 
 type SearchIndexProps = {
   params: { slug: Array<string | number> }
@@ -19,7 +25,7 @@ async function ManageProductPage({
 }: SearchIndexProps) {
   const isMobileView = await CheckIsMobileView()
   const queryClient = getQueryClient()
-
+  const { t } = useTranslation()
   const args: IndexProductInput = {}
   // args["page"] =
   //   searchParams.page && +searchParams.page[0] > 0 ? +searchParams.page[0] : 1
@@ -66,6 +72,27 @@ async function ManageProductPage({
 
   const dehydratedState = dehydrate(queryClient)
 
+  const sellerCreateOfferMutation = useCreateOfferMutation(
+    graphqlRequestClientWithToken,
+    {
+      onError: () => {
+        toast({
+          description: t("common:entity_added_error", {
+            entity: t("common:offer")
+          }),
+          duration: 2000,
+          variant: "danger"
+        })
+      },
+      onSuccess: () => {
+        toast({
+          description: "کالای شما با موفقیت اضافه شد",
+          duration: 2000,
+          variant: "success"
+        })
+      }
+    }
+  )
   return (
     <ReactQueryHydrate state={dehydratedState}>
       {isMobileView ? (
@@ -77,7 +104,9 @@ async function ManageProductPage({
           isMobileView={isMobileView}
         />
       ) : (
-        <SellerDesktopProductsPage />
+        <AddFromProducts
+          sellerCreateOfferMutation={sellerCreateOfferMutation}
+        />
       )}
     </ReactQueryHydrate>
   )

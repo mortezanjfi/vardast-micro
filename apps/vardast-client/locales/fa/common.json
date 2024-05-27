@@ -317,5 +317,6 @@
   "buy-from-vardast": "خرید از وردست",
   "have-better-offer": "قیمت پایین تری دارم",
   "last-price-update": "آخرین به روز رسانی قیمت",
-  "add-to_entity": "افزودن به {{entity}}"
+  "add-to_entity": "افزودن به {{entity}}",
+  "entity_code": "کد {{entity}}"
 }

@@ -18,16 +18,10 @@ export const DetailsWithTitle = ({
   textCustomStyle
 }: DetailsWithTitleProps) => {
   return (
-    <div className={clsx("flex items-start gap-2 py-1 leading-8", className)}>
-      <div className="flex items-start gap-2">
-        <ListBulletIcon
-          className="my-auto text-alpha-500"
-          width={6}
-          height={6}
-        />
-        <span className="whitespace-nowrap text-alpha-500">
-          {digitsEnToFa(title)}:
-        </span>
+    <div className={clsx("flex items-center gap-2 py-1", className)}>
+      <div className="flex items-center gap-2">
+        <ListBulletIcon className="text-alpha-500" width={6} height={6} />
+        <span className="whitespace-nowrap text-alpha-500">{title}:</span>
       </div>
       <span className={clsx("whitespace-pre-wrap", textCustomStyle)}>
         {text ? digitsEnToFa(`${text}`) : "-"}
