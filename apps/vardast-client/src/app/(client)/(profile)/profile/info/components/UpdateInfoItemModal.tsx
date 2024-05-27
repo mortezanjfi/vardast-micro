@@ -120,7 +120,7 @@ const UpdateInfoItemModal = ({
               control={form.control}
               name={name}
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="pb">
                   <FormLabel>{t(`common:${name}`)}</FormLabel>
                   <FormControl>
                     <Input type="text" {...field} />
@@ -135,7 +135,7 @@ const UpdateInfoItemModal = ({
                 loading={createUserMutation.isLoading}
                 disabled={createUserMutation.isLoading}
               >
-                {t("common:confirm")}
+                تایید
               </Button>
             </DialogFooter>
           </form>

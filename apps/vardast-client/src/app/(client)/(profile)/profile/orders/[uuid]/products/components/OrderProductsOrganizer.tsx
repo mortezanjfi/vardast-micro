@@ -55,7 +55,7 @@ const OrderProductsOrganizer = ({
       <Segments
         value={activeTab}
         onValueChange={onTabValueChange}
-        className="sticky left-0 right-0 top-0 h-full flex-col bg-alpha-white sm:flex md:w-full"
+        className="flex w-full flex-col bg-alpha-white"
       >
         <SegmentsList wrap className="!justify-start border-b pb md:py-6">
           {tabs.map(({ title, value }) => (

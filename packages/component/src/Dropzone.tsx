@@ -9,6 +9,7 @@ import {
 } from "react"
 import Image from "next/image"
 import { UseMutationResult, useQueryClient } from "@tanstack/react-query"
+import blankProductImageSrc from "@vardast/asset/product-blank.svg"
 import {
   Exact,
   ImageCategory,
@@ -177,7 +178,29 @@ const Dropzone = ({
 
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     accept: {
-      "image/*": []
+      ".tgz": ["application/x-gzip", "application/x-compressed-tar"],
+      ".tar": ["application/x-tar"],
+      ".zip": ["application/zip", "application/x-zip-compressed"],
+      ".rar": ["application/vnd.rar"],
+      ".xlsx": [
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      ],
+      ".xls": ["application/vnd.ms-excel"],
+      ".odt": ["application/vnd.oasis.opendocument.text"],
+      ".png": ["image/png"],
+      ".gif": ["image/gif"],
+      ".tiff": ["image/tiff"],
+      ".jpg": ["image/jpeg"],
+      ".jpeg": ["image/jpeg"],
+      ".bmp": ["image/bmp"],
+      ".svg": ["image/svg+xml"],
+      ".txt": ["text/plain"],
+      ".doc": ["application/msword"],
+      ".docx": [
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      ],
+      ".rtf": ["application/rtf"],
+      ".pdf": ["application/pdf"]
     },
     noClick: !!files.length,
     onDrop,
@@ -236,7 +259,10 @@ const Dropzone = ({
                           }}
                         >
                           <Image
-                            src={image.file.presignedUrl.url}
+                            src={
+                              image.file.presignedUrl.url ||
+                              blankProductImageSrc
+                            }
                             alt={image.file.uuid}
                             width={100}
                             height={100}
@@ -270,7 +296,14 @@ const Dropzone = ({
                       </div>
                     )}
                     <Image
-                      src={file.preview}
+                      src={
+                        file.name.includes(".png") ||
+                        file.name.includes(".jpeg") ||
+                        file.name.includes(".jpg") ||
+                        file.name.includes(".svg")
+                          ? file.preview
+                          : blankProductImageSrc
+                      }
                       alt={file.name}
                       width={100}
                       height={100}

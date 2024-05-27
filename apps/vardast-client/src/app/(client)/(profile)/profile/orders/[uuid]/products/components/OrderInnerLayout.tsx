@@ -19,7 +19,7 @@ const OrderProductsInnerLayout: React.FC<IOrderProductsInnerLayout> = ({
   uuid
 }) => {
   return (
-    <div className="hide-scrollbar flex flex-col-reverse gap-x-9 gap-y-1 overflow-y-auto p-0.5 2xl:grid 2xl:grid-cols-4">
+    <div className="flex flex-col-reverse gap-x-9 gap-y-1 p-0.5 2xl:grid 2xl:grid-cols-4">
       <div className="col-span-3">{children}</div>
       <OrderInfoCard
         isMobileView={isMobileView}
