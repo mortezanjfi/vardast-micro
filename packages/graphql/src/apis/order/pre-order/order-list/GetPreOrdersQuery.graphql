@@ -16,6 +16,12 @@ query PreOrders($indexPreOrderInput: IndexPreOrderInput!) {
       offersNum
       descriptions
       status
+      user {
+        id
+        firstName
+        lastName
+        fullName
+      }
       project {
         name
       }
