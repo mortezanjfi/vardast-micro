@@ -1,10 +1,3 @@
-import OrderDetail, {
-  OrderDetailPageType
-} from "@vardast/component/desktop/OrderDetail"
-
-import OrderSubmit from "@/app/(admin)/orders/components/OrderSubmit"
-import UploadedFiles from "@/app/(admin)/orders/components/UploadedFiles"
-
 const page = async ({ params: { uuid } }: { params: { uuid: string } }) => {
   const fakeData = [
     {
@@ -19,16 +12,17 @@ const page = async ({ params: { uuid } }: { params: { uuid: string } }) => {
     }
   ]
   return (
-    <OrderDetail
-      type={OrderDetailPageType.ADMIN_ORDER_DETAIL_PAGE}
-      data={fakeData}
-      Adminchildren={
-        <>
-          <UploadedFiles />
-          <OrderSubmit uuid={uuid} />
-        </>
-      }
-    />
+    // <OrderDetail
+    //   type={OrderDetailPageType.ADMIN_ORDER_DETAIL_PAGE}
+    //   data={fakeData}
+    //   Adminchildren={
+    //     <>
+    //       <UploadedFiles />
+    //       <OrderSubmit uuid={uuid} />
+    //     </>
+    //   }
+    // />
+    <div></div>
   )
 }
 

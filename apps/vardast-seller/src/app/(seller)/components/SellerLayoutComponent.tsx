@@ -3,7 +3,7 @@
 import { ReactNode, Suspense, useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import Link from "@vardast/component/Link"
-import Search from "@vardast/component/search"
+import Search from "@vardast/component/Search"
 import Sidebar from "@vardast/component/Sidebar"
 import { GetMyProfileSellerQuery } from "@vardast/graphql/generated"
 import { _sellerSidebarMenu } from "@vardast/lib/constants"

@@ -18,10 +18,10 @@ import {
   ThreeStateSupervisionStatuses,
   useRemoveOfferMutation
 } from "@vardast/graphql/generated"
-import { toast } from "@vardast/hook/src/use-toast"
+import { toast } from "@vardast/hook/use-toast"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { getMyProfileSellerQueryFns } from "@vardast/query/queryFns/getMyProfileSellerQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
-import graphqlRequestClientWithToken from "@vardast/query/src/queryClients/graphqlRequestClientWithToken"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { checkSellerRedirectUrl } from "@vardast/util/checkSellerRedirectUrl"
 import { ClientError } from "graphql-request"

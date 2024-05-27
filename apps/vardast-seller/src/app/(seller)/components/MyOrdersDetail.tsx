@@ -1,11 +1,5 @@
 "use client"
 
-import OrderDetail, {
-  OrderDetailPageType
-} from "@vardast/component/desktop/OrderDetail"
-
-import SellersList from "@/app/(seller)/components/SellersList"
-
 type MyOrdersDetailProps = { uuid: string }
 const MyOrdersDetail = ({ uuid }: MyOrdersDetailProps) => {
   const fakeData = [
@@ -39,7 +33,7 @@ const MyOrdersDetail = ({ uuid }: MyOrdersDetailProps) => {
 
   return (
     <>
-      <OrderDetail
+      {/* <OrderDetail
         type={OrderDetailPageType.SELLER_MY_ORDERS_DETAIL}
         data={fakeData}
         AddOfferChildren={
@@ -47,7 +41,7 @@ const MyOrdersDetail = ({ uuid }: MyOrdersDetailProps) => {
             <SellersList sellersData={sellersData} uuid={uuid} />
           </>
         }
-      />
+      /> */}
     </>
   )
 }
