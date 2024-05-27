@@ -15,12 +15,7 @@ import {
 import { Input } from "@vardast/ui/input"
 import { Textarea } from "@vardast/ui/textarea"
 
-import { OrderProductTabContentProps } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductsTabs"
-
-const OrderManualTabContent = ({
-  addProductLine,
-  form
-}: OrderProductTabContentProps) => {
+const OrderManualTabContent = ({ addProductLine, form }: any) => {
   return (
     <Form {...form}>
       <form

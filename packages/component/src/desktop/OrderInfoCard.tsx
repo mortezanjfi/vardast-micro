@@ -50,8 +50,6 @@ const OrderInfoCard = ({ findPreOrderByIdQuery, uuid }: OrderInfoCardProps) => {
 
   const orderInfo = findPreOrderByIdQuery?.data?.findPreOrderById
 
-  console.log({ orderInfo })
-
   return (
     <Card
       title={t("common:order-info")}

@@ -5,7 +5,7 @@ import { OfferLine, TypeOrderOffer } from "@vardast/graphql/generated"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
 
-type OfferCardProps = { offerLine: OfferLine; isVardast: boolean }
+type OfferCardProps = { offerLine: OfferLine }
 
 function OfferCard({ offerLine }: OfferCardProps) {
   const { t } = useTranslation()
