@@ -3,7 +3,7 @@ import OrderDetail, {
 } from "@vardast/component/desktop/OrderDetail"
 
 import OrderSubmit from "@/app/(admin)/orders/components/OrderSubmit"
-import UploadedFiles from "@/app/(admin)/orders/components/UploadedFIles"
+import UploadedFiles from "@/app/(admin)/orders/components/UploadedFiles"
 
 const page = async ({ params: { uuid } }: { params: { uuid: string } }) => {
   const fakeData = [
