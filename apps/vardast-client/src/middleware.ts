@@ -18,6 +18,7 @@ export const config = {
     "/products/:path*",
     "/brand/:path*",
     "/category/:path*",
-    "/seller/:path*"
+    "/seller/:path*",
+    "/profile/orders/:path*"
   ]
 }

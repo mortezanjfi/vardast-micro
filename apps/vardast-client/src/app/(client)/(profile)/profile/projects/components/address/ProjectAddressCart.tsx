@@ -32,7 +32,7 @@ const ProjectAddressCart = ({
   return (
     <div className="flex flex-col border-b py-5">
       <div className="flex w-full justify-between">
-        <span className="text-base font-semibold">{address.title}</span>
+        <span className="text-base font-semibold">{address?.title}</span>
         <DropdownMenu
           modal={false}
           open={dropDownMenuOpen}
@@ -75,14 +75,14 @@ const ProjectAddressCart = ({
         </DropdownMenu>
       </div>
       <div className="flex flex-col">
-        <DetailsWithTitle title={t("common:address")} text={address.address} />
+        <DetailsWithTitle title={t("common:address")} text={address?.address} />
         <DetailsWithTitle
           title={t("common:transferee")}
-          text={address.delivery_name}
+          text={address?.delivery_name}
         />
         <DetailsWithTitle
           title={t("common:transferee-number")}
-          text={address.delivery_contact}
+          text={address?.delivery_contact}
         />
       </div>
     </div>

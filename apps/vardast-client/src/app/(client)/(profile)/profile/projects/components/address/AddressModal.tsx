@@ -130,7 +130,7 @@ export const AddressModal = ({
       return updateProjectAddressMutation.mutate({
         updateProjectAddressInput: {
           ...(data as UpdateProjectAddressInput),
-          addressId: selectedAddresses?.data.id,
+          addressId: selectedAddresses?.data?.id,
           projectId: +uuid
         }
       })
@@ -146,15 +146,15 @@ export const AddressModal = ({
       selectedAddresses?.type === SELECTED_ITEM_TYPE.EDIT &&
       selectedAddresses?.data
     ) {
-      form.setValue("title", selectedAddresses?.data.title)
-      form.setValue("provinceId", +selectedAddresses?.data.province.id)
-      form.setValue("cityId", +selectedAddresses?.data.city.id)
-      form.setValue("postalCode", selectedAddresses?.data.postalCode)
-      form.setValue("address", selectedAddresses?.data.address)
-      form.setValue("delivery_name", selectedAddresses?.data.delivery_name)
+      form.setValue("title", selectedAddresses?.data?.title)
+      form.setValue("provinceId", +selectedAddresses?.data?.province.id)
+      form.setValue("cityId", +selectedAddresses?.data?.city.id)
+      form.setValue("postalCode", selectedAddresses?.data?.postalCode)
+      form.setValue("address", selectedAddresses?.data?.address)
+      form.setValue("delivery_name", selectedAddresses?.data?.delivery_name)
       form.setValue(
         "delivery_contact",
-        selectedAddresses?.data.delivery_contact
+        selectedAddresses?.data?.delivery_contact
       )
     }
     return () => form.reset()
@@ -231,7 +231,7 @@ export const AddressModal = ({
                               className="input-field flex items-center text-start"
                             >
                               {field.value
-                                ? provinces.data?.provinces.data.find(
+                                ? provinces.data?.provinces.data?.find(
                                     (province) =>
                                       province && province.id === field.value
                                   )?.name
@@ -261,7 +261,7 @@ export const AddressModal = ({
                               })}
                             </CommandEmpty>
                             <CommandGroup>
-                              {provinces.data?.provinces.data.map(
+                              {provinces.data?.provinces.data?.map(
                                 (province) =>
                                   province && (
                                     <CommandItem
@@ -270,7 +270,7 @@ export const AddressModal = ({
                                       onSelect={(value) => {
                                         form.setValue(
                                           "provinceId",
-                                          provinces.data.provinces.data.find(
+                                          provinces.data?.provinces.data?.find(
                                             (province) =>
                                               province &&
                                               province.name.toLowerCase() ===

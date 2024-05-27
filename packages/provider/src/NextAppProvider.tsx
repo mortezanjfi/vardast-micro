@@ -5,7 +5,6 @@ import Script from "next/script"
 import startupImage from "@vardast/lib/startupImage"
 import { myColors } from "@vardast/tailwind-config/themes"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
-import { CheckIsTwa } from "@vardast/util/checkIsTwa"
 import { setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
 import useTranslation from "next-translate/useTranslation"
@@ -51,9 +50,6 @@ export default async function NextAppProvider({
 }) {
   const { lang } = useTranslation()
   const isMobileView = await CheckIsMobileView()
-  const isTwa = await CheckIsTwa()
-
-  console.log({ isTwa })
 
   setDefaultOptions({
     locale: faIR,

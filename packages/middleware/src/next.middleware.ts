@@ -30,6 +30,16 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  const orderPathRegexp = pathToRegexp("/profile/orders/:uuid*")
+
+  const orderPathRegexpText = orderPathRegexp.exec(request.nextUrl.pathname)
+  if (orderPathRegexpText) {
+    const url = request.nextUrl.clone()
+    const response = NextResponse.next()
+    response.headers.set("x-url-pathname", url.pathname)
+    return response
+  }
+
   const productsPathRegexp = pathToRegexp("/products/:slug1/:slug2?")
   const productsPathRegexpText = productsPathRegexp.exec(
     request.nextUrl.pathname

@@ -175,8 +175,6 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
     }
   }, [findPreOrderByIdQuery.data, addresses])
 
-  console.log({ bib: form.watch() })
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(submit)}>

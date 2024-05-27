@@ -30,11 +30,11 @@ const OrderInfoCard = ({
         <div className="grid grid-cols-3 flex-col 2xl:flex">
           <DetailsWithTitle
             title={t("common:purchaser-name")}
-            text={orderInfo?.address.delivery_name}
+            text={orderInfo?.address?.delivery_name}
           />
           <DetailsWithTitle
             title={t("common:purchaser-number")}
-            text={orderInfo?.address.delivery_contact}
+            text={orderInfo?.address?.delivery_contact}
           />
           <DetailsWithTitle
             title={t("common:entity_name", { entity: t("common:project") })}
