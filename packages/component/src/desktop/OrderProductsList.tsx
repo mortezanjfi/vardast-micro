@@ -70,7 +70,7 @@ function OrderProductsList({
       colSpan: 3,
       display: true,
       element: "div",
-      children: "قیمت خریدار (تومان)"
+      children: "قیمت (تومان)"
     },
     {
       colSpan: 3,
