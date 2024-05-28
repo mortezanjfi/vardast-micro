@@ -43,7 +43,6 @@ type NavbarItem = {
 
 export const _profileSidebarMenu: NavigationType[] = [
   {
-    title: "پرکاربردها",
     items: [
       {
         title: "اطلاعات حساب کاربری",
@@ -135,7 +134,7 @@ export const _sidebarMenu: NavigationType[] = [
         path: "/uoms",
         icon: "ruler",
         abilities: "gql.products.uom.index"
-      },
+      }
       // {
       //   title: "کالاها",
       //   icon: "package",
@@ -174,12 +173,12 @@ export const _sidebarMenu: NavigationType[] = [
       //   ]
       // },
 
-      {
-        title: "مناطق جغرافیایی",
-        path: "/locations",
-        icon: "map",
-        abilities: "gql.base.location.country.index"
-      }
+      // {
+      //   title: "مناطق جغرافیایی",
+      //   path: "/locations",
+      //   icon: "map",
+      //   abilities: "gql.base.location.country.index"
+      // }
     ]
   }
   // {
