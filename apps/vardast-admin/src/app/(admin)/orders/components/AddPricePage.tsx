@@ -8,7 +8,7 @@ import AddPriceModal from "@vardast/component/desktop/AddPriceModal"
 import AllOrderDeleteModal from "@vardast/component/desktop/AllOrderDeleteModal"
 import CardContainer from "@vardast/component/desktop/CardContainer"
 import RemoveProductModal from "@vardast/component/desktop/RemoveProductModal"
-import { Product } from "@vardast/graphql/src/generated"
+import { Product } from "@vardast/graphql/generated"
 import { Button } from "@vardast/ui/button"
 import useTranslation from "next-translate/useTranslation"
 

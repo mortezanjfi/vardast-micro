@@ -1,7 +1,7 @@
 "use client"
 
 import { ReactNode, Suspense, useState } from "react"
-import { NavigationType } from "@vardast/type/src/Navigation"
+import { NavigationType } from "@vardast/type/Navigation"
 import { Button } from "@vardast/ui/button"
 import { LucideMenu } from "lucide-react"
 

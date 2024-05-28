@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation"
 import CardContainer from "@vardast/component/desktop/CardContainer"
 import OrderProductsList from "@vardast/component/desktop/OrderProductsList"
 import SellerAdminConfirmationModal from "@vardast/component/desktop/SellerAdminConfirmationModal"
+import { useFindPreOrderByIdQuery } from "@vardast/graphql/generated"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 
 type Props = { uuid: string }
@@ -13,18 +15,12 @@ const AddOfferPrice = ({ uuid }: Props) => {
   const router = useRouter()
   const [open, onOpenChange] = useState<boolean>(false)
 
-  const fakeData = [
+  const findPreOrderByIdQuery = useFindPreOrderByIdQuery(
+    graphqlRequestClientWithToken,
     {
-      id: 3,
-      product_sku: "Innovative AI Development",
-      productName: "test",
-      brand: "test brand",
-      unit: "60",
-      value: 4,
-      attributes: ["test", "test2"],
-      purchaserPrice: { basePrice: 300, tax: 40, total: 340 }
+      id: +uuid
     }
-  ]
+  )
 
   const submitPage = () => {
     onOpenChange(true)
@@ -32,7 +28,7 @@ const AddOfferPrice = ({ uuid }: Props) => {
 
   const submitModal = () => {
     onOpenChange(false)
-    router.push(`/my-orders/${uuid}/order-detail`)
+    router.push(`/my-orders/${uuid}/offers`)
   }
 
   return (
@@ -45,9 +41,10 @@ const AddOfferPrice = ({ uuid }: Props) => {
       />
       <div className="flex flex-col gap-9">
         <OrderProductsList
+          uuid={uuid}
           hasOperation={true}
           hasExtraInfo={true}
-          data={fakeData}
+          findPreOrderByIdQuery={findPreOrderByIdQuery}
         />
         <CardContainer title="افزودن فروشنده به لیست فروشندگان">
           <div className="flex w-full items-center justify-between">

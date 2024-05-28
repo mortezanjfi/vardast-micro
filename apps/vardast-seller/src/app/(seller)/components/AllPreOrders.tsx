@@ -34,7 +34,7 @@ function AllPreOrders({ args }: Props) {
       setFilter={setFilter}
       currentPage={currentPage}
       setCurrentPage={setCurrentPage}
-      data={preOrdersQuery}
+      preOrdersQuery={preOrdersQuery}
     />
   )
 }

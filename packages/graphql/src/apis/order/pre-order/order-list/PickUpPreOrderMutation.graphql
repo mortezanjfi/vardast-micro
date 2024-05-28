@@ -1,0 +1,5 @@
+mutation PickUpPreOrder($preOrderId: Float!) {
+  pickUpPreOrder(preOrderId: $preOrderId) {
+    id
+  }
+}

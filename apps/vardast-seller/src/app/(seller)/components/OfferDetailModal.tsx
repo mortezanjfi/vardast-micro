@@ -1,32 +1,30 @@
 "use client"
 
 import { Dispatch, SetStateAction } from "react"
+import { UseQueryResult } from "@tanstack/react-query"
 import OrderProductsList from "@vardast/component/desktop/OrderProductsList"
+import {
+  FindPreOrderByIdQuery,
+  PreOrderStates
+} from "@vardast/graphql/generated"
 import { Dialog, DialogContent, DialogHeader } from "@vardast/ui/dialog"
 import { Input } from "@vardast/ui/input"
 import useTranslation from "next-translate/useTranslation"
 
-type Props = {
+export type OfferDetailModalProps = {
   selectedOfferId: number
+  findPreOrderByIdQuery: UseQueryResult<FindPreOrderByIdQuery, unknown>
   open: boolean
   onOpenChange: Dispatch<SetStateAction<boolean>>
 }
 
-function OfferDetailModal({ selectedOfferId, open, onOpenChange }: Props) {
+function OfferDetailModal({
+  findPreOrderByIdQuery,
+  selectedOfferId,
+  open,
+  onOpenChange
+}: OfferDetailModalProps) {
   const { t } = useTranslation()
-
-  const data = [
-    {
-      id: 3,
-      product_sku: "Innovative AI Development",
-      productName: "test",
-      brand: "test brand",
-      unit: "60",
-      value: 4,
-      attributes: ["test", "test2"],
-      purchaserPrice: { basePrice: 300, tax: 40, total: 340 }
-    }
-  ]
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -39,9 +37,17 @@ function OfferDetailModal({ selectedOfferId, open, onOpenChange }: Props) {
             <span>
               {t("common:entity_name", { entity: t("common:seller") })}
             </span>
-            <Input disabled className="w-full" value="seller name" />
+            <Input
+              disabled
+              className="w-full"
+              value={
+                findPreOrderByIdQuery?.data?.findPreOrderById?.offers.find(
+                  (item) => item.id === selectedOfferId
+                )?.request_name
+              }
+            />
           </div>
-          <div className="flex flex-col gap-1">
+          {/* <div className="flex flex-col gap-1">
             <span>{t("common:cellPhone")}</span>
             <Input disabled className="w-full" value="8888888888" />
           </div>
@@ -52,9 +58,16 @@ function OfferDetailModal({ selectedOfferId, open, onOpenChange }: Props) {
           <div className="flex flex-col gap-1">
             <span>{t("common:city")}</span>
             <Input disabled className="w-full" value="Tehran" />
-          </div>
+          </div> */}
         </div>
-        <OrderProductsList data={data} hasExtraInfo={true} />
+        <OrderProductsList
+          hasOperation={
+            findPreOrderByIdQuery?.data?.findPreOrderById?.status !==
+            PreOrderStates.Closed
+          }
+          uuid={`${selectedOfferId}`}
+          findPreOrderByIdQuery={findPreOrderByIdQuery}
+        />
       </DialogContent>
     </Dialog>
   )

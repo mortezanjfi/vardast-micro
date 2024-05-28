@@ -1,16 +1,19 @@
 "use client"
 
-import OrderDetail, {
-  OrderDetailPageType
-} from "@vardast/component/desktop/OrderDetail"
-import { useFindPreOrderByIdQuery } from "@vardast/graphql/generated"
+import OrderOffers, {
+  OrderOffersPageType
+} from "@vardast/component/desktop/OrderOffers"
+import {
+  PreOrderStates,
+  useFindPreOrderByIdQuery
+} from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 
 import AddToMyOrders from "@/app/(seller)/components/AddToMyOrders"
 
 type Props = { uuid: string }
 
-function OrderDetailIndex({ uuid }: Props) {
+function OrderOffersIndex({ uuid }: Props) {
   const findPreOrderByIdQuery = useFindPreOrderByIdQuery(
     graphqlRequestClientWithToken,
     {
@@ -18,14 +21,21 @@ function OrderDetailIndex({ uuid }: Props) {
     }
   )
   return (
-    <OrderDetail
+    <OrderOffers
       uuid={uuid}
       findPreOrderByIdQuery={findPreOrderByIdQuery}
-      SellerChildren={<AddToMyOrders />}
-      type={OrderDetailPageType.SELLER_ORDERS_DETAIL}
+      SellerChildren={
+        findPreOrderByIdQuery?.data?.findPreOrderById?.status ===
+        PreOrderStates.Closed ? (
+          <></>
+        ) : (
+          <AddToMyOrders />
+        )
+      }
+      type={OrderOffersPageType.SELLER_ORDERS_OFFERS}
       SellerAddOfferPriceChildren={""}
     />
   )
 }
 
-export default OrderDetailIndex
+export default OrderOffersIndex

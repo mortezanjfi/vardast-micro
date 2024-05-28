@@ -2,6 +2,8 @@
 
 import { useState } from "react"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
+import { UseQueryResult } from "@tanstack/react-query"
+import { FindPreOrderByIdQuery } from "@vardast/graphql/generated"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
 
@@ -11,7 +13,8 @@ import CardContainer from "./CardContainer"
 type OrderProductsListProps = {
   hasOperation?: boolean
   hasExtraInfo?: boolean
-  data: any
+  uuid: string
+  findPreOrderByIdQuery: UseQueryResult<FindPreOrderByIdQuery, unknown>
 }
 
 const thClassName = "whitespace-nowrap border align-middle"
@@ -30,11 +33,15 @@ const TablePriceHead = ({ isVardast }: { isVardast?: boolean }) => {
 function OrderProductsList({
   hasOperation,
   hasExtraInfo,
-  data
+  uuid,
+  findPreOrderByIdQuery
 }: OrderProductsListProps) {
   const { t } = useTranslation()
   const [open, setOpen] = useState<boolean>(false)
-  const [productIdToEdit, setProdctIdToEdit] = useState<number>()
+  const [lineToEdit, setLineToEdit] = useState<{
+    lineId: number
+    fi_price: string
+  }>()
 
   const tableHead = [
     { colSpan: 1, display: true, element: "td", children: t("common:row") },
@@ -81,18 +88,24 @@ function OrderProductsList({
 
   const submit = (data: any) => {
     console.log(data)
-    console.log("product Id:", productIdToEdit)
+    console.log("product Id:", lineToEdit)
     setOpen(false)
   }
   return (
     <>
-      <AddPriceModal
+      {/* <AddPriceModal
         productId={productIdToEdit}
         submitFunction={submit}
         open={open}
         setOpen={setOpen}
+      /> */}
+      <AddPriceModal
+        lineId={lineToEdit?.lineId}
+        setOpen={setOpen}
+        open={open}
+        offerId={uuid}
+        fi_price={lineToEdit?.fi_price}
       />
-
       <CardContainer title="لیست کالاها">
         <div className="max-w-full overflow-x-auto">
           <table
@@ -135,103 +148,103 @@ function OrderProductsList({
             </thead>
 
             <tbody>
-              {data.map(
-                (order, index) =>
-                  order && (
-                    <tr key={order.id}>
-                      <td className={tdClassName}>
-                        <span>{digitsEnToFa(index + 1)}</span>
-                      </td>
-                      <td className={tdClassName}>
-                        <span className="font-medium text-alpha-800">
-                          {order.product_sku}
-                        </span>
-                      </td>
-                      <td className={tdClassName}>
-                        <span className="font-medium text-alpha-800">
-                          {order.productName}
-                        </span>
-                      </td>
-                      <td className={tdClassName}>
-                        <span className="font-medium text-alpha-800">
-                          {order.brand}
-                        </span>
-                      </td>
+              {findPreOrderByIdQuery?.data?.findPreOrderById?.offers[
+                findPreOrderByIdQuery?.data?.findPreOrderById?.offers.length - 1
+              ]?.offerLine.map((offer, index) => (
+                <tr key={offer.id}>
+                  <td className={tdClassName}>
+                    <span>{digitsEnToFa(index + 1)}</span>
+                  </td>
+                  <td className={tdClassName}>
+                    <span className="font-medium text-alpha-800">
+                      {offer?.id && digitsEnToFa(offer?.id)}
+                    </span>
+                  </td>
+                  <td className={tdClassName}>
+                    <span className="font-medium text-alpha-800">
+                      {offer?.line?.item_name &&
+                        digitsEnToFa(offer?.line?.item_name)}
+                    </span>
+                  </td>
+                  <td className={tdClassName}>
+                    <span className="font-medium text-alpha-800">
+                      {offer?.line?.brand}
+                    </span>
+                  </td>
 
-                      <td className={tdClassName}>{digitsEnToFa(1236)}</td>
+                  <td className={tdClassName}>{offer?.line?.uom}</td>
 
-                      <td className={tdClassName}>{digitsEnToFa(85495)}</td>
-                      <td className={tdClassName}>
-                        <div className="flex gap-1">
-                          {order.attributes.map((attribute) => (
+                  <td className={tdClassName}>
+                    {offer?.line?.qty && digitsEnToFa(offer?.line?.qty)}
+                  </td>
+                  <td className={tdClassName}>
+                    {offer?.line?.attribuite ? (
+                      <span className="tag tag-sm tag-gray">
+                        {offer?.line?.attribuite}
+                      </span>
+                    ) : (
+                      "-"
+                    )}
+                    {/* <div className="flex gap-1">
+                          {offer?.attributes.map((attribute) => (
                             <span className="tag tag-sm tag-gray">
                               {attribute}
                             </span>
                           ))}
-                        </div>
+                        </div> */}
+                  </td>
+                  <td className="border-x px-4 py-3">
+                    {digitsEnToFa(addCommas(offer?.fi_price))}
+                  </td>
+                  <td className="border-x px-4 py-3">
+                    {digitsEnToFa(addCommas(offer?.tax_price))}
+                  </td>
+                  <td className="border-x px-4 py-3">
+                    {digitsEnToFa(addCommas(offer?.total_price))}
+                  </td>
+                  {hasExtraInfo && (
+                    <>
+                      <td className="border-x px-4 py-3">
+                        {digitsEnToFa(addCommas(offer?.fi_price))}
                       </td>
                       <td className="border-x px-4 py-3">
-                        {digitsEnToFa(
-                          addCommas(order.purchaserPrice.basePrice)
-                        )}
+                        {digitsEnToFa(addCommas(offer?.tax_price))}
                       </td>
                       <td className="border-x px-4 py-3">
-                        {digitsEnToFa(addCommas(order.purchaserPrice.tax))}
+                        {digitsEnToFa(addCommas(offer?.total_price))}
                       </td>
                       <td className="border-x px-4 py-3">
-                        {digitsEnToFa(addCommas(order.purchaserPrice.total))}
+                        {digitsEnToFa(addCommas(offer?.fi_price))}
                       </td>
-                      {hasExtraInfo && (
-                        <>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(
-                              addCommas(order.purchaserPrice.basePrice)
-                            )}
-                          </td>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(addCommas(order.purchaserPrice.tax))}
-                          </td>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(
-                              addCommas(order.purchaserPrice.total)
-                            )}
-                          </td>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(
-                              addCommas(order.purchaserPrice.basePrice)
-                            )}
-                          </td>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(addCommas(order.purchaserPrice.tax))}
-                          </td>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(
-                              addCommas(order.purchaserPrice.total)
-                            )}
-                          </td>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(
-                              addCommas(order.purchaserPrice.total)
-                            )}
-                          </td>
-                        </>
-                      )}
-                      {hasOperation && (
-                        <td className={clsx(tdClassName, "whitespace-nowrap")}>
-                          <span
-                            onClick={() => {
-                              setProdctIdToEdit(order.id)
-                              setOpen(true)
-                            }}
-                            className="cursor-pointer text-blue-500"
-                          >
-                            افزودن قیمت
-                          </span>
-                        </td>
-                      )}
-                    </tr>
-                  )
-              )}
+                      <td className="border-x px-4 py-3">
+                        {digitsEnToFa(addCommas(offer?.tax_price))}
+                      </td>
+                      <td className="border-x px-4 py-3">
+                        {digitsEnToFa(addCommas(offer?.total_price))}
+                      </td>
+                      <td className="border-x px-4 py-3">
+                        {digitsEnToFa(addCommas(offer?.total_price))}
+                      </td>
+                    </>
+                  )}
+                  {hasOperation && (
+                    <td className={clsx(tdClassName, "whitespace-nowrap")}>
+                      <span
+                        onClick={() => {
+                          setLineToEdit({
+                            fi_price: offer?.fi_price,
+                            lineId: offer?.line?.id
+                          })
+                          setOpen(true)
+                        }}
+                        className="cursor-pointer text-blue-500"
+                      >
+                        افزودن قیمت
+                      </span>
+                    </td>
+                  )}
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

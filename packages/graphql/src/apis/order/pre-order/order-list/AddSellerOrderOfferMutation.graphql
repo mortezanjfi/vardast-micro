@@ -1,0 +1,14 @@
+mutation AddSellerOrderOffer($addSellerOrderOffer: AddSellerOrderOffer!) {
+  addSellerOrderOffer(addSellerOrderOffer: $addSellerOrderOffer) {
+    id
+    userId
+    request_name
+    total
+    total_tax
+    total_fi
+    type
+    status
+    created_at
+    deleted_at
+  }
+}

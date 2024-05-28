@@ -59,7 +59,9 @@ const OrderInfoCard = ({ findPreOrderByIdQuery, uuid }: OrderInfoCardProps) => {
       <div className="flex flex-col gap-4 pt-5">
         <div className="flex gap-5">
           <div className="tag flex w-fit gap-2 border border-alpha-400 bg-alpha-50 px-4 py-1">
-            <span>{t("entity_code", { entity: t("common:project") })}</span>
+            <span>
+              {t("common:entity_code", { entity: t("common:project") })}
+            </span>
             <span>{digitsEnToFa(uuid)}</span>
           </div>
           <div
@@ -104,13 +106,13 @@ const OrderInfoCard = ({ findPreOrderByIdQuery, uuid }: OrderInfoCardProps) => {
               <DetailsWithTitle
                 textCustomStyle="whitespace-nowrap line-clamp-1"
                 title={t("common:transferee")}
-                text={"-"}
+                text={orderInfo?.project?.address[0]?.address?.delivery_name}
               />
               {/*شماره تماس تحویل گیرنده */}
               <DetailsWithTitle
                 textCustomStyle="whitespace-nowrap line-clamp-1"
                 title={t("common:transferee-number")}
-                text={"-"}
+                text={orderInfo?.project?.address[0]?.address?.delivery_contact}
               />{" "}
             </>
           </div>
@@ -120,7 +122,7 @@ const OrderInfoCard = ({ findPreOrderByIdQuery, uuid }: OrderInfoCardProps) => {
               <DetailsWithTitle
                 textCustomStyle="whitespace-nowrap line-clamp-1"
                 title={t("common:shipping-address")}
-                text={orderInfo?.shipping_address}
+                text={orderInfo?.project?.address[0]?.address?.address}
               />{" "}
               {/* زمان ثبت سفارش*/}
               <DetailsWithTitle
@@ -148,19 +150,19 @@ const OrderInfoCard = ({ findPreOrderByIdQuery, uuid }: OrderInfoCardProps) => {
               text={PaymentMethodEnumFa[orderInfo?.payment_methods]?.name_fa}
             />
             {/* توضیحات روش پرداخت*/}
-            <DetailsWithTitle
+            {/* <DetailsWithTitle
               textCustomStyle="whitespace-nowrap line-clamp-1"
               title={t("common:pay-method-description")}
               text={"-"}
-            />
+            /> */}
             {/*زمان اعتبار سفارش*/}
             <DetailsWithTitle
               textCustomStyle="whitespace-nowrap line-clamp-1"
               title={t("common:order-expire-time")}
               text={
-                orderInfo?.expire_date
+                orderInfo?.expire_time
                   ? digitsEnToFa(
-                      new Date(orderInfo?.expire_date).toLocaleDateString(
+                      new Date(orderInfo?.expire_time).toLocaleDateString(
                         "fa-IR",
                         {
                           year: "numeric",

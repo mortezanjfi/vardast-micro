@@ -34,7 +34,7 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-type Props = { uuid: string }
+type Props = { uuid: string; offerId: string }
 const CreateSellerSchema = z.object({
   storeName: z.string(),
   sellerName: z.string(),
@@ -46,7 +46,7 @@ const CreateSellerSchema = z.object({
 })
 export type CreateSellerInfoType = TypeOf<typeof CreateSellerSchema>
 
-const AddSellerInfo = ({ uuid }: Props) => {
+const AddSellerInfo = ({ uuid, offerId }: Props) => {
   const { t } = useTranslation()
   const router = useRouter()
   const [provinceQueryTemp, setProvinceQueryTemp] = useState("")

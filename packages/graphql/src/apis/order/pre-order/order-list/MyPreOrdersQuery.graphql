@@ -1,0 +1,52 @@
+query MyPreOrders($indexPreOrderInput: IndexPreOrderInput!) {
+  myPreOrder(indexPreOrderInput: $indexPreOrderInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    from
+    to
+    data {
+      id
+      request_date
+      expire_date
+      expire_time
+      shipping_address
+      payment_methods
+      offersNum
+      descriptions
+      status
+      user {
+        id
+        firstName
+        lastName
+        fullName
+      }
+      project {
+        name
+      }
+      deleted_at
+      lines {
+        id
+        userId
+        item_name
+        attribuite
+        uom
+        brand
+        qty
+        descriptions
+        type
+        status
+      }
+      files {
+        id
+        file {
+          presignedUrl {
+            url
+            expiresAt
+          }
+        }
+      }
+    }
+  }
+}

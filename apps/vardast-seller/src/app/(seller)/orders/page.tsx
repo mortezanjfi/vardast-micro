@@ -16,19 +16,6 @@ type SearchIndexProps = {
   params: { slug: Array<string | number> }
   searchParams: { [key: string]: string | string[] | undefined }
 }
-const fakeData = [
-  {
-    id: 3,
-    projectName: "Innovative AI Development",
-    personInCharge: "Jane Doe",
-    dateOfSubmission: "2023-11-01",
-    dateOfExpiry: "2024-11-01",
-    hasFile: true,
-    status: false,
-    projectCode: "AI-DEV-001",
-    purchaser: "Tech Solutions Inc."
-  }
-]
 
 const queryClient = getQueryClient()
 const dehydratedState = dehydrate(queryClient)

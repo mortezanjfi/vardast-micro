@@ -82,7 +82,7 @@ function OrdersPage({}: Props) {
                     key={order.id}
                     className="cursor-pointer"
                     onClick={() => {
-                      router.push(`/orders/${order.id}/order-detail`)
+                      router.push(`/orders/${order.id}/offers`)
                     }}
                   >
                     <td className="w-4">
