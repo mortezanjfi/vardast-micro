@@ -4,7 +4,6 @@ import { useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { PlusIcon } from "@heroicons/react/24/solid"
-import AddPriceModal from "@vardast/component/desktop/AddPriceModal"
 import AllOrderDeleteModal from "@vardast/component/desktop/AllOrderDeleteModal"
 import CardContainer from "@vardast/component/desktop/CardContainer"
 import RemoveProductModal from "@vardast/component/desktop/RemoveProductModal"
@@ -69,11 +68,11 @@ const AddPricePage = ({ uuid }: AddPricePageProps) => {
         open={open}
         onOpenChange={onOpenChange}
       />
-      <AddPriceModal
+      {/* <AddPriceModal
         submitFunction={submit}
         setOpen={setAddPriceModalOpen}
         open={addPriceModalOpen}
-      />
+      /> */}
       <CardContainer title="افزودن قیمت">
         <div className="flex items-center justify-between border-b py-5">
           <div className="flex flex-col gap-2">
