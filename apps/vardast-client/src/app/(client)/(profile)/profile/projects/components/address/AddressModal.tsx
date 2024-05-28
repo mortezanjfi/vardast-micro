@@ -38,6 +38,7 @@ import {
 import { Input } from "@vardast/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@vardast/ui/popover"
 import zodI18nMap from "@vardast/util/zodErrorMap"
+import clsx from "clsx"
 import { ClientError } from "graphql-request"
 import {
   LucideAlertOctagon,
@@ -66,6 +67,7 @@ export const AddAddressModalFormSchema = z.object({
 export type AddAddressModalFormType = TypeOf<typeof AddAddressModalFormSchema>
 
 export const AddressModal = ({
+  isMobileView,
   onCloseModal,
   selectedAddresses,
   uuid
@@ -160,15 +162,26 @@ export const AddressModal = ({
     return () => form.reset()
   }, [selectedAddresses, selectedAddresses?.data])
 
+  const RowsClass = clsx(
+    "col-span-2 grid grid-cols-2 gap-x-7",
+    isMobileView && "!flex flex-col gap-5"
+  )
+
   return (
     <Dialog
+      modal={isMobileView ? false : true}
       open={
         selectedAddresses?.type === SELECTED_ITEM_TYPE.ADD ||
         selectedAddresses?.type === SELECTED_ITEM_TYPE.EDIT
       }
       onOpenChange={onCloseModal}
     >
-      <DialogContent className="gap-7">
+      <DialogContent
+        className={clsx(
+          "gap-7",
+          isMobileView && "h-full max-h-full w-screen max-w-screen rounded-none"
+        )}
+      >
         <DialogHeader className="border-b pb">
           <DialogTitle>
             {t("common:add_new_entity", { entity: t("common:address") })}
@@ -190,7 +203,12 @@ export const AddressModal = ({
         )}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="grid w-full grid-cols-2 grid-rows-6 gap-y-5">
+            <div
+              className={clsx(
+                "grid w-full grid-cols-2 grid-rows-6 gap-y-5",
+                isMobileView && "!flex !flex-col"
+              )}
+            >
               <div className="col-span-2 grid grid-cols-2 gap-x-7">
                 <div className="col-span-2">
                   <FormField
@@ -208,7 +226,7 @@ export const AddressModal = ({
                   />
                 </div>
               </div>
-              <div className="col-span-2 grid grid-cols-2 gap-x-7">
+              <div className={RowsClass}>
                 <FormField
                   control={form.control}
                   name="provinceId"
@@ -386,7 +404,7 @@ export const AddressModal = ({
                   )}
                 />
               </div>
-              <div className="col-span-2 grid grid-cols-2 gap-x-7">
+              <div className={RowsClass}>
                 <div className="col-span-1">
                   <FormField
                     control={form.control}
@@ -403,7 +421,7 @@ export const AddressModal = ({
                   />
                 </div>
               </div>
-              <div className="col-span-2 grid grid-cols-2 gap-x-7">
+              <div className={RowsClass}>
                 <div className="col-span-2">
                   <FormField
                     control={form.control}
@@ -420,7 +438,7 @@ export const AddressModal = ({
                   />
                 </div>
               </div>
-              <div className="col-span-2 grid grid-cols-2 gap-x-7">
+              <div className={RowsClass}>
                 <div>
                   <FormField
                     control={form.control}
@@ -439,7 +457,7 @@ export const AddressModal = ({
                   />
                 </div>
               </div>
-              <div className="col-span-2 grid grid-cols-2 gap-x-7">
+              <div className={RowsClass}>
                 <div className="col-span-1">
                   <FormField
                     control={form.control}

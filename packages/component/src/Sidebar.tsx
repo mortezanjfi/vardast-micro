@@ -119,7 +119,7 @@ const Sidebar = ({
               <div className="flex flex-col px-6">
                 <div className="app-navigation-container bg-alpha-white">
                   <Navigation menus={menus} />
-                </div>{" "}
+                </div>
                 <div className="flex flex-col gap-1 border-b ">
                   {sessionStatus !== "loading" &&
                     (session ? (

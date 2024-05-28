@@ -8,7 +8,12 @@ const Layout: React.FC<PropsWithChildren> = async ({ children }) => {
   const isMobileView = await CheckIsMobileView()
   return (
     <UserProfileLayout isMobileView={isMobileView}>
-      <MobileBaseLayout bgWhite={true} container={false} spaceLess>
+      <MobileBaseLayout
+        isMobileView={isMobileView}
+        bgWhite={true}
+        container={false}
+        spaceLess
+      >
         {children}
       </MobileBaseLayout>
     </UserProfileLayout>

@@ -8,6 +8,7 @@ import {
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@vardast/ui/tabs"
+import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
 
 import PageTitle from "@/app/(client)/(profile)/components/PageTitle"
@@ -21,15 +22,26 @@ export enum PROJECT_TAB {
   PROJECT_USERS = "project-colleagues"
 }
 
-export type ProjectFormProps = { uuid?: string; title: string; isNew: boolean }
+export type ProjectFormProps = {
+  isMobileView: boolean
+  uuid?: string
+  title: string
+  isNew: boolean
+}
 
 export type ProjectTabProps = Pick<ProjectFormProps, "uuid" | "isNew"> & {
   setActiveTab: Dispatch<SetStateAction<PROJECT_TAB>>
   activeTab: PROJECT_TAB
   findOneProjectQuery: UseQueryResult<FindOneProjectQuery, unknown>
+  isMobileView?: boolean
 }
 
-const ProjectForm = ({ title, isNew, uuid }: ProjectFormProps) => {
+const ProjectForm = ({
+  isMobileView,
+  title,
+  isNew,
+  uuid
+}: ProjectFormProps) => {
   const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState<PROJECT_TAB>(PROJECT_TAB.INFO)
 
@@ -42,6 +54,7 @@ const ProjectForm = ({ title, isNew, uuid }: ProjectFormProps) => {
   )
 
   const tabProps = {
+    isMobileView,
     uuid,
     isNew,
     activeTab,
@@ -50,14 +63,26 @@ const ProjectForm = ({ title, isNew, uuid }: ProjectFormProps) => {
   }
 
   return (
-    <div className="flex h-full w-full flex-col gap-9">
-      <PageTitle backButtonUrl="/profile/projects" title={title} />
+    <div
+      className={clsx(
+        "flex h-full w-full flex-col gap-9",
+        isMobileView && "py-6"
+      )}
+    >
+      {!isMobileView && (
+        <PageTitle backButtonUrl="/profile/projects" title={title} />
+      )}
       <Tabs
         value={activeTab}
         onValueChange={(e) => setActiveTab(e as PROJECT_TAB)}
         className="flex h-full w-full flex-col"
       >
-        <TabsList className="w-full border-b">
+        <TabsList
+          className={clsx(
+            "w-full border-b",
+            isMobileView && "!grid !grid-cols-3"
+          )}
+        >
           <TabsTrigger value={PROJECT_TAB.INFO}>اطلاعات پروژه</TabsTrigger>
           <TabsTrigger
             disabled={!findOneProjectQuery.data}
@@ -72,13 +97,22 @@ const ProjectForm = ({ title, isNew, uuid }: ProjectFormProps) => {
             {t(`common:${PROJECT_TAB.PROJECT_USERS}`)}
           </TabsTrigger>
         </TabsList>
-        <TabsContent value={PROJECT_TAB.INFO}>
+        <TabsContent
+          className={clsx(isMobileView && "!h-full")}
+          value={PROJECT_TAB.INFO}
+        >
           <ProjectInfoTab {...tabProps} />
         </TabsContent>
-        <TabsContent value={PROJECT_TAB.ADDRESSES}>
+        <TabsContent
+          className={clsx(isMobileView && "!h-full")}
+          value={PROJECT_TAB.ADDRESSES}
+        >
           <ProjectAddressesTab {...tabProps} />
         </TabsContent>
-        <TabsContent value={PROJECT_TAB.PROJECT_USERS}>
+        <TabsContent
+          className={clsx(isMobileView && "!h-full")}
+          value={PROJECT_TAB.PROJECT_USERS}
+        >
           <ProjectUsersTab {...tabProps} />
         </TabsContent>
       </Tabs>

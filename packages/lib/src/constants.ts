@@ -41,6 +41,63 @@ type NavbarItem = {
   id: number
 }
 
+export const _clientMobileSecondProfileMenu: NavigationType[] = [
+  {
+    title: "سایر",
+    items: [
+      {
+        title: "قوانین و مقررات",
+        icon: "newspaper",
+        path: "/privacy"
+      },
+      {
+        title: "درباره ما",
+        icon: "info",
+        path: "/about"
+      },
+      {
+        title: "تماس با ما",
+        icon: "phone",
+        path: "/contact"
+      }
+    ]
+  }
+]
+
+export const _clientMobileProfileMenu: NavigationType[] = [
+  {
+    title: "منوی اصلی",
+    items: [
+      {
+        title: "پروژه ها",
+        icon: "folder-open",
+        path: "/profile/projects"
+      },
+      {
+        title: "سفارشات",
+        icon: "list",
+        path: "/profile/orders"
+      },
+      {
+        title: "سبد کالا",
+        icon: "shopping-cart",
+        path: "/profile/basket"
+      },
+      {
+        title: "علاقه مندی ها",
+        icon: "bookmark",
+        path: "/profile/favorites"
+      },
+      { title: "بازدیدهای اخیر", icon: "clock", path: "/profile" },
+      {
+        title: "اطلاعات حساب کاربری",
+        icon: "user",
+        path: "/profile/info"
+      }
+    ]
+  }
+]
+
 export const _profileSidebarMenu: NavigationType[] = [
   {
     title: "پرکاربردها",

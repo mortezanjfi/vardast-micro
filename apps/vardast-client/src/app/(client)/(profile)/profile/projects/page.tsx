@@ -1,5 +1,4 @@
 import { Metadata } from "next"
-import { redirect } from "next/navigation"
 import { dehydrate } from "@tanstack/react-query"
 import withMobileHeader from "@vardast/component/withMobileHeader"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
@@ -19,15 +18,12 @@ const Page = async () => {
   const isMobileView = await CheckIsMobileView()
   const queryClient = getQueryClient()
 
-  if (isMobileView) {
-    redirect("/")
-  }
-
   const dehydratedState = dehydrate(queryClient)
 
   return (
     <ReactQueryHydrate state={dehydratedState}>
       <ProjectsPage
+        isMobileView={isMobileView}
         title={(await generateMetadata()).title?.toString() as string}
       />
     </ReactQueryHydrate>

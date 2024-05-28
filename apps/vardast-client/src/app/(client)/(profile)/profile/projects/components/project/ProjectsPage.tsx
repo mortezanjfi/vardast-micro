@@ -7,13 +7,14 @@ import Loading from "@vardast/component/Loading"
 import PageHeader from "@vardast/component/PageHeader"
 import { Project, useMyProjectsQuery } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
+import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
 
 import PageTitle from "@/app/(client)/(profile)/components/PageTitle"
 import ProjectCard from "@/app/(client)/(profile)/profile/projects/components/project/ProjectCard"
 import ProjectDeleteModal from "@/app/(client)/(profile)/profile/projects/components/project/ProjectDeleteModal"
 
-type ProjectsPageProps = { title: string }
+type ProjectsPageProps = { title: string; isMobileView: boolean }
 // const statuses = [
 //   {
 //     status: "دارد",
@@ -26,7 +27,7 @@ type ProjectsPageProps = { title: string }
 //   }
 // ]
 
-const ProjectsPage = ({ title }: ProjectsPageProps) => {
+const ProjectsPage = ({ isMobileView, title }: ProjectsPageProps) => {
   const { t } = useTranslation()
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const [projectToDelete, setProjectToDelete] = useState<{}>()
@@ -45,7 +46,7 @@ const ProjectsPage = ({ title }: ProjectsPageProps) => {
         open={deleteModalOpen}
         onOpenChange={setDeleteModalOpen}
       />
-      <PageTitle title={title} />
+      {!isMobileView && <PageTitle title={title} />}
       {/* <div className="flex w-full gap-5 border-b border-alpha-200 pb-5">
         <Popover>
           <PopoverTrigger asChild>
@@ -131,27 +132,29 @@ const ProjectsPage = ({ title }: ProjectsPageProps) => {
           </PopoverContent>
         </Popover>{" "}
       </div> */}
-      <PageHeader
-        pageHeaderClasses="border-b py-5 !mb-0"
-        title={
-          "پروژه های خود را تعریف کنید و مدیریت خرید کالای آن را راحت تر انجام دهید"
-        }
-        titleClasses="text-[14px] font-normal "
-        containerClass="items-center"
-      >
-        <Link className="btn-primary btn btn-md" href="/profile/projects/new">
-          {t("common:add_new_entity", {
-            entity: t("common:project")
-          })}
-        </Link>
-      </PageHeader>
-      <div className="w-full">
+      {!isMobileView && (
+        <PageHeader
+          pageHeaderClasses="border-b py-5 !mb-0"
+          title={
+            "پروژه های خود را تعریف کنید و مدیریت خرید کالای آن را راحت تر انجام دهید"
+          }
+          titleClasses="text-[14px] font-normal "
+          containerClass="items-center"
+        >
+          <Link className="btn-primary btn btn-md" href="/profile/projects/new">
+            {t("common:add_new_entity", {
+              entity: t("common:project")
+            })}
+          </Link>
+        </PageHeader>
+      )}
+      <div className={clsx("w-full", isMobileView && " px-6")}>
         {myProjectsQuery.isFetching && myProjectsQuery.isLoading ? (
           <div className="flex h-full items-center justify-center pt-6">
             <Loading hideMessage />
           </div>
         ) : myProjectsQuery.data?.myProjects?.length > 0 ? (
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-5">
             {myProjectsQuery.data?.myProjects?.map((project) => (
               <ProjectCard
                 key={project.id}
@@ -160,11 +163,35 @@ const ProjectsPage = ({ title }: ProjectsPageProps) => {
                 setDeleteModalOpen={setDeleteModalOpen}
               />
             ))}
+            {isMobileView && (
+              <Link
+                className="btn-primary btn btn-md py-3"
+                href="/profile/projects/new"
+              >
+                {t("common:add_new_entity", {
+                  entity: t("common:project")
+                })}
+              </Link>
+            )}
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center gap-5 py-7">
-            <FolderOpenIcon width={64} height={64} className="text-alpha-400" />
+            <FolderOpenIcon
+              width={isMobileView ? 48 : 64}
+              height={isMobileView ? 48 : 64}
+              className="text-alpha-400"
+            />
             <p>شما هنوز پروژه ای اضافه نکرده اید!</p>
+            {isMobileView && (
+              <Link
+                className="btn-primary btn btn-md"
+                href="/profile/projects/new"
+              >
+                {t("common:add_new_entity", {
+                  entity: t("common:project")
+                })}
+              </Link>
+            )}
           </div>
         )}
       </div>

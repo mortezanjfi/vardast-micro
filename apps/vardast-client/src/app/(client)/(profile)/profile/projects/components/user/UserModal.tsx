@@ -27,6 +27,7 @@ import {
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
 import zodI18nMap from "@vardast/util/zodErrorMap"
+import clsx from "clsx"
 import { ClientError } from "graphql-request"
 import { LucideAlertOctagon } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
@@ -46,6 +47,7 @@ export const AddUserModalFormSchema = z.object({
 export type AddUserModalFormType = TypeOf<typeof AddUserModalFormSchema>
 
 export const UserModal = ({
+  isMobileView,
   onCloseModal,
   selectedUsers,
   uuid
@@ -151,7 +153,12 @@ export const UserModal = ({
         )}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="grid w-full grid-cols-2 gap-6">
+            <div
+              className={clsx(
+                "grid w-full grid-cols-2 gap-6",
+                isMobileView && "!flex !flex-col"
+              )}
+            >
               <FormField
                 control={form.control}
                 name="name"

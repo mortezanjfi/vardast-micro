@@ -8,16 +8,18 @@ import {
   ArrowRightEndOnRectangleIcon,
   InformationCircleIcon,
   NewspaperIcon,
+  PencilSquareIcon,
   PhoneIcon as PhoneIconOutline,
   QuestionMarkCircleIcon
 } from "@heroicons/react/24/outline"
-import { UserCircleIcon } from "@heroicons/react/24/solid"
-import { digitsEnToFa } from "@persian-tools/persian-tools"
-import {
-  StatusUserAlternatives,
-  UserStatusItem
-} from "@vardast/component/desktop/DesktopHeader"
+import { WalletIcon } from "@heroicons/react/24/solid"
+import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import Link from "@vardast/component/Link"
+import Navigation from "@vardast/component/Navigation"
+import {
+  _clientMobileProfileMenu,
+  _clientMobileSecondProfileMenu
+} from "@vardast/lib/constants"
 import { ColorEnum } from "@vardast/type/Enums"
 import clsx from "clsx"
 import { useSession } from "next-auth/react"
@@ -150,7 +152,7 @@ const ProfileIconItem = ({
 }
 
 const ProfileIndex = () => {
-  const { data: session } = useSession()
+  const { data: session, status: sessionStatus } = useSession()
   const productContainerRef = useRef<HTMLAnchorElement>(null)
 
   const _small_logout_icons: BigSmallIconProps[] = [
@@ -176,12 +178,19 @@ const ProfileIndex = () => {
   ]
 
   return (
-    <>
+    <div className="app-navigation flex w-full flex-col gap-1 bg-alpha-50 pt-0">
+      {/* <div
+        className={clsx(
+          "flex h-full flex-col !gap-0 divide-y-8 divide-alpha-50"
+        )}
+      > */}
       {session?.profile?.status && (
-        <div className="flex flex-col gap-y border-b bg-alpha-white px">
-          <div className="flex items-center pb">
+        <div className="flex flex-col divide-y bg-alpha-white px-6">
+          <div className="flex items-center py-5">
             <div className="flex flex-1 items-center gap-x-2">
-              <UserCircleIcon className="h-16 w-16 text-primary" />
+              {/* {isMobileView && (
+                          <UserCircleIcon className="h-16 w-16 text-primary" />
+                        )} */}
               <div className="flex flex-col gap-y-1">
                 {session?.profile?.fullName &&
                 session?.profile?.fullName !== "null null" ? (
@@ -198,47 +207,88 @@ const ProfileIndex = () => {
                 </p>
               </div>
             </div>
-            <UserStatusItem
-              {...StatusUserAlternatives[session?.profile?.status]}
-            />
+            <Link href={"/profile/info"}>
+              <PencilSquareIcon height={20} width={20} />
+            </Link>
+          </div>
+          <div className="flex items-center justify-between py-5">
+            <div className="flex items-center gap-4">
+              <div className="rounded-lg bg-blue-600 p-2">
+                <WalletIcon
+                  width={24}
+                  height={24}
+                  className="text-alpha-white"
+                  color="alpha-white"
+                />
+              </div>
+              <span>کیف پول</span>
+            </div>
+            <div className="text-alph-500 flex items-center gap-1">
+              <span>{digitsEnToFa(addCommas(0))}</span>
+              <span>تومان</span>
+            </div>
           </div>
         </div>
       )}
-
-      <div className="bg-alpha-white">
-        <Link
-          href={process.env.NEXT_PUBLIC_SELLER_VARDAST as string}
-          ref={productContainerRef}
-          className={`relative flex flex-shrink-0 transform flex-col items-center justify-center rounded-xl bg-center bg-no-repeat align-middle transition-all duration-1000 ease-out`}
-        >
-          <div className="w-full">
-            <Image
-              src={"/images/be-seller.png"}
-              alt={"be-seller"}
-              width={360}
-              height={120}
-              className="h-full w-full rounded-xl"
-            />
-          </div>
-        </Link>
+      <div className="flex flex-col bg-alpha-white px-6">
+        <div className="app-navigation-container bg-alpha-white">
+          <Navigation menus={_clientMobileProfileMenu} />
+        </div>
+        <div className="flex flex-col gap-1">
+          {sessionStatus !== "loading" &&
+            (session ? (
+              <Link
+                prefetch={false}
+                href="/auth/signout"
+                className="btn-ghost btn justify-start !px-2 py-4 text-start"
+              >
+                <ArrowLeftStartOnRectangleIcon
+                  width={24}
+                  height={24}
+                  className="icon"
+                />
+                خروج از حساب کاربری
+              </Link>
+            ) : (
+              <Link
+                prefetch={false}
+                href="/auth/signin"
+                className="btn-ghost btn justify-start !px-2 py-4 text-start !text-success"
+              >
+                <ArrowRightEndOnRectangleIcon
+                  width={24}
+                  height={24}
+                  className="icon"
+                />
+                ورود به حساب کاربری
+              </Link>
+            ))}
+        </div>
       </div>
+      <div className="flex flex-col">
+        <div className="app-navigation-container !border-t-0 bg-alpha-white px-6">
+          <Navigation menus={_clientMobileSecondProfileMenu} />
+        </div>
 
-      <div className="flex w-full flex-col items-start justify-start divide-y bg-alpha-white px-3.5">
-        <div className="border-t"></div>
-        {_small_icons
-          .concat(session ? _small_logout_icons : _small_signin_icons)
-          .map(({ id, status, ...props }) => (
-            <ProfileIconItem
-              key={id}
-              variant={{
-                type: ProfileIconVariantTypeEnum.SMALL,
-                status
-              }}
-              {...props}
-            />
-          ))}
+        <div className="bg-alpha-white py-5">
+          <Link
+            href={process.env.NEXT_PUBLIC_SELLER_VARDAST as string}
+            ref={productContainerRef}
+            className={`relative flex flex-shrink-0 transform flex-col items-center justify-center rounded-xl bg-center bg-no-repeat align-middle transition-all duration-1000 ease-out`}
+          >
+            <div className="w-full">
+              <Image
+                src={"/images/be-seller.png"}
+                alt={"be-seller"}
+                width={360}
+                height={120}
+                className="h-full w-full rounded-xl"
+              />
+            </div>
+          </Link>
+        </div>
       </div>
-    </>
+    </div>
   )
 }
 
