@@ -21,12 +21,14 @@ import useTranslation from "next-translate/useTranslation"
 import { PreOrderStatesFa } from "@/app/(client)/(profile)/profile/orders/components/OrdersPage"
 
 type OrderCardProps = {
+  isMobileView?: boolean
   preOrder: PreOrder
   setOrderToDelete: Dispatch<SetStateAction<PreOrder>>
   setDeleteModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const OrderCard = ({
+  isMobileView,
   preOrder,
   setOrderToDelete,
   setDeleteModalOpen
@@ -36,10 +38,10 @@ const OrderCard = ({
   const [dropDownMenuOpen, setDropDownMenuOpen] = useState(false)
 
   return (
-    <div className="flex w-full items-start justify-between border-b border-alpha-200 py-4">
-      <div className="flex flex-col gap-4 py-7">
-        <div className="flex items-center gap-9">
-          {/* <span className="text-base font-semibold">{preOrder?.name}</span> */}
+    <div className="flex w-full flex-col gap-4 border-b border-alpha-200 py-4">
+      <div className="flex w-full items-center justify-between">
+        {/* <span className="text-base font-semibold">{preOrder?.name}</span> */}
+        <div className={clsx("flex gap-9", isMobileView && "!gap-3")}>
           <div
             className={clsx(
               "tag",
@@ -49,6 +51,7 @@ const OrderCard = ({
             {/* <Dot /> */}
             <span>{PreOrderStatesFa[preOrder?.status]?.name_fa}</span>
           </div>
+
           <Button
             variant="secondary"
             className="tag"
@@ -62,81 +65,80 @@ const OrderCard = ({
             </span>
           </Button>
         </div>
-        <div className="flex items-center gap-9">
-          <DetailsWithTitle title={"کد سفارش"} text={preOrder?.id} />
-          <DetailsWithTitle title={"پروژه"} text={preOrder?.project?.name} />
-          <DetailsWithTitle
-            title={t("common:submition-time")}
-            text={
-              preOrder?.request_date
-                ? digitsEnToFa(
-                    new Date(preOrder?.request_date).toLocaleDateString(
-                      "fa-IR",
-                      {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit"
-                      }
-                    )
-                  )
-                : ""
-            }
-          />
-          <DetailsWithTitle
-            title={t("common:order-expire-time")}
-            text={
-              preOrder?.expire_time
-                ? digitsEnToFa(
-                    new Date(preOrder?.expire_time).toLocaleDateString(
-                      "fa-IR",
-                      {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit"
-                      }
-                    )
-                  )
-                : ""
-            }
-          />
-        </div>
+        <DropdownMenu
+          modal={false}
+          open={dropDownMenuOpen}
+          onOpenChange={setDropDownMenuOpen}
+        >
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" iconOnly>
+              <LucideMoreVertical className="icon text-black" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <>
+              {preOrder.status !== PreOrderStates.Closed && (
+                <>
+                  <Link href={`/profile/orders/${preOrder?.id}/info`}>
+                    <DropdownMenuItem>
+                      <LucideEdit className="dropdown-menu-item-icon" />
+                      <span>{t("common:edit")}</span>
+                    </DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuSeparator />
+                </>
+              )}
+              <DropdownMenuItem
+                onSelect={() => {
+                  setOrderToDelete(preOrder)
+                  setDeleteModalOpen(true)
+                }}
+                className="danger"
+              >
+                <LucideTrash className="dropdown-menu-item-icon" />
+                <span>{t("common:delete")}</span>
+              </DropdownMenuItem>
+            </>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
-      <DropdownMenu
-        modal={false}
-        open={dropDownMenuOpen}
-        onOpenChange={setDropDownMenuOpen}
+      <div
+        className={clsx(
+          "flex items-center gap-9",
+          isMobileView && "flex-col !items-start !gap-1"
+        )}
       >
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" iconOnly>
-            <LucideMoreVertical className="icon text-black" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <>
-            {preOrder.status !== PreOrderStates.Closed && (
-              <>
-                <Link href={`/profile/orders/${preOrder?.id}/info`}>
-                  <DropdownMenuItem>
-                    <LucideEdit className="dropdown-menu-item-icon" />
-                    <span>{t("common:edit")}</span>
-                  </DropdownMenuItem>
-                </Link>
-                <DropdownMenuSeparator />
-              </>
-            )}
-            <DropdownMenuItem
-              onSelect={() => {
-                setOrderToDelete(preOrder)
-                setDeleteModalOpen(true)
-              }}
-              className="danger"
-            >
-              <LucideTrash className="dropdown-menu-item-icon" />
-              <span>{t("common:delete")}</span>
-            </DropdownMenuItem>
-          </>
-        </DropdownMenuContent>
-      </DropdownMenu>
+        <DetailsWithTitle title={"کد سفارش"} text={preOrder?.id} />
+        <DetailsWithTitle title={"پروژه"} text={preOrder?.project?.name} />
+        <DetailsWithTitle
+          title={t("common:submition-time")}
+          text={
+            preOrder?.request_date
+              ? digitsEnToFa(
+                  new Date(preOrder?.request_date).toLocaleDateString("fa-IR", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit"
+                  })
+                )
+              : ""
+          }
+        />
+        <DetailsWithTitle
+          title={t("common:order-expire-time")}
+          text={
+            preOrder?.expire_time
+              ? digitsEnToFa(
+                  new Date(preOrder?.expire_time).toLocaleDateString("fa-IR", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit"
+                  })
+                )
+              : ""
+          }
+        />
+      </div>
     </div>
   )
 }

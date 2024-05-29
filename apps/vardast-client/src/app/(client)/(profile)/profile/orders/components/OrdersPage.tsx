@@ -22,7 +22,7 @@ import PageTitle from "@/app/(client)/(profile)/components/PageTitle"
 import OrderCard from "@/app/(client)/(profile)/profile/orders/components/OrderCart"
 import OrderDeleteModal from "@/app/(client)/(profile)/profile/orders/components/OrderDeleteModal"
 
-type OrdersPageProps = { title: string }
+type OrdersPageProps = { isMobileView?: boolean; title: string }
 
 export const OrderOfferStatusesFa = {
   [OrderOfferStatuses.Closed]: { className: "tag-success", name_fa: "بسته شده" }
@@ -56,7 +56,7 @@ export const PaymentMethodEnumFa = {
   }
 }
 
-const OrdersPage = ({ title }: OrdersPageProps) => {
+const OrdersPage = ({ isMobileView, title }: OrdersPageProps) => {
   const { t } = useTranslation()
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const [orderToDelete, setOrderToDelete] = useState<PreOrder | null>()
@@ -99,25 +99,27 @@ const OrdersPage = ({ title }: OrdersPageProps) => {
         onOpenChange={setDeleteModalOpen}
         orderToDelete={orderToDelete}
       />
-      <PageTitle title={title} />
-      <PageHeader
-        pageHeaderClasses="border-b py-5 !mb-0"
-        title={"سفارش خود را ثبت کنید و بهترین قیمت را از وردست بخواهید."}
-        titleClasses="text-[14px] font-normal"
-        containerClass="items-center"
-      >
-        <Button
-          disabled={createOrderMutation.isLoading || preOrdersQuery.isLoading}
-          loading={createOrderMutation.isLoading}
-          onClick={onCreateOrder}
-          variant="primary"
-          size="medium"
+      {!isMobileView && <PageTitle title={title} />}
+      {!isMobileView && (
+        <PageHeader
+          pageHeaderClasses="border-b py-5 !mb-0"
+          title={"سفارش خود را ثبت کنید و بهترین قیمت را از وردست بخواهید."}
+          titleClasses="text-[14px] font-normal"
+          containerClass="items-center"
         >
-          {t("common:add_new_entity", {
-            entity: t("common:order")
-          })}
-        </Button>
-      </PageHeader>
+          <Button
+            disabled={createOrderMutation.isLoading || preOrdersQuery.isLoading}
+            loading={createOrderMutation.isLoading}
+            onClick={onCreateOrder}
+            variant="primary"
+            size="medium"
+          >
+            {t("common:add_new_entity", {
+              entity: t("common:order")
+            })}
+          </Button>
+        </PageHeader>
+      )}
       <div className="w-full">
         {preOrdersQuery.isFetching && preOrdersQuery.isLoading ? (
           <div className="flex h-full items-center justify-center pt-6">
@@ -127,6 +129,7 @@ const OrdersPage = ({ title }: OrdersPageProps) => {
           <div className="flex flex-col">
             {preOrdersQuery.data?.preOrders?.data.map((preOrder, index) => (
               <OrderCard
+                isMobileView={isMobileView}
                 key={index}
                 preOrder={preOrder as PreOrder}
                 setOrderToDelete={setOrderToDelete}
@@ -141,6 +144,24 @@ const OrdersPage = ({ title }: OrdersPageProps) => {
                   setCurrentPage(page)
                 }}
               />
+            )}
+            {isMobileView && (
+              <div className="absolute bottom-0 w-full border-y border-alpha-200 bg-alpha-white px-6 py-5">
+                <Button
+                  disabled={
+                    createOrderMutation.isLoading || preOrdersQuery.isLoading
+                  }
+                  loading={createOrderMutation.isLoading}
+                  onClick={onCreateOrder}
+                  variant="primary"
+                  size="medium"
+                  className=" mt-auto w-full py-3"
+                >
+                  {t("common:add_new_entity", {
+                    entity: t("common:order")
+                  })}
+                </Button>
+              </div>
             )}
           </div>
         ) : (

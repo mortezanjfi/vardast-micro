@@ -3,6 +3,7 @@ import { dehydrate } from "@tanstack/react-query"
 import withMobileHeader from "@vardast/component/withMobileHeader"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
+import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
 import OrdersPage from "@/app/(client)/(profile)/profile/orders/components/OrdersPage"
 
@@ -16,10 +17,12 @@ export async function generateMetadata(): Promise<Metadata> {
 const Page = async () => {
   const queryClient = getQueryClient()
   const dehydratedState = dehydrate(queryClient)
+  const isMobileView = await CheckIsMobileView()
 
   return (
     <ReactQueryHydrate state={dehydratedState}>
       <OrdersPage
+        isMobileView={isMobileView}
         title={(await generateMetadata()).title?.toString() as string}
       />
     </ReactQueryHydrate>
