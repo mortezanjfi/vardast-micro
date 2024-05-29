@@ -37,7 +37,11 @@ export default async function PublicLayout({
         <>
           <AdminOrSellerDesktopHeader />
           <div className="h-[92px] w-full bg-transparent"></div>
-          <WithSidebarLayout menu={_sellerSidebarMenu}>
+          <WithSidebarLayout
+            isMobileView={isMobileView}
+            grayBackground={true}
+            menu={_sellerSidebarMenu}
+          >
             <MobileBaseLayout bgWhite={false} container spaceLess>
               {children}
             </MobileBaseLayout>
