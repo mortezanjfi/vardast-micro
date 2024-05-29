@@ -31,7 +31,7 @@ const ProjectCard = ({
 
   return (
     <div className="flex w-full  items-start justify-between border-b  border-alpha-200 py-4">
-      <div className="flex w-full flex-col gap-4 py-7">
+      <div className="flex w-full flex-col gap-4">
         <div className="flex w-full items-center justify-between">
           <span className="text-base font-semibold">{project.name}</span>
           <DropdownMenu

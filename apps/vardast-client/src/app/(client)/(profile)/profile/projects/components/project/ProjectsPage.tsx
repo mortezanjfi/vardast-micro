@@ -148,24 +148,26 @@ const ProjectsPage = ({ isMobileView, title }: ProjectsPageProps) => {
           </Link>
         </PageHeader>
       )}
-      <div className={clsx("w-full", isMobileView && " px-6")}>
+      <div className={clsx("w-full", isMobileView && " h-full px-6")}>
         {myProjectsQuery.isFetching && myProjectsQuery.isLoading ? (
           <div className="flex h-full items-center justify-center pt-6">
             <Loading hideMessage />
           </div>
         ) : myProjectsQuery.data?.myProjects?.length > 0 ? (
-          <div className="flex flex-col gap-5">
-            {myProjectsQuery.data?.myProjects?.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project as Project}
-                setProjectToDelete={setProjectToDelete}
-                setDeleteModalOpen={setDeleteModalOpen}
-              />
-            ))}
+          <div className={clsx("flex h-full flex-col")}>
+            <div className="flex flex-col">
+              {myProjectsQuery.data?.myProjects?.map((project) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project as Project}
+                  setProjectToDelete={setProjectToDelete}
+                  setDeleteModalOpen={setDeleteModalOpen}
+                />
+              ))}
+            </div>
             {isMobileView && (
               <Link
-                className="btn-primary btn btn-md py-3"
+                className="btn-primary btn btn-md mt-auto py-3"
                 href="/profile/projects/new"
               >
                 {t("common:add_new_entity", {
@@ -184,7 +186,7 @@ const ProjectsPage = ({ isMobileView, title }: ProjectsPageProps) => {
             <p>شما هنوز پروژه ای اضافه نکرده اید!</p>
             {isMobileView && (
               <Link
-                className="btn-primary btn btn-md"
+                className="btn-primary btn btn-md py-5"
                 href="/profile/projects/new"
               >
                 {t("common:add_new_entity", {
