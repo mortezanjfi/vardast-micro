@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { useQueryClient } from "@tanstack/react-query"
 import {
   CreateUserProjectInput,
@@ -27,6 +28,7 @@ import {
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
 import zodI18nMap from "@vardast/util/zodErrorMap"
+import { cellphoneNumberSchema } from "@vardast/util/zodValidationSchemas"
 import { ClientError } from "graphql-request"
 import { LucideAlertOctagon } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
@@ -40,7 +42,7 @@ import {
 
 export const AddUserModalFormSchema = z.object({
   name: z.string(),
-  cellphone: z.string()
+  cellphone: cellphoneNumberSchema
 })
 
 export type AddUserModalFormType = TypeOf<typeof AddUserModalFormSchema>
@@ -152,7 +154,7 @@ export const UserModal = ({
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid w-full grid-cols-2 gap-6">
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
@@ -164,7 +166,7 @@ export const UserModal = ({
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
               <FormField
                 control={form.control}
                 name="cellphone"
@@ -172,7 +174,16 @@ export const UserModal = ({
                   <FormItem>
                     <FormLabel>{t("common:cellphone")}</FormLabel>
                     <FormControl>
-                      <Input type="tel" {...field} />
+                      <Input
+                        type="tel"
+                        inputMode="numeric"
+                        placeholder={digitsEnToFa("09*********")}
+                        {...field}
+                        onChange={(e) =>
+                          e.target.value.length <= 11 &&
+                          field.onChange(digitsEnToFa(e.target.value))
+                        }
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
