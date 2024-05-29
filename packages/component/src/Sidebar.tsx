@@ -53,12 +53,12 @@ const Sidebar = ({
   return (
     <>
       {open && (
-        <div className="pointer-events-none fixed inset-0 z-50 h-full w-full bg-alpha-800 bg-opacity-40"></div>
+        <div className=" pointer-events-none fixed inset-0 z-50 h-full w-full bg-alpha-800 bg-opacity-40"></div>
       )}
       <div
         ref={ref}
         className={clsx(
-          "app-sidebar z-20 overflow-hidden rounded-2xl border bg-alpha-white",
+          "app-sidebar  z-20 overflow-hidden rounded-2xl border bg-alpha-white",
           open ? "open z-50" : ""
         )}
       >
@@ -119,14 +119,14 @@ const Sidebar = ({
               <div className="flex flex-col px-6">
                 <div className="app-navigation-container bg-alpha-white">
                   <Navigation menus={menus} />
-                </div>
-                <div className="flex flex-col gap-1 border-b ">
+                </div>{" "}
+                <div className="flex flex-col gap-1">
                   {sessionStatus !== "loading" &&
                     (session ? (
                       <Link
                         prefetch={false}
                         href="/auth/signout"
-                        className="btn-ghost btn justify-start !px-2 py-4 text-start"
+                        className="btn btn-ghost justify-start gap-2 px-3 py-4 text-start"
                       >
                         <ArrowLeftStartOnRectangleIcon
                           width={24}
@@ -139,7 +139,7 @@ const Sidebar = ({
                       <Link
                         prefetch={false}
                         href="/auth/signin"
-                        className="btn-ghost btn justify-start !px-2 py-4 text-start !text-success"
+                        className="btn btn-ghost justify-start gap-2 px-3 py-4 text-start !text-success"
                       >
                         <ArrowRightEndOnRectangleIcon
                           width={24}

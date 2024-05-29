@@ -24,32 +24,31 @@ const UserProfileLayout = ({
         children
       ) : (
         <div className="md:app h-full flex-col overflow-y-scroll bg-alpha-white pb-8 lg:container md:overflow-y-auto">
-          <div className="flex items-center gap-2">
-            <Button
-              onClick={() => setSidebarOpen(true)}
-              variant="ghost"
-              iconOnly
-              className="lg:hidden"
-            >
-              <LucideMenu className="icon" />
-            </Button>
-            <div className="flex-1 overflow-y-auto">
-              <Suspense>
-                <Breadcrumb dynamic isMobileView={isMobileView} />
-              </Suspense>
-            </div>
-          </div>
-
-          <div className="app-inner gap-6 pb-5">
+          <div className="app-inner !max-w-full gap-3 pb-5 pt">
             <Sidebar
-              isUserProfile
               open={sidebarOpen}
               onOpenChanged={setSidebarOpen}
               menus={_profileSidebarMenu}
-              isAdmin={false}
+              isAdmin={true}
             />
-
-            {children}
+            <div className="flex h-full w-full !max-w-full flex-col overflow-x-hidden pb">
+              <div className="flex items-center gap-2 pr-6">
+                <Button
+                  onClick={() => setSidebarOpen(true)}
+                  variant="ghost"
+                  iconOnly
+                  className="lg:hidden"
+                >
+                  <LucideMenu className="icon" />
+                </Button>
+                <div className="flex-1 overflow-y-auto">
+                  <Suspense>
+                    <Breadcrumb dynamic />
+                  </Suspense>
+                </div>
+              </div>{" "}
+              {children}
+            </div>
           </div>
         </div>
       )}

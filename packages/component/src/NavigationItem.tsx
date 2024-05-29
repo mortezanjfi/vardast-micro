@@ -38,7 +38,7 @@ const NavigationItem = (props: Props) => {
     <>
       <li
         className={clsx([
-          "app-navigation-item border-b",
+          "app-navigation-item",
           menu.items && "has-child",
           isActive(menu.path as string) && "active",
           open && "open"
