@@ -157,9 +157,7 @@ const OrdersPage = ({ isMobileView, title }: OrdersPageProps) => {
                   size="medium"
                   className=" mt-auto w-full py-3"
                 >
-                  {t("common:add_new_entity", {
-                    entity: t("common:order")
-                  })}
+                  {t("common:addOrderInfo")}
                 </Button>
               </div>
             )}
