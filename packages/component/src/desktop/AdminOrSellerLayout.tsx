@@ -22,13 +22,14 @@ const AdminOrSellerLayoutComponent = ({
   return (
     <div className="hide-scrollbar min-h-full w-full overflow-y-scroll bg-alpha-50">
       <div className="h-full w-full flex-col  pb-8 lg:container md:overflow-y-auto">
-        <div className="app-inner !max-w-full gap-3 pb-5 pt">
+        <div className="app-inner relative h-full !max-w-full gap-3 pb-5 pt">
           <Sidebar
             open={sidebarOpen}
             onOpenChanged={setSidebarOpen}
             menus={menu}
             isAdmin={true}
           />
+
           <div className="flex h-full w-full !max-w-full flex-col overflow-x-hidden pb">
             <div className="flex items-center gap-2 pr-6">
               <Button

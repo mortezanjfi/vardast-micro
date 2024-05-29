@@ -35,7 +35,10 @@ const Navigation = (props: Props) => {
                       ((menuItem?.abilities &&
                         session?.abilities?.includes(menuItem?.abilities)) ||
                         !menuItem.abilities) && (
-                        <NavigationItem key={idx} menu={menuItem} />
+                        <>
+                          <NavigationItem key={idx} menu={menuItem} />
+                          <hr className="mx-auto h-0.5 w-4/5" />
+                        </>
                       )
                   )}
               </ol>
