@@ -36,7 +36,7 @@ export default async function AdminLayout({
     <>
       <SearchActionModal isMobileView={false} />
       <AdminOrSellerDesktopHeader />
-      <div className="h-[92px] w-full bg-transparent"></div>
+      <div className="md:h-header h-largeHeader w-full bg-transparent"></div>
       <AdminOrSellerLayoutComponent menu={_sidebarMenu}>
         {" "}
         <MobileBaseLayout bgWhite={false} container spaceLess>

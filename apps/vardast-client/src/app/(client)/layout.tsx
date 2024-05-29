@@ -33,7 +33,7 @@ export default async function PublicLayout({
           {process.env.NEXT_PUBLIC_PROJECT_NAME_FOR === "user" && (
             <DesktopHeader />
           )}
-          <div className="h-[92px] w-full bg-transparent"></div>
+          <div className="md:h-header h-largeHeader w-full bg-transparent"></div>
           <div className="flex flex-col">{children}</div>
           {process.env.NEXT_PUBLIC_PROJECT_NAME_FOR === "user" && (
             <DesktopFooter />

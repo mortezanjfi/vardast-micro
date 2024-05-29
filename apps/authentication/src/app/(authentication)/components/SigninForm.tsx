@@ -429,6 +429,7 @@ const SigninFormContent = () => {
                       <FormItem>
                         <FormControl>
                           <Input
+                            id="verify-otp-track-button"
                             type="tel"
                             inputMode="numeric"
                             className="placeholder:text-right"

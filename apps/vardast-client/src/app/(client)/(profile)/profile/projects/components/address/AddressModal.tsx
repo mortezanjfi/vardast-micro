@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { digitsEnToFa } from "@persian-tools/persian-tools"
+import { digitsEnToFa, digitsFaToEn } from "@persian-tools/persian-tools"
 import { useQueryClient } from "@tanstack/react-query"
 import {
   CreateAddressProjectInput,
-  UpdateProjectAddressInput,
   useAssignAddressProjectMutation,
   useGetAllProvincesQuery,
   useGetProvinceQuery,
@@ -77,7 +76,7 @@ export const AddressModal = ({
   const { t } = useTranslation()
   const [errors, setErrors] = useState<ClientError>()
   const [provinceDialog, setProvinceDialog] = useState(false)
-  // const [provinceQueryTemp, setProvinceQueryTemp] = useState("")
+  // const [cityQuery, setCityQuery] = useState("")
   const [cityDialog, setCityDialog] = useState(false)
   const queryClient = useQueryClient()
 
@@ -133,12 +132,13 @@ export const AddressModal = ({
     }
   )
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: AddAddressModalFormType) => {
     if (selectedAddresses?.data) {
       return updateProjectAddressMutation.mutate({
         updateProjectAddressInput: {
-          ...(data as UpdateProjectAddressInput),
+          ...data,
           addressId: selectedAddresses?.data?.id,
+          postalCode: digitsFaToEn(data.postalCode),
           projectId: +uuid
         }
       })
@@ -154,16 +154,33 @@ export const AddressModal = ({
       selectedAddresses?.type === SELECTED_ITEM_TYPE.EDIT &&
       selectedAddresses?.data
     ) {
-      form.setValue("title", selectedAddresses?.data?.title)
-      form.setValue("provinceId", +selectedAddresses?.data?.province.id)
-      form.setValue("cityId", +selectedAddresses?.data?.city.id)
-      form.setValue("postalCode", selectedAddresses?.data?.postalCode)
-      form.setValue("address", selectedAddresses?.data?.address)
-      form.setValue("delivery_name", selectedAddresses?.data?.delivery_name)
-      form.setValue(
-        "delivery_contact",
-        selectedAddresses?.data?.delivery_contact
-      )
+      if (selectedAddresses?.data?.title) {
+        form.setValue("title", selectedAddresses?.data?.title)
+      }
+      if (+selectedAddresses?.data?.province.id) {
+        form.setValue("provinceId", +selectedAddresses?.data?.province.id)
+      }
+      if (+selectedAddresses?.data?.city.id) {
+        form.setValue("cityId", +selectedAddresses?.data?.city.id)
+      }
+      if (selectedAddresses?.data?.postalCode) {
+        form.setValue(
+          "postalCode",
+          digitsEnToFa(selectedAddresses?.data?.postalCode)
+        )
+      }
+      if (selectedAddresses?.data?.address) {
+        form.setValue("address", selectedAddresses?.data?.address)
+      }
+      if (selectedAddresses?.data?.delivery_name) {
+        form.setValue("delivery_name", selectedAddresses?.data?.delivery_name)
+      }
+      if (selectedAddresses?.data?.delivery_contact) {
+        form.setValue(
+          "delivery_contact",
+          selectedAddresses?.data?.delivery_contact
+        )
+      }
     }
     return () => form.reset()
   }, [selectedAddresses, selectedAddresses?.data])
@@ -280,6 +297,7 @@ export const AddressModal = ({
                                               value
                                         )?.id || 0
                                       )
+                                      form.setValue("cityId", null)
                                       setProvinceDialog(false)
                                     }}
                                   >
@@ -340,10 +358,15 @@ export const AddressModal = ({
                       <PopoverContent className="!z-[9999]" asChild>
                         <Command>
                           {/* <CommandInput
-                              placeholder={t("common:search_entity", {
-                                entity: t("common:city")
-                              })}
-                            /> */}
+                            loading={cities.isLoading}
+                            value={cityQuery}
+                            onValueChange={(newQuery) => {
+                              setCityQuery(newQuery)
+                            }}
+                            placeholder={t("common:search_entity", {
+                              entity: t("common:city")
+                            })}
+                          /> */}
                           <CommandEmpty>
                             {t("common:no_entity_found", {
                               entity: t("common:city")
@@ -462,6 +485,7 @@ export const AddressModal = ({
               <div className="flex items-center gap-2">
                 <Button
                   className="py-2"
+                  type="button"
                   variant="ghost"
                   onClick={() => {
                     onCloseModal()
@@ -469,7 +493,21 @@ export const AddressModal = ({
                 >
                   انصراف
                 </Button>
-                <Button className="py-2" variant="primary" type="submit">
+                <Button
+                  loading={
+                    assignAddressProjectMutation.isLoading ||
+                    updateProjectAddressMutation.isLoading
+                  }
+                  disabled={
+                    assignAddressProjectMutation.isLoading ||
+                    updateProjectAddressMutation.isLoading ||
+                    provinces.isLoading ||
+                    cities.isLoading
+                  }
+                  className="py-2"
+                  variant="primary"
+                  type="submit"
+                >
                   ذخیره آدرس
                 </Button>
               </div>

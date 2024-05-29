@@ -1,6 +1,6 @@
 "use client"
 
-import ProductsHeader from "@vardast/component/search-header"
+import ProductsHeader from "@vardast/component/searcmd:h-header h-largeHeader"
 import { SearchSellerRepresentativeInput } from "@vardast/graphql/generated"
 import { Session } from "next-auth"
 

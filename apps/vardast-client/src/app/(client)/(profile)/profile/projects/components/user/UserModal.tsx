@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { digitsEnToFa } from "@persian-tools/persian-tools"
+import { digitsEnToFa, digitsFaToEn } from "@persian-tools/persian-tools"
 import { useQueryClient } from "@tanstack/react-query"
 import {
-  CreateUserProjectInput,
-  UpdateProjectUserInput,
   useAssignUserProjectMutation,
   useUpdateProjectUserMutation
 } from "@vardast/graphql/generated"
@@ -41,7 +39,7 @@ import {
 } from "@/app/(client)/(profile)/profile/projects/components/user/ProjectUsersTab"
 
 export const AddUserModalFormSchema = z.object({
-  name: z.string(),
+  // name: z.string(),
   cellphone: cellphoneNumberSchema
 })
 
@@ -92,11 +90,15 @@ export const UserModal = ({
     }
   )
 
-  const onSubmit = (data: any) => {
-    if (selectedUsers?.data) {
+  const onSubmit = (data: AddUserModalFormType) => {
+    if (
+      selectedUsers?.data &&
+      selectedUsers?.type === SELECTED_ITEM_TYPE.EDIT
+    ) {
       return updateProjectUserMutation.mutate({
         updateProjectUserInput: {
-          ...(data as UpdateProjectUserInput),
+          // ...data,
+          cellphone: digitsFaToEn(data.cellphone),
           userId: selectedUsers?.data.id,
           projectId: +uuid
         }
@@ -104,7 +106,8 @@ export const UserModal = ({
     }
     assignUserProjectMutation.mutate({
       createUserProjectInput: {
-        ...(data as CreateUserProjectInput),
+        // ...(data as CreateUserProjectInput),
+        cellphone: digitsFaToEn(data.cellphone),
         projectId: +uuid
       }
     })
@@ -115,12 +118,19 @@ export const UserModal = ({
       selectedUsers?.data &&
       selectedUsers?.type === SELECTED_ITEM_TYPE.EDIT
     ) {
-      form.setValue("name", selectedUsers?.data.fullName)
-      form.setValue("cellphone", selectedUsers?.data.cellphone)
+      // if (selectedUsers?.data.fullName) {
+      //   form.setValue("name", selectedUsers?.data.fullName)
+      // }
+      if (selectedUsers?.data.cellphone) {
+        form.setValue("cellphone", digitsEnToFa(selectedUsers?.data.cellphone))
+      }
     } else {
       form.reset()
     }
-    return () => form.reset()
+    return () => {
+      form.reset()
+      setErrors(undefined)
+    }
   }, [selectedUsers, selectedUsers?.data])
 
   return (
@@ -196,6 +206,7 @@ export const UserModal = ({
                 <Button
                   className="py-2"
                   variant="ghost"
+                  type="button"
                   onClick={() => {
                     onCloseModal()
                   }}

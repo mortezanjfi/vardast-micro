@@ -2,6 +2,7 @@
 
 import { useMemo } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { digitsFaToEn } from "@persian-tools/persian-tools"
 import { useQueryClient } from "@tanstack/react-query"
 import { TabTitleWithExtraData } from "@vardast/component/BrandOrSellerProfile"
 import {
@@ -11,6 +12,7 @@ import {
 import { toast } from "@vardast/hook/use-toast"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import zodI18nMap from "@vardast/util/zodErrorMap"
+import { amountSchema } from "@vardast/util/zodValidationSchemas"
 import { ClientError } from "graphql-request"
 import { useForm, UseFormReturn } from "react-hook-form"
 import { TypeOf, z } from "zod"
@@ -44,7 +46,7 @@ export const CreateOrderLineSchema = z.object({
   brand: z.string(),
   descriptions: z.string().optional(),
   item_name: z.string(),
-  qty: z.string().optional(),
+  qty: amountSchema,
   uom: z.string(),
   type: z.string().optional()
 })
@@ -100,7 +102,7 @@ const OrderProductsTabs = ({ uuid }: OrderProductsTabsProps) => {
     createLineMutation.mutate({
       createLineInput: {
         ...createLineInput,
-        qty: createLineInput.qty || "1",
+        qty: digitsFaToEn(createLineInput.qty) || "1",
         item_name: createLineInput.item_name,
         preOrderId: +uuid
       }

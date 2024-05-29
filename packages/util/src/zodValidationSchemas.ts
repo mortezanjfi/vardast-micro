@@ -6,6 +6,7 @@ import { z } from "zod"
 
 import { persianCharactersValidator } from "./persianCharactersValidator"
 import { slugValidator } from "./slugValidator"
+import { stringHasOnlyNumberValidator } from "./stringHasOnlyNumberValidator"
 
 export const optionalTextInputSchema = (schema: z.ZodString) =>
   z
@@ -27,13 +28,28 @@ export const cellphoneNumberSchema = z
 
 export const postalCodeSchema = z
   .string()
-  .refine((data) => digitsFaToEn(`${data}`), {
+  .min(10, {
+    message: "کد پستی باید ۱۰ رقم باشد"
+  })
+  .min(10, {
+    message: "کد پستی باید ۱۰ رقم باشد"
+  })
+  .refine((data) => stringHasOnlyNumberValidator(digitsFaToEn(`${data}`)), {
+    message: "کد پستی صحیح نیست"
+  })
+
+export const otpSchema = z
+  .string()
+  .refine((data) => stringHasOnlyNumberValidator(digitsFaToEn(`${data}`)), {
     message: "رمز یکبار مصرف صحیح نیست"
   })
 
-export const otpSchema = z.string().refine((data) => digitsFaToEn(`${data}`), {
-  message: "رمز یکبار مصرف صحیح نیست"
-})
+export const amountSchema = z
+  .string()
+  .refine((data) => stringHasOnlyNumberValidator(digitsFaToEn(`${data}`)), {
+    message: "تعداد صحیح نیست"
+  })
+  .optional()
 
 export const slugInputSchema = z
   .string()

@@ -11,6 +11,7 @@
       "@vardast/graphql/generated": [
         "node_modules/@vardast/graphql/src/generated.ts"
       ],
+      "@vardast/util/*": ["node_modules/@vardast/util/src/*"],
       "@@vardast/tailwind-config": ["node_modules/@vardast/tailwind-config/*"]
     }
   },

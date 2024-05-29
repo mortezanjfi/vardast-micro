@@ -26,7 +26,6 @@ function PageHeader({
       </button> */}
       <div className={`flex items-end ${containerClass}`}>
         <div className={`${titleContainerClasses}`}>
-          {" "}
           <h2 className={` font-black text-alpha-800 ${titleClasses} leading`}>
             {title}
           </h2>

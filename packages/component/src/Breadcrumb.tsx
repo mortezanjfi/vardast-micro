@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
 import { HomeIcon } from "@heroicons/react/24/outline"
+import { stringHasOnlyNumberValidator } from "@vardast/util/stringHasOnlyNumberValidator"
 import useTranslation from "next-translate/useTranslation"
 
 import Link from "./Link"
@@ -41,7 +42,11 @@ const Breadcrumb = ({
         const href = "/" + pathArray.slice(0, index + 1).join("/")
         return {
           path: href,
-          label: +path > 0 ? path : t(`common:${path}`),
+          label: stringHasOnlyNumberValidator(path)
+            ? t(`common:details`)
+            : +path > 0
+              ? path
+              : t(`common:${path}`),
           isCurrent: index === pathArray.length - 1
         }
       })

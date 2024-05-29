@@ -78,7 +78,7 @@ const tailwind = {
   theme: {
     screens,
     extend: {
-      height: screens,
+      height: { ...screens, header: "92px", largeHeader: "140px" },
       container: {
         // you can configure the container to be centered
         center: true,
