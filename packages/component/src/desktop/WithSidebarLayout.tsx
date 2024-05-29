@@ -24,8 +24,6 @@ const WithSidebarLayout = ({
 }: WithSidebarLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
 
-  console.log(isMobileView)
-
   return (
     <>
       {isMobileView ? (

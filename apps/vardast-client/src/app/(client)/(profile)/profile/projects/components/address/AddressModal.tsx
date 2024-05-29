@@ -169,332 +169,351 @@ export const AddressModal = ({
 
   return (
     <Dialog
-      modal={isMobileView ? false : true}
+      modal={!isMobileView}
       open={
         selectedAddresses?.type === SELECTED_ITEM_TYPE.ADD ||
         selectedAddresses?.type === SELECTED_ITEM_TYPE.EDIT
       }
       onOpenChange={onCloseModal}
     >
-      <DialogContent
+      {" "}
+      <div
         className={clsx(
-          "gap-7",
-          isMobileView && "h-full max-h-full w-screen max-w-screen rounded-none"
+          "flex h-full w-full flex-col gap-7",
+          !selectedAddresses && "hidden"
         )}
       >
-        <DialogHeader className="border-b pb">
-          <DialogTitle>
-            {t("common:add_new_entity", { entity: t("common:address") })}
-          </DialogTitle>
-        </DialogHeader>
-        {errors && (
-          <Alert variant="danger">
-            <LucideAlertOctagon />
-            <AlertTitle>خطا</AlertTitle>
-            <AlertDescription>
-              {(
-                errors.response.errors?.at(0)?.extensions
-                  .displayErrors as string[]
-              ).map((error) => (
-                <p key={error}>{error}</p>
-              ))}
-            </AlertDescription>
-          </Alert>
-        )}
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div
-              className={clsx(
-                "grid w-full grid-cols-2 grid-rows-6 gap-y-5",
-                isMobileView && "!flex !flex-col"
-              )}
+        <DialogContent
+          className={clsx(
+            "gap-7",
+            isMobileView &&
+              "h-full max-h-full w-screen max-w-screen !gap-0 rounded-none"
+          )}
+        >
+          <DialogHeader
+            className={clsx("border-b pb", isMobileView && "!h-fit py-4 !pb-9")}
+          >
+            <DialogTitle>
+              {t("common:add_new_entity", { entity: t("common:address") })}
+            </DialogTitle>
+          </DialogHeader>
+          {errors && (
+            <Alert variant="danger">
+              <LucideAlertOctagon />
+              <AlertTitle>خطا</AlertTitle>
+              <AlertDescription>
+                {(
+                  errors.response.errors?.at(0)?.extensions
+                    .displayErrors as string[]
+                ).map((error) => (
+                  <p key={error}>{error}</p>
+                ))}
+              </AlertDescription>
+            </Alert>
+          )}
+          <Form {...form}>
+            <form
+              className="flex h-full flex-col justify-between"
+              onSubmit={form.handleSubmit(onSubmit)}
             >
-              <div className="col-span-2 grid grid-cols-2 gap-x-7">
-                <div className="col-span-2">
+              <div
+                className={clsx(
+                  "grid w-full grid-cols-2 grid-rows-6 gap-y-5",
+                  isMobileView && "!flex !flex-col !gap-y-4"
+                )}
+              >
+                <div className="col-span-2 grid grid-cols-2 gap-x-7">
+                  <div className="col-span-2">
+                    <FormField
+                      control={form.control}
+                      name="title"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t("common:title")}</FormLabel>
+                          <FormControl>
+                            <Input type="text" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+                <div className={RowsClass}>
                   <FormField
                     control={form.control}
-                    name="title"
+                    name="provinceId"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("common:title")}</FormLabel>
-                        <FormControl>
-                          <Input type="text" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
-              <div className={RowsClass}>
-                <FormField
-                  control={form.control}
-                  name="provinceId"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t("common:province")}</FormLabel>
-                      <Popover
-                        modal
-                        open={provinceDialog}
-                        onOpenChange={setProvinceDialog}
-                      >
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              disabled={
-                                provinces.isLoading || provinces.isError
-                              }
-                              noStyle
-                              role="combobox"
-                              className="input-field flex items-center text-start"
-                            >
-                              {field.value
-                                ? provinces.data?.provinces.data?.find(
-                                    (province) =>
-                                      province && province.id === field.value
-                                  )?.name
-                                : t("common:choose_entity", {
-                                    entity: t("common:province")
-                                  })}
-                              <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="!z-[9999]" asChild>
-                          <Command>
-                            <CommandInput
-                              loading={provinces.isLoading}
-                              value={provinceQueryTemp}
-                              onValueChange={(newQuery) => {
-                                // setProvinceQuery(newQuery)
-                                setProvinceQueryTemp(newQuery)
-                              }}
-                              placeholder={t("common:search_entity", {
-                                entity: t("common:province")
-                              })}
-                            />
-                            <CommandEmpty>
-                              {t("common:no_entity_found", {
-                                entity: t("common:province")
-                              })}
-                            </CommandEmpty>
-                            <CommandGroup>
-                              {provinces.data?.provinces.data?.map(
-                                (province) =>
-                                  province && (
-                                    <CommandItem
-                                      value={province.name}
-                                      key={province.id}
-                                      onSelect={(value) => {
-                                        form.setValue(
-                                          "provinceId",
-                                          provinces.data?.provinces.data?.find(
-                                            (province) =>
-                                              province &&
-                                              province.name.toLowerCase() ===
-                                                value
-                                          )?.id || 0
-                                        )
-                                        setProvinceDialog(false)
-                                      }}
-                                    >
-                                      <LucideCheck
-                                        className={mergeClasses(
-                                          "mr-2 h-4 w-4",
-                                          province.id === field.value
-                                            ? "opacity-100"
-                                            : "opacity-0"
-                                        )}
-                                      />
-                                      {province.name}
-                                    </CommandItem>
-                                  )
-                              )}
-                            </CommandGroup>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="cityId"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t("common:city")}</FormLabel>
-                      <Popover
-                        modal
-                        open={cityDialog}
-                        onOpenChange={setCityDialog}
-                      >
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              disabled={
-                                cities.isFetching ||
-                                cities.isLoading ||
-                                !cities.data?.province.cities.length
-                              }
-                              noStyle
-                              role="combobox"
-                              className="input-field flex items-center text-start"
-                            >
-                              {field.value
-                                ? cities?.data?.province.cities.find(
-                                    (city) => city && city.id === field.value
-                                  )?.name
-                                : t("common:choose_entity", {
-                                    entity: t("common:city")
-                                  })}
-                              <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="!z-[9999]" asChild>
-                          <Command>
-                            <CommandInput
-                              placeholder={t("common:search_entity", {
-                                entity: t("common:city")
-                              })}
-                            />
-                            <CommandEmpty>
-                              {t("common:no_entity_found", {
-                                entity: t("common:city")
-                              })}
-                            </CommandEmpty>
-                            <CommandGroup>
-                              {cities.data?.province.cities.map(
-                                (city) =>
-                                  city && (
-                                    <CommandItem
-                                      value={city.name}
-                                      key={city.id}
-                                      onSelect={(value) => {
-                                        const selected =
-                                          cities.data?.province.cities.find(
-                                            (item) => item?.name === value
+                        <FormLabel>{t("common:province")}</FormLabel>
+                        <Popover
+                          modal
+                          open={provinceDialog}
+                          onOpenChange={setProvinceDialog}
+                        >
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                disabled={
+                                  provinces.isLoading || provinces.isError
+                                }
+                                noStyle
+                                role="combobox"
+                                className="input-field flex items-center text-start"
+                              >
+                                {field.value
+                                  ? provinces.data?.provinces.data?.find(
+                                      (province) =>
+                                        province && province.id === field.value
+                                    )?.name
+                                  : t("common:choose_entity", {
+                                      entity: t("common:province")
+                                    })}
+                                <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="!z-[9999]" asChild>
+                            <Command>
+                              <CommandInput
+                                loading={provinces.isLoading}
+                                value={provinceQueryTemp}
+                                onValueChange={(newQuery) => {
+                                  // setProvinceQuery(newQuery)
+                                  setProvinceQueryTemp(newQuery)
+                                }}
+                                placeholder={t("common:search_entity", {
+                                  entity: t("common:province")
+                                })}
+                              />
+                              <CommandEmpty>
+                                {t("common:no_entity_found", {
+                                  entity: t("common:province")
+                                })}
+                              </CommandEmpty>
+                              <CommandGroup>
+                                {provinces.data?.provinces.data?.map(
+                                  (province) =>
+                                    province && (
+                                      <CommandItem
+                                        value={province.name}
+                                        key={province.id}
+                                        onSelect={(value) => {
+                                          form.setValue(
+                                            "provinceId",
+                                            provinces.data?.provinces.data?.find(
+                                              (province) =>
+                                                province &&
+                                                province.name.toLowerCase() ===
+                                                  value
+                                            )?.id || 0
                                           )
-                                        form.setValue(
-                                          "cityId",
-                                          selected?.id || 0
-                                        )
-                                        setCityDialog(false)
-                                      }}
-                                    >
-                                      <LucideCheck
-                                        className={mergeClasses(
-                                          "mr-2 h-4 w-4",
-                                          city.id === field.value
-                                            ? "opacity-100"
-                                            : "opacity-0"
-                                        )}
-                                      />
-                                      {city.name}
-                                    </CommandItem>
-                                  )
-                              )}
-                            </CommandGroup>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className={RowsClass}>
-                <div className="col-span-1">
+                                          setProvinceDialog(false)
+                                        }}
+                                      >
+                                        <LucideCheck
+                                          className={mergeClasses(
+                                            "mr-2 h-4 w-4",
+                                            province.id === field.value
+                                              ? "opacity-100"
+                                              : "opacity-0"
+                                          )}
+                                        />
+                                        {province.name}
+                                      </CommandItem>
+                                    )
+                                )}
+                              </CommandGroup>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   <FormField
                     control={form.control}
-                    name="postalCode"
+                    name="cityId"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("common:postalCode")}</FormLabel>
-                        <FormControl>
-                          <Input type="tel" {...field} />
-                        </FormControl>
+                        <FormLabel>{t("common:city")}</FormLabel>
+                        <Popover
+                          modal
+                          open={cityDialog}
+                          onOpenChange={setCityDialog}
+                        >
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                disabled={
+                                  cities.isFetching ||
+                                  cities.isLoading ||
+                                  !cities.data?.province.cities.length
+                                }
+                                noStyle
+                                role="combobox"
+                                className="input-field flex items-center text-start"
+                              >
+                                {field.value
+                                  ? cities?.data?.province.cities.find(
+                                      (city) => city && city.id === field.value
+                                    )?.name
+                                  : t("common:choose_entity", {
+                                      entity: t("common:city")
+                                    })}
+                                <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="!z-[9999]" asChild>
+                            <Command>
+                              <CommandInput
+                                placeholder={t("common:search_entity", {
+                                  entity: t("common:city")
+                                })}
+                              />
+                              <CommandEmpty>
+                                {t("common:no_entity_found", {
+                                  entity: t("common:city")
+                                })}
+                              </CommandEmpty>
+                              <CommandGroup>
+                                {cities.data?.province.cities.map(
+                                  (city) =>
+                                    city && (
+                                      <CommandItem
+                                        value={city.name}
+                                        key={city.id}
+                                        onSelect={(value) => {
+                                          const selected =
+                                            cities.data?.province.cities.find(
+                                              (item) => item?.name === value
+                                            )
+                                          form.setValue(
+                                            "cityId",
+                                            selected?.id || 0
+                                          )
+                                          setCityDialog(false)
+                                        }}
+                                      >
+                                        <LucideCheck
+                                          className={mergeClasses(
+                                            "mr-2 h-4 w-4",
+                                            city.id === field.value
+                                              ? "opacity-100"
+                                              : "opacity-0"
+                                          )}
+                                        />
+                                        {city.name}
+                                      </CommandItem>
+                                    )
+                                )}
+                              </CommandGroup>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                 </div>
-              </div>
-              <div className={RowsClass}>
-                <div className="col-span-2">
-                  <FormField
-                    control={form.control}
-                    name="address"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("common:postal-address")}</FormLabel>
-                        <FormControl>
-                          <Input type="text" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                <div className={RowsClass}>
+                  <div className="col-span-1">
+                    <FormField
+                      control={form.control}
+                      name="postalCode"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t("common:postalCode")}</FormLabel>
+                          <FormControl>
+                            <Input type="tel" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+                <div className={RowsClass}>
+                  <div className="col-span-2">
+                    <FormField
+                      control={form.control}
+                      name="address"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t("common:postal-address")}</FormLabel>
+                          <FormControl>
+                            <Input type="text" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+                <div className={RowsClass}>
+                  <div>
+                    <FormField
+                      control={form.control}
+                      name="delivery_name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>
+                            {t("common:transferee-name-family")}
+                          </FormLabel>
+                          <FormControl>
+                            <Input type="text" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+                <div className={RowsClass}>
+                  <div className="col-span-1">
+                    <FormField
+                      control={form.control}
+                      name="delivery_contact"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t("common:transferee-number")}</FormLabel>
+                          <FormControl>
+                            <Input type="tel" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                 </div>
               </div>
-              <div className={RowsClass}>
-                <div>
-                  <FormField
-                    control={form.control}
-                    name="delivery_name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          {t("common:transferee-name-family")}
-                        </FormLabel>
-                        <FormControl>
-                          <Input type="text" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
-              <div className={RowsClass}>
-                <div className="col-span-1">
-                  <FormField
-                    control={form.control}
-                    name="delivery_contact"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("common:transferee-number")}</FormLabel>
-                        <FormControl>
-                          <Input type="tel" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
-            </div>
 
-            <DialogFooter className="mt-7 border-t pt">
-              <div className="flex items-center gap-2">
-                <Button
-                  className="py-2"
-                  variant="ghost"
-                  onClick={() => {
-                    onCloseModal()
-                  }}
+              <DialogFooter className="mt-7 border-t pt">
+                <div
+                  className={clsx(
+                    "flex items-center gap-2",
+                    isMobileView && "!grid !grid-cols-2"
+                  )}
                 >
-                  انصراف
-                </Button>
-                <Button className="py-2" variant="primary" type="submit">
-                  ذخیره آدرس
-                </Button>
-              </div>
-            </DialogFooter>
-          </form>
-        </Form>
-      </DialogContent>
+                  <Button
+                    className="py-2"
+                    variant="ghost"
+                    onClick={() => {
+                      onCloseModal()
+                    }}
+                  >
+                    انصراف
+                  </Button>
+                  <Button className="py-2" variant="primary" type="submit">
+                    ذخیره آدرس
+                  </Button>
+                </div>
+              </DialogFooter>
+            </form>
+          </Form>
+        </DialogContent>{" "}
+      </div>
     </Dialog>
   )
 }

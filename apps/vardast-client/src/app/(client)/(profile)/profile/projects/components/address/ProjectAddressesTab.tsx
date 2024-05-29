@@ -109,10 +109,14 @@ const ProjectAddressesTab = ({
             </>
           ) : (
             <div className="flex flex-col items-center justify-center gap-5 py-7">
-              <MapPinIcon width={64} height={64} className="text-alpha-400" />
+              <MapPinIcon
+                width={isMobileView ? 48 : 64}
+                height={isMobileView ? 48 : 64}
+                className="text-alpha-400"
+              />
               <p>شما هنوز آدرس اضافه نکرده اید!</p>{" "}
               <Button
-                className="my-5 py-2"
+                className="my-5 py-3"
                 size="medium"
                 onClick={() => {
                   onOpenModal({
@@ -128,27 +132,28 @@ const ProjectAddressesTab = ({
             </div>
           )}
         </div>
-
-        <div
-          className={clsx(
-            "mt-5 flex justify-end",
-            isMobileView && "!mt-auto w-full"
-          )}
-        >
-          <Button
-            className={clsx(isMobileView && "w-full")}
-            disabled={
-              findOneProjectQuery?.data?.findOneProject?.address.length === 0
-            }
-            loading={
-              findOneProjectQuery.isFetching && findOneProjectQuery.isLoading
-            }
-            type="submit"
-            variant="primary"
+        {isMobileView && (
+          <div
+            className={clsx(
+              "mt-5 flex justify-end",
+              isMobileView && "!mt-auto w-full"
+            )}
           >
-            ذخیره اطلاعات
-          </Button>
-        </div>
+            <Button
+              className={clsx(isMobileView && "w-full")}
+              disabled={
+                findOneProjectQuery?.data?.findOneProject?.address.length === 0
+              }
+              loading={
+                findOneProjectQuery.isFetching && findOneProjectQuery.isLoading
+              }
+              type="submit"
+              variant="primary"
+            >
+              ذخیره اطلاعات
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   )

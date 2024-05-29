@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { MapPinIcon } from "@heroicons/react/24/solid"
+import { UserIcon } from "@heroicons/react/24/solid"
 import Loading from "@vardast/component/Loading"
 import PageHeader from "@vardast/component/PageHeader"
 import { User } from "@vardast/graphql/generated"
@@ -106,10 +106,14 @@ const ProjectUsersTab = ({
             ))
           ) : (
             <div className="flex flex-col items-center justify-center gap-5 py-7">
-              <MapPinIcon width={64} height={64} className="text-alpha-400" />
-              <p>شما هنوز آدرس اضافه نکرده اید!</p>{" "}
+              <UserIcon
+                width={isMobileView ? 48 : 64}
+                height={isMobileView ? 48 : 64}
+                className="text-alpha-400"
+              />
+              <p>شما هنوز همکار اضافه نکرده اید!</p>{" "}
               <Button
-                className="my-5"
+                className="my-5 py-3"
                 size="medium"
                 onClick={() => {
                   onOpenModal({
@@ -125,26 +129,28 @@ const ProjectUsersTab = ({
             </div>
           )}
         </div>
-        <div
-          className={clsx(
-            "mt-5 flex justify-end",
-            isMobileView && "!mt-auto w-full"
-          )}
-        >
-          <Button
-            className={clsx(isMobileView && "w-full")}
-            disabled={
-              findOneProjectQuery?.data?.findOneProject?.address.length === 0
-            }
-            loading={
-              findOneProjectQuery.isFetching && findOneProjectQuery.isLoading
-            }
-            type="submit"
-            variant="primary"
+        {isMobileView && (
+          <div
+            className={clsx(
+              "mt-5 flex justify-end",
+              isMobileView && "!mt-auto w-full"
+            )}
           >
-            ذخیره اطلاعات
-          </Button>
-        </div>
+            <Button
+              className={clsx(isMobileView && "w-full")}
+              disabled={
+                findOneProjectQuery?.data?.findOneProject?.address.length === 0
+              }
+              loading={
+                findOneProjectQuery.isFetching && findOneProjectQuery.isLoading
+              }
+              type="submit"
+              variant="primary"
+            >
+              ذخیره اطلاعات
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   )
