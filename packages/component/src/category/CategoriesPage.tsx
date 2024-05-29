@@ -6,7 +6,7 @@ import { GetCategoryQuery } from "@vardast/graphql/generated"
 import { getCategoryQueryFn } from "@vardast/query/queryFns/categoryQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 
-import SearchHeader from "../searcmd:h-header h-largeHeader"
+import SearchHeader from "../search-header"
 import CategoriesList from "./CategoriesList"
 
 interface CategoriesListProps {

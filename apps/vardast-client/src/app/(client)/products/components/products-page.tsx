@@ -5,7 +5,7 @@ import Breadcrumb from "@vardast/component/Breadcrumb"
 import DesktopCategoriesCardsSection from "@vardast/component/category/DesktopCategoriesCardsSection"
 import ProductDescription from "@vardast/component/product-description"
 import ProductList from "@vardast/component/product-list"
-import ProductsHeader from "@vardast/component/searcmd:h-header h-largeHeader"
+import ProductsHeader from "@vardast/component/search-header"
 import {
   GetCategoryQuery,
   GetCategoryQueryVariables,
