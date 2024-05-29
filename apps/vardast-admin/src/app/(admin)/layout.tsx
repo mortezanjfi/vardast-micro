@@ -5,7 +5,8 @@ import AdminOrSellerDesktopHeader from "@vardast/component/desktop/AdminOrSeller
 import WithSidebarLayout from "@vardast/component/desktop/WithSidebarLayout"
 import MobileBaseLayout from "@vardast/component/MobileBaseLayout"
 import { SearchActionModal } from "@vardast/component/Search"
-import { _sidebarMenu } from "@vardast/lib/constants"
+import { _adminSidebarMenu } from "@vardast/lib/constants"
+import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 import { getServerSession } from "next-auth"
 
 // import { signOut } from "next-auth/react"
@@ -31,13 +32,17 @@ export default async function AdminLayout({
   //     callbackUrl: "/"
   //   })
   // }
-
+  const isMobileView = await CheckIsMobileView()
   return (
     <>
       <SearchActionModal isMobileView={false} />
       <AdminOrSellerDesktopHeader />
       <div className="h-[92px] w-full bg-transparent"></div>
-      <WithSidebarLayout menu={_sidebarMenu}>
+      <WithSidebarLayout
+        isMobileView={isMobileView}
+        grayBackground={false}
+        menu={_adminSidebarMenu}
+      >
         {" "}
         <MobileBaseLayout bgWhite={false} container spaceLess>
           {children}

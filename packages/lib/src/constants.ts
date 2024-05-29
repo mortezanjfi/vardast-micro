@@ -41,7 +41,7 @@ type NavbarItem = {
   id: number
 }
 
-export const _profileSidebarMenu: NavigationType[] = [
+export const _clientSidebarMenu: NavigationType[] = [
   {
     items: [
       {
@@ -73,7 +73,7 @@ export const _profileSidebarMenu: NavigationType[] = [
   }
 ]
 
-export const _sidebarMenu: NavigationType[] = [
+export const _adminSidebarMenu: NavigationType[] = [
   {
     items: [
       {

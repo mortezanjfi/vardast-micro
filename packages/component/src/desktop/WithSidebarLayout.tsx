@@ -10,6 +10,7 @@ import Breadcrumb from "../Breadcrumb"
 import Sidebar from "../Sidebar"
 
 type WithSidebarLayoutProps = {
+  isUserProfile?: boolean
   grayBackground?: boolean
   isMobileView?: boolean
   menu: NavigationType[]
@@ -17,6 +18,7 @@ type WithSidebarLayoutProps = {
 }
 
 const WithSidebarLayout = ({
+  isUserProfile,
   isMobileView,
   grayBackground,
   children,
@@ -31,17 +33,17 @@ const WithSidebarLayout = ({
       ) : (
         <div
           className={clsx(
-            "hide-scrollbar min-h-full w-full overflow-y-scroll ",
-            grayBackground ? "bg-alpha-50" : "bg-alpha-white"
+            "hide-scrollbar min-h-full w-full overflow-y-scroll bg-alpha-white ",
+            grayBackground && "!bg-alpha-50"
           )}
         >
           <div className="h-full w-full flex-col  pb-8 lg:container md:overflow-y-auto">
             <div className="app-inner relative h-full !max-w-full gap-3 pb-5 pt">
               <Sidebar
+                isUserProfile={isUserProfile}
                 open={sidebarOpen}
                 onOpenChanged={setSidebarOpen}
                 menus={menu}
-                isAdmin={true}
               />
 
               <div className="flex h-full w-full !max-w-full flex-col overflow-x-hidden pb">

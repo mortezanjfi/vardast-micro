@@ -23,15 +23,13 @@ type SidebarProps = {
   open: boolean
   onOpenChanged: Dispatch<SetStateAction<boolean>>
   menus: NavigationType[]
-  isAdmin: boolean
 }
 
 const Sidebar = ({
+  isUserProfile,
   menus,
   open,
-  onOpenChanged,
-  isAdmin,
-  isUserProfile
+  onOpenChanged
 }: SidebarProps) => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -117,7 +115,12 @@ const Sidebar = ({
                 </div>
               )}
               <div className="flex flex-col px-6">
-                <div className="app-navigation-container bg-alpha-white">
+                <div
+                  className={clsx(
+                    "app-navigation-container bg-alpha-white ",
+                    isUserProfile && "pt-5"
+                  )}
+                >
                   <Navigation menus={menus} />
                 </div>{" "}
                 <div className="flex flex-col gap-1">
