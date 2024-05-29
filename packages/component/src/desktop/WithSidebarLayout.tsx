@@ -24,6 +24,8 @@ const WithSidebarLayout = ({
 }: WithSidebarLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
 
+  console.log(isMobileView)
+
   return (
     <>
       {isMobileView ? (
@@ -31,8 +33,8 @@ const WithSidebarLayout = ({
       ) : (
         <div
           className={clsx(
-            "hide-scrollbar min-h-full w-full overflow-y-scroll ",
-            grayBackground ? "bg-alpha-50" : "bg-alpha-white"
+            "hide-scrollbar min-h-full w-full overflow-y-scroll bg-alpha-white ",
+            grayBackground && "!bg-alpha-50"
           )}
         >
           <div className="h-full w-full flex-col  pb-8 lg:container md:overflow-y-auto">
