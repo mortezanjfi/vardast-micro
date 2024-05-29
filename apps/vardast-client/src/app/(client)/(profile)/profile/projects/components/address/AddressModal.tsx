@@ -17,7 +17,6 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem
 } from "@vardast/ui/command"
 import {
@@ -83,7 +82,11 @@ export const AddressModal = ({
 
   z.setErrorMap(zodI18nMap)
 
-  const provinces = useGetAllProvincesQuery(graphqlRequestClientWithToken)
+  const provinces = useGetAllProvincesQuery(graphqlRequestClientWithToken, {
+    indexProvinceInput: {
+      perPage: 32
+    }
+  })
 
   const cities = useGetProvinceQuery(
     graphqlRequestClientWithToken,
@@ -244,7 +247,7 @@ export const AddressModal = ({
                         </PopoverTrigger>
                         <PopoverContent className="!z-[9999]" asChild>
                           <Command>
-                            <CommandInput
+                            {/* <CommandInput
                               loading={provinces.isLoading}
                               value={provinceQueryTemp}
                               onValueChange={(newQuery) => {
@@ -254,13 +257,13 @@ export const AddressModal = ({
                               placeholder={t("common:search_entity", {
                                 entity: t("common:province")
                               })}
-                            />
+                            /> */}
                             <CommandEmpty>
                               {t("common:no_entity_found", {
                                 entity: t("common:province")
                               })}
                             </CommandEmpty>
-                            <CommandGroup>
+                            <CommandGroup className="max-h-[150px] overflow-y-scroll">
                               {provinces.data?.provinces.data?.map(
                                 (province) =>
                                   province && (
@@ -336,17 +339,17 @@ export const AddressModal = ({
                         </PopoverTrigger>
                         <PopoverContent className="!z-[9999]" asChild>
                           <Command>
-                            <CommandInput
+                            {/* <CommandInput
                               placeholder={t("common:search_entity", {
                                 entity: t("common:city")
                               })}
-                            />
+                            /> */}
                             <CommandEmpty>
                               {t("common:no_entity_found", {
                                 entity: t("common:city")
                               })}
                             </CommandEmpty>
-                            <CommandGroup>
+                            <CommandGroup className="max-h-[150px] overflow-y-scroll">
                               {cities.data?.province.cities.map(
                                 (city) =>
                                   city && (
