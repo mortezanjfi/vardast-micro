@@ -429,7 +429,6 @@ const SigninFormContent = () => {
                       <FormItem>
                         <FormControl>
                           <Input
-                            id="verify-otp-track-button"
                             type="tel"
                             inputMode="numeric"
                             className="placeholder:text-right"
@@ -555,6 +554,7 @@ const SigninFormContent = () => {
                   </Button>
                   <Button
                     type="submit"
+                    id="verify-otp-track-button"
                     form="verify-otp-form"
                     block
                     disabled={
@@ -569,7 +569,7 @@ const SigninFormContent = () => {
                       formStepTwo.formState.isSubmitting
                     }
                   >
-                    تایید تلفن همراه
+                    ورود
                   </Button>
                 </>
               )}
