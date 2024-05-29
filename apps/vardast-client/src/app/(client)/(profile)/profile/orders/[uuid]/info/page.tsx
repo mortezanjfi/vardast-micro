@@ -1,4 +1,6 @@
 import { Metadata } from "next"
+import withMobileHeader from "@vardast/component/withMobileHeader"
+import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
 import OrderInfoPage from "@/app/(client)/(profile)/profile/orders/[uuid]/info/components/OrderInfoPage"
 
@@ -12,7 +14,9 @@ const ProjectEdit = async ({
 }: {
   params: { uuid: string }
 }) => {
-  return <OrderInfoPage uuid={uuid} />
+  const isMobileView = await CheckIsMobileView()
+
+  return <OrderInfoPage isMobileView={isMobileView} uuid={uuid} />
 }
 
-export default ProjectEdit
+export default withMobileHeader(ProjectEdit, { title: "ثبت اطلاعات سفارش" })

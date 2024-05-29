@@ -45,7 +45,7 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-type OrderInfoFormProps = { uuid: string }
+type OrderInfoFormProps = { isMobileView: boolean; uuid: string }
 export type CreateOrderInfoType = TypeOf<typeof CreateOrderInfoSchema>
 
 const CreateOrderInfoSchema = z.object({
@@ -71,7 +71,7 @@ const ExpireTypesFa = {
   }
 }
 
-const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
+const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
   const { t } = useTranslation()
   const router = useRouter()
   const queryClient = useQueryClient()
@@ -178,7 +178,12 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(submit)}>
-        <div className="grid grid-cols-3 grid-rows-3 gap-x-7 gap-y-5 border-b pb-4">
+        <div
+          className={clsx(
+            "grid grid-cols-3 grid-rows-3 gap-x-7 gap-y-5 border-b pb-4",
+            isMobileView && "!flex !flex-col !gap-5"
+          )}
+        >
           <FormField
             control={form.control}
             name="projectId"
@@ -471,23 +476,26 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
             )}
           />
 
-          <div className="col-span-3">
-            <FormField
-              control={form.control}
-              name="descriptions"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>توضیحات سفارش</FormLabel>
-                  <FormControl>
-                    <Textarea style={{ resize: "none" }} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+          <FormField
+            control={form.control}
+            name="descriptions"
+            render={({ field }) => (
+              <FormItem className="col-span-3">
+                <FormLabel>توضیحات سفارش</FormLabel>
+                <FormControl>
+                  <Textarea style={{ resize: "none" }} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
-        <div className="flex justify-end gap pt-4">
+        <div
+          className={clsx(
+            "flex justify-end gap pt-4",
+            isMobileView && "!grid !grid-cols-2"
+          )}
+        >
           <Link className="btn btn-md btn-secondary" href="/profile/orders/">
             بازگشت به سفارشات
           </Link>
