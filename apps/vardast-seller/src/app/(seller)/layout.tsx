@@ -2,7 +2,7 @@
 import { redirect } from "next/navigation"
 import { authOptions } from "@vardast/auth/authOptions"
 import AdminOrSellerDesktopHeader from "@vardast/component/desktop/AdminOrSellerDesktopHeader"
-import AdminOrSellerLayoutComponent from "@vardast/component/desktop/AdminOrSellerLayout"
+import WithSidebarLayout from "@vardast/component/desktop/WithSidebarLayout"
 // import { authOptions } from "@vardast/auth/authOptions"
 import MobileScrollProvider from "@vardast/component/header/MobileScrollProvider"
 import MobileBaseLayout from "@vardast/component/MobileBaseLayout"
@@ -37,11 +37,11 @@ export default async function PublicLayout({
         <>
           <AdminOrSellerDesktopHeader />
           <div className="h-[92px] w-full bg-transparent"></div>
-          <AdminOrSellerLayoutComponent menu={_sellerSidebarMenu}>
+          <WithSidebarLayout menu={_sellerSidebarMenu}>
             <MobileBaseLayout bgWhite={false} container spaceLess>
               {children}
             </MobileBaseLayout>
-          </AdminOrSellerLayoutComponent>
+          </WithSidebarLayout>
           {/* <AdminOrSellerDesktopFooter isAdmin={false} /> */}
         </>
       )}

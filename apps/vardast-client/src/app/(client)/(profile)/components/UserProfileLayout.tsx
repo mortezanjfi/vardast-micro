@@ -50,33 +50,6 @@ const UserProfileLayout = ({
               {children}
             </div>
           </div>
-          {/* <div className="flex items-center gap-2">
-            <Button
-              onClick={() => setSidebarOpen(true)}
-              variant="ghost"
-              iconOnly
-              className="lg:hidden"
-            >
-              <LucideMenu className="icon" />
-            </Button>
-            <div className="flex-1 overflow-y-auto">
-              <Suspense>
-                <Breadcrumb dynamic isMobileView={isMobileView} />
-              </Suspense>
-            </div>
-          </div>
-
-          <div className="app-inner gap-6 pb-5">
-            <Sidebar
-              isUserProfile
-              open={sidebarOpen}
-              onOpenChanged={setSidebarOpen}
-              menus={_profileSidebarMenu}
-              isAdmin={false}
-            />
-
-            {children}
-          </div> */}
         </div>
       )}
     </>
