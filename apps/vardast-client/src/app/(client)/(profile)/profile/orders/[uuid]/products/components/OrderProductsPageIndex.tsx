@@ -8,13 +8,17 @@ import {
   useFindPreOrderByIdQuery
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
+import clsx from "clsx"
 
 import OrderProductsInnerLayout from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderInnerLayout"
 import OrderProductsTabs from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductsTabs"
 
-type OrderProductsPageIndexProps = { uuid: string }
+type OrderProductsPageIndexProps = { isMobileView: boolean; uuid: string }
 
-function OrderProductsPageIndex({ uuid }: OrderProductsPageIndexProps) {
+function OrderProductsPageIndex({
+  isMobileView,
+  uuid
+}: OrderProductsPageIndexProps) {
   const router = useRouter()
   const findPreOrderByIdQuery = useFindPreOrderByIdQuery(
     graphqlRequestClientWithToken,
@@ -35,11 +39,16 @@ function OrderProductsPageIndex({ uuid }: OrderProductsPageIndexProps) {
   return (
     <OrderProductsInnerLayout
       findPreOrderByIdQuery={findPreOrderByIdQuery}
-      isMobileView={false}
+      isMobileView={isMobileView}
       uuid={uuid}
     >
       <OrderProductsTabs uuid={uuid} />
-      <div className="mt-5 flex justify-end gap border-t pt-5">
+      <div
+        className={clsx(
+          "mt-5 flex justify-end gap border-t pt-5",
+          isMobileView && "!grid !grid-cols-2"
+        )}
+      >
         <Link className="btn btn-md btn-secondary" href="/profile/orders/">
           بازگشت به سفارشات
         </Link>

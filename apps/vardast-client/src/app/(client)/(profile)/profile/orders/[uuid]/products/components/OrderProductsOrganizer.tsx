@@ -57,7 +57,10 @@ const OrderProductsOrganizer = ({
         onValueChange={onTabValueChange}
         className="flex w-full flex-col bg-alpha-white"
       >
-        <SegmentsList wrap className="!justify-start border-b pb md:py-6">
+        <SegmentsList
+          wrap={false}
+          className="!justify-start border-b pb md:py-6"
+        >
           {tabs.map(({ title, value }) => (
             <SegmentsListItem
               key={value}

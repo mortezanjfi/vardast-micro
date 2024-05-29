@@ -27,7 +27,7 @@ const MoreInfo = ({ activeTab, tabs, onTabValueChange }: MoreInfoProps) => {
           با استفاده از روش های زیر نیز میتوانید سفارش خود را تکمیل نمایید.
         </p>
       </div>
-      <div className="flex gap-2">
+      <div className="hide-scrollbar flex gap-2 overflow-x-auto">
         {tabs.map((tab, index) => {
           return (
             <Link
