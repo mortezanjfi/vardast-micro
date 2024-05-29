@@ -19,20 +19,12 @@ import Link from "./Link"
 import Navigation from "./Navigation"
 
 type SidebarProps = {
-  isUserProfile?: boolean
   open: boolean
   onOpenChanged: Dispatch<SetStateAction<boolean>>
   menus: NavigationType[]
-  isAdmin: boolean
 }
 
-const Sidebar = ({
-  menus,
-  open,
-  onOpenChanged,
-  isAdmin,
-  isUserProfile
-}: SidebarProps) => {
+const Sidebar = ({ menus, open, onOpenChanged }: SidebarProps) => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const { data: session, status: sessionStatus } = useSession()
@@ -70,7 +62,7 @@ const Sidebar = ({
                 "flex h-full flex-col !gap-0 divide-y-8 divide-alpha-50 px-4 md:px-0"
               )}
             >
-              {isUserProfile && session?.profile?.status && (
+              {session?.profile?.status && (
                 <div className="flex flex-col divide-y bg-alpha-white px-6">
                   <div className="flex items-center py-5">
                     <div className="flex flex-1 items-center gap-x-2">

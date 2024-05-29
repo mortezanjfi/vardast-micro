@@ -29,7 +29,6 @@ const UserProfileLayout = ({
               open={sidebarOpen}
               onOpenChanged={setSidebarOpen}
               menus={_profileSidebarMenu}
-              isAdmin={true}
             />
             <div className="flex h-full w-full !max-w-full flex-col overflow-x-hidden pb">
               <div className="flex items-center gap-2 pr-6">

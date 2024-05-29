@@ -41,7 +41,6 @@ const WithSidebarLayout = ({
                 open={sidebarOpen}
                 onOpenChanged={setSidebarOpen}
                 menus={menu}
-                isAdmin={true}
               />
 
               <div className="flex h-full w-full !max-w-full flex-col overflow-x-hidden pb">
