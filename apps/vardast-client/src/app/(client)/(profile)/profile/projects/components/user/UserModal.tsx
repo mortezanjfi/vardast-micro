@@ -145,9 +145,7 @@ export const UserModal = ({
         )}
       >
         <div className="flex h-full w-full flex-col gap-7">
-          <DialogHeader
-            className={clsx("border-b pb", isMobileView && "!h-fit py-4 !pb-9")}
-          >
+          <DialogHeader className="h-fit border-b pb-9 pt-4 md:pb md:pt-0">
             <DialogTitle>
               {t("common:add_new_entity", { entity: t("common:user") })}
             </DialogTitle>
@@ -172,12 +170,7 @@ export const UserModal = ({
               className="flex h-full flex-col justify-between"
               onSubmit={form.handleSubmit(onSubmit)}
             >
-              <div
-                className={clsx(
-                  "grid w-full grid-cols-2 gap-6",
-                  isMobileView && "!flex !flex-col"
-                )}
-              >
+              <div className="flex w-full grid-cols-2 flex-col gap-6 md:grid">
                 <FormField
                   control={form.control}
                   name="name"
@@ -207,12 +200,7 @@ export const UserModal = ({
               </div>
 
               <DialogFooter className="mt-7 border-t pt">
-                <div
-                  className={clsx(
-                    "flex items-center gap-2",
-                    isMobileView && "!grid !grid-cols-2"
-                  )}
-                >
+                <div className="grid grid-cols-2 items-center gap-2 md:flex">
                   <Button
                     className="py-2"
                     variant="ghost"

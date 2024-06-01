@@ -162,10 +162,8 @@ export const AddressModal = ({
     return () => form.reset()
   }, [selectedAddresses, selectedAddresses?.data])
 
-  const RowsClass = clsx(
-    "col-span-2 grid grid-cols-2 gap-x-7",
-    isMobileView && "!flex flex-col gap-5"
-  )
+  const RowsClass =
+    "flex flex-col gap-5 col-span-2 md:grid grid-cols-2 md:!gap-x"
 
   return (
     <Dialog
@@ -190,9 +188,7 @@ export const AddressModal = ({
               "h-full max-h-full w-screen max-w-screen !gap-0 rounded-none"
           )}
         >
-          <DialogHeader
-            className={clsx("border-b pb", isMobileView && "!h-fit py-4 !pb-9")}
-          >
+          <DialogHeader className="h-fit border-b pb-9 pt-4 md:pb md:pt-0">
             <DialogTitle>
               {t("common:add_new_entity", { entity: t("common:address") })}
             </DialogTitle>
@@ -216,29 +212,21 @@ export const AddressModal = ({
               className="flex h-full flex-col justify-between"
               onSubmit={form.handleSubmit(onSubmit)}
             >
-              <div
-                className={clsx(
-                  "grid w-full grid-cols-2 grid-rows-6 gap-y-5",
-                  isMobileView && "!flex !flex-col !gap-y-4"
-                )}
-              >
-                <div className="col-span-2 grid grid-cols-2 gap-x-7">
-                  <div className="col-span-2">
-                    <FormField
-                      control={form.control}
-                      name="title"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{t("common:title")}</FormLabel>
-                          <FormControl>
-                            <Input type="text" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
+              <div className="flex  w-full  grid-cols-2 grid-rows-5 flex-col gap-x gap-y-9 md:grid">
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t("common:title")}</FormLabel>
+                      <FormControl>
+                        <Input type="text" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 <div className={RowsClass}>
                   <FormField
                     control={form.control}
@@ -418,84 +406,66 @@ export const AddressModal = ({
                   />
                 </div>
                 <div className={RowsClass}>
-                  <div className="col-span-1">
-                    <FormField
-                      control={form.control}
-                      name="postalCode"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{t("common:postalCode")}</FormLabel>
-                          <FormControl>
-                            <Input type="tel" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                  <FormField
+                    control={form.control}
+                    name="delivery_name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          {t("common:transferee-name-family")}
+                        </FormLabel>
+                        <FormControl>
+                          <Input type="text" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="delivery_contact"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t("common:transferee-number")}</FormLabel>
+                        <FormControl>
+                          <Input type="tel" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />{" "}
                 </div>
-                <div className={RowsClass}>
-                  <div className="col-span-2">
-                    <FormField
-                      control={form.control}
-                      name="address"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{t("common:postal-address")}</FormLabel>
-                          <FormControl>
-                            <Input type="text" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-                <div className={RowsClass}>
-                  <div>
-                    <FormField
-                      control={form.control}
-                      name="delivery_name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>
-                            {t("common:transferee-name-family")}
-                          </FormLabel>
-                          <FormControl>
-                            <Input type="text" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-                <div className={RowsClass}>
-                  <div className="col-span-1">
-                    <FormField
-                      control={form.control}
-                      name="delivery_contact"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{t("common:transferee-number")}</FormLabel>
-                          <FormControl>
-                            <Input type="tel" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
+                <FormField
+                  control={form.control}
+                  name="postalCode"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t("common:postalCode")}</FormLabel>
+                      <FormControl>
+                        <Input type="tel" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="address"
+                  render={({ field }) => (
+                    <FormItem className="col-span-2">
+                      <FormLabel>{t("common:postal-address")}</FormLabel>
+                      <FormControl>
+                        <Input type="text" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
 
               <DialogFooter className="mt-7 border-t pt">
-                <div
-                  className={clsx(
-                    "flex items-center gap-2",
-                    isMobileView && "!grid !grid-cols-2"
-                  )}
-                >
+                <div className="grid grid-cols-2 gap-2 md:flex md:items-center">
                   <Button
                     className="py-2"
                     variant="ghost"

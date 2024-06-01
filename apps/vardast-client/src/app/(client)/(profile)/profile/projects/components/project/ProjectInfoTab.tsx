@@ -21,7 +21,6 @@ import {
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
 import zodI18nMap from "@vardast/util/zodErrorMap"
-import clsx from "clsx"
 import { ClientError } from "graphql-request/build/esm/types"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
@@ -32,7 +31,6 @@ import {
 } from "@/app/(client)/(profile)/profile/projects/components/project/ProjectForm"
 
 const ProjectInfoTab = ({
-  isMobileView,
   setActiveTab,
   uuid,
   isNew,
@@ -43,7 +41,6 @@ const ProjectInfoTab = ({
   const ProjectSchema = z.object({
     name: z.string()
   })
-  console.log(isMobileView)
 
   type CreateProjectType = TypeOf<typeof ProjectSchema>
 
@@ -122,26 +119,13 @@ const ProjectInfoTab = ({
   }, [findOneProjectQuery?.data])
 
   return (
-    <div
-      className={clsx(
-        "flex h-full w-full flex-col gap-9 py-5",
-        isMobileView && "px-6"
-      )}
-    >
+    <div className="flex h-full w-full flex-col gap-9 p-6 md:px-0 md:py-5">
       <Form {...form}>
         <form
-          className={clsx(
-            "flex flex-col gap-9",
-            isMobileView && "h-full justify-between"
-          )}
+          className="flex h-full flex-col justify-between gap-9"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <div
-            className={clsx(
-              "grid grid-cols-3 gap-x-7 gap-y-5 2xl:grid-cols-4",
-              isMobileView && "!grid-cols-1"
-            )}
-          >
+          <div className="grid grid-cols-1 gap-x-7 gap-y-5 md:grid-cols-3 2xl:grid-cols-4">
             <FormField
               control={form.control}
               name="name"
@@ -165,9 +149,9 @@ const ProjectInfoTab = ({
               )}
             />
           </div>
-          <div className={clsx("flex justify-end", isMobileView && "w-full")}>
+          <div className="flex w-full justify-end">
             <Button
-              className={clsx(isMobileView && "w-full")}
+              className="w-full md:w-fit"
               disabled={
                 !form.watch("name") ||
                 updateProjectMutation.isLoading ||

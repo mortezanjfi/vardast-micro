@@ -8,7 +8,6 @@ import {
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@vardast/ui/tabs"
-import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
 
 import PageTitle from "@/app/(client)/(profile)/components/PageTitle"
@@ -63,12 +62,7 @@ const ProjectForm = ({
   }
 
   return (
-    <div
-      className={clsx(
-        "flex h-full w-full flex-col gap-9",
-        isMobileView && "py-6"
-      )}
-    >
+    <div className="flex h-full w-full flex-col gap-9 py-6 md:py-0">
       {!isMobileView && (
         <PageTitle backButtonUrl="/profile/projects" title={title} />
       )}
@@ -77,12 +71,7 @@ const ProjectForm = ({
         onValueChange={(e) => setActiveTab(e as PROJECT_TAB)}
         className="flex h-full w-full flex-col"
       >
-        <TabsList
-          className={clsx(
-            "w-full border-b",
-            isMobileView && "!grid !grid-cols-3"
-          )}
-        >
+        <TabsList className="grid w-full grid-cols-3 border-b md:flex">
           <TabsTrigger value={PROJECT_TAB.INFO}>اطلاعات پروژه</TabsTrigger>
           <TabsTrigger
             disabled={!findOneProjectQuery.data}
@@ -97,22 +86,13 @@ const ProjectForm = ({
             {t(`common:${PROJECT_TAB.PROJECT_USERS}`)}
           </TabsTrigger>
         </TabsList>
-        <TabsContent
-          className={clsx(isMobileView && "!h-full")}
-          value={PROJECT_TAB.INFO}
-        >
+        <TabsContent className="!h-full" value={PROJECT_TAB.INFO}>
           <ProjectInfoTab {...tabProps} />
         </TabsContent>
-        <TabsContent
-          className={clsx(isMobileView && "!h-full")}
-          value={PROJECT_TAB.ADDRESSES}
-        >
+        <TabsContent className="!h-full" value={PROJECT_TAB.ADDRESSES}>
           <ProjectAddressesTab {...tabProps} />
         </TabsContent>
-        <TabsContent
-          className={clsx(isMobileView && "!h-full")}
-          value={PROJECT_TAB.PROJECT_USERS}
-        >
+        <TabsContent className="!h-full" value={PROJECT_TAB.PROJECT_USERS}>
           <ProjectUsersTab {...tabProps} />
         </TabsContent>
       </Tabs>
