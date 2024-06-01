@@ -7,9 +7,9 @@ const Layout: React.FC<PropsWithChildren> = async ({ children }) => {
   const isMobileView = await CheckIsMobileView()
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex h-full flex-col gap-8">
       {!isMobileView && <OfferItemStepper />}
-      <div>{children}</div>
+      <div className="h-full">{children}</div>
     </div>
   )
 }

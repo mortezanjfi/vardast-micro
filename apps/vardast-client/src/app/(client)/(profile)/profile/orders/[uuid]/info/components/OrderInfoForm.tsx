@@ -45,7 +45,7 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-type OrderInfoFormProps = { isMobileView: boolean; uuid: string }
+type OrderInfoFormProps = { uuid: string }
 export type CreateOrderInfoType = TypeOf<typeof CreateOrderInfoSchema>
 
 const CreateOrderInfoSchema = z.object({
@@ -71,7 +71,7 @@ const ExpireTypesFa = {
   }
 }
 
-const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
+const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
   const { t } = useTranslation()
   const router = useRouter()
   const queryClient = useQueryClient()
@@ -177,13 +177,11 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(submit)}>
-        <div
-          className={clsx(
-            "grid grid-cols-3 grid-rows-3 gap-x-7 gap-y-5 border-b pb-4",
-            isMobileView && "!flex !flex-col !gap-5"
-          )}
-        >
+      <form
+        className="flex h-full flex-col justify-between"
+        onSubmit={form.handleSubmit(submit)}
+      >
+        <div className="flex grid-cols-3 grid-rows-3 flex-col gap-x-7 gap-y-5 border-b pb-4 md:grid">
           <FormField
             control={form.control}
             name="projectId"
@@ -490,12 +488,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
             )}
           />
         </div>
-        <div
-          className={clsx(
-            "flex justify-end gap pt-4",
-            isMobileView && "!grid !grid-cols-2"
-          )}
-        >
+        <div className="grid !grid-cols-2 gap pt-4 md:flex md:justify-end">
           <Link className="btn btn-md btn-secondary" href="/profile/orders/">
             بازگشت به سفارشات
           </Link>

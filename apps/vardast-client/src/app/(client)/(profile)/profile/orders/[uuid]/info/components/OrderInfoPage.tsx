@@ -2,10 +2,10 @@
 
 import OrderInfoForm from "@/app/(client)/(profile)/profile/orders/[uuid]/info/components/OrderInfoForm"
 
-type OrderInfoPageProps = { isMobileView: boolean; uuid: string }
+type OrderInfoPageProps = { uuid: string }
 
-const OrderInfoPage = ({ isMobileView, uuid }: OrderInfoPageProps) => {
-  return <OrderInfoForm isMobileView={isMobileView} uuid={uuid} />
+const OrderInfoPage = ({ uuid }: OrderInfoPageProps) => {
+  return <OrderInfoForm uuid={uuid} />
 }
 
 export default OrderInfoPage

@@ -21,14 +21,12 @@ import useTranslation from "next-translate/useTranslation"
 import { PreOrderStatesFa } from "@/app/(client)/(profile)/profile/orders/components/OrdersPage"
 
 type OrderCardProps = {
-  isMobileView?: boolean
   preOrder: PreOrder
   setOrderToDelete: Dispatch<SetStateAction<PreOrder>>
   setDeleteModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const OrderCard = ({
-  isMobileView,
   preOrder,
   setOrderToDelete,
   setDeleteModalOpen
@@ -38,10 +36,10 @@ const OrderCard = ({
   const [dropDownMenuOpen, setDropDownMenuOpen] = useState(false)
 
   return (
-    <div className="flex w-full flex-col gap-4 border-b border-alpha-200 py-4">
+    <div className="flex w-full flex-col gap-4 border-b border-alpha-200 py-4 md:py-11">
       <div className="flex w-full items-center justify-between">
         {/* <span className="text-base font-semibold">{preOrder?.name}</span> */}
-        <div className={clsx("flex gap-9", isMobileView && "!gap-3")}>
+        <div className="flex gap-3 md:gap-9">
           <div
             className={clsx(
               "tag",
@@ -60,7 +58,7 @@ const OrderCard = ({
             }}
           >
             <span>{t("common:price-offer")}</span>
-            <span className="flex h-[19px] w-[19px] flex-col items-center justify-evenly rounded-full  bg-error-500 text-alpha-white">
+            <span className="flex h-[19px] w-[19px] flex-col items-center justify-center rounded-full  bg-error-500 text-alpha-white">
               {digitsEnToFa(preOrder?.offersNum)}
             </span>
           </Button>
@@ -102,12 +100,7 @@ const OrderCard = ({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div
-        className={clsx(
-          "flex items-center gap-9",
-          isMobileView && "flex-col !items-start !gap-1"
-        )}
-      >
+      <div className="flex flex-col items-start gap-1 md:flex-row md:gap-9">
         <DetailsWithTitle title={"کد سفارش"} text={preOrder?.id} />
         <DetailsWithTitle title={"پروژه"} text={preOrder?.project?.name} />
         <DetailsWithTitle

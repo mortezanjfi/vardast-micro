@@ -93,7 +93,7 @@ const OrdersPage = ({ isMobileView, title }: OrdersPageProps) => {
   }
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <>
       <OrderDeleteModal
         open={deleteModalOpen}
         onOpenChange={setDeleteModalOpen}
@@ -120,53 +120,51 @@ const OrdersPage = ({ isMobileView, title }: OrdersPageProps) => {
           </Button>
         </PageHeader>
       )}
-      <div className="w-full">
-        {preOrdersQuery.isFetching && preOrdersQuery.isLoading ? (
-          <div className="flex h-full items-center justify-center pt-6">
-            <Loading hideMessage />
-          </div>
-        ) : preOrdersQuery.data?.preOrders?.data.length > 0 ? (
-          <div className="flex flex-col">
-            {preOrdersQuery.data?.preOrders?.data.map((preOrder, index) => (
-              <OrderCard
-                isMobileView={isMobileView}
-                key={index}
-                preOrder={preOrder as PreOrder}
-                setOrderToDelete={setOrderToDelete}
-                setDeleteModalOpen={setDeleteModalOpen}
-              />
-            ))}
-            {preOrdersQuery.data?.preOrders?.lastPage > 1 && (
-              <Pagination
-                total={preOrdersQuery.data?.preOrders.lastPage ?? 0}
-                page={currentPage}
-                onChange={(page) => {
-                  setCurrentPage(page)
-                }}
-              />
-            )}
-            {isMobileView && (
-              <div className="absolute bottom-0 w-full border-y border-alpha-200 bg-alpha-white px-6 py-5">
-                <Button
-                  disabled={
-                    createOrderMutation.isLoading || preOrdersQuery.isLoading
-                  }
-                  loading={createOrderMutation.isLoading}
-                  onClick={onCreateOrder}
-                  variant="primary"
-                  size="medium"
-                  className=" mt-auto w-full py-3"
-                >
-                  {t("common:addOrderInfo")}
-                </Button>
-              </div>
-            )}
-          </div>
-        ) : (
-          <NotFoundMessage text="سفارشی" />
-        )}
-      </div>
-    </div>
+
+      {preOrdersQuery.isFetching && preOrdersQuery.isLoading ? (
+        <div className="flex h-full items-center justify-center pt-6">
+          <Loading hideMessage />
+        </div>
+      ) : preOrdersQuery.data?.preOrders?.data.length > 0 ? (
+        <>
+          {preOrdersQuery.data?.preOrders?.data.map((preOrder, index) => (
+            <OrderCard
+              key={index}
+              preOrder={preOrder as PreOrder}
+              setOrderToDelete={setOrderToDelete}
+              setDeleteModalOpen={setDeleteModalOpen}
+            />
+          ))}
+          {preOrdersQuery.data?.preOrders?.lastPage > 1 && (
+            <Pagination
+              total={preOrdersQuery.data?.preOrders.lastPage ?? 0}
+              page={currentPage}
+              onChange={(page) => {
+                setCurrentPage(page)
+              }}
+            />
+          )}
+          {isMobileView && (
+            <div className="absolute bottom-0 w-full border-y border-alpha-200 bg-alpha-white px-6 py-5">
+              <Button
+                disabled={
+                  createOrderMutation.isLoading || preOrdersQuery.isLoading
+                }
+                loading={createOrderMutation.isLoading}
+                onClick={onCreateOrder}
+                variant="primary"
+                size="medium"
+                className=" mt-auto w-full py-3"
+              >
+                {t("common:addOrderInfo")}
+              </Button>
+            </div>
+          )}
+        </>
+      ) : (
+        <NotFoundMessage text="سفارشی" />
+      )}
+    </>
   )
 }
 

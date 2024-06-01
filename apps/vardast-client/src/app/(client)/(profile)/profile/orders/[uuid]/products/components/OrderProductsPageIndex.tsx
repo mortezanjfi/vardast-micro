@@ -8,7 +8,6 @@ import {
   useFindPreOrderByIdQuery
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
-import clsx from "clsx"
 
 import OrderProductsInnerLayout from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderInnerLayout"
 import OrderProductsTabs from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductsTabs"
@@ -43,12 +42,7 @@ function OrderProductsPageIndex({
       uuid={uuid}
     >
       <OrderProductsTabs uuid={uuid} />
-      <div
-        className={clsx(
-          "mt-5 flex justify-end gap border-t pt-5",
-          isMobileView && "!grid !grid-cols-2"
-        )}
-      >
+      <div className="mt-auto grid !grid-cols-2 gap pt-4 md:mt-0 md:flex md:justify-end">
         <Link className="btn btn-md btn-secondary" href="/profile/orders/">
           بازگشت به سفارشات
         </Link>
