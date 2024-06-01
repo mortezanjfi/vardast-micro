@@ -4,8 +4,6 @@
 import { useRef } from "react"
 import Image from "next/image"
 import {
-  ArrowLeftStartOnRectangleIcon,
-  ArrowRightEndOnRectangleIcon,
   InformationCircleIcon,
   NewspaperIcon,
   PencilSquareIcon,
@@ -155,30 +153,8 @@ const ProfileIndex = () => {
   const { data: session, status: sessionStatus } = useSession()
   const productContainerRef = useRef<HTMLAnchorElement>(null)
 
-  const _small_logout_icons: BigSmallIconProps[] = [
-    {
-      id: 6,
-      text: "خروج از حساب کاربری",
-      href: "/auth/signout",
-      color: ColorEnum.ERROR,
-      Icon: ArrowLeftStartOnRectangleIcon,
-      status: ProfileIconVariantStatusEnum.ERROR
-    }
-  ]
-
-  const _small_signin_icons: BigSmallIconProps[] = [
-    {
-      id: 5,
-      text: "ورود به حساب کاربری",
-      href: "/auth/signin/profile",
-      Icon: ArrowRightEndOnRectangleIcon,
-      color: ColorEnum.SUCCESS,
-      status: ProfileIconVariantStatusEnum.SUCCESS
-    }
-  ]
-
   return (
-    <div className="app-navigation flex w-full flex-col gap-1 bg-alpha-50 pt-0">
+    <div className="app-navigation flex w-full flex-col divide-y-2 divide-alpha-50 pt-0">
       {/* <div
         className={clsx(
           "flex h-full flex-col !gap-0 divide-y-8 divide-alpha-50"
@@ -233,36 +209,6 @@ const ProfileIndex = () => {
       <div className="flex flex-col bg-alpha-white px-6">
         <div className="app-navigation-container bg-alpha-white">
           <Navigation menus={_clientMobileProfileMenu} />
-        </div>
-        <div className="flex flex-col gap-1">
-          {sessionStatus !== "loading" &&
-            (session ? (
-              <Link
-                prefetch={false}
-                href="/auth/signout"
-                className="btn-ghost btn justify-start !px-2 py-4 text-start"
-              >
-                <ArrowLeftStartOnRectangleIcon
-                  width={24}
-                  height={24}
-                  className="icon"
-                />
-                خروج از حساب کاربری
-              </Link>
-            ) : (
-              <Link
-                prefetch={false}
-                href="/auth/signin"
-                className="btn-ghost btn justify-start !px-2 py-4 text-start !text-success"
-              >
-                <ArrowRightEndOnRectangleIcon
-                  width={24}
-                  height={24}
-                  className="icon"
-                />
-                ورود به حساب کاربری
-              </Link>
-            ))}
         </div>
       </div>
       <div className="flex flex-col">

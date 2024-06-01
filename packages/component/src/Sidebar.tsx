@@ -2,11 +2,7 @@
 
 import { Dispatch, useEffect, useRef } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
-import {
-  ArrowLeftStartOnRectangleIcon,
-  ArrowRightEndOnRectangleIcon,
-  PencilSquareIcon
-} from "@heroicons/react/24/outline"
+import { PencilSquareIcon } from "@heroicons/react/24/outline"
 import { WalletIcon } from "@heroicons/react/24/solid"
 import { useClickOutside } from "@mantine/hooks"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
@@ -111,36 +107,6 @@ const Sidebar = ({ menus, open, onOpenChanged }: SidebarProps) => {
               <div className="flex flex-col px-6">
                 <div className="app-navigation-container bg-alpha-white">
                   <Navigation menus={menus} />
-                </div>{" "}
-                <div className="flex flex-col gap-1">
-                  {sessionStatus !== "loading" &&
-                    (session ? (
-                      <Link
-                        prefetch={false}
-                        href="/auth/signout"
-                        className="btn btn-ghost justify-start gap-2 px-3 py-4 text-start"
-                      >
-                        <ArrowLeftStartOnRectangleIcon
-                          width={24}
-                          height={24}
-                          className="icon"
-                        />
-                        خروج از حساب کاربری
-                      </Link>
-                    ) : (
-                      <Link
-                        prefetch={false}
-                        href="/auth/signin"
-                        className="btn btn-ghost justify-start gap-2 px-3 py-4 text-start !text-success"
-                      >
-                        <ArrowRightEndOnRectangleIcon
-                          width={24}
-                          height={24}
-                          className="icon"
-                        />
-                        ورود به حساب کاربری
-                      </Link>
-                    ))}
                 </div>
               </div>
             </div>

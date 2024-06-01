@@ -46,11 +46,6 @@ export const _clientMobileSecondProfileMenu: NavigationType[] = [
     title: "سایر",
     items: [
       {
-        title: "قوانین و مقررات",
-        icon: "newspaper",
-        path: "/privacy"
-      },
-      {
         title: "درباره ما",
         icon: "info",
         path: "/about"
@@ -59,6 +54,12 @@ export const _clientMobileSecondProfileMenu: NavigationType[] = [
         title: "تماس با ما",
         icon: "phone",
         path: "/contact"
+      },
+      { title: "سوالات متداول", icon: "file-question", path: "/faq" },
+      {
+        title: "قوانین و مقررات",
+        icon: "newspaper",
+        path: "/privacy"
       }
     ]
   }
@@ -88,11 +89,16 @@ export const _clientMobileProfileMenu: NavigationType[] = [
         icon: "bookmark",
         path: "/profile/favorites"
       },
-      { title: "بازدیدهای اخیر", icon: "clock", path: "/profile" },
       {
         title: "اطلاعات حساب کاربری",
         icon: "user",
         path: "/profile/info"
+      },
+      {
+        title: "خروج از حساب کاربری",
+        icon: "log-out",
+        path: "/auth/signout",
+        color: "text-error-600"
       }
     ]
   }
@@ -115,6 +121,12 @@ export const _profileSidebarMenu: NavigationType[] = [
         title: "سفارشات",
         icon: "list",
         path: "/profile/orders"
+      },
+      {
+        title: "خروج از حساب کاربری",
+        icon: "log-out",
+        path: "/auth/signout",
+        color: "text-error-600"
       }
       // {
       //   title: "سبد کالا",
@@ -191,7 +203,14 @@ export const _sidebarMenu: NavigationType[] = [
         path: "/uoms",
         icon: "ruler",
         abilities: "gql.products.uom.index"
+      },
+      {
+        title: "خروج از حساب کاربری",
+        icon: "log-out",
+        path: "/auth/signout",
+        color: "text-error-600"
       }
+
       // {
       //   title: "کالاها",
       //   icon: "package",
@@ -317,6 +336,12 @@ export const _sellerSidebarMenu: NavigationType[] = [
         title: "برندهای من",
         path: "/brands",
         icon: "layers"
+      },
+      {
+        title: "خروج از حساب کاربری",
+        icon: "log-out",
+        path: "/auth/signout",
+        color: "text-error-600"
       }
     ]
   }

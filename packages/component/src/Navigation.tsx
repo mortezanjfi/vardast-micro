@@ -25,7 +25,7 @@ const Navigation = (props: Props) => {
             <section className="app-navigation-section" key={sectionId}>
               <ol className="app-navigation-section-list">
                 {menuSection.title && (
-                  <li className="app-navigation-section-label">
+                  <li className="app-navigation-section-label !text-alpha-500">
                     {menuSection.title}
                   </li>
                 )}
@@ -37,7 +37,9 @@ const Navigation = (props: Props) => {
                         !menuItem.abilities) && (
                         <>
                           <NavigationItem key={idx} menu={menuItem} />
-                          <hr className="mx-auto h-0.5 w-4/5" />
+                          {idx !== menuSection.items.length - 1 && (
+                            <hr className="mx-auto h-0.5 w-4/5" />
+                          )}
                         </>
                       )
                   )}

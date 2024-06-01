@@ -46,7 +46,11 @@ const NavigationItem = (props: Props) => {
       >
         <span>
           <Link href={menu.path as string} className="app-navigation-item-link">
-            <DynamicIcon name={menu.icon} className="icon" strokeWidth={1.5} />
+            <DynamicIcon
+              name={menu.icon}
+              className={clsx("icon", menu.color && "!text-error-600")}
+              strokeWidth={1.5}
+            />
             <span className={clsx("flex-1", menu.color)}>{menu.title}</span>
           </Link>
           {menu.items && (
