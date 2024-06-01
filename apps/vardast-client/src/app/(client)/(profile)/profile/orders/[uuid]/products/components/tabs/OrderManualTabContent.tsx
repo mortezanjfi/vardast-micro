@@ -30,7 +30,7 @@ const OrderManualTabContent = ({
         onSubmit={form.handleSubmit(addProductLine)}
         className="flex w-full flex-col gap-5 py-5"
       >
-        <div className="grid w-full grid-cols-3 gap-7">
+        <div className="flex w-full grid-cols-3 flex-col gap-7 md:grid">
           <FormField
             control={form.control}
             name="item_name"
@@ -71,7 +71,7 @@ const OrderManualTabContent = ({
             )}
           />
         </div>
-        <div className="grid w-full grid-cols-2 gap-7">
+        <div className="flex w-full grid-cols-2 flex-col gap-7 md:grid">
           <FormField
             control={form.control}
             name="qty"
