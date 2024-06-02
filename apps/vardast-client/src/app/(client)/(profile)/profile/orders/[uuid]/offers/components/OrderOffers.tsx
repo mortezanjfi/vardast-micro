@@ -176,7 +176,7 @@ const OrderOffers = ({ isMobileView, uuid }: OrderOffersProps) => {
           )
         )}
       </div>
-      <div className="absolute bottom-0 mt-5 grid w-full grid-cols-2 justify-end gap border-t pt-5 md:relative md:flex md:justify-end">
+      <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] mt-5 grid w-full grid-cols-2 justify-end gap border-t bg-alpha-white pt-5 md:relative md:bottom-0 md:flex md:justify-end">
         <Link className="btn btn-md btn-secondary" href="/profile/orders/">
           بازگشت به سفارشات
         </Link>

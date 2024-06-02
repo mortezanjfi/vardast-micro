@@ -501,7 +501,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
               )}
             />
           </div>
-          <div className="absolute bottom-0 grid w-full !grid-cols-2 gap pt-4 md:flex md:justify-end">
+          <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] grid w-full !grid-cols-2 gap pt-4 md:relative md:bottom-0 md:flex md:justify-end">
             <Link className="btn btn-md btn-secondary" href="/profile/orders/">
               بازگشت به سفارشات
             </Link>

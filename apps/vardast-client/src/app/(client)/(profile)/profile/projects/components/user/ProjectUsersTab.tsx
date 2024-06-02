@@ -128,9 +128,9 @@ const ProjectUsersTab = ({
       )}
 
       {isMobileView && (
-        <div className="!mt-auto flex w-full justify-end">
+        <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] flex w-full justify-end md:relative md:bottom-0">
           <Button
-            className="w-full"
+            className="w-full md:w-fit"
             disabled={
               findOneProjectQuery?.data?.findOneProject?.address.length === 0
             }

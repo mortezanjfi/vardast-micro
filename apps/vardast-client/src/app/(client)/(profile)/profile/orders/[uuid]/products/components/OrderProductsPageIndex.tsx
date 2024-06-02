@@ -42,7 +42,7 @@ function OrderProductsPageIndex({
       uuid={uuid}
     >
       <OrderProductsTabs uuid={uuid} />
-      <div className="mt-auto grid !grid-cols-2 gap pt-4 md:mt-0 md:flex md:justify-end">
+      <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] mt-auto grid w-full !grid-cols-2 gap pt-4 md:relative md:bottom-0 md:mt-0 md:flex md:justify-end">
         <Link className="btn btn-md btn-secondary" href="/profile/orders/">
           بازگشت به سفارشات
         </Link>
