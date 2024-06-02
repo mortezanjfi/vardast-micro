@@ -291,6 +291,8 @@ const BrandForm = ({ brand }: BrandFormProps) => {
     }
   }
 
+  console.log(brand)
+
   return (
     <Form {...form}>
       {errors && (
@@ -414,6 +416,7 @@ const BrandForm = ({ brand }: BrandFormProps) => {
                 </div>
               </Card>
             )}
+            {/* catalog */}
             {brand && (
               <Card template="1/2" title={t("common:catalog")}>
                 <div className="flex items-end gap-6">
@@ -473,6 +476,7 @@ const BrandForm = ({ brand }: BrandFormProps) => {
                 </div>
               </Card>
             )}
+            {/* priceList */}
             {brand && (
               <Card template="1/2" title={t("common:price_list")}>
                 <div className="flex items-end gap-6">
@@ -544,11 +548,11 @@ const BrandForm = ({ brand }: BrandFormProps) => {
                     ref={bannerFileRef}
                   />
                   <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
-                    {bannerPreview || brand?.bannerFile ? (
+                    {bannerPreview || brand?.bannerDesktop ? (
                       <Image
                         src={
                           bannerPreview ||
-                          (brand?.bannerFile?.presignedUrl.url as string)
+                          (brand?.bannerDesktop?.presignedUrl.url as string)
                         }
                         fill
                         alt="..."
