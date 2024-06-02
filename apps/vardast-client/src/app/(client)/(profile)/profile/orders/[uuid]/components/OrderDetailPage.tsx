@@ -91,7 +91,7 @@ const OrderDetailPage = ({
           toast({
             title: "پیشنهاد شما با موفقیت ثبت شد",
             description:
-              "لطفا برای قیمت گذاری بقر روی کالاها ادامه فرایند را انجام دهید.",
+              "لطفا برای قیمت گذاری بر روی کالاها ادامه فرایند را انجام دهید.",
             duration: 8000,
             variant: "success"
           })
@@ -236,7 +236,7 @@ const OrderDetailPage = ({
         <NotFoundMessage text="کالایی به سفارش خود" />
       )}
 
-      <div className="mt-auto grid !grid-cols-2 gap pt-4 md:mt-0 md:flex md:justify-end">
+      <div className="absolute bottom-0 grid w-full !grid-cols-2 gap pt-4 md:relative md:mt-0 md:flex md:justify-end">
         <Link className="btn btn-md btn-secondary" href="/profile/orders/">
           بازگشت به سفارشات
         </Link>

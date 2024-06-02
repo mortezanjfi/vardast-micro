@@ -64,7 +64,7 @@ const OrderOffers = ({ isMobileView, uuid }: OrderOffersProps) => {
           toast({
             title: "پیشنهاد شما با موفقیت ثبت شد",
             description:
-              "لطفا برای قیمت گذاری بقر روی کالاها ادامه فرایند را انجام دهید.",
+              "لطفا برای قیمت گذاری بر روی کالاها ادامه فرایند را انجام دهید.",
             duration: 8000,
             variant: "success"
           })
@@ -124,7 +124,7 @@ const OrderOffers = ({ isMobileView, uuid }: OrderOffersProps) => {
   }
 
   return (
-    <div className="flex h-full flex-col">
+    <>
       <VardastDialog open={open} setOpen={setOpen} />
       <div className="flex h-full w-full flex-col gap-4 px-0.5">
         {findPreOrderByIdQuery.data?.findPreOrderById?.offers.map(
@@ -176,7 +176,7 @@ const OrderOffers = ({ isMobileView, uuid }: OrderOffersProps) => {
           )
         )}
       </div>
-      <div className="mt-5 grid grid-cols-2 justify-end gap border-t pt-5 md:flex md:justify-end">
+      <div className="absolute bottom-0 mt-5 grid w-full grid-cols-2 justify-end gap border-t pt-5 md:relative md:flex md:justify-end">
         <Link className="btn btn-md btn-secondary" href="/profile/orders/">
           بازگشت به سفارشات
         </Link>
@@ -196,7 +196,7 @@ const OrderOffers = ({ isMobileView, uuid }: OrderOffersProps) => {
           </Button>
         )}
       </div>
-    </div>
+    </>
   )
 }
 

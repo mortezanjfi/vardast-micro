@@ -187,10 +187,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
         />
       )}
       <Form {...form}>
-        <form
-          className="flex h-full flex-col justify-between"
-          onSubmit={form.handleSubmit(submit)}
-        >
+        <form onSubmit={form.handleSubmit(submit)}>
           <div className="flex grid-cols-3 grid-rows-3 flex-col gap-x-7 gap-y-5 border-b pb-4 md:grid">
             <FormField
               control={form.control}
@@ -504,7 +501,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
               )}
             />
           </div>
-          <div className="grid !grid-cols-2 gap pt-4 md:flex md:justify-end">
+          <div className="absolute bottom-0 grid w-full !grid-cols-2 gap pt-4 md:flex md:justify-end">
             <Link className="btn btn-md btn-secondary" href="/profile/orders/">
               بازگشت به سفارشات
             </Link>

@@ -116,7 +116,7 @@ function SellersList({ findPreOrderByIdQuery, uuid }: Props) {
           toast({
             title: "پیشنهاد شما با موفقیت ثبت شد",
             description:
-              "لطفا برای قیمت گذاری بقر روی کالاها ادامه فرایند را انجام دهید.",
+              "لطفا برای قیمت گذاری بر روی کالاها ادامه فرایند را انجام دهید.",
             duration: 8000,
             variant: "success"
           })
