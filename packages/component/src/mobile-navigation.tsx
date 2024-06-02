@@ -58,6 +58,21 @@ const MobileNavigation = (_: Props) => {
       path: "category"
     },
     {
+      forceEqual: true,
+      dynamicRouteAllow: true,
+      path: "profile/orders"
+    },
+    {
+      forceEqual: true,
+      dynamicRouteAllow: true,
+      path: "profile/projects"
+    },
+    {
+      forceEqual: true,
+      dynamicRouteAllow: true,
+      path: "profile/info"
+    },
+    {
       forceEqual: false,
       dynamicRouteAllow: true,
       path: "auth"

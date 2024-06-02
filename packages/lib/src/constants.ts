@@ -1,5 +1,4 @@
 import {
-  BookmarkIcon,
   CubeIcon,
   HomeIcon,
   Squares2X2Icon,
@@ -370,6 +369,18 @@ export const _withNavigationRoutes: WithNavigationRouteItem[] = [
     path: "/profile"
   },
   {
+    forceEqual: true,
+    path: "/profile/orders"
+  },
+  {
+    forceEqual: true,
+    path: "/profile/projects"
+  },
+  {
+    forceEqual: true,
+    path: "/profile/info"
+  },
+  {
     forceEqual: false,
     path: "/privacy"
   },
@@ -451,10 +462,10 @@ export const _navbar_items: NavbarItem[] = [
     id: 1
   },
   {
-    href: "/favorites",
-    Icon: BookmarkIcon,
+    href: "/orders",
+    Icon: ListBulletIcon,
     ActiveIcon: SolidBookmarkIcon,
-    title: "علاقه‌مندی",
+    title: "سفارشات",
     id: 2
   },
   {
