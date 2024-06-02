@@ -67,12 +67,12 @@ const ProjectCard = ({
           </DropdownMenu>
         </div>
         <div className="flex flex-col items-start gap">
-          <DetailsWithTitle
+          {/* <DetailsWithTitle
             title="آدرس ها"
             text={project?.address
               .map((address) => `- ${address.address.address}`)
               .join("\n")}
-          />
+          /> */}
           <DetailsWithTitle
             title="همکاران پروژه"
             className="!flex-col"

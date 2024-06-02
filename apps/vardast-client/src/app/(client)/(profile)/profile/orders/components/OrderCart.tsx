@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@vardast/ui/dropdown-menu"
+import convertToPersianDate from "@vardast/util/convertToPersianDate"
 import { clsx } from "clsx"
 import { LucideEdit, LucideMoreVertical, LucideTrash } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
@@ -106,14 +107,12 @@ const OrderCard = ({
         <DetailsWithTitle
           title={t("common:submition-time")}
           text={
-            preOrder?.request_date
-              ? digitsEnToFa(
-                  new Date(preOrder?.request_date).toLocaleDateString("fa-IR", {
-                    year: "numeric",
-                    month: "2-digit",
-                    day: "2-digit"
-                  })
-                )
+            preOrder.request_date
+              ? convertToPersianDate({
+                  dateString: preOrder.request_date,
+                  withHour: true,
+                  withMinutes: true
+                })
               : ""
           }
         />

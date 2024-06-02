@@ -26,9 +26,9 @@ import CollapsibleOfferCart from "@/app/(client)/(profile)/profile/orders/compon
 import VardastDialog from "@/app/(client)/(profile)/profile/orders/components/VardastDialog"
 import OfferCard from "@/app/(client)/(profile)/profile/orders/OfferCard"
 
-type OrderOffersProps = { uuid: string }
+type OrderOffersProps = { isMobileView: boolean; uuid: string }
 
-const OrderOffers = ({ uuid }: OrderOffersProps) => {
+const OrderOffers = ({ isMobileView, uuid }: OrderOffersProps) => {
   const { t } = useTranslation()
   const { data: session } = useSession()
   const router = useRouter()
@@ -124,19 +124,23 @@ const OrderOffers = ({ uuid }: OrderOffersProps) => {
   }
 
   return (
-    <>
+    <div className="flex h-full flex-col">
       <VardastDialog open={open} setOpen={setOpen} />
       <div className="flex h-full w-full flex-col gap-4 px-0.5">
         {findPreOrderByIdQuery.data?.findPreOrderById?.offers.map(
           (offerOrder, orderIndex) => (
             <CollapsibleOfferCart
+              isMobileView={isMobileView}
               status={orderIndex === 0 ? "enable" : "disable"}
               key={offerOrder.id}
               offerOrder={offerOrder as OfferOrder}
               openDefault={false}
             >
               {offerOrder.offerLine.map((offer, index) => (
-                <div key={index} className="grid grid-cols-4 gap-4 py-5">
+                <div
+                  key={index}
+                  className="flex grid-cols-4 flex-col gap-4 py-5 md:grid"
+                >
                   <div className="col-span-3">
                     <OrderProductCard
                       line={{
@@ -172,7 +176,7 @@ const OrderOffers = ({ uuid }: OrderOffersProps) => {
           )
         )}
       </div>
-      <div className="mt-5 flex justify-end gap border-t pt-5">
+      <div className="mt-5 grid grid-cols-2 justify-end gap border-t pt-5 md:flex md:justify-end">
         <Link className="btn btn-md btn-secondary" href="/profile/orders/">
           بازگشت به سفارشات
         </Link>
@@ -192,7 +196,7 @@ const OrderOffers = ({ uuid }: OrderOffersProps) => {
           </Button>
         )}
       </div>
-    </>
+    </div>
   )
 }
 

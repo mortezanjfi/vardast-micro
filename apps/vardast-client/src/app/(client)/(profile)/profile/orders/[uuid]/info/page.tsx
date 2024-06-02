@@ -15,8 +15,7 @@ const ProjectEdit = async ({
   params: { uuid: string }
 }) => {
   const isMobileView = await CheckIsMobileView()
-
-  return <OrderInfoPage uuid={uuid} />
+  return <OrderInfoPage isMobileView={isMobileView} uuid={uuid} />
 }
 
 export default withMobileHeader(ProjectEdit, { title: "ثبت اطلاعات سفارش" })

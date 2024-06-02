@@ -3,6 +3,7 @@ import { dehydrate } from "@tanstack/react-query"
 import withMobileHeader from "@vardast/component/withMobileHeader"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
+import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
 import InfoPage from "@/app/(client)/(profile)/profile/info/components/InfoPage"
 
@@ -17,10 +18,11 @@ const Page = async () => {
   const queryClient = getQueryClient()
 
   const dehydratedState = dehydrate(queryClient)
-
+  const isMobileView = await CheckIsMobileView()
   return (
     <ReactQueryHydrate state={dehydratedState}>
       <InfoPage
+        isMobileView={isMobileView}
         title={(await generateMetadata()).title?.toString() as string}
       />
     </ReactQueryHydrate>

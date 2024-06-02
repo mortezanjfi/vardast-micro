@@ -20,15 +20,24 @@ import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRe
 import { Button } from "@vardast/ui/button"
 import { ClientError } from "graphql-request"
 
+import PageTitle from "@/app/(client)/(profile)/components/PageTitle"
 import OrderProductCard, {
   ACTION_BUTTON_TYPE,
   OrderProductCardSkeleton
 } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductCard"
 import OrderProductListContainer from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductListContainer"
 
-type OrderDetailPageProps = { uuid: string; offerId?: string }
+type OrderDetailPageProps = {
+  isMobileView?: boolean
+  uuid: string
+  offerId?: string
+}
 
-const OrderDetailPage = ({ uuid, offerId }: OrderDetailPageProps) => {
+const OrderDetailPage = ({
+  isMobileView,
+  uuid,
+  offerId
+}: OrderDetailPageProps) => {
   const queryClient = useQueryClient()
   const router = useRouter()
   const findPreOrderByIdQuery = useFindPreOrderByIdQuery(
@@ -175,7 +184,14 @@ const OrderDetailPage = ({ uuid, offerId }: OrderDetailPageProps) => {
   }, [])
 
   return (
-    <>
+    <div className="flex h-full flex-col">
+      {isMobileView && (
+        <PageTitle
+          className="pb"
+          titleClass="text-sm"
+          title={"لیست کالاهای سفارش"}
+        />
+      )}
       {findPreOrderByIdQuery.isLoading && findPreOrderByIdQuery.isFetching ? (
         <OrderProductListContainer>
           {() => (
@@ -220,7 +236,7 @@ const OrderDetailPage = ({ uuid, offerId }: OrderDetailPageProps) => {
         <NotFoundMessage text="کالایی به سفارش خود" />
       )}
 
-      <div className="mt-5 flex justify-end gap border-t pt-5">
+      <div className="mt-auto grid !grid-cols-2 gap pt-4 md:mt-0 md:flex md:justify-end">
         <Link className="btn btn-md btn-secondary" href="/profile/orders/">
           بازگشت به سفارشات
         </Link>
@@ -238,7 +254,7 @@ const OrderDetailPage = ({ uuid, offerId }: OrderDetailPageProps) => {
           تایید و ادامه
         </Button>
       </div>
-    </>
+    </div>
   )
 }
 
