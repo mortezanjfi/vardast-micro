@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import OrderCard from "@vardast/component/desktop/OrderCart"
 import Loading from "@vardast/component/Loading"
 import NotFoundMessage from "@vardast/component/NotFound"
 import PageHeader from "@vardast/component/PageHeader"
@@ -19,30 +20,12 @@ import { Button } from "@vardast/ui/button"
 import useTranslation from "next-translate/useTranslation"
 
 import PageTitle from "@/app/(client)/(profile)/components/PageTitle"
-import OrderCard from "@/app/(client)/(profile)/profile/orders/components/OrderCart"
 import OrderDeleteModal from "@/app/(client)/(profile)/profile/orders/components/OrderDeleteModal"
 
 type OrdersPageProps = { isMobileView?: boolean; title: string }
 
 export const OrderOfferStatusesFa = {
   [OrderOfferStatuses.Closed]: { className: "tag-success", name_fa: "بسته شده" }
-}
-
-export const PreOrderStatesFa = {
-  [PreOrderStates.Created]: {
-    className: "tag-gray",
-    name_fa: "ایجاد شده"
-  },
-  [PreOrderStates.PendingInfo]: {
-    className: "tag-info",
-    name_fa: "در انتظار تایید اطلاعات"
-  },
-  [PreOrderStates.PendingLine]: {
-    className: "tag-warning",
-    name_fa: "در انتظار افزودن کالا"
-  },
-  [PreOrderStates.Verified]: { className: "tag-primary", name_fa: "تایید شده" },
-  [PreOrderStates.Closed]: { className: "tag-success", name_fa: "بسته شده" }
 }
 
 export const PaymentMethodEnumFa = {
