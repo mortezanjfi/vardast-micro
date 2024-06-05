@@ -1,7 +1,5 @@
 "use client"
 
-import { Dispatch, SetStateAction, useState } from "react"
-import { useRouter } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { PreOrder, PreOrderStates } from "@vardast/graphql/generated"
 import { Button } from "@vardast/ui/button"
@@ -16,11 +14,14 @@ import convertToPersianDate from "@vardast/util/convertToPersianDate"
 import { clsx } from "clsx"
 import { LucideEdit, LucideMoreVertical, LucideTrash } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
+import { useRouter } from "next/navigation"
+import { Dispatch, SetStateAction, useState } from "react"
 
 import Link from "../Link"
 import { DetailsWithTitle } from "./DetailsWithTitle"
 
 type OrderCardProps = {
+  goToOffers?: boolean
   isSellerPanel?: boolean
   preOrder: PreOrder
   setOrderToDelete?: Dispatch<SetStateAction<PreOrder>>
@@ -45,6 +46,7 @@ export const PreOrderStatesFa = {
 }
 
 const OrderCard = ({
+  goToOffers,
   isSellerPanel,
   preOrder,
   setOrderToDelete,
@@ -57,7 +59,12 @@ const OrderCard = ({
   return (
     <div
       onClick={() => {
-        isSellerPanel && router.push(`/orders/${preOrder?.id}`)
+        isSellerPanel &&
+          router.push(
+            goToOffers
+              ? `/my-orders/${preOrder?.id}/offers`
+              : `/orders/${preOrder?.id}`
+          )
       }}
       className="flex w-full flex-col gap-4 border-b border-alpha-200 py-4 md:py-11"
     >

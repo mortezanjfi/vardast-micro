@@ -11,9 +11,9 @@ import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRe
 
 import AddToMyOrders from "@/app/(seller)/components/AddToMyOrders"
 
-type Props = { uuid: string }
+type Props = { isMobileView: boolean; uuid: string }
 
-function OrderOffersIndex({ uuid }: Props) {
+function OrderOffersIndex({ isMobileView, uuid }: Props) {
   const findPreOrderByIdQuery = useFindPreOrderByIdQuery(
     graphqlRequestClientWithToken,
     {
@@ -22,6 +22,7 @@ function OrderOffersIndex({ uuid }: Props) {
   )
   return (
     <OrderOffers
+      isMobileView={isMobileView}
       uuid={uuid}
       findPreOrderByIdQuery={findPreOrderByIdQuery}
       SellerChildren={

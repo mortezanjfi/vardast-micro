@@ -5,12 +5,15 @@ import { useRouter } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
 import CardContainer from "@vardast/component/desktop/CardContainer"
+import OrderCard from "@vardast/component/desktop/OrderCart"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
+import NotFoundMessage from "@vardast/component/NotFound"
 import Pagination from "@vardast/component/Pagination"
 import {
   PaymentMethodEnum,
+  PreOrder,
   PreOrdersQuery,
   PreOrderStates
 } from "@vardast/graphql/generated"
@@ -19,6 +22,8 @@ import { clsx } from "clsx"
 import useTranslation from "next-translate/useTranslation"
 
 type Props = {
+  goToOffers: boolean
+  isMobileView?: boolean
   filter?: PreOrderStates
   setFilter?: Dispatch<SetStateAction<PreOrderStates>>
   isMyOrderPage?: boolean
@@ -103,6 +108,8 @@ export const statuses = [
 function SellerOrdersPage({
   // filter,
   // setFilter,
+  goToOffers,
+  isMobileView,
   setCurrentPage,
   currentPage,
   isMyOrderPage,
@@ -110,6 +117,7 @@ function SellerOrdersPage({
 }: Props) {
   const { t } = useTranslation()
   const router = useRouter()
+
   // const [filterDialog, setFilterDialog] = useState(false)
 
   const preOrdersLength = useMemo(
@@ -117,8 +125,33 @@ function SellerOrdersPage({
     [preOrdersQuery.data?.preOrders?.data.length]
   )
 
-  return (
-    <CardContainer title={isMyOrderPage ? "لیست سفارشات من" : "لیست سفارشات"}>
+  return isMobileView ? (
+    <>
+      {preOrdersQuery.isFetching && preOrdersQuery.isLoading ? (
+        <div className="flex h-full items-center justify-center pt-6">
+          <Loading hideMessage />
+        </div>
+      ) : preOrdersQuery.data?.preOrders?.data.length > 0 ? (
+        <>
+          {preOrdersQuery.data?.preOrders?.data.map((preOrder, index) => (
+            <OrderCard
+              goToOffers={goToOffers}
+              isSellerPanel={true}
+              key={index}
+              preOrder={preOrder as PreOrder}
+            />
+          ))}
+        </>
+      ) : (
+        <NotFoundMessage text="سفارشی" />
+      )}
+    </>
+  ) : (
+    <CardContainer
+      title={
+        isMobileView ? "" : isMyOrderPage ? "لیست سفارشات من" : "لیست سفارشات"
+      }
+    >
       {/* <div className="flex w-full gap-5 border-b border-alpha-200 pb-5">
         <Popover open={filterDialog} onOpenChange={setFilterDialog}>
           <PopoverTrigger asChild>
