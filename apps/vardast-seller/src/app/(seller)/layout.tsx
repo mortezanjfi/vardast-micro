@@ -5,6 +5,7 @@ import AdminOrSellerDesktopHeader from "@vardast/component/desktop/AdminOrSeller
 import WithSidebarLayout from "@vardast/component/desktop/WithSidebarLayout"
 // import { authOptions } from "@vardast/auth/authOptions"
 import MobileScrollProvider from "@vardast/component/header/MobileScrollProvider"
+import MobileNavigation from "@vardast/component/mobile-navigation"
 import MobileBaseLayout from "@vardast/component/MobileBaseLayout"
 import { SearchActionModal } from "@vardast/component/Search"
 import { _sellerSidebarMenu } from "@vardast/lib/constants"
@@ -32,7 +33,19 @@ export default async function PublicLayout({
     <>
       <SearchActionModal isMobileView={isMobileView} />
       {isMobileView ? (
-        <MobileScrollProvider>{children}</MobileScrollProvider>
+        <>
+          <MobileScrollProvider>
+            <MobileBaseLayout
+              isMobileView={isMobileView}
+              bgWhite={true}
+              container
+              spaceLess
+            >
+              {children}
+            </MobileBaseLayout>
+          </MobileScrollProvider>
+          <MobileNavigation isClient={false} />
+        </>
       ) : (
         <>
           <AdminOrSellerDesktopHeader />
@@ -42,7 +55,12 @@ export default async function PublicLayout({
             grayBackground={true}
             menu={_sellerSidebarMenu}
           >
-            <MobileBaseLayout bgWhite={false} container spaceLess>
+            <MobileBaseLayout
+              isMobileView={isMobileView}
+              bgWhite={true}
+              container
+              spaceLess
+            >
               {children}
             </MobileBaseLayout>
           </WithSidebarLayout>
