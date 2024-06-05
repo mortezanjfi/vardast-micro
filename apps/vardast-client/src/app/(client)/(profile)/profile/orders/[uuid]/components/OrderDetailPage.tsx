@@ -4,6 +4,10 @@ import { useCallback, useEffect, useMemo } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
+import OrderProductCard from "@vardast/component/desktop/OrderProductCard"
+import OrderProductListContainer, {
+  OrderProductCardSkeleton
+} from "@vardast/component/desktop/OrderProductListContainer"
 import Link from "@vardast/component/Link"
 import NotFoundMessage from "@vardast/component/NotFound"
 import {
@@ -17,15 +21,11 @@ import {
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
+import { ACTION_BUTTON_TYPE } from "@vardast/type/OrderProductTabs"
 import { Button } from "@vardast/ui/button"
 import { ClientError } from "graphql-request"
 
 import PageTitle from "@/app/(client)/(profile)/components/PageTitle"
-import OrderProductCard, {
-  ACTION_BUTTON_TYPE,
-  OrderProductCardSkeleton
-} from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductCard"
-import OrderProductListContainer from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductListContainer"
 
 type OrderDetailPageProps = {
   isMobileView?: boolean

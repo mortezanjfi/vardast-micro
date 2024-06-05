@@ -3,6 +3,8 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
+import OfferCard from "@vardast/component/desktop/OfferCard"
+import OrderProductCard from "@vardast/component/desktop/OrderProductCard"
 import Link from "@vardast/component/Link"
 import {
   OfferLine,
@@ -21,10 +23,8 @@ import { ClientError } from "graphql-request"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 
-import OrderProductCard from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductCard"
 import CollapsibleOfferCart from "@/app/(client)/(profile)/profile/orders/components/CollapsibleOfferCart"
 import VardastDialog from "@/app/(client)/(profile)/profile/orders/components/VardastDialog"
-import OfferCard from "@/app/(client)/(profile)/profile/orders/OfferCard"
 
 type OrderOffersProps = { isMobileView: boolean; uuid: string }
 

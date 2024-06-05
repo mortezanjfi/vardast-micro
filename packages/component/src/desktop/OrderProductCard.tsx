@@ -4,21 +4,19 @@ import { forwardRef, Ref, useState } from "react"
 import Image, { StaticImageData } from "next/image"
 import blankProductImageSrc from "@vardast/asset/product-blank.svg"
 import blankServiceImageSrc from "@vardast/asset/service-blank.svg"
-import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
 import { Line, MultiTypeOrder, PriceOfferDto } from "@vardast/graphql/generated"
+import {
+  ACTION_BUTTON_TYPE,
+  OrderProductTabContentProps
+} from "@vardast/type/OrderProductTabs"
 import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
 import { setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
 import useTranslation from "next-translate/useTranslation"
 
-import { OrderProductTabContentProps } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductsTabs"
-import AddPriceModal from "@/app/(client)/(profile)/profile/orders/components/AddPriceModal"
-
-export enum ACTION_BUTTON_TYPE {
-  ADD_PRODUCT_ORDER = "ADD_PRODUCT_ORDER",
-  ADD_PRODUCT_OFFER = "ADD_PRODUCT_OFFER"
-}
+import AddPriceModal from "./AddPriceModal"
+import { DetailsWithTitle } from "./DetailsWithTitle"
 
 interface OrderProductCardProps {
   line: Pick<
@@ -28,14 +26,6 @@ interface OrderProductCardProps {
   imageSrc?: string | StaticImageData
   actionButtonType?: ACTION_BUTTON_TYPE
   addProductLine?: OrderProductTabContentProps["addProductLine"]
-}
-
-export const OrderProductCardSkeleton = ({}: {}) => {
-  return (
-    <div className="py-5">
-      <div className="animated-card h-[200px] rounded "></div>
-    </div>
-  )
 }
 
 const OrderProductCard = forwardRef(
