@@ -37,8 +37,6 @@ type BrandsListProps = {
 }
 
 const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
-  // const [queryTemp, setQueryTemp] = useState<string>("")
-
   const [sort, setSort] = useState<SortBrandEnum>(
     args.sortType || SortBrandEnum.Newest
   )
@@ -47,9 +45,6 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
   const searchParams = useSearchParams()
 
   const [filterAttributes, setFilterAttributes] = useState<[]>([])
-  // const [filterAttributes, setFilterAttributes] = useState<FilterAttribute[]>(
-  //   []
-  // )
 
   const allBrandsQuery = useInfiniteQuery<GetAllBrandsQuery>(
     [
@@ -144,48 +139,7 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
     )
 
   const DesktopSidebar = (
-    <div className="top-40 h-fit border-alpha-200 bg-alpha-white px-4 py-4 sm:sticky md:w-[250px] md:min-w-[200px] md:rounded md:border-2 md:bg-inherit">
-      {/* {hasSearch && (
-          <div className="relative flex transform items-center rounded-lg border-alpha-200 bg-alpha-100 pr-2 transition-all">
-            {queryTemp !== query ? (
-              <Loader2 className="h-6 w-6 animate-spin text-alpha-400" />
-            ) : (
-              <LucideSearch className="h-6 w-6 text-primary" />
-            )}
-            <Input
-              autoFocus
-              value={queryTemp}
-              defaultValue={query}
-              onChange={(e) => {
-                setQueryTemp(e.target.value)
-                setQuery(e.target.value)
-              }}
-              type="text"
-              placeholder="نام کالا | برند | فروشنده | دسته بندی | SKU"
-              className="flex h-full
-                    w-full
-                    items-center
-                    gap-2
-                    rounded-lg
-                    bg-alpha-100
-                    px-4
-                    py-3
-                    focus:!ring-0 disabled:bg-alpha-100"
-            />
-            <Button
-              variant="ghost"
-              size="small"
-              iconOnly
-              className="rounded-full"
-              onClick={() => {
-                setQuery("")
-                setQueryTemp("")
-              }}
-            >
-              <LucideX className="icon" />
-            </Button>
-          </div>
-        )} */}
+    <div className="top-0 h-fit border-alpha-200 bg-alpha-white px-4 py-4 sm:sticky md:w-[250px] md:min-w-[200px] md:rounded md:border-2 md:bg-inherit">
       <div className="flex flex-col gap-9">
         <div className=" flex items-center border-b-2 border-b-alpha-200 py-4">
           <strong>فیلترها</strong>
@@ -200,40 +154,6 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
             </Button>
           )}
         </div>
-        {/* {selectedCategoryIds &&
-              selectedCategoryIds.length === 1 &&
-              !brandId &&
-              !sellerId && (
-                <CategoryFilter selectedCategoryId={selectedCategoryIds[0]} />
-              )} */}
-
-        {/* {brandId && (
-            <BrandOrSellerCategoryFilter
-              categoryIdsFilter={categoryIdsFilter}
-              onCategoryIdsFilterChanged={onCategoryIdsFilterChanged}
-              brandId={brandId}
-            />
-          )} */}
-
-        {/* {sellerId && (
-            <BrandOrSellerCategoryFilter
-              categoryIdsFilter={categoryIdsFilter}
-              onCategoryIdsFilterChanged={onCategoryIdsFilterChanged}
-              sellerId={sellerId}
-            />
-          )} */}
-
-        {/* {selectedCategoryIds &&
-            selectedCategoryIds.length === 1 &&
-            selectedCategoryIds[0] !== 0 && (
-              <FiltersContainer
-                selectedCategoryId={selectedCategoryIds[0]}
-                filterAttributes={filterAttributes}
-                onFilterAttributesChanged={onFilterAttributesChanged}
-              />
-            )} */}
-
-        {/* {!selectedCategoryIds && !brandId && !sellerId && <VocabularyFilter />} */}
       </div>
     </div>
   )
@@ -244,7 +164,7 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
       Content={Content}
       DesktopHeader={DesktopHeader}
       DesktopSidebar={DesktopSidebar}
-    ></DesktopMobileViewOrganizer>
+    />
   )
 }
 

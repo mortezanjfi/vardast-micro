@@ -1,13 +1,6 @@
-import { PropsWithChildren } from "react"
-import MobileBaseLayout from "@vardast/component/MobileBaseLayout"
-import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
+import WithLayoutMaker from "@vardast/component/hoc/WithLayoutMaker"
+import layout_options from "@vardast/lib/layout_options"
 
-const Layout: React.FC<PropsWithChildren> = async ({ children }) => {
-  const isMobileView = await CheckIsMobileView()
-  return (
-    <MobileBaseLayout isMobileView={isMobileView} spaceLess>
-      {children}
-    </MobileBaseLayout>
-  )
-}
-export default Layout
+export default WithLayoutMaker({
+  options: layout_options._default
+})

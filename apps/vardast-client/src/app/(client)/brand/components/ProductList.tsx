@@ -350,7 +350,7 @@ const ProductList = ({
   const DesktopSidebar = (
     <div
       className={clsx(
-        "top-40 h-fit border-2 border-alpha-200 bg-alpha-white px-4 py-4 md:sticky md:w-[250px] md:min-w-[200px] md:rounded md:bg-inherit",
+        "top-0 h-fit border-2 border-alpha-200 bg-alpha-white px-4 py-4 md:sticky md:w-[250px] md:min-w-[200px] md:rounded md:bg-inherit",
         desktopSideBarClass
       )}
     >

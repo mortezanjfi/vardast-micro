@@ -1,4 +1,3 @@
-import withMobileHeader from "@vardast/component/withMobileHeader"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
 import SigninForm from "@/app/(authentication)/components/SigninForm"
@@ -18,6 +17,4 @@ const SigninPage = async () => {
   return <SigninForm isMobileView={isMobileView} />
 }
 
-export default withMobileHeader(SigninPage, {
-  hasLogo: true
-})
+export default SigninPage

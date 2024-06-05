@@ -1,11 +1,8 @@
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
-import MobileHeader, { IModalHeader } from "./header/MobileHeader"
+import MobileHeader from "./header/MobileHeader"
 
-function withMobileHeader<T>(
-  Component: React.FC<T>,
-  headerProps: IModalHeader
-) {
+function withMobileHeader<T>(Component: React.FC<T>, headerProps: any) {
   return async (props: any) => {
     const isMobileView = await CheckIsMobileView()
     const title =

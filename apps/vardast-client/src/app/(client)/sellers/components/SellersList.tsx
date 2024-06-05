@@ -142,7 +142,7 @@ const SellersList = ({ limitPage, args, isMobileView }: SellersListProps) => {
     )
 
   const DesktopSidebar = (
-    <div className="top-40 h-fit border-alpha-200 bg-alpha-white px-4 py-4 md:sticky md:w-[250px] md:min-w-[200px] md:rounded md:border-2 md:bg-inherit">
+    <div className="top-0 h-fit border-alpha-200 bg-alpha-white px-4 py-4 md:sticky md:w-[250px] md:min-w-[200px] md:rounded md:border-2 md:bg-inherit">
       {/* {hasSearch && (
         <div className="relative flex transform items-center rounded-lg border-alpha-200 bg-alpha-100 pr-2 transition-all">
           {queryTemp !== query ? (

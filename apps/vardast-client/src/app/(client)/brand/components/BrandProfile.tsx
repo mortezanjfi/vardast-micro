@@ -203,7 +203,7 @@ export const BrandOrSellersTab = ({
       ) : (
         <div className="flex flex-col md:flex-row md:gap-9 md:bg-alpha-white">
           {!productsProps.isMobileView && (
-            <div className="sticky top-40 h-fit flex-shrink-0 border-2 border-alpha-200 bg-alpha-white px-4 py-4 md:w-[250px] md:min-w-[200px] md:rounded md:bg-inherit">
+            <div className="sticky top-0 h-fit flex-shrink-0 border-2 border-alpha-200 bg-alpha-white px-4 py-4 md:w-[250px] md:min-w-[200px] md:rounded md:bg-inherit">
               <div className="flex flex-col gap-9">
                 <div className=" flex items-center border-b-2 border-b-alpha-200 py-4">
                   <strong>فیلترها</strong>

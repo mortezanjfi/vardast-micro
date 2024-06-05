@@ -4,11 +4,11 @@ import { notFound } from "next/navigation"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import { useQuery } from "@tanstack/react-query"
 import { GetCategoryQuery } from "@vardast/graphql/generated"
+import { setBreadCrumb } from "@vardast/provider/BreadcrumbProvider"
 import { getCategoryQueryFn } from "@vardast/query/queryFns/categoryQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
+import { CrumbItemProps } from "@vardast/type/breadcrumb"
 import { BreadcrumbList, ItemList, WithContext } from "schema-dts"
-
-import Breadcrumb, { CrumbItemProps } from "./Breadcrumb"
 
 interface SearchHeaderProps {
   selectedCategoryId: number
@@ -84,21 +84,16 @@ const SearchHeader = ({ selectedCategoryId }: SearchHeaderProps) => {
     isCurrent: true
   })
 
+  setBreadCrumb({
+    dynamic: false,
+    items: breadcrumb
+  })
+
   return (
-    <>
-      <div className="bg-alpha-white">
-        <Breadcrumb dynamic={false} items={breadcrumb} />
-      </div>
-      {/* <div className="mb-8">
-        <h2 className="text-xl font-extrabold text-alpha-800">
-          {data.category.title}
-        </h2>
-      </div> */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-    </>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+    />
   )
 }
 

@@ -1,0 +1,18 @@
+import { Metadata } from "next"
+
+import OrderInfoPage from "@/app/(client)/profile/orders/[uuid]/info/components/OrderInfoPage"
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "ثبت اطلاعات سفارش"
+  }
+}
+const ProjectEdit = async ({
+  params: { uuid }
+}: {
+  params: { uuid: string }
+}) => {
+  return <OrderInfoPage uuid={uuid} />
+}
+
+export default ProjectEdit

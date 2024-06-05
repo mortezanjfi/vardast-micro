@@ -50,7 +50,6 @@ const SellerLayoutComponent = ({
     <div className="app flex h-full overflow-y-scroll bg-alpha-white md:overflow-y-auto">
       <div className="app-inner">
         <Sidebar
-          isAdmin={false}
           menus={_sellerSidebarMenu}
           open={sidebarOpen}
           onOpenChanged={setSidebarOpen}

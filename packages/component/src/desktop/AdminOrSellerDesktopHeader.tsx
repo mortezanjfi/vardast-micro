@@ -59,7 +59,7 @@ const AdminOrSellerDesktopHeader = (_: AdminOrSellerDesktopHeaderProps) => {
   const pathname = usePathname()
 
   return (
-    <header className="md:h-header h-largeHeader fixed left-0 right-0 top-0 z-30 border-b bg-alpha-white px-6 sm:px-0">
+    <header className="fixed left-0 right-0 top-0 z-30 h-header border-b bg-alpha-white px-6 sm:px-0">
       <div className="container grid grid-cols-12 grid-rows-2 items-center gap-y py-7 md:grid-rows-1 md:gap-x-12">
         <Link
           href="/"

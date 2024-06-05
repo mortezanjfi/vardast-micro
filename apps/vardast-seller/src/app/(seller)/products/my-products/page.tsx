@@ -1,6 +1,5 @@
 import { dehydrate } from "@tanstack/react-query"
 import { authOptions } from "@vardast/auth/authOptions"
-import withMobileHeader from "@vardast/component/withMobileHeader"
 import { SearchSellerRepresentativeInput } from "@vardast/graphql/generated"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
@@ -49,7 +48,4 @@ async function MyProductsPage({ params: { slug } }: SearchIndexProps) {
   )
 }
 
-export default withMobileHeader(MyProductsPage, {
-  title: "مدیریت کالاهای من",
-  hasBack: true
-})
+export default MyProductsPage

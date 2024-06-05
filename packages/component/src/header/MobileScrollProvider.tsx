@@ -40,30 +40,22 @@ const MobileScrollProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <div
-      className={clsx(
-        "relative mx-auto flex h-full transform flex-col transition-all duration-200"
-      )}
+      id="scroll-container"
+      // onScroll={(e: any) => {
+      //   // var st = e.target?.scrollTop
+      //   // const showNavbarFlag =
+      //   //   st === 0 || st >= realScrollbarHeight ? true : st < lastScrollTop
+      //   // setShowNavbarScroll(showNavbarFlag)
+      //   // setLastScrollTop(st <= 0 ? 0 : st)
+      // }}
+      ref={ref}
+      style={{
+        // paddingBottom: `calc(env(safe-area-inset-bottom) + ${navigationBarHeight}px)`
+        paddingBottom: navigationBarHeight
+      }}
+      className={clsx(`app-content mobile`)}
     >
-      <div
-        id="scroll-container"
-        // onScroll={(e: any) => {
-        //   // var st = e.target?.scrollTop
-        //   // const showNavbarFlag =
-        //   //   st === 0 || st >= realScrollbarHeight ? true : st < lastScrollTop
-        //   // setShowNavbarScroll(showNavbarFlag)
-        //   // setLastScrollTop(st <= 0 ? 0 : st)
-        // }}
-        ref={ref}
-        style={{
-          // paddingBottom: `calc(env(safe-area-inset-bottom) + ${navigationBarHeight}px)`
-          paddingBottom: navigationBarHeight
-        }}
-        className={clsx(
-          `flex flex-1 flex-col overflow-y-auto overflow-x-hidden bg-transparent pt-14`
-        )}
-      >
-        {children}
-      </div>
+      {children}
     </div>
   )
 }

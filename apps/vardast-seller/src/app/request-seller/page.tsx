@@ -1,7 +1,6 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { authOptions } from "@vardast/auth/authOptions"
-import withMobileHeader from "@vardast/component/withMobileHeader"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 import { getServerSession } from "next-auth"
 
@@ -29,6 +28,4 @@ const ProfileSellerPage = async () => {
   return <ProfileSellerForm isMobileView={isMobileView} />
 }
 
-export default withMobileHeader(ProfileSellerPage, {
-  title: "درخواست تبدیل به فروشنده"
-})
+export default ProfileSellerPage

@@ -53,25 +53,26 @@ const MobileBaseLayout: React.FC<IMobileBaseLayout> = ({
   }
 
   return (
-    <div
-      className={clsx(
-        "flex h-full w-full flex-1 flex-col",
-        spaceLess ? "" : "gap p",
-        limitWidth ? "max-w-md" : "w-full",
-        background && "bg-[url('/images/background.svg')]",
-        extraPadding && "py-20"
-      )}
-    >
-      <div
-        className={clsx(
-          container && "mx-auto w-full md:container",
-          isAuth &&
-            "flex h-full w-full items-center justify-center md:container"
-        )}
-      >
-        {children}
-      </div>
-    </div>
+    // <div
+    //   className={clsx(
+    //     "flex h-full w-full flex-1 flex-col",
+    //     spaceLess ? "" : "gap p",
+    //     limitWidth ? "max-w-md" : "w-full",
+    //     background && "bg-[url('/images/background.svg')]",
+    //     extraPadding && "py-20"
+    //   )}
+    // >
+    //   <div
+    //     className={clsx(
+    //       container && "mx-auto w-full md:container",
+    //       isAuth &&
+    //         "flex h-full w-full items-center justify-center md:container"
+    //     )}
+    //   >
+    //     {children}
+    //   </div>
+    // </div>
+    <>{children}</>
   )
 }
 

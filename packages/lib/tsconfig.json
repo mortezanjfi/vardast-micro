@@ -1,26 +1,13 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@vardast/tsconfig/base.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-    "target": "ES6",
-    "lib": ["dom", "dom.iterable", "esnext", "ES6"],
-    "experimentalDecorators": true,
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "downlevelIteration": true,
+    "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
-      "@type/*": ["node_modules/@vardast/type/src/*"],
+      "@/*": ["node_modules/@vardast/type/src/*"],
       "@vardast/type/*": ["node_modules/@vardast/type/src/*"]
     },
     "plugins": [

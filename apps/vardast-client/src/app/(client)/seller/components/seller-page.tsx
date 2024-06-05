@@ -1,7 +1,6 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import Breadcrumb from "@vardast/component/Breadcrumb"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
@@ -11,6 +10,7 @@ import {
   IndexProductInput,
   Seller
 } from "@vardast/graphql/generated"
+import { setBreadCrumb } from "@vardast/provider/BreadcrumbProvider"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { getSellerQueryFn } from "@vardast/query/queryFns/sellerQueryFns"
 
@@ -35,23 +35,20 @@ const SellerPage = ({ isMobileView, args, slug }: SellerPageProps) => {
   if (sellerQuery.error) return <LoadingFailed />
   if (!sellerQuery.data) return <NoResult entity="brand" />
 
+  setBreadCrumb({
+    dynamic: false,
+    items: [
+      { label: "فروشندگان وردست", path: "/sellers", isCurrent: false },
+      {
+        label: sellerQuery?.data.seller.name,
+        path: `/seller/${sellerQuery?.data.seller.id}/${sellerQuery?.data.seller.name}`,
+        isCurrent: true
+      }
+    ]
+  })
+
   return (
     <>
-      <div>
-        <Breadcrumb
-          isMobileView={isMobileView}
-          dynamic={false}
-          items={[
-            { label: "فروشندگان وردست", path: "/sellers", isCurrent: false },
-            {
-              label: sellerQuery?.data.seller.name,
-              path: `/seller/${sellerQuery?.data.seller.id}/${sellerQuery?.data.seller.name}`,
-              isCurrent: true
-            }
-          ]}
-        />
-      </div>
-
       <SellerHeader seller={sellerQuery?.data.seller as Seller} />
 
       <ProductList

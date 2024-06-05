@@ -2,7 +2,6 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { dehydrate } from "@tanstack/react-query"
 import { authOptions } from "@vardast/auth/authOptions"
-import withMobileHeader from "@vardast/component/withMobileHeader"
 import { EntityTypeEnum } from "@vardast/graphql/generated"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
@@ -69,4 +68,4 @@ const FavoritePage = async () => {
   )
 }
 
-export default withMobileHeader(FavoritePage, { title: "علاقه‌مندی‌ها" })
+export default FavoritePage

@@ -53,19 +53,6 @@ const BrandsPage = ({ session }: BrandsPageProps) => {
 
   return (
     <>
-      {/* <div className="border-b bg-alpha-white">
-        <Breadcrumb
-          dynamic={false}
-          items={[
-            {
-              label: t("common:brands_vardast"),
-              path: "/brands",
-              isCurrent: true
-            }
-          ]}
-        />
-      </div> */}
-
       <BrandsOrSellersContainer>
         {({ selectedItemId, setSelectedItemId }) => (
           <>

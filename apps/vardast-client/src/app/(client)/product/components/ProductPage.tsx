@@ -3,7 +3,6 @@
 import { useContext, useEffect } from "react"
 import { notFound } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
-import Breadcrumb, { CrumbItemProps } from "@vardast/component/Breadcrumb"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
@@ -19,9 +18,11 @@ import {
   Seller,
   Uom
 } from "@vardast/graphql/generated"
+import { setBreadCrumb } from "@vardast/provider/BreadcrumbProvider"
 import { PublicContext } from "@vardast/provider/PublicProvider"
 import { getProductQueryFn } from "@vardast/query/queryFns/productQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
+import { CrumbItemProps } from "@vardast/type/breadcrumb"
 import clsx from "clsx"
 import { addDays, format, setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
@@ -222,15 +223,13 @@ const ProductPage = ({ id, isMobileView }: ProductPageProps) => {
     weekStartsOn: 6
   })
 
+  setBreadCrumb({
+    dynamic: false,
+    items: breadcrumb
+  })
+
   return (
     <>
-      <div className="bg-alpha-white">
-        <Breadcrumb
-          dynamic={false}
-          items={breadcrumb}
-          isMobileView={isMobileView}
-        />
-      </div>
       {/* <SellerCardDesktop
         offers={queryProduct?.data?.product?.publicOffers[0] as Offer}
       /> */}

@@ -1,11 +1,14 @@
 html[lang="fa"] {
   direction: rtl;
-  @apply h-full;
 }
 html {
-  @apply bg-alpha-100 md:bg-alpha-white;
+  @apply h-screen;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: unset;
 }
 
 body {
-  @apply h-full overflow-hidden bg-alpha-100 font-iranYekan antialiased md:overflow-auto md:bg-alpha-white;
+  @apply font-iranYekan antialiased flex flex-col min-h-0;
 }

@@ -1,6 +1,5 @@
 import { Metadata } from "next"
 import { dehydrate } from "@tanstack/react-query"
-import withMobileHeader from "@vardast/component/withMobileHeader"
 import {
   IndexProductInput,
   ProductSortablesEnum
@@ -134,4 +133,4 @@ const SearchIndex = async ({
     </ReactQueryHydrate>
   )
 }
-export default withMobileHeader(SearchIndex, {})
+export default SearchIndex

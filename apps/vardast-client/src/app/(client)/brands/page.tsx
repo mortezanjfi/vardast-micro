@@ -1,6 +1,5 @@
 import { Metadata } from "next"
 import { dehydrate } from "@tanstack/react-query"
-import withMobileHeader from "@vardast/component/withMobileHeader"
 import { IndexBrandInput } from "@vardast/graphql/generated"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
@@ -51,6 +50,4 @@ const BrandsIndex = async ({ searchParams }: BrandsIndexProps) => {
   )
 }
 
-export default withMobileHeader(BrandsIndex, {
-  title: "برندها"
-})
+export default BrandsIndex

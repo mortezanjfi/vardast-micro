@@ -1,6 +1,5 @@
 import { Metadata } from "next"
 import { dehydrate } from "@tanstack/react-query"
-import withMobileHeader from "@vardast/component/withMobileHeader"
 import { IndexPreOrderInput, PreOrderStates } from "@vardast/graphql/generated"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
@@ -35,4 +34,4 @@ const page = async ({ params: { slug }, searchParams }: SearchIndexProps) => {
   )
 }
 
-export default withMobileHeader(page, { title: "سفارشات" })
+export default page

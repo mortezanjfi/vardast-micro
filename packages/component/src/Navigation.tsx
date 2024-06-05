@@ -1,17 +1,40 @@
 "use client"
 
+import { useMemo } from "react"
+import {
+  _authentication_signin_sidebarMenu,
+  _authentication_signout_sidebarMenu
+} from "@vardast/lib/constants"
 import { NavigationType } from "@vardast/type/Navigation"
 import { useSession } from "next-auth/react"
 
-import NavigationItem from "./NavigationItem"
+import NavigationItem, { NavigationItemVariant } from "./NavigationItem"
 
 type Props = {
   menus: NavigationType[]
+  withLogin?: boolean
 }
 
 const Navigation = (props: Props) => {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const { menus } = props
+
+  const loginToggleMenu = useMemo(() => {
+    if (props.withLogin) {
+      if (status !== "loading") {
+        if (status === "authenticated") {
+          return { variant: "error", menu: _authentication_signout_sidebarMenu }
+        }
+        if (status === "unauthenticated") {
+          return {
+            variant: "success",
+            menu: _authentication_signin_sidebarMenu
+          }
+        }
+      }
+    }
+    return null
+  }, [props.withLogin, session, status])
 
   return (
     <>
@@ -35,12 +58,15 @@ const Navigation = (props: Props) => {
                       ((menuItem?.abilities &&
                         session?.abilities?.includes(menuItem?.abilities)) ||
                         !menuItem.abilities) && (
-                        <>
-                          <NavigationItem key={idx} menu={menuItem} />
-                          <hr className="mx-auto h-0.5 w-4/5" />
-                        </>
+                        <NavigationItem key={idx} menu={menuItem} />
                       )
                   )}
+                {loginToggleMenu && (
+                  <NavigationItem
+                    variant={loginToggleMenu.variant as NavigationItemVariant}
+                    menu={loginToggleMenu.menu}
+                  />
+                )}
               </ol>
             </section>
           )

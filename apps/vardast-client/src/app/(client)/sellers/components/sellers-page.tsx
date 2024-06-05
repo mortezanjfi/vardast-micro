@@ -4,12 +4,12 @@ import { useState } from "react"
 import { notFound } from "next/navigation"
 import { useDebouncedState } from "@mantine/hooks"
 import { useInfiniteQuery } from "@tanstack/react-query"
-import Breadcrumb from "@vardast/component/Breadcrumb"
 import { checkLimitPageByCondition } from "@vardast/component/product-list"
 import {
   GetAllSellersQuery,
   IndexSellerInput
 } from "@vardast/graphql/generated"
+import { setBreadCrumb } from "@vardast/provider/BreadcrumbProvider"
 import { getAllSellersQueryFn } from "@vardast/query/queryFns/allSellersQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { Button } from "@vardast/ui/button"
@@ -71,6 +71,17 @@ const SellersPage = ({
 
   if (!allSellersQuery.data) notFound()
 
+  setBreadCrumb({
+    dynamic: false,
+    items: [
+      {
+        label: t("common:sellers_vardast"),
+        path: "/sellers",
+        isCurrent: true
+      }
+    ]
+  })
+
   return (
     <div
       className={clsx(
@@ -78,20 +89,6 @@ const SellersPage = ({
         !isMobileView && "bg-alpha-white"
       )}
     >
-      {!isMobileView && (
-        <div className="border-b-2 bg-alpha-white">
-          <Breadcrumb
-            dynamic={false}
-            items={[
-              {
-                label: t("common:sellers_vardast"),
-                path: "/sellers",
-                isCurrent: true
-              }
-            ]}
-          />
-        </div>
-      )}
       {hasSearch && (
         <div className="bg-alpha-white p md:w-1/4">
           {" "}

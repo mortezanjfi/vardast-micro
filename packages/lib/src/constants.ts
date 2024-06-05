@@ -1,20 +1,11 @@
-import {
-  BookmarkIcon,
-  CubeIcon,
-  HomeIcon,
-  Squares2X2Icon,
-  UserCircleIcon
-} from "@heroicons/react/24/outline"
+import { CubeIcon, Squares2X2Icon } from "@heroicons/react/24/outline"
 import {
   ArrowRightStartOnRectangleIcon,
   HomeModernIcon,
   ListBulletIcon,
-  PlusCircleIcon,
-  BookmarkIcon as SolidBookmarkIcon,
-  HomeIcon as SolidHomeIcon,
-  Squares2X2Icon as SolidSquares2X2Icon,
-  UserCircleIcon as SolidUserCircleIcon
+  PlusCircleIcon
 } from "@heroicons/react/24/solid"
+import { NavigationItemType, NavigationType } from "@vardast/type/Navigation"
 import {
   ISellerDesktopAnalyzeProps,
   ISellerMobileAnalyzeProps
@@ -30,8 +21,6 @@ import {
   LucidePhoneIncoming
   // LucideUserCircle
 } from "lucide-react"
-
-import { NavigationType } from "../../type/src/Navigation"
 
 type NavbarItem = {
   href: string
@@ -72,6 +61,18 @@ export const _profileSidebarMenu: NavigationType[] = [
     ]
   }
 ]
+
+export const _authentication_signin_sidebarMenu: NavigationItemType = {
+  title: "ورود به حساب کاربری",
+  icon: "log-in",
+  path: "/auth/signin"
+}
+
+export const _authentication_signout_sidebarMenu: NavigationItemType = {
+  title: "خروج از حساب کاربری",
+  icon: "log-out",
+  path: "/auth/signout"
+}
 
 export const _sidebarMenu: NavigationType[] = [
   {
@@ -350,37 +351,6 @@ export const _withNavigationRoutes: WithNavigationRouteItem[] = [
   {
     forceEqual: true,
     path: "/seller"
-  }
-]
-
-export const _navbar_items: NavbarItem[] = [
-  {
-    href: "/",
-    Icon: HomeIcon,
-    ActiveIcon: SolidHomeIcon,
-    title: "خانه",
-    id: 0
-  },
-  {
-    href: "/category",
-    Icon: Squares2X2Icon,
-    ActiveIcon: SolidSquares2X2Icon,
-    title: "دسته‌بندی",
-    id: 1
-  },
-  {
-    href: "/favorites",
-    Icon: BookmarkIcon,
-    ActiveIcon: SolidBookmarkIcon,
-    title: "علاقه‌مندی",
-    id: 2
-  },
-  {
-    href: "/profile",
-    Icon: UserCircleIcon,
-    ActiveIcon: SolidUserCircleIcon,
-    title: "حساب کاربری",
-    id: 3
   }
 ]
 

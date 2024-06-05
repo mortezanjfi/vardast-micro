@@ -15,6 +15,7 @@ import {
   GetIsFavoriteQuery,
   GetSellerQuery
 } from "@vardast/graphql/generated"
+import { setBreadCrumb } from "@vardast/provider/BreadcrumbProvider"
 import {
   Segments,
   SegmentsContent,
@@ -28,7 +29,6 @@ import { faIR } from "date-fns/locale"
 import useTranslation from "next-translate/useTranslation"
 import { useQueryState } from "next-usequerystate"
 
-import Breadcrumb from "./Breadcrumb"
 import FavoriteIcon from "./FavoriteIcon"
 import ShareIcon from "./ShareIcon"
 
@@ -85,11 +85,23 @@ const BrandOrSellerProfile = ({
   const [openTabName, setOpenTabName] = useQueryState("tab")
   const [activeTab, setActiveTab] = useState<string>("")
   const { t } = useTranslation()
-  // const [bioMoreFlag, setBioMoreFlag] = useState(false)
+  const isSellerQuery = () => type === EntityTypeEnum.Seller
 
-  // const onOpenCategories = () => {
-  //   setBioMoreFlag((prev) => !prev)
-  // }
+  setBreadCrumb({
+    dynamic: false,
+    items: [
+      {
+        label: t(isSellerQuery() ? "common:sellers" : "common:brands"),
+        path: "/brands",
+        isCurrent: false
+      },
+      {
+        label: data.name,
+        path: `${isSellerQuery() ? `sellers/${data.id}` : `brands/${data.id}`}`,
+        isCurrent: true
+      }
+    ]
+  })
 
   setDefaultOptions({
     locale: faIR,
@@ -100,40 +112,13 @@ const BrandOrSellerProfile = ({
     setActiveTab(openTabName || tabs[0].value)
   }, [openTabName, tabs])
 
-  const isSellerQuery = () => type === EntityTypeEnum.Seller
-
   return (
     <div className="flex h-full flex-col bg-alpha-white md:gap-9">
-      {!isMobileView && (
-        <div className="border-b-2 bg-alpha-white">
-          <Breadcrumb
-            isMobileView={isMobileView}
-            dynamic={false}
-            items={[
-              {
-                label: t(isSellerQuery() ? "common:sellers" : "common:brands"),
-                path: "/brands",
-                isCurrent: false
-              },
-              {
-                label: data.name,
-                path: `
-                ${
-                  isSellerQuery() ? `sellers/${data.id}` : `brands/${data.id}`
-                }`,
-                // path: `/brand/${brandQuery?.data.brand.id}/${brandQuery?.data.brand.name}`,
-                isCurrent: true
-              }
-            ]}
-          />
-        </div>
-      )}
       <div className="w-full md:flex md:gap-9">
         <div className="relative flex flex-col justify-start overflow-hidden md:w-[250px] md:min-w-[200px] md:flex-shrink-0 md:justify-center md:rounded-2xl md:border-2">
           <div className="flex flex-col gap-y bg-alpha-white px py-5 md:py-9">
             <div className="grid h-full grid-cols-9 items-center justify-center gap-y bg-alpha-white px py-5 md:flex md:py-9">
               <div></div>
-
               <div className="col-span-7 flex flex-col items-center justify-center">
                 <div className="rounded-full border-2 border-alpha-400 p-0.5 md:h-full">
                   {isSellerQuery() && (data as SellerQuery).isBlueTik && (

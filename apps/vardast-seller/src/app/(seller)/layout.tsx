@@ -36,7 +36,7 @@ export default async function PublicLayout({
       ) : (
         <>
           <AdminOrSellerDesktopHeader />
-          <div className="md:h-header h-largeHeader w-full bg-transparent"></div>
+          <div className="h-header w-full bg-transparent"></div>
           <AdminOrSellerLayoutComponent menu={_sellerSidebarMenu}>
             <MobileBaseLayout bgWhite={false} container spaceLess>
               {children}

@@ -1,3 +1,4 @@
+import { useMemo } from "react"
 import dynamic from "next/dynamic"
 import { LucideProps } from "lucide-react"
 import dynamicIconImports from "lucide-react/dynamicIconImports"
@@ -7,7 +8,7 @@ interface IconProps extends LucideProps {
 }
 
 const DynamicIcon = ({ name, ...props }: IconProps) => {
-  const LucideIcon = dynamic(dynamicIconImports[name])
+  const LucideIcon = useMemo(() => dynamic(dynamicIconImports[name]), [])
 
   return <LucideIcon {...props} />
 }

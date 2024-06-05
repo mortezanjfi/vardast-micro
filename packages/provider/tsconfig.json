@@ -12,6 +12,7 @@
       "@vardast/util/*": ["node_modules/@vardast/util/src/*"],
       "@vardast/lib/*": ["node_modules/@vardast/lib/src/*"],
       "@vardast/query/*": ["node_modules/@vardast/query/src/*"],
+      "@vardast/type/*": ["node_modules/@vardast/type/src/*"],
       "@vardast/asset/*": ["node_modules/@vardast/asset/src/*"],
       "@vardast/graphql/generated": [
         "node_modules/@vardast/graphql/src/generated.ts"

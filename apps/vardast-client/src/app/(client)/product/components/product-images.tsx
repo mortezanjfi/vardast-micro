@@ -192,7 +192,7 @@ const ProductImages = ({
           </DialogContent>
         </Dialog>
       )}
-      <div className="flex h-fit w-full flex-col items-start justify-center gap-5 bg-alpha-white md:flex-row xl:sticky xl:top-40 xl:mb-8 xl:w-[36.25rem]">
+      <div className="flex h-fit w-full flex-col items-start justify-center gap-5 bg-alpha-white md:flex-row xl:sticky xl:top-0 xl:mb-8 xl:w-[36.25rem]">
         {!isMobileView && images.length > 1 && (
           <div
             className={clsx(

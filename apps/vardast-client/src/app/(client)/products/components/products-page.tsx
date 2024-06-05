@@ -1,7 +1,6 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import Breadcrumb from "@vardast/component/Breadcrumb"
 import DesktopCategoriesCardsSection from "@vardast/component/category/DesktopCategoriesCardsSection"
 import ProductDescription from "@vardast/component/product-description"
 import ProductList from "@vardast/component/product-list"
@@ -13,7 +12,6 @@ import {
 } from "@vardast/graphql/generated"
 import { getCategoryQueryFn } from "@vardast/query/queryFns/categoryQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
-import useTranslation from "next-translate/useTranslation"
 
 interface ProductsPageProps {
   isMobileView: boolean
@@ -38,7 +36,6 @@ const ProductsPage = ({
     queryKey: [QUERY_FUNCTIONS_KEY.CATEGORY_QUERY_KEY, caategoryArgs],
     queryFn: () => getCategoryQueryFn(selectedCategoryId)
   })
-  const { t } = useTranslation()
   // args["categoryIds"] = getCategoryQuery.data?.category?.children?.length
   //   ? getCategoryQuery.data.category.children.map((children) => {
   //       return children?.id as number
@@ -53,6 +50,7 @@ const ProductsPage = ({
             return children?.id as number
           })
         : [selectedCategoryId]
+
   return (
     <>
       {slug && slug.length > 0 ? (
@@ -60,20 +58,7 @@ const ProductsPage = ({
           isMobileView={isMobileView}
           selectedCategoryId={+slug[0]}
         />
-      ) : (
-        <div className="bg-alpha-white">
-          <Breadcrumb
-            dynamic={false}
-            items={[
-              {
-                label: t("common:products_vardast"),
-                path: "/products",
-                isCurrent: true
-              }
-            ]}
-          />
-        </div>
-      )}
+      ) : null}
 
       <div className="flex flex-col gap-9">
         {!isMobileView && (

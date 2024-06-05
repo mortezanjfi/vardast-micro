@@ -115,8 +115,8 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
         }
         if (onClick) onClick(event)
       }}
-      prefetch={prefetch ? prefetch : false}
       {...rest}
+      prefetch={prefetch ? prefetch : false}
       ref={ref}
     />
   )

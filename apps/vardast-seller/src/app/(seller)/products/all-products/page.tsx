@@ -1,5 +1,4 @@
 import { dehydrate } from "@tanstack/react-query"
-import withMobileHeader from "@vardast/component/withMobileHeader"
 import { IndexProductInput } from "@vardast/graphql/generated"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
@@ -75,7 +74,4 @@ async function ManageProductPage({
   )
 }
 
-export default withMobileHeader(ManageProductPage, {
-  title: "کالاهای وردست",
-  hasBack: true
-})
+export default ManageProductPage

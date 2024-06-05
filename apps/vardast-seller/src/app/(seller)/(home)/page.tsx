@@ -1,7 +1,6 @@
 import { Metadata } from "next"
 import { dehydrate } from "@tanstack/react-query"
 import { authOptions } from "@vardast/auth/authOptions"
-import withMobileHeader from "@vardast/component/withMobileHeader"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 import { getMyProfileSellerQueryFns } from "@vardast/query/queryFns/getMyProfileSellerQueryFns"
@@ -45,4 +44,4 @@ const SellerHome = async () => {
   )
 }
 
-export default withMobileHeader(SellerHome, {})
+export default SellerHome

@@ -1,7 +1,6 @@
 import { Metadata } from "next"
 import { dehydrate } from "@tanstack/react-query"
 import CategoriesPage from "@vardast/component/category/CategoriesPage"
-import withMobileHeader from "@vardast/component/withMobileHeader"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 import { getCategoryQueryFn } from "@vardast/query/queryFns/categoryQueryFns"
@@ -63,4 +62,4 @@ const CategoryIdPage: React.FC<CategoryIdPageIndexProps> = async ({
   )
 }
 
-export default withMobileHeader(CategoryIdPage, {})
+export default CategoryIdPage

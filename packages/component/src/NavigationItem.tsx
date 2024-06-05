@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { usePathname } from "next/navigation"
 import { NavigationItemType } from "@vardast/type/Navigation"
 import { Button } from "@vardast/ui/button"
@@ -10,8 +10,10 @@ import { LucideChevronDown } from "lucide-react"
 import DynamicIcon from "./DynamicIcon"
 import Link from "./Link"
 
+export type NavigationItemVariant = "success" | "error"
 type Props = {
   menu: NavigationItemType
+  variant?: NavigationItemVariant
 }
 
 const NavigationItem = (props: Props) => {
@@ -19,34 +21,42 @@ const NavigationItem = (props: Props) => {
   const [open, setOpen] = useState<boolean>(false)
   const { menu } = props
 
-  const toggleOpen = () => {
+  const toggleOpen = useCallback(() => {
     const oldOpen = open
     setOpen(!oldOpen)
-  }
+  }, [pathname])
 
-  const isActive = (linkPath: string): boolean => {
-    const currentPathModified = pathname.split("/").slice(1).join("/")
-    const linkPathModified = linkPath?.split("/").slice(1).join("/")
+  const isActive = useCallback(
+    (linkPath: string): boolean => {
+      const currentPathModified = pathname.split("/").slice(1).join("/")
+      const linkPathModified = linkPath?.split("/").slice(1).join("/")
 
-    return linkPathModified === currentPathModified
-      ? true
-      : linkPathModified !== "" &&
-          currentPathModified.startsWith(linkPathModified)
-  }
+      return linkPathModified === currentPathModified
+        ? true
+        : linkPathModified !== "" &&
+            currentPathModified.startsWith(linkPathModified)
+    },
+    [pathname]
+  )
 
   return (
     <>
       <li
         className={clsx([
           "app-navigation-item",
+
           menu.items && "has-child",
           isActive(menu.path as string) && "active",
           open && "open"
         ])}
       >
-        <span>
+        <span className={clsx(props.variant)}>
           <Link href={menu.path as string} className="app-navigation-item-link">
-            <DynamicIcon name={menu.icon} className="icon" strokeWidth={1.5} />
+            <DynamicIcon
+              name={menu.icon}
+              className={clsx("icon", props.variant)}
+              strokeWidth={1.5}
+            />
             <span className="flex-1">{menu.title}</span>
           </Link>
           {menu.items && (

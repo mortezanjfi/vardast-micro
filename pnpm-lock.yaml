@@ -942,6 +942,9 @@ importers:
       '@vardast/tailwind-config':
         specifier: workspace:*
         version: link:../../configs/tailwind
+      '@vardast/type':
+        specifier: workspace:*
+        version: link:../type
       '@vardast/ui':
         specifier: workspace:*
         version: link:../ui

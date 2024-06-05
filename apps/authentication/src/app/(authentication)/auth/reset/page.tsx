@@ -1,5 +1,3 @@
-import withMobileHeader from "@vardast/component/withMobileHeader"
-
 import ResetForm from "@/app/(authentication)/components/ResetForm"
 
 const ResetPage = async () => {
@@ -14,6 +12,4 @@ const ResetPage = async () => {
   return <ResetForm />
 }
 
-export default withMobileHeader(ResetPage, {
-  hasLogo: true
-})
+export default ResetPage

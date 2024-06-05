@@ -1,7 +1,6 @@
 import { Metadata } from "next"
 import { dehydrate } from "@tanstack/react-query"
 import { authOptions } from "@vardast/auth/authOptions"
-import withMobileHeader from "@vardast/component/withMobileHeader"
 import {
   EntityTypeEnum,
   IndexProductInput,
@@ -154,8 +153,4 @@ const SellerIndex = async ({
   )
 }
 
-export default withMobileHeader(SellerIndex, {
-  hasLogo: true
-  // hasFavorite: {}
-  // hasShare: true
-})
+export default SellerIndex

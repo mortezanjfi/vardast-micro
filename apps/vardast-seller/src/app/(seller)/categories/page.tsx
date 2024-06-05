@@ -1,7 +1,6 @@
 import { Metadata } from "next"
 import { dehydrate } from "@tanstack/react-query"
 import { authOptions } from "@vardast/auth/authOptions"
-import withMobileHeader from "@vardast/component/withMobileHeader"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 import { getMyProfileCategoriesSellerQueryFns } from "@vardast/query/queryFns/getMyProfileCategoriesSellerQueryFns"
@@ -37,7 +36,4 @@ const CategoriesIndex = async () => {
   )
 }
 
-export default withMobileHeader(CategoriesIndex, {
-  title: "دسته‌بندی‌ها",
-  hasBack: true
-})
+export default CategoriesIndex

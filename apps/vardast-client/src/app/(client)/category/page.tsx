@@ -1,7 +1,6 @@
 import { Metadata } from "next"
 import { dehydrate } from "@tanstack/react-query"
 import VocabulariesPage from "@vardast/component/category/VocabulariesPage"
-import withMobileHeader from "@vardast/component/withMobileHeader"
 import { GetVocabularyQuery } from "@vardast/graphql/generated"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
@@ -33,6 +32,4 @@ const CategoriesPage = async () => {
     </ReactQueryHydrate>
   )
 }
-export default withMobileHeader(CategoriesPage, {
-  title: "دسته‌بندی‌ها"
-})
+export default CategoriesPage

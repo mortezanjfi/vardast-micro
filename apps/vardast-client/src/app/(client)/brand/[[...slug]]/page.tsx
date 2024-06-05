@@ -1,7 +1,6 @@
 import { Metadata } from "next"
 import { dehydrate } from "@tanstack/react-query"
 import { authOptions } from "@vardast/auth/authOptions"
-import withMobileHeader from "@vardast/component/withMobileHeader"
 import {
   EntityTypeEnum,
   IndexProductInput,
@@ -158,8 +157,4 @@ const BrandIndex = async ({
   )
 }
 
-export default withMobileHeader(BrandIndex, {
-  // hasLogo: true
-  // hasFavorite: {}
-  // hasShare: true
-})
+export default BrandIndex
