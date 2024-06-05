@@ -20,6 +20,7 @@ import {
   IndexBrandInput,
   SortBrandEnum
 } from "@vardast/graphql/generated"
+import { setSidebar } from "@vardast/provider/LayoutProvider"
 import { getAllBrandsQueryFn } from "@vardast/query/queryFns/allBrandsQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { Button } from "@vardast/ui/button"
@@ -139,31 +140,31 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
     )
 
   const DesktopSidebar = (
-    <div className="top-0 h-fit border-alpha-200 bg-alpha-white px-4 py-4 sm:sticky md:w-[250px] md:min-w-[200px] md:rounded md:border-2 md:bg-inherit">
-      <div className="flex flex-col gap-9">
-        <div className=" flex items-center border-b-2 border-b-alpha-200 py-4">
-          <strong>فیلترها</strong>
-          {filterAttributes.length > 0 && (
-            <Button
-              size="small"
-              noStyle
-              className="ms-auto text-sm text-red-500"
-              onClick={() => setFilterAttributes([])}
-            >
-              حذف همه فیلترها
-            </Button>
-          )}
-        </div>
+    <div className="flex flex-col gap-9">
+      <div className=" flex items-center border-b-2 border-b-alpha-200 py-4">
+        <strong>فیلترها</strong>
+        {filterAttributes.length > 0 && (
+          <Button
+            size="small"
+            noStyle
+            className="ms-auto text-sm text-red-500"
+            onClick={() => setFilterAttributes([])}
+          >
+            حذف همه فیلترها
+          </Button>
+        )}
       </div>
     </div>
   )
+
+  setSidebar(DesktopSidebar)
 
   return (
     <DesktopMobileViewOrganizer
       isMobileView={isMobileView}
       Content={Content}
       DesktopHeader={DesktopHeader}
-      DesktopSidebar={DesktopSidebar}
+      DesktopSidebar={<></>}
     />
   )
 }

@@ -39,6 +39,7 @@ import {
   ProductSortablesEnum,
   useGetAllFilterableAttributesBasicsQuery
 } from "@vardast/graphql/generated"
+import { setSidebar } from "@vardast/provider/LayoutProvider"
 import { PublicContext } from "@vardast/provider/PublicProvider"
 import graphqlRequestClientWithoutToken from "@vardast/query/queryClients/graphqlRequestClientWithoutToken"
 import { getAllProductsQueryFn } from "@vardast/query/queryFns/allProductsQueryFns"
@@ -348,12 +349,7 @@ const ProductList = ({
   }
 
   const DesktopSidebar = (
-    <div
-      className={clsx(
-        "top-0 h-fit border-2 border-alpha-200 bg-alpha-white px-4 py-4 md:sticky md:w-[250px] md:min-w-[200px] md:rounded md:bg-inherit",
-        desktopSideBarClass
-      )}
-    >
+    <>
       {hasSearch && (
         <div className="relative flex transform items-center rounded-lg border-alpha-200 bg-alpha-100 pr-2 transition-all">
           {queryTemp !== query ? (
@@ -447,7 +443,7 @@ const ProductList = ({
           )}
         {!selectedCategoryIds && !brandId && !sellerId && <VocabularyFilter />}
       </div>
-    </div>
+    </>
   )
 
   const DesktopHeader = (
@@ -644,10 +640,12 @@ const ProductList = ({
       <NotFoundMessage />
     )
 
+  setSidebar(DesktopSidebar)
+
   return (
     <DesktopMobileViewOrganizer
       isMobileView={isMobileView}
-      DesktopSidebar={DesktopSidebar}
+      DesktopSidebar={<></>}
       DesktopHeader={DesktopHeader}
       // DesktopHeader={<></>}
       MobileHeader={hasFilter ? MobileHeader : <></>}

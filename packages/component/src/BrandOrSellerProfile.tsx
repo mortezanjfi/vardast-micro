@@ -15,7 +15,7 @@ import {
   GetIsFavoriteQuery,
   GetSellerQuery
 } from "@vardast/graphql/generated"
-import { setBreadCrumb } from "@vardast/provider/BreadcrumbProvider"
+import { setBreadCrumb } from "@vardast/provider/LayoutProvider"
 import {
   Segments,
   SegmentsContent,

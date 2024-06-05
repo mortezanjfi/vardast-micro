@@ -10,7 +10,7 @@ import {
   GetCategoryQueryVariables,
   IndexProductInput
 } from "@vardast/graphql/generated"
-import { setBreadCrumb } from "@vardast/provider/BreadcrumbProvider"
+import { setBreadCrumb } from "@vardast/provider/LayoutProvider"
 import { getCategoryQueryFn } from "@vardast/query/queryFns/categoryQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import useTranslation from "next-translate/useTranslation"

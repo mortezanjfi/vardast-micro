@@ -2,7 +2,7 @@
 
 import { useContext, useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
-import { BreadcrumbContext } from "@vardast/provider/BreadcrumbProvider"
+import { LayoutContext } from "@vardast/provider/LayoutProvider"
 import { BreadcrumbProps, CrumbItemProps } from "@vardast/type/breadcrumb"
 import { stringHasOnlyNumberValidator } from "@vardast/util/stringHasOnlyNumberValidator"
 import { useAtomValue } from "jotai"
@@ -14,9 +14,9 @@ const Breadcrumb = ({
   dynamic: dynamicProps,
   items: itemsProps
 }: BreadcrumbProps) => {
-  const { optionsAtom } = useContext(BreadcrumbContext)
+  const { breadcrumbAtom } = useContext(LayoutContext)
   const { dynamic: dynamicContext, items: itemsContext } =
-    useAtomValue(optionsAtom)
+    useAtomValue(breadcrumbAtom)
   const pathname = usePathname()
   const [breadcrumbs, setBreadcrumbs] = useState<CrumbItemProps[]>()
   const { t } = useTranslation()

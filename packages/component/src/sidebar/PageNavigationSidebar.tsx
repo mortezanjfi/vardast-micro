@@ -1,21 +1,15 @@
 "use client"
 
-import { ReactNode, useContext, useEffect, useState } from "react"
-import { usePathname, useSearchParams } from "next/navigation"
 import { PencilSquareIcon } from "@heroicons/react/24/outline"
 import { WalletIcon } from "@heroicons/react/24/solid"
-import { useClickOutside } from "@mantine/hooks"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import sidebar_options from "@vardast/lib/sidebar_options"
-import { LayoutContext } from "@vardast/provider/LayoutProvider"
 import { ILayoutDesktopSidebar } from "@vardast/type/layout"
-import clsx from "clsx"
-import { useAtomValue } from "jotai"
 import { Session } from "next-auth"
 import { useSession } from "next-auth/react"
 
-import Link from "./Link"
-import Navigation from "./Navigation"
+import Link from "../Link"
+import Navigation from "../Navigation"
 
 const SidebarProfile = ({ session }: { session: Session }) => {
   return (
@@ -61,42 +55,20 @@ const SidebarProfile = ({ session }: { session: Session }) => {
   )
 }
 
-const Sidebar = ({ menus_name, profile }: ILayoutDesktopSidebar) => {
-  const { sidebarAtom } = useContext(LayoutContext)
-  const innerComponentSidebar: ReactNode = useAtomValue(sidebarAtom)
-  const [open, setOpen] = useState(false)
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
+const PageNavigationSidebar = ({
+  menus_name,
+  profile
+}: ILayoutDesktopSidebar) => {
   const { data: session } = useSession()
 
-  const ref = useClickOutside(() => {
-    if (open) {
-      setOpen(false)
-    }
-  })
-
-  useEffect(() => {
-    setOpen(false)
-  }, [setOpen, pathname, searchParams])
-
-  console.log({ innerComponentSidebar })
-
   return (
-    <aside ref={ref} className={clsx("app-sidebar", open && "open")}>
-      <div className="app-sidebar-inner">
-        <div className="app-navigation">
-          {innerComponentSidebar ? (
-            innerComponentSidebar
-          ) : (
-            <div className="app-navigation-container">
-              {profile && <SidebarProfile session={session} />}
-              <Navigation menus={sidebar_options[menus_name]} withLogin />
-            </div>
-          )}
-        </div>
+    <div className="app-navigation">
+      <div className="app-navigation-container">
+        {profile && <SidebarProfile session={session} />}
+        <Navigation menus={sidebar_options[menus_name]} withLogin />
       </div>
-    </aside>
+    </div>
   )
 }
 
-export default Sidebar
+export default PageNavigationSidebar

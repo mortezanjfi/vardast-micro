@@ -100,6 +100,7 @@ const _profile: ILayoutProps = {
 const _seller_or_brand: ILayoutProps = {
   desktop: {
     header: {},
+    sidebar: {},
     main: {
       container: true,
       breadcrumb: true
@@ -114,7 +115,8 @@ const _seller_or_brand: ILayoutProps = {
     },
     footer: {
       search: true,
-      options: { name: "_default" }
+      options: { name: "_default" },
+      back: true
     }
   }
 }
@@ -123,6 +125,7 @@ const _products: ILayoutProps = {
   desktop: {
     footer: {},
     header: {},
+    sidebar: {},
     main: {
       container: true,
       breadcrumb: true
@@ -136,7 +139,8 @@ const _products: ILayoutProps = {
     },
     footer: {
       search: true,
-      options: { name: "_default" }
+      options: { name: "_default" },
+      back: true
     }
   }
 }

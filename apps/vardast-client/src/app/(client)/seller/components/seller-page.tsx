@@ -10,7 +10,7 @@ import {
   IndexProductInput,
   Seller
 } from "@vardast/graphql/generated"
-import { setBreadCrumb } from "@vardast/provider/BreadcrumbProvider"
+import { setBreadCrumb } from "@vardast/provider/LayoutProvider"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { getSellerQueryFn } from "@vardast/query/queryFns/sellerQueryFns"
 

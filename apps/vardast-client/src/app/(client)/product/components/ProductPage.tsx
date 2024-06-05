@@ -18,7 +18,7 @@ import {
   Seller,
   Uom
 } from "@vardast/graphql/generated"
-import { setBreadCrumb } from "@vardast/provider/BreadcrumbProvider"
+import { setBreadCrumb } from "@vardast/provider/LayoutProvider"
 import { PublicContext } from "@vardast/provider/PublicProvider"
 import { getProductQueryFn } from "@vardast/query/queryFns/productQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"

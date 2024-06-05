@@ -83,12 +83,12 @@
   }
 
   .app-sidebar-inner {
-    @apply relative flex;
+    @apply relative flex rounded-2xl border;
   }
 }
 
 .app-navigation {
-  @apply z-10 rounded-2xl border
+  @apply z-10
     w-80
     flex-shrink-0
     p-6

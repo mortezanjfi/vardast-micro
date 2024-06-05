@@ -1,5 +1,5 @@
 import { PropsWithChildren, Suspense } from "react"
-import BreadcrumbProvider from "@vardast/provider/BreadcrumbProvider"
+import LayoutProvider from "@vardast/provider/LayoutProvider"
 import { ILayoutProps, ILayoutTitle } from "@vardast/type/layout"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 import { clsx } from "clsx"
@@ -28,7 +28,7 @@ export default function withLayout<T>(
     }
 
     return (
-      <BreadcrumbProvider>
+      <LayoutProvider>
         {isMobileView ? (
           <>
             {layout?.mobile?.header && (
@@ -97,7 +97,7 @@ export default function withLayout<T>(
             )}
           </>
         )}
-      </BreadcrumbProvider>
+      </LayoutProvider>
     )
   }
 }

@@ -10,7 +10,7 @@ export interface ILayoutDesktopBreadcrumb {
   component_name: string
 }
 export interface ILayoutDesktopSidebar {
-  menus_name: string
+  menus_name?: string
   profile?: boolean
   background?: ILayoutBackground
 }
