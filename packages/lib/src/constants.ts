@@ -10,6 +10,7 @@ import {
   ListBulletIcon,
   PlusCircleIcon,
   BookmarkIcon as SolidBookmarkIcon,
+  CubeIcon as SolidCubeIcon,
   HomeIcon as SolidHomeIcon,
   Squares2X2Icon as SolidSquares2X2Icon,
   UserCircleIcon as SolidUserCircleIcon
@@ -498,8 +499,8 @@ export const _seller_navbar_items: NavbarItem[] = [
   },
   {
     href: "/products",
-    Icon: ListBulletIcon,
-    ActiveIcon: SolidBookmarkIcon,
+    Icon: CubeIcon,
+    ActiveIcon: SolidCubeIcon,
     title: "کالاها",
     id: 2
   },
