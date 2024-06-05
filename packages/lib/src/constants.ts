@@ -32,7 +32,7 @@ import {
 
 import { NavigationType } from "../../type/src/Navigation"
 
-type NavbarItem = {
+export type NavbarItem = {
   href: string
   Icon: LucideIcon
   ActiveIcon: LucideIcon
@@ -370,6 +370,10 @@ export const _withNavigationRoutes: WithNavigationRouteItem[] = [
   },
   {
     forceEqual: true,
+    path: "/orders"
+  },
+  {
+    forceEqual: true,
     path: "/profile/orders"
   },
   {
@@ -466,6 +470,37 @@ export const _navbar_items: NavbarItem[] = [
     Icon: ListBulletIcon,
     ActiveIcon: SolidBookmarkIcon,
     title: "سفارشات",
+    id: 2
+  },
+  {
+    href: "/profile",
+    Icon: UserCircleIcon,
+    ActiveIcon: SolidUserCircleIcon,
+    title: "حساب کاربری",
+    id: 3
+  }
+]
+
+export const _seller_navbar_items: NavbarItem[] = [
+  {
+    href: "/dasboard",
+    Icon: HomeIcon,
+    ActiveIcon: SolidHomeIcon,
+    title: "داشبورد",
+    id: 0
+  },
+  {
+    href: "/orders",
+    Icon: ListBulletIcon,
+    ActiveIcon: SolidSquares2X2Icon,
+    title: "سفارشات",
+    id: 1
+  },
+  {
+    href: "/products",
+    Icon: ListBulletIcon,
+    ActiveIcon: SolidBookmarkIcon,
+    title: "کالاها",
     id: 2
   },
   {

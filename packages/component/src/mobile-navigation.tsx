@@ -8,7 +8,11 @@ import {
 } from "@vardast/graphql/generated"
 import useIsCurrentPath from "@vardast/hook/use-is-current-path"
 import { toast } from "@vardast/hook/use-toast"
-import { _navbar_items, _withNavigationRoutes } from "@vardast/lib/constants"
+import {
+  _navbar_items,
+  _seller_navbar_items,
+  _withNavigationRoutes
+} from "@vardast/lib/constants"
 import { PublicContext } from "@vardast/provider/PublicProvider"
 import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
@@ -23,9 +27,9 @@ import Link from "./Link"
 import Progress from "./Progress"
 import Search from "./Search"
 
-type Props = {}
+type Props = { isClient: boolean }
 
-const MobileNavigation = (_: Props) => {
+const MobileNavigation = ({ isClient }: Props) => {
   const session = useSession()
   const router = useRouter()
   const pathname = usePathname()
@@ -218,7 +222,7 @@ const MobileNavigation = (_: Props) => {
   useEffect(() => {
     ref?.current?.focus()
   }, [pathname])
-
+  const menu = isClient ? _navbar_items : _seller_navbar_items
   if (isShowNavigation()) {
     return (
       <>
@@ -304,32 +308,33 @@ const MobileNavigation = (_: Props) => {
             )}
             {!showBuyBoxFlag && (
               <div className="grid w-full grid-cols-4 bg-alpha-white bg-opacity-5">
-                {_navbar_items.map(({ Icon, ActiveIcon, href, id, title }) => {
-                  const ShowedIcon = getIsActiveNav(href) ? ActiveIcon : Icon
-                  return (
-                    <Link
-                      key={id}
-                      href={href}
-                      className={`group inline-flex h-full flex-col items-center justify-center gap-y-0.5 pb-2`}
-                    >
-                      <ShowedIcon
-                        className={mergeClasses(
-                          "h-7 w-7 transform transition-all",
-                          showNavbarScroll ? "" : "my-2",
-                          getActiveClassName(href)
-                        )}
-                      />
-                      <p
-                        className={mergeClasses(
-                          "text-xs font-bold",
-                          getActiveClassName(href)
-                        )}
+                {menu &&
+                  menu.map(({ Icon, ActiveIcon, href, id, title }) => {
+                    const ShowedIcon = getIsActiveNav(href) ? ActiveIcon : Icon
+                    return (
+                      <Link
+                        key={id}
+                        href={href}
+                        className={`group inline-flex h-full flex-col items-center justify-center gap-y-0.5 pb-2`}
                       >
-                        {title}
-                      </p>
-                    </Link>
-                  )
-                })}
+                        <ShowedIcon
+                          className={mergeClasses(
+                            "h-7 w-7 transform transition-all",
+                            showNavbarScroll ? "" : "my-2",
+                            getActiveClassName(href)
+                          )}
+                        />
+                        <p
+                          className={mergeClasses(
+                            "text-xs font-bold",
+                            getActiveClassName(href)
+                          )}
+                        >
+                          {title}
+                        </p>
+                      </Link>
+                    )
+                  })}
               </div>
             )}
           </div>

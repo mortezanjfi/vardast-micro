@@ -26,7 +26,7 @@ export default async function PublicLayout({
       {isMobileView ? (
         <>
           <MobileScrollProvider>{children}</MobileScrollProvider>
-          <MobileNavigation />
+          <MobileNavigation isClient={true} />
         </>
       ) : (
         <>
