@@ -8,8 +8,8 @@ import logoHorizontal from "@vardast/asset/logo-horizontal-v2-persian-light-bg.s
 import { UserStatusesEnum } from "@vardast/graphql/generated"
 import { ColorEnum } from "@vardast/type/Enums"
 import { ILayoutDesktopHeader } from "@vardast/type/layout"
-import { Avatar, AvatarFallback, AvatarImage } from "@vardast/ui/avatar"
 import clsx from "clsx"
+import { ChevronLeft } from "lucide-react"
 import { useSession } from "next-auth/react"
 
 import Link from "../Link"
@@ -125,9 +125,11 @@ const DesktopHeader = ({ search, button }: ILayoutDesktopHeader) => {
                         >
                           <div className="bg-alpha-white py-4">
                             <NavigationMenuLink>
-                              <Link href={"/profile/info"}>
-                                <div className="flex items-center gap-2 px-4 py-2">
-                                  <Avatar className="rounded-full border border-secondary">
+                              <Link
+                                className="flex items-center justify-between gap-2 px-4 py-2"
+                                href={"/profile/info"}
+                              >
+                                {/* <Avatar className="rounded-full border border-secondary">
                                     <AvatarImage
                                       src={
                                         session?.profile?.avatarFile
@@ -140,26 +142,25 @@ const DesktopHeader = ({ search, button }: ILayoutDesktopHeader) => {
                                       {session?.profile?.firstName &&
                                         session?.profile?.lastName?.[0]}
                                     </AvatarFallback>
-                                  </Avatar>
-                                  <div className="flex flex-col">
-                                    {session?.profile?.fullName &&
-                                    session?.profile?.fullName !==
-                                      "null null" ? (
-                                      <h4 className="truncate font-semibold">
-                                        {session?.profile?.fullName}
-                                      </h4>
-                                    ) : (
-                                      "کاربر وردست"
-                                    )}
-                                    <p className="text-sm font-semibold text-alpha-400">
-                                      {session?.profile?.cellphone
-                                        ? digitsEnToFa(
-                                            session?.profile?.cellphone
-                                          )
-                                        : digitsEnToFa("09123456789")}
-                                    </p>
-                                  </div>
+                                  </Avatar> */}
+                                <div className="flex flex-col">
+                                  {session?.profile?.fullName &&
+                                  session?.profile?.fullName !== "null null" ? (
+                                    <h4 className="truncate font-semibold">
+                                      {session?.profile?.fullName}
+                                    </h4>
+                                  ) : (
+                                    "کاربر وردست"
+                                  )}
+                                  <p className="text-sm font-semibold text-alpha-400">
+                                    {session?.profile?.cellphone
+                                      ? digitsEnToFa(
+                                          session?.profile?.cellphone
+                                        )
+                                      : digitsEnToFa("09123456789")}
+                                  </p>
                                 </div>
+                                <ChevronLeft className="h-6 w-6" />
                               </Link>
                             </NavigationMenuLink>
                             {/* {status === "authenticated" &&

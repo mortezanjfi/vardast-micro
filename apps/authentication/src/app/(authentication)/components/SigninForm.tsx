@@ -31,7 +31,7 @@ import {
 import clsx from "clsx"
 import { ClientError } from "graphql-request"
 import { LucideAlertOctagon, LucideX } from "lucide-react"
-import { signIn } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
@@ -48,6 +48,7 @@ enum LoginOptions {
 
 const SigninFormContent = () => {
   const pathname = usePathname()
+  const { data: session, update: updateSession } = useSession()
   const returnedUrl = pathname
     .replace("/auth/signin", "")
     .split("/")
@@ -131,7 +132,7 @@ const SigninFormContent = () => {
             setErrors(null)
             setLoginErrors(null)
             setMessage(message as string)
-            // await session?.update(session)
+            await updateSession(session)
 
             if (returnedUrl.startsWith("foreign/")) {
               window.location.href = `https://${decodedUrl}`
@@ -224,7 +225,7 @@ const SigninFormContent = () => {
         setErrors(null)
         setLoginErrors(null)
         setMessage(message as string)
-        // await session?.update(session)
+        await updateSession(session)
 
         if (returnedUrl.startsWith("foreign/")) {
           window.location.href = `https://${decodedUrl}`

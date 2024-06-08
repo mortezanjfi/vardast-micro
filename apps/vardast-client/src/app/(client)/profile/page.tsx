@@ -22,7 +22,7 @@ export default async () => {
   const queryClient = getQueryClient()
 
   if (!session?.accessToken) {
-    redirect("/auth/signin/profile")
+    redirect("/auth/signin")
   }
 
   const dehydratedState = dehydrate(queryClient)

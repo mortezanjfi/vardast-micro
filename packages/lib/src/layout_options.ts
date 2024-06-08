@@ -60,6 +60,40 @@ const _category: ILayoutProps = {
   }
 }
 
+const _category_item: ILayoutProps = {
+  desktop: {
+    footer: {},
+    header: {
+      button: {
+        type: "link",
+        value: process.env.NEXT_PUBLIC_SELLER_VARDAST as string
+      },
+      search: true
+    },
+    main: {
+      container: true
+    }
+  },
+  mobile: {
+    header: {
+      title: {
+        type: "image"
+      }
+    },
+    main: {
+      background: {
+        type: "color",
+        value: "bg-alpha-100"
+      }
+    },
+    footer: {
+      search: true,
+      back: true,
+      options: { name: "_default" }
+    }
+  }
+}
+
 const _home: ILayoutProps = {
   desktop: {
     footer: {},
@@ -234,6 +268,7 @@ const _product: ILayoutProps = {
     },
     main: {
       container: true,
+
       breadcrumb: true
     },
     footer: {}
@@ -242,6 +277,12 @@ const _product: ILayoutProps = {
     header: {
       title: {
         type: "image"
+      }
+    },
+    main: {
+      background: {
+        type: "color",
+        value: "bg-alpha-100"
       }
     },
     footer: {
@@ -365,6 +406,7 @@ export default {
   _brand,
   _products,
   _category,
+  _category_item,
   _seller_or_brand_with_header,
   _product,
   _footer,

@@ -6,8 +6,10 @@ import { LucideChevronDown } from "lucide-react"
 
 const NavigationMenu = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>
->(({ className, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root> & {
+    viewPort?: boolean
+  }
+>(({ className, viewPort = true, children, ...props }, ref) => (
   <NavigationMenuPrimitive.Root
     ref={ref}
     className={mergeClasses(
@@ -17,7 +19,7 @@ const NavigationMenu = React.forwardRef<
     {...props}
   >
     {children}
-    <NavigationMenuViewport />
+    {viewPort && <NavigationMenuViewport />}
   </NavigationMenuPrimitive.Root>
 ))
 NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName
