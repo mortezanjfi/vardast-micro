@@ -880,6 +880,9 @@ importers:
       '@vardast/ui':
         specifier: workspace:*
         version: link:../ui
+      '@vardast/util':
+        specifier: workspace:*
+        version: link:../util
     devDependencies:
       '@vardast/eslint-config':
         specifier: workspace:*

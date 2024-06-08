@@ -15,7 +15,7 @@ import {
   GetIsFavoriteQuery,
   GetSellerQuery
 } from "@vardast/graphql/generated"
-import { setBreadCrumb } from "@vardast/provider/LayoutProvider"
+import { setBreadCrumb, setPageHeader } from "@vardast/provider/LayoutProvider"
 import {
   Segments,
   SegmentsContent,
@@ -112,76 +112,80 @@ const BrandOrSellerProfile = ({
     setActiveTab(openTabName || tabs[0].value)
   }, [openTabName, tabs])
 
-  return (
-    <div className="flex h-full flex-col bg-alpha-white md:gap-9">
-      <div className="w-full md:flex md:gap-9">
-        <div className="relative flex flex-col justify-start overflow-hidden md:w-[250px] md:min-w-[200px] md:flex-shrink-0 md:justify-center md:rounded-2xl md:border-2">
-          <div className="flex flex-col gap-y bg-alpha-white px py-5 md:py-9">
-            <div className="grid h-full grid-cols-9 items-center justify-center gap-y bg-alpha-white px py-5 md:flex md:py-9">
-              <div></div>
-              <div className="col-span-7 flex flex-col items-center justify-center">
-                <div className="rounded-full border-2 border-alpha-400 p-0.5 md:h-full">
-                  {isSellerQuery() && (data as SellerQuery).isBlueTik && (
-                    <>
-                      <CheckBadgeIcon className="w-h-7 absolute right-1 top-0 z-20 h-7 -translate-y-1 translate-x-1 text-info" />
-                      <span className="absolute right-2 top-1 h-3 w-3 rounded-full bg-alpha-white"></span>
-                    </>
-                  )}
-                  <div className="aspect-square">
-                    <Image
-                      src={
-                        data?.logoFile?.presignedUrl.url
-                          ? data?.logoFile?.presignedUrl.url
-                          : sellerUserImage
-                      }
-                      alt="seller"
-                      width={100}
-                      height={100}
-                      className="h-full w-full rounded-full object-contain"
-                    />
-                  </div>
-                </div>
-                {(!isMobileView || isSellerQuery()) && (
-                  <div className="flex flex-col items-center gap-y-2 pt">
-                    <p>{data.name}</p>
-                    {data?.addresses?.length > 0 &&
-                      data.addresses[0].city.name && (
-                        <p className="flex h-4 items-center gap-x-1 py-1 text-xs text-alpha-600">
-                          <MapPinIcon className="h-3 w-3 text-alpha-600" />
-                          {data.addresses[0].city.name}
-                        </p>
-                      )}
-                  </div>
+  const PageHeader = (
+    <div className="w-full md:flex md:gap-6">
+      <div className="relative flex flex-col justify-start overflow-hidden md:w-80 md:min-w-80 md:flex-shrink-0 md:justify-center md:rounded-2xl md:border">
+        <div className="flex flex-col gap-y bg-alpha-white px py-5 md:py-9">
+          <div className="grid h-full grid-cols-9 items-center justify-center gap-y bg-alpha-white px py-5 md:flex md:py-9">
+            <div></div>
+            <div className="col-span-7 flex flex-col items-center justify-center">
+              <div className="rounded-full border-2 border-alpha-400 p-0.5 md:h-full">
+                {isSellerQuery() && (data as SellerQuery).isBlueTik && (
+                  <>
+                    <CheckBadgeIcon className="w-h-7 absolute right-1 top-0 z-20 h-7 -translate-y-1 translate-x-1 text-info" />
+                    <span className="absolute right-2 top-1 h-3 w-3 rounded-full bg-alpha-white"></span>
+                  </>
                 )}
+                <div className="aspect-square">
+                  <Image
+                    src={
+                      data?.logoFile?.presignedUrl.url
+                        ? data?.logoFile?.presignedUrl.url
+                        : sellerUserImage
+                    }
+                    alt="seller"
+                    width={100}
+                    height={100}
+                    className="h-full w-full rounded-full object-contain"
+                  />
+                </div>
               </div>
-              <div className="hidden md:block"></div>
-              <div className="left-3 top-3 flex h-full flex-col justify-start md:absolute">
-                <FavoriteIcon
-                  entityId={+slug[0]}
-                  isFavoriteQuery={isFavoriteQuery}
-                  type={type}
-                />
-                <ShareIcon name={data.name} />
-              </div>
+              {(!isMobileView || isSellerQuery()) && (
+                <div className="flex flex-col items-center gap-y-2 pt">
+                  <p>{data.name}</p>
+                  {data?.addresses?.length > 0 &&
+                    data.addresses[0].city.name && (
+                      <p className="flex h-4 items-center gap-x-1 py-1 text-xs text-alpha-600">
+                        <MapPinIcon className="h-3 w-3 text-alpha-600" />
+                        {data.addresses[0].city.name}
+                      </p>
+                    )}
+                </div>
+              )}
+            </div>
+            <div className="hidden md:block"></div>
+            <div className="left-3 top-3 flex h-full flex-col justify-start md:absolute">
+              <FavoriteIcon
+                entityId={+slug[0]}
+                isFavoriteQuery={isFavoriteQuery}
+                type={type}
+              />
+              <ShareIcon name={data.name} />
             </div>
           </div>
         </div>
-        {!isMobileView && (
-          <div className="relative hidden aspect-auto w-full overflow-hidden rounded-2xl md:col-span-9 md:block">
-            <Image
-              src={
-                data.bannerFile?.presignedUrl.url
-                  ? `${data.bannerFile?.presignedUrl.url}`
-                  : blankImage
-              }
-              className="h-full w-full object-cover"
-              alt="banner"
-              fill
-            />
-          </div>
-        )}
       </div>
+      {!isMobileView && (
+        <div className="relative hidden aspect-auto w-full overflow-hidden rounded-2xl md:col-span-9 md:block">
+          <Image
+            src={
+              data.bannerFile?.presignedUrl.url
+                ? `${data.bannerFile?.presignedUrl.url}`
+                : blankImage
+            }
+            className="h-full w-full object-cover"
+            alt="banner"
+            fill
+          />
+        </div>
+      )}
+    </div>
+  )
 
+  setPageHeader(PageHeader)
+
+  return (
+    <div className="flex h-full flex-col bg-alpha-white md:gap-9">
       <Segments
         value={activeTab}
         onValueChange={(value) => {
@@ -192,7 +196,7 @@ const BrandOrSellerProfile = ({
           }
           setOpenTabName(value)
         }}
-        className="sticky left-0 right-0 top-0 h-full flex-col  gap-9 bg-alpha-white sm:flex md:mt md:w-full md:overflow-visible"
+        className="sticky left-0 right-0 top-0 h-full flex-col gap-9 bg-alpha-white sm:flex md:ml-auto md:w-full md:overflow-visible"
       >
         <SegmentsList wrap className="border-b pb  md:border-b-2 md:pb-5">
           {tabs.map(({ title, value }) => (

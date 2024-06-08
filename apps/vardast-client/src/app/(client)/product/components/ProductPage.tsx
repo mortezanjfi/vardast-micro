@@ -235,7 +235,7 @@ const ProductPage = ({ id, isMobileView }: ProductPageProps) => {
       /> */}
       <div
         className={clsx(
-          "relative flex h-full w-full flex-col gap-1 sm:gap-0",
+          "flex h-full w-full flex-col gap-1 sm:gap-0",
           !isMobileView && "pb-6"
         )}
       >
@@ -317,7 +317,7 @@ const ProductPage = ({ id, isMobileView }: ProductPageProps) => {
             {/* <div className="p bg-purple-500 h-10 w-full"></div> */}
           </div>
         </div>
-        <div className="w-full ">
+        <div className="w-full">
           {queryProduct.data?.product.sameCategory &&
             queryProduct.data?.product.sameCategory.length > 0 && (
               <div>

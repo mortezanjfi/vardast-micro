@@ -74,7 +74,7 @@ const DesktopCategoriesCardsSection = ({
           </div>
         </div>
       ) : getCategoryQuery.data?.category.children.length ? (
-        <div className="relative hidden w-full flex-col gap-8 border-b-2 border-t-2 py-8 md:flex">
+        <div className="relative hidden w-full flex-col gap-8 border-b-2 pb-8 md:flex">
           <h3
             className={`font-medium md:text-xl`}
           >{`دسته‌بندی ${getCategoryQuery.data.category.title}`}</h3>

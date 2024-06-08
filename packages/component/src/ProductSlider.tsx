@@ -25,7 +25,7 @@ const ProductSlider = ({
 }: ProductSliderProps) => {
   return (
     <div className="h-full overflow-hidden">
-      <div className="hide-scrollbar flex h-full w-full overflow-x-auto pr-5">
+      <div className="flex h-full w-full overflow-x-auto pr-5">
         {hasExtraItem && (
           <div
             className={`min-h-full w-[37vw] flex-shrink-0 cursor-pointer pl-5 md:w-60`}

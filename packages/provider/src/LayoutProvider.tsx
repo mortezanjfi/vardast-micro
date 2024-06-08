@@ -8,13 +8,16 @@ import { atom, PrimitiveAtom, useSetAtom } from "jotai"
 interface LayoutContextType {
   breadcrumbAtom: PrimitiveAtom<BreadcrumbProps>
   sidebarAtom: PrimitiveAtom<JSX.Element>
+  pageHeaderAtom: PrimitiveAtom<JSX.Element>
 }
 const breadcrumbAtom = atom<BreadcrumbProps>({ dynamic: true, items: [] })
 const sidebarAtom = atom<JSX.Element>(<></>)
+const pageHeaderAtom = atom<JSX.Element>(<></>)
 
 export const LayoutContext = createContext<LayoutContextType>({
   breadcrumbAtom,
-  sidebarAtom
+  sidebarAtom,
+  pageHeaderAtom
 })
 
 export const setBreadCrumb = (options: BreadcrumbProps) => {
@@ -22,7 +25,7 @@ export const setBreadCrumb = (options: BreadcrumbProps) => {
 
   useEffect(() => {
     setBreadcrumb(options)
-  }, [])
+  }, [setBreadcrumb, options])
 
   return null
 }
@@ -32,7 +35,17 @@ export const setSidebar = (reactNode: JSX.Element) => {
 
   useEffect(() => {
     setSidebar(reactNode)
-  }, [])
+  }, [setSidebar, reactNode])
+
+  return null
+}
+
+export const setPageHeader = (reactNode: JSX.Element) => {
+  const setPageHeader = useSetAtom(pageHeaderAtom)
+
+  useEffect(() => {
+    setPageHeader(reactNode)
+  }, [setPageHeader, reactNode])
 
   return null
 }
@@ -40,21 +53,24 @@ export const setSidebar = (reactNode: JSX.Element) => {
 const LayoutProvider = ({ children }: { children: ReactNode }) => {
   const setBreadcrumb = useSetAtom(breadcrumbAtom)
   const setSidebar = useSetAtom(sidebarAtom)
+  const setPageHeader = useSetAtom(pageHeaderAtom)
 
   const pathname = usePathname()
 
   useEffect(() => {
     return () => {
       setBreadcrumb({ dynamic: true })
-      setSidebar(<></>)
+      setSidebar(null)
+      setPageHeader(null)
     }
-  }, [pathname])
+  }, [pathname, setBreadcrumb, setSidebar, setPageHeader])
 
   return (
     <LayoutContext.Provider
       value={{
         breadcrumbAtom,
-        sidebarAtom
+        sidebarAtom,
+        pageHeaderAtom
       }}
     >
       {children}

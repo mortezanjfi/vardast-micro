@@ -1,39 +1,35 @@
 import { PropsWithChildren, Suspense } from "react"
 import LayoutProvider from "@vardast/provider/LayoutProvider"
-import { ILayoutProps, ILayoutTitle } from "@vardast/type/layout"
+import { ILayoutProps } from "@vardast/type/layout"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 import { clsx } from "clsx"
 
 import Breadcrumb from "../Breadcrumb"
 import DesktopFooter from "../desktop/DesktopFooter"
 import DesktopHeader from "../desktop/DesktopHeader"
+import PageBanner from "../desktop/PageBanner"
 import MobileHeader from "../header/MobileHeader"
 import MobileScrollProvider from "../header/MobileScrollProvider"
 import MobileNavigation from "../mobile-navigation"
+import { SearchActionModal } from "../Search"
 import Sidebar from "../Sidebar"
 
 export default function withLayout<T>(
   Component: React.FC<PropsWithChildren<T>>,
   layout: ILayoutProps
 ) {
-  return async (props: T & { params?: string[] }) => {
+  return async (props: T) => {
     const isMobileView = await CheckIsMobileView()
-    const headerTitle = layout?.mobile?.header?.title
-    const propsTitle =
-      Object.values(props?.params)?.at(0)?.at(1) &&
-      decodeURI(Object.values(props?.params)?.at(0)?.at(1))
-    let title: ILayoutTitle<"text" | "image"> = headerTitle ?? {
-      type: "text",
-      value: propsTitle
-    }
 
     return (
       <LayoutProvider>
         {isMobileView ? (
           <>
+            <SearchActionModal isMobileView />
+
             {layout?.mobile?.header && (
               <header id="mobile-header-navbar" className="app-header mobile">
-                <MobileHeader {...{ ...layout?.mobile?.header, title }} />
+                <MobileHeader {...layout?.mobile?.header} />
               </header>
             )}
             <main
@@ -43,12 +39,9 @@ export default function withLayout<T>(
               )}
             >
               <MobileScrollProvider>
-                {layout?.mobile?.main?.breadcrumb && (
-                  <Suspense>
-                    <Breadcrumb />
-                  </Suspense>
-                )}
-                <Component {...{ ...props, ...layout?.mobile?.main }} />
+                {layout?.mobile?.main?.breadcrumb && <Breadcrumb />}
+                {layout?.mobile?.main?.page_header && <PageBanner />}
+                <Component {...{ ...props, ...layout?.desktop?.main }} />
               </MobileScrollProvider>
             </main>
             {layout?.mobile?.footer && (
@@ -62,7 +55,7 @@ export default function withLayout<T>(
             <div className="app-header-ghost"></div>
             {layout?.desktop?.header && (
               <header className="app-header desktop">
-                <DesktopHeader {...{ ...layout?.desktop?.header, title }} />
+                <DesktopHeader {...layout?.desktop?.header} />
               </header>
             )}
             <main
@@ -76,9 +69,21 @@ export default function withLayout<T>(
                   <Breadcrumb />
                 </Suspense>
               )}
-              <div className={clsx("app-layout desktop")}>
+              {layout?.desktop?.main?.page_header && (
+                <Suspense>
+                  <PageBanner />
+                </Suspense>
+              )}
+              <div
+                className={clsx(
+                  "app-layout desktop",
+                  layout?.desktop?.main?.page_header && "pt-6"
+                )}
+              >
                 {layout?.desktop?.sidebar && (
-                  <Sidebar {...layout?.desktop?.sidebar} />
+                  <Suspense>
+                    <Sidebar {...layout?.desktop?.sidebar} />
+                  </Suspense>
                 )}
                 <div
                   className={clsx(

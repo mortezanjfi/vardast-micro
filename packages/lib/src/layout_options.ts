@@ -72,6 +72,34 @@ const _home: ILayoutProps = {
   }
 }
 
+const _footer: ILayoutProps = {
+  desktop: {
+    header: {},
+    // main: {
+    //   background: {
+    //     type: "image",
+    //     value: "bg-[url('/images/background.svg')]"
+    //   }
+    // },
+    main: {
+      container: true
+    },
+    footer: {}
+  },
+  mobile: {
+    header: {
+      title: {
+        type: "image"
+      }
+    },
+    footer: {
+      search: true,
+      back: true,
+      options: { name: "_default" }
+    }
+  }
+}
+
 const _profile: ILayoutProps = {
   desktop: {
     header: {},
@@ -97,10 +125,65 @@ const _profile: ILayoutProps = {
   }
 }
 
-const _seller_or_brand: ILayoutProps = {
+const _brand: ILayoutProps = {
   desktop: {
     header: {},
     sidebar: {},
+    main: {
+      container: true,
+      breadcrumb: true
+    },
+    footer: {}
+  },
+  mobile: {
+    header: {
+      title: {
+        type: "text",
+        value: "برندهای وردست"
+      }
+    },
+    main: {
+      background: { type: "color", value: "bg-alpha-100" }
+    },
+    footer: {
+      search: true,
+      options: { name: "_default" },
+      back: true
+    }
+  }
+}
+
+const _seller: ILayoutProps = {
+  desktop: {
+    header: {},
+    sidebar: {},
+    main: {
+      container: true,
+      breadcrumb: true
+    },
+    footer: {}
+  },
+  mobile: {
+    header: {
+      title: {
+        type: "text",
+        value: "فروشندگان وردست"
+      }
+    },
+    main: {
+      background: { type: "color", value: "bg-alpha-100" }
+    },
+    footer: {
+      search: true,
+      options: { name: "_default" },
+      back: true
+    }
+  }
+}
+
+const _product: ILayoutProps = {
+  desktop: {
+    header: {},
     main: {
       container: true,
       breadcrumb: true
@@ -114,9 +197,33 @@ const _seller_or_brand: ILayoutProps = {
       }
     },
     footer: {
-      search: true,
-      options: { name: "_default" },
-      back: true
+      back: true,
+      action: true
+    }
+  }
+}
+
+const _seller_or_brand_with_header: ILayoutProps = {
+  desktop: {
+    header: {},
+    sidebar: {},
+    main: {
+      container: true,
+      breadcrumb: true,
+      page_header: true
+    },
+    footer: {}
+  },
+  mobile: {
+    header: {
+      title: {
+        type: "text"
+      }
+    },
+    main: { page_header: true },
+    footer: {
+      back: true,
+      action: true
     }
   }
 }
@@ -149,7 +256,11 @@ export default {
   _default,
   _profile,
   _home,
-  _seller_or_brand,
+  _seller,
+  _brand,
   _products,
-  _category
+  _category,
+  _seller_or_brand_with_header,
+  _product,
+  _footer
 }

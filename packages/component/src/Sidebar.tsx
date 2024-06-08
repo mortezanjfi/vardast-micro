@@ -41,7 +41,7 @@ const SidebarProfile = ({ session }: { session: Session }) => {
         </li>
         <li className="app-navigation-item flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="rounded-lg bg-blue-600 p-2">
+            <div className="rounted-lg bg-blue-600 p-2">
               <WalletIcon
                 width={24}
                 height={24}
@@ -62,6 +62,7 @@ const SidebarProfile = ({ session }: { session: Session }) => {
 }
 
 const Sidebar = ({ menus_name, profile }: ILayoutDesktopSidebar) => {
+  const [mount, setMount] = useState(false)
   const { sidebarAtom } = useContext(LayoutContext)
   const innerComponentSidebar: ReactNode = useAtomValue(sidebarAtom)
   const [open, setOpen] = useState(false)
@@ -79,20 +80,25 @@ const Sidebar = ({ menus_name, profile }: ILayoutDesktopSidebar) => {
     setOpen(false)
   }, [setOpen, pathname, searchParams])
 
-  console.log({ innerComponentSidebar })
+  useEffect(() => {
+    setMount(true)
+  }, [])
 
   return (
     <aside ref={ref} className={clsx("app-sidebar", open && "open")}>
       <div className="app-sidebar-inner">
         <div className="app-navigation">
-          {innerComponentSidebar ? (
-            innerComponentSidebar
-          ) : (
-            <div className="app-navigation-container">
-              {profile && <SidebarProfile session={session} />}
-              <Navigation menus={sidebar_options[menus_name]} withLogin />
-            </div>
-          )}
+          {mount &&
+            (innerComponentSidebar ? (
+              innerComponentSidebar
+            ) : (
+              <div className="app-navigation-container">
+                {profile && <SidebarProfile session={session} />}
+                {menus_name && (
+                  <Navigation menus={sidebar_options[menus_name]} withLogin />
+                )}
+              </div>
+            ))}
         </div>
       </div>
     </aside>

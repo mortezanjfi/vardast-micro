@@ -6,7 +6,7 @@ import { getAllFaqQueryFns } from "@vardast/query/queryFns/getAllFaqQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
-import Faq from "@/app/(client)/(home)/faq/components/Faq"
+import Faq from "@/app/(client)/(footer)/faq/components/Faq"
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

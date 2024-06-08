@@ -1,6 +1,6 @@
 "use client"
 
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import {
   EventTrackerSubjectTypes,
@@ -90,32 +90,50 @@ const MobileNavigation = ({
     router.replace(`/auth/signin${pathname}`)
   }
 
-  useEffect(() => {
-    const appMobileFooter = document?.querySelector("#mobile-navigation-bar")
-    const hastShortClassNow = appMobileFooter?.querySelector(".short")
-    const observer = new MutationObserver(() => {
-      if (action) {
-        if (!hastShortClassNow) {
-          appMobileFooter?.classList.add("short")
-        }
-      } else {
-        if (hastShortClassNow) {
-          appMobileFooter?.classList.remove("short")
-        }
-      }
-    })
+  // useEffect(() => {
+  //   const appMobileFooter = document?.querySelector("#mobile-navigation-bar")
+  //   if (appMobileFooter) {
+  //     const hastShortClassNow = appMobileFooter?.querySelector(".short")
+  //     if (action) {
+  //       if (!hastShortClassNow) {
+  //         appMobileFooter?.classList.add("short")
+  //       }
+  //     } else {
+  //       if (hastShortClassNow) {
+  //         appMobileFooter?.classList.remove("short")
+  //       }
+  //     }
+  //   }
+  // }, [])
 
-    observer.observe(appMobileFooter, {
-      childList: true,
-      subtree: true,
-      attributes: true
-    })
+  // useEffect(() => {
+  //   const appMobileFooter = document?.querySelector("#mobile-navigation-bar")
+  //   if (appMobileFooter) {
+  //     const hastShortClassNow = appMobileFooter?.querySelector(".short")
+  //     const observer = new MutationObserver(() => {
+  //       if (action) {
+  //         if (!hastShortClassNow) {
+  //           appMobileFooter?.classList.add("short")
+  //         }
+  //       } else {
+  //         if (hastShortClassNow) {
+  //           appMobileFooter?.classList.remove("short")
+  //         }
+  //       }
+  //     })
 
-    // Clean up the observer on unmount
-    return () => {
-      observer.disconnect()
-    }
-  }, [])
+  //     observer.observe(appMobileFooter, {
+  //       childList: true,
+  //       subtree: true,
+  //       attributes: true
+  //     })
+
+  //     // Clean up the observer on unmount
+  //     return () => {
+  //       observer.disconnect()
+  //     }
+  //   }
+  // }, [])
 
   return (
     <>

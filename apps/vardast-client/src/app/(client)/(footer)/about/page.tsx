@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
-import AboutPageIndex from "@/app/(client)/(home)/about/components/AboutPageIndex"
+import AboutPageIndex from "@/app/(client)/(footer)/about/components/AboutPageIndex"
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

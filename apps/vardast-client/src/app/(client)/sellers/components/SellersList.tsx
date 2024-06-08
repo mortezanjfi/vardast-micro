@@ -19,6 +19,7 @@ import {
   IndexBrandInput,
   Seller
 } from "@vardast/graphql/generated"
+import { setSidebar } from "@vardast/provider/LayoutProvider"
 import { getAllSellersQueryFn } from "@vardast/query/queryFns/allSellersQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { Button } from "@vardast/ui/button"
@@ -142,107 +143,32 @@ const SellersList = ({ limitPage, args, isMobileView }: SellersListProps) => {
     )
 
   const DesktopSidebar = (
-    <div className="top-0 h-fit border-alpha-200 bg-alpha-white px-4 py-4 md:sticky md:w-[250px] md:min-w-[200px] md:rounded md:border-2 md:bg-inherit">
-      {/* {hasSearch && (
-        <div className="relative flex transform items-center rounded-lg border-alpha-200 bg-alpha-100 pr-2 transition-all">
-          {queryTemp !== query ? (
-            <Loader2 className="h-6 w-6 animate-spin text-alpha-400" />
-          ) : (
-            <LucideSearch className="h-6 w-6 text-primary" />
-          )}
-          <Input
-            autoFocus
-            value={queryTemp}
-            defaultValue={query}
-            onChange={(e) => {
-              setQueryTemp(e.target.value)
-              setQuery(e.target.value)
-            }}
-            type="text"
-            placeholder="نام کالا | برند | فروشنده | دسته بندی | SKU"
-            className="flex h-full
-                  w-full
-                  items-center
-                  gap-2
-                  rounded-lg
-                  bg-alpha-100
-                  px-4
-                  py-3
-                  focus:!ring-0 disabled:bg-alpha-100"
-          />
+    <div className="flex flex-col gap-9">
+      <div className=" flex items-center border-b-2 border-b-alpha-200 py-4">
+        <strong>فیلترها</strong>
+        {filterAttributes.length > 0 && (
           <Button
-            variant="ghost"
             size="small"
-            iconOnly
-            className="rounded-full"
-            onClick={() => {
-              setQuery("")
-              setQueryTemp("")
-            }}
+            noStyle
+            className="ms-auto text-sm text-red-500"
+            onClick={() => setFilterAttributes([])}
           >
-            <LucideX className="icon" />
+            حذف همه فیلترها
           </Button>
-        </div>
-      )} */}
-      <div className="flex flex-col gap-9">
-        <div className=" flex items-center border-b-2 border-b-alpha-200 py-4">
-          <strong>فیلترها</strong>
-          {filterAttributes.length > 0 && (
-            <Button
-              size="small"
-              noStyle
-              className="ms-auto text-sm text-red-500"
-              onClick={() => setFilterAttributes([])}
-            >
-              حذف همه فیلترها
-            </Button>
-          )}
-        </div>
-        {/* {selectedCategoryIds &&
-            selectedCategoryIds.length === 1 &&
-            !brandId &&
-            !sellerId && (
-              <CategoryFilter selectedCategoryId={selectedCategoryIds[0]} />
-            )} */}
-
-        {/* {brandId && (
-          <BrandOrSellerCategoryFilter
-            categoryIdsFilter={categoryIdsFilter}
-            onCategoryIdsFilterChanged={onCategoryIdsFilterChanged}
-            brandId={brandId}
-          />
-        )} */}
-
-        {/* {sellerId && (
-          <BrandOrSellerCategoryFilter
-            categoryIdsFilter={categoryIdsFilter}
-            onCategoryIdsFilterChanged={onCategoryIdsFilterChanged}
-            sellerId={sellerId}
-          />
-        )} */}
-
-        {/* {selectedCategoryIds &&
-          selectedCategoryIds.length === 1 &&
-          selectedCategoryIds[0] !== 0 && (
-            <FiltersContainer
-              selectedCategoryId={selectedCategoryIds[0]}
-              filterAttributes={filterAttributes}
-              onFilterAttributesChanged={onFilterAttributesChanged}
-            />
-          )} */}
-
-        {/* {!selectedCategoryIds && !brandId && !sellerId && <VocabularyFilter />} */}
+        )}
       </div>
     </div>
   )
+
+  setSidebar(DesktopSidebar)
 
   return (
     <DesktopMobileViewOrganizer
       isMobileView={isMobileView}
       Content={Content}
       DesktopHeader={DesktopHeader}
-      DesktopSidebar={DesktopSidebar}
-    ></DesktopMobileViewOrganizer>
+      DesktopSidebar={<></>}
+    />
   )
 }
 

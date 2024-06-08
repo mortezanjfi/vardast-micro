@@ -4,7 +4,7 @@ type ILayoutTitleType = "image" | "text"
 
 type ILayoutTitleMap<T extends ILayoutTitleType> = T extends "image"
   ? { type: "image"; value?: string }
-  : { type: "text"; value: string }
+  : { type: "text"; value?: string }
 
 export interface ILayoutDesktopBreadcrumb {
   component_name: string
@@ -73,12 +73,14 @@ export interface ILayoutMobileFooter {
 export interface ILayoutMobileMain {
   background?: ILayoutBackground
   breadcrumb?: boolean
+  page_header?: boolean
 }
 
 export interface ILayoutDesktopMain {
   container?: boolean
   background?: ILayoutBackground
   breadcrumb?: boolean
+  page_header?: boolean
 }
 export interface ILayoutDesktop {
   background?: ILayoutBackground

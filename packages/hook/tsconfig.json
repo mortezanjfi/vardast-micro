@@ -25,6 +25,7 @@
       "@lib/*": ["node_modules/@vardast/lib/src/*"],
       "@vardast/lib/*": ["node_modules/@vardast/lib/src/*"],
       "@ui/*": ["node_modules/@vardast/ui/src/*"],
+      "@vardast/util/*": ["node_modules/@vardast/util/src/*"],
       "@vardast/ui/*": ["node_modules/@vardast/ui/src/*"]
     },
     "plugins": [

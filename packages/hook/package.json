@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@vardast/lib": "workspace:*",
+    "@vardast/util": "workspace:*",
     "@vardast/ui": "workspace:*"
   },
   "devDependencies": {

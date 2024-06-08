@@ -32,7 +32,7 @@ const FilterBlock = ({
         </Collapsible.Trigger>
       </div>
       <Collapsible.Content>
-        <div className="max-h-[400px] overflow-y-auto pb-3 text-justify">
+        <div className="hide-scrollbar max-h-full overflow-y-auto pb-3 text-justify">
           {children}
         </div>
       </Collapsible.Content>

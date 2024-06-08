@@ -22,7 +22,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger
 } from "../navigation-menu"
-import Search from "../Search"
+import Search, { SearchActionModal } from "../Search"
 
 export const StatusUserAlternatives = {
   [UserStatusesEnum.NotActivated]: {
@@ -58,138 +58,144 @@ const DesktopHeader = (_: ILayoutDesktopHeader) => {
   const pathname = usePathname()
 
   return (
-    <div className="container grid grid-cols-12 grid-rows-2 items-center gap-y py-7 md:grid-rows-1 md:gap-x-12">
-      <Link
-        href="/"
-        className="relative col-span-4 row-start-1 flex h-full items-center md:col-span-3 lg:col-span-3"
-      >
-        <Image
-          src={logoHorizontal}
-          alt={`وردست`}
-          className="w-auto object-contain lg:h-12"
-          priority
-        />
-      </Link>
-      <div className="col-span-12 row-start-2 hidden h-full rounded ring-1 ring-alpha-200 md:col-span-4 md:row-start-1 md:block lg:col-span-6">
-        <Search isMobileView={false} />
-      </div>
-      <div className="col-span-7 col-start-6 row-start-1 grid h-full grid-cols-2 justify-end gap-x-6 md:col-span-5 md:col-start-auto lg:col-span-3">
-        {status === "loading" ? (
-          <div className="col-span-2 flex h-full items-center justify-center">
-            <Loading hideMessage />
-          </div>
-        ) : (
-          <div className="col-span-2 grid grid-cols-4 gap-x md:gap-x-6">
-            {status === "authenticated" && !!session?.profile && (
-              <div className=""></div>
-            )}
-            <div className="col-span-2">
-              <Link
-                href={process.env.NEXT_PUBLIC_SELLER_VARDAST as string}
-                target="_blank"
-                className="btn flex h-full !bg-secondary text-sm font-semibold text-white"
-              >
-                {status === "authenticated" &&
-                session?.profile?.roles.some((role) => role?.name === "seller")
-                  ? "پنل فروش"
-                  : "فروشنده شوید!"}
-              </Link>
+    <>
+      <SearchActionModal />
+      <div className="container grid grid-cols-12 grid-rows-2 items-center gap-y py-7 md:grid-rows-1 md:gap-x-12">
+        <Link
+          href="/"
+          className="relative col-span-4 row-start-1 flex h-full items-center md:col-span-3 lg:col-span-3"
+        >
+          <Image
+            src={logoHorizontal}
+            alt={`وردست`}
+            className="w-auto object-contain lg:h-12"
+            priority
+          />
+        </Link>
+        <div className="col-span-12 row-start-2 hidden h-full rounded ring-1 ring-alpha-200 md:col-span-4 md:row-start-1 md:block lg:col-span-6">
+          <Search isMobileView={false} />
+        </div>
+        <div className="col-span-7 col-start-6 row-start-1 grid h-full grid-cols-2 justify-end gap-x-6 md:col-span-5 md:col-start-auto lg:col-span-3">
+          {status === "loading" ? (
+            <div className="col-span-2 flex h-full items-center justify-center">
+              <Loading hideMessage />
             </div>
-            {status === "authenticated" && !!session?.profile ? (
-              <div className="h-full">
-                <NavigationMenu className="h-full !max-w-full !justify-end">
-                  <NavigationMenuList className="flex h-full w-full">
-                    <NavigationMenuItem className="flex w-full flex-1 items-center">
-                      <UserIcon className="h-8 w-8" />
-                    </NavigationMenuItem>
-                    <NavigationMenuItem>
-                      <NavigationMenuTrigger
-                        onPointerMove={(event) => event.preventDefault()}
-                        onPointerLeave={(event) => event.preventDefault()}
-                        className="!px-0"
-                      ></NavigationMenuTrigger>
-                      <NavigationMenuContent
-                        onPointerMove={(event) => event.preventDefault()}
-                        onPointerLeave={(event) => event.preventDefault()}
-                      >
-                        <div className="bg-alpha-white py-4">
-                          <NavigationMenuLink>
-                            <Link href={"/profile/info"}>
-                              <div className="flex items-center gap-2 px-4 py-2">
-                                <Avatar className="rounded-full border border-secondary">
-                                  <AvatarImage
-                                    src={
-                                      session?.profile?.avatarFile
-                                        ?.url as string
-                                    }
-                                    alt="seller"
-                                  />
-
-                                  <AvatarFallback>
-                                    {session?.profile?.firstName &&
-                                      session?.profile?.lastName?.[0]}
-                                  </AvatarFallback>
-                                </Avatar>
-                                <div className="flex flex-col">
-                                  {session?.profile?.fullName &&
-                                  session?.profile?.fullName !== "null null" ? (
-                                    <h4 className="truncate font-semibold">
-                                      {session?.profile?.fullName}
-                                    </h4>
-                                  ) : (
-                                    "کاربر وردست"
-                                  )}
-                                  <p className="text-sm font-semibold text-alpha-400">
-                                    {session?.profile?.cellphone
-                                      ? digitsEnToFa(
-                                          session?.profile?.cellphone
-                                        )
-                                      : digitsEnToFa("09123456789")}
-                                  </p>
-                                </div>
-                              </div>
-                            </Link>
-                          </NavigationMenuLink>
-                          {status === "authenticated" &&
-                            session?.profile?.roles.some(
-                              (role) => role?.name === "admin"
-                            ) && (
-                              <NavigationMenuLink className="flex w-full justify-start text-nowrap bg-alpha-white px-4 py-2 md:z-50">
-                                <Link
-                                  target="_blank"
-                                  href={process.env.NEXT_PUBLIC_ADMIN_VARDAST}
-                                  className="btn !text-alpha"
-                                >
-                                  ورود به پنل ادمین
-                                </Link>
-                              </NavigationMenuLink>
-                            )}
-                          <NavigationMenuLink className="flex w-full justify-start text-nowrap bg-alpha-white px-4 py-2 md:z-50">
-                            <Link
-                              href="/auth/signout"
-                              className="btn !text-error"
-                            >
-                              خروج از حساب کاربری
-                            </Link>
-                          </NavigationMenuLink>
-                        </div>
-                      </NavigationMenuContent>
-                    </NavigationMenuItem>
-                  </NavigationMenuList>
-                </NavigationMenu>
+          ) : (
+            <div className="col-span-2 grid grid-cols-4 gap-x md:gap-x-6">
+              {status === "authenticated" && !!session?.profile && (
+                <div className=""></div>
+              )}
+              <div className="col-span-2">
+                <Link
+                  href={process.env.NEXT_PUBLIC_SELLER_VARDAST as string}
+                  target="_blank"
+                  className="btn flex h-full !bg-secondary text-sm font-semibold text-white"
+                >
+                  {status === "authenticated" &&
+                  session?.profile?.roles.some(
+                    (role) => role?.name === "seller"
+                  )
+                    ? "پنل فروش"
+                    : "فروشنده شوید!"}
+                </Link>
               </div>
-            ) : (
-              <Link
-                href={`/auth/signin${pathname}`}
-                className="btn btn-primary col-span-2 flex text-sm font-semibold"
-              >
-                ورود
-              </Link>
-            )}
-          </div>
-        )}
+              {status === "authenticated" && !!session?.profile ? (
+                <div className="h-full">
+                  <NavigationMenu className="h-full !max-w-full !justify-end">
+                    <NavigationMenuList className="flex h-full w-full">
+                      <NavigationMenuItem className="flex w-full flex-1 items-center">
+                        <UserIcon className="h-8 w-8" />
+                      </NavigationMenuItem>
+                      <NavigationMenuItem>
+                        <NavigationMenuTrigger
+                          onPointerMove={(event) => event.preventDefault()}
+                          onPointerLeave={(event) => event.preventDefault()}
+                          className="!px-0"
+                        ></NavigationMenuTrigger>
+                        <NavigationMenuContent
+                          onPointerMove={(event) => event.preventDefault()}
+                          onPointerLeave={(event) => event.preventDefault()}
+                        >
+                          <div className="bg-alpha-white py-4">
+                            <NavigationMenuLink>
+                              <Link href={"/profile/info"}>
+                                <div className="flex items-center gap-2 px-4 py-2">
+                                  <Avatar className="rounded-full border border-secondary">
+                                    <AvatarImage
+                                      src={
+                                        session?.profile?.avatarFile
+                                          ?.url as string
+                                      }
+                                      alt="seller"
+                                    />
+
+                                    <AvatarFallback>
+                                      {session?.profile?.firstName &&
+                                        session?.profile?.lastName?.[0]}
+                                    </AvatarFallback>
+                                  </Avatar>
+                                  <div className="flex flex-col">
+                                    {session?.profile?.fullName &&
+                                    session?.profile?.fullName !==
+                                      "null null" ? (
+                                      <h4 className="truncate font-semibold">
+                                        {session?.profile?.fullName}
+                                      </h4>
+                                    ) : (
+                                      "کاربر وردست"
+                                    )}
+                                    <p className="text-sm font-semibold text-alpha-400">
+                                      {session?.profile?.cellphone
+                                        ? digitsEnToFa(
+                                            session?.profile?.cellphone
+                                          )
+                                        : digitsEnToFa("09123456789")}
+                                    </p>
+                                  </div>
+                                </div>
+                              </Link>
+                            </NavigationMenuLink>
+                            {status === "authenticated" &&
+                              session?.profile?.roles.some(
+                                (role) => role?.name === "admin"
+                              ) && (
+                                <NavigationMenuLink className="flex w-full justify-start text-nowrap bg-alpha-white px-4 py-2 md:z-50">
+                                  <Link
+                                    target="_blank"
+                                    href={process.env.NEXT_PUBLIC_ADMIN_VARDAST}
+                                    className="btn !text-alpha"
+                                  >
+                                    ورود به پنل ادمین
+                                  </Link>
+                                </NavigationMenuLink>
+                              )}
+                            <NavigationMenuLink className="flex w-full justify-start text-nowrap bg-alpha-white px-4 py-2 md:z-50">
+                              <Link
+                                href="/auth/signout"
+                                className="btn !text-error"
+                              >
+                                خروج از حساب کاربری
+                              </Link>
+                            </NavigationMenuLink>
+                          </div>
+                        </NavigationMenuContent>
+                      </NavigationMenuItem>
+                    </NavigationMenuList>
+                  </NavigationMenu>
+                </div>
+              ) : (
+                <Link
+                  href={`/auth/signin${pathname}`}
+                  className="btn btn-primary col-span-2 flex text-sm font-semibold"
+                >
+                  ورود
+                </Link>
+              )}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

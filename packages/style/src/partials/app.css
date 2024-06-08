@@ -12,8 +12,8 @@
     @apply flex flex-1 flex-col gap-1 overflow-y-auto overflow-x-hidden bg-transparent pt-14;
   }
   &.desktop {
-    @apply flex-1 
-    overflow-hidden
+    @apply flex-1 w-full
+    /* overflow-hidden */
     overscroll-contain;
   }
 }
@@ -51,9 +51,9 @@
   }
   &.mobile {
     @apply fixed bottom-0 left-0 z-50 w-full transform border-t border-alpha-200 bg-alpha-white pb-[calc(env(safe-area-inset-bottom)*0.4)] transition-all duration-300 dark:border-alpha-600 dark:bg-alpha-700;
-    &.short {
+    /* &.short {
       @apply translate-y-[calc(env(safe-area-inset-bottom)*0.5+4rem)];
-    }
+    } */
   }
 }
 .app-header-ghost {
@@ -61,17 +61,17 @@
 }
 .app-sidebar {
   @apply fixed
-    top-0
+    top-[calc(theme('spacing.header')+theme('spacing.6'))]
     z-20
     h-full
     flex-shrink-0
     translate-x-80
     bg-opacity-90
-    overflow-auto
     bg-alpha-white
     backdrop-blur-sm
     transition
-    min-w-[200px]
+    min-w-80
+    w-80
     duration-200
     lg:sticky
     lg:translate-x-0
@@ -79,17 +79,17 @@
     dark:bg-opacity-10;
 
   &.open {
-    @apply translate-x-0 z-50;
+    @apply translate-x-0 z-50 hide-scrollbar;
   }
 
   .app-sidebar-inner {
-    @apply relative flex rounded-2xl border;
+    @apply relative flex rounded-2xl border overflow-auto max-h-[80vh] hide-scrollbar;
   }
 }
 
 .app-navigation {
   @apply z-10
-    w-80
+    w-full
     flex-shrink-0
     p-6
     transition-all;

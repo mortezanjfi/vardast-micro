@@ -59,11 +59,9 @@ const CategoryListItem = forwardRef(
           } flex flex-col gap-y-0.5 px-3`}
         >
           <p className="text-sm font-semibold">{title}</p>
-          {productsCount && (
-            <p className="text-xs text-primary">{`${digitsEnToFa(
-              addCommas(productsCount)
-            )} کالا`}</p>
-          )}
+          <p className="text-xs text-primary">{`${digitsEnToFa(
+            addCommas(productsCount ?? 0)
+          )} کالا`}</p>
         </div>
         <div
           id={`category-image-${id}`}

@@ -28,7 +28,7 @@ interface ILatestSearchType {
 }
 
 interface ISearch {
-  isMobileView: boolean
+  isMobileView?: boolean
 }
 
 const Search: React.FC<ISearch> = ({ isMobileView }) => {

@@ -38,6 +38,7 @@ import {
   Seller,
   SortBrandEnum
 } from "@vardast/graphql/generated"
+import { setSidebar } from "@vardast/provider/LayoutProvider"
 import { getAllCategoriesQueryFn } from "@vardast/query/queryFns/allCategoriesQueryFns"
 import { getBrandQueryFn } from "@vardast/query/queryFns/brandQueryFns"
 import { brandsOfSellerQueryFns } from "@vardast/query/queryFns/brandsOfSellerQueryFns"
@@ -176,6 +177,24 @@ export const BrandOrSellersTab = ({
     }
   )
 
+  const DesktopSidebar = productsProps.isMobileView ? null : (
+    <div className="flex items-center justify-between md:pb-8">
+      <strong>فیلترها</strong>
+      {/* {filterAttributes.length > 0 && (
+                    <Button
+                      size="small"
+                      noStyle
+                      className="ms-auto text-sm text-red-500"
+                      onClick={() => setFilterAttributes([])}
+                    >
+                      حذف همه فیلترها
+                    </Button>
+                  )} */}
+    </div>
+  )
+
+  setSidebar(DesktopSidebar)
+
   // const totalBrands = isBrand
   //   ? undefined
   //   : brandsOfSellerQuery.data?.pages.reduce(
@@ -202,25 +221,6 @@ export const BrandOrSellersTab = ({
         </div>
       ) : (
         <div className="flex flex-col md:flex-row md:gap-9 md:bg-alpha-white">
-          {!productsProps.isMobileView && (
-            <div className="sticky top-0 h-fit flex-shrink-0 border-2 border-alpha-200 bg-alpha-white px-4 py-4 md:w-[250px] md:min-w-[200px] md:rounded md:bg-inherit">
-              <div className="flex flex-col gap-9">
-                <div className=" flex items-center border-b-2 border-b-alpha-200 py-4">
-                  <strong>فیلترها</strong>
-                  {/* {filterAttributes.length > 0 && (
-                    <Button
-                      size="small"
-                      noStyle
-                      className="ms-auto text-sm text-red-500"
-                      onClick={() => setFilterAttributes([])}
-                    >
-                      حذف همه فیلترها
-                    </Button>
-                  )} */}
-                </div>
-              </div>
-            </div>
-          )}
           <div className="flex w-full flex-col gap-9">
             {!productsProps.isMobileView && isBrand ? (
               <div className={sortContainerClass}>
