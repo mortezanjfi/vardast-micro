@@ -83,15 +83,7 @@ const Sidebar = ({ menus_name, profile }: ILayoutDesktopSidebar) => {
 
   useEffect(() => {
     setMount(true)
-  }, [innerComponentSidebar, menus_name])
-
-  console.log({
-    menus_name,
-    innerComponentSidebar,
-    profile,
-    sidebar_options,
-    mount
-  })
+  }, [])
 
   return (
     <>
