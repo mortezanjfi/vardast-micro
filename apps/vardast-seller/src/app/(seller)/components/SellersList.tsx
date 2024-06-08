@@ -360,7 +360,7 @@ function SellersList({ isMobileView, findPreOrderByIdQuery, uuid }: Props) {
             <div className="justify between flex flex-row-reverse border-t pt-5">
               <Button
                 disabled={!form.watch("offerId")}
-                className="py-2"
+                className="w-full py-2 md:w-fit"
                 type="submit"
                 variant="primary"
               >
