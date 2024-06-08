@@ -38,7 +38,7 @@ const Navigation = (props: Props) => {
 
   return (
     <>
-      {menus.map((menuSection, sectionId) => {
+      {menus?.map((menuSection, sectionId) => {
         return (
           ((menuSection.role &&
             session?.profile?.roles.some(

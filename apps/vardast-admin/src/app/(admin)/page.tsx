@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import { redirect } from "next/navigation"
 import { authOptions } from "@vardast/auth/authOptions"
 import { UserStatusesEnum } from "@vardast/graphql/generated"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
@@ -14,14 +13,6 @@ export const metadata: Metadata = {
 
 const AdminIndex = async () => {
   const session = await getServerSession(authOptions)
-
-  if (
-    !session?.accessToken ||
-    (session?.accessToken &&
-      !session?.profile?.roles.some((role) => role?.name === "admin"))
-  ) {
-    redirect("/auth/signin")
-  }
 
   return (
     <div>

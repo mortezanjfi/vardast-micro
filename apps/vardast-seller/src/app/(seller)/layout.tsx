@@ -1,50 +1,22 @@
-// import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
 import { authOptions } from "@vardast/auth/authOptions"
-import AdminOrSellerDesktopHeader from "@vardast/component/desktop/AdminOrSellerDesktopHeader"
-import AdminOrSellerLayoutComponent from "@vardast/component/desktop/AdminOrSellerLayout"
-// import { authOptions } from "@vardast/auth/authOptions"
-import MobileScrollProvider from "@vardast/component/header/MobileScrollProvider"
-import MobileBaseLayout from "@vardast/component/MobileBaseLayout"
-import { SearchActionModal } from "@vardast/component/Search"
-import { _sellerSidebarMenu } from "@vardast/lib/constants"
-import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
+import WithLayout from "@vardast/component/hoc/withLayout"
+import layout_options from "@vardast/lib/layout_options"
 import { getServerSession } from "next-auth"
 
-export default async function PublicLayout({
-  children
-}: {
-  children: React.ReactNode
-}) {
-  const isMobileView = await CheckIsMobileView()
+export default WithLayout(
+  async ({ children }: { children: React.ReactNode }) => {
+    const session = await getServerSession(authOptions)
 
-  const session = await getServerSession(authOptions)
+    if (
+      !session?.accessToken ||
+      (session?.accessToken &&
+        !session?.profile?.roles.some((role) => role?.name === "seller"))
+    ) {
+      redirect("/auth/signin")
+    }
 
-  if (
-    !session?.accessToken ||
-    (session?.accessToken &&
-      !session?.profile?.roles.some((role) => role?.name === "seller"))
-  ) {
-    redirect("/auth/signin")
-  }
-
-  return (
-    <>
-      <SearchActionModal isMobileView={isMobileView} />
-      {isMobileView ? (
-        <MobileScrollProvider>{children}</MobileScrollProvider>
-      ) : (
-        <>
-          <AdminOrSellerDesktopHeader />
-          <div className="h-header w-full bg-transparent"></div>
-          <AdminOrSellerLayoutComponent menu={_sellerSidebarMenu}>
-            <MobileBaseLayout bgWhite={false} container spaceLess>
-              {children}
-            </MobileBaseLayout>
-          </AdminOrSellerLayoutComponent>
-          {/* <AdminOrSellerDesktopFooter isAdmin={false} /> */}
-        </>
-      )}
-    </>
-  )
-}
+    return <>{children}</>
+  },
+  layout_options._seller_panel
+)

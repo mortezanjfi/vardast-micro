@@ -53,7 +53,7 @@ export const UserStatusItem = ({
   )
 }
 
-const DesktopHeader = ({ search }: ILayoutDesktopHeader) => {
+const DesktopHeader = ({ search, button }: ILayoutDesktopHeader) => {
   const { data: session, status } = useSession()
   const pathname = usePathname()
 
@@ -91,18 +91,20 @@ const DesktopHeader = ({ search }: ILayoutDesktopHeader) => {
                 <div className=""></div>
               )}
               <div className="col-span-2">
-                <Link
-                  href={process.env.NEXT_PUBLIC_SELLER_VARDAST as string}
-                  target="_blank"
-                  className="btn flex h-full !bg-secondary text-sm font-semibold text-white"
-                >
-                  {status === "authenticated" &&
-                  session?.profile?.roles.some(
-                    (role) => role?.name === "seller"
-                  )
-                    ? "پنل فروش"
-                    : "فروشنده شوید!"}
-                </Link>
+                {button && (
+                  <Link
+                    href={process.env.NEXT_PUBLIC_SELLER_VARDAST as string}
+                    target="_blank"
+                    className="btn flex h-full !bg-secondary text-sm font-semibold text-white"
+                  >
+                    {status === "authenticated" &&
+                    session?.profile?.roles.some(
+                      (role) => role?.name === "seller"
+                    )
+                      ? "پنل فروش"
+                      : "فروشنده شوید!"}
+                  </Link>
+                )}
               </div>
               {status === "authenticated" && !!session?.profile ? (
                 <div className="h-full">

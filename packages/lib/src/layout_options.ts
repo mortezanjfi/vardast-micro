@@ -4,6 +4,10 @@ const _default: ILayoutProps = {
   desktop: {
     footer: {},
     header: {
+      button: {
+        type: "link",
+        value: process.env.NEXT_PUBLIC_SELLER_VARDAST as string
+      },
       search: true
     },
     main: {
@@ -27,6 +31,10 @@ const _category: ILayoutProps = {
   desktop: {
     footer: {},
     header: {
+      button: {
+        type: "link",
+        value: process.env.NEXT_PUBLIC_SELLER_VARDAST as string
+      },
       search: true
     },
     main: {
@@ -56,6 +64,10 @@ const _home: ILayoutProps = {
   desktop: {
     footer: {},
     header: {
+      button: {
+        type: "link",
+        value: process.env.NEXT_PUBLIC_SELLER_VARDAST as string
+      },
       search: true
     }
   },
@@ -81,6 +93,10 @@ const _home: ILayoutProps = {
 const _footer: ILayoutProps = {
   desktop: {
     header: {
+      button: {
+        type: "link",
+        value: process.env.NEXT_PUBLIC_SELLER_VARDAST as string
+      },
       search: true
     },
     // main: {
@@ -111,6 +127,10 @@ const _footer: ILayoutProps = {
 const _profile: ILayoutProps = {
   desktop: {
     header: {
+      button: {
+        type: "link",
+        value: process.env.NEXT_PUBLIC_SELLER_VARDAST as string
+      },
       search: true
     },
     main: {
@@ -138,6 +158,10 @@ const _profile: ILayoutProps = {
 const _brand: ILayoutProps = {
   desktop: {
     header: {
+      button: {
+        type: "link",
+        value: process.env.NEXT_PUBLIC_SELLER_VARDAST as string
+      },
       search: true
     },
     sidebar: {},
@@ -168,6 +192,10 @@ const _brand: ILayoutProps = {
 const _seller: ILayoutProps = {
   desktop: {
     header: {
+      button: {
+        type: "link",
+        value: process.env.NEXT_PUBLIC_SELLER_VARDAST as string
+      },
       search: true
     },
     sidebar: {},
@@ -198,6 +226,10 @@ const _seller: ILayoutProps = {
 const _product: ILayoutProps = {
   desktop: {
     header: {
+      button: {
+        type: "link",
+        value: process.env.NEXT_PUBLIC_SELLER_VARDAST as string
+      },
       search: true
     },
     main: {
@@ -222,6 +254,10 @@ const _product: ILayoutProps = {
 const _seller_or_brand_with_header: ILayoutProps = {
   desktop: {
     header: {
+      button: {
+        type: "link",
+        value: process.env.NEXT_PUBLIC_SELLER_VARDAST as string
+      },
       search: true
     },
     sidebar: {},
@@ -250,6 +286,11 @@ const _products: ILayoutProps = {
   desktop: {
     footer: {},
     header: {
+      button: {
+        type: "link",
+        value: process.env.NEXT_PUBLIC_SELLER_VARDAST as string
+      },
+
       search: true
     },
     sidebar: {},
@@ -294,6 +335,28 @@ const _admin: ILayoutProps = {
   }
 }
 
+const _seller_panel: ILayoutProps = {
+  desktop: {
+    header: {},
+    main: {
+      container: true,
+      breadcrumb: true
+    },
+    sidebar: {
+      menus_name: "_seller_panel"
+    }
+  },
+  mobile: {
+    header: {
+      progress: true,
+      hamburger: true,
+      title: {
+        type: "image"
+      }
+    }
+  }
+}
+
 export default {
   _default,
   _profile,
@@ -305,5 +368,6 @@ export default {
   _seller_or_brand_with_header,
   _product,
   _footer,
-  _admin
+  _admin,
+  _seller_panel
 }

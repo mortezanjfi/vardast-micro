@@ -156,7 +156,66 @@ const _admin: NavigationType[] = [
   // }
 ]
 
+export const _seller_panel: NavigationType[] = [
+  {
+    items: [
+      {
+        title: "خانه",
+        path: "/",
+        icon: "home"
+      },
+      {
+        title: "سفارشات",
+        icon: "list",
+        path: "/orders"
+      },
+      {
+        title: "سفارشات من",
+        icon: "list",
+        path: "/my-orders"
+      },
+      {
+        title: "کالا",
+        path: "/products",
+        icon: "package",
+        abilities: "gql.products.product.index",
+        items: [
+          {
+            title: "لیست کالاهای وردست",
+            path: "/products/all-products",
+            icon: "package",
+            abilities: "gql.products.product.index"
+          },
+          {
+            title: "ثبت کالای جدید",
+            path: "/products/new",
+            icon: "package",
+            abilities: "gql.products.product.index"
+          },
+          {
+            title: "مدیریت کالاهای من",
+            path: "/products/my-products",
+            icon: "package",
+            abilities: "gql.products.offer.index.index"
+          }
+        ]
+      },
+      {
+        title: "دسته بندی‌های من",
+        path: "/categories",
+        icon: "layers"
+      },
+      {
+        title: "برندهای من",
+        path: "/brands",
+        icon: "layers"
+      }
+    ]
+  }
+]
+
 export default {
   _profile,
-  _admin
+  _admin,
+  _seller_panel
 }

@@ -1,8 +1,22 @@
-import WithLayoutMaker from "@vardast/component/hoc/WithLayoutMaker"
+import { redirect } from "next/navigation"
+import { authOptions } from "@vardast/auth/authOptions"
+import WithLayout from "@vardast/component/hoc/withLayout"
 import layout_options from "@vardast/lib/layout_options"
+import { getServerSession } from "next-auth"
 
-export const dynamic = "force-dynamic"
+export default WithLayout(
+  async ({ children }: { children: React.ReactNode }) => {
+    const session = await getServerSession(authOptions)
 
-export default WithLayoutMaker({
-  options: layout_options._admin
-})
+    if (
+      !session?.accessToken ||
+      (session?.accessToken &&
+        !session?.profile?.roles.some((role) => role?.name === "admin"))
+    ) {
+      redirect("/auth/signin")
+    }
+
+    return <>{children}</>
+  },
+  layout_options._admin
+)
