@@ -1,10 +1,9 @@
 import { useState } from "react"
+import OrderProductCard from "@vardast/component/desktop/OrderProductCard"
+import OrderProductListContainer from "@vardast/component/desktop/OrderProductListContainer"
 import { MultiTypeOrder } from "@vardast/graphql/generated"
 
-import OrderProductCard, {
-  OrderProductCardSkeleton
-} from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductCard"
-import OrderProductListContainer from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductListContainer"
+import { OrderProductCardSkeleton } from "@/app/(client)/(profile)/profile/orders/components/OrderProductCard"
 import { NotFoundItems } from "@/app/(client)/favorites/components/FavoritesPageIndex"
 
 type OrderOffersSectionProps = {}

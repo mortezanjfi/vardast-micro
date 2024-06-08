@@ -11,7 +11,6 @@ import {
   OrderOfferStatuses,
   PaymentMethodEnum,
   PreOrder,
-  PreOrderStates,
   useCreatePreOrderMutation,
   usePreOrdersQuery
 } from "@vardast/graphql/generated"
@@ -146,6 +145,14 @@ const OrdersPage = ({ isMobileView, title }: OrdersPageProps) => {
         </>
       ) : (
         <NotFoundMessage text="سفارشی" />
+      )}
+
+      {isMobileView && (
+        <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] flex w-full justify-end md:relative md:bottom-0">
+          <Button onClick={onCreateOrder} className="w-full" variant="primary">
+            افزودن سفارش
+          </Button>
+        </div>
       )}
     </>
   )

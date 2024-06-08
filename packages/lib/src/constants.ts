@@ -467,7 +467,7 @@ export const _navbar_items: NavbarItem[] = [
     id: 1
   },
   {
-    href: "/orders",
+    href: "/profile/orders",
     Icon: ListBulletIcon,
     ActiveIcon: SolidBookmarkIcon,
     title: "سفارشات",

@@ -66,11 +66,9 @@ const ProjectUsersTab = ({
       {findOneProjectQuery?.data?.findOneProject?.user.length > 0 && (
         <PageHeader
           pageHeaderClasses="!mb-0 py-5 border-b"
-          title={
-            "آدرس های پروژه خود را تعریف کنید و در تحویل و فاکتورها از آن ها استفاده کنید."
-          }
+          title={"همکاران پروژه را تعریف و مدیریت کنید."}
           titleClasses="text-[14px] font-normal "
-          containerClass={isMobileView && "!flex-col"}
+          containerClass={isMobileView && "!flex-col !items-start"}
         >
           <Button
             className="py-2"

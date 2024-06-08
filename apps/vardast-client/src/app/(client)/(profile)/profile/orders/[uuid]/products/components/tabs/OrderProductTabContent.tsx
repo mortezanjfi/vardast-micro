@@ -1,15 +1,16 @@
 "use client"
 
+import OrderProductCard from "@vardast/component/desktop/OrderProductCard"
+import OrderProductListContainer from "@vardast/component/desktop/OrderProductListContainer"
 import NotFoundMessage from "@vardast/component/NotFound"
 import { MultiTypeOrder, useGetBasketQuery } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
-
-import OrderProductCard, {
+import {
   ACTION_BUTTON_TYPE,
-  OrderProductCardSkeleton
-} from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductCard"
-import OrderProductListContainer from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductListContainer"
-import { OrderProductTabContentProps } from "@/app/(client)/(profile)/profile/orders/[uuid]/products/components/OrderProductsTabs"
+  OrderProductTabContentProps
+} from "@vardast/type/OrderProductTabs"
+
+import { OrderProductCardSkeleton } from "@/app/(client)/(profile)/profile/orders/components/OrderProductCard"
 
 export const OrderProductTabContent = ({
   addProductLine
