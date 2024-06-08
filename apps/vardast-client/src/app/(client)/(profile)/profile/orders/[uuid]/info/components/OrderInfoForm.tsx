@@ -175,7 +175,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
         form.setValue("projectId", `${defaultValue?.project?.id}`)
       }
     }
-  }, [findPreOrderByIdQuery?.data, addresses])
+  }, [findPreOrderByIdQuery?.data])
 
   return (
     <>
