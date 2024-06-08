@@ -490,7 +490,7 @@ export const _navbar_items: NavbarItem[] = [
 
 export const _seller_navbar_items: NavbarItem[] = [
   {
-    href: "/dasboard",
+    href: "/",
     Icon: HomeIcon,
     ActiveIcon: SolidHomeIcon,
     title: "داشبورد",
