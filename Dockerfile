@@ -3,7 +3,8 @@ FROM node:20.10.0-alpine as base
 
 RUN apk add openssl
 
-RUN npm i -g pnpm@8.7.4 ts-node turbo@latest
+RUN npm i -g pnpm@8.7.4 ts-node turbo@1.13.4
+
 
 USER root
 
