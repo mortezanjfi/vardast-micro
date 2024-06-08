@@ -57,6 +57,11 @@ const MobileNavigation = ({ isClient }: Props) => {
   ])
   const ShowNavigationBackButton = useIsCurrentPath([
     {
+      forceEqual: true,
+      dynamicRouteAllow: true,
+      path: "my-orders"
+    },
+    {
       forceEqual: false,
       dynamicRouteAllow: true,
       path: "category"

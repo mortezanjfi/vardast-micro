@@ -41,7 +41,7 @@ const Card = ({
         )}
         {description && <p className="text-sm text-alpha-500">{description}</p>}
       </div>
-      <div>{children}</div>
+      {children}
     </div>
   )
 }

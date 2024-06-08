@@ -9,6 +9,7 @@ import CardContainer from "@vardast/component/desktop/CardContainer"
 import SellerAdminConfirmationModal from "@vardast/component/desktop/SellerAdminConfirmationModal"
 import {
   FindPreOrderByIdQuery,
+  OfferOrder,
   OrderOfferStatuses,
   PreOrderStates,
   useCreateOrderOfferMutation,
@@ -26,8 +27,10 @@ import { TypeOf, z } from "zod"
 
 import AddSellerModal from "@/app/(seller)/components/AddSellerModal"
 import OfferDetailModal from "@/app/(seller)/components/OfferDetailModal"
+import SellerMobileCart from "@/app/(seller)/components/SellerMobileCart"
 
 type Props = {
+  isMobileView?: boolean
   uuid: string
   findPreOrderByIdQuery: UseQueryResult<FindPreOrderByIdQuery, unknown>
 }
@@ -37,10 +40,10 @@ const AddOfferSchema = z.object({
 })
 
 export type ConfirmOffer = TypeOf<typeof AddOfferSchema>
-function SellersList({ findPreOrderByIdQuery, uuid }: Props) {
+function SellersList({ isMobileView, findPreOrderByIdQuery, uuid }: Props) {
   const { t } = useTranslation()
   const router = useRouter()
-  const [open, setOpen] = useState<boolean>(false)
+  const [detailOpen, setDetailOpen] = useState<boolean>(false)
   const [addSellerModalOpen, setAddSellerModalOpen] = useState<boolean>(false)
   const [selectedOfferId, setSelectedOfferId] = useState<number>()
   const [orderId, setOrderId] = useState<number>()
@@ -113,13 +116,14 @@ function SellersList({ findPreOrderByIdQuery, uuid }: Props) {
           queryClient.invalidateQueries({
             queryKey: ["FindPreOrderById"]
           })
-          toast({
-            title: "پیشنهاد شما با موفقیت ثبت شد",
-            description:
-              "لطفا برای قیمت گذاری بر روی کالاها ادامه فرایند را انجام دهید.",
-            duration: 8000,
-            variant: "success"
-          })
+          !isMobileView &&
+            toast({
+              title: "پیشنهاد شما با موفقیت ثبت شد",
+              description:
+                "لطفا برای قیمت گذاری بر روی کالاها ادامه فرایند را انجام دهید.",
+              duration: 8000,
+              variant: "success"
+            })
           setOrderId(data.createOrderOffer.id)
           setAddSellerModalOpen(true)
           // router.push(`/my-orders/${uuid}/offers/${data.createOrderOffer.id}`)
@@ -154,18 +158,20 @@ function SellersList({ findPreOrderByIdQuery, uuid }: Props) {
         onOpenChange={seConfirmModalOpen}
       />
       <OfferDetailModal
+        isMobileView={isMobileView}
         findPreOrderByIdQuery={findPreOrderByIdQuery}
         selectedOfferId={selectedOfferId}
-        open={open}
-        onOpenChange={setOpen}
+        open={detailOpen}
+        onOpenChange={setDetailOpen}
       />
       <AddSellerModal
+        isMobileView={isMobileView}
         detailModalProps={{
           findPreOrderByIdQuery: findPreOrderByIdQuery,
           selectedOfferId: selectedOfferId,
           setSelectedOfferId: setSelectedOfferId,
-          open: open,
-          onOpenChange: setOpen
+          open: detailOpen,
+          onOpenChange: setDetailOpen
         }}
         orderId={orderId}
         open={addSellerModalOpen}
@@ -190,108 +196,132 @@ function SellersList({ findPreOrderByIdQuery, uuid }: Props) {
                   </Button>
                 </div>
               )}
-              <table className="table border-collapse border">
-                <thead>
-                  <tr>
-                    <th className={thClasses}>{t("common:row")}</th>
-                    <th className={thClasses}>
-                      {" "}
-                      {t("common:entity_code", { entity: t("common:seller") })}
-                    </th>
-                    <th className={thClasses}>
-                      {" "}
-                      {t("common:entity_name", { entity: t("common:seller") })}
-                    </th>
-                    <th className={thClasses}>{t("common:invoice-number")}</th>
-                    <th className={thClasses}>
-                      {t("common:invoice-total-price")}
-                    </th>
-                    {findPreOrderByIdQuery?.data?.findPreOrderById?.status !==
-                      PreOrderStates.Closed && (
-                      <>
-                        <th className={thClasses}>
-                          {t("common:choose-offer")}
-                        </th>
-                      </>
-                    )}
-                    <th className={thClasses}>{t("common:operation")}</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {findPreOrderByIdQuery.data?.findPreOrderById?.offers
-                    ?.length === 0 ? (
+              {isMobileView ? (
+                findPreOrderByIdQuery?.data?.findPreOrderById?.offers.map(
+                  (offer, index) => (
+                    <SellerMobileCart
+                      setSelectedOfferId={setSelectedOfferId}
+                      setOpen={setDetailOpen}
+                      form={form}
+                      selectedRow={selectedRow}
+                      setSelectedRow={setSelectedRow}
+                      key={index}
+                      offer={offer as OfferOrder}
+                    />
+                  )
+                )
+              ) : (
+                <table className="table border-collapse border">
+                  <thead>
                     <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td>
-                        <span>فروشنده مورد نظر خود را اضافه کنید!</span>
-                      </td>
-                      <td></td>
-                      <td></td>
+                      <th className={thClasses}>{t("common:row")}</th>
+                      <th className={thClasses}>
+                        {" "}
+                        {t("common:entity_code", {
+                          entity: t("common:seller")
+                        })}
+                      </th>
+                      <th className={thClasses}>
+                        {" "}
+                        {t("common:entity_name", {
+                          entity: t("common:seller")
+                        })}
+                      </th>
+                      <th className={thClasses}>
+                        {t("common:invoice-number")}
+                      </th>
+                      <th className={thClasses}>
+                        {t("common:invoice-total-price")}
+                      </th>
+                      {findPreOrderByIdQuery?.data?.findPreOrderById?.status !==
+                        PreOrderStates.Closed && (
+                        <>
+                          <th className={thClasses}>
+                            {t("common:choose-offer")}
+                          </th>
+                        </>
+                      )}
+                      <th className={thClasses}>{t("common:operation")}</th>
                     </tr>
-                  ) : (
-                    findPreOrderByIdQuery.data?.findPreOrderById?.offers?.map(
-                      (offer, index) => (
-                        <tr key={offer?.id}>
-                          <td className="w-4 border">
-                            <span>{digitsEnToFa(index + 1)}</span>
-                          </td>
-                          <td className="border">
-                            <span className="font-medium text-alpha-800">
-                              {offer?.id && digitsEnToFa(offer?.id)}
-                            </span>
-                          </td>
-                          <td className="border">{offer?.request_name}</td>
-                          <td className="border">
-                            {digitsEnToFa(offer?.created_at)}
-                          </td>
-                          <td className="border">
-                            {digitsEnToFa(offer?.total)}
-                          </td>
-                          {findPreOrderByIdQuery?.data?.findPreOrderById
-                            ?.status !== PreOrderStates.Closed && (
-                            <>
-                              <td className="border">
-                                <FormField
-                                  control={form.control}
-                                  name="offerId"
-                                  render={({ field }) => {
-                                    return (
-                                      <FormItem className="checkbox-field">
-                                        <FormControl>
-                                          <Checkbox
-                                            checked={offer?.id === selectedRow}
-                                            onCheckedChange={(checked) => {
-                                              setSelectedRow(offer?.id)
-                                            }}
-                                          />
-                                        </FormControl>
-                                      </FormItem>
-                                    )
-                                  }}
-                                />
-                              </td>
-                            </>
-                          )}
-                          <td className="border">
-                            <span
-                              onClick={() => {
-                                setSelectedOfferId(offer?.id)
-                                setOpen(true)
-                              }}
-                              className="tag cursor-pointer text-blue-500"
-                            >
-                              نمایش جزییات
-                            </span>
-                          </td>
-                        </tr>
+                  </thead>
+
+                  <tbody>
+                    {findPreOrderByIdQuery.data?.findPreOrderById?.offers
+                      ?.length === 0 ? (
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                          <span>فروشنده مورد نظر خود را اضافه کنید!</span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    ) : (
+                      findPreOrderByIdQuery.data?.findPreOrderById?.offers?.map(
+                        (offer, index) => (
+                          <tr key={offer?.id}>
+                            <td className="w-4 border">
+                              <span>{digitsEnToFa(index + 1)}</span>
+                            </td>
+                            <td className="border">
+                              <span className="font-medium text-alpha-800">
+                                {offer?.id && digitsEnToFa(offer?.id)}
+                              </span>
+                            </td>
+                            <td className="border">{offer?.request_name}</td>
+                            <td className="border">
+                              {digitsEnToFa(offer?.created_at)}
+                            </td>
+                            <td className="border">
+                              {digitsEnToFa(offer?.total)}
+                            </td>
+                            {findPreOrderByIdQuery?.data?.findPreOrderById
+                              ?.status !== PreOrderStates.Closed && (
+                              <>
+                                <td className="border">
+                                  <FormField
+                                    control={form.control}
+                                    name="offerId"
+                                    render={({ field }) => {
+                                      return (
+                                        <FormItem className="checkbox-field">
+                                          <FormControl>
+                                            <Checkbox
+                                              checked={
+                                                offer?.id === selectedRow
+                                              }
+                                              onCheckedChange={(checked) => {
+                                                setSelectedRow(offer?.id)
+                                              }}
+                                            />
+                                          </FormControl>
+                                        </FormItem>
+                                      )
+                                    }}
+                                  />
+                                </td>
+                              </>
+                            )}
+                            <td className="border">
+                              <span
+                                onClick={() => {
+                                  setSelectedOfferId(offer?.id)
+                                  setDetailOpen(true)
+                                }}
+                                className="tag cursor-pointer text-blue-500"
+                              >
+                                نمایش جزییات
+                              </span>
+                            </td>
+                          </tr>
+                        )
                       )
-                    )
-                  )}
-                </tbody>
-              </table>
+                    )}
+                  </tbody>
+                </table>
+              )}
             </div>
           </CardContainer>
           {/* <CardContainer title="تایید قیمت خریدار">

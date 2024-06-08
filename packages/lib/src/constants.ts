@@ -369,10 +369,16 @@ export const _withNavigationRoutes: WithNavigationRouteItem[] = [
     forceEqual: false,
     path: "/profile"
   },
+  //for seller////
+  {
+    forceEqual: true,
+    path: "/my-orders"
+  },
   {
     forceEqual: true,
     path: "/orders"
   },
+  /////////////////
   {
     forceEqual: true,
     path: "/profile/orders"
