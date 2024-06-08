@@ -32,6 +32,11 @@ export default function withLayout<T>(
                 <MobileHeader {...layout?.mobile?.header} />
               </header>
             )}
+            {layout?.desktop?.sidebar && (
+              <Suspense>
+                <Sidebar {...layout?.desktop?.sidebar} />
+              </Suspense>
+            )}
             <main
               className={clsx(
                 "app-layout mobile",

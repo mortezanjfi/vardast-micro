@@ -3,7 +3,9 @@ import { ILayoutProps } from "@vardast/type/layout"
 const _default: ILayoutProps = {
   desktop: {
     footer: {},
-    header: {},
+    header: {
+      search: true
+    },
     main: {
       container: true
     }
@@ -24,7 +26,9 @@ const _default: ILayoutProps = {
 const _category: ILayoutProps = {
   desktop: {
     footer: {},
-    header: {},
+    header: {
+      search: true
+    },
     main: {
       container: true
     }
@@ -51,7 +55,9 @@ const _category: ILayoutProps = {
 const _home: ILayoutProps = {
   desktop: {
     footer: {},
-    header: {}
+    header: {
+      search: true
+    }
   },
   mobile: {
     header: {
@@ -74,7 +80,9 @@ const _home: ILayoutProps = {
 
 const _footer: ILayoutProps = {
   desktop: {
-    header: {},
+    header: {
+      search: true
+    },
     // main: {
     //   background: {
     //     type: "image",
@@ -102,7 +110,9 @@ const _footer: ILayoutProps = {
 
 const _profile: ILayoutProps = {
   desktop: {
-    header: {},
+    header: {
+      search: true
+    },
     main: {
       container: true,
       breadcrumb: true
@@ -127,7 +137,9 @@ const _profile: ILayoutProps = {
 
 const _brand: ILayoutProps = {
   desktop: {
-    header: {},
+    header: {
+      search: true
+    },
     sidebar: {},
     main: {
       container: true,
@@ -155,7 +167,9 @@ const _brand: ILayoutProps = {
 
 const _seller: ILayoutProps = {
   desktop: {
-    header: {},
+    header: {
+      search: true
+    },
     sidebar: {},
     main: {
       container: true,
@@ -183,7 +197,9 @@ const _seller: ILayoutProps = {
 
 const _product: ILayoutProps = {
   desktop: {
-    header: {},
+    header: {
+      search: true
+    },
     main: {
       container: true,
       breadcrumb: true
@@ -205,7 +221,9 @@ const _product: ILayoutProps = {
 
 const _seller_or_brand_with_header: ILayoutProps = {
   desktop: {
-    header: {},
+    header: {
+      search: true
+    },
     sidebar: {},
     main: {
       container: true,
@@ -231,7 +249,9 @@ const _seller_or_brand_with_header: ILayoutProps = {
 const _products: ILayoutProps = {
   desktop: {
     footer: {},
-    header: {},
+    header: {
+      search: true
+    },
     sidebar: {},
     main: {
       container: true,
@@ -252,6 +272,28 @@ const _products: ILayoutProps = {
   }
 }
 
+const _admin: ILayoutProps = {
+  desktop: {
+    header: {},
+    main: {
+      container: true,
+      breadcrumb: true
+    },
+    sidebar: {
+      menus_name: "_admin"
+    }
+  },
+  mobile: {
+    header: {
+      progress: true,
+      hamburger: true,
+      title: {
+        type: "image"
+      }
+    }
+  }
+}
+
 export default {
   _default,
   _profile,
@@ -262,5 +304,6 @@ export default {
   _category,
   _seller_or_brand_with_header,
   _product,
-  _footer
+  _footer,
+  _admin
 }

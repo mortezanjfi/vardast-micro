@@ -53,6 +53,8 @@ export interface ILayoutMobileHeader {
   background?: ILayoutBackground
   title?: ILayoutTitle<"image" | "text">
   back?: boolean
+  progress?: boolean
+  hamburger?: boolean
   options?: {
     name: string
   }

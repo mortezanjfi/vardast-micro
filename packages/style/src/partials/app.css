@@ -12,7 +12,7 @@
     @apply flex flex-1 flex-col gap-1 overflow-y-auto overflow-x-hidden bg-transparent pt-14;
   }
   &.desktop {
-    @apply flex-1 w-full
+    @apply flex-1 w-full pb-6
     /* overflow-hidden */
     overscroll-contain;
   }
@@ -61,7 +61,8 @@
 }
 .app-sidebar {
   @apply fixed
-    top-[calc(theme('spacing.header')+theme('spacing.6'))]
+    top-0
+    md:top-[calc(theme('spacing.header')+theme('spacing.6'))]
     z-20
     h-full
     flex-shrink-0
@@ -79,11 +80,11 @@
     dark:bg-opacity-10;
 
   &.open {
-    @apply translate-x-0 z-50 hide-scrollbar;
+    @apply translate-x-0 z-50 hide-scrollbar rounded-l-lg bg-opacity-80 bg-alpha-white;
   }
 
   .app-sidebar-inner {
-    @apply relative flex rounded-2xl border overflow-auto max-h-[80vh] hide-scrollbar;
+    @apply relative flex md:rounded-2xl md:border overflow-auto max-h-screen md:max-h-[80vh] hide-scrollbar;
   }
 }
 

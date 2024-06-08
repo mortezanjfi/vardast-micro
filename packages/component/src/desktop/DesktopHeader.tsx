@@ -53,7 +53,7 @@ export const UserStatusItem = ({
   )
 }
 
-const DesktopHeader = (_: ILayoutDesktopHeader) => {
+const DesktopHeader = ({ search }: ILayoutDesktopHeader) => {
   const { data: session, status } = useSession()
   const pathname = usePathname()
 
@@ -72,8 +72,13 @@ const DesktopHeader = (_: ILayoutDesktopHeader) => {
             priority
           />
         </Link>
-        <div className="col-span-12 row-start-2 hidden h-full rounded ring-1 ring-alpha-200 md:col-span-4 md:row-start-1 md:block lg:col-span-6">
-          <Search isMobileView={false} />
+        <div
+          className={clsx(
+            "col-span-12 row-start-2 hidden h-full rounded md:col-span-4 md:row-start-1 md:block lg:col-span-6",
+            search && "ring-1 ring-alpha-200"
+          )}
+        >
+          {search && <Search isMobileView={false} />}
         </div>
         <div className="col-span-7 col-start-6 row-start-1 grid h-full grid-cols-2 justify-end gap-x-6 md:col-span-5 md:col-start-auto lg:col-span-3">
           {status === "loading" ? (
@@ -155,7 +160,7 @@ const DesktopHeader = (_: ILayoutDesktopHeader) => {
                                 </div>
                               </Link>
                             </NavigationMenuLink>
-                            {status === "authenticated" &&
+                            {/* {status === "authenticated" &&
                               session?.profile?.roles.some(
                                 (role) => role?.name === "admin"
                               ) && (
@@ -168,7 +173,7 @@ const DesktopHeader = (_: ILayoutDesktopHeader) => {
                                     ورود به پنل ادمین
                                   </Link>
                                 </NavigationMenuLink>
-                              )}
+                              )} */}
                             <NavigationMenuLink className="flex w-full justify-start text-nowrap bg-alpha-white px-4 py-2 md:z-50">
                               <Link
                                 href="/auth/signout"

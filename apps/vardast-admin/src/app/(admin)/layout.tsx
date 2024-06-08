@@ -1,38 +1,8 @@
-import { redirect } from "next/navigation"
-import { authOptions } from "@vardast/auth/authOptions"
-import AdminOrSellerDesktopHeader from "@vardast/component/desktop/AdminOrSellerDesktopHeader"
-import AdminOrSellerLayoutComponent from "@vardast/component/desktop/AdminOrSellerLayout"
-import MobileBaseLayout from "@vardast/component/MobileBaseLayout"
-import { SearchActionModal } from "@vardast/component/Search"
-import { _sidebarMenu } from "@vardast/lib/constants"
-import { getServerSession } from "next-auth"
+import WithLayoutMaker from "@vardast/component/hoc/WithLayoutMaker"
+import layout_options from "@vardast/lib/layout_options"
 
 export const dynamic = "force-dynamic"
 
-export default async function AdminLayout({
-  children
-}: {
-  children: React.ReactNode
-}) {
-  const session = await getServerSession(authOptions)
-  if (
-    !session?.accessToken ||
-    (session?.accessToken &&
-      !session?.profile?.roles.some((role) => role?.name === "admin"))
-  ) {
-    redirect("/auth/signin")
-  }
-
-  return (
-    <>
-      <SearchActionModal isMobileView={false} />
-      <AdminOrSellerDesktopHeader />
-      <div className="h-header w-full bg-transparent"></div>
-      <AdminOrSellerLayoutComponent menu={_sidebarMenu}>
-        <MobileBaseLayout bgWhite={false} container spaceLess>
-          {children}
-        </MobileBaseLayout>
-      </AdminOrSellerLayoutComponent>
-    </>
-  )
-}
+export default WithLayoutMaker({
+  options: layout_options._admin
+})

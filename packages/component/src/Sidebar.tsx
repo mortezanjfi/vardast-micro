@@ -10,12 +10,13 @@ import sidebar_options from "@vardast/lib/sidebar_options"
 import { LayoutContext } from "@vardast/provider/LayoutProvider"
 import { ILayoutDesktopSidebar } from "@vardast/type/layout"
 import clsx from "clsx"
-import { useAtomValue } from "jotai"
+import { useAtom, useAtomValue } from "jotai"
 import { Session } from "next-auth"
 import { useSession } from "next-auth/react"
 
 import Link from "./Link"
 import Navigation from "./Navigation"
+import Progress from "./Progress"
 
 const SidebarProfile = ({ session }: { session: Session }) => {
   return (
@@ -63,9 +64,9 @@ const SidebarProfile = ({ session }: { session: Session }) => {
 
 const Sidebar = ({ menus_name, profile }: ILayoutDesktopSidebar) => {
   const [mount, setMount] = useState(false)
-  const { sidebarAtom } = useContext(LayoutContext)
+  const { sidebarAtom, sidebarHamburgerAtom } = useContext(LayoutContext)
   const innerComponentSidebar: ReactNode = useAtomValue(sidebarAtom)
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useAtom(sidebarHamburgerAtom)
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const { data: session } = useSession()
@@ -85,23 +86,41 @@ const Sidebar = ({ menus_name, profile }: ILayoutDesktopSidebar) => {
   }, [])
 
   return (
-    <aside ref={ref} className={clsx("app-sidebar", open && "open")}>
-      <div className="app-sidebar-inner">
-        <div className="app-navigation">
-          {mount &&
-            (innerComponentSidebar ? (
-              innerComponentSidebar
-            ) : (
-              <div className="app-navigation-container">
-                {profile && <SidebarProfile session={session} />}
-                {menus_name && (
-                  <Navigation menus={sidebar_options[menus_name]} withLogin />
-                )}
-              </div>
-            ))}
+    <>
+      {open && (
+        <div className="pointer-events-none fixed inset-0 z-50 h-full w-full bg-alpha-800 bg-opacity-80"></div>
+      )}
+      <aside ref={ref} className={clsx("app-sidebar", open && "open")}>
+        {/* {open && (
+          <div className="fixed left-0 top-0 z-50 flex w-full items-center justify-end">
+            <Button
+              className="mr-auto"
+              variant={"ghost"}
+              onClick={() => setOpen(false)}
+              iconOnly
+            >
+              <LucideX className="icon h-6 w-6 text-alpha-black" />
+            </Button>
+          </div>
+        )} */}
+        <div className="app-sidebar-inner">
+          {open && <Progress />}
+          <div className="app-navigation">
+            {mount &&
+              (innerComponentSidebar ? (
+                innerComponentSidebar
+              ) : (
+                <div className="app-navigation-container">
+                  {profile && <SidebarProfile session={session} />}
+                  {menus_name && (
+                    <Navigation menus={sidebar_options[menus_name]} withLogin />
+                  )}
+                </div>
+              ))}
+          </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   )
 }
 
