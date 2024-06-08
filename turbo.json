@@ -35,7 +35,8 @@
     "format": {
       "outputs": [
         "node_modules/.cache/.prettiercache"
-      ]
+      ],
+      "outputMode": "new-only"
     },
     "lint": {
       "dependsOn": [

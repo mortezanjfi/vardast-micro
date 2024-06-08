@@ -1,6 +1,6 @@
 "use client"
 
-import { ChangeEvent, useRef, useState } from "react"
+import { ChangeEvent, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -44,17 +44,23 @@ const BrandForm = ({ brand }: BrandFormProps) => {
   const { toast } = useToast()
   const router = useRouter()
   const [errors, setErrors] = useState<ClientError>()
+  //logo
   const logoFileFieldRef = useRef<HTMLInputElement>(null)
   const [logoFile, setLogoFile] = useState<File | null>(null)
   const [logoPreview, setLogoPreview] = useState<string>("")
-
+  //catalog
   const CatalogFileRef = useRef<HTMLInputElement>(null)
   const [catalogFile, setCatalogFile] = useState<File | null>(null)
   const [catalogPreview, setCatalogPreview] = useState<string>("")
-
+  //priceList
   const priceListFileRef = useRef<HTMLInputElement>(null)
   const [priceListFile, setPriceListFile] = useState<File | null>(null)
   const [priceListPreview, setPriceListPreview] = useState<string>("")
+
+  //banner
+  const bannerFileRef = useRef<HTMLInputElement>(null)
+  const [bannerFile, setBannerFile] = useState<File | null>(null)
+  const [bannerPreview, setBannerPreview] = useState<string>("")
 
   const queryClient = useQueryClient()
   const token = session?.accessToken || null
@@ -111,7 +117,8 @@ const BrandForm = ({ brand }: BrandFormProps) => {
     about: z.string().optional(),
     social: z.string().optional(),
     catalogFileUuid: z.string().optional(),
-    priceListUuid: z.string().optional()
+    priceListUuid: z.string().optional(),
+    bannerUuid: z.string().optional()
   })
   type CreateBrandType = TypeOf<typeof CreateBrandSchema>
 
@@ -125,6 +132,10 @@ const BrandForm = ({ brand }: BrandFormProps) => {
   })
 
   const name_fa = form.watch("name_fa")
+
+  useEffect(() => {
+    console.log(brand)
+  }, [bannerFile, bannerPreview, bannerFileRef])
 
   const onLogoFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -221,6 +232,42 @@ const BrandForm = ({ brand }: BrandFormProps) => {
     }
   }
 
+  const onBannerfileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const fileToUpload = event.target.files[0]
+      const formData = new FormData()
+      formData.append("directoryPath", uploadPaths.brandBanner)
+      formData.append("file", fileToUpload)
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/base/storage/file/brand/banner/${brand?.id}`,
+        {
+          method: "POST",
+          headers: {
+            authorization: `Bearer ${token}`
+          },
+          body: formData
+        }
+      ).then(async (response) => {
+        if (!response.ok) {
+          toast({
+            description: t("common:entity_added_successfully", {
+              entity: t("common:banner")
+            }),
+            duration: 2000,
+            variant: "success"
+          })
+        }
+
+        const uploadResult = await response.json()
+        form.setValue("bannerUuid", uploadResult.uuid)
+        console.log(uploadResult.uuid)
+
+        setBannerFile(fileToUpload)
+        setBannerPreview(URL.createObjectURL(fileToUpload))
+      })
+    }
+  }
+
   function onSubmit(data: CreateBrandType) {
     const { name_fa, name_en, logoFileUuid } = data
 
@@ -243,6 +290,8 @@ const BrandForm = ({ brand }: BrandFormProps) => {
       })
     }
   }
+
+  console.log(brand)
 
   return (
     <Form {...form}>
@@ -307,183 +356,247 @@ const BrandForm = ({ brand }: BrandFormProps) => {
               />
             </div>
           </Card>
-          {brand && (
-            <Card template="1/2" title={t("common:logo")}>
-              <div className="flex items-end gap-6">
-                <Input
-                  type="file"
-                  onChange={(e) => onLogoFileChange(e)}
-                  className="hidden"
-                  accept="image/*"
-                  ref={logoFileFieldRef}
-                />
-                <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
-                  {logoPreview || brand?.logoFile ? (
-                    <Image
-                      src={
-                        logoPreview ||
-                        (brand?.logoFile?.presignedUrl.url as string)
-                      }
-                      fill
-                      alt="..."
-                      className="object-contain p-3"
-                    />
-                  ) : (
-                    <LucideWarehouse
-                      className="h-8 w-8 text-alpha-400"
-                      strokeWidth={1.5}
-                    />
-                  )}
-                </div>
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="secondary"
-                    type="button"
-                    onClick={() => {
-                      logoFileFieldRef.current?.click()
-                    }}
-                  >
-                    {logoFile
-                      ? logoFile.name
-                      : t("common:choose_entity_file", {
-                          entity: t("common:logo")
-                        })}
-                  </Button>
-                  {logoPreview && (
+          <div className="grid grid-cols-2 gap-8">
+            {brand && (
+              <Card template="1/2" title={t("common:logo")}>
+                <div className="flex items-end gap-6">
+                  <Input
+                    type="file"
+                    onChange={(e) => onLogoFileChange(e)}
+                    className="hidden"
+                    accept="image/*"
+                    ref={logoFileFieldRef}
+                  />
+                  <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
+                    {logoPreview || brand?.logoFile ? (
+                      <Image
+                        src={
+                          logoPreview ||
+                          (brand?.logoFile?.presignedUrl.url as string)
+                        }
+                        fill
+                        alt="..."
+                        className="object-contain p-3"
+                      />
+                    ) : (
+                      <LucideWarehouse
+                        className="h-8 w-8 text-alpha-400"
+                        strokeWidth={1.5}
+                      />
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2">
                     <Button
-                      variant="danger"
-                      iconOnly
+                      variant="secondary"
+                      type="button"
                       onClick={() => {
-                        form.setValue("logoFileUuid", "")
-                        setLogoFile(null)
-                        setLogoPreview("")
+                        logoFileFieldRef.current?.click()
                       }}
                     >
-                      <LucideTrash className="icon" />
+                      {logoFile
+                        ? logoFile.name
+                        : t("common:choose_entity_file", {
+                            entity: t("common:logo")
+                          })}
                     </Button>
-                  )}
+                    {logoPreview && (
+                      <Button
+                        variant="danger"
+                        iconOnly
+                        onClick={() => {
+                          form.setValue("logoFileUuid", "")
+                          setLogoFile(null)
+                          setLogoPreview("")
+                        }}
+                      >
+                        <LucideTrash className="icon" />
+                      </Button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Card>
-          )}
-          {brand && (
-            <Card template="1/2" title={t("common:catalog")}>
-              <div className="flex items-end gap-6">
-                <Input
-                  type="file"
-                  onChange={(e) => onCatalogFileChange(e)}
-                  className="hidden"
-                  accept="image/*"
-                  ref={CatalogFileRef}
-                />
-                <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
-                  {catalogPreview || brand?.catalog ? (
-                    <Image
-                      src={
-                        catalogPreview ||
-                        (brand?.catalog?.presignedUrl.url as string)
-                      }
-                      fill
-                      alt="..."
-                      className="object-contain p-3"
-                    />
-                  ) : (
-                    <LucideWarehouse
-                      className="h-8 w-8 text-alpha-400"
-                      strokeWidth={1.5}
-                    />
-                  )}
-                </div>
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="secondary"
-                    type="button"
-                    onClick={() => {
-                      CatalogFileRef.current?.click()
-                    }}
-                  >
-                    {catalogFile
-                      ? catalogFile.name
-                      : t("common:choose_entity_file", {
-                          entity: t("common:catalog")
-                        })}
-                  </Button>
-                  {catalogPreview && (
+              </Card>
+            )}
+            {/* catalog */}
+            {brand && (
+              <Card template="1/2" title={t("common:catalog")}>
+                <div className="flex items-end gap-6">
+                  <Input
+                    type="file"
+                    onChange={(e) => onCatalogFileChange(e)}
+                    className="hidden"
+                    accept="image/*"
+                    ref={CatalogFileRef}
+                  />
+                  <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
+                    {catalogPreview || brand?.catalog ? (
+                      <Image
+                        src={
+                          catalogPreview ||
+                          (brand?.catalog?.presignedUrl.url as string)
+                        }
+                        fill
+                        alt="..."
+                        className="object-contain p-3"
+                      />
+                    ) : (
+                      <LucideWarehouse
+                        className="h-8 w-8 text-alpha-400"
+                        strokeWidth={1.5}
+                      />
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2">
                     <Button
-                      variant="danger"
-                      iconOnly
+                      variant="secondary"
+                      type="button"
                       onClick={() => {
-                        form.setValue("catalogFileUuid", "")
-                        setCatalogFile(null)
-                        setCatalogPreview("")
+                        CatalogFileRef.current?.click()
                       }}
                     >
-                      <LucideTrash className="icon" />
+                      {catalogFile
+                        ? catalogFile.name
+                        : t("common:choose_entity_file", {
+                            entity: t("common:catalog")
+                          })}
                     </Button>
-                  )}
+                    {catalogPreview && (
+                      <Button
+                        variant="danger"
+                        iconOnly
+                        onClick={() => {
+                          form.setValue("catalogFileUuid", "")
+                          setCatalogFile(null)
+                          setCatalogPreview("")
+                        }}
+                      >
+                        <LucideTrash className="icon" />
+                      </Button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Card>
-          )}
-          {brand && (
-            <Card template="1/2" title={t("common:price_list")}>
-              <div className="flex items-end gap-6">
-                <Input
-                  type="file"
-                  onChange={(e) => onPriceListfileChange(e)}
-                  className="hidden"
-                  accept="image/*"
-                  ref={priceListFileRef}
-                />
-                <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
-                  {priceListPreview || brand?.priceList ? (
-                    <Image
-                      src={
-                        priceListPreview ||
-                        (brand?.priceList?.presignedUrl.url as string)
-                      }
-                      fill
-                      alt="..."
-                      className="object-contain p-3"
-                    />
-                  ) : (
-                    <LucideWarehouse
-                      className="h-8 w-8 text-alpha-400"
-                      strokeWidth={1.5}
-                    />
-                  )}
-                </div>
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="secondary"
-                    type="button"
-                    onClick={() => {
-                      priceListFileRef.current?.click()
-                    }}
-                  >
-                    {priceListFile
-                      ? priceListFile.name
-                      : t("common:choose_entity_file", {
-                          entity: t("common:price_list")
-                        })}
-                  </Button>
-                  {priceListPreview && (
+              </Card>
+            )}
+            {/* priceList */}
+            {brand && (
+              <Card template="1/2" title={t("common:price_list")}>
+                <div className="flex items-end gap-6">
+                  <Input
+                    type="file"
+                    onChange={(e) => onPriceListfileChange(e)}
+                    className="hidden"
+                    accept="image/*"
+                    ref={priceListFileRef}
+                  />
+                  <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
+                    {priceListPreview || brand?.priceList ? (
+                      <Image
+                        src={
+                          priceListPreview ||
+                          (brand?.priceList?.presignedUrl.url as string)
+                        }
+                        fill
+                        alt="..."
+                        className="object-contain p-3"
+                      />
+                    ) : (
+                      <LucideWarehouse
+                        className="h-8 w-8 text-alpha-400"
+                        strokeWidth={1.5}
+                      />
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2">
                     <Button
-                      variant="danger"
-                      iconOnly
+                      variant="secondary"
+                      type="button"
                       onClick={() => {
-                        form.setValue("priceListUuid", "")
-                        setPriceListFile(null)
-                        setPriceListPreview("")
+                        priceListFileRef.current?.click()
                       }}
                     >
-                      <LucideTrash className="icon" />
+                      {priceListFile
+                        ? priceListFile.name
+                        : t("common:choose_entity_file", {
+                            entity: t("common:price_list")
+                          })}
                     </Button>
-                  )}
+                    {priceListPreview && (
+                      <Button
+                        variant="danger"
+                        iconOnly
+                        onClick={() => {
+                          form.setValue("priceListUuid", "")
+                          setPriceListFile(null)
+                          setPriceListPreview("")
+                        }}
+                      >
+                        <LucideTrash className="icon" />
+                      </Button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Card>
-          )}{" "}
+              </Card>
+            )}
+            {/* banner */}
+            {brand && (
+              <Card template="1/2" title={t("common:banner")}>
+                <div className="flex items-end gap-6">
+                  <Input
+                    type="file"
+                    onChange={(e) => onBannerfileChange(e)}
+                    className="hidden"
+                    accept="image/*"
+                    ref={bannerFileRef}
+                  />
+                  <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
+                    {bannerPreview || brand?.bannerDesktop ? (
+                      <Image
+                        src={
+                          bannerPreview ||
+                          (brand?.bannerDesktop?.presignedUrl.url as string)
+                        }
+                        fill
+                        alt="..."
+                        className="object-contain p-3"
+                      />
+                    ) : (
+                      <LucideWarehouse
+                        className="h-8 w-8 text-alpha-400"
+                        strokeWidth={1.5}
+                      />
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="secondary"
+                      type="button"
+                      onClick={() => {
+                        bannerFileRef.current?.click()
+                      }}
+                    >
+                      {bannerFile
+                        ? bannerFile.name
+                        : t("common:choose_entity_file", {
+                            entity: t("common:banner")
+                          })}
+                    </Button>
+                    {bannerPreview && (
+                      <Button
+                        variant="danger"
+                        iconOnly
+                        onClick={() => {
+                          form.setValue("bannerUuid", "")
+                          setBannerFile(null)
+                          setBannerPreview("")
+                        }}
+                      >
+                        <LucideTrash className="icon" />
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </Card>
+            )}
+          </div>
           <Card template="1/2" title={t("common:about")}>
             <div className="grid grid-cols-1 gap-6">
               <FormField

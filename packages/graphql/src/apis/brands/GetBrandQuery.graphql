@@ -15,6 +15,14 @@ query GetBrand($id: Int!) {
         url
       }
     }
+    bannerDesktop {
+      id
+      uuid
+      presignedUrl {
+        url
+        expiresAt
+      }
+    }
     catalog {
       id
       uuid

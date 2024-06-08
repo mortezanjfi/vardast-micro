@@ -169,8 +169,8 @@ const BrandOrSellerProfile = ({
         <div className="relative hidden aspect-auto w-full overflow-hidden rounded-2xl md:col-span-9 md:block">
           <Image
             src={
-              data.bannerFile?.presignedUrl.url
-                ? `${data.bannerFile?.presignedUrl.url}`
+              (data as BrandQuery).bannerDesktop?.presignedUrl.url
+                ? `${(data as BrandQuery).bannerDesktop?.presignedUrl.url}`
                 : blankImage
             }
             className="h-full w-full object-cover"
