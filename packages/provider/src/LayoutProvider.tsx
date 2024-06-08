@@ -3,19 +3,33 @@
 import { createContext, ReactNode, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import { BreadcrumbProps } from "@vardast/type/breadcrumb"
-import { atom, PrimitiveAtom, useSetAtom } from "jotai"
+import { atom, useSetAtom, WritableAtom } from "jotai"
+
+type WritableAtomType<Value> = WritableAtom<Value, [Value], void>
 
 interface LayoutContextType {
-  breadcrumbAtom: PrimitiveAtom<BreadcrumbProps>
-  sidebarAtom: PrimitiveAtom<JSX.Element>
-  sidebarHamburgerAtom: PrimitiveAtom<boolean>
-
-  pageHeaderAtom: PrimitiveAtom<JSX.Element>
+  breadcrumbAtom: WritableAtomType<BreadcrumbProps>
+  sidebarAtom: WritableAtomType<JSX.Element | null>
+  sidebarHamburgerAtom: WritableAtomType<boolean>
+  pageHeaderAtom: WritableAtomType<JSX.Element | null>
 }
-const breadcrumbAtom = atom<BreadcrumbProps>({ dynamic: true, items: [] })
-const sidebarAtom = atom<JSX.Element>(<></>)
-const sidebarHamburgerAtom = atom<boolean>(false)
-const pageHeaderAtom = atom<JSX.Element>(<></>)
+
+const breadcrumbAtom: WritableAtomType<BreadcrumbProps> = atom(
+  { dynamic: true, items: [] },
+  (get, set, update) => set(breadcrumbAtom, update)
+)
+const sidebarAtom: WritableAtomType<JSX.Element | null> = atom(
+  null,
+  (get, set, update) => set(sidebarAtom, update)
+)
+const sidebarHamburgerAtom: WritableAtomType<boolean> = atom(
+  false,
+  (get, set, update) => set(sidebarHamburgerAtom, update)
+)
+const pageHeaderAtom: WritableAtomType<JSX.Element | null> = atom(
+  null,
+  (get, set, update) => set(pageHeaderAtom, update)
+)
 
 export const LayoutContext = createContext<LayoutContextType>({
   breadcrumbAtom,
@@ -68,7 +82,7 @@ const LayoutProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     return () => {
-      setBreadcrumb({ dynamic: true })
+      setBreadcrumb({ dynamic: true, items: [] })
       setSidebar(null)
       setPageHeader(null)
     }
