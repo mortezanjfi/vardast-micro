@@ -25,12 +25,14 @@ export type SELECTED_ITEM = {
 }
 
 export type ProjectAddressCartProps = {
+  isMobileView?: boolean
   selectedAddresses: SELECTED_ITEM
   onCloseModal: (_?: any) => void
   uuid: string
 }
 
 const ProjectAddressesTab = ({
+  isMobileView,
   uuid,
   findOneProjectQuery
 }: ProjectTabProps) => {
@@ -46,17 +48,19 @@ const ProjectAddressesTab = ({
   }
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <>
       <AddressDeleteModal
         uuid={uuid}
         onCloseModal={onCloseModal}
         selectedAddresses={selectedAddresses}
       />
       <AddressModal
+        isMobileView={isMobileView}
         uuid={uuid}
         onCloseModal={onCloseModal}
         selectedAddresses={selectedAddresses}
       />
+
       {findOneProjectQuery?.data?.findOneProject?.address.length > 0 && (
         <PageHeader
           pageHeaderClasses="!mb-0 py-5 border-b"
@@ -64,9 +68,10 @@ const ProjectAddressesTab = ({
             "آدرس های پروژه خود را تعریف کنید و در تحویل و فاکتورها از آن ها استفاده کنید."
           }
           titleClasses="text-[14px] font-normal "
-          containerClass="items-center"
+          containerClass={isMobileView && "!flex-col"}
         >
           <Button
+            className="py-2"
             variant="outline-primary"
             size="medium"
             onClick={() => {
@@ -83,41 +88,64 @@ const ProjectAddressesTab = ({
         </PageHeader>
       )}
 
-      <div className="flex w-full flex-col">
-        {findOneProjectQuery.isFetching && findOneProjectQuery.isLoading ? (
-          <div className="flex h-full items-center justify-center pt-6">
-            <Loading hideMessage />
-          </div>
-        ) : findOneProjectQuery?.data?.findOneProject?.address.length > 0 ? (
-          findOneProjectQuery?.data?.findOneProject?.address.map((address) => (
+      {findOneProjectQuery.isFetching && findOneProjectQuery.isLoading ? (
+        <div className="flex h-full items-center justify-center pt-6">
+          <Loading hideMessage />
+        </div>
+      ) : findOneProjectQuery?.data?.findOneProject?.address.length > 0 ? (
+        <>
+          {" "}
+          {findOneProjectQuery?.data?.findOneProject?.address.map((address) => (
             <ProjectAddressCart
               key={address.id}
               address={address.address as ProjectAddress}
               onOpenModal={onOpenModal}
             />
-          ))
-        ) : (
-          <div className="flex flex-col items-center justify-center gap-5 py-7">
-            <MapPinIcon width={64} height={64} className="text-alpha-400" />
-            <p>شما هنوز آدرس اضافه نکرده اید!</p>{" "}
-            <Button
-              className="my-5"
-              size="medium"
-              onClick={() => {
-                onOpenModal({
-                  type: SELECTED_ITEM_TYPE.ADD,
-                  data: undefined
-                })
-              }}
-            >
-              {t("common:add_new_entity", {
-                entity: t("common:address")
-              })}
-            </Button>
-          </div>
-        )}
-      </div>
-    </div>
+          ))}
+        </>
+      ) : (
+        <div className="flex flex-col items-center justify-center gap-5 py-7">
+          <MapPinIcon
+            width={isMobileView ? 48 : 64}
+            height={isMobileView ? 48 : 64}
+            className="text-alpha-400"
+          />
+          <p>شما هنوز آدرس اضافه نکرده اید!</p>{" "}
+          <Button
+            className="my-5 py-3"
+            size="medium"
+            onClick={() => {
+              onOpenModal({
+                type: SELECTED_ITEM_TYPE.ADD,
+                data: undefined
+              })
+            }}
+          >
+            {t("common:add_new_entity", {
+              entity: t("common:address")
+            })}
+          </Button>
+        </div>
+      )}
+
+      {isMobileView && (
+        <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] flex w-full justify-end md:relative md:bottom-0">
+          <Button
+            className="w-full md:w-fit"
+            disabled={
+              findOneProjectQuery?.data?.findOneProject?.address.length === 0
+            }
+            loading={
+              findOneProjectQuery.isFetching && findOneProjectQuery.isLoading
+            }
+            type="submit"
+            variant="primary"
+          >
+            ذخیره اطلاعات
+          </Button>
+        </div>
+      )}
+    </>
   )
 }
 

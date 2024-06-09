@@ -19,6 +19,12 @@
       ]
     }
   },
-  "include": ["*.ts", "src", "shared", "providers"],
+  "include": [
+    "../asset/declaration.d.ts",
+    "*.ts",
+    "src",
+    "shared",
+    "providers"
+  ],
   "exclude": ["node_modules"]
 }

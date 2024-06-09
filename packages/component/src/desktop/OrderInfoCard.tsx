@@ -74,7 +74,7 @@ const OrderInfoCard = ({ findPreOrderByIdQuery, uuid }: OrderInfoCardProps) => {
             <span>{PreOrderStatesFa[orderInfo?.status]?.name_fa}</span>
           </div>
         </div>
-        <div className={"grid grid-cols-2 2xl:grid-cols-3"}>
+        <div className={"flex grid-cols-2 flex-col md:grid 2xl:grid-cols-3"}>
           {/* نام خریدار */}
           <div className="flex flex-col">
             <DetailsWithTitle

@@ -3,6 +3,7 @@ import { dehydrate } from "@tanstack/react-query"
 import { IndexPreOrderInput, PreOrderStates } from "@vardast/graphql/generated"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
+import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
 import AllPreOrders from "@/app/(seller)/components/AllPreOrders"
 
@@ -20,6 +21,7 @@ const queryClient = getQueryClient()
 const dehydratedState = dehydrate(queryClient)
 const page = async ({ params: { slug }, searchParams }: SearchIndexProps) => {
   const args: IndexPreOrderInput = {}
+  const isMobileView = await CheckIsMobileView()
 
   if (searchParams.status) {
     args["status"] = searchParams.orderBy as PreOrderStates
@@ -29,7 +31,7 @@ const page = async ({ params: { slug }, searchParams }: SearchIndexProps) => {
 
   return (
     <ReactQueryHydrate state={dehydratedState}>
-      <AllPreOrders args={args} />
+      <AllPreOrders isMobileView={isMobileView} args={args} />
     </ReactQueryHydrate>
   )
 }

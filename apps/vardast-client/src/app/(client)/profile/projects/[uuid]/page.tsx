@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
 import ProjectForm from "@/app/(client)/profile/projects/components/project/ProjectForm"
 
@@ -15,15 +16,16 @@ export async function generateMetadata(
   }
 }
 
-const ProjectEdit = async ({ params }: ProductIndexProps) => {
+export default async ({ params }: ProductIndexProps) => {
+  const isMobileView = await CheckIsMobileView()
+
   const isNew = params.uuid === "new"
   return (
     <ProjectForm
+      isMobileView={isMobileView}
       isNew={isNew}
       uuid={params.uuid}
       title={(await generateMetadata({ params })).title?.toString() as string}
     />
   )
 }
-
-export default ProjectEdit

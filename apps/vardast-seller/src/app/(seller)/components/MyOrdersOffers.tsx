@@ -8,8 +8,8 @@ import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRe
 
 import SellersList from "@/app/(seller)/components/SellersList"
 
-type MyOrdersOffersProps = { uuid: string }
-const MyOrdersOffers = ({ uuid }: MyOrdersOffersProps) => {
+type MyOrdersOffersProps = { isMobileView: boolean; uuid: string }
+const MyOrdersOffers = ({ isMobileView, uuid }: MyOrdersOffersProps) => {
   const findPreOrderByIdQuery = useFindPreOrderByIdQuery(
     graphqlRequestClientWithToken,
     {
@@ -19,12 +19,14 @@ const MyOrdersOffers = ({ uuid }: MyOrdersOffersProps) => {
   return (
     <>
       <OrderOffers
+        isMobileView={isMobileView}
         uuid={uuid}
         type={OrderOffersPageType.SELLER_MY_ORDERS_OFFERS}
         findPreOrderByIdQuery={findPreOrderByIdQuery}
         AddOfferChildren={
           <>
             <SellersList
+              isMobileView={isMobileView}
               findPreOrderByIdQuery={findPreOrderByIdQuery}
               uuid={uuid}
             />

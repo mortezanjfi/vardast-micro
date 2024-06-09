@@ -23,9 +23,11 @@ export const DetailsWithTitle = ({
         <ListBulletIcon className="text-alpha-500" width={6} height={6} />
         <span className="whitespace-nowrap text-alpha-500">{title}:</span>
       </div>
-      <span className={clsx("whitespace-pre-wrap", textCustomStyle)}>
-        {text ? digitsEnToFa(`${text}`) : "-"}
-      </span>
+      <div className="flex gap-1">
+        <span className={clsx("whitespace-pre-wrap", textCustomStyle)}>
+          {text ? digitsEnToFa(`${text}`) : "-"}
+        </span>
+      </div>
     </div>
   )
 }

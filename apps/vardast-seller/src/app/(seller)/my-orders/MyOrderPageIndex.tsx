@@ -7,7 +7,7 @@ import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRe
 
 import SellerOrdersPage from "@/app/(seller)/components/SellerOrdersPage"
 
-const MyOrderPageIndex = () => {
+const MyOrderPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
   const myPreOrdersQuery = useMyPreOrdersQuery(
     graphqlRequestClientWithToken,
     {
@@ -32,7 +32,12 @@ const MyOrderPageIndex = () => {
   ) as UseQueryResult<PreOrdersQuery, unknown>
 
   return (
-    <SellerOrdersPage isMyOrderPage={true} preOrdersQuery={preOrdersQuery} />
+    <SellerOrdersPage
+      goToOffers={true}
+      isMobileView={isMobileView}
+      isMyOrderPage={true}
+      preOrdersQuery={preOrdersQuery}
+    />
   )
 }
 

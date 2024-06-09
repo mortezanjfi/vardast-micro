@@ -1,9 +1,19 @@
-import { CubeIcon, Squares2X2Icon } from "@heroicons/react/24/outline"
+import {
+  CubeIcon,
+  HomeIcon,
+  Squares2X2Icon,
+  UserCircleIcon
+} from "@heroicons/react/24/outline"
 import {
   ArrowRightStartOnRectangleIcon,
   HomeModernIcon,
   ListBulletIcon,
-  PlusCircleIcon
+  PlusCircleIcon,
+  BookmarkIcon as SolidBookmarkIcon,
+  CubeIcon as SolidCubeIcon,
+  HomeIcon as SolidHomeIcon,
+  Squares2X2Icon as SolidSquares2X2Icon,
+  UserCircleIcon as SolidUserCircleIcon
 } from "@heroicons/react/24/solid"
 import { NavigationItemType, NavigationType } from "@vardast/type/Navigation"
 import {
@@ -22,13 +32,76 @@ import {
   // LucideUserCircle
 } from "lucide-react"
 
-type NavbarItem = {
+export type NavbarItem = {
   href: string
   Icon: LucideIcon
   ActiveIcon: LucideIcon
   title: string
   id: number
 }
+
+export const _clientMobileSecondProfileMenu: NavigationType[] = [
+  {
+    title: "سایر",
+    items: [
+      {
+        title: "درباره ما",
+        icon: "info",
+        path: "/about"
+      },
+      {
+        title: "تماس با ما",
+        icon: "phone",
+        path: "/contact"
+      },
+      { title: "سوالات متداول", icon: "file-question", path: "/faq" },
+      {
+        title: "قوانین و مقررات",
+        icon: "newspaper",
+        path: "/privacy"
+      }
+    ]
+  }
+]
+
+export const _clientMobileProfileMenu: NavigationType[] = [
+  {
+    title: "منوی اصلی",
+    items: [
+      {
+        title: "پروژه ها",
+        icon: "folder-open",
+        path: "/profile/projects"
+      },
+      {
+        title: "سفارشات",
+        icon: "list",
+        path: "/profile/orders"
+      },
+      {
+        title: "سبد کالا",
+        icon: "shopping-cart",
+        path: "/profile/basket"
+      },
+      {
+        title: "علاقه مندی ها",
+        icon: "bookmark",
+        path: "/profile/favorites"
+      },
+      {
+        title: "اطلاعات حساب کاربری",
+        icon: "user",
+        path: "/profile/info"
+      },
+      {
+        title: "خروج از حساب کاربری",
+        icon: "log-out",
+        path: "/auth/signout",
+        color: "text-error-600"
+      }
+    ]
+  }
+]
 
 export const _profileSidebarMenu: NavigationType[] = [
   {
@@ -47,6 +120,12 @@ export const _profileSidebarMenu: NavigationType[] = [
         title: "سفارشات",
         icon: "list",
         path: "/profile/orders"
+      },
+      {
+        title: "خروج از حساب کاربری",
+        icon: "log-out",
+        path: "/auth/signout",
+        color: "text-error-600"
       }
       // {
       //   title: "سبد کالا",
@@ -135,7 +214,14 @@ export const _sidebarMenu: NavigationType[] = [
         path: "/uoms",
         icon: "ruler",
         abilities: "gql.products.uom.index"
+      },
+      {
+        title: "خروج از حساب کاربری",
+        icon: "log-out",
+        path: "/auth/signout",
+        color: "text-error-600"
       }
+
       // {
       //   title: "کالاها",
       //   icon: "package",
@@ -261,6 +347,12 @@ export const _sellerSidebarMenu: NavigationType[] = [
         title: "برندهای من",
         path: "/brands",
         icon: "layers"
+      },
+      {
+        title: "خروج از حساب کاربری",
+        icon: "log-out",
+        path: "/auth/signout",
+        color: "text-error-600"
       }
     ]
   }
@@ -287,6 +379,28 @@ export const _withNavigationRoutes: WithNavigationRouteItem[] = [
   {
     forceEqual: false,
     path: "/profile"
+  },
+  //for seller////
+  {
+    forceEqual: true,
+    path: "/my-orders"
+  },
+  {
+    forceEqual: true,
+    path: "/orders"
+  },
+  /////////////////
+  {
+    forceEqual: true,
+    path: "/profile/orders"
+  },
+  {
+    forceEqual: true,
+    path: "/profile/projects"
+  },
+  {
+    forceEqual: true,
+    path: "/profile/info"
   },
   {
     forceEqual: false,
@@ -351,6 +465,68 @@ export const _withNavigationRoutes: WithNavigationRouteItem[] = [
   {
     forceEqual: true,
     path: "/seller"
+  }
+]
+
+export const _navbar_items: NavbarItem[] = [
+  {
+    href: "/",
+    Icon: HomeIcon,
+    ActiveIcon: SolidHomeIcon,
+    title: "خانه",
+    id: 0
+  },
+  {
+    href: "/category",
+    Icon: Squares2X2Icon,
+    ActiveIcon: SolidSquares2X2Icon,
+    title: "دسته‌بندی",
+    id: 1
+  },
+  {
+    href: "/profile/orders",
+    Icon: ListBulletIcon,
+    ActiveIcon: SolidBookmarkIcon,
+    title: "سفارشات",
+    id: 2
+  },
+  {
+    href: "/profile",
+    Icon: UserCircleIcon,
+    ActiveIcon: SolidUserCircleIcon,
+    title: "حساب کاربری",
+    id: 3
+  }
+]
+
+export const _seller_navbar_items: NavbarItem[] = [
+  {
+    href: "/",
+    Icon: HomeIcon,
+    ActiveIcon: SolidHomeIcon,
+    title: "داشبورد",
+    id: 0
+  },
+  {
+    href: "/orders",
+    Icon: ListBulletIcon,
+    ActiveIcon: SolidSquares2X2Icon,
+    title: "سفارشات",
+    id: 1
+  },
+  {
+    href: "/products",
+    Icon: CubeIcon,
+    ActiveIcon: SolidCubeIcon,
+    title: "کالاها",
+    id: 2
+  },
+  {
+    href: "/profile",
+    Icon: UserCircleIcon,
+    ActiveIcon: SolidUserCircleIcon,
+    title: "حساب کاربری",
+    id: 3
   }
 ]
 

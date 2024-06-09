@@ -6,6 +6,7 @@ import {
   EventTrackerSubjectTypes,
   useCreateEventTrackerMutation
 } from "@vardast/graphql/generated"
+import useIsCurrentPath from "@vardast/hook/use-is-current-path"
 import { toast } from "@vardast/hook/use-toast"
 import mobile_footer_options from "@vardast/lib/mobile_footer_options"
 import { PublicContext } from "@vardast/provider/PublicProvider"
@@ -24,7 +25,7 @@ import Progress from "./Progress"
 import Search from "./Search"
 
 const MobileNavigation = ({
-  back,
+  back: propsBack,
   action,
   options,
   search
@@ -36,6 +37,9 @@ const MobileNavigation = ({
     useContext(PublicContext)
   const setOpen = useSetAtom(contactModalVisibilityAtom)
   const [{ data, type, title }] = useAtom(contactModalDataAtom)
+  const back = Array.isArray(propsBack)
+    ? useIsCurrentPath(propsBack)
+    : propsBack
 
   const getIsActiveNav = (activePath: string) =>
     pathname.split("/")[1] === activePath.split("/")[1]
@@ -89,51 +93,6 @@ const MobileNavigation = ({
     }
     router.replace(`/auth/signin${pathname}`)
   }
-
-  // useEffect(() => {
-  //   const appMobileFooter = document?.querySelector("#mobile-navigation-bar")
-  //   if (appMobileFooter) {
-  //     const hastShortClassNow = appMobileFooter?.querySelector(".short")
-  //     if (action) {
-  //       if (!hastShortClassNow) {
-  //         appMobileFooter?.classList.add("short")
-  //       }
-  //     } else {
-  //       if (hastShortClassNow) {
-  //         appMobileFooter?.classList.remove("short")
-  //       }
-  //     }
-  //   }
-  // }, [])
-
-  // useEffect(() => {
-  //   const appMobileFooter = document?.querySelector("#mobile-navigation-bar")
-  //   if (appMobileFooter) {
-  //     const hastShortClassNow = appMobileFooter?.querySelector(".short")
-  //     const observer = new MutationObserver(() => {
-  //       if (action) {
-  //         if (!hastShortClassNow) {
-  //           appMobileFooter?.classList.add("short")
-  //         }
-  //       } else {
-  //         if (hastShortClassNow) {
-  //           appMobileFooter?.classList.remove("short")
-  //         }
-  //       }
-  //     })
-
-  //     observer.observe(appMobileFooter, {
-  //       childList: true,
-  //       subtree: true,
-  //       attributes: true
-  //     })
-
-  //     // Clean up the observer on unmount
-  //     return () => {
-  //       observer.disconnect()
-  //     }
-  //   }
-  // }, [])
 
   return (
     <>

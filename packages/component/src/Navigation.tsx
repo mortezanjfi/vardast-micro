@@ -48,7 +48,7 @@ const Navigation = (props: Props) => {
             <section className="app-navigation-section" key={sectionId}>
               <ol className="app-navigation-section-list">
                 {menuSection.title && (
-                  <li className="app-navigation-section-label">
+                  <li className="app-navigation-section-label !text-alpha-500">
                     {menuSection.title}
                   </li>
                 )}

@@ -1,5 +1,7 @@
 import { ILayoutProps } from "@vardast/type/layout"
 
+import mobile_footer_back_options from "./mobile_footer_back_options"
+
 const _default: ILayoutProps = {
   desktop: {
     footer: {},
@@ -184,6 +186,7 @@ const _profile: ILayoutProps = {
     },
     footer: {
       search: true,
+      back: mobile_footer_back_options._profile,
       options: { name: "_default" }
     }
   }
@@ -366,6 +369,9 @@ const _admin: ILayoutProps = {
     }
   },
   mobile: {
+    sidebar: {
+      menus_name: "_admin"
+    },
     header: {
       progress: true,
       hamburger: true,
@@ -394,6 +400,9 @@ const _seller_panel: ILayoutProps = {
       title: {
         type: "image"
       }
+    },
+    sidebar: {
+      menus_name: "_seller_panel"
     }
   }
 }

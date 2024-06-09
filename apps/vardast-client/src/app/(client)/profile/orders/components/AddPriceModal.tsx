@@ -222,7 +222,7 @@ const AddPriceModal = ({
                 </p>
               </div>
             </div>
-            <DialogFooter className="flex gap border-t pt-5">
+            <DialogFooter className="flex flex-col gap border-t pt-5 md:flex-row">
               <Button
                 disabled={
                   calculatePriceOfferLineMutation.isLoading ||

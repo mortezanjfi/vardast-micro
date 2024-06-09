@@ -10,9 +10,9 @@ import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRe
 
 import SellerOrdersPage from "@/app/(seller)/components/SellerOrdersPage"
 
-type Props = { args: IndexPreOrderInput }
+type Props = { isMobileView: boolean; args: IndexPreOrderInput }
 
-function AllPreOrders({ args }: Props) {
+function AllPreOrders({ isMobileView, args }: Props) {
   const [filter, setFilter] = useState<PreOrderStates | undefined>(args.status)
   const [currentPage, setCurrentPage] = useState<number>(1)
   const preOrdersQuery = usePreOrdersQuery(
@@ -30,6 +30,8 @@ function AllPreOrders({ args }: Props) {
 
   return (
     <SellerOrdersPage
+      goToOffers={false}
+      isMobileView={isMobileView}
       filter={filter}
       setFilter={setFilter}
       currentPage={currentPage}

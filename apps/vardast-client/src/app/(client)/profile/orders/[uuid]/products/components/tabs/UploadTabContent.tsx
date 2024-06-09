@@ -5,10 +5,9 @@ import { Image, useAddFilePreOrderMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
 import { uploadPaths } from "@vardast/lib/uploadPaths"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
+import { OrderProductTabContentProps } from "@vardast/type/OrderProductTabs"
 import { Button } from "@vardast/ui/button"
 import { ClientError } from "graphql-request"
-
-import { OrderProductTabContentProps } from "@/app/(client)/profile/orders/[uuid]/products/components/OrderProductsTabs"
 
 function UploadTabContent({ uuid }: OrderProductTabContentProps) {
   const [files, setFiles] = useState<FilesWithPreview[]>([])

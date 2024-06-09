@@ -31,7 +31,7 @@ const ProjectAddressCart = ({
 
   return (
     <div className="flex flex-col border-b py-5">
-      <div className="flex w-full justify-between">
+      <div className="flex w-full items-center justify-between">
         <span className="text-base font-semibold">{address?.title}</span>
         <DropdownMenu
           modal={false}

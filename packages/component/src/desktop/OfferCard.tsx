@@ -1,9 +1,10 @@
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
-import Card from "@vardast/component/Card"
-import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
 import { OfferLine, TypeOrderOffer } from "@vardast/graphql/generated"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
+
+import Card from "../Card"
+import { DetailsWithTitle } from "./DetailsWithTitle"
 
 type OfferCardProps = { offerLine: OfferLine }
 

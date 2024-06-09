@@ -14,7 +14,7 @@ type UpdateInfoItemProps = Pick<
 const UpdateInfoItem = ({ value, title, name }: UpdateInfoItemProps) => {
   const [open, setOpen] = useState<boolean>(false)
   return (
-    <div className="flex h-28 items-center justify-between rounded border border-alpha-200 px-6">
+    <div className="flex h-28 items-center justify-between border border-alpha-200 px-6 md:rounded">
       <UpdateInfoItemModal
         open={open}
         setOpen={setOpen}

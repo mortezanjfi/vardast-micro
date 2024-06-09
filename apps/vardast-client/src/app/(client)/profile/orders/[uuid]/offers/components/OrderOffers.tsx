@@ -3,6 +3,8 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
+import OfferCard from "@vardast/component/desktop/OfferCard"
+import OrderProductCard from "@vardast/component/desktop/OrderProductCard"
 import Link from "@vardast/component/Link"
 import {
   OfferLine,
@@ -21,14 +23,12 @@ import { ClientError } from "graphql-request"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 
-import OrderProductCard from "@/app/(client)/profile/orders/[uuid]/products/components/OrderProductCard"
 import CollapsibleOfferCart from "@/app/(client)/profile/orders/components/CollapsibleOfferCart"
 import VardastDialog from "@/app/(client)/profile/orders/components/VardastDialog"
-import OfferCard from "@/app/(client)/profile/orders/OfferCard"
 
-type OrderOffersProps = { uuid: string }
+type OrderOffersProps = { isMobileView: boolean; uuid: string }
 
-const OrderOffers = ({ uuid }: OrderOffersProps) => {
+const OrderOffers = ({ isMobileView, uuid }: OrderOffersProps) => {
   const { t } = useTranslation()
   const { data: session } = useSession()
   const router = useRouter()
@@ -64,7 +64,7 @@ const OrderOffers = ({ uuid }: OrderOffersProps) => {
           toast({
             title: "پیشنهاد شما با موفقیت ثبت شد",
             description:
-              "لطفا برای قیمت گذاری بقر روی کالاها ادامه فرایند را انجام دهید.",
+              "لطفا برای قیمت گذاری بر روی کالاها ادامه فرایند را انجام دهید.",
             duration: 8000,
             variant: "success"
           })
@@ -130,13 +130,17 @@ const OrderOffers = ({ uuid }: OrderOffersProps) => {
         {findPreOrderByIdQuery.data?.findPreOrderById?.offers.map(
           (offerOrder, orderIndex) => (
             <CollapsibleOfferCart
+              isMobileView={isMobileView}
               status={orderIndex === 0 ? "enable" : "disable"}
               key={offerOrder.id}
               offerOrder={offerOrder as OfferOrder}
               openDefault={false}
             >
               {offerOrder.offerLine.map((offer, index) => (
-                <div key={index} className="grid grid-cols-4 gap-4 py-5">
+                <div
+                  key={index}
+                  className="flex grid-cols-4 flex-col gap-4 py-5 md:grid"
+                >
                   <div className="col-span-3">
                     <OrderProductCard
                       line={{
@@ -172,7 +176,7 @@ const OrderOffers = ({ uuid }: OrderOffersProps) => {
           )
         )}
       </div>
-      <div className="my-5 flex justify-end gap border-t pt-5">
+      <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] mt-5 grid w-full grid-cols-2 justify-end gap border-t bg-alpha-white pt-5 md:relative md:bottom-0 md:flex md:justify-end">
         <Link className="btn btn-md btn-secondary" href="/profile/orders/">
           بازگشت به سفارشات
         </Link>

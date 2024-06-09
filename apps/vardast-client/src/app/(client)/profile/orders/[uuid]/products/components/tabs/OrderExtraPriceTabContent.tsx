@@ -2,11 +2,10 @@
 
 import { useState } from "react"
 import { MultiTypeOrder } from "@vardast/graphql/generated"
+import { OrderProductTabContentProps } from "@vardast/type/OrderProductTabs"
 import { Button } from "@vardast/ui/button"
 import { Checkbox } from "@vardast/ui/checkbox"
 import useTranslation from "next-translate/useTranslation"
-
-import { OrderProductTabContentProps } from "@/app/(client)/profile/orders/[uuid]/products/components/OrderProductsTabs"
 
 export const OrderExtraPriceTabContent = ({
   addProductLine

@@ -1,11 +1,16 @@
+import { Metadata } from "next"
+import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
+
 import MyOrdersOffers from "@/app/(seller)/components/MyOrdersOffers"
 
-const OrderOffersPage = async ({
-  params: { uuid }
-}: {
-  params: { uuid: string }
-}) => {
-  return <MyOrdersOffers uuid={uuid} />
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "پیشنهادات"
+  }
 }
 
-export default OrderOffersPage
+export default async ({ params: { uuid } }: { params: { uuid: string } }) => {
+  const isMobileView = await CheckIsMobileView()
+
+  return <MyOrdersOffers isMobileView={isMobileView} uuid={uuid} />
+}

@@ -33,4 +33,12 @@ const OrderProductListContainer: React.FC<IOrderProductListContainer> = ({
   )
 }
 
+export const OrderProductCardSkeleton = ({}: {}) => {
+  return (
+    <div className="py-5">
+      <div className="animated-card h-[200px] rounded "></div>
+    </div>
+  )
+}
+
 export default OrderProductListContainer

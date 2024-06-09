@@ -11,7 +11,12 @@ import {
 import { toast } from "@vardast/hook/use-toast"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
-import { Dialog, DialogContent, DialogHeader } from "@vardast/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle
+} from "@vardast/ui/dialog"
 import {
   Form,
   FormControl,
@@ -22,6 +27,7 @@ import {
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
 import zodI18nMap from "@vardast/util/zodErrorMap"
+import clsx from "clsx"
 import { ClientError } from "graphql-request"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
@@ -43,12 +49,14 @@ type Props = {
   detailModalProps: OfferDetailModalProps & {
     setSelectedOfferId: Dispatch<SetStateAction<number>>
   }
+  isMobileView?: boolean
   orderId: number
   open: boolean
   onOpenChange: Dispatch<SetStateAction<boolean>>
 }
 
 function AddSellerModal({
+  isMobileView,
   orderId,
   open,
   onOpenChange,
@@ -84,7 +92,7 @@ function AddSellerModal({
           toast({
             title: "پیشنهاد شما با موفقیت ثبت شد",
             description:
-              "لطفا برای قیمت گذاری بقر روی کالاها ادامه فرایند را انجام دهید.",
+              "لطفا برای قیمت گذاری بر روی کالاها ادامه فرایند را انجام دهید.",
             duration: 8000,
             variant: "success"
           })
@@ -114,25 +122,37 @@ function AddSellerModal({
   }, [open])
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="!w-fit !min-w-[50rem] max-w-full gap-7">
-        <DialogHeader className="">
-          <span>{t("common:details")}</span>
+    <Dialog modal={!isMobileView} open={open} onOpenChange={onOpenChange}>
+      <DialogContent
+        className={clsx(
+          "flex flex-col gap-7 md:!w-fit md:!min-w-[50rem] md:max-w-full",
+          isMobileView && "h-full max-h-full w-screen max-w-screen rounded-none"
+        )}
+      >
+        <DialogHeader className="h-fit">
+          <DialogTitle>
+            {isMobileView ? "اطلاعات فروشنده" : t("common:details")}
+          </DialogTitle>
         </DialogHeader>
-        <CardContainer title="اطلاعات فروشنده">
+        <CardContainer
+          className="h-full"
+          title={!isMobileView && "اطلاعات فروشنده"}
+        >
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="flex flex-col gap-7"
+              className="flex h-full flex-col  gap-7"
             >
-              <div className="grid grid-cols-4 gap-7">
+              <div className="flex grid-cols-4 flex-col gap-7 md:grid">
                 <FormField
                   control={form.control}
                   name="company_name"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        {t("common:entity_name", { entity: t("common:store") })}
+                        {t("common:entity_name", {
+                          entity: t("common:store")
+                        })}
                         <span> / </span>
                         {t("common:entity_name", {
                           entity: t("common:company")
@@ -215,7 +235,7 @@ function AddSellerModal({
                 />
               </div>
 
-              <div className="flex flex-row-reverse border-t pt-5">
+              <div className="mt-auto flex w-full flex-row-reverse pt-5 md:mt-0 md:w-fit md:border-t">
                 <Button className="py-2" type="submit" variant="primary">
                   تایید و ادامه
                 </Button>

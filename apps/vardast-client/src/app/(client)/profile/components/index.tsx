@@ -1,23 +1,16 @@
 /* eslint-disable no-unused-vars */
 "use client"
 
-import { useMemo } from "react"
-import Image from "next/image"
 import {
-  ArrowLeftStartOnRectangleIcon,
-  ArrowRightEndOnRectangleIcon,
   InformationCircleIcon,
   NewspaperIcon,
   PhoneIcon as PhoneIconOutline,
   QuestionMarkCircleIcon
 } from "@heroicons/react/24/outline"
-import { UserCircleIcon } from "@heroicons/react/24/solid"
-import { digitsEnToFa } from "@persian-tools/persian-tools"
-import {
-  StatusUserAlternatives,
-  UserStatusItem
-} from "@vardast/component/desktop/DesktopHeader"
 import Link from "@vardast/component/Link"
+import Navigation from "@vardast/component/Navigation"
+import { SidebarProfile } from "@vardast/component/Sidebar"
+import sidebar_options from "@vardast/lib/sidebar_options"
 import { ColorEnum } from "@vardast/type/Enums"
 import clsx from "clsx"
 import { useSession } from "next-auth/react"
@@ -149,101 +142,96 @@ const ProfileIconItem = ({
   )
 }
 
-const _small_logout_icons = {
-  id: 6,
-  text: "خروج از حساب کاربری",
-  href: "/auth/signout",
-  color: ColorEnum.ERROR,
-  Icon: ArrowLeftStartOnRectangleIcon,
-  status: ProfileIconVariantStatusEnum.ERROR
-}
-
-const _small_signin_icons = {
-  id: 5,
-  text: "ورود به حساب کاربری",
-  href: "/auth/signin/profile",
-  Icon: ArrowRightEndOnRectangleIcon,
-  color: ColorEnum.SUCCESS,
-  status: ProfileIconVariantStatusEnum.SUCCESS
-}
-
 const ProfileIndex = () => {
-  const { data: session, status } = useSession()
-
-  const profileIcons = useMemo(() => {
-    const temp = [..._small_icons]
-    if (status !== "loading") {
-      if (status === "authenticated") {
-        temp.push(_small_logout_icons)
-      }
-      if (status === "unauthenticated") {
-        temp.push(_small_signin_icons)
-      }
-    }
-    return temp
-  }, [session, status])
-
+  const { data: session } = useSession()
   return (
-    <>
-      {session?.profile?.status && (
-        <div className="flex flex-col gap-y border-b bg-alpha-white px">
-          <div className="flex items-center pb">
-            <div className="flex flex-1 items-center gap-x-2">
-              <UserCircleIcon className="h-16 w-16 text-primary" />
-              <div className="flex flex-col gap-y-1">
-                {session?.profile?.fullName &&
-                session?.profile?.fullName !== "null null" ? (
-                  <h4 className="font-semibold">
-                    {session?.profile?.fullName}
-                  </h4>
-                ) : (
-                  "کاربر وردست"
-                )}
-                <p className="text-sm font-semibold text-alpha-400">
-                  {session?.profile?.cellphone
-                    ? digitsEnToFa(session?.profile?.cellphone)
-                    : digitsEnToFa("09123456789")}
-                </p>
-              </div>
-            </div>
-            <UserStatusItem
-              {...StatusUserAlternatives[session?.profile?.status]}
-            />
-          </div>
-        </div>
-      )}
-
-      <div className="bg-alpha-white">
-        <Link
-          href={process.env.NEXT_PUBLIC_SELLER_VARDAST as string}
-          className={`relative flex flex-shrink-0 transform flex-col items-center justify-center rounded-xl bg-center bg-no-repeat align-middle transition-all duration-1000 ease-out`}
-        >
-          <div className="w-full">
-            <Image
-              src={"/images/be-seller.png"}
-              alt={"be-seller"}
-              width={360}
-              height={120}
-              className="h-full w-full rounded-xl"
-            />
-          </div>
-        </Link>
+    <div className="app-navigation">
+      <div className="app-navigation-container">
+        <SidebarProfile session={session} />
+        <Navigation menus={sidebar_options._profile} withLogin />
       </div>
+    </div>
+    // <div className="app-navigation flex w-full flex-col divide-y-2 divide-alpha-50 pt-0">
+    //   {/* <div
+    //     className={clsx(
+    //       "flex h-full flex-col !gap-0 divide-y-8 divide-alpha-50"
+    //     )}
+    //   > */}
+    //   {session?.profile?.status && (
+    //     <div className="flex flex-col divide-y bg-alpha-white px-6">
+    //       <div className="flex items-center py-5">
+    //         <div className="flex flex-1 items-center gap-x-2">
+    //           {/* {isMobileView && (
+    //                       <UserCircleIcon className="h-16 w-16 text-primary" />
+    //                     )} */}
+    //           <div className="flex flex-col gap-y-1">
+    //             {session?.profile?.fullName &&
+    //             session?.profile?.fullName !== "null null" ? (
+    //               <h4 className="font-semibold">
+    //                 {session?.profile?.fullName}
+    //               </h4>
+    //             ) : (
+    //               "کاربر وردست"
+    //             )}
+    //             <p className="text-sm font-semibold text-alpha-400">
+    //               {session?.profile?.cellphone
+    //                 ? digitsEnToFa(session?.profile?.cellphone)
+    //                 : digitsEnToFa("09123456789")}
+    //             </p>
+    //           </div>
+    //         </div>
+    //         <Link href={"/profile/info"}>
+    //           <PencilSquareIcon height={20} width={20} />
+    //         </Link>
+    //       </div>
+    //       <div className="flex items-center justify-between py-5">
+    //         <div className="flex items-center gap-4">
+    //           <div className="rounded-lg bg-blue-600 p-2">
+    //             <WalletIcon
+    //               width={24}
+    //               height={24}
+    //               className="text-alpha-white"
+    //               color="alpha-white"
+    //             />
+    //           </div>
+    //           <span>کیف پول</span>
+    //         </div>
+    //         <div className="text-alph-500 flex items-center gap-1">
+    //           <span>{digitsEnToFa(addCommas(0))}</span>
+    //           <span>تومان</span>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   )}
+    //   <div className="flex flex-col bg-alpha-white px-6">
+    //     <div className="app-navigation-container bg-alpha-white">
+    //       <Navigation menus={_clientMobileProfileMenu} />
+    //     </div>
+    //   </div>
+    //   <div className="flex flex-col">
+    //     <div className="app-navigation-container !border-t-0 bg-alpha-white px-6">
+    //       <Navigation menus={_clientMobileSecondProfileMenu} />
+    //     </div>
 
-      <div className="flex w-full flex-col items-start justify-start divide-y bg-alpha-white px-3.5">
-        <div className="border-t"></div>
-        {profileIcons.map(({ id, status, ...props }) => (
-          <ProfileIconItem
-            key={id}
-            variant={{
-              type: ProfileIconVariantTypeEnum.SMALL,
-              status
-            }}
-            {...props}
-          />
-        ))}
-      </div>
-    </>
+    //     <div className="bg-alpha-white py-5">
+    //       <Link
+    //         href={process.env.NEXT_PUBLIC_SELLER_VARDAST as string}
+    //         ref={productContainerRef}
+    //         className={`relative flex flex-shrink-0 transform flex-col items-center justify-center rounded-xl bg-center bg-no-repeat align-middle transition-all duration-1000 ease-out`}
+    //       >
+    //         <div className="w-full">
+    //           <Image
+    //             src={"/images/be-seller.png"}
+    //             alt={"be-seller"}
+    //             width={360}
+    //             height={120}
+    //             className="h-full w-full rounded-xl"
+    //           />
+    //         </div>
+    //       </Link>
+    //     </div>
+    //   </div>
+    // </div>
   )
 }
 

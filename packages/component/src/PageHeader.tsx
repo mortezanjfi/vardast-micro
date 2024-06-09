@@ -24,7 +24,7 @@ function PageHeader({
         <ChevronRight className="icon" />
         <span>مناطق جغرافیایی</span>
       </button> */}
-      <div className={`flex items-end ${containerClass}`}>
+      <div className={`flex items-center ${containerClass}`}>
         <div className={`${titleContainerClasses}`}>
           <h2 className={` font-black text-alpha-800 ${titleClasses} leading`}>
             {title}

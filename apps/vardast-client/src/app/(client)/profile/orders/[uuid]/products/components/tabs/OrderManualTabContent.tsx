@@ -3,7 +3,7 @@
 
 import "chart.js/auto"
 
-import { digitsEnToFa } from "@persian-tools/persian-tools"
+import { OrderProductTabContentProps } from "@vardast/type/OrderProductTabs"
 import { Button } from "@vardast/ui/button"
 import {
   Form,
@@ -17,8 +17,6 @@ import { Input } from "@vardast/ui/input"
 import { Textarea } from "@vardast/ui/textarea"
 import useTranslation from "next-translate/useTranslation"
 
-import { OrderProductTabContentProps } from "@/app/(client)/profile/orders/[uuid]/products/components/OrderProductsTabs"
-
 const OrderManualTabContent = ({
   addProductLine,
   form
@@ -29,102 +27,102 @@ const OrderManualTabContent = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(addProductLine)}
-        className="grid w-full grid-cols-3 gap-x gap-y-9 py-5"
+        className="flex w-full flex-col gap-5 py-5"
       >
-        <FormField
-          control={form.control}
-          name="item_name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>نام کالا</FormLabel>
-              <FormControl>
-                <Input placeholder="وارد کنید" type="text" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="brand"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>برند</FormLabel>
-              <FormControl>
-                <Input placeholder="وارد کنید" type="text" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="uom"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>واحد</FormLabel>
-              <FormControl>
-                <Input placeholder="وارد کنید" type="text" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="qty"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>مقدار کالا (تعداد)</FormLabel>
-              <FormControl>
-                <Input
-                  type="tel"
-                  inputMode="numeric"
-                  placeholder={"وارد کنید"}
-                  {...field}
-                  onChange={(e) => field.onChange(digitsEnToFa(e.target.value))}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="attribuite"
-          render={({ field }) => (
-            <FormItem className="col-span-2">
-              <FormLabel>ویژگی ها (اختیاری)</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="مثال: متراژ، ضخامت، طول و ..."
-                  type="text"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="descriptions"
-          render={({ field }) => (
-            <FormItem className="col-span-3">
-              <FormLabel>توضیحات (اختیاری)</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="متن خود را وارد کنید"
-                  style={{ resize: "none" }}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex w-full grid-cols-3 flex-col gap-7 md:grid">
+          <FormField
+            control={form.control}
+            name="item_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>نام کالا</FormLabel>
+                <FormControl>
+                  <Input placeholder="وارد کنید" type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="brand"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>برند</FormLabel>
+                <FormControl>
+                  <Input placeholder="وارد کنید" type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="uom"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>واحد</FormLabel>
+                <FormControl>
+                  <Input placeholder="وارد کنید" type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="flex w-full grid-cols-2 flex-col gap-7 md:grid">
+          <FormField
+            control={form.control}
+            name="qty"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>مقدار کالا (تعداد)</FormLabel>
+                <FormControl>
+                  <Input placeholder="وارد کنید" type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="attribuite"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>ویژگی ها (اختیاری)</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="مثال: متراژ، ضخامت، طول و ..."
+                    type="text"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div>
+          <FormField
+            control={form.control}
+            name="descriptions"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>توضیحات (اختیاری)</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="متن خود را وارد کنید"
+                    style={{ resize: "none" }}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
-        <div className="col-span-3 flex justify-end">
+        <div className="flex flex-row-reverse py-5">
           <Button
             variant="outline-primary"
             disabled={

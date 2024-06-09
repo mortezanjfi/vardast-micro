@@ -18,7 +18,7 @@ import Link from "./Link"
 import Navigation from "./Navigation"
 import Progress from "./Progress"
 
-const SidebarProfile = ({ session }: { session: Session }) => {
+export const SidebarProfile = ({ session }: { session: Session }) => {
   return (
     session?.profile?.status && (
       <ol className="app-navigation-section">

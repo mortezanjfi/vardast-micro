@@ -7,6 +7,7 @@ export interface NavigationItemType {
   abilities?: string
   role?: string
   items?: NavigationItemType[]
+  color?: string
 }
 
 export interface NavigationType {

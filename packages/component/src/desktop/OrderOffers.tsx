@@ -15,6 +15,7 @@ export enum OrderOffersPageType {
 }
 
 type Props = {
+  isMobileView?: boolean
   uuid?: string
   offerId?: string
   isAdmin?: boolean
@@ -27,6 +28,7 @@ type Props = {
 }
 
 const OrderOffers: React.FC<Props> = ({
+  isMobileView,
   uuid,
   SellerAddOfferPriceChildren,
   type,
@@ -41,7 +43,9 @@ const OrderOffers: React.FC<Props> = ({
         findPreOrderByIdQuery={findPreOrderByIdQuery}
         uuid={uuid}
       />
+
       <OrderProductsList
+        isMobileView={isMobileView}
         findPreOrderByIdQuery={findPreOrderByIdQuery}
         uuid={uuid}
       />

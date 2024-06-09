@@ -1,11 +1,26 @@
 import Link from "@vardast/component/Link"
+import clsx from "clsx"
 
-type PageTitleProps = { title: string; backButtonUrl?: string }
+type PageTitleProps = {
+  className?: string
+  titleClass?: string
+  title: string
+  backButtonUrl?: string
+}
 
-const PageTitle = ({ title, backButtonUrl }: PageTitleProps) => {
+const PageTitle = ({
+  className,
+  titleClass,
+  title,
+  backButtonUrl
+}: PageTitleProps) => {
   return (
-    <div className="flex w-full items-center justify-between pt">
-      <span className="pb-2 text-lg font-semibold">{title}</span>
+    <div
+      className={clsx("flex w-full items-center justify-between pt", className)}
+    >
+      <span className={clsx("pb-2 text-lg font-semibold", titleClass)}>
+        {title}
+      </span>
       {backButtonUrl && (
         <Link className="btn btn-md btn-secondary" href={backButtonUrl}>
           بازگشت

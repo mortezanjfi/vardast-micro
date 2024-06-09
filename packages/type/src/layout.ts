@@ -59,13 +59,19 @@ export interface ILayoutMobileHeader {
     name: string
   }
 }
+
+export type WithNavigationRouteItem = {
+  forceEqual: boolean
+  path: string
+  dynamicRouteAllow?: boolean
+}
 export interface ILayoutDesktopFooter {
   background?: ILayoutBackground
 }
 export interface ILayoutMobileFooter {
   background?: ILayoutBackground
   search?: boolean
-  back?: boolean
+  back?: boolean | WithNavigationRouteItem[]
   action?: boolean
   options?: {
     name: string
@@ -95,6 +101,8 @@ export interface ILayoutMobile {
   background?: ILayoutBackground
   header?: ILayoutMobileHeader
   footer?: ILayoutMobileFooter
+  sidebar?: ILayoutDesktopSidebar
+
   main?: ILayoutMobileMain
 }
 

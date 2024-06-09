@@ -2,16 +2,25 @@
 
 import { Dispatch, SetStateAction } from "react"
 import { UseQueryResult } from "@tanstack/react-query"
+import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
 import OrderProductsList from "@vardast/component/desktop/OrderProductsList"
 import {
   FindPreOrderByIdQuery,
   PreOrderStates
 } from "@vardast/graphql/generated"
-import { Dialog, DialogContent, DialogHeader } from "@vardast/ui/dialog"
+import { ACTION_BUTTON_TYPE } from "@vardast/type/OrderProductTabs"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle
+} from "@vardast/ui/dialog"
 import { Input } from "@vardast/ui/input"
+import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
 
 export type OfferDetailModalProps = {
+  isMobileView?: boolean
   selectedOfferId: number
   findPreOrderByIdQuery: UseQueryResult<FindPreOrderByIdQuery, unknown>
   open: boolean
@@ -19,6 +28,7 @@ export type OfferDetailModalProps = {
 }
 
 function OfferDetailModal({
+  isMobileView,
   findPreOrderByIdQuery,
   selectedOfferId,
   open,
@@ -27,26 +37,42 @@ function OfferDetailModal({
   const { t } = useTranslation()
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="!w-fit !min-w-[50rem] max-w-full gap-7">
-        <DialogHeader className="">
-          <span>{t("common:details")}</span>
+    <Dialog modal={!isMobileView} open={open} onOpenChange={onOpenChange}>
+      <DialogContent
+        className={clsx(
+          "flex flex-col gap-7 md:!w-fit md:!min-w-[50rem] md:max-w-full",
+          isMobileView && "h-full max-h-full w-screen max-w-screen rounded-none"
+        )}
+      >
+        <DialogHeader className="h-fit">
+          <DialogTitle>{t("common:details")}</DialogTitle>
         </DialogHeader>
-        <div className="grid grid-cols-4 gap-7">
-          <div className="flex flex-col gap-1">
-            <span>
-              {t("common:entity_name", { entity: t("common:seller") })}
-            </span>
-            <Input
-              disabled
-              className="w-full"
-              value={
+        <div className="flex grid-cols-4 flex-col gap-7 md:grid">
+          {isMobileView ? (
+            <DetailsWithTitle
+              title={t("common:entity_name", { entity: t("common:seller") })}
+              text={
                 findPreOrderByIdQuery?.data?.findPreOrderById?.offers.find(
                   (item) => item.id === selectedOfferId
                 )?.request_name
               }
             />
-          </div>
+          ) : (
+            <div className="flex flex-col gap-1">
+              <span>
+                {t("common:entity_name", { entity: t("common:seller") })}
+              </span>
+              <Input
+                disabled
+                className="w-full"
+                value={
+                  findPreOrderByIdQuery?.data?.findPreOrderById?.offers.find(
+                    (item) => item.id === selectedOfferId
+                  )?.request_name
+                }
+              />
+            </div>
+          )}
           {/* <div className="flex flex-col gap-1">
             <span>{t("common:cellPhone")}</span>
             <Input disabled className="w-full" value="8888888888" />
@@ -61,6 +87,9 @@ function OfferDetailModal({
           </div> */}
         </div>
         <OrderProductsList
+          isSeller={true}
+          actionButtonType={ACTION_BUTTON_TYPE.ADD_PRODUCT_OFFER}
+          isMobileView={isMobileView}
           hasOperation={
             findPreOrderByIdQuery?.data?.findPreOrderById?.status !==
             PreOrderStates.Closed

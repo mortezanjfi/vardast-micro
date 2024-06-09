@@ -32,8 +32,8 @@ export default function withLayout<T>(
                 <MobileHeader {...layout?.mobile?.header} />
               </header>
             )}
-            {layout?.desktop?.sidebar && (
-              <Sidebar {...layout?.desktop?.sidebar} />
+            {layout?.mobile?.sidebar && (
+              <Sidebar {...layout?.mobile?.sidebar} />
             )}
             <main
               className={clsx(

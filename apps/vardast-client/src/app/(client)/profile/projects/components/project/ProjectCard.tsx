@@ -31,39 +31,28 @@ const ProjectCard = ({
 
   return (
     <div className="flex w-full  items-start justify-between border-b  border-alpha-200 py-4">
-      <div className="flex flex-col gap-4 py-7">
-        <span className="text-base font-semibold">{project.name}</span>
-        <div className="flex flex-col items-start gap">
-          <DetailsWithTitle
-            title="همکاران پروژه"
-            text={project?.user
-              .map((user) => `- ${user.user.fullName}`)
-              .join("\n")}
-          />
-          <DetailsWithTitle
-            title="آدرس ها"
-            text={project?.address
-              .map((address) => `- ${address.address.address}`)
-              .join("\n")}
-          />
-        </div>
-      </div>
-      <DropdownMenu open={dropDownMenuOpen} onOpenChange={setDropDownMenuOpen}>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" iconOnly>
-            <LucideMoreVertical className="icon text-black" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <Link href={`/profile/projects/${project.id}`}>
-            <DropdownMenuItem>
-              <LucideEdit className="dropdown-menu-item-icon" />
-              <span>{t("common:edit")}</span>
-            </DropdownMenuItem>
-          </Link>
-          <>
-            {/* <DropdownMenuSeparator /> */}
-            {/* <DropdownMenuItem
+      <div className="flex w-full flex-col gap-4">
+        <div className="flex w-full items-center justify-between">
+          <span className="text-base font-semibold">{project.name}</span>
+          <DropdownMenu
+            open={dropDownMenuOpen}
+            onOpenChange={setDropDownMenuOpen}
+          >
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" iconOnly>
+                <LucideMoreVertical className="icon text-black" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <Link href={`/profile/projects/${project.id}`}>
+                <DropdownMenuItem>
+                  <LucideEdit className="dropdown-menu-item-icon" />
+                  <span>{t("common:edit")}</span>
+                </DropdownMenuItem>
+              </Link>
+              <>
+                {/* <DropdownMenuSeparator /> */}
+                {/* <DropdownMenuItem
               onSelect={() => {
                 setProjectToDelete(project)
                 setDeleteModalOpen(true)
@@ -73,9 +62,26 @@ const ProjectCard = ({
               <LucideTrash className="dropdown-menu-item-icon" />
               <span>{t("common:delete")}</span>
             </DropdownMenuItem> */}
-          </>
-        </DropdownMenuContent>
-      </DropdownMenu>
+              </>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+        <div className="flex flex-col items-start gap">
+          {/* <DetailsWithTitle
+            title="آدرس ها"
+            text={project?.address
+              .map((address) => `- ${address.address.address}`)
+              .join("\n")}
+          /> */}
+          <DetailsWithTitle
+            title="همکاران پروژه"
+            className="!flex-col"
+            text={project?.user
+              .map((user) => `- ${user.user.fullName}`)
+              .join("\n")}
+          />
+        </div>
+      </div>
     </div>
   )
 }

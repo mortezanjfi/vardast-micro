@@ -38,7 +38,7 @@ const MobileBaseLayout: React.FC<IMobileBaseLayout> = ({
             : clsx(
                 noStyle,
                 limitWidth && !isMobileView ? "max-w-md" : "w-full",
-                bgWhite && "bg-alpha-white",
+                bgWhite && "!bg-alpha-white",
                 fullHeight &&
                   "h-full pb-[calc(env(safe-area-inset-bottom)*0.5+10px)]",
                 spaceLess ? "" : "gap-y px-3.5 py",

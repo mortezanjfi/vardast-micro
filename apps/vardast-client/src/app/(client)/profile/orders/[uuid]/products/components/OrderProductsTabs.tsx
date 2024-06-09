@@ -2,20 +2,19 @@
 
 import { useMemo } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { digitsFaToEn } from "@persian-tools/persian-tools"
 import { useQueryClient } from "@tanstack/react-query"
 import { TabTitleWithExtraData } from "@vardast/component/BrandOrSellerProfile"
-import {
-  CreateLineInput,
-  useCreateLineMutation
-} from "@vardast/graphql/generated"
+import { useCreateLineMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
+import {
+  CreateOrderLineSchema,
+  CreateOrderLineType
+} from "@vardast/type/OrderProductTabs"
 import zodI18nMap from "@vardast/util/zodErrorMap"
-import { amountSchema } from "@vardast/util/zodValidationSchemas"
 import { ClientError } from "graphql-request"
-import { useForm, UseFormReturn } from "react-hook-form"
-import { TypeOf, z } from "zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
 import OrderProductsOrganizer from "@/app/(client)/profile/orders/[uuid]/products/components/OrderProductsOrganizer"
 import { OrderExtraPriceTabContent } from "@/app/(client)/profile/orders/[uuid]/products/components/tabs/OrderExtraPriceTabContent"
@@ -39,26 +38,6 @@ export enum OrderProductsTabsEnum {
   ORDER_MANUAL_TAB = "ORDER_MANUAL_TAB",
   UPLOAD_TAB_CONTENT = "UPLOAD_TAB_CONTENT",
   EXTRA_PRICE = "EXTRA_PRICE"
-}
-
-export const CreateOrderLineSchema = z.object({
-  attribuite: z.string().optional(),
-  brand: z.string(),
-  descriptions: z.string().optional(),
-  item_name: z.string(),
-  qty: amountSchema,
-  uom: z.string(),
-  type: z.string().optional()
-})
-
-export type CreateOrderLineType = TypeOf<typeof CreateOrderLineSchema> & {
-  type?: CreateLineInput["type"]
-}
-
-export interface OrderProductTabContentProps {
-  addProductLine: (productLine: CreateOrderLineType) => void
-  form: UseFormReturn<CreateOrderLineType>
-  uuid?: string
 }
 
 const OrderProductsTabs = ({ uuid }: OrderProductsTabsProps) => {
@@ -102,7 +81,7 @@ const OrderProductsTabs = ({ uuid }: OrderProductsTabsProps) => {
     createLineMutation.mutate({
       createLineInput: {
         ...createLineInput,
-        qty: digitsFaToEn(createLineInput.qty) || "1",
+        qty: createLineInput.qty || "1",
         item_name: createLineInput.item_name,
         preOrderId: +uuid
       }

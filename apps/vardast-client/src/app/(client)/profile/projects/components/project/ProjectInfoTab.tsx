@@ -119,63 +119,58 @@ const ProjectInfoTab = ({
   }, [findOneProjectQuery?.data])
 
   return (
-    <div className="flex h-full w-full flex-col gap-9 py-5">
-      <Form {...form}>
-        <form
-          className="flex flex-col gap-9"
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
-          <div className="grid grid-cols-3 gap-x-7 gap-y-5 2xl:grid-cols-4">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>نام پروژه</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={
-                        (findOneProjectQuery.isLoading &&
-                          findOneProjectQuery.isFetching) ||
-                        updateProjectMutation.isLoading ||
-                        createProjectMutation.isLoading
-                      }
-                      type="text"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="flex justify-end">
-            <Button
-              disabled={
-                !form.watch("name") ||
-                updateProjectMutation.isLoading ||
-                createProjectMutation.isLoading ||
-                (findOneProjectQuery.isLoading &&
-                  findOneProjectQuery.isFetching) ||
-                (form.watch("name") &&
-                  findOneProjectQuery?.data?.findOneProject?.name ===
-                    form.watch("name"))
-              }
-              loading={
-                updateProjectMutation.isLoading ||
-                createProjectMutation.isLoading ||
-                (findOneProjectQuery.isLoading &&
-                  findOneProjectQuery.isFetching)
-              }
-              type="submit"
-              variant="primary"
-            >
-              ذخیره اطلاعات
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </div>
+    <Form {...form}>
+      <form className="md:py-5" onSubmit={form.handleSubmit(onSubmit)}>
+        <div className="grid grid-cols-1 gap-x-7 gap-y-5 md:grid-cols-3 2xl:grid-cols-4">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>نام پروژه</FormLabel>
+                <FormControl>
+                  <Input
+                    disabled={
+                      (findOneProjectQuery.isLoading &&
+                        findOneProjectQuery.isFetching) ||
+                      updateProjectMutation.isLoading ||
+                      createProjectMutation.isLoading
+                    }
+                    type="text"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] flex w-full justify-end md:relative md:bottom-0">
+          <Button
+            className="w-full md:w-fit"
+            disabled={
+              !form.watch("name") ||
+              updateProjectMutation.isLoading ||
+              createProjectMutation.isLoading ||
+              (findOneProjectQuery.isLoading &&
+                findOneProjectQuery.isFetching) ||
+              (form.watch("name") &&
+                findOneProjectQuery?.data?.findOneProject?.name ===
+                  form.watch("name"))
+            }
+            loading={
+              updateProjectMutation.isLoading ||
+              createProjectMutation.isLoading ||
+              (findOneProjectQuery.isLoading && findOneProjectQuery.isFetching)
+            }
+            type="submit"
+            variant="primary"
+          >
+            ذخیره اطلاعات
+          </Button>
+        </div>
+      </form>
+    </Form>
   )
 }
 
