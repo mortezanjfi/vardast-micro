@@ -9,7 +9,7 @@
 }
 .app-content {
   &.mobile {
-    @apply flex flex-1 flex-col gap-1 overflow-y-auto overflow-x-hidden bg-transparent pt-14;
+    @apply flex flex-1 flex-col gap-1 overflow-y-auto overflow-x-hidden bg-transparent;
   }
   &.desktop {
     @apply flex-1 w-full pb-6
@@ -35,7 +35,7 @@
 .app-header {
   @apply fixed left-0 right-0 top-0 z-30;
   &.mobile {
-    @apply z-40 w-full bg-primary px-2;
+    @apply z-40 h-14 w-full bg-primary px-2;
   }
   &.desktop {
     @apply z-30 h-header border-b bg-alpha-white px-6 sm:px-0;
@@ -57,7 +57,12 @@
   }
 }
 .app-header-ghost {
-  @apply h-header w-full bg-transparent;
+  &.mobile {
+    @apply h-14 w-full bg-transparent;
+  }
+  &.desktop {
+    @apply h-header w-full bg-transparent;
+  }
 }
 .app-sidebar {
   @apply fixed

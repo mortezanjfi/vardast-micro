@@ -19,7 +19,7 @@ import {
   IndexBrandInput,
   Seller
 } from "@vardast/graphql/generated"
-import { setSidebar } from "@vardast/provider/LayoutProvider"
+import { setSidebar } from "@vardast/provider/LayoutProvider/use-layout"
 import { getAllSellersQueryFn } from "@vardast/query/queryFns/allSellersQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { Button } from "@vardast/ui/button"

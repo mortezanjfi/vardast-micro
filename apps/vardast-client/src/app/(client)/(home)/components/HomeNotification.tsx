@@ -1,0 +1,95 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import { usePathname, useRouter } from "next/navigation"
+import { Button } from "@vardast/ui/button"
+import clsx from "clsx"
+import { LucideX } from "lucide-react"
+import { useSession } from "next-auth/react"
+
+const pdfBlogUrl = "gateway.vardast.com/Gozareshmaskan1403.pdf"
+
+type HomeNotificationProps = {}
+
+const HomeNotification = (_: HomeNotificationProps) => {
+  const [downloadPdfModal, setDownloadPdfModal] = useState(false)
+  const pathname = usePathname()
+  const session = useSession()
+  const router = useRouter()
+
+  const setLocalStoragePdf = (finish?: boolean) => {
+    const pdfCount = localStorage.getItem("pdf")
+    localStorage.setItem(
+      "pdf",
+      finish ? "3" : pdfCount ? `${+pdfCount + 1}` : "1"
+    )
+  }
+
+  const downloadPdf = (e) => {
+    e.preventDefault()
+    setLocalStoragePdf(true)
+    if (!!session?.data) {
+      window.location.href = `https://${pdfBlogUrl}`
+      return
+    }
+    router.replace(`/auth/signin/foreign/${pdfBlogUrl}`)
+  }
+
+  useEffect(() => {
+    if (
+      typeof window !== "undefined" &&
+      (!localStorage.getItem("pdf") ||
+        (localStorage.getItem("pdf") && localStorage.getItem("pdf") !== "3")) &&
+      pathname === "/"
+    ) {
+      setTimeout(() => {
+        setDownloadPdfModal(true)
+      }, 2000)
+    }
+  }, [pathname])
+
+  return (
+    <>
+      {downloadPdfModal && pathname === "/" && (
+        <div
+          onClick={downloadPdf}
+          className={clsx(
+            "fixed bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] left-0 right-0 z-50 flex w-full max-w-[500px] transform cursor-pointer items-center justify-between gap-x bg-info px-6 py transition-all md:bottom-10 md:right-10 md:ml-auto md:rounded-lg md:px-12 md:py-4"
+          )}
+        >
+          <Button
+            onClick={(e) => {
+              e.stopPropagation()
+              e.nativeEvent.preventDefault()
+              e.nativeEvent.stopImmediatePropagation()
+              setLocalStoragePdf()
+              setDownloadPdfModal(false)
+            }}
+            size="small"
+            className="absolute -top-5 right-5 h-7 w-7 !bg-secondary-800"
+            iconOnly
+            variant="ghost"
+          >
+            <LucideX className="h-full w-full text-alpha-white" />
+          </Button>
+          <p className="text-center text-lg font-bold text-alpha-white">
+            آخرین گزارش معاملات مسکن در تهران
+            <br />
+            <span className="text-sm">(فروردین ۱۴۰۳)</span>
+          </p>
+          <Button
+            // loading={createEventTrackerDownloadPdfMutation.isLoading}
+            // disabled={createEventTrackerDownloadPdfMutation.isLoading}
+            size="small"
+            className="!bg-error !px-5 !py-3 font-bold"
+            variant="primary"
+          >
+            دانلود
+          </Button>
+        </div>
+      )}
+    </>
+  )
+}
+
+export default HomeNotification

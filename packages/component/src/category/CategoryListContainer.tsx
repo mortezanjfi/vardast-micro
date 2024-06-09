@@ -1,6 +1,7 @@
 "use client"
 
 import React, { ReactElement, useState } from "react"
+import { clsx } from "clsx"
 
 import Link from "../Link"
 import { ICategoryListLoader } from "./CategoryListLoader"
@@ -50,11 +51,10 @@ const CategoryListContainer: React.FC<ICategoryListContainer> = ({
         </>
       )}
       <ul
-        className={`grid grid-cols-2 md:grid-cols-5 ${
-          isSubcategory
-            ? "grid-rows-4 md:grid-rows-1"
-            : "grid-rows-2 md:grid-rows-1"
-        }  mt-6 gap-4 divide-alpha-200 p-6 pt-0`}
+        className={clsx(
+          "mt-6 grid grid-cols-2 gap-4 divide-alpha-200 p-6 pt-0 md:grid-cols-5 md:grid-rows-1",
+          isSubcategory ? "grid-rows-4" : "grid-rows-2"
+        )}
       >
         {children({ selectedItemId, setSelectedItemId })}
       </ul>

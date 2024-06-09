@@ -34,6 +34,7 @@
     ]
   },
   "include": [
+    "../asset/declaration.d.ts",
     "next-env.d.ts",
     "src/@core/types/*.ts",
     "**/*.ts",

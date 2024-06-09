@@ -138,7 +138,7 @@ const MobileNavigation = ({
   return (
     <>
       {(search || back || action) && (
-        <div className="flex gap-x px-8 py-2">
+        <div className="flex h-16 gap-x px-8 py-2">
           <AnimatePresence>
             {back && (
               <motion.div
@@ -202,7 +202,7 @@ const MobileNavigation = ({
         </div>
       )}
       {options && (
-        <div className="grid w-full grid-cols-4 bg-alpha-white bg-opacity-5">
+        <div className="grid h-14 w-full grid-cols-4 bg-alpha-white bg-opacity-5">
           {mobile_footer_options[`${options.name}`].map(
             ({ icon, button, id, title }) => {
               const href = button.value as string

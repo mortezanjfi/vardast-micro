@@ -15,7 +15,10 @@ import {
   GetIsFavoriteQuery,
   GetSellerQuery
 } from "@vardast/graphql/generated"
-import { setBreadCrumb, setPageHeader } from "@vardast/provider/LayoutProvider"
+import {
+  setBreadCrumb,
+  setPageHeader
+} from "@vardast/provider/LayoutProvider/use-layout"
 import {
   Segments,
   SegmentsContent,
@@ -115,7 +118,7 @@ const BrandOrSellerProfile = ({
   const PageHeader = (
     <div className="w-full md:flex md:gap-6">
       <div className="relative flex flex-col justify-start overflow-hidden md:w-80 md:min-w-80 md:flex-shrink-0 md:justify-center md:rounded-2xl md:border">
-        <div className="flex flex-col gap-y bg-alpha-white px py-5 md:py-9">
+        <div className="flex h-72 min-h-72 flex-col gap-y bg-alpha-white px py-5 md:h-auto md:min-h-full md:py-9">
           <div className="grid h-full grid-cols-9 items-center justify-center gap-y bg-alpha-white px py-5 md:flex md:py-9">
             <div></div>
             <div className="col-span-7 flex flex-col items-center justify-center">

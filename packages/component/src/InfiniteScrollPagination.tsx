@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactElement, useEffect } from "react"
+import { Fragment, ReactElement, useEffect } from "react"
 import { UseInfiniteQueryResult } from "@tanstack/react-query"
 import { useInView } from "react-intersection-observer"
 
@@ -40,18 +40,23 @@ const InfiniteScrollPagination = <T extends unknown>({
     <>
       {infiniteQuery.data?.pages && infiniteQuery.data?.pages.length > 0 ? (
         <>
-          {infiniteQuery?.data?.pages.map((page: T) =>
-            children(page, infiniteQuery.hasNextPage ? ref : undefined, props)
-          )}
+          {infiniteQuery.data.pages.map((page, pageIndex) => (
+            <Fragment key={`infinite-scroll-page-${pageIndex}`}>
+              {children(page, infiniteQuery.hasNextPage ? ref : undefined, {
+                ...props,
+                key: `infinite-scroll-child-${pageIndex}` // Ensure the key is unique for each child
+              })}
+            </Fragment>
+          ))}
           {infiniteQuery.isFetching &&
             infiniteQuery.isFetchingNextPage &&
-            [...Array(3)].map((_, loader) => (
-              <CardLoader key={`infinite-scroll-loader-${loader}`} />
+            [...Array(3)].map((_, loaderIndex) => (
+              <CardLoader key={`infinite-scroll-loader-${loaderIndex}`} />
             ))}
         </>
       ) : infiniteQuery.isFetching && infiniteQuery.isLoading ? (
-        [...Array(fetchingLoaderCount)].map((_, loader) => (
-          <CardLoader key={`infinite-scroll-outer-loader-${loader}`} />
+        [...Array(fetchingLoaderCount)].map((_, loaderIndex) => (
+          <CardLoader key={`infinite-scroll-outer-loader-${loaderIndex}`} />
         ))
       ) : (
         <NoProductFound />

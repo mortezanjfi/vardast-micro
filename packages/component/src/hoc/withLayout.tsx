@@ -26,16 +26,14 @@ export default function withLayout<T>(
         {isMobileView ? (
           <>
             <SearchActionModal isMobileView />
-
+            <div className="app-header-ghost mobile"></div>
             {layout?.mobile?.header && (
               <header id="mobile-header-navbar" className="app-header mobile">
                 <MobileHeader {...layout?.mobile?.header} />
               </header>
             )}
             {layout?.desktop?.sidebar && (
-              <Suspense>
-                <Sidebar {...layout?.desktop?.sidebar} />
-              </Suspense>
+              <Sidebar {...layout?.desktop?.sidebar} />
             )}
             <main
               className={clsx(
@@ -44,20 +42,37 @@ export default function withLayout<T>(
               )}
             >
               <MobileScrollProvider>
-                {layout?.mobile?.main?.breadcrumb && <Breadcrumb />}
+                {layout?.mobile?.main?.breadcrumb && (
+                  <Suspense>
+                    <Breadcrumb />
+                  </Suspense>
+                )}
                 {layout?.mobile?.main?.page_header && <PageBanner />}
                 <Component {...{ ...props, ...layout?.desktop?.main }} />
               </MobileScrollProvider>
             </main>
             {layout?.mobile?.footer && (
-              <footer id="mobile-navigation-bar" className="app-footer mobile">
-                <MobileNavigation {...layout?.mobile?.footer} />
-              </footer>
+              <>
+                <footer
+                  id="mobile-navigation-bar"
+                  className="app-footer mobile"
+                >
+                  <MobileNavigation {...layout?.mobile?.footer} />
+                </footer>
+                {(layout?.mobile?.footer?.search ||
+                  layout?.mobile?.footer?.back ||
+                  layout?.mobile?.footer?.action) && (
+                  <div className={clsx("h-16 w-full bg-transparent")}></div>
+                )}
+                {layout?.mobile?.footer?.options && (
+                  <div className={clsx("h-14 w-full bg-transparent")}></div>
+                )}
+              </>
             )}
           </>
         ) : (
           <>
-            <div className="app-header-ghost"></div>
+            <div className="app-header-ghost desktop"></div>
             {layout?.desktop?.header && (
               <header className="app-header desktop">
                 <DesktopHeader {...layout?.desktop?.header} />
@@ -74,11 +89,7 @@ export default function withLayout<T>(
                   <Breadcrumb />
                 </Suspense>
               )}
-              {layout?.desktop?.main?.page_header && (
-                <Suspense>
-                  <PageBanner />
-                </Suspense>
-              )}
+              {layout?.desktop?.main?.page_header && <PageBanner />}
               <div
                 className={clsx(
                   "app-layout desktop",
@@ -86,9 +97,7 @@ export default function withLayout<T>(
                 )}
               >
                 {layout?.desktop?.sidebar && (
-                  <Suspense>
-                    <Sidebar {...layout?.desktop?.sidebar} />
-                  </Suspense>
+                  <Sidebar {...layout?.desktop?.sidebar} />
                 )}
                 <div
                   className={clsx(

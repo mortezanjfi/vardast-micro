@@ -38,7 +38,7 @@ import {
   Seller,
   SortBrandEnum
 } from "@vardast/graphql/generated"
-import { setSidebar } from "@vardast/provider/LayoutProvider"
+import { setSidebar } from "@vardast/provider/LayoutProvider/use-layout"
 import { getAllCategoriesQueryFn } from "@vardast/query/queryFns/allCategoriesQueryFns"
 import { getBrandQueryFn } from "@vardast/query/queryFns/brandQueryFns"
 import { brandsOfSellerQueryFns } from "@vardast/query/queryFns/brandsOfSellerQueryFns"

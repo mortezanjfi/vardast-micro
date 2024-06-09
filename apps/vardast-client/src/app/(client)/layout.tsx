@@ -5,6 +5,7 @@
 import PublicProvider from "@vardast/provider/PublicProvider"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
+import HomeNotification from "@/app/(client)/(home)/components/HomeNotification"
 import SellerContactModal from "@/app/(client)/product/components/seller-contact-modal"
 
 const PublicLayout = async ({ children }: { children: React.ReactNode }) => {
@@ -13,6 +14,7 @@ const PublicLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <PublicProvider isMobileView={isMobileView}>
       <SellerContactModal />
+      <HomeNotification />
       {children}
     </PublicProvider>
   )

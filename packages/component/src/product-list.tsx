@@ -20,7 +20,7 @@ import {
   ProductSortablesEnum,
   useGetAllFilterableAttributesBasicsQuery
 } from "@vardast/graphql/generated"
-import { setSidebar } from "@vardast/provider/LayoutProvider"
+import { setSidebar } from "@vardast/provider/LayoutProvider/use-layout"
 import { PublicContext } from "@vardast/provider/PublicProvider"
 import graphqlRequestClientWithoutToken from "@vardast/query/queryClients/graphqlRequestClientWithoutToken"
 import { getAllProductsQueryFn } from "@vardast/query/queryFns/allProductsQueryFns"

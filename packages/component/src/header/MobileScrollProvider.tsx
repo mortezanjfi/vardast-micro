@@ -1,6 +1,6 @@
 "use client"
 
-import { PropsWithChildren, useEffect, useRef, useState } from "react"
+import { PropsWithChildren, useEffect, useRef } from "react"
 import { usePathname } from "next/navigation"
 import clsx from "clsx"
 
@@ -9,27 +9,27 @@ const MobileScrollProvider: React.FC<PropsWithChildren> = ({ children }) => {
   // const [realScrollbarHeight, setRealScrollbarHeight] = useState(0)
   // const setShowNavbarScroll = useSetAtom(showNavbar)
   // const [lastScrollTop, setLastScrollTop] = useState(0)
-  const [navigationBarHeight, setNavigationBarHeight] = useState(0)
+  // const [navigationBarHeight, setNavigationBarHeight] = useState(0)
   const ref = useRef<any>(null)
   const pathname = usePathname()
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      // const scrollBarContainer =
-      //   window?.document?.getElementById("scroll-container")
-      // const scrollBarContainerScrollHeight = scrollBarContainer?.scrollHeight
-      // const scrollBarContainerClientHeight = scrollBarContainer?.clientHeight
-      // setRealScrollbarHeight(
-      //   (scrollBarContainerScrollHeight || 0) -
-      //     (scrollBarContainerClientHeight || 0)
-      // )
-      const navigationBar = window?.document?.getElementById(
-        "mobile-navigation-bar"
-      )
-      const navigationBarScrollHeight = navigationBar?.scrollHeight
+    // if (typeof window !== "undefined") {
+    // const scrollBarContainer =
+    //   window?.document?.getElementById("scroll-container")
+    // const scrollBarContainerScrollHeight = scrollBarContainer?.scrollHeight
+    // const scrollBarContainerClientHeight = scrollBarContainer?.clientHeight
+    // setRealScrollbarHeight(
+    //   (scrollBarContainerScrollHeight || 0) -
+    //     (scrollBarContainerClientHeight || 0)
+    // )
+    // const navigationBar = window?.document?.getElementById(
+    //   "mobile-navigation-bar"
+    // )
+    // const navigationBarScrollHeight = navigationBar?.scrollHeight
 
-      setNavigationBarHeight(navigationBarScrollHeight || 0)
-    }
+    // setNavigationBarHeight(navigationBarScrollHeight || 0)
+    // }
     if (ref?.current) {
       ref.current.scrollTo({
         top: 0,
@@ -49,10 +49,10 @@ const MobileScrollProvider: React.FC<PropsWithChildren> = ({ children }) => {
       //   // setLastScrollTop(st <= 0 ? 0 : st)
       // }}
       ref={ref}
-      style={{
-        // paddingBottom: `calc(env(safe-area-inset-bottom) + ${navigationBarHeight}px)`
-        paddingBottom: navigationBarHeight
-      }}
+      // style={{
+      //   // paddingBottom: `calc(env(safe-area-inset-bottom) + ${navigationBarHeight}px)`
+      //   // paddingBottom: navigationBarHeight
+      // }}
       className={clsx(`app-content mobile`)}
     >
       {children}

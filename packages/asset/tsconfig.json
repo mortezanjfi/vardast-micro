@@ -1,23 +1,9 @@
 {
   "extends": "@vardast/tsconfig/base.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-    "target": "ES6",
-    "lib": ["dom", "dom.iterable", "esnext", "ES6"],
-    "experimentalDecorators": true,
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "downlevelIteration": true,
+    "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"]
@@ -29,6 +15,7 @@
     ]
   },
   "include": [
+    "declaration.d.ts",
     "src/**/*",
     "*.ts",
     "**/*.svg",

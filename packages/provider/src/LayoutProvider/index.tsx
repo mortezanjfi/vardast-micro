@@ -38,41 +38,6 @@ export const LayoutContext = createContext<LayoutContextType>({
   pageHeaderAtom
 })
 
-export const setBreadCrumb = (options: BreadcrumbProps) => {
-  const setBreadcrumb = useSetAtom(breadcrumbAtom)
-
-  useEffect(() => {
-    setBreadcrumb(options)
-  }, [setBreadcrumb, options])
-
-  return null
-}
-
-export const setSidebar = (reactNode: JSX.Element) => {
-  const setSidebar = useSetAtom(sidebarAtom)
-
-  useEffect(() => {
-    setSidebar(reactNode)
-  }, [setSidebar, reactNode])
-
-  return null
-}
-
-export const useSetSidebarHamburger = () => {
-  const setSidebarHamburger = useSetAtom(sidebarHamburgerAtom)
-  return setSidebarHamburger
-}
-
-export const setPageHeader = (reactNode: JSX.Element) => {
-  const setPageHeader = useSetAtom(pageHeaderAtom)
-
-  useEffect(() => {
-    setPageHeader(reactNode)
-  }, [setPageHeader, reactNode])
-
-  return null
-}
-
 const LayoutProvider = ({ children }: { children: ReactNode }) => {
   const setBreadcrumb = useSetAtom(breadcrumbAtom)
   const setSidebar = useSetAtom(sidebarAtom)
