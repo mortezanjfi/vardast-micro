@@ -1,10 +1,15 @@
 "use client"
 
-import { forwardRef, Ref, useState } from "react"
+import { Dispatch, forwardRef, Ref, SetStateAction, useState } from "react"
 import Image, { StaticImageData } from "next/image"
 import blankProductImageSrc from "@vardast/asset/product-blank.svg"
 import blankServiceImageSrc from "@vardast/asset/service-blank.svg"
-import { Line, MultiTypeOrder, PriceOfferDto } from "@vardast/graphql/generated"
+import {
+  Line,
+  MultiTypeOrder,
+  OfferLine,
+  PriceOfferDto
+} from "@vardast/graphql/generated"
 import {
   ACTION_BUTTON_TYPE,
   OrderProductTabContentProps
@@ -26,11 +31,29 @@ interface OrderProductCardProps {
   imageSrc?: string | StaticImageData
   actionButtonType?: ACTION_BUTTON_TYPE
   addProductLine?: OrderProductTabContentProps["addProductLine"]
+  setLineToEdit?: Dispatch<
+    SetStateAction<{
+      lineId: number
+      fi_price: string
+    }>
+  >
+  offer?: OfferLine
+  offerId?: string
+  isSeller?: boolean
 }
 
 const OrderProductCard = forwardRef(
   (
-    { line, addProductLine, actionButtonType, imageSrc }: OrderProductCardProps,
+    {
+      offerId,
+      isSeller,
+      offer,
+      setLineToEdit,
+      line,
+      addProductLine,
+      actionButtonType,
+      imageSrc
+    }: OrderProductCardProps,
     ref: Ref<HTMLDivElement> | undefined
   ) => {
     const { t } = useTranslation()
@@ -64,11 +87,23 @@ const OrderProductCard = forwardRef(
       [ACTION_BUTTON_TYPE.ADD_PRODUCT_OFFER]: (
         <Button
           className="py-3"
-          variant={+line?.price?.fi_price > 0 ? "secondary" : "full-secondary"}
+          variant={
+            +line?.price?.fi_price > 0
+              ? isSeller
+                ? "outline-primary"
+                : "secondary"
+              : isSeller
+                ? "primary"
+                : "full-secondary"
+          }
           onClick={(e) => {
             e.stopPropagation()
             e.nativeEvent.preventDefault()
             e.nativeEvent.stopImmediatePropagation()
+            setLineToEdit({
+              fi_price: offer?.fi_price,
+              lineId: offer?.line?.id
+            })
             if (setOpen) setOpen(true)
           }}
         >
@@ -83,6 +118,7 @@ const OrderProductCard = forwardRef(
       <>
         {actionButtonType === ACTION_BUTTON_TYPE.ADD_PRODUCT_OFFER && (
           <AddPriceModal
+            offerId={offerId}
             lineId={line?.id}
             setOpen={setOpen}
             open={open}

@@ -8,6 +8,7 @@ import {
   FindPreOrderByIdQuery,
   PreOrderStates
 } from "@vardast/graphql/generated"
+import { ACTION_BUTTON_TYPE } from "@vardast/type/OrderProductTabs"
 import {
   Dialog,
   DialogContent,
@@ -36,7 +37,7 @@ function OfferDetailModal({
   const { t } = useTranslation()
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog modal={!isMobileView} open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className={clsx(
           "flex flex-col gap-7 md:!w-fit md:!min-w-[50rem] md:max-w-full",
@@ -86,6 +87,8 @@ function OfferDetailModal({
           </div> */}
         </div>
         <OrderProductsList
+          isSeller={true}
+          actionButtonType={ACTION_BUTTON_TYPE.ADD_PRODUCT_OFFER}
           isMobileView={isMobileView}
           hasOperation={
             findPreOrderByIdQuery?.data?.findPreOrderById?.status !==

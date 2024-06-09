@@ -45,6 +45,7 @@ function SellerMobileCart({
         <div className="flex w-full items-center justify-between">
           <span className="text-base font-semibold">{offer.request_name}</span>
           <DropdownMenu
+            modal={false}
             open={dropDownMenuOpen}
             onOpenChange={setDropDownMenuOpen}
           >

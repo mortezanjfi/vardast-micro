@@ -4,6 +4,7 @@ import { useState } from "react"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
 import { FindPreOrderByIdQuery, OfferLine } from "@vardast/graphql/generated"
+import { ACTION_BUTTON_TYPE } from "@vardast/type/OrderProductTabs"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
 
@@ -16,6 +17,8 @@ import OrderProductListContainer, {
 } from "./OrderProductListContainer"
 
 type OrderProductsListProps = {
+  isSeller?: boolean
+  actionButtonType?: ACTION_BUTTON_TYPE
   isMobileView?: boolean
   hasOperation?: boolean
   hasExtraInfo?: boolean
@@ -37,6 +40,8 @@ const TablePriceHead = ({ isVardast }: { isVardast?: boolean }) => {
 }
 
 function OrderProductsList({
+  isSeller,
+  actionButtonType,
   isMobileView,
   hasOperation,
   hasExtraInfo,
@@ -137,6 +142,11 @@ function OrderProductsList({
                   <div className="col-span-3">
                     {" "}
                     <OrderProductCard
+                      offerId={uuid}
+                      isSeller={isSeller}
+                      setLineToEdit={setLineToEdit}
+                      offer={offer as OfferLine}
+                      actionButtonType={actionButtonType}
                       line={{
                         id: offer.line.id,
                         item_name: offer.line.item_name,
