@@ -3,6 +3,8 @@ import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { cva, VariantProps } from "class-variance-authority"
 import clsx from "clsx"
 
+import { Button } from "../../ui/src/button"
+
 const cardVariants = cva("card rounded p-4", {
   variants: {
     template: {
@@ -11,7 +13,23 @@ const cardVariants = cva("card rounded p-4", {
   }
 })
 
+export interface cardButton {
+  text?: string
+  type?: "button" | "submit" | "reset"
+  variant?:
+    | "link"
+    | "primary"
+    | "outline-primary"
+    | "outline-blue"
+    | "full-secondary"
+    | "secondary"
+    | "danger"
+    | "ghost"
+  className?: string
+}
+
 interface CardProps extends VariantProps<typeof cardVariants> {
+  button?: cardButton
   titleClass?: string
   className?: string
   title?: string
@@ -20,6 +38,7 @@ interface CardProps extends VariantProps<typeof cardVariants> {
 }
 
 const Card = ({
+  button,
   titleClass,
   title,
   description,
@@ -34,11 +53,22 @@ const Card = ({
       {...props}
     >
       <div className="flex">
-        {title && (
-          <h2 className={clsx("font-medium text-alpha-800", titleClass)}>
-            {title}
-          </h2>
-        )}
+        <div className="flex w-full flex-row-reverse justify-between">
+          {button && (
+            <Button
+              type={button.type}
+              variant={button.variant}
+              className={clsx("py-2", button.className)}
+            >
+              {button.text}
+            </Button>
+          )}
+          {title && (
+            <h2 className={clsx("font-medium text-alpha-800", titleClass)}>
+              {title}
+            </h2>
+          )}
+        </div>
         {description && <p className="text-sm text-alpha-500">{description}</p>}
       </div>
       {children}
