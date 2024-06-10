@@ -9,7 +9,6 @@ import PageHeader from "@vardast/component/PageHeader"
 import Pagination from "@vardast/component/table/Pagination"
 import {
   OrderOfferStatuses,
-  PaymentMethodEnum,
   PreOrder,
   useCreatePreOrderMutation,
   usePreOrdersQuery
@@ -25,17 +24,6 @@ type OrdersPageProps = { isMobileView?: boolean; title: string }
 
 export const OrderOfferStatusesFa = {
   [OrderOfferStatuses.Closed]: { className: "tag-success", name_fa: "بسته شده" }
-}
-
-export const PaymentMethodEnumFa = {
-  [PaymentMethodEnum.Cash]: {
-    className: "",
-    name_fa: "نقدی"
-  },
-  [PaymentMethodEnum.Credit]: {
-    className: "",
-    name_fa: "غیر نقدی"
-  }
 }
 
 const OrdersPage = ({ isMobileView, title }: OrdersPageProps) => {

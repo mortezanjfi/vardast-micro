@@ -5,14 +5,15 @@ import { useRouter } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
 import CardContainer from "@vardast/component/desktop/CardContainer"
-import OrderCard from "@vardast/component/desktop/OrderCart"
+import OrderCard, {
+  PreOrderStatesFa
+} from "@vardast/component/desktop/OrderCart"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
 import NotFoundMessage from "@vardast/component/NotFound"
 import Pagination from "@vardast/component/Pagination"
 import {
-  PaymentMethodEnum,
   PreOrder,
   PreOrdersQuery,
   PreOrderStates
@@ -30,33 +31,6 @@ type Props = {
   preOrdersQuery: UseQueryResult<PreOrdersQuery, unknown>
   currentPage?: number
   setCurrentPage?: Dispatch<SetStateAction<number>>
-}
-export const PreOrderStatesFa = {
-  [PreOrderStates.Created]: {
-    className: "tag-gray",
-    name_fa: "ایجاد شده"
-  },
-  [PreOrderStates.PendingInfo]: {
-    className: "tag-info",
-    name_fa: "در انتظار تایید اطلاعات"
-  },
-  [PreOrderStates.PendingLine]: {
-    className: "tag-warning",
-    name_fa: "در انتظار افزودن کالا"
-  },
-  [PreOrderStates.Verified]: { className: "tag-primary", name_fa: "تایید شده" },
-  [PreOrderStates.Closed]: { className: "tag-success", name_fa: "بسته شده" }
-}
-
-export const PaymentMethodEnumFa = {
-  [PaymentMethodEnum.Cash]: {
-    className: "",
-    name_fa: "نقدی"
-  },
-  [PaymentMethodEnum.Credit]: {
-    className: "",
-    name_fa: "غیر نقدی"
-  }
 }
 export const renderedListStatus = {
   [ApiCallStatusEnum.LOADING]: <Loading />,
@@ -81,29 +55,25 @@ export const getContentByApiStatus = (
   return ApiCallStatusEnum.DEFAULT
 }
 
-export const statuses = [
-  { filterValue: undefined, name_fa: "همه" },
-  {
-    filterValue: PreOrderStates.Created,
-    name_fa: PreOrderStatesFa[PreOrderStates.Created]?.name_fa
-  },
-  {
-    filterValue: PreOrderStates.PendingInfo,
-    name_fa: PreOrderStatesFa[PreOrderStates.PendingInfo]?.name_fa
-  },
-  {
-    filterValue: PreOrderStates.PendingLine,
-    name_fa: PreOrderStatesFa[PreOrderStates.PendingLine]?.name_fa
-  },
-  {
-    filterValue: PreOrderStates.Verified,
-    name_fa: PreOrderStatesFa[PreOrderStates.Verified]?.name_fa
-  },
-  {
-    filterValue: PreOrderStates.Verified,
-    name_fa: PreOrderStatesFa[PreOrderStates.Closed]?.name_fa
-  }
-]
+// export const statuses = [
+//   { filterValue: undefined, name_fa: "همه" },
+//   {
+//     filterValue: PreOrderStates.PendingInfo,
+//     name_fa: PreOrderStatesFa[PreOrderStates.PendingInfo]?.name_fa
+//   },
+//   {
+//     filterValue: PreOrderStates.PendingLine,
+//     name_fa: PreOrderStatesFa[PreOrderStates.PendingLine]?.name_fa
+//   },
+//   {
+//     filterValue: PreOrderStates.Verified,
+//     name_fa: PreOrderStatesFa[PreOrderStates.Verified]?.name_fa
+//   },
+//   {
+//     filterValue: PreOrderStates.Verified,
+//     name_fa: PreOrderStatesFa[PreOrderStates.Closed]?.name_fa
+//   }
+// ]
 
 function SellerOrdersPage({
   // filter,

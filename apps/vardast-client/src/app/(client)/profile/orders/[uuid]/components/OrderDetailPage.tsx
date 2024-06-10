@@ -163,13 +163,13 @@ const OrderDetailPage = ({
     if (offerId) {
       updateOrderOfferMutation.mutate({
         updateOrderOfferInput: {
-          status: OrderOfferStatuses.Confirmed,
+          status: OrderOfferStatuses.Closed,
           id: +offerId
         }
       })
     } else {
       updatePreOrderMutation.mutate({
-        updatePreOrderInput: { status: PreOrderStates.Verified, id: +uuid }
+        updatePreOrderInput: { status: PreOrderStates.Completed, id: +uuid }
       })
     }
   }, [offerId])

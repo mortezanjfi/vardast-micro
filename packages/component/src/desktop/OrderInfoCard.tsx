@@ -2,47 +2,17 @@
 
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
-import {
-  FindPreOrderByIdQuery,
-  PaymentMethodEnum,
-  PreOrderStates
-} from "@vardast/graphql/generated"
+import { FindPreOrderByIdQuery } from "@vardast/graphql/generated"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
 
 import Card from "../Card"
 import { DetailsWithTitle } from "./DetailsWithTitle"
+import { PaymentMethodEnumFa, PreOrderStatesFa } from "./OrderCart"
 
 type OrderInfoCardProps = {
   findPreOrderByIdQuery: UseQueryResult<FindPreOrderByIdQuery, unknown>
   uuid?: string
-}
-
-export const PaymentMethodEnumFa = {
-  [PaymentMethodEnum.Cash]: {
-    className: "",
-    name_fa: "نقدی"
-  },
-  [PaymentMethodEnum.Credit]: {
-    className: "",
-    name_fa: "غیر نقدی"
-  }
-}
-
-export const PreOrderStatesFa = {
-  [PreOrderStates.Created]: {
-    className: "tag-secondary",
-    name_fa: "ایجاد شده"
-  },
-  [PreOrderStates.PendingInfo]: {
-    className: "tag-warning",
-    name_fa: "در انتظار تایید اطلاعات"
-  },
-  [PreOrderStates.PendingLine]: {
-    className: "tag-warning",
-    name_fa: "در انتظار افزودن کالا"
-  },
-  [PreOrderStates.Verified]: { className: "tag-success", name_fa: "تایید شده" }
 }
 
 const OrderInfoCard = ({ findPreOrderByIdQuery, uuid }: OrderInfoCardProps) => {

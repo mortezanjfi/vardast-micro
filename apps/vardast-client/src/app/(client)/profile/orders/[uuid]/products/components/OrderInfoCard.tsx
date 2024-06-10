@@ -3,10 +3,10 @@
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import Card from "@vardast/component/Card"
 import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
+import { PaymentMethodEnumFa } from "@vardast/component/desktop/OrderCart"
 import useTranslation from "next-translate/useTranslation"
 
 import { IOrderProductsInnerLayout } from "@/app/(client)/profile/orders/[uuid]/products/components/OrderInnerLayout"
-import { PaymentMethodEnumFa } from "@/app/(client)/profile/orders/components/OrdersPage"
 
 const OrderInfoCard = ({
   findPreOrderByIdQuery,

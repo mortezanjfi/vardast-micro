@@ -162,7 +162,7 @@ const OrderOffers = ({ isMobileView, uuid }: OrderOffersProps) => {
                 session?.profile?.roles.some((role) => role?.name === "user")
               ) &&
                 findPreOrderByIdQuery.data?.findPreOrderById.status ===
-                  PreOrderStates.Verified && (
+                  PreOrderStates.Completed && (
                   <div className="flex w-full flex-row-reverse gap-5 border-t py-5">
                     <Button
                       onClick={() => onFinishOrder(offerOrder.id)}
@@ -181,7 +181,7 @@ const OrderOffers = ({ isMobileView, uuid }: OrderOffersProps) => {
           بازگشت به سفارشات
         </Link>
         {findPreOrderByIdQuery.data?.findPreOrderById.status ===
-          PreOrderStates.Verified && (
+          PreOrderStates.Completed && (
           <Button
             disabled={
               createOrderOfferMutation.isLoading ||

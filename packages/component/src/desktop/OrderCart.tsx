@@ -1,7 +1,13 @@
 "use client"
 
+import { Dispatch, SetStateAction, useState } from "react"
+import { useRouter } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import { PreOrder, PreOrderStates } from "@vardast/graphql/generated"
+import {
+  PaymentMethodEnum,
+  PreOrder,
+  PreOrderStates
+} from "@vardast/graphql/generated"
 import { Button } from "@vardast/ui/button"
 import {
   DropdownMenu,
@@ -14,8 +20,6 @@ import convertToPersianDate from "@vardast/util/convertToPersianDate"
 import { clsx } from "clsx"
 import { LucideEdit, LucideMoreVertical, LucideTrash } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
-import { useRouter } from "next/navigation"
-import { Dispatch, SetStateAction, useState } from "react"
 
 import Link from "../Link"
 import { DetailsWithTitle } from "./DetailsWithTitle"
@@ -29,20 +33,45 @@ type OrderCardProps = {
 }
 
 export const PreOrderStatesFa = {
-  [PreOrderStates.Created]: {
-    className: "tag-gray",
-    name_fa: "ایجاد شده"
+  [PreOrderStates.PendingAdmin]: {
+    className: "tag-warning",
+    name_fa: "جاری"
   },
   [PreOrderStates.PendingInfo]: {
-    className: "tag-info",
-    name_fa: "در انتظار تایید اطلاعات"
-  },
-  [PreOrderStates.PendingLine]: {
     className: "tag-warning",
-    name_fa: "در انتظار افزودن کالا"
+    name_fa: "جاری"
   },
-  [PreOrderStates.Verified]: { className: "tag-primary", name_fa: "تایید شده" },
-  [PreOrderStates.Closed]: { className: "tag-success", name_fa: "بسته شده" }
+  [PreOrderStates.PendingOffer]: {
+    className: "tag-warning",
+    name_fa: "جاری"
+  },
+  [PreOrderStates.PendingProduct]: {
+    className: "tag-warning",
+    name_fa: "جاری"
+  },
+  [PreOrderStates.VerifyFile]: {
+    className: "tag-warning",
+    name_fa: "جاری"
+  },
+  [PreOrderStates.Closed]: {
+    className: "tag-success",
+    name_fa: "خریداری شده"
+  },
+  [PreOrderStates.Completed]: {
+    className: "tag-danger",
+    name_fa: "خریداری نشده"
+  }
+}
+
+export const PaymentMethodEnumFa = {
+  [PaymentMethodEnum.Cash]: {
+    className: "",
+    name_fa: "نقدی"
+  },
+  [PaymentMethodEnum.Credit]: {
+    className: "",
+    name_fa: "غیر نقدی"
+  }
 }
 
 const OrderCard = ({
