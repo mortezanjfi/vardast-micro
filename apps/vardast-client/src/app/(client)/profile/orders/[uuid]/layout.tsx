@@ -1,7 +1,6 @@
 import { PropsWithChildren } from "react"
+import OfferItemStepper from "@vardast/component/order/OfferItemStepper"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
-
-import OfferItemStepper from "@/app/(client)/profile/orders/[uuid]/components/OfferItemStepper"
 
 const Layout: React.FC<PropsWithChildren> = async ({ children }) => {
   const isMobileView = await CheckIsMobileView()

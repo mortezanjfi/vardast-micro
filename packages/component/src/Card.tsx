@@ -53,7 +53,12 @@ const Card = ({
       {...props}
     >
       <div className="flex">
-        <div className="flex w-full flex-row-reverse justify-between">
+        <div className="flex w-full justify-between">
+          {title && (
+            <h2 className={clsx("font-medium text-alpha-800", titleClass)}>
+              {title}
+            </h2>
+          )}
           {button && (
             <Button
               type={button.type}
@@ -62,11 +67,6 @@ const Card = ({
             >
               {button.text}
             </Button>
-          )}
-          {title && (
-            <h2 className={clsx("font-medium text-alpha-800", titleClass)}>
-              {title}
-            </h2>
           )}
         </div>
         {description && <p className="text-sm text-alpha-500">{description}</p>}
