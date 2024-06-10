@@ -55,26 +55,6 @@ export const getContentByApiStatus = (
   return ApiCallStatusEnum.DEFAULT
 }
 
-// export const statuses = [
-//   { filterValue: undefined, name_fa: "همه" },
-//   {
-//     filterValue: PreOrderStates.PendingInfo,
-//     name_fa: PreOrderStatesFa[PreOrderStates.PendingInfo]?.name_fa
-//   },
-//   {
-//     filterValue: PreOrderStates.PendingLine,
-//     name_fa: PreOrderStatesFa[PreOrderStates.PendingLine]?.name_fa
-//   },
-//   {
-//     filterValue: PreOrderStates.Verified,
-//     name_fa: PreOrderStatesFa[PreOrderStates.Verified]?.name_fa
-//   },
-//   {
-//     filterValue: PreOrderStates.Verified,
-//     name_fa: PreOrderStatesFa[PreOrderStates.Closed]?.name_fa
-//   }
-// ]
-
 function SellerOrdersPage({
   // filter,
   // setFilter,

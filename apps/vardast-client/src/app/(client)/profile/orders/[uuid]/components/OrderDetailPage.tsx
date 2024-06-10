@@ -163,7 +163,7 @@ const OrderDetailPage = ({
     if (offerId) {
       updateOrderOfferMutation.mutate({
         updateOrderOfferInput: {
-          status: OrderOfferStatuses.Closed,
+          status: OrderOfferStatuses.PendingPrice,
           id: +offerId
         }
       })

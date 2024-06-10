@@ -118,7 +118,7 @@ const OrderOffers = ({ isMobileView, uuid }: OrderOffersProps) => {
     updateOrderOfferMutation.mutate({
       updateOrderOfferInput: {
         id,
-        status: OrderOfferStatuses.Closed
+        status: OrderOfferStatuses.PendingPrice
       }
     })
   }
