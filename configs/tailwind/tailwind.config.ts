@@ -94,9 +94,8 @@ const tailwind = {
         header: "92px",
         half: "0.5px"
       },
-      maxWidth: {
-        screen: "100vw"
-      },
+      maxWidth: { ...screens, screen: "100vw" },
+      minWidth: screens,
       borderRadius: {
         DEFAULT: "0.5rem"
       },

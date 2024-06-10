@@ -94,6 +94,8 @@ export interface ILayoutDesktop {
   background?: ILayoutBackground
   header?: ILayoutDesktopHeader
   sidebar?: ILayoutDesktopSidebar
+  breadcrumb?: boolean
+
   footer?: ILayoutDesktopFooter
   main?: ILayoutDesktopMain
 }

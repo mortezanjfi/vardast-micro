@@ -7,7 +7,7 @@ import { MapPinIcon } from "@heroicons/react/24/outline"
 import { CheckBadgeIcon } from "@heroicons/react/24/solid"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
-import blankImage from "@vardast/asset/images/blank.png"
+import brandSellerBlank from "@vardast/asset/brand-seller-blank.svg"
 import sellerUserImage from "@vardast/asset/images/seller-user.png"
 import {
   EntityTypeEnum,
@@ -169,12 +169,12 @@ const BrandOrSellerProfile = ({
         </div>
       </div>
       {!isMobileView && (
-        <div className="relative hidden aspect-auto w-full overflow-hidden rounded-2xl md:col-span-9 md:block">
+        <div className="relative hidden aspect-auto w-full overflow-hidden rounded-2xl border md:col-span-9 md:block">
           <Image
             src={
               (data as BrandQuery).bannerDesktop?.presignedUrl.url
                 ? `${(data as BrandQuery).bannerDesktop?.presignedUrl.url}`
-                : blankImage
+                : brandSellerBlank
             }
             className="h-full w-full object-cover"
             alt="banner"

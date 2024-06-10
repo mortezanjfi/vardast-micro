@@ -307,9 +307,9 @@ const _seller_or_brand_with_header: ILayoutProps = {
     sidebar: {},
     main: {
       container: true,
-      breadcrumb: true,
       page_header: true
     },
+    breadcrumb: true,
     footer: {}
   },
   mobile: {

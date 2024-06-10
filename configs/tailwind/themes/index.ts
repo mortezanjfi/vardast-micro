@@ -78,6 +78,7 @@ export const myColors =
     : userColors
 
 export const breakpoints = {
+  xsm: 420,
   sm: 640,
   md: 768,
   lg: 1024,

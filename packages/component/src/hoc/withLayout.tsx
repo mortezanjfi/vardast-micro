@@ -84,7 +84,7 @@ export default function withLayout<T>(
                 layout?.desktop?.main?.container && "container"
               )}
             >
-              {layout?.desktop?.main?.breadcrumb && (
+              {layout?.desktop?.breadcrumb && (
                 <Suspense>
                   <Breadcrumb />
                 </Suspense>
@@ -93,6 +93,9 @@ export default function withLayout<T>(
               <div
                 className={clsx(
                   "app-layout desktop",
+                  !layout?.desktop?.breadcrumb &&
+                    layout?.desktop?.sidebar &&
+                    "pt-6",
                   layout?.desktop?.main?.page_header && "pt-6"
                 )}
               >
@@ -105,6 +108,11 @@ export default function withLayout<T>(
                     layout?.desktop?.sidebar && "pr-6"
                   )}
                 >
+                  {layout?.desktop?.main?.breadcrumb && (
+                    <Suspense>
+                      <Breadcrumb />
+                    </Suspense>
+                  )}
                   <Component {...{ ...props, ...layout?.desktop?.main }} />
                 </div>
               </div>

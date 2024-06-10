@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa, digitsFaToEn } from "@persian-tools/persian-tools"
+import Link from "@vardast/component/Link"
 import {
   usePasswordResetMutation,
   useValidateCellphoneMutation,
@@ -30,12 +31,12 @@ import {
 } from "@vardast/util/zodValidationSchemas"
 import clsx from "clsx"
 import { ClientError } from "graphql-request"
-import { LucideAlertOctagon } from "lucide-react"
+import { LucideAlertOctagon, LucideX } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-type Props = {}
+type Props = { isMobileView?: boolean }
 
 const ResetForm = (_: Props) => {
   const { t } = useTranslation()
@@ -200,137 +201,194 @@ const ResetForm = (_: Props) => {
   return (
     <>
       {errors && (
-        <Alert variant="danger">
-          <LucideAlertOctagon />
-          <AlertTitle>خطا</AlertTitle>
-          <AlertDescription>
-            {(
-              errors?.response?.errors?.at(0)?.extensions
-                ?.displayErrors as string[]
-            )?.map((error) => <p key={error}>{error}</p>)}
-          </AlertDescription>
-        </Alert>
+        <div className="p">
+          <Alert variant="danger">
+            <LucideAlertOctagon />
+            <AlertTitle>خطا</AlertTitle>
+            <AlertDescription>
+              {(
+                errors?.response?.errors?.at(0)?.extensions
+                  ?.displayErrors as string[]
+              )?.map((error) => <p key={error}>{error}</p>)}
+            </AlertDescription>
+          </Alert>
+        </div>
       )}
 
       {!errors && message && (
-        <Alert variant="success">
-          <AlertDescription>{digitsEnToFa(message)}</AlertDescription>
-        </Alert>
+        <div className="p">
+          <Alert variant="success">
+            <AlertDescription>{digitsEnToFa(message)}</AlertDescription>
+          </Alert>
+        </div>
       )}
 
-      <div className="flex h-full flex-col justify-start gap-y-6 px-3 pt-[22vw] md:items-center md:pt">
-        <h3 className="font-semibold">تغییر رمز عبور</h3>
-        <div className="flex min-h-[calc(100vw/4)] flex-col justify-center md:mx-auto md:w-1/4">
-          {formState === 1 && (
-            <>
-              <Form {...formStepOne}>
-                <form
-                  id="login-cellphone"
-                  onSubmit={formStepOne.handleSubmit(onSubmitStepOne)}
-                  noValidate
-                  className="flex flex-1 flex-col gap-8 pb-6"
-                >
-                  <FormField
-                    control={formStepOne.control}
-                    name="cellphone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("common:cellphone")}</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="tel"
-                            inputMode="numeric"
-                            placeholder={digitsEnToFa("09*********")}
-                            {...field}
-                            onChange={(e) =>
-                              e.target.value.length <= 11 &&
-                              field.onChange(digitsEnToFa(e.target.value))
-                            }
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  ></FormField>
-                </form>
-              </Form>
-              <Button
-                form="login-cellphone"
-                type="submit"
-                block
-                disabled={
-                  validateCellphoneMutation.isLoading ||
-                  formStepOne.formState.isSubmitting
-                }
-                loading={
-                  validateCellphoneMutation.isLoading ||
-                  formStepOne.formState.isSubmitting
-                }
-              >
-                دریافت رمز یکبار مصرف
-              </Button>
-            </>
-          )}
+      {formState === 2 ? (
+        <>
+          <h3 className="font-semibold">لطفا کد تایید را وارد کنید.</h3>
+          <p className="py text-alpha-800">
+            کد تایید برای شماره {digitsEnToFa(formStepOne.watch("cellphone"))}
+            پیامک شد.
+          </p>
+        </>
+      ) : (
+        <>
+          <div className="flex w-full items-center justify-between">
+            <h3 className="font-semibold">تغییر رمز عبور</h3>
+            <Link className="btn btn-ghost btn-icon-only" href="/auth/signin">
+              <LucideX className="icon h-6 w-6 text-alpha-black" />
+            </Link>
+          </div>
+          <div className="text-md flex flex-col gap-y-2 py">
+            <p className="text-alpha-800">
+              لطفا شماره موبایل خود را وارد کنید.
+            </p>
+          </div>
+        </>
+      )}
+      <div className="flex w-full flex-col gap-y">
+        {formState === 1 && (
+          <Form {...formStepOne}>
+            <form
+              id="login-cellphone"
+              onSubmit={formStepOne.handleSubmit(onSubmitStepOne)}
+              noValidate
+              className="flex flex-1 flex-col gap-8"
+            >
+              <FormField
+                control={formStepOne.control}
+                name="cellphone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        type="tel"
+                        inputMode="numeric"
+                        placeholder={digitsEnToFa("09*********")}
+                        {...field}
+                        onChange={(e) =>
+                          e.target.value.length <= 11 &&
+                          field.onChange(digitsEnToFa(e.target.value))
+                        }
+                      />
+                    </FormControl>
+                    <Link
+                      href="/auth/signin"
+                      className="text-left text-sm underline"
+                    >
+                      رمز عبور دارم
+                    </Link>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              ></FormField>
+            </form>
+          </Form>
+        )}
+        {formState === 2 && (
+          <Form {...formStepTwo}>
+            <form
+              id="verify-otp-form"
+              onSubmit={formStepTwo.handleSubmit(onSubmitStepTwo)}
+              noValidate
+              className="flex flex-1 flex-col gap-8"
+            >
+              <FormField
+                control={formStepTwo.control}
+                name="otp"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("common:otp")}</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="tel"
+                        inputMode="numeric"
+                        className="placeholder:text-right"
+                        placeholder={t("common:otp")}
+                        {...field}
+                        onChange={(e) =>
+                          e.target.value.length <= 5 &&
+                          field.onChange(digitsEnToFa(e.target.value))
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                    <div className="flex items-center justify-between">
+                      <Button
+                        onClick={() => {
+                          setFormState(1)
+                          formStepTwo.reset()
+                        }}
+                        size={"xsmall"}
+                        type="button"
+                        variant="ghost"
+                      >
+                        ویرایش شماره همراه
+                      </Button>
+                      <p
+                        className={clsx("text-left", "text-sm", "text-succuss")}
+                      >
+                        {secondsLeft && secondsLeft > 0
+                          ? digitsEnToFa(secondsLeft)
+                          : digitsEnToFa(0)}{" "}
+                        ثانیه
+                      </p>
+                    </div>
+                  </FormItem>
+                )}
+              ></FormField>
+            </form>
+          </Form>
+        )}
 
+        {formState === 3 && (
+          <Form {...formStepThree}>
+            <form
+              id="change-password-form"
+              onSubmit={formStepThree.handleSubmit(onSubmitStepThree)}
+              noValidate
+              className="flex flex-1 flex-col gap-8 pb-6"
+            >
+              <FormField
+                control={formStepThree.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("common:new_password")}</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder={t("common:new_password")}
+                        type="password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              ></FormField>
+            </form>
+          </Form>
+        )}
+        <div className="flex w-full flex-col gap-y">
+          {formState === 1 && (
+            <Button
+              form="login-cellphone"
+              type="submit"
+              block
+              disabled={
+                validateCellphoneMutation.isLoading ||
+                formStepOne.formState.isSubmitting
+              }
+              loading={
+                validateCellphoneMutation.isLoading ||
+                formStepOne.formState.isSubmitting
+              }
+            >
+              دریافت رمز یکبار مصرف
+            </Button>
+          )}
           {formState === 2 && (
             <>
-              <Form {...formStepTwo}>
-                <form
-                  id="verify-otp-form"
-                  onSubmit={formStepTwo.handleSubmit(onSubmitStepTwo)}
-                  noValidate
-                  className="flex flex-1 flex-col gap-8 pb-6"
-                >
-                  <FormField
-                    control={formStepTwo.control}
-                    name="otp"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("common:otp")}</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="tel"
-                            inputMode="numeric"
-                            className="placeholder:text-right"
-                            placeholder={t("common:otp")}
-                            {...field}
-                            onChange={(e) =>
-                              e.target.value.length <= 5 &&
-                              field.onChange(digitsEnToFa(e.target.value))
-                            }
-                          />
-                        </FormControl>
-                        <FormMessage />
-                        <div className="flex items-center justify-between">
-                          <Button
-                            onClick={() => {
-                              setFormState(1)
-                              formStepTwo.reset()
-                            }}
-                            size={"xsmall"}
-                            type="button"
-                            variant="ghost"
-                          >
-                            ویرایش شماره همراه
-                          </Button>
-                          <p
-                            className={clsx(
-                              "text-left",
-                              "text-sm",
-                              "text-succuss"
-                            )}
-                          >
-                            {secondsLeft && secondsLeft > 0
-                              ? digitsEnToFa(secondsLeft)
-                              : digitsEnToFa(0)}{" "}
-                            ثانیه
-                          </p>
-                        </div>
-                      </FormItem>
-                    )}
-                  ></FormField>
-                </form>
-              </Form>
               <Button
                 onClick={() => {
                   onSubmitStepOne({
@@ -365,51 +423,22 @@ const ResetForm = (_: Props) => {
               </Button>
             </>
           )}
-
           {formState === 3 && (
-            <>
-              <Form {...formStepThree}>
-                <form
-                  id="change-password-form"
-                  onSubmit={formStepThree.handleSubmit(onSubmitStepThree)}
-                  noValidate
-                  className="flex flex-1 flex-col gap-8 pb-6"
-                >
-                  <FormField
-                    control={formStepThree.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("common:new_password")}</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder={t("common:new_password")}
-                            type="password"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  ></FormField>
-                </form>
-              </Form>
-              <Button
-                form="change-password-form"
-                type="submit"
-                block
-                disabled={
-                  passwordResetMutation.isLoading ||
-                  formStepThree.formState.isSubmitting
-                }
-                loading={
-                  passwordResetMutation.isLoading ||
-                  formStepThree.formState.isSubmitting
-                }
-              >
-                تغییر کلمه عبور
-              </Button>
-            </>
+            <Button
+              form="change-password-form"
+              type="submit"
+              block
+              disabled={
+                passwordResetMutation.isLoading ||
+                formStepThree.formState.isSubmitting
+              }
+              loading={
+                passwordResetMutation.isLoading ||
+                formStepThree.formState.isSubmitting
+              }
+            >
+              تغییر کلمه عبور
+            </Button>
           )}
         </div>
       </div>

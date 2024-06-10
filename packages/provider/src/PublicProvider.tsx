@@ -72,12 +72,25 @@ const PublicProvider = ({ isMobileView, children }: PublicProviderProps) => {
   const [appVersionInformation, setAppVersionInformation] = useAtom(appVersion)
   const [orientation, setOrientation] = useState("")
 
+  const clearCookies = () => {
+    const cookies = document.cookie.split(";")
+    for (const cookie of cookies) {
+      const eqPos = cookie.indexOf("=")
+      const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/"
+    }
+  }
+
+  const clearStorage = () => {
+    sessionStorage.clear()
+  }
+
   useQuery(["check-version"], {
     queryFn: async () => {
       const response = await axiosApis.getVersion()
       const localStorageVersion = localStorage.getItem("version")
       if (localStorageVersion) {
-        if (localStorageVersion == response.data) {
+        if (localStorageVersion === response.data) {
           setAppVersionInformation({
             version: response.data,
             shouldReload: false
@@ -89,6 +102,8 @@ const PublicProvider = ({ isMobileView, children }: PublicProviderProps) => {
           shouldReload: true
         })
         localStorage.setItem("version", response.data)
+        clearCookies()
+        clearStorage()
         location.reload()
         return response
       }
@@ -98,22 +113,17 @@ const PublicProvider = ({ isMobileView, children }: PublicProviderProps) => {
       })
       localStorage.setItem("version", response.data)
     },
-    enabled: !appVersionInformation
+    enabled: !appVersionInformation.version
   })
 
   useEffect(() => {
-    // Function to update the orientation state
     function updateOrientation() {
       if (typeof window !== "undefined" && window.screen?.orientation?.type) {
         setOrientation(window.screen?.orientation?.type)
       }
-      // window.location.reload()
     }
-    // Initial update of the orientation state
     updateOrientation()
-    // Add an event listener for orientation change
     window.addEventListener("orientationchange", updateOrientation)
-    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener("orientationchange", updateOrientation)
     }
