@@ -328,5 +328,9 @@
   "add-order-product": "افزودن کالا به سفارش",
   "order-detail": "جزییات سفارش",
   "add-price": "پیشنهاد قیمت",
-  "banner": "بنر"
+  "banner": "بنر",
+  "entity_uuid": "شناسه {{entity}}",
+  "last-order-date": "تاریخ آخرین سفارش",
+  "project-manager": "مدیر پروژه",
+  "last-updated-at": "آخرین به روز رسانی"
 }

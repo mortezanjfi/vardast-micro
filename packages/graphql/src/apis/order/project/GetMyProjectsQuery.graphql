@@ -55,6 +55,8 @@ query MyProjects {
         updatedAt
         fullName
       }
+      type
     }
+    createTime
   }
 }

@@ -16,14 +16,12 @@ import { DetailsWithTitle } from "../desktop/DetailsWithTitle"
 import Link from "../Link"
 
 type ProjectCardProps = {
-  isAdmin: boolean
   project: Project
   setProjectToDelete: Dispatch<SetStateAction<{} | undefined>>
   setDeleteModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const ProjectCard = ({
-  isAdmin,
   project
   // setProjectToDelete,
   // setDeleteModalOpen
@@ -47,13 +45,7 @@ const ProjectCard = ({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <Link
-                href={
-                  isAdmin
-                    ? `/projects/${project.id}`
-                    : `/profile/projects/${project.id}`
-                }
-              >
+              <Link href={`/profile/projects/${project.id}`}>
                 <DropdownMenuItem>
                   <LucideEdit className="dropdown-menu-item-icon" />
                   <span>{t("common:edit")}</span>
