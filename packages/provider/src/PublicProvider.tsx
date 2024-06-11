@@ -10,6 +10,7 @@ import {
   GetSellerQuery
 } from "@vardast/graphql/generated"
 import axiosApis from "@vardast/query/queryClients/axiosApis"
+import { clearCookies, clearStorage } from "@vardast/util/session"
 import { atom, PrimitiveAtom, useAtom } from "jotai"
 
 export type VersionType = {
@@ -71,19 +72,6 @@ type PublicProviderProps = {
 const PublicProvider = ({ isMobileView, children }: PublicProviderProps) => {
   const [appVersionInformation, setAppVersionInformation] = useAtom(appVersion)
   const [orientation, setOrientation] = useState("")
-
-  const clearCookies = () => {
-    const cookies = document.cookie.split(";")
-    for (const cookie of cookies) {
-      const eqPos = cookie.indexOf("=")
-      const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie
-      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/"
-    }
-  }
-
-  const clearStorage = () => {
-    sessionStorage.clear()
-  }
 
   useQuery(["check-version"], {
     queryFn: async () => {
