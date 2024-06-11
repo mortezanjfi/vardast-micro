@@ -47,7 +47,10 @@ import { TypeOf, z } from "zod"
 import Link from "../../Link"
 import PageTitle from "../../project/PageTitle"
 
-type OrderInfoFormProps = { isMobileView: boolean; uuid: string }
+type OrderInfoFormProps = {
+  isMobileView: boolean
+  uuid: string
+}
 export type CreateOrderInfoType = TypeOf<typeof CreateOrderInfoSchema>
 
 const CreateOrderInfoSchema = z.object({
@@ -112,6 +115,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
         queryClient.invalidateQueries({
           queryKey: ["FindPreOrderById"]
         })
+
         router.push(`/profile/orders/${uuid}/products`)
       }
     }
@@ -502,7 +506,10 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
             />
           </div>
           <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] grid w-full !grid-cols-2 gap pt-4 md:relative md:bottom-0 md:flex md:justify-end">
-            <Link className="btn btn-md btn-secondary" href="/profile/orders/">
+            <Link
+              className="btn btn-md btn-secondary"
+              href={"/profile/orders/"}
+            >
               بازگشت به سفارشات
             </Link>
             <Button

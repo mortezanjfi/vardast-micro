@@ -1,5 +1,7 @@
 "use client"
 
+import { Dispatch, SetStateAction, useState } from "react"
+import { useRouter } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { PreOrder, PreOrderStates } from "@vardast/graphql/generated"
 import { Button } from "@vardast/ui/button"
@@ -14,8 +16,6 @@ import convertToPersianDate from "@vardast/util/convertToPersianDate"
 import { clsx } from "clsx"
 import { LucideEdit, LucideMoreVertical, LucideTrash } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
-import { useRouter } from "next/navigation"
-import { Dispatch, SetStateAction, useState } from "react"
 
 import Link from "../Link"
 import { DetailsWithTitle } from "./DetailsWithTitle"
@@ -62,7 +62,7 @@ const OrderCard = ({
         isSellerPanel &&
           router.push(
             goToOffers
-              ? `/my-orders/${preOrder?.id}/offers`
+              ? `/my-orders/${preOrder?.id}`
               : `/orders/${preOrder?.id}`
           )
       }}
@@ -89,18 +89,14 @@ const OrderCard = ({
           </div>
 
           {!isSellerPanel && (
-            <Button
-              variant="secondary"
-              className="tag"
-              onClick={() => {
-                router.push(`/profile/orders/${preOrder?.id}/offers`)
-              }}
-            >
-              <span>{t("common:price-offer")}</span>
-              <span className="flex h-[19px] w-[19px] flex-col items-center justify-center rounded-full  bg-error-500 text-alpha-white">
-                {digitsEnToFa(preOrder?.offersNum)}
-              </span>
-            </Button>
+            <Link href={`/profile/orders/${preOrder?.id}/offers`}>
+              <Button variant="secondary" className="tag">
+                <span>{t("common:price-offer")}</span>
+                <span className="flex h-[19px] w-[19px] flex-col items-center justify-center rounded-full  bg-error-500 text-alpha-white">
+                  {digitsEnToFa(preOrder?.offersNum)}
+                </span>
+              </Button>
+            </Link>
           )}
         </div>
         {!isSellerPanel && (

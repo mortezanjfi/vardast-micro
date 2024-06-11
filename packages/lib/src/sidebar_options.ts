@@ -33,7 +33,7 @@ const _admin: NavigationType[] = [
       {
         title: "سفارشات",
         icon: "list",
-        path: "/orders"
+        path: "/profile/orders"
       },
       {
         title: "کالاها",
