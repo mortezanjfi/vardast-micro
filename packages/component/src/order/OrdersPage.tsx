@@ -87,30 +87,27 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
         onOpenChange={setDeleteModalOpen}
         orderToDelete={orderToDelete}
       />
-      {!isMobileView || (!isAdmin && <PageTitle title={title} />)}
-      {!isMobileView ||
-        (!isAdmin && (
-          <PageHeader
-            pageHeaderClasses="border-b py-5 !mb-0"
-            title={"سفارش خود را ثبت کنید و بهترین قیمت را از وردست بخواهید."}
-            titleClasses="text-[14px] font-normal"
-            containerClass="items-center"
+      {!isMobileView && !isAdmin && <PageTitle title={title} />}
+      {!isMobileView && !isAdmin && (
+        <PageHeader
+          pageHeaderClasses="border-b py-5 !mb-0"
+          title={"سفارش خود را ثبت کنید و بهترین قیمت را از وردست بخواهید."}
+          titleClasses="text-[14px] font-normal"
+          containerClass="items-center"
+        >
+          <Button
+            disabled={createOrderMutation.isLoading || preOrdersQuery.isLoading}
+            loading={createOrderMutation.isLoading}
+            onClick={onCreateOrder}
+            variant="primary"
+            size="medium"
           >
-            <Button
-              disabled={
-                createOrderMutation.isLoading || preOrdersQuery.isLoading
-              }
-              loading={createOrderMutation.isLoading}
-              onClick={onCreateOrder}
-              variant="primary"
-              size="medium"
-            >
-              {t("common:add_new_entity", {
-                entity: t("common:order")
-              })}
-            </Button>
-          </PageHeader>
-        ))}
+            {t("common:add_new_entity", {
+              entity: t("common:order")
+            })}
+          </Button>
+        </PageHeader>
+      )}
 
       {preOrdersQuery.isFetching && preOrdersQuery.isLoading ? (
         <div className="flex h-full items-center justify-center pt-6">
@@ -202,7 +199,7 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                         <td>
                           <Link
                             target="_blank"
-                            href={`/profile/orders/${preOrder?.id}`}
+                            href={`/profile/orders/${preOrder?.id}/info`}
                           >
                             <span className="tag cursor-pointer text-blue-500">
                               {" "}

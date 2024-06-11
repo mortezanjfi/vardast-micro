@@ -1,13 +1,11 @@
+"use client"
+
+import { Step } from "@/template/OfferItemStepper"
 import { clsx } from "clsx"
 
-type IStepper = {
-  name: string
-  Icon: any
-  currentStep: number
-  description: string
-}[]
+import DynamicIcon from "../DynamicIcon"
 
-const Stepper = ({ steps, step }: { steps: IStepper; step: number }) => {
+const Stepper = ({ steps, step }: { steps: Step[]; step: number }) => {
   return (
     <div className="flex flex-col gap-9 border-b pb-4">
       <ol className="flex w-full items-center">
@@ -35,16 +33,22 @@ const Stepper = ({ steps, step }: { steps: IStepper; step: number }) => {
           >
             <div className="gap-y-base py-base flex flex-col items-center justify-center text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-full p">
-                <Icon />
+                <DynamicIcon
+                  name={Icon}
+                  className={clsx("icon")}
+                  strokeWidth={1.5}
+                />
               </div>
               <p className="whitespace-nowrap px text-sm">{name}</p>
             </div>
           </li>
         ))}
       </ol>
-      <p className="text-sm text-alpha-500">
-        - {steps.find((item) => item.currentStep === step)?.description}
-      </p>
+      {steps.find((item) => item.currentStep === step)?.description && (
+        <p className="text-sm text-alpha-500">
+          - {steps.find((item) => item.currentStep === step)?.description}
+        </p>
+      )}
     </div>
   )
 }

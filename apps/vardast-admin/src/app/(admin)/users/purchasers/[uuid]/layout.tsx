@@ -9,29 +9,34 @@ import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 const Layout: React.FC<PropsWithChildren> = async ({ children }) => {
   const steppers: Step[] = [
     {
-      description: "اطلاعات اولیه سفارش خود را وارد کنید.",
-      name: "اطلاعات سفارش",
-      Icon: "badge-info",
+      name: "اطلاعات پایه شرکت",
+      Icon: "info",
       currentStep: 0
     },
     {
-      description:
-        "کالاها و هزینه های جانبی درخواستی خود را از یک یا ترکیبی از روش های زیر انتخاب کنید.",
-      name: "افزودن کالا و هزینه های جانبی",
-      Icon: "box",
+      name: "اطلاعات تماس",
+      Icon: "info",
       currentStep: 1
     },
     {
-      description: "کالاها و هزینه های جانبی درخواستی خود را تایید کنید.",
-      name: "تایید کالاهای سفارش",
-      Icon: "check-circle-2",
+      name: "اطلاعات حقوقی",
+      Icon: "info",
       currentStep: 2
     },
     {
-      description: "در این قسمت بر روی کالاهای درخواستی خود قیمت گذاری کنید.",
-      name: "پیشنهادات",
-      Icon: "badge-dollar-sign",
+      name: "اطلاعات مالی",
+      Icon: "info",
       currentStep: 3
+    },
+    {
+      name: "همکاران",
+      Icon: "info",
+      currentStep: 4
+    },
+    {
+      name: "تایید نهایی",
+      Icon: "info",
+      currentStep: 5
     }
   ]
 
@@ -42,11 +47,23 @@ const Layout: React.FC<PropsWithChildren> = async ({ children }) => {
     },
     {
       stepNumber: 1,
-      name: "products"
+      name: "address-info"
+    },
+    {
+      stepNumber: 2,
+      name: "legal-info"
     },
     {
       stepNumber: 3,
-      name: "offers"
+      name: "finance-info"
+    },
+    {
+      stepNumber: 4,
+      name: "collabs-info"
+    },
+    {
+      stepNumber: 5,
+      name: "submition"
     }
   ]
 
