@@ -48,8 +48,6 @@
         data-[state=open]:slide-in-from-left-1/2
         data-[state=open]:slide-in-from-top-[48%]
         md:max-w-md
-        lg:max-w-lg
-        xl:max-w-2xl
         dark:bg-alpha-900;
 }
 
