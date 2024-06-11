@@ -121,8 +121,9 @@ const SigninFormContent = (_: { isMobileView?: boolean }) => {
             cellphone: digitsFaToEn(formStepOne.getValues().cellphone),
             signInType: "otp",
             validationKey,
-            callbackUrl: `/${returnedUrl ?? ""}`,
-            redirect: !foreign
+            // callbackUrl: `/${returnedUrl ?? ""}`,
+            // redirect: !foreign
+            redirect: false
           })
           if (callback?.error) {
             setLoginErrors(callback?.error)
@@ -134,11 +135,13 @@ const SigninFormContent = (_: { isMobileView?: boolean }) => {
             setMessage(message as string)
             await updateSession(session)
             router.refresh()
-            if (foreign) {
-              setTimeout(() => {
+            setTimeout(() => {
+              if (foreign) {
                 window.location.href = `https://${decodedUrl}`
-              }, 200)
-            }
+              } else {
+                window.location.href = `/${returnedUrl ?? ""}`
+              }
+            }, 200)
           }
         } catch (error) {
           console.log("ValidateOtpMutation error: ", error)
@@ -210,8 +213,9 @@ const SigninFormContent = (_: { isMobileView?: boolean }) => {
       username: digitsFaToEn(username),
       password,
       signInType: "username",
-      callbackUrl: `/${returnedUrl ?? ""}`,
-      redirect: !foreign
+      // callbackUrl: `/${returnedUrl ?? ""}`,
+      // redirect: !foreign
+      redirect: false
     })
     if (callback?.error) {
       setLoginErrors(callback?.error)
@@ -222,47 +226,43 @@ const SigninFormContent = (_: { isMobileView?: boolean }) => {
       setMessage(message as string)
       await updateSession(session)
       router.refresh()
-      if (foreign) {
-        setTimeout(() => {
+      setTimeout(() => {
+        if (foreign) {
           window.location.href = `https://${decodedUrl}`
-        }, 200)
-      }
+        } else {
+          window.location.href = `/${returnedUrl ?? ""}`
+        }
+      }, 200)
     }
   }
 
   return (
     <>
       {errors && (
-        <div className="p">
-          <Alert variant="danger">
-            <LucideAlertOctagon />
-            <AlertTitle>خطا</AlertTitle>
-            <AlertDescription>
-              {(
-                errors.response?.errors?.at(0)?.extensions
-                  .displayErrors as string[]
-              )?.map((error) => <p key={error}>{error}</p>)}
-            </AlertDescription>
-          </Alert>
-        </div>
+        <Alert variant="danger">
+          <LucideAlertOctagon />
+          <AlertTitle>خطا</AlertTitle>
+          <AlertDescription>
+            {(
+              errors.response?.errors?.at(0)?.extensions
+                .displayErrors as string[]
+            )?.map((error) => <p key={error}>{error}</p>)}
+          </AlertDescription>
+        </Alert>
       )}
 
       {loginErrors && (
-        <div className="p">
-          <Alert variant="danger">
-            <LucideAlertOctagon />
-            <AlertTitle>خطا</AlertTitle>
-            <AlertDescription>{loginErrors}</AlertDescription>
-          </Alert>
-        </div>
+        <Alert variant="danger">
+          <LucideAlertOctagon />
+          <AlertTitle>خطا</AlertTitle>
+          <AlertDescription>{loginErrors}</AlertDescription>
+        </Alert>
       )}
 
       {!errors && message && (
-        <div className="p">
-          <Alert variant="success">
-            <AlertDescription>{digitsEnToFa(message)}</AlertDescription>
-          </Alert>
-        </div>
+        <Alert variant="success">
+          <AlertDescription>{digitsEnToFa(message)}</AlertDescription>
+        </Alert>
       )}
 
       {formState === LoginOptions.VERIFY_OTP ? (
@@ -289,11 +289,6 @@ const SigninFormContent = (_: { isMobileView?: boolean }) => {
           </div>
         </>
       )}
-      {/* <div className="rounded border border-warning-200 bg-warning-50 p-2">
-          <p className="text-warning">
-            لطفا کیبورد را در حالت انگلیسی قرار دهید.
-          </p>
-        </div> */}
 
       <div className="flex w-full flex-col gap-y">
         {formState === LoginOptions.PASSWORD && (

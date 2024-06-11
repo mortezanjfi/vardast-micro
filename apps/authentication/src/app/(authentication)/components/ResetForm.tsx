@@ -201,26 +201,22 @@ const ResetForm = (_: Props) => {
   return (
     <>
       {errors && (
-        <div className="p">
-          <Alert variant="danger">
-            <LucideAlertOctagon />
-            <AlertTitle>خطا</AlertTitle>
-            <AlertDescription>
-              {(
-                errors?.response?.errors?.at(0)?.extensions
-                  ?.displayErrors as string[]
-              )?.map((error) => <p key={error}>{error}</p>)}
-            </AlertDescription>
-          </Alert>
-        </div>
+        <Alert variant="danger">
+          <LucideAlertOctagon />
+          <AlertTitle>خطا</AlertTitle>
+          <AlertDescription>
+            {(
+              errors?.response?.errors?.at(0)?.extensions
+                ?.displayErrors as string[]
+            )?.map((error) => <p key={error}>{error}</p>)}
+          </AlertDescription>
+        </Alert>
       )}
 
       {!errors && message && (
-        <div className="p">
-          <Alert variant="success">
-            <AlertDescription>{digitsEnToFa(message)}</AlertDescription>
-          </Alert>
-        </div>
+        <Alert variant="success">
+          <AlertDescription>{digitsEnToFa(message)}</AlertDescription>
+        </Alert>
       )}
 
       {formState === 2 ? (
@@ -246,6 +242,7 @@ const ResetForm = (_: Props) => {
           </div>
         </>
       )}
+
       <div className="flex w-full flex-col gap-y">
         {formState === 1 && (
           <Form {...formStepOne}>
