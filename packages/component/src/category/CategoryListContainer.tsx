@@ -52,8 +52,7 @@ const CategoryListContainer: React.FC<ICategoryListContainer> = ({
       )}
       <ul
         className={clsx(
-          "mt-6 grid grid-cols-2 gap-4 divide-alpha-200 p-6 pt-0 md:grid-cols-5 md:grid-rows-1",
-          isSubcategory ? "grid-rows-4" : "grid-rows-2"
+          "mt-6 grid grid-cols-2 grid-rows-none gap-4 divide-alpha-200 p-6 pt-0 md:grid-cols-5 md:grid-rows-1"
         )}
       >
         {children({ selectedItemId, setSelectedItemId })}

@@ -2,13 +2,16 @@ html[lang="fa"] {
   direction: rtl;
 }
 html {
-  @apply h-screen;
+  @apply font-iranYekan antialiased h-full;
 }
-* {
+/* * {
   scrollbar-width: thin;
   scrollbar-color: unset;
-}
+} */
 
+/* body {
+  @apply overflow-hidden m-0 p-0 ;
+} */
 body {
-  @apply font-iranYekan antialiased flex flex-col min-h-0 overflow-x-hidden;
+  @apply h-full;
 }

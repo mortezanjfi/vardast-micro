@@ -1,20 +1,27 @@
-.app-inner {
-  @apply flex flex-1;
+.app {
+  /* @apply flex flex-col; */
   &.mobile {
-    @apply gap-1;
+    @apply flex flex-col overflow-x-hidden h-full min-h-0 pb-[calc(env(safe-area-inset-bottom)*0.4)];
   }
   &.desktop {
-    @apply flex-col;
+    @apply min-h-0 flex-1;
   }
+}
+.app-inner {
+  /* @apply flex; */
+  &.mobile {
+    @apply flex flex-1 gap-1;
+  }
+  /* &.desktop {
+    @apply;
+  } */
 }
 .app-content {
   &.mobile {
-    @apply flex flex-1 flex-col gap-1 overflow-y-auto overflow-x-hidden bg-transparent;
+    @apply h-full flex flex-col gap-1 overflow-y-scroll overflow-x-hidden bg-transparent;
   }
   &.desktop {
-    @apply flex-1 w-full pb-6
-    /* overflow-hidden */
-    overscroll-contain;
+    @apply flex-1 w-full pb-6 overscroll-contain;
   }
 }
 
@@ -28,12 +35,12 @@
   }
 
   &.mobile {
-    @apply w-full relative mx-auto flex h-full transform flex-col transition-all duration-200;
+    @apply w-full flex-1 relative mx-auto transform transition-all duration-200;
   }
 }
 
 .app-header {
-  @apply fixed left-0 right-0 top-0 z-30;
+  @apply fixed inset-0 z-30;
   &.mobile {
     @apply z-40 h-14 w-full bg-primary px-2;
   }
@@ -50,7 +57,7 @@
     @apply bg-secondary text-alpha-white;
   }
   &.mobile {
-    @apply fixed bottom-0 left-0 z-50 w-full transform border-t border-alpha-200 bg-alpha-white pb-[calc(env(safe-area-inset-bottom)*0.4)] transition-all duration-300 dark:border-alpha-600 dark:bg-alpha-700;
+    @apply fixed inset-x-0 bottom-0 z-50 w-full transform border-t border-alpha-200 bg-alpha-white transition-all duration-300 dark:border-alpha-600 dark:bg-alpha-700;
     /* &.short {
       @apply translate-y-[calc(env(safe-area-inset-bottom)*0.5+4rem)];
     } */

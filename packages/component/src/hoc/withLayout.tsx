@@ -20,62 +20,81 @@ export default function withLayout<T>(
 ) {
   return async (props: T) => {
     const isMobileView = await CheckIsMobileView()
+    const height =
+      (layout?.mobile?.footer?.search ||
+      layout?.mobile?.footer?.back ||
+      layout?.mobile?.footer?.action
+        ? 4
+        : 0) + (layout?.mobile?.footer?.options ? 3.5 : 0)
 
     return (
       <LayoutProvider>
         {isMobileView ? (
           <>
             <SearchActionModal isMobileView />
-            <div className="app-header-ghost mobile"></div>
-            {layout?.mobile?.header && (
-              <header id="mobile-header-navbar" className="app-header mobile">
-                <MobileHeader {...layout?.mobile?.header} />
-              </header>
-            )}
-            {layout?.mobile?.sidebar && (
-              <Sidebar {...layout?.mobile?.sidebar} />
-            )}
-            <main
-              className={clsx(
-                "app-layout mobile",
-                layout?.mobile?.main?.background?.value
-              )}
+            <div
+              className={clsx("app mobile")}
+              style={{ paddingBottom: `${height}rem` }}
             >
-              <MobileScrollProvider>
-                {layout?.mobile?.main?.breadcrumb && (
-                  <Suspense>
-                    <Breadcrumb />
-                  </Suspense>
+              {layout?.mobile?.header && (
+                <>
+                  <div>
+                    <div className="app-header-ghost mobile"></div>
+                    <header
+                      id="mobile-header-navbar"
+                      className="app-header mobile"
+                    >
+                      <MobileHeader {...layout?.mobile?.header} />
+                    </header>
+                  </div>
+                </>
+              )}
+              {layout?.mobile?.sidebar && (
+                <Sidebar {...layout?.mobile?.sidebar} />
+              )}
+              <main
+                className={clsx(
+                  "app-layout mobile",
+                  layout?.mobile?.main?.background?.value
                 )}
-                {layout?.mobile?.main?.page_header && <PageBanner />}
-                <Component {...{ ...props, ...layout?.desktop?.main }} />
-              </MobileScrollProvider>
-            </main>
-            {layout?.mobile?.footer && (
-              <>
+              >
+                <MobileScrollProvider>
+                  {layout?.mobile?.main?.breadcrumb && (
+                    <Suspense>
+                      <Breadcrumb />
+                    </Suspense>
+                  )}
+                  {layout?.mobile?.main?.page_header && <PageBanner />}
+                  <Component {...{ ...props, ...layout?.desktop?.main }} />
+                </MobileScrollProvider>
+              </main>
+              {layout?.mobile?.footer && (
                 <footer
                   id="mobile-navigation-bar"
                   className="app-footer mobile"
                 >
                   <MobileNavigation {...layout?.mobile?.footer} />
                 </footer>
-                {(layout?.mobile?.footer?.search ||
-                  layout?.mobile?.footer?.back ||
-                  layout?.mobile?.footer?.action) && (
-                  <div className={clsx("h-16 w-full bg-transparent")}></div>
-                )}
-                {layout?.mobile?.footer?.options && (
-                  <div className={clsx("h-14 w-full bg-transparent")}></div>
-                )}
-              </>
-            )}
+                // <div>
+                //   {(layout?.mobile?.footer?.search ||
+                //     layout?.mobile?.footer?.back ||
+                //     layout?.mobile?.footer?.action) && (
+                //     <div className={clsx("h-16 w-full bg-transparent")}></div>
+                //   )}
+                //   {layout?.mobile?.footer?.options && (
+                //     <div className={clsx("h-14 w-full bg-transparent")}></div>
+                //   )}
+                // </div>
+              )}
+            </div>
           </>
         ) : (
-          <>
-            <div className="app-header-ghost desktop"></div>
+          <div className="app desktop">
             {layout?.desktop?.header && (
-              <header className="app-header desktop">
-                <DesktopHeader {...layout?.desktop?.header} />
+              <header className="app-header-ghost desktop">
+                <div className="app-header desktop">
+                  <DesktopHeader {...layout?.desktop?.header} />
+                </div>
               </header>
             )}
             <main
@@ -122,7 +141,7 @@ export default function withLayout<T>(
                 <DesktopFooter {...layout?.desktop?.footer} />
               </footer>
             )}
-          </>
+          </div>
         )}
       </LayoutProvider>
     )
