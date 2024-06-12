@@ -40,6 +40,9 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
       refetchOnMount: "always"
     }
   )
+  const adminAddNewProject = () => {
+    router.push(`/projects/new`)
+  }
 
   return (
     <div className="flex h-full w-full flex-col ">
@@ -78,7 +81,11 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
         ) : myProjectsQuery.data?.myProjects?.length > 0 ? (
           isAdmin ? (
             <CardContainer
-              button={{ text: "افزودن پروژه", variant: "primary" }}
+              button={{
+                text: "افزودن پروژه",
+                variant: "primary",
+                onClick: adminAddNewProject
+              }}
               title="لیست‌ پروژه ها"
             >
               <table className="table-hover table">
