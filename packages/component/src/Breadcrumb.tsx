@@ -29,14 +29,14 @@ const Breadcrumb = ({
     let tempBreadcrumbs: CrumbItemProps[]
 
     if (dynamic) {
-      const pathWithoutQuery = pathname.split("?")[0]
-      let pathArray = pathWithoutQuery.split("/")
-      pathArray.shift()
+      const pathWithoutQuery = pathname?.split("?")[0]
+      let pathArray = pathWithoutQuery?.split("/")
+      pathArray?.shift()
 
-      pathArray = pathArray.filter((path) => path !== "")
+      pathArray = pathArray?.filter((path) => path !== "")
 
-      tempBreadcrumbs = pathArray.map((path, index) => {
-        const href = "/" + pathArray.slice(0, index + 1).join("/")
+      tempBreadcrumbs = pathArray?.map((path, index) => {
+        const href = "/" + pathArray?.slice(0, index + 1)?.join("/")
         return {
           path: href,
           label: stringHasOnlyNumberValidator(path)
@@ -44,7 +44,7 @@ const Breadcrumb = ({
             : +path > 0
               ? path
               : t(`common:${path}`),
-          isCurrent: index === pathArray.length - 1
+          isCurrent: index === pathArray?.length - 1
         }
       })
     } else {
