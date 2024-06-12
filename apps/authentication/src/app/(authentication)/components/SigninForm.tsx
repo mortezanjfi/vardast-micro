@@ -139,7 +139,7 @@ const SigninFormContent = (_: { isMobileView?: boolean }) => {
               if (foreign) {
                 window.location.href = `https://${decodedUrl}`
               } else {
-                window.location.href = `/${returnedUrl ?? ""}`
+                router.replace(`/${returnedUrl ?? ""}`)
               }
             }, 200)
           }
@@ -230,7 +230,7 @@ const SigninFormContent = (_: { isMobileView?: boolean }) => {
         if (foreign) {
           window.location.href = `https://${decodedUrl}`
         } else {
-          window.location.href = `/${returnedUrl ?? ""}`
+          router.replace(`/${returnedUrl ?? ""}`)
         }
       }, 200)
     }
