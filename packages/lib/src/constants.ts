@@ -32,6 +32,8 @@ import {
   // LucideUserCircle
 } from "lucide-react"
 
+import paths from "./paths"
+
 export type NavbarItem = {
   href: string
   Icon: LucideIcon
@@ -144,7 +146,7 @@ export const _profileSidebarMenu: NavigationType[] = [
 export const _authentication_signin_sidebarMenu: NavigationItemType = {
   title: "ورود به حساب کاربری",
   icon: "log-in",
-  path: "/auth/signin"
+  path: paths.signin
 }
 
 export const _authentication_signout_sidebarMenu: NavigationItemType = {
@@ -428,7 +430,7 @@ export const _withNavigationRoutes: WithNavigationRouteItem[] = [
   },
   {
     forceEqual: false,
-    path: "/auth/signin"
+    path: paths.signin
   },
   {
     forceEqual: false,
@@ -444,7 +446,7 @@ export const _withNavigationRoutes: WithNavigationRouteItem[] = [
   },
   {
     forceEqual: false,
-    path: "/auth/signin"
+    path: paths.signin
   },
   {
     forceEqual: false,

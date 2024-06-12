@@ -6,6 +6,7 @@ import { UserIcon } from "@heroicons/react/24/outline"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import logoHorizontal from "@vardast/asset/logo-horizontal-v2-persian-light-bg.svg"
 import { UserStatusesEnum } from "@vardast/graphql/generated"
+import paths from "@vardast/lib/paths"
 import { ColorEnum } from "@vardast/type/Enums"
 import { ILayoutDesktopHeader } from "@vardast/type/layout"
 import clsx from "clsx"
@@ -193,7 +194,7 @@ const DesktopHeader = ({ search, button }: ILayoutDesktopHeader) => {
                 </div>
               ) : (
                 <Link
-                  href={`/auth/signin${pathname}`}
+                  href={`${paths.signin}?ru=${pathname}`}
                   className="btn btn-primary col-span-2 flex text-sm font-semibold"
                 >
                   ورود

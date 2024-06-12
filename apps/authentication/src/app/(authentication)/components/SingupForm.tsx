@@ -13,6 +13,7 @@ import {
   ValidationTypes
 } from "@vardast/graphql/generated"
 import useCountdown from "@vardast/hook/use-countdown"
+import paths from "@vardast/lib/paths"
 import graphqlRequestClientWithoutToken from "@vardast/query/queryClients/graphqlRequestClientWithoutToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
@@ -60,7 +61,7 @@ const SingupForm = (_: Props) => {
         setErrors(null)
 
         if (nextState === "LOGIN") {
-          router.push("/auth/signin")
+          router.push(paths.signin)
         }
 
         if (nextState === "VALIDATE_OTP") {
@@ -92,7 +93,7 @@ const SingupForm = (_: Props) => {
         }
 
         if (nextState === "LOGIN") {
-          router.push("/auth/signin")
+          router.push(paths.signin)
         }
       }
     }
@@ -110,7 +111,7 @@ const SingupForm = (_: Props) => {
       }
 
       if (nextState === "LOGIN") {
-        router.push("/auth/signin")
+        router.push(paths.signin)
       }
 
       if (nextState === "LOGGED_IN") {
@@ -415,7 +416,7 @@ const SingupForm = (_: Props) => {
         )}
 
         <Link
-          href="/auth/signin"
+          href={paths.signin}
           className="text-center text-alpha-500 hover:text-alpha-700"
         >
           {t("common:already_have_an_account_login")}

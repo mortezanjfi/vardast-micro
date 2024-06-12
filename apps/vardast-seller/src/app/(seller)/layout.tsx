@@ -2,6 +2,7 @@ import { redirect } from "next/navigation"
 import { authOptions } from "@vardast/auth/authOptions"
 import WithLayout from "@vardast/component/hoc/withLayout"
 import layout_options from "@vardast/lib/layout_options"
+import paths from "@vardast/lib/paths"
 import { getServerSession } from "next-auth"
 
 export default WithLayout(
@@ -13,7 +14,7 @@ export default WithLayout(
       (session?.accessToken &&
         !session?.profile?.roles.some((role) => role?.name === "seller"))
     ) {
-      redirect("/auth/signin")
+      redirect(paths.signin)
     }
 
     return <>{children}</>

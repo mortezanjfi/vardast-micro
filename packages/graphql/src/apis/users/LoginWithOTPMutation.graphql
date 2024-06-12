@@ -13,5 +13,6 @@ mutation LoginWithOTP($LoginOTPInput: LoginOTPInput!) {
     abilities
     refreshToken
     refreshTokenTtl
+    type
   }
 }

@@ -4,7 +4,7 @@ import SigninForm from "@/app/(authentication)/components/SigninForm"
 
 const SigninPage = async () => {
   const isMobileView = await CheckIsMobileView()
-  return <SigninForm isMobileView={isMobileView} />
+  return <SigninForm hasPassword isMobileView={isMobileView} />
 }
 
 export default SigninPage

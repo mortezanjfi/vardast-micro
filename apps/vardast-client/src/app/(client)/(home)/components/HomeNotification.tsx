@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
+import paths from "@vardast/lib/paths"
 import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
 import { LucideX } from "lucide-react"
 import { useSession } from "next-auth/react"
 
-const pdfBlogUrl = "gateway.vardast.com/Gozareshmaskan1403.pdf"
+const pdfBlogUrl = "https://gateway.vardast.com/Gozareshmaskan1403.pdf"
 
 type HomeNotificationProps = {}
 
@@ -29,10 +30,10 @@ const HomeNotification = (_: HomeNotificationProps) => {
     e.preventDefault()
     setLocalStoragePdf(true)
     if (!!session?.data) {
-      window.location.href = `https://${pdfBlogUrl}`
+      window.location.href = pdfBlogUrl
       return
     }
-    router.replace(`/auth/signin/foreign/${pdfBlogUrl}`)
+    router.replace(`${paths.signin}?ru=${pdfBlogUrl}`)
   }
 
   useEffect(() => {

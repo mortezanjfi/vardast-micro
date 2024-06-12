@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { authOptions } from "@vardast/auth/authOptions"
+import paths from "@vardast/lib/paths"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 import { getServerSession } from "next-auth"
 
@@ -18,7 +19,7 @@ const ProfileSellerPage = async () => {
   const isMobileView = await CheckIsMobileView()
 
   if (!session) {
-    return redirect("/auth/signin/request-seller")
+    return redirect(`${paths.signin}?ru=/request-seller`)
   }
 
   if (session?.profile?.roles.some((role) => role?.name === "seller")) {

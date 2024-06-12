@@ -38,6 +38,7 @@ import {
   Seller,
   SortBrandEnum
 } from "@vardast/graphql/generated"
+import paths from "@vardast/lib/paths"
 import { setSidebar } from "@vardast/provider/LayoutProvider/use-layout"
 import { getAllCategoriesQueryFn } from "@vardast/query/queryFns/allCategoriesQueryFns"
 import { getBrandQueryFn } from "@vardast/query/queryFns/brandQueryFns"
@@ -723,7 +724,7 @@ const PdfTabItem = ({ file, access_token, title }: PdfTabItemProps) => {
               برای مشاهده {title}، لطفا ابتدا وارد حساب کاربری خود شوید.
             </h4>
             <Link
-              href={`/auth/signin${pathname}`}
+              href={`${paths.signin}?ru=${pathname}`}
               className="btn btn-md btn-primary block px"
             >
               ورود به حساب کاربری

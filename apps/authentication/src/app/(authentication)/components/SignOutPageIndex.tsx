@@ -2,13 +2,15 @@
 
 import { useEffect } from "react"
 import Loading from "@vardast/component/Loading"
-import { signOut } from "next-auth/react"
+import { clearCacheBySignOut } from "@vardast/util/session"
 
 export default function SignOutPageIndex() {
   useEffect(() => {
-    signOut({
-      callbackUrl: "/"
-    })
+    try {
+      clearCacheBySignOut("/")
+    } catch (error) {
+      console.error("Error during sign out:", error)
+    }
   }, [])
 
   return (

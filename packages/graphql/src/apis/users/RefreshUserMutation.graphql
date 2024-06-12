@@ -8,5 +8,6 @@ mutation RefreshUserMutation($refreshInput: RefreshInput!) {
     user {
       id
     }
+    type
   }
 }

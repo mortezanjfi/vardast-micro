@@ -12,6 +12,7 @@ import {
   ValidationTypes
 } from "@vardast/graphql/generated"
 import useCountdown from "@vardast/hook/use-countdown"
+import paths from "@vardast/lib/paths"
 import graphqlRequestClientWithoutToken from "@vardast/query/queryClients/graphqlRequestClientWithoutToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
@@ -62,7 +63,7 @@ const ResetForm = (_: Props) => {
         setErrors(null)
 
         if (nextState === "LOGIN") {
-          router.replace("/auth/signin/auth/signin/auth/signin")
+          router.replace(paths.signin)
         }
 
         if (nextState === "VALIDATE_OTP") {
@@ -96,7 +97,7 @@ const ResetForm = (_: Props) => {
         }
 
         if (nextState === "LOGIN") {
-          router.replace("/auth/signin")
+          router.replace(paths.signin)
         }
         setPageLoading(false)
       }
@@ -118,7 +119,7 @@ const ResetForm = (_: Props) => {
         }
 
         if (nextState === "LOGIN") {
-          router.replace("/auth/signin")
+          router.replace(paths.signin)
         }
 
         setMessage(message as string)
@@ -231,7 +232,7 @@ const ResetForm = (_: Props) => {
         <>
           <div className="flex w-full items-center justify-between">
             <h3 className="font-semibold">تغییر رمز عبور</h3>
-            <Link className="btn btn-ghost btn-icon-only" href="/auth/signin">
+            <Link className="btn btn-ghost btn-icon-only" href={paths.signin}>
               <LucideX className="icon h-6 w-6 text-alpha-black" />
             </Link>
           </div>
@@ -270,7 +271,7 @@ const ResetForm = (_: Props) => {
                       />
                     </FormControl>
                     <Link
-                      href="/auth/signin"
+                      href={paths.signin}
                       className="text-left text-sm underline"
                     >
                       رمز عبور دارم

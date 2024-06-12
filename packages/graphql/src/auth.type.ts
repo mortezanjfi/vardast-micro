@@ -1,4 +1,4 @@
-import { User as BaseUser } from "./generated"
+import { User as BaseUser, UserType } from "./generated"
 
 export interface Session {
   accessToken?: string
@@ -8,6 +8,7 @@ export interface Session {
   error?: string
   profile: BaseUser
   abilities: string[]
+  type: UserType
 }
 
 export interface User {
@@ -19,4 +20,5 @@ export interface User {
   profile: BaseUser
   abilities: string[]
   roles?: BaseUser["roles"]
+  type: UserType
 }

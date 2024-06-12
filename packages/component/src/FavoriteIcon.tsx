@@ -13,6 +13,7 @@ import {
   useUpdateFavoriteMutation
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
+import paths from "@vardast/lib/paths"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import { ClientError } from "graphql-request"
@@ -37,7 +38,7 @@ export default function FavoriteIcon({
         isFavoriteQuery.refetch()
       },
       onError: (errors: ClientError) => {
-        router.replace(`/auth/signin${pathname}`)
+        router.replace(`${paths.signin}?ru=${pathname}`)
 
         if (
           errors.response.errors?.find(
@@ -52,7 +53,7 @@ export default function FavoriteIcon({
           // })
           console.log("redirect to login for FORBIDDEN favorite visit")
 
-          router.replace(`/auth/signin${pathname}`)
+          router.replace(`${paths.signin}?ru=${pathname}`)
         } else {
           toast({
             description: (

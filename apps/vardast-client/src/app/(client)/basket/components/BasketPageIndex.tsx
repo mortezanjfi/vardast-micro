@@ -8,6 +8,7 @@ import {
   EntityTypeEnum,
   GetUserFavoriteProductsQuery
 } from "@vardast/graphql/generated"
+import paths from "@vardast/lib/paths"
 import { allUserFavoriteProductsQueryFns } from "@vardast/query/queryFns/allUserFavoriteProductsQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { useSession } from "next-auth/react"
@@ -31,7 +32,7 @@ const BasketPageIndex = () => {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.replace("/auth/signin/basket")
+      router.replace(`${paths.signin}?ru=/basket`)
     } else if (!cacheFlag) {
       productQuery.refetch()
       setCacheFlag(true)

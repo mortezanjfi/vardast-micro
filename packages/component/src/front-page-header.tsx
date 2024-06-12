@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation"
 import { PopoverArrow } from "@radix-ui/react-popover"
 import { useGetVocabularyQuery } from "@vardast/graphql/generated"
+import paths from "@vardast/lib/paths"
 import graphqlRequestClientWithoutToken from "@vardast/query/queryClients/graphqlRequestClientWithoutToken"
 import { Popover, PopoverContent, PopoverTrigger } from "@vardast/ui/popover"
 import slugify from "@vardast/util/persian-slugify"
@@ -95,7 +96,10 @@ const FrontPageHeader = ({ session }: Props) => {
           </>
         ) : (
           !session?.user && (
-            <Link href={`/auth/signin${pathname}`} className="btn btn-ghost">
+            <Link
+              href={`${paths.signin}?ru=${pathname}`}
+              className="btn btn-ghost"
+            >
               ورود / ثبت‌نام
             </Link>
           )

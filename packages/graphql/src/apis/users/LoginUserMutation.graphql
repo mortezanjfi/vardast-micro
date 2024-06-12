@@ -13,5 +13,6 @@ mutation LoginUser($loginInput: LoginInput!) {
     abilities
     refreshToken
     refreshTokenTtl
+    type
   }
 }

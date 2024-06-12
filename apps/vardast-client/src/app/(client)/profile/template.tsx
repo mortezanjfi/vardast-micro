@@ -3,6 +3,7 @@
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Loading from "@vardast/component/Loading"
+import paths from "@vardast/lib/paths"
 import { useSession } from "next-auth/react"
 
 const Template = ({ children }: { children: React.ReactNode }) => {
@@ -11,7 +12,7 @@ const Template = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (status !== "loading" && !session?.accessToken) {
-      router.push("/auth/signin/profile")
+      router.push(`${paths.signin}?ru=/profile`)
     }
   }, [session, status, router])
 

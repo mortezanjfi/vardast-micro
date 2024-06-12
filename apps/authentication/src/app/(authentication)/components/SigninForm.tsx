@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { usePathname, useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa, digitsFaToEn } from "@persian-tools/persian-tools"
 import Card from "@vardast/component/Card"
@@ -12,6 +12,7 @@ import {
   ValidationTypes
 } from "@vardast/graphql/generated"
 import useCountdown from "@vardast/hook/use-countdown"
+import paths from "@vardast/lib/paths"
 import graphqlRequestClientWithoutToken from "@vardast/query/queryClients/graphqlRequestClientWithoutToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
@@ -46,21 +47,15 @@ enum LoginOptions {
   VERIFY_OTP = "VERIFY_OTP"
 }
 
-const SigninFormContent = (_: { isMobileView?: boolean }) => {
-  const pathname = usePathname()
+const SigninFormContent = ({
+  hasPassword
+}: {
+  isMobileView?: boolean
+  hasPassword?: boolean
+}) => {
   const { data: session, update: updateSession } = useSession()
-  const returnedUrl = pathname
-    .replace("/auth/signin", "")
-    .split("/")
-    .filter(Boolean)
-    .join("/")
-  const foreign = returnedUrl.startsWith("foreign/")
-
-  const decodedUrl = decodeURIComponent(returnedUrl.split("foreign/")[1])
-
   const { t } = useTranslation()
   const router = useRouter()
-  // const searchParams = useSearchParams()
   const [formState, setFormState] = useState<LoginOptions>(LoginOptions.OTP)
   const [validationKey, setValidationKey] = useState<string>("")
   const [errors, setErrors] = useState<ClientError | null>()
@@ -68,6 +63,13 @@ const SigninFormContent = (_: { isMobileView?: boolean }) => {
   const [message, setMessage] = useState<string>("")
   const [pageLoading, setPageLoading] = useState(false)
   const { secondsLeft, startCountdown } = useCountdown()
+  const searchParams = useSearchParams()
+
+  const returnedUrl = searchParams.get("ru") || "/"
+  const decodedExternalUrl = returnedUrl.startsWith("https://")
+    ? decodeURIComponent(returnedUrl)
+    : ""
+
   z.setErrorMap(zodI18nMap)
 
   const validateCellphoneMutation = useValidateCellphoneMutation(
@@ -85,9 +87,7 @@ const SigninFormContent = (_: { isMobileView?: boolean }) => {
           setLoginErrors(null)
 
           if (nextState === "LOGIN") {
-            router.replace(
-              `/auth/signin${returnedUrl ? "/" + returnedUrl : ""}`
-            )
+            router.replace(`${paths.signin}?ru=${returnedUrl}`)
           }
 
           if (nextState === "VALIDATE_OTP") {
@@ -121,8 +121,6 @@ const SigninFormContent = (_: { isMobileView?: boolean }) => {
             cellphone: digitsFaToEn(formStepOne.getValues().cellphone),
             signInType: "otp",
             validationKey,
-            // callbackUrl: `/${returnedUrl ?? ""}`,
-            // redirect: !foreign
             redirect: false
           })
           if (callback?.error) {
@@ -136,10 +134,10 @@ const SigninFormContent = (_: { isMobileView?: boolean }) => {
             await updateSession(session)
             router.refresh()
             setTimeout(() => {
-              if (foreign) {
-                window.location.href = `https://${decodedUrl}`
+              if (decodedExternalUrl) {
+                window.location.href = decodedExternalUrl
               } else {
-                router.replace(`/${returnedUrl ?? ""}`)
+                router.replace(returnedUrl)
               }
             }, 200)
           }
@@ -213,8 +211,6 @@ const SigninFormContent = (_: { isMobileView?: boolean }) => {
       username: digitsFaToEn(username),
       password,
       signInType: "username",
-      // callbackUrl: `/${returnedUrl ?? ""}`,
-      // redirect: !foreign
       redirect: false
     })
     if (callback?.error) {
@@ -227,10 +223,10 @@ const SigninFormContent = (_: { isMobileView?: boolean }) => {
       await updateSession(session)
       router.refresh()
       setTimeout(() => {
-        if (foreign) {
-          window.location.href = `https://${decodedUrl}`
+        if (decodedExternalUrl) {
+          window.location.href = decodedExternalUrl
         } else {
-          router.replace(`/${returnedUrl ?? ""}`)
+          router.replace(returnedUrl)
         }
       }, 200)
     }
@@ -264,7 +260,6 @@ const SigninFormContent = (_: { isMobileView?: boolean }) => {
           <AlertDescription>{digitsEnToFa(message)}</AlertDescription>
         </Alert>
       )}
-
       {formState === LoginOptions.VERIFY_OTP ? (
         <>
           <h3 className="font-semibold">لطفا کد تایید را وارد کنید.</h3>
@@ -275,18 +270,29 @@ const SigninFormContent = (_: { isMobileView?: boolean }) => {
         </>
       ) : (
         <>
-          <div className="flex w-full items-center justify-between">
-            <h3 className="text-right font-semibold">ورود | ثبت‌نام</h3>
-            <Link className="btn btn-ghost btn-icon-only" href="/">
-              <LucideX className="icon h-6 w-6 text-alpha-black" />
-            </Link>
-          </div>
-          <div className="text-md flex flex-col gap-y-2 py">
-            <p className="text-alpha-800">سلام!</p>
-            <p className="text-alpha-800">
-              لطفا شماره موبایل خود را وارد کنید.
-            </p>
-          </div>
+          {hasPassword ? (
+            <>
+              <div className="flex w-full items-center justify-between">
+                <h3 className="text-right font-semibold">ورود | ثبت‌نام</h3>
+                <Link className="btn btn-ghost btn-icon-only" href="/">
+                  <LucideX className="icon h-6 w-6 text-alpha-black" />
+                </Link>
+              </div>
+              <div className="text-md flex flex-col gap-y-2 py">
+                <p className="text-alpha-800">سلام!</p>
+                <p className="text-alpha-800">
+                  لطفا شماره موبایل خود را وارد کنید.
+                </p>
+              </div>
+            </>
+          ) : (
+            <div className="text-md flex flex-col gap-y-2 py">
+              <p className="text-alpha-800">سلام!</p>
+              <p className="text-alpha-800">
+                لطفا شماره موبایل خود را وارد کنید.
+              </p>
+            </div>
+          )}
         </>
       )}
 
@@ -333,12 +339,14 @@ const SigninFormContent = (_: { isMobileView?: boolean }) => {
                         {...field}
                       />
                     </FormControl>
-                    <Link
-                      href="/auth/reset"
-                      className="text-left text-sm underline"
-                    >
-                      ایجاد / فراموشی رمز عبور
-                    </Link>
+                    {hasPassword && (
+                      <Link
+                        href="/auth/reset"
+                        className="text-left text-sm underline"
+                      >
+                        ایجاد / فراموشی رمز عبور
+                      </Link>
+                    )}
                     <FormMessage />
                   </FormItem>
                 )}
@@ -437,46 +445,51 @@ const SigninFormContent = (_: { isMobileView?: boolean }) => {
             </form>
           </Form>
         )}
-
         <div className="flex w-full flex-col gap-y">
-          {formState !== LoginOptions.VERIFY_OTP && (
-            <div className="flex flex-col justify-center gap-y-7 py-7">
-              <div
-                onClick={() => {
-                  setFormState(LoginOptions.OTP)
-                  setMessage(null)
-                  setErrors(null)
-                  setLoginErrors(null)
-                }}
-                className="flex cursor-pointer items-center gap-x-2"
-              >
-                <Circle solid={formState === LoginOptions.OTP} />
-                <span className="text-sm text-info">دریافت رمز یکبار مصرف</span>
-              </div>
-              <div
-                onClick={() => {
-                  setFormState(LoginOptions.PASSWORD)
-                  setMessage(null)
-                  setErrors(null)
-                  setLoginErrors(null)
-                }}
-                className="flex cursor-pointer items-center gap-x-2"
-              >
-                <Circle solid={formState === LoginOptions.PASSWORD} />
-                <span className="text-sm text-info">ورود با رمز عبور</span>
-              </div>
-            </div>
-          )}
-          {formState === LoginOptions.PASSWORD && (
-            <Button
-              type="submit"
-              block
-              form="login-username"
-              disabled={pageLoading || form.formState.isSubmitting}
-              loading={pageLoading || form.formState.isSubmitting}
-            >
-              {t("common:login")}
-            </Button>
+          {hasPassword && (
+            <>
+              {formState !== LoginOptions.VERIFY_OTP && (
+                <div className="flex flex-col justify-center gap-y-7 py-7">
+                  <div
+                    onClick={() => {
+                      setFormState(LoginOptions.OTP)
+                      setMessage(null)
+                      setErrors(null)
+                      setLoginErrors(null)
+                    }}
+                    className="flex cursor-pointer items-center gap-x-2"
+                  >
+                    <Circle solid={formState === LoginOptions.OTP} />
+                    <span className="text-sm text-info">
+                      دریافت رمز یکبار مصرف
+                    </span>
+                  </div>
+                  <div
+                    onClick={() => {
+                      setFormState(LoginOptions.PASSWORD)
+                      setMessage(null)
+                      setErrors(null)
+                      setLoginErrors(null)
+                    }}
+                    className="flex cursor-pointer items-center gap-x-2"
+                  >
+                    <Circle solid={formState === LoginOptions.PASSWORD} />
+                    <span className="text-sm text-info">ورود با رمز عبور</span>
+                  </div>
+                </div>
+              )}
+              {formState === LoginOptions.PASSWORD && (
+                <Button
+                  type="submit"
+                  block
+                  form="login-username"
+                  disabled={pageLoading || form.formState.isSubmitting}
+                  loading={pageLoading || form.formState.isSubmitting}
+                >
+                  {t("common:login")}
+                </Button>
+              )}
+            </>
           )}
           {formState === LoginOptions.OTP && (
             <Button
@@ -538,7 +551,11 @@ const SigninFormContent = (_: { isMobileView?: boolean }) => {
               ورود شما به معنای پذیرش
               <Link
                 target="_blank"
-                href={`${process.env.NEXT_PUBLIC_VARDAST}/privacy`}
+                href={
+                  hasPassword
+                    ? `${process.env.NEXT_PUBLIC_VARDAST}/privacy`
+                    : "#"
+                }
                 className="text-primary underline"
               >
                 {" "}
@@ -570,13 +587,19 @@ const Circle = ({ solid }: { solid?: boolean }) => {
   )
 }
 
-const SigninForm = ({ isMobileView }) => {
+const SigninForm = ({
+  isMobileView,
+  hasPassword
+}: {
+  isMobileView?: boolean
+  hasPassword?: boolean
+}) => {
   if (isMobileView) {
-    return <SigninFormContent isMobileView={true} />
+    return <SigninFormContent isMobileView={true} hasPassword={hasPassword} />
   }
   return (
     <Card className="gap-6 md:py-12">
-      <SigninFormContent />
+      <SigninFormContent hasPassword={hasPassword} />
     </Card>
   )
 }

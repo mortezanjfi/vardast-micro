@@ -2,12 +2,14 @@
 
 import { useState } from "react"
 import { useClickOutside } from "@mantine/hooks"
+// import { useTheme } from "next-themes"
+import paths from "@vardast/lib/paths"
 import { Avatar, AvatarFallback, AvatarImage } from "@vardast/ui/avatar"
 import { Button } from "@vardast/ui/button"
+import { clearCacheBySignOut } from "@vardast/util/session"
 import clsx from "clsx"
 import { LucideChevronsUpDown, LucideLogOut } from "lucide-react"
-import { signOut, useSession } from "next-auth/react"
-// import { useTheme } from "next-themes"
+import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 
 const UserMenu = () => {
@@ -57,11 +59,7 @@ const UserMenu = () => {
                   </>
                 </Button> */}
                 <Button
-                  onClick={() =>
-                    signOut({
-                      callbackUrl: "/auth/signin"
-                    })
-                  }
+                  onClick={() => clearCacheBySignOut(paths.signin)}
                   variant="ghost"
                   className="justify-start text-start"
                 >

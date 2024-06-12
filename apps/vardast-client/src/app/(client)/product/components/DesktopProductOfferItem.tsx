@@ -22,6 +22,7 @@ import {
   useCreateEventTrackerMutation
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
+import paths from "@vardast/lib/paths"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import { Dialog, DialogContent, DialogHeader } from "@vardast/ui/dialog"
@@ -75,7 +76,7 @@ const DesktopProductOfferItem = ({ hasContactButton, offer, uom }: Props) => {
         setOpen(true)
       },
       onError: (errors: ClientError) => {
-        router.replace(`/auth/signin${pathname}`)
+        router.replace(`${paths.signin}?ru=${pathname}`)
         if (
           errors.response.errors?.find(
             (error) => error.extensions?.code === "FORBIDDEN"
@@ -89,7 +90,7 @@ const DesktopProductOfferItem = ({ hasContactButton, offer, uom }: Props) => {
           // })
           console.log("redirect to login for FORBIDDEN contact visit")
 
-          router.replace(`/auth/signin${pathname}`)
+          router.replace(`${paths.signin}?ru=${pathname}`)
         } else {
           toast({
             description: (
@@ -116,7 +117,7 @@ const DesktopProductOfferItem = ({ hasContactButton, offer, uom }: Props) => {
       })
       return
     }
-    router.replace(`/auth/signin${pathname}`)
+    router.replace(`${paths.signin}?ru=${pathname}`)
   }
 
   return (

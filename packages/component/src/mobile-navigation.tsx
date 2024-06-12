@@ -9,6 +9,7 @@ import {
 import useIsCurrentPath from "@vardast/hook/use-is-current-path"
 import { toast } from "@vardast/hook/use-toast"
 import mobile_footer_options from "@vardast/lib/mobile_footer_options"
+import paths from "@vardast/lib/paths"
 import { PublicContext } from "@vardast/provider/PublicProvider"
 import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
@@ -58,13 +59,13 @@ const MobileNavigation = ({
         setOpen(true)
       },
       onError: (errors: ClientError) => {
-        router.replace(`/auth/signin${pathname}`)
+        router.replace(`${paths.signin}?ru=${pathname}`)
         if (
           errors.response.errors?.find(
             (error) => error.extensions?.code === "FORBIDDEN"
           )
         ) {
-          router.replace(`/auth/signin${pathname}`)
+          router.replace(`${paths.signin}?ru=${pathname}`)
         } else {
           toast({
             description: (
@@ -91,7 +92,7 @@ const MobileNavigation = ({
       })
       return
     }
-    router.replace(`/auth/signin${pathname}`)
+    router.replace(`${paths.signin}?ru=${pathname}`)
   }
 
   return (

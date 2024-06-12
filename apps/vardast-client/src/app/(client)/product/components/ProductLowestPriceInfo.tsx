@@ -14,6 +14,7 @@ import {
   useCreateEventTrackerMutation
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
+import paths from "@vardast/lib/paths"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import { Dialog, DialogContent, DialogHeader } from "@vardast/ui/dialog"
@@ -45,7 +46,7 @@ const ProductLowestPriceInfo = ({
         setOpen(true)
       },
       onError: (errors: ClientError) => {
-        router.replace(`/auth/signin${pathname}`)
+        router.replace(`${paths.signin}?ru=${pathname}`)
         if (
           errors.response.errors?.find(
             (error) => error.extensions?.code === "FORBIDDEN"
@@ -59,7 +60,7 @@ const ProductLowestPriceInfo = ({
           // })
           console.log("redirect to login for FORBIDDEN contact visit")
 
-          router.replace(`/auth/signin${pathname}`)
+          router.replace(`${paths.signin}?ru=${pathname}`)
         } else {
           toast({
             description: (
@@ -86,7 +87,7 @@ const ProductLowestPriceInfo = ({
       })
       return
     }
-    router.replace(`/auth/signin${pathname}`)
+    router.replace(`${paths.signin}?ru=${pathname}`)
   }
 
   const mainOffer = lowestPrice

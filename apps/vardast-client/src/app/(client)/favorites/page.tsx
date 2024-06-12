@@ -54,8 +54,6 @@ const FavoritePage = async () => {
     )
   }
 
-  // if (!session) redirect("/auth/signin/favorites")
-
   const dehydratedState = dehydrate(queryClient)
 
   if (!isMobileView) {

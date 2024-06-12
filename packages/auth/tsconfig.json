@@ -7,6 +7,12 @@
       "@vardast/graphql/*": ["node_modules/@vardast/graphql/src/*.ts"]
     }
   },
-  "include": ["src", "env.js", "next/types/**/*.ts", "src/types/next-env.d.ts"],
+  "include": [
+    "next-auth.d.ts",
+    "src",
+    "env.js",
+    "next/types/**/*.ts",
+    "src/types/next-env.d.ts"
+  ],
   "exclude": ["node_modules"]
 }

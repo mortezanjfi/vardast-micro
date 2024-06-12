@@ -16,6 +16,7 @@ import {
   GetUserFavoriteProductsQuery,
   GetUserFavoriteSellersQuery
 } from "@vardast/graphql/generated"
+import paths from "@vardast/lib/paths"
 import { allUserFavoriteBrandsQueryFns } from "@vardast/query/queryFns/allUserFavoriteBrandsQueryFns"
 import { allUserFavoriteProductsQueryFns } from "@vardast/query/queryFns/allUserFavoriteProductsQueryFns"
 import { allUserFavoriteSellersQueryFns } from "@vardast/query/queryFns/allUserFavoriteSellersQueryFns"
@@ -110,7 +111,7 @@ const FavoritesPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.replace("/auth/signin/favorites")
+      router.replace(`${paths.signin}?ru=/favorites`)
     } else if (!cacheFlag) {
       brandQuery.refetch()
       sellerQuery.refetch()

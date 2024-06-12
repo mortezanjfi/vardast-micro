@@ -6,7 +6,8 @@ import {
   LoginWithOtpDocument,
   LoginWithOtpMutation,
   RefreshUserMutation,
-  RefreshUserMutationDocument
+  RefreshUserMutationDocument,
+  UserType
 } from "@vardast/graphql/generated"
 import { GraphQLClient } from "graphql-request"
 import { AuthOptions } from "next-auth"
@@ -41,7 +42,8 @@ async function refreshAccessToken(tokenObject: any) {
       accessToken: data.refresh.accessToken,
       accessTokenTtl: data.refresh.accessTokenTtl + Date.now(),
       refreshToken: data.refresh.refreshToken,
-      refreshTokenTtl: data.refresh.refreshTokenTtl + Date.now()
+      refreshTokenTtl: data.refresh.refreshTokenTtl + Date.now(),
+      type: data.refresh.type
     }
   } catch (error) {
     return {
@@ -114,6 +116,7 @@ export const authOptions: AuthOptions = {
               accessTokenTtl: data.loginWithOtp.accessTokenTtl + Date.now(),
               refreshToken: data.loginWithOtp.refreshToken,
               refreshTokenTtl: data.loginWithOtp.refreshTokenTtl + Date.now(),
+              type: data.loginWithOtp.type,
               userId: data.loginWithOtp.user.id,
               abilities: data.loginWithOtp.abilities,
               roles: data.loginWithOtp.user.roles
@@ -139,6 +142,7 @@ export const authOptions: AuthOptions = {
               accessTokenTtl: data.login.accessTokenTtl + Date.now(),
               refreshToken: data.login.refreshToken,
               refreshTokenTtl: data.login.refreshTokenTtl + Date.now(),
+              type: data.login.type,
               userId: data.login.user.id,
               abilities: data.login.abilities,
               roles: data.login.user.roles
@@ -169,6 +173,7 @@ export const authOptions: AuthOptions = {
           token.accessTokenTtl = user.accessTokenTtl
           token.refreshToken = user.refreshToken
           token.refreshTokenTtl = user.refreshTokenTtl
+          token.type = user.type
         }
 
         if (trigger === "update" && session) {
@@ -178,6 +183,7 @@ export const authOptions: AuthOptions = {
           token.accessTokenTtl = session?.accessTokenTtl
           token.refreshToken = session?.refreshToken
           token.refreshTokenTtl = session?.refreshTokenTtl
+          token.type = user.type
           return token
         }
 
@@ -223,6 +229,7 @@ export const authOptions: AuthOptions = {
         session.accessTokenTtl = token.accessTokenTtl as number
         session.refreshToken = token.refreshToken as string
         session.refreshTokenTtl = token.refreshTokenTtl as number
+        session.type = token.type as UserType
         session.profile = userInfo.whoAmI as any
         session.abilities = token.abilities as string[]
         session.error = token.error as string
