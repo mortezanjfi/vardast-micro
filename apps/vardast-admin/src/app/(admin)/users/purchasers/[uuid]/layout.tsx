@@ -9,60 +9,51 @@ import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 const Layout: React.FC<PropsWithChildren> = async ({ children }) => {
   const steppers: Step[] = [
     {
-      name: "اطلاعات پایه شرکت",
+      name: "اطلاعات تماس",
       Icon: "info",
       currentStep: 0
     },
     {
-      name: "اطلاعات تماس",
+      name: "اطلاعات حقوقی",
       Icon: "info",
       currentStep: 1
     },
     {
-      name: "اطلاعات حقوقی",
+      name: "اطلاعات مالی",
       Icon: "info",
       currentStep: 2
     },
     {
-      name: "اطلاعات مالی",
+      name: "همکاران",
       Icon: "info",
       currentStep: 3
     },
     {
-      name: "همکاران",
-      Icon: "info",
-      currentStep: 4
-    },
-    {
       name: "تایید نهایی",
       Icon: "info",
-      currentStep: 5
+      currentStep: 4
     }
   ]
 
   const urlToStepMappers: urlToStepMapper[] = [
     {
       stepNumber: 0,
-      name: "info"
-    },
-    {
-      stepNumber: 1,
       name: "address"
     },
     {
-      stepNumber: 2,
+      stepNumber: 1,
       name: "legal"
     },
     {
-      stepNumber: 3,
+      stepNumber: 2,
       name: "finance"
     },
     {
-      stepNumber: 4,
+      stepNumber: 3,
       name: "collabs"
     },
     {
-      stepNumber: 5,
+      stepNumber: 4,
       name: "submition"
     }
   ]

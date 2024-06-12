@@ -4,6 +4,7 @@ import { useState } from "react"
 import useTranslation from "next-translate/useTranslation"
 
 import CardContainer from "../../desktop/CardContainer"
+import Link from "../../Link"
 import {
   SELECTED_ITEM,
   SELECTED_ITEM_TYPE
@@ -73,6 +74,17 @@ function LegalUsers({ isMobileView, uuid }: Props) {
           </tbody>
         </table>
       </CardContainer>
+      <div className=" mt-7 flex w-full flex-row-reverse gap border-t pt-6 ">
+        <Link
+          className="btn btn-md btn-primary"
+          href={`/users/purchasers/${uuid}/submition`}
+        >
+          تایید و ادامه
+        </Link>
+        <Link className="btn btn-md btn-secondary" href={"/users/purchasers"}>
+          بازگشت به کاربران
+        </Link>
+      </div>
     </>
   )
 }
