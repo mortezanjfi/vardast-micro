@@ -1,13 +1,29 @@
-import { redirect } from "next/navigation"
-import { authOptions } from "@vardast/auth/authOptions"
-import { getServerSession } from "next-auth"
+"use client"
 
-export default async ({ children }: { children: React.ReactNode }) => {
-  const session = await getServerSession(authOptions)
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
+import Loading from "@vardast/component/Loading"
+import { useSession } from "next-auth/react"
 
-  if (!session?.accessToken) {
-    redirect("/auth/signin")
+const Template = ({ children }: { children: React.ReactNode }) => {
+  const { data: session, status } = useSession()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (status !== "loading" && !session?.accessToken) {
+      router.push("/auth/signin/profile")
+    }
+  }, [session, status, router])
+
+  if (session?.accessToken) {
+    return <>{children}</>
   }
 
-  return <>{children}</>
+  return (
+    <div className="flex h-full w-full flex-col items-center justify-center">
+      <Loading message="لطفا منتظر بمانید..." />
+    </div>
+  )
 }
+
+export default Template
