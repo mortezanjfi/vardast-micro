@@ -24,6 +24,9 @@ const Layout = ({
         />
       )}
       <div className="h-full">{children}</div>
+      <div>
+        
+      </div>
     </div>
   )
 }

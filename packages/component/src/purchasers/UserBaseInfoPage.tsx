@@ -1,4 +1,4 @@
-import UserBaseInfoForm from "@/purchasers/UserBaseInfoForm"
+import UserBaseInfoForm from "./UserBaseInfoForm"
 
 export type UserBaseInfoPageProps = {
   isMobileView: boolean
