@@ -91,7 +91,7 @@ const OrderCard = ({
         isSellerPanel &&
           router.push(
             goToOffers
-              ? `/my-orders/${preOrder?.id}/offers`
+              ? `/my-orders/${preOrder?.id}`
               : `/orders/${preOrder?.id}`
           )
       }}
@@ -118,18 +118,14 @@ const OrderCard = ({
           </div>
 
           {!isSellerPanel && (
-            <Button
-              variant="secondary"
-              className="tag"
-              onClick={() => {
-                router.push(`/profile/orders/${preOrder?.id}/offers`)
-              }}
-            >
-              <span>{t("common:price-offer")}</span>
-              <span className="flex h-[19px] w-[19px] flex-col items-center justify-center rounded-full  bg-error-500 text-alpha-white">
-                {digitsEnToFa(preOrder?.offersNum)}
-              </span>
-            </Button>
+            <Link href={`/profile/orders/${preOrder?.id}/offers`}>
+              <Button variant="secondary" className="tag">
+                <span>{t("common:price-offer")}</span>
+                <span className="flex h-[19px] w-[19px] flex-col items-center justify-center rounded-full  bg-error-500 text-alpha-white">
+                  {digitsEnToFa(preOrder?.offersNum)}
+                </span>
+              </Button>
+            </Link>
           )}
         </div>
         {!isSellerPanel && (

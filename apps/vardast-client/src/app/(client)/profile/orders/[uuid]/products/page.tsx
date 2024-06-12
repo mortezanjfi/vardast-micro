@@ -1,7 +1,6 @@
 import { Metadata } from "next"
+import OrderProductsPageIndex from "@vardast/component/order/products/OrderProductsPageIndex"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
-
-import OrderProductsPageIndex from "@/app/(client)/profile/orders/[uuid]/products/components/OrderProductsPageIndex"
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

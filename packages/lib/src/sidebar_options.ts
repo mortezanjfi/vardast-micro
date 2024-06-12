@@ -33,7 +33,7 @@ const _admin: NavigationType[] = [
       {
         title: "سفارشات",
         icon: "list",
-        path: "/orders"
+        path: "/profile/orders"
       },
       {
         title: "کالاها",
@@ -60,10 +60,24 @@ const _admin: NavigationType[] = [
         abilities: "gql.products.seller.index"
       },
       {
+        title: "پروژه ها",
+        path: "/projects",
+        icon: "folder",
+        abilities: "gql.products.seller.index"
+      },
+      {
         title: "کاربران",
         path: "/users",
         icon: "users",
-        abilities: "gql.users.user.index"
+        abilities: "gql.users.user.index",
+        items: [
+          {
+            title: "خریداران",
+            path: "/users/purchasers",
+            icon: "package",
+            abilities: "gql.products.offer.index.index"
+          }
+        ]
       },
       {
         title: "پیشنهادات",

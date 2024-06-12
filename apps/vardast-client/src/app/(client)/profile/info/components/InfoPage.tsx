@@ -1,8 +1,8 @@
 "use client"
 
+import PageTitle from "@vardast/component/project/PageTitle"
 import { useSession } from "next-auth/react"
 
-import PageTitle from "@/app/(client)/profile/components/PageTitle"
 import UpdateInfoItem from "@/app/(client)/profile/info/components/UpdateInfoItem"
 
 type InfoPageProps = {

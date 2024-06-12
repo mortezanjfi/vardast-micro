@@ -1,7 +1,6 @@
 import { Metadata } from "next"
+import ProjectForm from "@vardast/component/project/ProjectForm"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
-
-import ProjectForm from "@/app/(client)/profile/projects/components/project/ProjectForm"
 
 interface ProductIndexProps {
   params: { uuid: string }

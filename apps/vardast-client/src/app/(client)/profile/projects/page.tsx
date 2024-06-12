@@ -1,10 +1,9 @@
 import { Metadata } from "next"
 import { dehydrate } from "@tanstack/react-query"
+import ProjectsPage from "@vardast/component/project/ProjectsPage"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
-
-import ProjectsPage from "@/app/(client)/profile/projects/components/project/ProjectsPage"
 
 // set dynamic metadata
 export async function generateMetadata(): Promise<Metadata> {
@@ -24,6 +23,7 @@ export default async () => {
       <ProjectsPage
         isMobileView={isMobileView}
         title={(await generateMetadata()).title?.toString() as string}
+        isAdmin={false}
       />
     </ReactQueryHydrate>
   )

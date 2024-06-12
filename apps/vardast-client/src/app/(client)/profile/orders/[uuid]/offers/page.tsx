@@ -1,10 +1,9 @@
 import { Metadata } from "next"
 import { dehydrate } from "@tanstack/react-query"
+import OrderOffers from "@vardast/component/order/offer/OrderOffers"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
-
-import OrderOffers from "@/app/(client)/profile/orders/[uuid]/offers/components/OrderOffers"
 
 // set dynamic metadata
 export async function generateMetadata(): Promise<Metadata> {
