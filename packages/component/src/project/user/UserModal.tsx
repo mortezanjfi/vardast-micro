@@ -45,6 +45,7 @@ export const AddUserModalFormSchema = z.object({
 export type AddUserModalFormType = TypeOf<typeof AddUserModalFormSchema>
 
 export const UserModal = ({
+  assignToProject,
   isMobileView,
   onCloseModal,
   selectedUsers,
@@ -91,21 +92,23 @@ export const UserModal = ({
   )
 
   const onSubmit = (data: any) => {
-    if (selectedUsers?.data) {
-      return updateProjectUserMutation.mutate({
-        updateProjectUserInput: {
-          ...(data as UpdateProjectUserInput),
-          userId: selectedUsers?.data.id,
+    if (assignToProject) {
+      if (selectedUsers?.data) {
+        return updateProjectUserMutation.mutate({
+          updateProjectUserInput: {
+            ...(data as UpdateProjectUserInput),
+            userId: selectedUsers?.data.id,
+            projectId: +uuid
+          }
+        })
+      }
+      assignUserProjectMutation.mutate({
+        createUserProjectInput: {
+          ...(data as CreateUserProjectInput),
           projectId: +uuid
         }
       })
     }
-    assignUserProjectMutation.mutate({
-      createUserProjectInput: {
-        ...(data as CreateUserProjectInput),
-        projectId: +uuid
-      }
-    })
   }
 
   useEffect(() => {

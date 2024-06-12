@@ -27,6 +27,7 @@ export type SELECTED_ITEM = {
 }
 
 export type ProjectUserCartProps = {
+  assignToProject?: boolean
   isMobileView?: boolean
   uuid: string
   selectedUsers: SELECTED_ITEM
@@ -34,6 +35,7 @@ export type ProjectUserCartProps = {
 }
 
 const ProjectUsersTab = ({
+  isAdmin,
   isMobileView,
   uuid,
   findOneProjectQuery
