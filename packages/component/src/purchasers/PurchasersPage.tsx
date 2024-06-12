@@ -11,8 +11,7 @@ const PurchasersPage = (props: Props) => {
   const { t } = useTranslation()
   const router = useRouter()
   const onCreateUser = () => {
-    router.push(`/users/purchasers/2/info
-    `)
+    router.push(`/users/purchasers/2/info`)
   }
 
   return (

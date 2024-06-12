@@ -17,16 +17,17 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-import CardContainer from "../desktop/CardContainer"
-import Link from "../Link"
+import CardContainer from "../../desktop/CardContainer"
+import Link from "../../Link"
 
 type Props = { uuid: string }
 
 export type CreateLegalUserInfoType = TypeOf<typeof CreateLegalUserSchema>
 
 const CreateLegalUserSchema = z.object({
-  companyName: z.string(),
-  companyID: z.coerce.number()
+  phone: z.coerce.number(),
+  accountNumber: z.coerce.number(),
+  ibanNumber: z.coerce.number()
 })
 
 export default ({ uuid }: Props) => {
@@ -40,7 +41,7 @@ export default ({ uuid }: Props) => {
   const submit = (data) => {
     console.log(data)
 
-    router.push(`/profile/users/purchaser/${uuid}/address-info`)
+    router.push(`/users/purchasers/2/collabs`)
   }
   z.setErrorMap(zodI18nMap)
   return (
@@ -55,12 +56,10 @@ export default ({ uuid }: Props) => {
               {" "}
               <FormField
                 control={form.control}
-                name="companyName"
+                name="phone"
                 render={({ field }) => (
                   <FormItem className="col-span-1">
-                    <FormLabel>
-                      {t("common:entity_name", { entity: t("common:company") })}
-                    </FormLabel>
+                    <FormLabel>{t("common:main-number")}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -74,14 +73,27 @@ export default ({ uuid }: Props) => {
               />
               <FormField
                 control={form.control}
-                name="companyID"
+                name="accountNumber"
                 render={({ field }) => (
                   <FormItem className="col-span-1">
-                    <FormLabel>
-                      {t("common:entity_uuid", {
-                        entity: t("common:national")
-                      })}
-                    </FormLabel>
+                    <FormLabel>{t("common:account-number")}</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="text"
+                        placeholder={t("common:enter")}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="ibanNumber"
+                render={({ field }) => (
+                  <FormItem className="col-span-1">
+                    <FormLabel>{t("common:IBAN-number")}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -95,7 +107,7 @@ export default ({ uuid }: Props) => {
               />
             </div>{" "}
           </CardContainer>
-          <div className=" flex w-full flex-row-reverse gap pt-4 ">
+          <div className=" mt-7 flex w-full flex-row-reverse gap border-t pt-6 ">
             <Button type="submit" variant="primary">
               تایید و ادامه
             </Button>
