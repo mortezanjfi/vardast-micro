@@ -26,7 +26,7 @@ export interface cardButton {
     | "danger"
     | "ghost"
   className?: string
-  onClick?: () => void
+  onClick?: Function
   loading?: boolean
   disabled?: boolean
 }
@@ -66,7 +66,9 @@ const Card = ({
             <Button
               disabled={button.disabled}
               loading={button.loading}
-              onClick={button.onClick}
+              onClick={() => {
+                button.onClick()
+              }}
               type={button.type}
               variant={button.variant}
               className={clsx("py-2", button.className)}
