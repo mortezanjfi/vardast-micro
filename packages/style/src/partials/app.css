@@ -1,7 +1,7 @@
 .app {
   /* @apply flex flex-col; */
   &.mobile {
-    @apply flex flex-col overflow-x-hidden h-full min-h-0 pb-[calc(env(safe-area-inset-bottom)*0.4)];
+    @apply overflow-hidden flex flex-col h-full min-h-0 pb-[calc(env(safe-area-inset-bottom)*0.4)];
   }
   &.desktop {
     @apply min-h-0 flex-1;
@@ -10,7 +10,7 @@
 .app-inner {
   /* @apply flex; */
   &.mobile {
-    @apply flex flex-1 gap-1;
+    @apply flex flex-1 gap-1 overflow-hidden;
   }
   /* &.desktop {
     @apply;
@@ -57,7 +57,7 @@
     @apply bg-secondary text-alpha-white;
   }
   &.mobile {
-    @apply fixed inset-x-0 bottom-0 z-50 w-full transform border-t border-alpha-200 bg-alpha-white transition-all duration-300 dark:border-alpha-600 dark:bg-alpha-700;
+    @apply pb-[calc(env(safe-area-inset-bottom)*0.4)] fixed inset-x-0 bottom-0 z-50 w-full transform border-t border-alpha-200 bg-alpha-white transition-all duration-300 dark:border-alpha-600 dark:bg-alpha-700;
     /* &.short {
       @apply translate-y-[calc(env(safe-area-inset-bottom)*0.5+4rem)];
     } */

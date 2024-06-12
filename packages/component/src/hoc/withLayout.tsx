@@ -34,7 +34,9 @@ export default function withLayout<T>(
             <SearchActionModal isMobileView />
             <div
               className={clsx("app mobile")}
-              style={{ paddingBottom: `${height}rem` }}
+              style={{
+                paddingBottom: `calc(${height}rem + env(safe-area-inset-bottom) * 0.4)`
+              }}
             >
               {layout?.mobile?.header && (
                 <>
@@ -54,19 +56,21 @@ export default function withLayout<T>(
               )}
               <main
                 className={clsx(
-                  "app-layout mobile",
+                  "app-inner mobile",
                   layout?.mobile?.main?.background?.value
                 )}
               >
-                <MobileScrollProvider>
-                  {layout?.mobile?.main?.breadcrumb && (
-                    <Suspense>
-                      <Breadcrumb />
-                    </Suspense>
-                  )}
-                  {layout?.mobile?.main?.page_header && <PageBanner />}
-                  <Component {...{ ...props, ...layout?.desktop?.main }} />
-                </MobileScrollProvider>
+                <div className="app-layout mobile">
+                  <MobileScrollProvider>
+                    {layout?.mobile?.main?.breadcrumb && (
+                      <Suspense>
+                        <Breadcrumb />
+                      </Suspense>
+                    )}
+                    {layout?.mobile?.main?.page_header && <PageBanner />}
+                    <Component {...{ ...props, ...layout?.desktop?.main }} />
+                  </MobileScrollProvider>
+                </div>
               </main>
               {layout?.mobile?.footer && (
                 <footer

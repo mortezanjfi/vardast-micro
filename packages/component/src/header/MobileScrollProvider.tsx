@@ -18,7 +18,7 @@ const MobileScrollProvider: React.FC<PropsWithChildren> = ({ children }) => {
   }, [pathname])
 
   return (
-    <div id="scroll-container" ref={ref} className={clsx("app-content mobile")}>
+    <div ref={ref} className={clsx("app-content mobile")}>
       {children}
     </div>
   )

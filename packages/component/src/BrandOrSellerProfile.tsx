@@ -188,7 +188,7 @@ const BrandOrSellerProfile = ({
   setPageHeader(PageHeader)
 
   return (
-    <div className="flex h-full flex-col bg-alpha-white md:gap-9">
+    <div className="flex flex-col bg-alpha-white md:h-full md:gap-9">
       <Segments
         value={activeTab}
         onValueChange={(value) => {

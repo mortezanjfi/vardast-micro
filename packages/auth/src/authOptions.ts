@@ -207,6 +207,8 @@ export const authOptions: AuthOptions = {
       return token
     },
     session: async ({ session, token }) => {
+      console.log("ddddddddddddddddddddddddddddddd", { token })
+
       try {
         const userClient = new GraphQLClient(
           process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT || "",

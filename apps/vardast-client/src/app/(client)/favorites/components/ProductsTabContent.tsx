@@ -19,8 +19,7 @@ type ProductsTabContentProps = {
 }
 
 export const ProductsTabContent = ({
-  productQuery,
-  session
+  productQuery
 }: ProductsTabContentProps) => {
   console.log({ productQuery })
 

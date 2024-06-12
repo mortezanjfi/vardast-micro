@@ -1,12 +1,12 @@
 import {
-  BookmarkIcon,
   HomeIcon,
+  ListBulletIcon,
   Squares2X2Icon,
   UserCircleIcon
 } from "@heroicons/react/24/outline"
 import {
-  BookmarkIcon as SolidBookmarkIcon,
   HomeIcon as SolidHomeIcon,
+  ListBulletIcon as SolidListBulletIcon,
   Squares2X2Icon as SolidSquares2X2Icon,
   UserCircleIcon as SolidUserCircleIcon
 } from "@heroicons/react/24/solid"
@@ -40,14 +40,14 @@ const _default: ILayoutOption[] = [
   {
     id: 2,
     icon: {
-      Default: BookmarkIcon,
-      Active: SolidBookmarkIcon
+      Default: ListBulletIcon,
+      Active: SolidListBulletIcon
     },
     button: {
       type: "link",
-      value: "/favorites"
+      value: "/basket"
     },
-    title: "علاقه‌مندی"
+    title: "سفارشات"
   },
   {
     id: 3,

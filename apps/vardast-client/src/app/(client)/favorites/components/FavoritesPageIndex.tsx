@@ -75,9 +75,7 @@ const NotFoundItemsHelp = ({ text = "کالا" }) => {
 const FavoritesPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
   const { data: session, status } = useSession()
   const router = useRouter()
-  // const [type, setType] = useState<EntityTypeEnum>(EntityTypeEnum.Product)
   const [cacheFlag, setCacheFlag] = useState(false)
-  // const router = useRouter()
   const productQuery = useQuery<GetUserFavoriteProductsQuery>({
     queryKey: [
       QUERY_FUNCTIONS_KEY.GET_ALL_USER_FAVORITE_PRODUCT,
@@ -126,16 +124,6 @@ const FavoritesPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // useEffect(() => {
-  //   if (!session) {
-  //     router.replace("/auth/signin")
-  //   }
-
-  //   if (!session?.profile?.roles.some((role) => role?.name === "seller")) {
-  //     router.replace("/")
-  //   }
-  // }, [router, session])
-
   const tabs: BrandOrSellerProfileTab[] = useMemo(
     () => [
       {
@@ -165,152 +153,7 @@ const FavoritesPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
   )
 
   if (status === "authenticated") {
-    return (
-      <FavoritesProfile tabs={tabs} isMobileView={isMobileView} />
-      // <Tabs
-      //   onValueChange={(value) => {
-      //     setType(value as EntityTypeEnum)
-      //   }}
-      //   defaultValue="product"
-      //   value={type}
-      //   className="h-full"
-      // >
-      //   <TabsList className="w-full">
-      //     <TabsTrigger
-      //       className={clsx("w-1/2 bg-alpha-white !pb-3 !pt-5 font-semibold ")}
-      //       value={EntityTypeEnum.Product}
-      //     >
-      //       <TabTitleWithExtraData
-      //         title="کالاها"
-      //         total={productQuery.data?.favorites.product.length}
-      //       />
-      //     </TabsTrigger>
-      //     <TabsTrigger
-      //       className={clsx("w-1/2 bg-alpha-white !pb-3 !pt-5 font-semibold ")}
-      //       value={EntityTypeEnum.Seller}
-      //     >
-      //       <TabTitleWithExtraData
-      //         title="فروشندگان"
-      //         total={sellerQuery.data?.favorites.seller.length}
-      //       />
-      //     </TabsTrigger>
-      //     <TabsTrigger
-      //       className={clsx("w-1/2 bg-alpha-white !pb-3 !pt-5 font-semibold ")}
-      //       value={EntityTypeEnum.Brand}
-      //     >
-      //       <TabTitleWithExtraData
-      //         title="برندها"
-      //         total={brandQuery.data?.favorites.brand.length}
-      //       />
-      //     </TabsTrigger>
-      //   </TabsList>
-      //   <TabsContent value={EntityTypeEnum.Product}>
-      //     {(productQuery.isFetching || productQuery.isLoading) &&
-      //     session?.accessToken ? (
-      //       <ProductListContainer>
-      //         {() => (
-      //           <>
-      //             <ProductCardSkeleton />
-      //             <ProductCardSkeleton />
-      //             <ProductCardSkeleton />
-      //           </>
-      //         )}
-      //       </ProductListContainer>
-      //     ) : productQuery.data?.favorites.product.length ? (
-      //       <ProductListContainer>
-      //         {({ selectedItemId, setSelectedItemId }) => (
-      //           <>
-      //             {productQuery.data?.favorites.product.map(
-      //               (product) =>
-      //                 product && (
-      //                   <ProductCard
-      //                     selectedItemId={selectedItemId}
-      //                     setSelectedItemId={setSelectedItemId}
-      //                     key={product.id}
-      //                     product={product as Product}
-      //                   />
-      //                 )
-      //             )}
-      //           </>
-      //         )}
-      //       </ProductListContainer>
-      //     ) : (
-      //       <NotFoundItems text="کالا" />
-      //     )}
-      //   </TabsContent>
-      //   <TabsContent value={EntityTypeEnum.Seller}>
-      //     {(sellerQuery.isFetching || sellerQuery.isLoading) &&
-      //     session?.accessToken ? (
-      //       <BrandsOrSellersContainer>
-      //         {() => (
-      //           <>
-      //             <BrandOrSellerCardSkeleton />
-      //             <BrandOrSellerCardSkeleton />
-      //             <BrandOrSellerCardSkeleton />
-      //           </>
-      //         )}
-      //       </BrandsOrSellersContainer>
-      //     ) : sellerQuery.data?.favorites.seller.length ? (
-      //       <BrandsOrSellersContainer>
-      //         {({ selectedItemId, setSelectedItemId }) => (
-      //           <>
-      //             {sellerQuery.data?.favorites.seller.map(
-      //               (seller) =>
-      //                 seller && (
-      //                   <BrandOrSellerCard
-      //                     selectedItemId={selectedItemId}
-      //                     setSelectedItemId={setSelectedItemId}
-      //                     key={seller.id}
-      //                     content={{
-      //                       ...(seller as Seller),
-      //                       __typename: "Seller"
-      //                     }}
-      //                   />
-      //                 )
-      //             )}
-      //           </>
-      //         )}
-      //       </BrandsOrSellersContainer>
-      //     ) : (
-      //       <NotFoundItems text="فروشنده‌" />
-      //     )}
-      //   </TabsContent>
-      //   <TabsContent value={EntityTypeEnum.Brand}>
-      //     {(brandQuery.isFetching || brandQuery.isLoading) &&
-      //     session?.accessToken ? (
-      //       <BrandsOrSellersContainer>
-      //         {() => (
-      //           <>
-      //             <BrandOrSellerCardSkeleton />
-      //             <BrandOrSellerCardSkeleton />
-      //             <BrandOrSellerCardSkeleton />
-      //           </>
-      //         )}
-      //       </BrandsOrSellersContainer>
-      //     ) : brandQuery.data?.favorites.brand.length ? (
-      //       <BrandsOrSellersContainer>
-      //         {({ selectedItemId, setSelectedItemId }) => (
-      //           <>
-      //             {brandQuery.data?.favorites.brand.map(
-      //               (brand) =>
-      //                 brand && (
-      //                   <BrandOrSellerCard
-      //                     selectedItemId={selectedItemId}
-      //                     setSelectedItemId={setSelectedItemId}
-      //                     key={brand.id}
-      //                     content={{ ...(brand as Brand), __typename: "Brand" }}
-      //                   />
-      //                 )
-      //             )}
-      //           </>
-      //         )}
-      //       </BrandsOrSellersContainer>
-      //     ) : (
-      //       <NotFoundItems text="برند" />
-      //     )}
-      //   </TabsContent>
-      // </Tabs>
-    )
+    return <FavoritesProfile tabs={tabs} isMobileView={isMobileView} />
   }
 
   return (
