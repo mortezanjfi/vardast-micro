@@ -51,28 +51,27 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
         open={deleteModalOpen}
         onOpenChange={setDeleteModalOpen}
       />
-      {!isMobileView || (!isAdmin && <PageTitle title={title} />)}
+      {!isMobileView && !isAdmin && <PageTitle title={title} />}
 
-      {!isMobileView ||
-        (!isAdmin && (
-          <PageHeader
-            pageHeaderClasses="border-b py-5 !mb-0"
-            title={
-              "پروژه های خود را تعریف کنید و مدیریت خرید کالای آن را راحت تر انجام دهید"
-            }
-            titleClasses="text-[14px] font-normal "
-            containerClass="items-center"
+      {!isMobileView && !isAdmin && (
+        <PageHeader
+          pageHeaderClasses="border-b py-5 !mb-0"
+          title={
+            "پروژه های خود را تعریف کنید و مدیریت خرید کالای آن را راحت تر انجام دهید"
+          }
+          titleClasses="text-[14px] font-normal "
+          containerClass="items-center"
+        >
+          <Link
+            className="btn-primary btn btn-md"
+            href={isAdmin ? "/projects/new" : "/profile/projects/new"}
           >
-            <Link
-              className="btn-primary btn btn-md"
-              href={isAdmin ? "/projects/new" : "/profile/projects/new"}
-            >
-              {t("common:add_new_entity", {
-                entity: t("common:project")
-              })}
-            </Link>
-          </PageHeader>
-        ))}
+            {t("common:add_new_entity", {
+              entity: t("common:project")
+            })}
+          </Link>
+        </PageHeader>
+      )}
       <div className={clsx("w-full", isMobileView && " h-full px-6")}>
         {myProjectsQuery.isFetching && myProjectsQuery.isLoading ? (
           <div className="flex h-full items-center justify-center pt-6">

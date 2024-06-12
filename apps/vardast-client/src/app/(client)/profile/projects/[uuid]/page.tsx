@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import ProjectForm from "@vardast/component/src/project/ProjectForm"
+import ProjectForm from "@vardast/component/project/ProjectForm"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
 interface ProductIndexProps {
