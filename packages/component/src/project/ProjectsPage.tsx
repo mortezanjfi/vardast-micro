@@ -6,8 +6,8 @@ import { FolderOpenIcon } from "@heroicons/react/24/solid"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import {
   Project,
-  TypeUserProject,
-  useMyProjectsQuery
+  useMyProjectsQuery,
+  UserTypeProject
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import clsx from "clsx"
@@ -41,7 +41,7 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
     }
   )
   const adminAddNewProject = () => {
-    router.push(`/projects/new`)
+    router.push(`/profile/projects/new`)
   }
 
   return (
@@ -62,10 +62,7 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
           titleClasses="text-[14px] font-normal "
           containerClass="items-center"
         >
-          <Link
-            className="btn-primary btn btn-md"
-            href={isAdmin ? "/projects/new" : "/profile/projects/new"}
-          >
+          <Link className="btn-primary btn btn-md" href="/profile/projects/new">
             {t("common:add_new_entity", {
               entity: t("common:project")
             })}
@@ -130,7 +127,7 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                           <td className="border">--</td>
                           <td className="border">
                             {project?.user?.find(
-                              (user) => user?.type === TypeUserProject.Manager
+                              (user) => user?.type === UserTypeProject.Manager
                             )?.user?.fullName || "--"}
                           </td>
                           {/* تاریخ ایجاد */}
@@ -153,7 +150,7 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                           <td className="border">
                             <Link
                               target="_blank"
-                              href={`/projects/${project.id}`}
+                              href={`/profile/projects/${project.id}`}
                             >
                               <span className="tag cursor-pointer text-blue-500">
                                 {t("common:edit")}

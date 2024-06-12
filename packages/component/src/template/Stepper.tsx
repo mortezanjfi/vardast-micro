@@ -1,9 +1,9 @@
 "use client"
 
-import { Step } from "@/template/OfferItemStepper"
 import { clsx } from "clsx"
 
 import DynamicIcon from "../DynamicIcon"
+import { Step } from "./OfferItemStepper"
 
 const Stepper = ({ steps, step }: { steps: Step[]; step: number }) => {
   return (

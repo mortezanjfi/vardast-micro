@@ -24,6 +24,7 @@ query FindOneProject($id: Float!) {
     }
     user {
       id
+      type
       user {
         id
         uuid

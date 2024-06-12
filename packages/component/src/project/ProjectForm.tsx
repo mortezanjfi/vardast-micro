@@ -22,7 +22,6 @@ export enum PROJECT_TAB {
 }
 
 export type ProjectFormProps = {
-  isAdmin?: boolean
   isMobileView: boolean
   uuid?: string
   title: string
@@ -30,8 +29,6 @@ export type ProjectFormProps = {
 }
 
 export type ProjectTabProps = Pick<ProjectFormProps, "uuid" | "isNew"> & {
-  isAdmin?: boolean
-
   setActiveTab: Dispatch<SetStateAction<PROJECT_TAB>>
   activeTab: PROJECT_TAB
   findOneProjectQuery: UseQueryResult<FindOneProjectQuery, unknown>
@@ -39,7 +36,6 @@ export type ProjectTabProps = Pick<ProjectFormProps, "uuid" | "isNew"> & {
 }
 
 const ProjectForm = ({
-  isAdmin,
   isMobileView,
   title,
   isNew,
@@ -57,7 +53,6 @@ const ProjectForm = ({
   )
 
   const tabProps = {
-    isAdmin,
     isMobileView,
     uuid,
     isNew,
@@ -69,10 +64,7 @@ const ProjectForm = ({
   return (
     <div className="flex h-full w-full flex-col gap-9 py-6 md:py-0">
       {!isMobileView && (
-        <PageTitle
-          backButtonUrl={isAdmin ? "/projects" : "/profile/projects"}
-          title={title}
-        />
+        <PageTitle backButtonUrl="/profile/projects" title={title} />
       )}
       <Tabs
         value={activeTab}

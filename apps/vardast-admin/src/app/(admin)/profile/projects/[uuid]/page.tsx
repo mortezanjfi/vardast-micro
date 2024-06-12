@@ -21,7 +21,6 @@ export default async ({ params }: ProductIndexProps) => {
   const isNew = params.uuid === "new"
   return (
     <ProjectForm
-      isAdmin={true}
       isMobileView={isMobileView}
       isNew={isNew}
       uuid={params.uuid}

@@ -10,11 +10,5 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async ({ params: { uuid } }: { params: { uuid: string } }) => {
   const isMobileView = await CheckIsMobileView()
 
-  return (
-    <OrderProductsPageIndex
-      isAdmin={true}
-      isMobileView={isMobileView}
-      uuid={uuid}
-    />
-  )
+  return <OrderProductsPageIndex isMobileView={isMobileView} uuid={uuid} />
 }

@@ -61,7 +61,7 @@ const _admin: NavigationType[] = [
       },
       {
         title: "پروژه ها",
-        path: "/projects",
+        path: "/profile/projects",
         icon: "folder",
         abilities: "gql.products.seller.index"
       },

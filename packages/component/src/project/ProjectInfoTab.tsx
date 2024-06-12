@@ -28,7 +28,6 @@ import zodI18nMap from "../../../util/src/zodErrorMap"
 import { PROJECT_TAB, ProjectTabProps } from "./ProjectForm"
 
 const ProjectInfoTab = ({
-  isAdmin,
   setActiveTab,
   uuid,
   isNew,
@@ -69,11 +68,7 @@ const ProjectInfoTab = ({
             duration: 2000,
             variant: "success"
           })
-          router.push(
-            isAdmin
-              ? `/projects/${data.createProject.id}`
-              : `/profile/projects/${data.createProject.id}`
-          )
+          router.push(`/profile/projects/${data.createProject.id}`)
         } else {
           toast({
             description: "خطا درایجاد پروژه",

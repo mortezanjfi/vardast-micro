@@ -35,7 +35,6 @@ export type ProjectUserCartProps = {
 }
 
 const ProjectUsersTab = ({
-  isAdmin,
   isMobileView,
   uuid,
   findOneProjectQuery

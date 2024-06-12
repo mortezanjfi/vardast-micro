@@ -28,14 +28,12 @@ import NotFoundMessage from "../NotFound"
 import PageTitle from "../project/PageTitle"
 
 type OrderDetailPageProps = {
-  isAdmin?: boolean
   isMobileView?: boolean
   uuid: string
   offerId?: string
 }
 
 const OrderDetailPage = ({
-  isAdmin,
   isMobileView,
   uuid,
   offerId
