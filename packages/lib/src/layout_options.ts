@@ -1,4 +1,4 @@
-import { ILayoutProps } from "@vardast/type/layout"
+import { ILayoutProps, ILayoutTitle } from "@vardast/type/layout"
 
 import mobile_footer_back_options from "./mobile_footer_back_options"
 
@@ -315,7 +315,7 @@ const _seller_or_brand_with_header: ILayoutProps = {
   mobile: {
     header: {
       title: {
-        type: "text"
+        type: "image"
       }
     },
     main: { page_header: true },
@@ -407,7 +407,7 @@ const _seller_panel: ILayoutProps = {
   }
 }
 
-export default {
+const options = {
   _default,
   _profile,
   _home,
@@ -421,4 +421,21 @@ export default {
   _footer,
   _admin,
   _seller_panel
+}
+
+type Options = typeof options
+type OptionName = keyof Options
+
+const createOptionByMobileTitle = (
+  title: ILayoutTitle<"image" | "text">,
+  optionName?: OptionName
+) => {
+  const temp = options[optionName || "_default"]
+  temp.mobile.header.title = title
+  return temp
+}
+
+export default {
+  ...options,
+  createOptionByMobileTitle
 }

@@ -21,9 +21,9 @@ const MobileHeader = ({
   const router = useRouter()
   const params = useParams()
   const setSidebarHamburger = useSetSidebarHamburger()
-  const slug = params.slug
+  const slug = Object.values(params)?.at(0)
 
-  const slugTitle = slug?.at(1) && decodeURI(slug?.at(1))
+  const slugTitle = slug?.at(-1) && decodeURI(slug?.at(-1))
 
   const titleColSpan =
     9 - (back ? 1 : 0) - (hamburger ? 2 : 0) - (options ? 1 : 0)
