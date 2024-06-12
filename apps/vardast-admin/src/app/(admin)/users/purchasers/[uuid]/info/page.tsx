@@ -6,7 +6,7 @@ type Props = {}
 async function page({ params: { uuid } }: { params: { uuid: string } }) {
   const isMobileView = await CheckIsMobileView()
 
-  return <UserBaseInfoPage uuid={uuid} isMobileView={false} />
+  return <UserBaseInfoPage uuid={uuid} />
 }
 
 export default page
