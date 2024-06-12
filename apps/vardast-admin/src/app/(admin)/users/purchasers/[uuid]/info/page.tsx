@@ -1,4 +1,4 @@
-import UserBaseInfoPage from "@vardast/component/purchasers/UserBaseInfoPage"
+import UserBaseInfoPage from "@vardast/component/purchasers/info/UserBaseInfoPage"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
 type Props = {}

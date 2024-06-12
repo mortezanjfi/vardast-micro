@@ -47,19 +47,19 @@ const Layout: React.FC<PropsWithChildren> = async ({ children }) => {
     },
     {
       stepNumber: 1,
-      name: "address-info"
+      name: "address"
     },
     {
       stepNumber: 2,
-      name: "legal-info"
+      name: "legal"
     },
     {
       stepNumber: 3,
-      name: "finance-info"
+      name: "finance"
     },
     {
       stepNumber: 4,
-      name: "collabs-info"
+      name: "collabs"
     },
     {
       stepNumber: 5,
