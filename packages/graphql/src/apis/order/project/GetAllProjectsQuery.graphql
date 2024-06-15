@@ -1,0 +1,50 @@
+query GetAllProjectsQuery($indexProjectInput: IndexProjectInput) {
+  projects(indexProjectInput: $indexProjectInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    from
+    to
+    data {
+      id
+      name
+      createTime
+      user {
+        id
+        user {
+          id
+          uuid
+          firstName
+          lastName
+          email
+          cellphone
+          telegramChatId
+          isCellphoneVerified
+          isEmailVerified
+          isTelegramVerified
+          username
+          password
+          mustChangePassword
+          lastPasswordChangeAt
+          language
+          timezone
+          status
+          suspensionReason
+          customDisplayRole
+          adminComments
+          lastLoginAt
+          lastLoginIP
+          lastFailedLoginAt
+          failedLoginAttempts
+          isLockedOut
+          lockedOutAt
+          createdAt
+          updatedAt
+          fullName
+        }
+        type
+      }
+    }
+  }
+}

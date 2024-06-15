@@ -6,7 +6,7 @@ import { FolderOpenIcon } from "@heroicons/react/24/solid"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import {
   Project,
-  useMyProjectsQuery,
+  useGetAllProjectsQuery,
   UserTypeProject
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
@@ -17,6 +17,7 @@ import CardContainer from "../desktop/CardContainer"
 import Link from "../Link"
 import Loading from "../Loading"
 import PageHeader from "../PageHeader"
+import Pagination from "../Pagination"
 import PageTitle from "./PageTitle"
 import ProjectCard from "./ProjectCard"
 import ProjectDeleteModal from "./ProjectDeleteModal"
@@ -31,14 +32,16 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
   const { t } = useTranslation()
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const router = useRouter()
-
+  const [currentPage, setCurrentPage] = useState<number>(1)
   const [projectToDelete, setProjectToDelete] = useState<{}>()
-  const myProjectsQuery = useMyProjectsQuery(
+  const myProjectsQuery = useGetAllProjectsQuery(
     graphqlRequestClientWithToken,
-    undefined,
     {
-      refetchOnMount: "always"
-    }
+      indexProjectInput: {
+        page: 1
+      }
+    },
+    { queryKey: [{ page: currentPage }], refetchOnMount: "always" }
   )
   const adminAddNewProject = () => {
     router.push(`/profile/projects/new`)
@@ -74,7 +77,7 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
           <div className="flex h-full items-center justify-center pt-6">
             <Loading hideMessage />
           </div>
-        ) : myProjectsQuery.data?.myProjects?.length > 0 ? (
+        ) : myProjectsQuery.data?.projects?.data?.length > 0 ? (
           isAdmin ? (
             <CardContainer
               button={{
@@ -111,7 +114,7 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                 </thead>
 
                 <tbody className="border-collapse border">
-                  {myProjectsQuery.data?.myProjects?.map(
+                  {myProjectsQuery.data?.projects?.data?.map(
                     (project, index) =>
                       project && (
                         <tr key={project.id}>
@@ -126,7 +129,7 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                           {/* تاریخ آخرین سفارش */}
                           <td className="border">--</td>
                           <td className="border">
-                            {project?.user?.find(
+                            {project.user.find(
                               (user) => user?.type === UserTypeProject.Manager
                             )?.user?.fullName || "--"}
                           </td>
@@ -162,18 +165,18 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                   )}
                 </tbody>
               </table>
-              {/* <Pagination
-          total={projects.data?.orders.lastPage ?? 0}
-          page={currentPage}
-          onChange={(page) => {
-            setCurrentPage(page)
-          }}
-        /> */}
+              <Pagination
+                total={myProjectsQuery.data.projects.lastPage ?? 0}
+                page={currentPage}
+                onChange={(page) => {
+                  setCurrentPage(page)
+                }}
+              />
             </CardContainer>
           ) : (
             <div className={clsx("flex h-full flex-col")}>
               <div className="flex flex-col">
-                {myProjectsQuery.data?.myProjects?.map((project) => (
+                {myProjectsQuery.data?.projects?.data?.map((project) => (
                   <ProjectCard
                     key={project.id}
                     project={project as Project}

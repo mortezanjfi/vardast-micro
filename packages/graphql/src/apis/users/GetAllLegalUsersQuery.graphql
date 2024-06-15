@@ -1,0 +1,47 @@
+query GetAllLegalUsersQuery($indexLegalInput: IndexLegalInput) {
+  findAllLegals(indexLegalInput: $indexLegalInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    from
+    to
+    data {
+      id
+      name_company
+      national_id
+      create_at
+      createdBy {
+        id
+        uuid
+        firstName
+        lastName
+        email
+        cellphone
+        telegramChatId
+        isCellphoneVerified
+        isEmailVerified
+        isTelegramVerified
+        username
+        password
+        mustChangePassword
+        lastPasswordChangeAt
+        language
+        timezone
+        status
+        suspensionReason
+        customDisplayRole
+        adminComments
+        lastLoginAt
+        lastLoginIP
+        lastFailedLoginAt
+        failedLoginAttempts
+        isLockedOut
+        lockedOutAt
+        createdAt
+        updatedAt
+        fullName
+      }
+    }
+  }
+}
