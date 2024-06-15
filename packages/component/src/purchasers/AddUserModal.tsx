@@ -46,7 +46,7 @@ const AddUserModal = ({ open, setOpen }: Props) => {
   const submit = (data) => {
     console.log(data)
 
-    router.push(`/users/purchasers/2/address`)
+    router.push(`/users/legal/2/address`)
   }
   return (
     <Dialog modal open={open} onOpenChange={setOpen}>

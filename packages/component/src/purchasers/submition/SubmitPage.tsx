@@ -19,7 +19,7 @@ export default ({ uuid }: Props) => {
         <Button type="button" variant="primary">
           تایید و ادامه
         </Button>
-        <Link className="btn btn-md btn-secondary" href={"/users/purchasers"}>
+        <Link className="btn btn-md btn-secondary" href={"/users/legal"}>
           بازگشت به کاربران
         </Link>
       </div>

@@ -41,7 +41,7 @@ export default ({ readOnlyMode, uuid }: Props) => {
   const submit = (data) => {
     console.log(data)
 
-    router.push(`/users/purchasers/2/finance`)
+    router.push(`/users/legal/2/finance`)
   }
   z.setErrorMap(zodI18nMap)
   return (
@@ -119,10 +119,7 @@ export default ({ readOnlyMode, uuid }: Props) => {
               <Button type="submit" variant="primary">
                 تایید و ادامه
               </Button>
-              <Link
-                className="btn btn-md btn-secondary"
-                href={"/users/purchasers"}
-              >
+              <Link className="btn btn-md btn-secondary" href={"/users/legal"}>
                 بازگشت به کاربران
               </Link>
             </div>
