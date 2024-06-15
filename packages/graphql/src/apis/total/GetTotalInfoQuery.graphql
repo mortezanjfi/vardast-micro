@@ -1,0 +1,15 @@
+query GetTotalInfoQuery {
+  totalInfo {
+    countOfBrands
+    countOfSellers
+    countOfUsers
+    countOfProducts
+    countOfCategories
+    countOfOrders
+    countOfSellersOnline
+    countOfSellersNormal
+    countOfSellersOffline
+    countOfProjects
+    countOfSellersExtended
+  }
+}
