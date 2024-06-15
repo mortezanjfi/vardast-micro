@@ -20,7 +20,7 @@ import { TypeOf, z } from "zod"
 import CardContainer from "../../desktop/CardContainer"
 import Link from "../../Link"
 
-type Props = { uuid: string }
+type Props = { readOnlyMode?: boolean; uuid: string }
 
 export type CreateLegalUserInfoType = TypeOf<typeof CreateLegalUserSchema>
 
@@ -30,7 +30,7 @@ const CreateLegalUserSchema = z.object({
   ibanNumber: z.coerce.number()
 })
 
-export default ({ uuid }: Props) => {
+export default ({ readOnlyMode, uuid }: Props) => {
   const { t } = useTranslation()
   const router = useRouter()
 
@@ -50,10 +50,13 @@ export default ({ uuid }: Props) => {
         <form className="flex flex-col" onSubmit={form.handleSubmit(submit)}>
           <CardContainer
             titleClass="!border-0 font-normal"
-            title="اطلاعات خواسته شده را وارد نمایید"
+            title={
+              readOnlyMode
+                ? "اطلاعات مالی"
+                : "اطلاعات خواسته شده را وارد نمایید"
+            }
           >
             <div className="grid w-full grid-cols-3 gap-7 ">
-              {" "}
               <FormField
                 control={form.control}
                 name="phone"
@@ -62,6 +65,7 @@ export default ({ uuid }: Props) => {
                     <FormLabel>{t("common:main-number")}</FormLabel>
                     <FormControl>
                       <Input
+                        disabled={readOnlyMode}
                         {...field}
                         type="text"
                         placeholder={t("common:enter")}
@@ -79,6 +83,7 @@ export default ({ uuid }: Props) => {
                     <FormLabel>{t("common:account-number")}</FormLabel>
                     <FormControl>
                       <Input
+                        disabled={readOnlyMode}
                         {...field}
                         type="text"
                         placeholder={t("common:enter")}
@@ -96,6 +101,7 @@ export default ({ uuid }: Props) => {
                     <FormLabel>{t("common:IBAN-number")}</FormLabel>
                     <FormControl>
                       <Input
+                        disabled={readOnlyMode}
                         {...field}
                         type="text"
                         placeholder={t("common:enter")}
@@ -107,17 +113,19 @@ export default ({ uuid }: Props) => {
               />
             </div>{" "}
           </CardContainer>
-          <div className=" mt-7 flex w-full flex-row-reverse gap border-t pt-6 ">
-            <Button type="submit" variant="primary">
-              تایید و ادامه
-            </Button>
-            <Link
-              className="btn btn-md btn-secondary"
-              href={"/users/purchasers"}
-            >
-              بازگشت به کاربران
-            </Link>
-          </div>
+          {!readOnlyMode && (
+            <div className=" mt-7 flex w-full flex-row-reverse gap border-t pt-6 ">
+              <Button type="submit" variant="primary">
+                تایید و ادامه
+              </Button>
+              <Link
+                className="btn btn-md btn-secondary"
+                href={"/users/purchasers"}
+              >
+                بازگشت به کاربران
+              </Link>
+            </div>
+          )}
         </form>
       </Form>
     </>

@@ -33,7 +33,7 @@ const CreateLegalUserSchema = z.object({
   companyID: z.coerce.number()
 })
 
-const AddLegalModal = ({ open, setOpen }: Props) => {
+const AddUserModal = ({ open, setOpen }: Props) => {
   const { t } = useTranslation()
 
   const [errors, setErrors] = useState<ClientError>()
@@ -133,4 +133,4 @@ const AddLegalModal = ({ open, setOpen }: Props) => {
     </Dialog>
   )
 }
-export default AddLegalModal
+export default AddUserModal

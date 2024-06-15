@@ -36,7 +36,7 @@ import { TypeOf, z } from "zod"
 import CardContainer from "../../desktop/CardContainer"
 import Link from "../../Link"
 
-type Props = { uuid: string }
+type Props = { readOnlyMode?: boolean; uuid: string }
 
 export type CreateLegalUserInfoType = TypeOf<typeof CreateLegalUserSchema>
 
@@ -48,7 +48,7 @@ const CreateLegalUserSchema = z.object({
   address: z.string()
 })
 
-export default ({ uuid }: Props) => {
+export default ({ readOnlyMode, uuid }: Props) => {
   const { t } = useTranslation()
   const router = useRouter()
   const [provinceDialog, setProvinceDialog] = useState(false)
@@ -81,8 +81,12 @@ export default ({ uuid }: Props) => {
       <Form {...form}>
         <form className="flex flex-col" onSubmit={form.handleSubmit(submit)}>
           <CardContainer
-            titleClass="!border-0 font-normal"
-            title="اطلاعات خواسته شده را وارد نمایید"
+            titleClass={!readOnlyMode && "!border-0 font-normal"}
+            title={
+              readOnlyMode
+                ? "اطلاعات تماس"
+                : "اطلاعات خواسته شده را وارد نمایید"
+            }
           >
             <div className="grid w-full grid-cols-3 grid-rows-4 gap-7 ">
               <FormField
@@ -93,6 +97,7 @@ export default ({ uuid }: Props) => {
                     <FormLabel>{t("common:main-number")}</FormLabel>
                     <FormControl>
                       <Input
+                        disabled={readOnlyMode}
                         {...field}
                         type="text"
                         placeholder={t("common:enter")}
@@ -120,7 +125,11 @@ export default ({ uuid }: Props) => {
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
-                            disabled={provinces.isLoading || provinces.isError}
+                            disabled={
+                              provinces.isLoading ||
+                              provinces.isError ||
+                              readOnlyMode
+                            }
                             noStyle
                             role="combobox"
                             className="input-field flex items-center text-start"
@@ -208,7 +217,8 @@ export default ({ uuid }: Props) => {
                             disabled={
                               cities.isFetching ||
                               cities.isLoading ||
-                              !cities.data?.province.cities.length
+                              !cities.data?.province.cities.length ||
+                              readOnlyMode
                             }
                             noStyle
                             role="combobox"
@@ -280,7 +290,11 @@ export default ({ uuid }: Props) => {
                   <FormItem className="col-span-1  row-start-3">
                     <FormLabel>{t("common:postalCode")}</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder={t("common:enter")} />
+                      <Input
+                        disabled={readOnlyMode}
+                        {...field}
+                        placeholder={t("common:enter")}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -294,6 +308,7 @@ export default ({ uuid }: Props) => {
                     <FormLabel>{t("common:postal-address")}</FormLabel>
                     <FormControl>
                       <Input
+                        disabled={readOnlyMode}
                         type="text"
                         {...field}
                         placeholder={t("common:enter")}
@@ -305,17 +320,19 @@ export default ({ uuid }: Props) => {
               />
             </div>
           </CardContainer>
-          <div className=" mt-7 flex w-full flex-row-reverse gap border-t pt-6 ">
-            <Button type="submit" variant="primary">
-              تایید و ادامه
-            </Button>
-            <Link
-              className="btn btn-md btn-secondary"
-              href={"/users/purchasers"}
-            >
-              بازگشت به کاربران
-            </Link>
-          </div>
+          {!readOnlyMode && (
+            <div className=" mt-7 flex w-full flex-row-reverse gap border-t pt-6 ">
+              <Button type="submit" variant="primary">
+                تایید و ادامه
+              </Button>
+              <Link
+                className="btn btn-md btn-secondary"
+                href={"/users/purchasers"}
+              >
+                بازگشت به کاربران
+              </Link>
+            </div>
+          )}
         </form>
       </Form>
     </>

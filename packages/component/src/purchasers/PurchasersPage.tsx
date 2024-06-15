@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import useTranslation from "next-translate/useTranslation"
 
 import CardContainer from "../../src/desktop/CardContainer"
-import AddLegalModal from "./AddLegalModal"
+import AddUserModal from "./AddUserModal"
 
 type Props = {}
 
@@ -20,7 +20,7 @@ const PurchasersPage = (props: Props) => {
 
   return (
     <>
-      <AddLegalModal open={open} setOpen={setOpen} />
+      <AddUserModal open={open} setOpen={setOpen} />
       <CardContainer
         button={{
           text: "افزودن کاربر",

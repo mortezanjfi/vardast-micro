@@ -58,7 +58,7 @@ const Card = ({
       <div className="flex">
         <div className="flex w-full justify-between">
           {title && (
-            <h2 className={clsx("font-medium text-alpha-800", titleClass)}>
+            <h2 className={clsx("font-medium text-alpha-800 ", titleClass)}>
               {title}
             </h2>
           )}
