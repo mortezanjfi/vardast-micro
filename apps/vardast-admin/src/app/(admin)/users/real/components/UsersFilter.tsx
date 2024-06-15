@@ -12,7 +12,7 @@ import { LucideSearch } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 import { UseFormReturn } from "react-hook-form"
 
-import { UsersFilterFields } from "@/app/(admin)/users/components/Users"
+import { UsersFilterFields } from "@/app/(admin)/users/real/components/Users"
 
 type UsersFilterProps = {
   form: UseFormReturn<UsersFilterFields, any, undefined>

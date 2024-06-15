@@ -91,7 +91,7 @@ const UserForm = ({ user }: Props) => {
           duration: 2000,
           variant: "success"
         })
-        router.push("/users")
+        router.push("/users/real")
       }
     }
   )
@@ -109,7 +109,7 @@ const UserForm = ({ user }: Props) => {
           duration: 2000,
           variant: "success"
         })
-        router.push("/users")
+        router.push("/users/real")
       }
     }
   )

@@ -2,7 +2,7 @@ import { redirect } from "next/navigation"
 import { authOptions } from "@vardast/auth/authOptions"
 import { getServerSession } from "next-auth"
 
-import UserForm from "@/app/(admin)/users/components/UserForm"
+import UserForm from "../components/UserForm"
 
 const CreateBrandPage = async () => {
   const session = await getServerSession(authOptions)

@@ -15,10 +15,9 @@ import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRe
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@vardast/ui/tabs"
 import useTranslation from "next-translate/useTranslation"
 
-import UserSessionsTab from "@/app/(admin)/users/components/UserSessionsTab"
-
 import UserForm from "./UserForm"
 import UserPermissionsForm from "./UserPermissionsForm"
+import UserSessionsTab from "./UserSessionsTab"
 
 type Props = {
   uuid: string

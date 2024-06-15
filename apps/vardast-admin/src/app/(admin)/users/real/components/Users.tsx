@@ -28,7 +28,7 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-import { UsersFilter } from "@/app/(admin)/users/components/UsersFilter"
+import { UsersFilter } from "@/app/(admin)/users/real/components/UsersFilter"
 
 const renderedListStatus = {
   [ApiCallStatusEnum.LOADING]: <Loading />,
@@ -83,7 +83,7 @@ const Users = () => {
       <Card className=" table-responsive mt-8 rounded">
         <PageHeader title={t("common:users_index_title")}>
           {session?.abilities.includes("gql.users.user.index") && (
-            <Link href="/users/new">
+            <Link href="/users/real/new">
               <Button size="medium">
                 {t("common:add_entity", { entity: t("common:user") })}
               </Button>
