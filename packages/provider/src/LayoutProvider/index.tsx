@@ -48,6 +48,7 @@ const LayoutProvider = ({ children }: { children: ReactNode }) => {
   const setBreadcrumb = useSetAtom(breadcrumbAtom)
   const setSidebar = useSetAtom(sidebarAtom)
   const setPageHeader = useSetAtom(pageHeaderAtom)
+  const setLoading = useSetAtom(loadingVisibilityAtom)
 
   const pathname = usePathname()
 
@@ -56,8 +57,9 @@ const LayoutProvider = ({ children }: { children: ReactNode }) => {
       setBreadcrumb([])
       setSidebar(null)
       setPageHeader(null)
+      setLoading(false)
     }
-  }, [pathname, setBreadcrumb, setSidebar, setPageHeader])
+  }, [pathname])
 
   return (
     <LayoutContext.Provider

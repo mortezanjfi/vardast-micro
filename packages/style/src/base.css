@@ -2,7 +2,7 @@ html[lang="fa"] {
   direction: rtl;
 }
 html {
-  @apply font-iranYekan antialiased h-full;
+  @apply font-iranYekan antialiased h-full overflow-y-scroll;
 }
 /* * {
   scrollbar-width: thin;
