@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMediaQuery } from "@mantine/hooks"
+import { digitsEnToFa, digitsFaToEn } from "@persian-tools/persian-tools"
 import { useQueryClient } from "@tanstack/react-query"
 import {
-  CreateUserProjectInput,
-  UpdateProjectUserInput,
   useAssignUserProjectMutation,
   useUpdateProjectUserMutation
 } from "@vardast/graphql/generated"
@@ -28,7 +26,7 @@ import {
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
 import zodI18nMap from "@vardast/util/zodErrorMap"
-import clsx from "clsx"
+import { cellphoneNumberSchema } from "@vardast/util/zodValidationSchemas"
 import { ClientError } from "graphql-request"
 import { LucideAlertOctagon } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
@@ -38,15 +36,13 @@ import { TypeOf, z } from "zod"
 import { ProjectUserCartProps, SELECTED_ITEM_TYPE } from "./ProjectUsersTab"
 
 export const AddUserModalFormSchema = z.object({
-  name: z.string(),
-  cellphone: z.string()
+  // name: z.string(),
+  cellphone: cellphoneNumberSchema
 })
 
 export type AddUserModalFormType = TypeOf<typeof AddUserModalFormSchema>
 
 export const UserModal = ({
-  assignToProject,
-  isMobileView,
   onCloseModal,
   selectedUsers,
   uuid
@@ -91,24 +87,27 @@ export const UserModal = ({
     }
   )
 
-  const onSubmit = (data: any) => {
-    if (assignToProject) {
-      if (selectedUsers?.data) {
-        return updateProjectUserMutation.mutate({
-          updateProjectUserInput: {
-            ...(data as UpdateProjectUserInput),
-            userId: selectedUsers?.data.id,
-            projectId: +uuid
-          }
-        })
-      }
-      assignUserProjectMutation.mutate({
-        createUserProjectInput: {
-          ...(data as CreateUserProjectInput),
+  const onSubmit = (data: AddUserModalFormType) => {
+    if (
+      selectedUsers?.data &&
+      selectedUsers?.type === SELECTED_ITEM_TYPE.EDIT
+    ) {
+      return updateProjectUserMutation.mutate({
+        updateProjectUserInput: {
+          // ...data,
+          cellphone: digitsFaToEn(data.cellphone),
+          userId: selectedUsers?.data.id,
           projectId: +uuid
         }
       })
     }
+    assignUserProjectMutation.mutate({
+      createUserProjectInput: {
+        // ...(data as CreateUserProjectInput),
+        cellphone: digitsFaToEn(data.cellphone),
+        projectId: +uuid
+      }
+    })
   }
 
   useEffect(() => {
@@ -116,108 +115,108 @@ export const UserModal = ({
       selectedUsers?.data &&
       selectedUsers?.type === SELECTED_ITEM_TYPE.EDIT
     ) {
-      form.setValue("name", selectedUsers?.data.fullName)
-      form.setValue("cellphone", selectedUsers?.data.cellphone)
+      // if (selectedUsers?.data.fullName) {
+      //   form.setValue("name", selectedUsers?.data.fullName)
+      // }
+      if (selectedUsers?.data.cellphone) {
+        form.setValue("cellphone", digitsEnToFa(selectedUsers?.data.cellphone))
+      }
     } else {
       form.reset()
     }
-    return () => form.reset()
+    return () => {
+      form.reset()
+      setErrors(undefined)
+    }
   }, [selectedUsers, selectedUsers?.data])
-
-  const isTabletOrMobile = useMediaQuery("(max-width: 640px)", true, {
-    getInitialValueInEffect: false
-  })
 
   return (
     <Dialog
-      modal={!isMobileView}
       open={
         selectedUsers?.type === SELECTED_ITEM_TYPE.ADD ||
         selectedUsers?.type === SELECTED_ITEM_TYPE.EDIT
       }
       onOpenChange={onCloseModal}
     >
-      <DialogContent
-        className={clsx(
-          "gap-7",
-          isMobileView &&
-            "h-full max-h-full w-screen max-w-screen !gap-0 rounded-none"
+      <DialogContent className="gap-7">
+        <DialogHeader className="border-b pb">
+          <DialogTitle>
+            {t("common:add_new_entity", { entity: t("common:user") })}
+          </DialogTitle>
+        </DialogHeader>
+        {errors && (
+          <Alert variant="danger">
+            <LucideAlertOctagon />
+            <AlertTitle>خطا</AlertTitle>
+            <AlertDescription>
+              {(
+                errors.response.errors?.at(0)?.extensions
+                  .displayErrors as string[]
+              ).map((error) => (
+                <p key={error}>{error}</p>
+              ))}
+            </AlertDescription>
+          </Alert>
         )}
-      >
-        <div className="flex h-full w-full flex-col gap-7">
-          <DialogHeader className="h-fit border-b pb-9 pt-4 md:pb md:pt-0">
-            <DialogTitle>
-              {t("common:add_new_entity", { entity: t("common:user") })}
-            </DialogTitle>
-          </DialogHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="grid w-full grid-cols-2 gap-6">
+              {/* <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>نام و نام خانوادگی</FormLabel>
+                    <FormControl>
+                      <Input type="text" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              /> */}
+              <FormField
+                control={form.control}
+                name="cellphone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("common:cellphone")}</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="tel"
+                        inputMode="numeric"
+                        placeholder={digitsEnToFa("09*********")}
+                        {...field}
+                        onChange={(e) =>
+                          e.target.value.length <= 11 &&
+                          field.onChange(digitsEnToFa(e.target.value))
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-          {errors && (
-            <Alert variant="danger">
-              <LucideAlertOctagon />
-              <AlertTitle>خطا</AlertTitle>
-              <AlertDescription>
-                {(
-                  errors.response.errors?.at(0)?.extensions
-                    .displayErrors as string[]
-                ).map((error) => (
-                  <p key={error}>{error}</p>
-                ))}
-              </AlertDescription>
-            </Alert>
-          )}
-          <Form {...form}>
-            <form
-              className="flex h-full flex-col justify-between"
-              onSubmit={form.handleSubmit(onSubmit)}
-            >
-              <div className="flex w-full grid-cols-2 flex-col gap-6 md:grid">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>نام و نام خانوادگی</FormLabel>
-                      <FormControl>
-                        <Input type="text" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="cellphone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t("common:cellphone")}</FormLabel>
-                      <FormControl>
-                        <Input type="tel" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+            <DialogFooter className="mt-7 border-t pt">
+              <div className="flex items-center gap-2">
+                <Button
+                  className="py-2"
+                  variant="ghost"
+                  type="button"
+                  onClick={() => {
+                    onCloseModal()
+                  }}
+                >
+                  انصراف
+                </Button>
+                <Button className="py-2" variant="primary" type="submit">
+                  ذخیره
+                </Button>
               </div>
-
-              <DialogFooter className="mt-7 border-t pt">
-                <div className="grid grid-cols-2 items-center gap-2 md:flex">
-                  <Button
-                    className="py-2"
-                    variant="ghost"
-                    onClick={() => {
-                      onCloseModal()
-                    }}
-                  >
-                    انصراف
-                  </Button>
-                  <Button className="py-2" variant="primary" type="submit">
-                    ذخیره
-                  </Button>
-                </div>
-              </DialogFooter>
-            </form>
-          </Form>
-        </div>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   )

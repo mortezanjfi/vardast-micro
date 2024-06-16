@@ -15,6 +15,6 @@
       "@@vardast/tailwind-config": ["node_modules/@vardast/tailwind-config/*"]
     }
   },
-  "include": ["*.ts", "src", "src"],
+  "include": ["../asset/declaration.d.ts", "*.ts", "src", "src"],
   "exclude": ["node_modules"]
 }

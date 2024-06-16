@@ -1,5 +1,6 @@
 import { PropsWithChildren, Suspense } from "react"
 import LayoutProvider from "@vardast/provider/LayoutProvider"
+import PageLoadingProvider from "@vardast/provider/PageLoadingProvider"
 import { ILayoutProps } from "@vardast/type/layout"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 import { clsx } from "clsx"
@@ -29,6 +30,7 @@ export default function withLayout<T>(
 
     return (
       <LayoutProvider>
+        <PageLoadingProvider />
         {isMobileView ? (
           <>
             <SearchActionModal isMobileView />

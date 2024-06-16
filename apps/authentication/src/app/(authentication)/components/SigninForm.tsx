@@ -98,6 +98,7 @@ const SigninFormContent = ({
             setMessage(null)
             setErrors(null)
             setLoginErrors(null)
+            router.refresh()
           }
         } catch (error) {
           console.log("ValidateCellphoneMutation error: ", error)

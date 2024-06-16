@@ -6,6 +6,7 @@ import { LayoutContext } from "@vardast/provider/LayoutProvider"
 import { CrumbItemProps } from "@vardast/type/breadcrumb"
 import { stringHasOnlyNumberValidator } from "@vardast/util/stringHasOnlyNumberValidator"
 import { useAtomValue } from "jotai"
+import useTranslation from "next-translate/useTranslation"
 
 import Link from "./Link"
 
@@ -14,7 +15,7 @@ const Breadcrumb = ({ items: itemsProps }: { items?: CrumbItemProps[] }) => {
   const itemsContext = useAtomValue(breadcrumbAtom)
   const pathname = usePathname()
   const [breadcrumbs, setBreadcrumbs] = useState<CrumbItemProps[]>()
-  // const { t } = useTranslation()
+  const { t } = useTranslation()
 
   const items = itemsProps ?? itemsContext
 
@@ -35,10 +36,10 @@ const Breadcrumb = ({ items: itemsProps }: { items?: CrumbItemProps[] }) => {
         return {
           path: href,
           label: stringHasOnlyNumberValidator(path)
-            ? `common:details`
+            ? t(`common:details`)
             : +path > 0
               ? path
-              : `common:${path}`,
+              : t(`common:${path}`),
           isCurrent: index === pathArray?.length - 1
         }
       })

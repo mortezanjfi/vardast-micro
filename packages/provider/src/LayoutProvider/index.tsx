@@ -11,12 +11,17 @@ interface LayoutContextType {
   breadcrumbAtom: WritableAtomType<CrumbItemProps[]>
   sidebarAtom: WritableAtomType<JSX.Element | null>
   sidebarHamburgerAtom: WritableAtomType<boolean>
+  loadingVisibilityAtom: WritableAtomType<boolean>
   pageHeaderAtom: WritableAtomType<JSX.Element | null>
 }
 
 const breadcrumbAtom: WritableAtomType<CrumbItemProps[]> = atom(
   [],
   (get, set, update) => set(breadcrumbAtom, update)
+)
+const loadingVisibilityAtom: WritableAtomType<boolean> = atom(
+  false,
+  (get, set, update) => set(loadingVisibilityAtom, update)
 )
 const sidebarAtom: WritableAtomType<JSX.Element | null> = atom(
   null,
@@ -35,6 +40,7 @@ export const LayoutContext = createContext<LayoutContextType>({
   breadcrumbAtom,
   sidebarAtom,
   sidebarHamburgerAtom,
+  loadingVisibilityAtom,
   pageHeaderAtom
 })
 
@@ -59,7 +65,8 @@ const LayoutProvider = ({ children }: { children: ReactNode }) => {
         breadcrumbAtom,
         sidebarAtom,
         sidebarHamburgerAtom,
-        pageHeaderAtom
+        pageHeaderAtom,
+        loadingVisibilityAtom
       }}
     >
       {children}
