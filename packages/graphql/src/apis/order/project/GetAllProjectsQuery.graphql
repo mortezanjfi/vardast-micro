@@ -14,6 +14,23 @@ query GetAllProjectsQuery($indexProjectInput: IndexProjectInput) {
       createTime
       address {
         id
+        address {
+          id
+          userId
+          title
+          delivery_contact
+          delivery_name
+          address
+          city {
+            id
+          }
+          province {
+            id
+          }
+          postalCode
+          status
+          createdAt
+        }
       }
       user {
         id
