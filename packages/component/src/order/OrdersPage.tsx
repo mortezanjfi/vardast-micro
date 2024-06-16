@@ -155,7 +155,7 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                         <td className="w-4">
                           <span>{digitsEnToFa(index + 1)}</span>
                         </td>
-                        <td>{preOrder?.id}</td>
+                        <td>{preOrder?.uuid}</td>
                         <td>{preOrder?.user?.fullName}</td>
                         <td>{preOrder?.project?.name}</td>
                         <td>
@@ -194,8 +194,8 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                             </span>
                           )}
                         </td>
-                        <td>--</td>
-                        <td>--</td>
+                        <td>{preOrder?.status}</td>
+                        <td>{preOrder?.pickUpUser?.fullName}</td>
                         <td>
                           <Link
                             target="_blank"

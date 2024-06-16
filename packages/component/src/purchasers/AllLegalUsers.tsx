@@ -9,11 +9,11 @@ import useTranslation from "next-translate/useTranslation"
 
 import CardContainer from "../desktop/CardContainer"
 import Pagination from "../Pagination"
-import AddUserModal from "./AddUserModal"
+import AddLegalUserModal from "./AddLegalUserModal"
 
 type Props = {}
 
-const AllLegalsUsers = (props: Props) => {
+export default (props: Props) => {
   const { t } = useTranslation()
   const [open, setOpen] = useState<boolean>(false)
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -36,7 +36,7 @@ const AllLegalsUsers = (props: Props) => {
 
   return (
     <>
-      <AddUserModal open={open} setOpen={setOpen} />
+      <AddLegalUserModal open={open} setOpen={setOpen} />
       <CardContainer
         button={{
           text: "افزودن کاربر",
@@ -93,5 +93,3 @@ const AllLegalsUsers = (props: Props) => {
     </>
   )
 }
-
-export default AllLegalsUsers

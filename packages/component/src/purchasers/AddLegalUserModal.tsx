@@ -1,6 +1,8 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useCreateLegalMutation } from "@vardast/graphql/generated"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
 import {
@@ -29,11 +31,11 @@ type Props = { open: boolean; setOpen: Dispatch<SetStateAction<boolean>> }
 export type CreateLegalUserInfoType = TypeOf<typeof CreateLegalUserSchema>
 
 const CreateLegalUserSchema = z.object({
-  companyName: z.string(),
-  companyID: z.coerce.number()
+  name_company: z.string(),
+  national_id: z.string()
 })
 
-const AddUserModal = ({ open, setOpen }: Props) => {
+const AddLegalUserModal = ({ open, setOpen }: Props) => {
   const { t } = useTranslation()
 
   const [errors, setErrors] = useState<ClientError>()
@@ -43,10 +45,24 @@ const AddUserModal = ({ open, setOpen }: Props) => {
     resolver: zodResolver(CreateLegalUserSchema)
   })
 
-  const submit = (data) => {
-    console.log(data)
+  const createLegalMutation = useCreateLegalMutation(
+    graphqlRequestClientWithToken,
+    {
+      onSuccess: (data) => {
+        if (data.createLegal.id) {
+          router.push(`/users/legal/${data.createLegal.id}/address`)
+        }
+      }
+    }
+  )
 
-    router.push(`/users/legal/2/address`)
+  const onCreateLegal = (data: CreateLegalUserInfoType) => {
+    createLegalMutation.mutate({
+      createLegalInput: {
+        national_id: data.national_id as string,
+        name_company: data.name_company as string
+      }
+    })
   }
   return (
     <Dialog modal open={open} onOpenChange={setOpen}>
@@ -75,12 +91,12 @@ const AddUserModal = ({ open, setOpen }: Props) => {
           <Form {...form}>
             <form
               className="flex flex-col"
-              onSubmit={form.handleSubmit(submit)}
+              onSubmit={form.handleSubmit(onCreateLegal)}
             >
               <div className="grid w-full grid-cols-2 gap-7 ">
                 <FormField
                   control={form.control}
-                  name="companyName"
+                  name="name_company"
                   render={({ field }) => (
                     <FormItem className="col-span-1">
                       <FormLabel>
@@ -101,7 +117,7 @@ const AddUserModal = ({ open, setOpen }: Props) => {
                 />
                 <FormField
                   control={form.control}
-                  name="companyID"
+                  name="national_id"
                   render={({ field }) => (
                     <FormItem className="col-span-1">
                       <FormLabel>
@@ -133,4 +149,4 @@ const AddUserModal = ({ open, setOpen }: Props) => {
     </Dialog>
   )
 }
-export default AddUserModal
+export default AddLegalUserModal

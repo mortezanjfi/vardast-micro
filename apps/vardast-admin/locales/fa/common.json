@@ -342,5 +342,6 @@
   "main-number": "تلفن ثابت",
   "account-number": "شماره حساب",
   "IBAN-number": "شماره شبا",
-  "colleague-role": "نقش همکار"
+  "colleague-role": "نقش همکار",
+  "entity_type": "نوع {{entity}}"
 }

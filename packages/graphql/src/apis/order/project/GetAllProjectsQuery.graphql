@@ -7,6 +7,8 @@ query GetAllProjectsQuery($indexProjectInput: IndexProjectInput) {
     from
     to
     data {
+      type
+      uuid
       id
       name
       createTime

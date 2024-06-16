@@ -1,5 +1,5 @@
 import { dehydrate } from "@tanstack/react-query"
-import AllLegalsUsers from "@vardast/component/purchasers/AllLegalsUsers"
+import AllLegalUsers from "@vardast/component/purchasers/AllLegalUsers"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 
@@ -11,7 +11,7 @@ export default async () => {
   const dehydratedState = dehydrate(queryClient)
   return (
     <ReactQueryHydrate state={dehydratedState}>
-      <AllLegalsUsers />
+      <AllLegalUsers />
     </ReactQueryHydrate>
   )
 }

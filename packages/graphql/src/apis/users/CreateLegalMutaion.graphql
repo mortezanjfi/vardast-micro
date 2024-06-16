@@ -1,0 +1,5 @@
+mutation CreateLegalMutation($createLegalInput: CreateLegalInput!) {
+  createLegal(createLegalInput: $createLegalInput) {
+    id
+  }
+}

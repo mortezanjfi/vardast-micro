@@ -6,6 +6,7 @@ import { FolderOpenIcon } from "@heroicons/react/24/solid"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import {
   Project,
+  TypeProject,
   useGetAllProjectsQuery,
   UserTypeProject
 } from "@vardast/graphql/generated"
@@ -28,6 +29,15 @@ type ProjectsPageProps = {
   isMobileView: boolean
 }
 
+export const TypeProjectFa = {
+  [TypeProject.Legal]: {
+    name_fa: "حقوقی"
+  },
+  [TypeProject.Real]: {
+    name_fa: "حقیقی"
+  }
+}
+
 const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
   const { t } = useTranslation()
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
@@ -38,7 +48,7 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
     graphqlRequestClientWithToken,
     {
       indexProjectInput: {
-        page: 1
+        page: currentPage
       }
     },
     { queryKey: [{ page: currentPage }], refetchOnMount: "always" }
@@ -46,6 +56,7 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
   const adminAddNewProject = () => {
     router.push(`/profile/projects/new`)
   }
+  console.log(myProjectsQuery?.data?.projects?.data)
 
   return (
     <div className="flex h-full w-full flex-col ">
@@ -92,15 +103,16 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                   <tr>
                     <th className="border">{t("common:row")}</th>
                     <th className="border">
-                      {" "}
                       {t("common:entity_uuid", { entity: t("common:project") })}
                     </th>
                     <th className="border">
                       {t("common:entity_name", { entity: t("common:project") })}
                     </th>
-                    <th className="border">
-                      {" "}
+                    {/* <th className="border">
                       {t("common:entity_count", { entity: t("common:order") })}
+                    </th> */}
+                    <th className="border">
+                      {t("common:entity_type", { entity: t("common:project") })}
                     </th>
                     <th className="border">{t("common:last-order-date")}</th>
                     <th className="border">{t("common:project-manager")}</th>
@@ -122,11 +134,15 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                             <span>{digitsEnToFa(index + 1)}</span>
                           </td>
                           {/* شناسه پروژه */}
-                          <td className="border">--</td>
+                          <td className="border">{project?.uuid}</td>
                           <td className="border">{project.name}</td>
                           {/* تعداد سفارش */}
-                          <td className="border">--</td>
+                          {/* <td className="border">--</td> */}
                           {/* تاریخ آخرین سفارش */}
+
+                          <td className="border">
+                            {TypeProjectFa[project.type]?.name_fa}
+                          </td>
                           <td className="border">--</td>
                           <td className="border">
                             {project.user.find(
