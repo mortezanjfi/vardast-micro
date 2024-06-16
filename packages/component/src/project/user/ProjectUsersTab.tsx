@@ -27,7 +27,6 @@ export type SELECTED_ITEM = {
 }
 
 export type ProjectUserCartProps = {
-  assignToProject?: boolean
   isMobileView?: boolean
   uuid: string
   selectedUsers: SELECTED_ITEM
