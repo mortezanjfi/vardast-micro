@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   UpdateProfileInput,
@@ -49,7 +49,7 @@ const UpdateInfoItemModal = ({
   const session = useSession()
   const [errors, setErrors] = useState<ClientError>()
 
-  const createUserMutation = useUpdateProfileMutation(
+  const updateUserMutation = useUpdateProfileMutation(
     graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
@@ -86,11 +86,15 @@ const UpdateInfoItemModal = ({
         [name]: data[name]
       } as UpdateProfileInput
 
-      createUserMutation.mutate({
+      updateUserMutation.mutate({
         updateProfileInput
       })
     }
   }
+
+  useEffect(() => {
+    form.reset()
+  }, [open])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -132,8 +136,8 @@ const UpdateInfoItemModal = ({
             <DialogFooter className="border-t pt">
               <Button
                 type="submit"
-                loading={createUserMutation.isLoading}
-                disabled={createUserMutation.isLoading}
+                loading={updateUserMutation.isLoading}
+                disabled={updateUserMutation.isLoading}
               >
                 تایید
               </Button>

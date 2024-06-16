@@ -3,31 +3,27 @@
 import { useContext, useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
 import { LayoutContext } from "@vardast/provider/LayoutProvider"
-import { BreadcrumbProps, CrumbItemProps } from "@vardast/type/breadcrumb"
+import { CrumbItemProps } from "@vardast/type/breadcrumb"
 import { stringHasOnlyNumberValidator } from "@vardast/util/stringHasOnlyNumberValidator"
 import { useAtomValue } from "jotai"
 
 import Link from "./Link"
 
-const Breadcrumb = ({
-  dynamic: dynamicProps,
-  items: itemsProps
-}: BreadcrumbProps) => {
+const Breadcrumb = ({ items: itemsProps }: { items?: CrumbItemProps[] }) => {
   const { breadcrumbAtom } = useContext(LayoutContext)
-  const { dynamic: dynamicContext, items: itemsContext } =
-    useAtomValue(breadcrumbAtom)
+  const itemsContext = useAtomValue(breadcrumbAtom)
   const pathname = usePathname()
   const [breadcrumbs, setBreadcrumbs] = useState<CrumbItemProps[]>()
   // const { t } = useTranslation()
 
   const items = itemsProps ?? itemsContext
 
-  const dynamic = dynamicProps ?? dynamicContext
-
   useEffect(() => {
     let tempBreadcrumbs: CrumbItemProps[]
 
-    if (dynamic) {
+    if (items.length) {
+      tempBreadcrumbs = items
+    } else {
       const pathWithoutQuery = pathname?.split("?")[0]
       let pathArray = pathWithoutQuery?.split("/")
       pathArray?.shift()
@@ -46,12 +42,10 @@ const Breadcrumb = ({
           isCurrent: index === pathArray?.length - 1
         }
       })
-    } else {
-      tempBreadcrumbs = items
     }
 
     setBreadcrumbs(tempBreadcrumbs)
-  }, [pathname, dynamic, items])
+  }, [pathname, items])
 
   return (
     <ol className="app-breadcrumb" aria-label="breadcrumb">

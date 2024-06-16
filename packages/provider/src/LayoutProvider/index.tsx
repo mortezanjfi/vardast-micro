@@ -2,20 +2,20 @@
 
 import { createContext, ReactNode, useEffect } from "react"
 import { usePathname } from "next/navigation"
-import { BreadcrumbProps } from "@vardast/type/breadcrumb"
+import { CrumbItemProps } from "@vardast/type/breadcrumb"
 import { atom, useSetAtom, WritableAtom } from "jotai"
 
 type WritableAtomType<Value> = WritableAtom<Value, [Value], void>
 
 interface LayoutContextType {
-  breadcrumbAtom: WritableAtomType<BreadcrumbProps>
+  breadcrumbAtom: WritableAtomType<CrumbItemProps[]>
   sidebarAtom: WritableAtomType<JSX.Element | null>
   sidebarHamburgerAtom: WritableAtomType<boolean>
   pageHeaderAtom: WritableAtomType<JSX.Element | null>
 }
 
-const breadcrumbAtom: WritableAtomType<BreadcrumbProps> = atom(
-  { dynamic: true, items: [] },
+const breadcrumbAtom: WritableAtomType<CrumbItemProps[]> = atom(
+  [],
   (get, set, update) => set(breadcrumbAtom, update)
 )
 const sidebarAtom: WritableAtomType<JSX.Element | null> = atom(
@@ -47,7 +47,7 @@ const LayoutProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     return () => {
-      setBreadcrumb({ dynamic: true, items: [] })
+      setBreadcrumb([])
       setSidebar(null)
       setPageHeader(null)
     }

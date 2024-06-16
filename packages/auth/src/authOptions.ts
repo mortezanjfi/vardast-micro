@@ -167,13 +167,13 @@ export const authOptions: AuthOptions = {
     jwt: async ({ token, user, trigger, session }) => {
       try {
         if (user) {
-          token.userId = user.userId
-          token.abilities = user.abilities
-          token.accessToken = user.accessToken
-          token.accessTokenTtl = user.accessTokenTtl
-          token.refreshToken = user.refreshToken
-          token.refreshTokenTtl = user.refreshTokenTtl
-          token.type = user.type
+          token.userId = user?.userId
+          token.abilities = user?.abilities
+          token.accessToken = user?.accessToken
+          token.accessTokenTtl = user?.accessTokenTtl
+          token.refreshToken = user?.refreshToken
+          token.refreshTokenTtl = user?.refreshTokenTtl
+          token.type = session?.type
         }
 
         if (trigger === "update" && session) {
@@ -183,7 +183,7 @@ export const authOptions: AuthOptions = {
           token.accessTokenTtl = session?.accessTokenTtl
           token.refreshToken = session?.refreshToken
           token.refreshTokenTtl = session?.refreshTokenTtl
-          token.type = user.type
+          token.type = session?.type
           return token
         }
 
@@ -195,10 +195,9 @@ export const authOptions: AuthOptions = {
           // console.log("JWT refreshAccessToken: ", {
           //   token: Promise.resolve(token)
           // })
+          token = await refreshAccessToken(token)
           return Promise.resolve(token)
         }
-
-        token = await refreshAccessToken(token)
 
         // console.log("JWT validate successfully: ", {
         //   user,
@@ -208,9 +207,8 @@ export const authOptions: AuthOptions = {
         return Promise.resolve(token)
       } catch (error) {
         console.error("Error in jwt callback:", error)
+        return null
       }
-      // console.log("JWT default: ", { user, token })
-      return token
     },
     session: async ({ session, token }) => {
       try {
@@ -238,10 +236,8 @@ export const authOptions: AuthOptions = {
         return session
       } catch (error) {
         console.error("Error in session callback:", error)
+        return null
       }
-      // console.log("Session default: ", { session, token })
-
-      return session
     },
     // async signIn({ user }) {
     //   try {

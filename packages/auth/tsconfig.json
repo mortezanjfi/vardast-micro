@@ -4,7 +4,8 @@
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "baseUrl": "./",
     "paths": {
-      "@vardast/graphql/*": ["node_modules/@vardast/graphql/src/*.ts"]
+      "@vardast/graphql/*": ["node_modules/@vardast/graphql/src/*.ts"],
+      "@vardast/lib/*": ["node_modules/@vardast/lib/src/*.ts"]
     }
   },
   "include": [

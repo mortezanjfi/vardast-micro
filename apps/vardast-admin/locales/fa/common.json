@@ -341,5 +341,7 @@
   "main-number": "تلفن ثابت",
   "account-number": "شماره حساب",
   "IBAN-number": "شماره شبا",
-  "colleague-role": "نقش همکار"
+  "colleague-role": "نقش همکار",
+  "national_id": "شناسه ملی شرکت",
+  "name_company": "نام شرکت"
 }

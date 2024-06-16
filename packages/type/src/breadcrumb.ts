@@ -3,7 +3,3 @@ export interface CrumbItemProps {
   path: string
   isCurrent: boolean
 }
-export interface BreadcrumbProps {
-  dynamic?: boolean
-  items?: CrumbItemProps[]
-}

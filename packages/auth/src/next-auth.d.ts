@@ -6,4 +6,5 @@ import {
 declare module "next-auth" {
   interface User extends UserOver {}
   interface Session extends SessionOver {}
+  interface DefaultSession {}
 }

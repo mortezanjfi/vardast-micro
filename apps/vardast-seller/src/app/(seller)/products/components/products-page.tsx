@@ -54,16 +54,13 @@ const ProductsPage = ({
           })
         : [selectedCategoryId]
 
-  setBreadCrumb({
-    dynamic: false,
-    items: [
-      {
-        label: t("common:products_vardast"),
-        path: "/products",
-        isCurrent: true
-      }
-    ]
-  })
+  setBreadCrumb([
+    {
+      label: t("common:products_vardast"),
+      path: "/products",
+      isCurrent: true
+    }
+  ])
 
   return (
     <>

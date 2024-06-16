@@ -6,6 +6,7 @@ import { PencilSquareIcon } from "@heroicons/react/24/outline"
 import { WalletIcon } from "@heroicons/react/24/solid"
 import { useClickOutside } from "@mantine/hooks"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
+import { UserType } from "@vardast/graphql/generated"
 import sidebar_options from "@vardast/lib/sidebar_options"
 import { LayoutContext } from "@vardast/provider/LayoutProvider"
 import { ILayoutDesktopSidebar } from "@vardast/type/layout"
@@ -19,6 +20,10 @@ import Navigation from "./Navigation"
 import Progress from "./Progress"
 
 export const SidebarProfile = ({ session }: { session: Session }) => {
+  const wallet =
+    session?.type === UserType.Legal
+      ? session?.profile?.legal?.wallet
+      : session?.profile?.wallet
   return (
     session?.profile?.status && (
       <ol className="app-navigation-section">
@@ -42,7 +47,7 @@ export const SidebarProfile = ({ session }: { session: Session }) => {
         </li>
         <li className="app-navigation-item flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="rounted-lg bg-blue-600 p-2">
+            <div className="rounded-lg bg-blue-600 p-2">
               <WalletIcon
                 width={24}
                 height={24}
@@ -53,7 +58,7 @@ export const SidebarProfile = ({ session }: { session: Session }) => {
             <span>کیف پول</span>
           </div>
           <div className="text-alph-500 flex items-center gap-1">
-            <span>{digitsEnToFa(addCommas(0))}</span>
+            <span>{digitsEnToFa(addCommas(wallet || 0))}</span>
             <span>تومان</span>
           </div>
         </li>

@@ -337,5 +337,7 @@
   "add-seller-info": "افزودن اطلاعات فروشنده",
   "company": "شرکت",
   "add-offer-price": "افزودن پیشنهاد قیمت",
-  "all-products": "همه‌ی کالاهای وردست"
+  "all-products": "همه‌ی کالاهای وردست",
+  "national_id": "شناسه ملی شرکت",
+  "name_company": "نام شرکت"
 }

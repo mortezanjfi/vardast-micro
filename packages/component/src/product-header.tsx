@@ -84,10 +84,7 @@ const SearchHeader = ({ selectedCategoryId }: SearchHeaderProps) => {
     isCurrent: true
   })
 
-  setBreadCrumb({
-    dynamic: false,
-    items: breadcrumb
-  })
+  setBreadCrumb(breadcrumb)
 
   return (
     <script

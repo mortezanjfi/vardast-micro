@@ -25,7 +25,13 @@ query GetWhoAmI {
     failedLoginAttempts
     isLockedOut
     lockedOutAt
-
+    wallet
+    legal {
+      id
+      name_company
+      national_id
+      wallet
+    }
     fullName
     country {
       id

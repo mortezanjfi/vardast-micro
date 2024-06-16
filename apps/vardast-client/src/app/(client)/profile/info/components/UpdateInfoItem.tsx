@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { PencilSquareIcon, PlusIcon } from "@heroicons/react/24/outline"
+import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { Button } from "@vardast/ui/button"
 
 import UpdateInfoItemModal, {
@@ -24,7 +25,7 @@ const UpdateInfoItem = ({ value, title, name }: UpdateInfoItemProps) => {
       />
       <div className="flex h-full flex-col justify-center gap-2">
         <span>{title}</span>
-        <span className="text-black">{value || "--"}</span>
+        <span className="text-black">{digitsEnToFa(value) || "--"}</span>
       </div>
       <Button
         variant="ghost"

@@ -71,16 +71,13 @@ const SellersPage = ({
 
   if (!allSellersQuery.data) notFound()
 
-  setBreadCrumb({
-    dynamic: false,
-    items: [
-      {
-        label: t("common:sellers_vardast"),
-        path: "/sellers",
-        isCurrent: true
-      }
-    ]
-  })
+  setBreadCrumb([
+    {
+      label: t("common:sellers_vardast"),
+      path: "/sellers",
+      isCurrent: true
+    }
+  ])
 
   return (
     <div

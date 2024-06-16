@@ -30,21 +30,18 @@ const BrandPage = ({ isMobileView, args, slug }: BrandPageProps) => {
     }
   )
 
-  setBreadCrumb({
-    dynamic: false,
-    items: [
-      {
-        label: t("common:producer_vardast"),
-        path: "/brands",
-        isCurrent: false
-      },
-      {
-        label: brandQuery?.data.brand.name,
-        path: `/brand/${brandQuery?.data.brand.id}/${brandQuery?.data.brand.name}`,
-        isCurrent: true
-      }
-    ]
-  })
+  setBreadCrumb([
+    {
+      label: t("common:producer_vardast"),
+      path: "/brands",
+      isCurrent: false
+    },
+    {
+      label: brandQuery?.data.brand.name,
+      path: `/brand/${brandQuery?.data.brand.id}/${brandQuery?.data.brand.name}`,
+      isCurrent: true
+    }
+  ])
 
   if (brandQuery.isLoading) return <Loading />
   if (brandQuery.error) return <LoadingFailed />

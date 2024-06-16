@@ -223,10 +223,7 @@ const ProductPage = ({ id, isMobileView }: ProductPageProps) => {
     weekStartsOn: 6
   })
 
-  setBreadCrumb({
-    dynamic: false,
-    items: breadcrumb
-  })
+  setBreadCrumb(breadcrumb)
 
   return (
     <>

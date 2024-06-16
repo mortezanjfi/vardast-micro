@@ -95,10 +95,7 @@ const SearchHeader = ({
     isCurrent: true
   })
 
-  setBreadCrumb({
-    dynamic: false,
-    items: breadcrumb
-  })
+  setBreadCrumb(breadcrumb)
 
   return (
     <script

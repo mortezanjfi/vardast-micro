@@ -48,7 +48,6 @@
     "dist",
     ".next",
     "node_modules",
-    "old-to-delete",
-    "src/stories/**/*.ts"
+    "old-to-delete"
   ]
 }

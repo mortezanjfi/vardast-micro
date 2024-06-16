@@ -35,17 +35,14 @@ const SellerPage = ({ isMobileView, args, slug }: SellerPageProps) => {
   if (sellerQuery.error) return <LoadingFailed />
   if (!sellerQuery.data) return <NoResult entity="brand" />
 
-  setBreadCrumb({
-    dynamic: false,
-    items: [
-      { label: "فروشندگان وردست", path: "/sellers", isCurrent: false },
-      {
-        label: sellerQuery?.data.seller.name,
-        path: `/seller/${sellerQuery?.data.seller.id}/${sellerQuery?.data.seller.name}`,
-        isCurrent: true
-      }
-    ]
-  })
+  setBreadCrumb([
+    { label: "فروشندگان وردست", path: "/sellers", isCurrent: false },
+    {
+      label: sellerQuery?.data.seller.name,
+      path: `/seller/${sellerQuery?.data.seller.id}/${sellerQuery?.data.seller.name}`,
+      isCurrent: true
+    }
+  ])
 
   return (
     <>

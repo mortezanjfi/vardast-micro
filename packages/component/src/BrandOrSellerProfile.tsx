@@ -90,21 +90,18 @@ const BrandOrSellerProfile = ({
   const { t } = useTranslation()
   const isSellerQuery = () => type === EntityTypeEnum.Seller
 
-  setBreadCrumb({
-    dynamic: false,
-    items: [
-      {
-        label: t(isSellerQuery() ? "common:sellers" : "common:brands"),
-        path: "/brands",
-        isCurrent: false
-      },
-      {
-        label: data.name,
-        path: `${isSellerQuery() ? `sellers/${data.id}` : `brands/${data.id}`}`,
-        isCurrent: true
-      }
-    ]
-  })
+  setBreadCrumb([
+    {
+      label: t(isSellerQuery() ? "common:sellers" : "common:brands"),
+      path: "/brands",
+      isCurrent: false
+    },
+    {
+      label: data.name,
+      path: `${isSellerQuery() ? `sellers/${data.id}` : `brands/${data.id}`}`,
+      isCurrent: true
+    }
+  ])
 
   setDefaultOptions({
     locale: faIR,
