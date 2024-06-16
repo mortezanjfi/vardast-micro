@@ -1,4 +1,4 @@
-import SubmitPage from "@vardast/component/purchasers/submition/SubmitPage"
+import SubmitPage from "@vardast/component/legal/submition/SubmitPage"
 
 type Props = {}
 

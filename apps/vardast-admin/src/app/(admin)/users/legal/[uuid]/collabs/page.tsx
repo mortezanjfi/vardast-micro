@@ -1,4 +1,4 @@
-import UsersDetail from "@vardast/component/purchasers/collabs/UsersDetail"
+import UsersDetail from "@vardast/component/legal/collabs/UsersDetail"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
 type Props = {}

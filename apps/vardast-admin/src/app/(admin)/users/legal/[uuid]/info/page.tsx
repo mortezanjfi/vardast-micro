@@ -1,4 +1,4 @@
-import UserLegalInfoPage from "@vardast/component/purchasers/legal-info/UserLegalInfoPage"
+import UserLegalInfoPage from "@vardast/component/legal/legal-info/UserLegalInfoPage"
 
 type Props = {}
 

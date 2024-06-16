@@ -1,5 +1,5 @@
 import { dehydrate } from "@tanstack/react-query"
-import AllLegalUsers from "@vardast/component/purchasers/AllLegalUsers"
+import AllLegalUsers from "@vardast/component/legal/AllLegalUsers"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 

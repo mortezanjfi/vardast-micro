@@ -30,7 +30,6 @@ function UsersDetail({ readOnlyMode, isMobileView, uuid }: Props) {
           uuid={uuid}
           onCloseModal={onCloseModal}
           selectedUsers={selectedUsers}
-          assignToProject={false}
         />
       )}
       <CardContainer
