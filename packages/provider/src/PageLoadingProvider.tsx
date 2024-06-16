@@ -12,7 +12,7 @@ const PageLoadingProvider = (_: Props) => {
 
   if (loading) {
     return (
-      <div className="absolute inset-0 z-[99999999] h-screen w-screen">
+      <div className="absolute inset-0 z-[99999999] h-full w-full overflow-hidden">
         <div
           className={clsx(
             "flex h-full w-full items-center justify-center bg-alpha-white bg-opacity-50"

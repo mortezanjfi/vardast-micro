@@ -14,12 +14,14 @@ import clsx from "clsx"
 import { useAtom, useAtomValue } from "jotai"
 import { Session } from "next-auth"
 import { useSession } from "next-auth/react"
+import useTranslation from "next-translate/useTranslation"
 
 import Link from "./Link"
 import Navigation from "./Navigation"
 import Progress from "./Progress"
 
 export const SidebarProfile = ({ session }: { session: Session }) => {
+  const { t } = useTranslation()
   const wallet =
     session?.type === UserType.Legal
       ? session?.profile?.legal?.wallet
@@ -31,7 +33,7 @@ export const SidebarProfile = ({ session }: { session: Session }) => {
           <div className="flex flex-col gap-y-1">
             {session?.profile?.fullName &&
             session?.profile?.fullName !== "null null" ? (
-              <h4 className="font-semibold">{session?.profile?.fullName}</h4>
+              <h4 className="font-semibold">{`${session?.profile?.fullName} (${session?.type === UserType.Legal ? t("common:legal") : t("common:real")})`}</h4>
             ) : (
               "کاربر وردست"
             )}

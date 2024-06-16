@@ -80,7 +80,7 @@ export const _legalUrlToStepMappers: urlToStepMapper[] = [
   },
   {
     stepNumber: 1,
-    name: "legal"
+    name: "info"
   },
   {
     stepNumber: 2,

@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { useState } from "react"
 import { usePathname } from "next/navigation"
 import { NavigationItemType } from "@vardast/type/Navigation"
 import { Button } from "@vardast/ui/button"
@@ -21,23 +21,20 @@ const NavigationItem = (props: Props) => {
   const [open, setOpen] = useState<boolean>(false)
   const { menu } = props
 
-  const toggleOpen = useCallback(() => {
+  const toggleOpen = () => {
     const oldOpen = open
     setOpen(!oldOpen)
-  }, [pathname])
+  }
 
-  const isActive = useCallback(
-    (linkPath: string): boolean => {
-      const currentPathModified = pathname.split("/").slice(1).join("/")
-      const linkPathModified = linkPath?.split("/").slice(1).join("/")
+  const isActive = (linkPath: string): boolean => {
+    const currentPathModified = pathname.split("/").slice(1).join("/")
+    const linkPathModified = linkPath?.split("/").slice(1).join("/")
 
-      return linkPathModified === currentPathModified
-        ? true
-        : linkPathModified !== "" &&
-            currentPathModified.startsWith(linkPathModified)
-    },
-    [pathname]
-  )
+    return linkPathModified === currentPathModified
+      ? true
+      : linkPathModified !== "" &&
+          currentPathModified.startsWith(linkPathModified)
+  }
 
   return (
     <>

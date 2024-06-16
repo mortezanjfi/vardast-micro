@@ -12,11 +12,10 @@ import useTranslation from "next-translate/useTranslation"
 
 import PageTitle from "./PageTitle"
 import ProjectAddressesTab from "./ProjectAddressesTab"
-import ProjectInfoTab from "./ProjectInfoTab"
 import ProjectUsersTab from "./user/ProjectUsersTab"
 
 export enum PROJECT_TAB {
-  INFO = "info",
+  // INFO = "info",
   ADDRESSES = "addresses",
   PROJECT_USERS = "project-colleagues"
 }
@@ -42,7 +41,7 @@ const ProjectForm = ({
   uuid
 }: ProjectFormProps) => {
   const { t } = useTranslation()
-  const [activeTab, setActiveTab] = useState<PROJECT_TAB>(PROJECT_TAB.INFO)
+  const [activeTab, setActiveTab] = useState<PROJECT_TAB>(PROJECT_TAB.ADDRESSES)
 
   const findOneProjectQuery = useFindOneProjectQuery(
     graphqlRequestClientWithToken,
@@ -72,7 +71,7 @@ const ProjectForm = ({
         className="flex h-full w-full flex-col"
       >
         <TabsList className="grid w-full grid-cols-3 border-b md:flex">
-          <TabsTrigger value={PROJECT_TAB.INFO}>اطلاعات پروژه</TabsTrigger>
+          {/* <TabsTrigger value={PROJECT_TAB.ADDRESSES}>اطلاعات پروژه</TabsTrigger> */}
           <TabsTrigger
             disabled={!findOneProjectQuery.data}
             value={PROJECT_TAB.ADDRESSES}
@@ -86,9 +85,9 @@ const ProjectForm = ({
             {t(`common:${PROJECT_TAB.PROJECT_USERS}`)}
           </TabsTrigger>
         </TabsList>
-        <TabsContent className="!h-full" value={PROJECT_TAB.INFO}>
+        {/* <TabsContent className="!h-full" value={PROJECT_TAB.INFO}>
           <ProjectInfoTab {...tabProps} />
-        </TabsContent>
+        </TabsContent> */}
         <TabsContent className="!h-full" value={PROJECT_TAB.ADDRESSES}>
           <ProjectAddressesTab {...tabProps} />
         </TabsContent>

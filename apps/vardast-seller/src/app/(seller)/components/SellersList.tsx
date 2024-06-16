@@ -88,7 +88,7 @@ function SellersList({ isMobileView, findPreOrderByIdQuery, uuid }: Props) {
     updateOrderOfferMutation.mutate({
       updateOrderOfferInput: {
         id: form.watch("offerId"),
-        status: OrderOfferStatuses.PendingPrice
+        status: OrderOfferStatuses.Invoice
       }
     })
   }

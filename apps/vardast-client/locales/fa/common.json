@@ -320,5 +320,7 @@
   "add-to_entity": "افزودن به {{entity}}",
   "entity_code": "کد {{entity}}",
   "national_id": "شناسه ملی شرکت",
-  "name_company": "نام شرکت"
+  "name_company": "نام شرکت",
+  "real": "حقیقی",
+  "legal": "حقوقی"
 }

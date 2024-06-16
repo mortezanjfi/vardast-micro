@@ -8,7 +8,7 @@ import {
   PaymentMethodEnum,
   PreOrder,
   useCreatePreOrderMutation,
-  usePreOrdersQuery
+  useGetAllPreOrdersQuery
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
@@ -52,7 +52,7 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const router = useRouter()
 
-  const preOrdersQuery = usePreOrdersQuery(
+  const preOrdersQuery = useGetAllPreOrdersQuery(
     graphqlRequestClientWithToken,
     {
       indexPreOrderInput: {
@@ -148,14 +148,14 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
               </thead>
 
               <tbody className="border-collapse border">
-                {preOrdersQuery?.data?.preOrders?.data.map(
+                {preOrdersQuery?.data?.preOrders?.data?.map(
                   (preOrder, index) =>
                     preOrder && (
                       <tr key={preOrder?.id}>
                         <td className="w-4">
                           <span>{digitsEnToFa(index + 1)}</span>
                         </td>
-                        <td>{preOrder?.id}</td>
+                        <td>{preOrder?.uuid}</td>
                         <td>{preOrder?.user?.fullName}</td>
                         <td>{preOrder?.project?.name}</td>
                         <td>
@@ -194,8 +194,8 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                             </span>
                           )}
                         </td>
-                        <td>--</td>
-                        <td>--</td>
+                        <td>{preOrder?.status}</td>
+                        <td>{preOrder?.pickUpUser?.fullName}</td>
                         <td>
                           <Link
                             target="_blank"
@@ -222,7 +222,7 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
               </tbody>
             </table>
             <Pagination
-              total={preOrdersQuery.data.preOrders.lastPage ?? 0}
+              total={preOrdersQuery?.data?.preOrders?.lastPage ?? 0}
               page={currentPage}
               onChange={(page) => {
                 setCurrentPage(page)
@@ -231,7 +231,7 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
           </CardContainer>
         ) : (
           <>
-            {preOrdersQuery.data?.preOrders?.data.map((preOrder, index) => (
+            {preOrdersQuery?.data?.preOrders?.data.map((preOrder, index) => (
               <OrderCard
                 key={index}
                 preOrder={preOrder as PreOrder}
@@ -239,9 +239,9 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                 setDeleteModalOpen={setDeleteModalOpen}
               />
             ))}
-            {preOrdersQuery.data?.preOrders?.lastPage > 1 && (
+            {preOrdersQuery?.data?.preOrders?.lastPage > 1 && (
               <Pagination
-                total={preOrdersQuery.data?.preOrders.lastPage ?? 0}
+                total={preOrdersQuery?.data?.preOrders?.lastPage ?? 0}
                 page={currentPage}
                 onChange={(page) => {
                   setCurrentPage(page)

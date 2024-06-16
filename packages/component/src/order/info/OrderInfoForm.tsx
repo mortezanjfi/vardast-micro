@@ -11,7 +11,7 @@ import {
   PreOrderStates,
   UpdatePreOrderInput,
   useFindPreOrderByIdQuery,
-  useMyProjectsQuery,
+  useGetAllProjectsQuery,
   useUpdatePreOrderMutation
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
@@ -121,7 +121,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
     }
   )
 
-  const myProjectsQuery = useMyProjectsQuery(
+  const myProjectsQuery = useGetAllProjectsQuery(
     graphqlRequestClientWithToken,
     undefined,
     {
@@ -138,7 +138,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
   const addresses = useMemo(
     () =>
       form.watch("projectId")
-        ? myProjectsQuery.data?.myProjects.find(
+        ? myProjectsQuery.data?.projects.data.find(
             (project) => project.id === +form.watch("projectId")
           )?.address
         : [],
@@ -199,11 +199,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{t("common:project")}</FormLabel>
-                  <Popover
-                    modal
-                    open={projectDialog}
-                    onOpenChange={setProjectDialog}
-                  >
+                  <Popover open={projectDialog} onOpenChange={setProjectDialog}>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
@@ -214,7 +210,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
                         >
                           <span className="inline-block max-w-full truncate">
                             {field.value
-                              ? myProjectsQuery.data?.myProjects.find(
+                              ? myProjectsQuery.data?.projects.data.find(
                                   (project) =>
                                     project && project.id === +field.value
                                 )?.name
@@ -230,7 +226,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
                       <Command>
                         <CommandInput
                           loading={
-                            myProjectsQuery.data?.myProjects.length === 0
+                            myProjectsQuery.data?.projects.data.length === 0
                           }
                           value={projectQueryTemp}
                           onValueChange={(newQuery) => {
@@ -247,7 +243,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
                           })}
                         </CommandEmpty>
                         <CommandGroup>
-                          {myProjectsQuery.data?.myProjects.map(
+                          {myProjectsQuery.data?.projects.data.map(
                             (project) =>
                               project && (
                                 <CommandItem
@@ -285,11 +281,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>زمان اعتبار سفارش</FormLabel>
-                  <Popover
-                    modal
-                    open={expireDialog}
-                    onOpenChange={setExpireDialog}
-                  >
+                  <Popover open={expireDialog} onOpenChange={setExpireDialog}>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
@@ -361,11 +353,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{t("common:address")}</FormLabel>
-                  <Popover
-                    modal
-                    open={addressDialog}
-                    onOpenChange={setAddressDialog}
-                  >
+                  <Popover open={addressDialog} onOpenChange={setAddressDialog}>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
@@ -379,7 +367,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
                               ? addresses?.find(
                                   (address) =>
                                     address && address.id === field.value
-                                )?.address.address
+                                )?.address?.address
                               : t("common:choose_entity", {
                                   entity: t("common:address")
                                 })}

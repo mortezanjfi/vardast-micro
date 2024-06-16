@@ -146,6 +146,7 @@
   "locations_menu_title": "مناطق جغرافیایی",
   "login": "ورود",
   "logo": "لوگو",
+  "type_seller": "نوع فروشنده",
   "logout": "خروج",
   "meta_description": "توضیحات صفحه",
   "name": "نام",
@@ -343,5 +344,6 @@
   "IBAN-number": "شماره شبا",
   "colleague-role": "نقش همکار",
   "national_id": "شناسه ملی شرکت",
-  "name_company": "نام شرکت"
+  "name_company": "نام شرکت",
+  "entity_type": "نوع {{entity}}"
 }

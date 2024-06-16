@@ -1,32 +1,17 @@
-query FindOneProject($id: Float!) {
-  findOneProject(id: $id) {
-    id
-    name
-    type
-    address {
+query GetAllLegalUsersQuery($indexLegalInput: IndexLegalInput) {
+  findAllLegals(indexLegalInput: $indexLegalInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    from
+    to
+    data {
       id
-      address {
-        id
-        userId
-        title
-        delivery_contact
-        delivery_name
-        address
-        city {
-          id
-        }
-        province {
-          id
-        }
-        postalCode
-        status
-        createdAt
-      }
-    }
-    user {
-      id
-      type
-      user {
+      name_company
+      national_id
+      create_at
+      createdBy {
         id
         uuid
         firstName

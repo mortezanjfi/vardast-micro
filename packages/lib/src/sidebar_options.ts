@@ -67,14 +67,19 @@ const _admin: NavigationType[] = [
       },
       {
         title: "کاربران",
-        path: "/users",
         icon: "users",
         abilities: "gql.users.user.index",
         items: [
           {
-            title: "خریداران",
-            path: "/users/purchasers",
-            icon: "package",
+            title: "حقوقی",
+            path: "/users/legal",
+            icon: "users",
+            abilities: "gql.products.offer.index.index"
+          },
+          {
+            title: "حقیقی",
+            path: "/users/real",
+            icon: "users",
             abilities: "gql.products.offer.index.index"
           }
         ]
