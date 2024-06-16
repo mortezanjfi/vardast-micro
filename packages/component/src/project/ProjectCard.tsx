@@ -13,21 +13,20 @@ import { LucideEdit, LucideMoreVertical } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
 import { DetailsWithTitle } from "../desktop/DetailsWithTitle"
-import Link from "../Link"
 
 type ProjectCardProps = {
+  addNewProject: () => void
+  setIdToEdit: Dispatch<SetStateAction<number>>
   project: Project
-  setProjectToDelete: Dispatch<SetStateAction<{} | undefined>>
-  setDeleteModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const ProjectCard = ({
+  addNewProject,
+  setIdToEdit,
+
   project
-  // setProjectToDelete,
-  // setDeleteModalOpen
 }: ProjectCardProps) => {
   const { t } = useTranslation()
-
   const [dropDownMenuOpen, setDropDownMenuOpen] = useState(false)
 
   return (
@@ -36,6 +35,7 @@ const ProjectCard = ({
         <div className="flex w-full items-center justify-between">
           <span className="text-base font-semibold">{project.name}</span>
           <DropdownMenu
+            modal={false}
             open={dropDownMenuOpen}
             onOpenChange={setDropDownMenuOpen}
           >
@@ -45,12 +45,16 @@ const ProjectCard = ({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <Link href={`/profile/projects/${project.id}`}>
-                <DropdownMenuItem>
-                  <LucideEdit className="dropdown-menu-item-icon" />
-                  <span>{t("common:edit")}</span>
-                </DropdownMenuItem>
-              </Link>
+              <DropdownMenuItem
+                onClick={() => {
+                  // setDropDownMenuOpen(false)
+                  setIdToEdit(project.id)
+                  addNewProject()
+                }}
+              >
+                <LucideEdit className="dropdown-menu-item-icon" />
+                <span>{t("common:edit")}</span>
+              </DropdownMenuItem>
               <>
                 {/* <DropdownMenuSeparator /> */}
                 {/* <DropdownMenuItem

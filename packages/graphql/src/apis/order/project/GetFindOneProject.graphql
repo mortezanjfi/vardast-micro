@@ -2,6 +2,7 @@ query FindOneProject($id: Float!) {
   findOneProject(id: $id) {
     id
     name
+    type
     address {
       id
       address {

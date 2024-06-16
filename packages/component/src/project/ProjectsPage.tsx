@@ -7,6 +7,7 @@ import { digitsEnToFa } from "@persian-tools/persian-tools"
 import {
   Project,
   TypeProject,
+  useFindOneProjectQuery,
   useGetAllProjectsQuery,
   UserTypeProject
 } from "@vardast/graphql/generated"
@@ -14,8 +15,8 @@ import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRe
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
 
+import { Button } from "../../../ui/src/button"
 import CardContainer from "../desktop/CardContainer"
-import Link from "../Link"
 import Loading from "../Loading"
 import PageHeader from "../PageHeader"
 import Pagination from "../Pagination"
@@ -46,6 +47,7 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
   const router = useRouter()
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [projectToDelete, setProjectToDelete] = useState<{}>()
+  const [idToEdit, setIdToEdit] = useState<number | undefined>(undefined)
   const myProjectsQuery = useGetAllProjectsQuery(
     graphqlRequestClientWithToken,
     {
@@ -55,14 +57,28 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
     },
     { queryKey: [{ page: currentPage }], refetchOnMount: "always" }
   )
-  const adminAddNewProject = () => {
+  const addNewProject = () => {
     setAddProjectOpen(true)
-    // router.push(`/profile/projects/new`)
   }
+  const findOneProjectQuery = useFindOneProjectQuery(
+    graphqlRequestClientWithToken,
+    {
+      id: +idToEdit
+    },
+    { enabled: +idToEdit > 0 }
+  )
 
   return (
     <>
-      <AddProjectModal open={addProjectOpen} setOpen={setAddProjectOpen} />
+      <AddProjectModal
+        setIdToEdit={setIdToEdit}
+        isMobileView={isMobileView}
+        findOneProjectQuery={findOneProjectQuery}
+        isAdmin={isAdmin}
+        id={idToEdit}
+        open={addProjectOpen}
+        setOpen={setAddProjectOpen}
+      />
       <div className="flex h-full w-full flex-col ">
         <ProjectDeleteModal
           projectToDelete={projectToDelete}
@@ -80,14 +96,16 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
             titleClasses="text-[14px] font-normal "
             containerClass="items-center"
           >
-            <Link
-              className="btn-primary btn btn-md"
-              href="/profile/projects/new"
+            <Button
+              variant="primary"
+              size="medium"
+              className="py-3"
+              onClick={addNewProject}
             >
               {t("common:add_new_entity", {
                 entity: t("common:project")
               })}
-            </Link>
+            </Button>
           </PageHeader>
         )}
         <div className={clsx("w-full", isMobileView && " h-full px-6")}>
@@ -101,7 +119,7 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                 button={{
                   text: "افزودن پروژه",
                   variant: "primary",
-                  onClick: adminAddNewProject
+                  onClick: addNewProject
                 }}
                 title="لیست‌ پروژه ها"
               >
@@ -180,14 +198,17 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                             {/* وضعیت */}
                             <td className="border">--</td>
                             <td className="border">
-                              <Link
-                                target="_blank"
-                                href={`/profile/projects/${project.id}`}
+                              <Button
+                                variant="primary"
+                                size="medium"
+                                className="py-3"
+                                onClick={() => {
+                                  setIdToEdit(project.id)
+                                  setAddProjectOpen(true)
+                                }}
                               >
-                                <span className="tag cursor-pointer text-blue-500">
-                                  {t("common:edit")}
-                                </span>
-                              </Link>
+                                {t("common:edit")}
+                              </Button>
                             </td>
                           </tr>
                         )
@@ -207,22 +228,24 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                 <div className="flex flex-col">
                   {myProjectsQuery.data?.projects?.data?.map((project) => (
                     <ProjectCard
+                      addNewProject={addNewProject}
+                      setIdToEdit={setIdToEdit}
                       key={project.id}
                       project={project as Project}
-                      setProjectToDelete={setProjectToDelete}
-                      setDeleteModalOpen={setDeleteModalOpen}
                     />
                   ))}
                 </div>
                 {isMobileView && (
-                  <Link
-                    className="btn-primary btn btn-md mt-auto py-3"
-                    href="/profile/projects/new"
+                  <Button
+                    variant="primary"
+                    size="medium"
+                    className="py-3"
+                    onClick={addNewProject}
                   >
                     {t("common:add_new_entity", {
                       entity: t("common:project")
                     })}
-                  </Link>
+                  </Button>
                 )}
               </div>
             )
@@ -235,14 +258,16 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
               />
               <p>شما هنوز پروژه ای اضافه نکرده اید!</p>
               {isMobileView && (
-                <Link
-                  className="btn-primary btn btn-md py-5"
-                  href="/profile/projects/new"
+                <Button
+                  variant="primary"
+                  size="medium"
+                  className="py-3"
+                  onClick={addNewProject}
                 >
                   {t("common:add_new_entity", {
                     entity: t("common:project")
                   })}
-                </Link>
+                </Button>
               )}
             </div>
           )}

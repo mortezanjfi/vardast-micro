@@ -12,7 +12,9 @@ query GetAllProjectsQuery($indexProjectInput: IndexProjectInput) {
       id
       name
       createTime
-      address
+      address {
+        id
+      }
       user {
         id
         user {
