@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useQueryClient } from "@tanstack/react-query"
 import { useCreateLegalMutation } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
@@ -26,6 +27,8 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
+import { toast } from "../../../hook/src/use-toast"
+
 type Props = { open: boolean; setOpen: Dispatch<SetStateAction<boolean>> }
 
 export type CreateLegalUserInfoType = TypeOf<typeof CreateLegalUserSchema>
@@ -40,6 +43,7 @@ const AddLegalUserModal = ({ open, setOpen }: Props) => {
 
   const [errors, setErrors] = useState<ClientError>()
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const form = useForm<CreateLegalUserInfoType>({
     resolver: zodResolver(CreateLegalUserSchema)
@@ -49,8 +53,23 @@ const AddLegalUserModal = ({ open, setOpen }: Props) => {
     graphqlRequestClientWithToken,
     {
       onSuccess: (data) => {
-        if (data.createLegal.id) {
-          router.push(`/users/legal/${data.createLegal.id}/address`)
+        if (data?.createLegal.id) {
+          queryClient.invalidateQueries({ queryKey: ["GetAllLegalUsersQuery"] })
+          toast({
+            description: "کاربر حقوقی با موفقیت اضافه شد",
+            duration: 2000,
+            variant: "success"
+          })
+          setOpen(false)
+          form.reset()
+        } else {
+          toast({
+            description: "خطا درایجاد کاربر حقوقی",
+            duration: 2000,
+            variant: "danger"
+          })
+          form.reset()
+          setOpen(false)
         }
       }
     }

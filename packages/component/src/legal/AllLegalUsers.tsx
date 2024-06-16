@@ -60,7 +60,7 @@ export default (props: Props) => {
               </th>
               <th>{t("common:entity_count", { entity: t("common:order") })}</th>
               <th>{t("common:status")}</th>
-              <th>{t("common:operation")}</th>
+              {/* <th>{t("common:operation")}</th> */}
             </tr>
           </thead>
 

@@ -17,6 +17,7 @@ import useTranslation from "next-translate/useTranslation"
 
 import { Button } from "../../../ui/src/button"
 import CardContainer from "../desktop/CardContainer"
+import Link from "../Link"
 import Loading from "../Loading"
 import PageHeader from "../PageHeader"
 import Pagination from "../Pagination"
@@ -198,17 +199,21 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                             {/* وضعیت */}
                             <td className="border">--</td>
                             <td className="border">
-                              <Button
-                                variant="primary"
-                                size="medium"
-                                className="py-3"
+                              <span
+                                className="tag cursor-pointer text-error"
                                 onClick={() => {
                                   setIdToEdit(project.id)
                                   setAddProjectOpen(true)
                                 }}
                               >
                                 {t("common:edit")}
-                              </Button>
+                              </span>
+                              /
+                              <Link href={`/profile/projects/${project.id}`}>
+                                <span className="tag cursor-pointer text-blue-500">
+                                  {t("common:details")}
+                                </span>
+                              </Link>
                             </td>
                           </tr>
                         )

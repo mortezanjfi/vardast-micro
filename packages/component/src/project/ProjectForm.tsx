@@ -71,7 +71,7 @@ const ProjectForm = ({
         className="flex h-full w-full flex-col"
       >
         <TabsList className="grid w-full grid-cols-3 border-b md:flex">
-          <TabsTrigger value={PROJECT_TAB.ADDRESSES}>اطلاعات پروژه</TabsTrigger>
+          {/* <TabsTrigger value={PROJECT_TAB.ADDRESSES}>اطلاعات پروژه</TabsTrigger> */}
           <TabsTrigger
             disabled={!findOneProjectQuery.data}
             value={PROJECT_TAB.ADDRESSES}
