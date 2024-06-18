@@ -4,19 +4,24 @@ const _profile: NavigationType[] = [
   {
     items: [
       {
-        title: "اطلاعات حساب کاربری",
-        icon: "user",
-        path: "/profile/info"
-      },
-      {
         title: "پروژه ها",
         icon: "folder-open",
         path: "/profile/projects"
       },
       {
         title: "سفارشات",
-        icon: "list",
+        icon: "layout-list",
         path: "/profile/orders"
+      },
+      {
+        title: "سبد کالا",
+        icon: "shopping-cart",
+        path: "/profile/basket"
+      },
+      {
+        title: "علاقه‌مندی ها",
+        icon: "bookmark",
+        path: "/profile/favorites"
       }
     ]
   }

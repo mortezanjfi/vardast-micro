@@ -13,7 +13,6 @@ import { ILayoutDesktopSidebar } from "@vardast/type/layout"
 import clsx from "clsx"
 import { useAtom, useAtomValue } from "jotai"
 import { Session } from "next-auth"
-import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 
 import Link from "./Link"
@@ -28,43 +27,57 @@ export const SidebarProfile = ({ session }: { session: Session }) => {
       : session?.profile?.wallet
   return (
     session?.profile?.status && (
-      <ol className="app-navigation-section">
-        <li className="app-navigation-item flex items-center justify-between">
-          <div className="flex flex-col gap-y-1">
-            {session?.profile?.fullName &&
-            session?.profile?.fullName !== "null null" ? (
-              <h4 className="font-semibold">{`${session?.profile?.fullName} (${session?.type === UserType.Legal ? t("common:legal") : t("common:real")})`}</h4>
-            ) : (
-              "کاربر وردست"
-            )}
-            <p className="text-sm font-semibold text-alpha-400">
-              {session?.profile?.cellphone
-                ? digitsEnToFa(session?.profile?.cellphone)
-                : digitsEnToFa("09123456789")}
-            </p>
-          </div>
-          <Link href={"/profile/info"}>
-            <PencilSquareIcon height={20} width={20} />
-          </Link>
-        </li>
-        <li className="app-navigation-item flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="rounded-lg bg-blue-600 p-2">
-              <WalletIcon
-                width={24}
-                height={24}
-                className="text-alpha-white"
-                color="alpha-white"
-              />
-            </div>
-            <span>کیف پول</span>
-          </div>
-          <div className="text-alph-500 flex items-center gap-1">
-            <span>{digitsEnToFa(addCommas(wallet || 0))}</span>
-            <span>تومان</span>
-          </div>
-        </li>
-      </ol>
+      <section className="app-navigation-section">
+        <ol className="app-navigation-section-list">
+          <li className="app-navigation-item flex items-center justify-between">
+            <span className="not-hover">
+              <div className="app-navigation-item-link">
+                <span className="flex">
+                  <div className="flex flex-1 flex-col gap-y-1">
+                    {session?.profile?.fullName &&
+                    session?.profile?.fullName !== "null null" ? (
+                      <h4 className="font-semibold">{`${session?.profile?.fullName} (${session?.type === UserType.Legal ? t("common:legal") : t("common:real")})`}</h4>
+                    ) : (
+                      "کاربر وردست"
+                    )}
+                    <p className="text-sm font-semibold text-alpha-400">
+                      {session?.profile?.cellphone
+                        ? digitsEnToFa(session?.profile?.cellphone)
+                        : digitsEnToFa("09123456789")}
+                    </p>
+                  </div>
+                  <Link className="my-auto" href={"/profile/info"}>
+                    <PencilSquareIcon height={20} width={20} />
+                  </Link>
+                </span>
+              </div>
+            </span>
+          </li>
+          <li className="app-navigation-item flex items-center justify-between">
+            <span className="not-hover">
+              <div className="app-navigation-item-link">
+                <span className="flex">
+                  <div className="flex flex-1 items-center gap-4">
+                    <div className="rounded-lg bg-blue-600 p-2">
+                      <WalletIcon
+                        width={24}
+                        height={24}
+                        className="text-alpha-white"
+                        color="alpha-white"
+                      />
+                    </div>
+                    <span>کیف پول</span>
+                  </div>
+                  <div className="flex items-center gap-1 text-alpha-500">
+                    <span>{digitsEnToFa(addCommas(wallet || 0))}</span>
+                    <span>تومان</span>
+                  </div>
+                </span>
+              </div>
+            </span>
+          </li>
+        </ol>
+      </section>
     )
   )
 }
@@ -76,7 +89,6 @@ const Sidebar = ({ menus_name, profile }: ILayoutDesktopSidebar) => {
   const [open, setOpen] = useAtom(sidebarHamburgerAtom)
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const { data: session } = useSession()
 
   const ref = useClickOutside(() => {
     if (open) {
@@ -118,9 +130,12 @@ const Sidebar = ({ menus_name, profile }: ILayoutDesktopSidebar) => {
                 innerComponentSidebar
               ) : (
                 <div className="app-navigation-container">
-                  {profile && <SidebarProfile session={session} />}
                   {menus_name && (
-                    <Navigation menus={sidebar_options[menus_name]} withLogin />
+                    <Navigation
+                      menus={sidebar_options[menus_name]}
+                      withLogin
+                      withProfile={profile}
+                    />
                   )}
                 </div>
               ))}

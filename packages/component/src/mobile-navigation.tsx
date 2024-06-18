@@ -13,6 +13,7 @@ import paths from "@vardast/lib/paths"
 import { PublicContext } from "@vardast/provider/PublicProvider"
 import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
+import { myColors } from "@vardast/tailwind-config/themes"
 import { ILayoutMobileFooter } from "@vardast/type/layout"
 import { Button } from "@vardast/ui/button"
 import { AnimatePresence, motion } from "framer-motion"
@@ -21,6 +22,7 @@ import { useAtom, useSetAtom } from "jotai"
 import { ArrowRight } from "lucide-react"
 import { useSession } from "next-auth/react"
 
+import DynamicIcon from "./DynamicIcon"
 import Link from "./Link"
 import Progress from "./Progress"
 import Search from "./Search"
@@ -43,7 +45,11 @@ const MobileNavigation = ({
     : propsBack
 
   const getIsActiveNav = (activePath: string) =>
-    pathname.split("/")[1] === activePath.split("/")[1]
+    activePath === "/"
+      ? pathname === activePath
+      : pathname.startsWith(activePath) &&
+        pathname.split("/").length === activePath.split("/").length
+
   const getActiveClassName = (activePath: string) => {
     const isActiveNav = getIsActiveNav(activePath)
 
@@ -166,20 +172,23 @@ const MobileNavigation = ({
           {mobile_footer_options[`${options.name}`].map(
             ({ icon, button, id, title }) => {
               const href = button.value as string
-              const ShowedIcon = getIsActiveNav(href)
-                ? icon.Active
-                : icon.Default
+
               return (
                 <Link
                   key={id}
                   href={href}
                   className={`group inline-flex h-full flex-col items-center justify-center gap-y-0.5 pb-2`}
                 >
-                  <ShowedIcon
+                  <DynamicIcon
+                    fill={getIsActiveNav(href) ? myColors.primary[600] : "none"}
+                    name={icon}
                     className={mergeClasses(
-                      "h-7 w-7 transform transition-all",
-                      getActiveClassName(href)
+                      "icon h-6 w-6 transform transition-all",
+                      getIsActiveNav(href)
+                        ? "text-primary-600"
+                        : "text-alpha-500"
                     )}
+                    strokeWidth={2}
                   />
                   <p
                     className={mergeClasses(

@@ -10,7 +10,7 @@ import { LucideChevronDown } from "lucide-react"
 import DynamicIcon from "./DynamicIcon"
 import Link from "./Link"
 
-export type NavigationItemVariant = "success" | "error"
+export type NavigationItemVariant = "success" | "error" | "primary"
 type Props = {
   menu: NavigationItemType
   variant?: NavigationItemVariant
@@ -54,17 +54,19 @@ const NavigationItem = (props: Props) => {
               className={clsx("icon", props.variant)}
               strokeWidth={1.5}
             />
-            <span className="flex-1">{menu.title}</span>
+            <span>
+              {menu.title}
+              {menu.items && (
+                <Button
+                  className="app-navigation-item-arrow"
+                  noStyle
+                  onClick={() => !isActive(menu.path as string) && toggleOpen()}
+                >
+                  <LucideChevronDown className="h-4 w-4" />
+                </Button>
+              )}
+            </span>
           </Link>
-          {menu.items && (
-            <Button
-              className="app-navigation-item-arrow"
-              noStyle
-              onClick={() => !isActive(menu.path as string) && toggleOpen()}
-            >
-              <LucideChevronDown className="h-4 w-4" />
-            </Button>
-          )}
         </span>
         {menu.items && (
           <ol className="app-navigation-item-children">

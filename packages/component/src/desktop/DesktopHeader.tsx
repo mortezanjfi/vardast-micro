@@ -9,6 +9,7 @@ import { UserStatusesEnum } from "@vardast/graphql/generated"
 import paths from "@vardast/lib/paths"
 import { ColorEnum } from "@vardast/type/Enums"
 import { ILayoutDesktopHeader } from "@vardast/type/layout"
+import { checkProjectName, EProjectName } from "@vardast/util/checkProjectName"
 import clsx from "clsx"
 import { ChevronLeft } from "lucide-react"
 import { useSession } from "next-auth/react"
@@ -164,7 +165,8 @@ const DesktopHeader = ({ search, button }: ILayoutDesktopHeader) => {
                                 <ChevronLeft className="h-6 w-6" />
                               </Link>
                             </NavigationMenuLink>
-                            {/* {status === "authenticated" &&
+                            {checkProjectName() === EProjectName.CLIENT &&
+                              status === "authenticated" &&
                               session?.profile?.roles.some(
                                 (role) => role?.name === "admin"
                               ) && (
@@ -177,7 +179,7 @@ const DesktopHeader = ({ search, button }: ILayoutDesktopHeader) => {
                                     ورود به پنل ادمین
                                   </Link>
                                 </NavigationMenuLink>
-                              )} */}
+                              )}
                             <NavigationMenuLink className="flex w-full justify-start text-nowrap bg-alpha-white px-4 py-2 md:z-50">
                               <Link
                                 href="/auth/signout"

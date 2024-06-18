@@ -5,6 +5,7 @@ import { useDebouncedState } from "@mantine/hooks"
 import { useQuery } from "@tanstack/react-query"
 import CategoryFilter from "@vardast/component/category-filter"
 import DesktopMobileViewOrganizer from "@vardast/component/DesktopMobileViewOrganizer"
+import FiltersSidebarContainer from "@vardast/component/filters-sidebar-container"
 import NotFoundMessage from "@vardast/component/NotFound"
 import { ProductCardSkeleton } from "@vardast/component/product-card"
 import ProductListContainer, {
@@ -76,16 +77,18 @@ const ProductList = ({
   }, [allProductsQuery.data?.myProfileSeller.sum, setCategoriesCount])
 
   const DesktopSidebar = (
-    <div className="rounded-md px-4">
-      {selectedCategoryIds &&
-        selectedCategoryIds.length === 1 &&
-        !brandId &&
-        !sellerId && (
-          <CategoryFilter selectedCategoryId={selectedCategoryIds[0]} />
-        )}
+    <FiltersSidebarContainer>
+      <div className="rounded-md px-4">
+        {selectedCategoryIds &&
+          selectedCategoryIds.length === 1 &&
+          !brandId &&
+          !sellerId && (
+            <CategoryFilter selectedCategoryId={selectedCategoryIds[0]} />
+          )}
 
-      {!selectedCategoryIds && !brandId && !sellerId && <VocabularyFilter />}
-    </div>
+        {!selectedCategoryIds && !brandId && !sellerId && <VocabularyFilter />}
+      </div>
+    </FiltersSidebarContainer>
   )
 
   const DesktopHeader = (

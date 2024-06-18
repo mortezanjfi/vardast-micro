@@ -11,7 +11,7 @@ import {
 } from "@vardast/graphql/generated"
 import { Session } from "next-auth"
 
-import { NotFoundItems } from "@/app/(client)/favorites/components/FavoritesPageIndex"
+import { NotFoundItems } from "@/app/(client)/profile/favorites/components/FavoritesPageIndex"
 
 type ProductsTabContentProps = {
   productQuery: UseQueryResult<GetUserFavoriteProductsQuery, unknown>
@@ -21,8 +21,6 @@ type ProductsTabContentProps = {
 export const ProductsTabContent = ({
   productQuery
 }: ProductsTabContentProps) => {
-  console.log({ productQuery })
-
   return (
     <>
       {productQuery.isFetching && productQuery.isLoading ? (

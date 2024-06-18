@@ -130,7 +130,7 @@ export default function withLayout<T>(
                 <div
                   className={clsx(
                     "app-content desktop",
-                    layout?.desktop?.sidebar && "pr-6"
+                    layout?.desktop?.sidebar && "md:pr-6"
                   )}
                 >
                   {layout?.desktop?.main?.breadcrumb && (

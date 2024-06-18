@@ -1,24 +1,9 @@
-import {
-  BookmarkIcon,
-  HomeIcon,
-  Squares2X2Icon,
-  UserCircleIcon
-} from "@heroicons/react/24/outline"
-import {
-  BookmarkIcon as SolidBookmarkIcon,
-  HomeIcon as SolidHomeIcon,
-  Squares2X2Icon as SolidSquares2X2Icon,
-  UserCircleIcon as SolidUserCircleIcon
-} from "@heroicons/react/24/solid"
 import { ILayoutOption } from "@vardast/type/layout"
 
 const _default: ILayoutOption[] = [
   {
     id: 0,
-    icon: {
-      Default: HomeIcon,
-      Active: SolidHomeIcon
-    },
+    icon: "home",
     button: {
       type: "link",
       value: "/"
@@ -27,46 +12,37 @@ const _default: ILayoutOption[] = [
   },
   {
     id: 1,
-    icon: {
-      Default: Squares2X2Icon,
-      Active: SolidSquares2X2Icon
-    },
+    icon: "layout-grid",
     button: {
       type: "link",
       value: "/category"
     },
     title: "دسته‌بندی"
   },
-  {
-    id: 2,
-    icon: {
-      Default: BookmarkIcon,
-      Active: SolidBookmarkIcon
-    },
-    button: {
-      type: "link",
-      value: "/favorites"
-    },
-    title: "علاقه‌مندی"
-  },
   // {
   //   id: 2,
   //   icon: {
-  //     Default: ListBulletIcon,
-  //     Active: SolidListBulletIcon
+  //     Default: BookmarkIcon,
+  //     Active: SolidBookmarkIcon
   //   },
   //   button: {
   //     type: "link",
-  //     value: "/basket"
+  //     value: "/favorites"
   //   },
-  //   title: "سفارشات"
+  //   title: "علاقه‌مندی"
   // },
   {
-    id: 3,
-    icon: {
-      Default: UserCircleIcon,
-      Active: SolidUserCircleIcon
+    id: 2,
+    icon: "layout-list",
+    button: {
+      type: "link",
+      value: "/profile/basket"
     },
+    title: "سفارشات"
+  },
+  {
+    id: 3,
+    icon: "user-2",
     button: {
       type: "link",
       value: "/profile"

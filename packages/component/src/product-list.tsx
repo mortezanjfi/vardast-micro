@@ -41,6 +41,7 @@ import {
 import BrandOrSellerCategoryFilter from "./brand-or-seller-category-filter"
 import DesktopMobileViewOrganizer from "./DesktopMobileViewOrganizer"
 import FiltersContainer from "./filters-container"
+import FiltersSidebarContainer from "./filters-sidebar-container"
 import InfiniteScrollPagination from "./InfiniteScrollPagination"
 import ItemsCount from "./ItemsCount"
 import LoadingFailed from "./LoadingFailed"
@@ -300,7 +301,7 @@ const ProductList = ({
   // if (!allProductsQuery.data) notFound()
 
   const DesktopSidebar = (
-    <>
+    <FiltersSidebarContainer>
       {hasSearch && (
         <div className="relative flex transform items-center rounded-lg border-alpha-200 bg-alpha-100 pr-2 transition-all">
           {queryTemp !== query ? (
@@ -408,7 +409,7 @@ const ProductList = ({
           )}
         {!selectedCategoryIds && !brandId && !sellerId && <VocabularyFilter />}
       </div>
-    </>
+    </FiltersSidebarContainer>
   )
 
   const DesktopHeader = (

@@ -78,7 +78,7 @@
     z-20
     h-full
     flex-shrink-0
-    translate-x-80
+    translate-x-[600px]
     bg-opacity-90
     bg-alpha-white
     backdrop-blur-sm
@@ -96,7 +96,7 @@
   }
 
   .app-sidebar-inner {
-    @apply relative flex md:rounded-2xl md:border overflow-auto max-h-screen md:max-h-[80vh] hide-scrollbar;
+    @apply relative flex overflow-auto max-h-screen md:border md:border-alpha-300 md:rounded-xl md:bg-alpha-100 md:max-h-[80vh] hide-scrollbar;
   }
 }
 
@@ -104,15 +104,15 @@
   @apply z-10
     w-full
     flex-shrink-0
-    p-6
     transition-all;
 
   .app-navigation-container {
-    @apply flex flex-1 flex-col overflow-y-auto;
+    @apply flex flex-1 flex-col overflow-y-auto gap-6 md:rounded-xl;
   }
   .app-navigation-section {
+    @apply md:bg-alpha-white md:rounded-xl py;
     &-list {
-      @apply flex flex-col divide-y;
+      @apply flex flex-col;
     }
     &-label {
       @apply py-2
@@ -123,44 +123,45 @@
     }
   }
   .app-navigation-item {
-    @apply py-2;
     > span {
       &.error {
         @apply text-error-700
           hover:bg-error-200
-          hover:bg-opacity-50
           dark:text-error-400
-          dark:hover:bg-error-800
-          dark:hover:bg-opacity-30;
+          dark:hover:bg-error-800;
       }
 
       &.success {
         @apply text-success-700
           hover:bg-success-200
-          hover:bg-opacity-50
           dark:text-success-400
-          dark:hover:bg-success-800
-          dark:hover:bg-opacity-30;
+          dark:hover:bg-success-800;
+      }
+
+      &.primary {
+        @apply text-primary-700
+          hover:bg-primary-200
+          dark:text-primary-400
+          dark:hover:bg-primary-800;
+      }
+      &:not(.not-hover) {
+        @apply hover:bg-alpha-200 hover:bg-opacity-50 dark:hover:bg-alpha-800 dark:hover:bg-opacity-30;
       }
 
       @apply flex
-          w-full
-          items-center
-          gap-2
-          rounded
-          px-2
-          py-3
-          leading-normal
-          text-alpha-700
-          hover:bg-alpha-200
-          hover:bg-opacity-50
-          dark:text-alpha-400
-          dark:hover:bg-alpha-800
-          dark:hover:bg-opacity-30;
+        w-full
+        items-center
+        gap-2
+        leading-normal
+        text-alpha-700
+        dark:text-alpha-400;
     }
 
     .app-navigation-item-link {
-      @apply flex flex-1 items-center gap-2;
+      @apply flex flex-1 items-center gap-2 px-6;
+      > span {
+        @apply border-b py-4 flex-1 md:border-alpha-300 flex justify-between;
+      }
 
       .icon {
         &.error {
@@ -171,6 +172,10 @@
         &.success {
           @apply text-success-700
         dark:text-success-600;
+        }
+        &.primary {
+          @apply text-primary-700
+        dark:text-primary-600;
         }
         @apply h-5
         w-5
@@ -263,6 +268,13 @@
             @apply text-alpha-700 before:bg-primary-600 dark:text-alpha-400;
           }
         }
+      }
+    }
+  }
+  .app-navigation-item:last-child {
+    .app-navigation-item-link {
+      > span {
+        @apply border-b-0;
       }
     }
   }

@@ -423,8 +423,7 @@ const options = {
   _seller_panel
 }
 
-type Options = typeof options
-type OptionName = keyof Options
+type OptionName = keyof typeof options
 
 const createOptionByMobileTitle = (
   title: ILayoutTitle<"image" | "text">,

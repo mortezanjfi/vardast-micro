@@ -13,7 +13,7 @@ import { allUserFavoriteProductsQueryFns } from "@vardast/query/queryFns/allUser
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { useSession } from "next-auth/react"
 
-import { ProductsTabContent } from "@/app/(client)/favorites/components/ProductsTabContent"
+import { ProductsTabContent } from "@/app/(client)/profile/favorites/components/ProductsTabContent"
 
 const BasketPageIndex = () => {
   const { data: session, status } = useSession()
@@ -22,10 +22,14 @@ const BasketPageIndex = () => {
   const productQuery = useQuery<GetUserFavoriteProductsQuery>({
     queryKey: [
       QUERY_FUNCTIONS_KEY.GET_ALL_USER_FAVORITE_PRODUCT,
-      EntityTypeEnum.Basket
+      EntityTypeEnum.Basket,
+      session?.accessToken
     ],
     queryFn: () =>
-      allUserFavoriteProductsQueryFns({ accessToken: session?.accessToken }),
+      allUserFavoriteProductsQueryFns({
+        type: EntityTypeEnum.Basket,
+        accessToken: session?.accessToken
+      }),
     refetchOnWindowFocus: true,
     enabled: !!session
   })

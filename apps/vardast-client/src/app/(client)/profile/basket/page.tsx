@@ -8,7 +8,7 @@ import { allUserFavoriteProductsQueryFns } from "@vardast/query/queryFns/allUser
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { getServerSession } from "next-auth"
 
-import BasketPageIndex from "@/app/(client)/basket/components/BasketPageIndex"
+import BasketPageIndex from "@/app/(client)/profile/basket/components/BasketPageIndex"
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -24,10 +24,12 @@ export default async () => {
     await queryClient.prefetchQuery(
       [
         QUERY_FUNCTIONS_KEY.GET_ALL_USER_FAVORITE_PRODUCT,
-        EntityTypeEnum.Basket
+        EntityTypeEnum.Basket,
+        session?.accessToken
       ],
       () =>
         allUserFavoriteProductsQueryFns({
+          type: EntityTypeEnum.Basket,
           accessToken: session?.accessToken
         })
     )

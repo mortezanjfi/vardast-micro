@@ -154,6 +154,11 @@ export const _authentication_signout_sidebarMenu: NavigationItemType = {
   icon: "log-out",
   path: "/auth/signout"
 }
+export const _authentication_profile_sidebarMenu: NavigationItemType = {
+  title: "اطلاعات حساب کاربری",
+  icon: "user",
+  path: "/profile/info"
+}
 
 export const _sidebarMenu: NavigationType[] = [
   {
