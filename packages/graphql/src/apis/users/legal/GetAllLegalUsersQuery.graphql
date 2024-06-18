@@ -11,6 +11,7 @@ query GetAllLegalUsersQuery($indexLegalInput: IndexLegalInput) {
       name_company
       national_id
       create_at
+      wallet
       createdBy {
         id
         uuid
