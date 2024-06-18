@@ -21,13 +21,13 @@ import {
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Button } from "@vardast/ui/button"
+import { checkBooleanByString } from "@vardast/util/checkBooleanByString"
 import { LucideCheck, LucidePlus, LucideX } from "lucide-react"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-import { checkBooleanByString } from "@/app/(admin)/brands/components/Brands"
 import OfferDeleteModal from "@/app/(admin)/offers/components/OfferDeleteModal"
 import { OffersFilter } from "@/app/(admin)/offers/components/OffersFilter"
 

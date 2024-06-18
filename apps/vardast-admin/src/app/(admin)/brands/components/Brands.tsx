@@ -4,7 +4,6 @@ import { useMemo, useState } from "react"
 import Image from "next/image"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
-import { UseQueryResult } from "@tanstack/react-query"
 import Card from "@vardast/component/Card"
 import Link from "@vardast/component/Link"
 import Loading from "@vardast/component/Loading"
@@ -20,6 +19,8 @@ import {
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Button } from "@vardast/ui/button"
+import { checkBooleanByString } from "@vardast/util/checkBooleanByString"
+import { getContentByApiStatus } from "@vardast/util/GetContentByApiStatus"
 import { LucidePlus, LucideWarehouse } from "lucide-react"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
@@ -30,36 +31,11 @@ import { TypeOf, z } from "zod"
 import BrandDeleteModal from "@/app/(admin)/brands/components/BrandDeleteModal"
 import { BrandFilter } from "@/app/(admin)/brands/components/BrandFilter"
 
-export const checkBooleanByString = (str: string) => {
-  if (str === "false") {
-    return false
-  }
-  if (str === "true") {
-    return true
-  }
-}
-
 const renderedListStatus = {
   [ApiCallStatusEnum.LOADING]: <Loading />,
   [ApiCallStatusEnum.ERROR]: <LoadingFailed />,
   [ApiCallStatusEnum.EMPTY]: <NoResult entity="brand" />,
   [ApiCallStatusEnum.DEFAULT]: null
-}
-
-const getContentByApiStatus = (
-  apiQuery: UseQueryResult<any, unknown>,
-  queryLength: boolean
-) => {
-  if (apiQuery.isLoading) {
-    return ApiCallStatusEnum.LOADING
-  }
-  if (apiQuery.isError) {
-    return ApiCallStatusEnum.ERROR
-  }
-  if (!queryLength || !apiQuery.data) {
-    return ApiCallStatusEnum.EMPTY
-  }
-  return ApiCallStatusEnum.DEFAULT
 }
 
 const filterSchema = z.object({
