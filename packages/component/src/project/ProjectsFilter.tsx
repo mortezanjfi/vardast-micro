@@ -3,7 +3,7 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { useDebouncedState } from "@mantine/hooks"
 import {
-  PreOrderStates,
+  MultiStatuses,
   useGetAllProjectsQuery
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
@@ -21,8 +21,7 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
-  FormMessage
+  FormLabel
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@vardast/ui/popover"
@@ -31,34 +30,35 @@ import useTranslation from "next-translate/useTranslation"
 import { UseFormReturn } from "react-hook-form"
 
 import Card from "../../src/Card"
-import { OrdersFilterType } from "./OrdersPage"
+import { ProjectsFilterType } from "./ProjectsPage"
 
-type OrdersFilterprops = {
-  form: UseFormReturn<OrdersFilterType>
-  setOrdersQueryParams: Dispatch<SetStateAction<OrdersFilterType>>
+type ProjectsFilterprops = {
+  form: UseFormReturn<ProjectsFilterType>
+  setOrdersQueryParams: Dispatch<SetStateAction<ProjectsFilterType>>
 }
 
-export const OrdersFilter = ({
+export const ProjectsFilter = ({
   form,
   setOrdersQueryParams
-}: OrdersFilterprops) => {
-  const [projectDialog, setProjectDialog] = useState(false)
+}: ProjectsFilterprops) => {
+  const [statusDialog, setStatusDialog] = useState(false)
   const [projectQuery, setProjectQuery] = useDebouncedState<string>("", 500)
   const [projectQueryTemp, setProjectQueryTemp] = useState<string>("")
-
-  const [statusDialog, setStatusDialog] = useState(false)
-  const [fileDialog, setFileDialog] = useState(false)
+  const [projectDialog, setProjectDialog] = useState(false)
 
   const { t } = useTranslation()
 
-  function getEnumValues<T>(enumObj: T): string[] {
-    return Object.values(enumObj).filter(
-      (value) => typeof value === "string"
-    ) as string[]
-  }
-
-  // Get the values of PreOrderStates enum
-  const orderStatus = [...getEnumValues(PreOrderStates)]
+  const statuses = [
+    {
+      status: "تایید شده",
+      value: MultiStatuses.Confirmed
+    },
+    { status: "در انتظار تایید", value: MultiStatuses.Pending },
+    {
+      status: "رد شده",
+      value: MultiStatuses.Rejected
+    }
+  ]
 
   const myProjectsQuery = useGetAllProjectsQuery(
     graphqlRequestClientWithToken,
@@ -69,32 +69,20 @@ export const OrdersFilter = ({
     }
   )
 
-  const statuses = [
-    {
-      status: "دارد",
-      value: "true"
-    },
-    { status: "ندارد", value: "false" },
-    {
-      status: "همه",
-      value: ""
-    }
-  ]
-
-  const submit = (data: OrdersFilterType) => {
+  const submit = (data: ProjectsFilterType) => {
     console.log(data)
     setOrdersQueryParams({
-      customerName: form.getValues("customerName"),
-      projectName: form.getValues("projectName"),
-      hasFile: form.getValues("hasFile"),
+      name: form.getValues("name"),
+      nameEmployer: form.getValues("nameEmployer"),
+      nameManager: form.getValues("nameManager"),
       status: form.getValues("status")
     })
   }
   const reset = () => {
     form.reset()
-    setOrdersQueryParams({})
     setProjectQuery("")
     setProjectQueryTemp("")
+    setOrdersQueryParams({})
   }
 
   return (
@@ -105,100 +93,7 @@ export const OrdersFilter = ({
             <div className="grid grid-cols-4 gap-6">
               <FormField
                 control={form.control}
-                name="customerName"
-                render={(_) => (
-                  <FormItem>
-                    <FormLabel>{t("common:purchaser-name")}</FormLabel>
-                    <FormControl>
-                      <div className="relative flex w-full transform items-center rounded-lg border-alpha-200 bg-alpha-100 py-0.5 pr-2 transition-all">
-                        <LucideSearch className="h-6 w-6 text-primary" />
-
-                        <Input
-                          autoFocus
-                          onChange={(e) => {
-                            form.setValue("customerName", e.target.value)
-                          }}
-                          type="text"
-                          placeholder="نام خریدار"
-                          className="flex h-full w-full items-center
-                          gap-2
-                          rounded-lg
-                          bg-alpha-100
-                          px-4
-                          py-3.5
-                           focus:!ring-0 disabled:bg-alpha-100"
-                        />
-                      </div>
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="status"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("common:status")}</FormLabel>
-                    <Popover open={statusDialog} onOpenChange={setStatusDialog}>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            noStyle
-                            role="combobox"
-                            className="input-field flex items-center text-start"
-                          >
-                            <span>
-                              {field.value
-                                ? orderStatus.find((st) => st === field.value)
-                                : t("common:choose_entity", {
-                                    entity: t("common:status")
-                                  })}
-                            </span>
-                            <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent>
-                        <Command>
-                          <CommandEmpty>
-                            {t("common:no_entity_found", {
-                              entity: t("common:status")
-                            })}
-                          </CommandEmpty>
-                          <CommandGroup>
-                            {orderStatus.map((st) => (
-                              <CommandItem
-                                value={st}
-                                key={st}
-                                onSelect={(value) => {
-                                  setStatusDialog(false)
-                                  form.setValue("status", value.toUpperCase())
-                                  console.log(form.getValues("status"))
-                                }}
-                              >
-                                <LucideCheck
-                                  className={mergeClasses(
-                                    "mr-2 h-4 w-4",
-                                    st === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {st}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="projectName"
+                name="name"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{t("common:project")}</FormLabel>
@@ -261,7 +156,7 @@ export const OrdersFilter = ({
                                     onSelect={(value) => {
                                       console.log(value)
 
-                                      form.setValue("projectName", value)
+                                      form.setValue("name", value)
                                       setProjectDialog(false)
                                     }}
                                   >
@@ -281,17 +176,80 @@ export const OrdersFilter = ({
                         </Command>
                       </PopoverContent>
                     </Popover>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
               <FormField
                 control={form.control}
-                name="hasFile"
+                name="nameManager"
+                render={(_) => (
+                  <FormItem>
+                    <FormLabel>{t("common:project-manager")}</FormLabel>
+                    <FormControl>
+                      <div className="relative flex w-full transform items-center rounded-lg border-alpha-200 bg-alpha-100 py-0.5 pr-2 transition-all">
+                        <LucideSearch className="h-6 w-6 text-primary" />
+
+                        <Input
+                          autoFocus
+                          onChange={(e) => {
+                            form.setValue("nameManager", e.target.value)
+                          }}
+                          type="text"
+                          placeholder={t("common:project-manager")}
+                          className="flex h-full w-full items-center
+                          gap-2
+                          rounded-lg
+                          bg-alpha-100
+                          px-4
+                          py-3.5
+                           focus:!ring-0 disabled:bg-alpha-100"
+                        />
+                      </div>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="nameEmployer"
+                render={(_) => (
+                  <FormItem>
+                    <FormLabel>
+                      {t("common:entity_name", { entity: t("common:users") })}
+                    </FormLabel>
+                    <FormControl>
+                      <div className="relative flex w-full transform items-center rounded-lg border-alpha-200 bg-alpha-100 py-0.5 pr-2 transition-all">
+                        <LucideSearch className="h-6 w-6 text-primary" />
+
+                        <Input
+                          autoFocus
+                          onChange={(e) => {
+                            form.setValue("nameEmployer", e.target.value)
+                          }}
+                          type="text"
+                          placeholder={t("common:entity_name", {
+                            entity: t("common:users")
+                          })}
+                          className="flex h-full w-full items-center
+                          gap-2
+                          rounded-lg
+                          bg-alpha-100
+                          px-4
+                          py-3.5
+                           focus:!ring-0 disabled:bg-alpha-100"
+                        />
+                      </div>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="status"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("common:file")}</FormLabel>
-                    <Popover open={fileDialog} onOpenChange={setFileDialog}>
+                    <FormLabel>{t("common:status")}</FormLabel>
+                    <Popover open={statusDialog} onOpenChange={setStatusDialog}>
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
@@ -320,11 +278,11 @@ export const OrdersFilter = ({
                           <CommandGroup>
                             {statuses.map((st) => (
                               <CommandItem
-                                defaultValue="ili"
                                 value={st.value}
-                                key={st.status}
+                                key={st.value}
                                 onSelect={(value) => {
-                                  form.setValue("hasFile", value)
+                                  form.setValue("status", value.toUpperCase())
+                                  setStatusDialog(false)
                                 }}
                               >
                                 <LucideCheck
