@@ -264,16 +264,6 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                               {/* وضعیت */}
                               <td className="border">--</td>
                               <td className="border">
-                                <span
-                                  className="tag cursor-pointer text-error"
-                                  onClick={() => {
-                                    setIdToEdit(project.id)
-                                    setAddProjectOpen(true)
-                                  }}
-                                >
-                                  {t("common:edit")}
-                                </span>
-                                /
                                 <Link href={`/profile/projects/${project.id}`}>
                                   <span className="tag cursor-pointer text-blue-500">
                                     {t("common:details")}

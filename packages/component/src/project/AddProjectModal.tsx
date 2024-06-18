@@ -99,7 +99,8 @@ const AddLegalUserModal = ({
             duration: 2000,
             variant: "success"
           })
-          router.push(`/profile/projects/${data.createProject.id}`)
+
+          router.push(`/profile/projects/${data.createProject.id}/?mode=new`)
           form.reset()
           setIdToEdit(undefined)
         } else {
