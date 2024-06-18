@@ -345,5 +345,7 @@
   "colleague-role": "نقش همکار",
   "national_id": "شناسه ملی شرکت",
   "name_company": "نام شرکت",
-  "entity_type": "نوع {{entity}}"
+  "entity_type": "نوع {{entity}}",
+  "real": "حقیقی",
+  "legal": "حقوقی"
 }

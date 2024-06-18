@@ -339,5 +339,7 @@
   "add-offer-price": "افزودن پیشنهاد قیمت",
   "all-products": "همه‌ی کالاهای وردست",
   "national_id": "شناسه ملی شرکت",
-  "name_company": "نام شرکت"
+  "name_company": "نام شرکت",
+  "real": "حقیقی",
+  "legal": "حقوقی"
 }
