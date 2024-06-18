@@ -50,6 +50,17 @@ export const TypeProjectFa = {
   }
 }
 
+export const statusProjectFa = {
+  [MultiStatuses.Confirmed]: {
+    name_fa: "تایید شدده"
+  },
+  [MultiStatuses.Pending]: {
+    name_fa: "در انتظار تایید"
+  },
+  [MultiStatuses.Rejected]: {
+    name_fa: "رد شده"
+  }
+}
 export const ProjectsFilterSchema = z.object({
   name: z.string().optional(),
   nameManager: z.string().optional(),
@@ -262,7 +273,9 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                               {/* آخرین بروز رسانی */}
                               <td className="border">--</td>
                               {/* وضعیت */}
-                              <td className="border">--</td>
+                              <td className="border">
+                                {statusProjectFa[project?.status].name_fa}
+                              </td>
                               <td className="border">
                                 <Link href={`/profile/projects/${project.id}`}>
                                   <span className="tag cursor-pointer text-blue-500">
