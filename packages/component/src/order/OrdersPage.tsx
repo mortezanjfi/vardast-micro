@@ -178,22 +178,22 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
               <table className="table-hover table">
                 <thead>
                   <tr>
-                    <th>{t("common:row")}</th>
-                    <th>
+                    <th className="border">{t("common:row")}</th>
+                    <th className="border">
                       {t("common:entity_code", { entity: t("common:order") })}
                     </th>
-                    <th>{t("common:purchaser-name")}</th>
-                    <th>
+                    <th className="border">{t("common:purchaser-name")}</th>
+                    <th className="border">
                       {t("common:entity_name", {
                         entity: t("common:project")
                       })}
                     </th>
-                    <th>{t("common:submition-time")}</th>
-                    <th>{t("common:order-expire-time")}</th>
-                    <th>{t("common:file")}</th>
-                    <th>{t("common:status")}</th>
-                    <th>{t("common:person-in-charge")}</th>
-                    <th>{t("common:operation")}</th>
+                    <th className="border">{t("common:submition-time")}</th>
+                    <th className="border">{t("common:order-expire-time")}</th>
+                    <th className="border">{t("common:file")}</th>
+                    <th className="border">{t("common:status")}</th>
+                    <th className="border">{t("common:person-in-charge")}</th>
+                    <th className="border">{t("common:operation")}</th>
                   </tr>
                 </thead>
 
@@ -202,13 +202,13 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                     (preOrder, index) =>
                       preOrder && (
                         <tr key={preOrder?.id}>
-                          <td className="w-4">
+                          <td className="w-4 border">
                             <span>{digitsEnToFa(index + 1)}</span>
                           </td>
-                          <td>{preOrder?.uuid}</td>
-                          <td>{preOrder?.user?.fullName}</td>
-                          <td>{preOrder?.project?.name}</td>
-                          <td>
+                          <td className="border">{preOrder?.uuid}</td>
+                          <td className="border">{preOrder?.user?.fullName}</td>
+                          <td className="border">{preOrder?.project?.name}</td>
+                          <td className="border">
                             {digitsEnToFa(
                               new Date(
                                 preOrder?.request_date
@@ -219,7 +219,7 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                               })
                             )}
                           </td>
-                          <td>
+                          <td className="border">
                             {digitsEnToFa(
                               new Date(
                                 preOrder?.expire_time
@@ -230,7 +230,7 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                               })
                             )}
                           </td>
-                          <td>
+                          <td className="border">
                             {preOrder?.files.length > 0 ? (
                               <span className="tag  tag-sm tag-success">
                                 {t("common:has")}
@@ -241,9 +241,11 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                               </span>
                             )}
                           </td>
-                          <td>{preOrder?.status}</td>
-                          <td>{preOrder?.pickUpUser?.fullName}</td>
-                          <td>
+                          <td className="border">{preOrder?.status}</td>
+                          <td className="border">
+                            {preOrder?.pickUpUser?.fullName}
+                          </td>
+                          <td className="border">
                             <Link
                               target="_blank"
                               href={`/profile/orders/${preOrder?.id}/info`}

@@ -9,7 +9,6 @@ import {
   MultiStatuses,
   Project,
   TypeProject,
-  useFindOneProjectQuery,
   useGetAllProjectsQuery,
   UserTypeProject
 } from "@vardast/graphql/generated"
@@ -85,7 +84,6 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
   const router = useRouter()
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [projectToDelete, setProjectToDelete] = useState<{}>()
-  const [idToEdit, setIdToEdit] = useState<number | undefined>(undefined)
 
   const [ordersQueryParams, setOrdersQueryParas] = useState<ProjectsFilterType>(
     {}
@@ -121,13 +119,6 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
   const addNewProject = () => {
     setAddProjectOpen(true)
   }
-  const findOneProjectQuery = useFindOneProjectQuery(
-    graphqlRequestClientWithToken,
-    {
-      id: +idToEdit
-    },
-    { enabled: +idToEdit > 0 }
-  )
 
   const projectLength = useMemo(
     () => myProjectsQuery?.data?.projects?.data?.length,
@@ -143,11 +134,8 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
         />
       )}
       <AddProjectModal
-        setIdToEdit={setIdToEdit}
         isMobileView={isMobileView}
-        findOneProjectQuery={findOneProjectQuery}
         isAdmin={isAdmin}
-        id={idToEdit}
         open={addProjectOpen}
         setOpen={setAddProjectOpen}
       />
@@ -278,8 +266,8 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                               </td>
                               <td className="border">
                                 <Link href={`/profile/projects/${project.id}`}>
-                                  <span className="tag cursor-pointer text-blue-500">
-                                    {t("common:details")}
+                                  <span className="tag cursor-pointer text-error">
+                                    {t("common:edit")}
                                   </span>
                                 </Link>
                               </td>
@@ -306,12 +294,7 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
             <div className={clsx("flex h-full flex-col")}>
               <div className="flex flex-col">
                 {myProjectsQuery.data?.projects?.data?.map((project) => (
-                  <ProjectCard
-                    addNewProject={addNewProject}
-                    setIdToEdit={setIdToEdit}
-                    key={project.id}
-                    project={project as Project}
-                  />
+                  <ProjectCard key={project.id} project={project as Project} />
                 ))}
               </div>
               {isMobileView && (
