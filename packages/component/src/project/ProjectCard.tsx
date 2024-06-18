@@ -7,7 +7,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@vardast/ui/dropdown-menu"
 import { LucideMoreVertical } from "lucide-react"
@@ -45,7 +44,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                   <span>{t("common:edit")}</span>
                 </DropdownMenuItem>
               </Link>
-              <DropdownMenuSeparator />
+              {/* <DropdownMenuSeparator /> */}
               {/* <DropdownMenuItem>
                 <Link href={`/profile/projects/${project.id}`}>
                   <span>{t("common:details")}</span>
