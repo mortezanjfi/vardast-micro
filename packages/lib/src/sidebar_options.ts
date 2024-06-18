@@ -36,7 +36,7 @@ const _admin: NavigationType[] = [
         path: "/profile/orders"
       },
       {
-        title: "کالاها",
+        title: "کالا",
         icon: "package",
         items: [
           {
