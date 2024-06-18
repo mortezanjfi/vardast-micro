@@ -1,7 +1,10 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { useDebouncedState } from "@mantine/hooks"
 import Card from "@vardast/component/Card"
-import { useGetAllBrandsWithoutPaginationQuery } from "@vardast/graphql/generated"
+import {
+  SellerType,
+  useGetAllBrandsWithoutPaginationQuery
+} from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
@@ -9,7 +12,6 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem
 } from "@vardast/ui/command"
 import {
@@ -26,15 +28,11 @@ import { LucideCheck, LucideChevronsUpDown, LucideSearch } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 import { UseFormReturn } from "react-hook-form"
 
-import {
-  SellersFilterFields,
-  SellersQueryParams
-} from "@/app/(admin)/sellers/components/Sellers"
+import { SellersFilterFields } from "@/app/(admin)/sellers/components/Sellers"
 
 type SellersFilterProps = {
   form: UseFormReturn<SellersFilterFields>
-  setSellersQueryParams: Dispatch<SetStateAction<SellersQueryParams>>
-  sellersQueryParams: SellersQueryParams
+  setSellersQueryParams: Dispatch<SetStateAction<SellersFilterFields>>
 }
 
 const statusesOfAvailability = [
@@ -54,9 +52,10 @@ export const SellersFilter = ({
   setSellersQueryParams
 }: SellersFilterProps) => {
   const { t } = useTranslation()
-  const [brandsQuery, setBrandsQuery] = useDebouncedState("", 500)
-  const [brandDialog, setBrandDialog] = useState(false)
-
+  const [brandsQuery, setBrandsQuery] = useDebouncedState<string>("", 500)
+  const [brandDialog, setBrandDialog] = useState<boolean>(false)
+  const [logoDialog, setLogoDialog] = useState<boolean>(false)
+  const [typeDialog, setTypeDialog] = useState<boolean>(false)
   const brands = useGetAllBrandsWithoutPaginationQuery(
     graphqlRequestClientWithToken,
     {
@@ -69,13 +68,34 @@ export const SellersFilter = ({
   const handleSubmit = (data: any) => {
     console.log(data)
 
-    setSellersQueryParams({ name: form.getValues("name") })
+    setSellersQueryParams({
+      name: form.getValues("name"),
+      hasLogo: form.getValues("hasLogo"),
+      type: form.getValues("type")
+    })
   }
   const handleReset = () => {
     form.reset()
     console.log(form.getValues("name"))
-    setSellersQueryParams({ name: form.getValues("name") })
+    setSellersQueryParams({})
   }
+
+  const types = [
+    {
+      status: "نمایندگان فروش",
+      value: SellerType.Offline
+    },
+    { status: "ثبت نامی", value: SellerType.Normal },
+    {
+      status: "اضافه شده",
+      value: SellerType.Extended
+    },
+    {
+      status: "آنلاین",
+      value: SellerType.Online
+    }
+  ]
+
   return (
     <Form {...form}>
       <form noValidate onSubmit={form.handleSubmit(handleSubmit)}>
@@ -111,8 +131,8 @@ export const SellersFilter = ({
                     </FormControl>
                   </FormItem>
                 )}
-              />{" "}
-              <FormField
+              />
+              {/* <FormField
                 control={form.control}
                 name="brandId"
                 render={({ field }) => (
@@ -192,14 +212,14 @@ export const SellersFilter = ({
                     <FormMessage />
                   </FormItem>
                 )}
-              />{" "}
+              /> */}
               <FormField
                 control={form.control}
                 name="hasLogo"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{t("common:logo")}</FormLabel>
-                    <Popover>
+                    <Popover open={logoDialog} onOpenChange={setLogoDialog}>
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
@@ -230,6 +250,7 @@ export const SellersFilter = ({
                                 key={st.status}
                                 onSelect={(value) => {
                                   form.setValue("hasLogo", value)
+                                  setLogoDialog(false)
                                 }}
                               >
                                 <LucideCheck
@@ -251,7 +272,67 @@ export const SellersFilter = ({
                   </FormItem>
                 )}
               />
-            </div>{" "}
+              <FormField
+                control={form.control}
+                name="type"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("common:type_seller")}</FormLabel>
+                    <Popover open={typeDialog} onOpenChange={setTypeDialog}>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            noStyle
+                            role="combobox"
+                            className="input-field flex items-center text-start"
+                          >
+                            {field.value
+                              ? types.find((st) => st.value === field.value)
+                                  ?.status
+                              : t("common:choose_entity", {
+                                  entity: t("common:type_seller")
+                                })}
+
+                            <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <Command>
+                          {/* <CommandEmpty>
+                            {t("common:no_entity_found", {
+                              entity: t("common:producer")
+                            })}
+                          </CommandEmpty> */}
+                          <CommandGroup>
+                            {types.map((st) => (
+                              <CommandItem
+                                value={st.value}
+                                key={st.value}
+                                onSelect={(value) => {
+                                  form.setValue("type", value.toUpperCase())
+                                  setTypeDialog(false)
+                                }}
+                              >
+                                <LucideCheck
+                                  className={mergeClasses(
+                                    "mr-2 h-4 w-4",
+                                    st.value === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {st.status}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                  </FormItem>
+                )}
+              />
+            </div>
             <div className="grid grid-cols-4 gap-6">
               <div className="col-start-4 flex justify-end gap-3">
                 <Button
