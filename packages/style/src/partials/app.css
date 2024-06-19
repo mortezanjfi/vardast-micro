@@ -177,10 +177,7 @@
           @apply text-primary-700
         dark:text-primary-600;
         }
-        @apply h-5
-        w-5
-        text-alpha-400
-        dark:text-alpha-600;
+        @apply h-5 w-5 text-alpha;
       }
     }
 
@@ -232,7 +229,7 @@
     }
 
     .app-navigation-item-children {
-      @apply ms-4
+      @apply ms-10
         hidden
         flex-col
         border-s

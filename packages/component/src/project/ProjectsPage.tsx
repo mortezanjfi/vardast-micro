@@ -262,7 +262,7 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                               <td className="border">--</td>
                               {/* وضعیت */}
                               <td className="border">
-                                {statusProjectFa[project?.status].name_fa}
+                                {statusProjectFa[project?.status]?.name_fa}
                               </td>
                               <td className="border">
                                 <Link href={`/profile/projects/${project.id}`}>

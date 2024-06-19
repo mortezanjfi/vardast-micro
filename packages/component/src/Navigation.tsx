@@ -66,6 +66,7 @@ const Navigation = (props: Props) => {
                 )}
                 {profileMenu && (
                   <NavigationItem
+                    session={session}
                     variant={profileMenu.variant as NavigationItemVariant}
                     menu={profileMenu.menu}
                   />
@@ -76,11 +77,16 @@ const Navigation = (props: Props) => {
                       ((menuItem?.abilities &&
                         session?.abilities?.includes(menuItem?.abilities)) ||
                         !menuItem.abilities) && (
-                        <NavigationItem key={idx} menu={menuItem} />
+                        <NavigationItem
+                          session={session}
+                          key={idx}
+                          menu={menuItem}
+                        />
                       )
                   )}
                 {loginToggleMenu && (
                   <NavigationItem
+                    session={session}
                     variant={loginToggleMenu.variant as NavigationItemVariant}
                     menu={loginToggleMenu.menu}
                   />

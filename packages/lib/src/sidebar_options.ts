@@ -36,118 +36,140 @@ const _admin: NavigationType[] = [
         icon: "home"
       },
       {
-        title: "سفارشات",
-        icon: "list",
-        path: "/profile/orders"
-      },
-      {
         title: "کالا",
         icon: "package",
         items: [
           {
             title: "تمام کالاها",
             icon: "package",
-            path: "/products",
-            abilities: "gql.products.product.index"
+            path: "/products"
+          },
+          {
+            title: "پیشنهادات",
+            path: "/offers",
+            icon: "package"
           },
           {
             title: "واحدهای اندازه‌گیری",
             path: "/uoms",
-            icon: "ruler",
-            abilities: "gql.products.uom.index"
+            icon: "ruler"
           },
           {
             title: "مشخصه‌ها",
             path: "/attributes",
-            icon: "layers",
-            abilities: "gql.products.attribute.index"
+            icon: "layers"
           }
         ]
       },
       {
         title: "دسته‌بندی‌ها",
         path: "/vocabularies",
-        icon: "layout-grid",
-        abilities: "gql.base.taxonomy.vocabulary.index"
+        icon: "layout-grid"
       },
       {
         title: "برندها",
         path: "/brands",
-        icon: "factory",
-        abilities: "gql.products.brand.index"
-      },
-      {
-        title: "فروشندگان",
-        path: "/sellers",
-        icon: "store",
-        abilities: "gql.products.seller.index"
-      },
-      {
-        title: "پروژه ها",
-        path: "/profile/projects",
-        icon: "folder",
-        abilities: "gql.products.seller.index"
+        icon: "factory"
       },
       {
         title: "کاربران",
-        icon: "users",
-        abilities: "gql.users.user.index",
+        icon: "users-2",
         items: [
           {
-            title: "حقوقی",
-            path: "/users/legal",
-            icon: "users",
-            abilities: "gql.products.offer.index.index"
+            title: "ادمین",
+            path: "/users/admin",
+            icon: "users"
           },
           {
-            title: "حقیقی",
-            path: "/users/real",
+            title: "فروشندگان",
+            icon: "store",
+            path: "/sellers"
+          },
+          {
+            title: "خریداران",
             icon: "users",
-            abilities: "gql.products.offer.index.index"
+            items: [
+              {
+                title: "حقوقی",
+                path: "/users/legal"
+              },
+              {
+                title: "حقیقی",
+                path: "/users/real"
+              }
+            ]
           }
         ]
       },
       {
-        title: "پیشنهادات",
-        path: "/offers",
-        icon: "package",
-        abilities: "gql.products.offer.index.index"
+        title: "پروژه ها",
+        path: "/profile/projects",
+        icon: "folder"
+      },
+      {
+        title: "سفارشات",
+        icon: "layout-list",
+        path: "/profile/orders"
+      },
+      {
+        title: "مالی",
+        icon: "wallet",
+        items: [
+          {
+            title: "پیش فاکتورها",
+            icon: "package",
+            path: "/"
+          },
+          {
+            title: "فاکتورها",
+            path: "/",
+            icon: "ruler"
+          }
+        ]
+      },
+      {
+        title: "گزارشات",
+        path: "/",
+        icon: "pie-chart"
+      },
+      {
+        title: "نقش‌ها",
+        path: "/",
+        icon: "shield-alert"
+      },
+      {
+        title: "دسترسی‌ها",
+        path: "/",
+        icon: "key-round"
       }
-
       // {
       //   title: "کالاها",
       //   icon: "package",
-      //   abilities: "gql.products.product.index",
       //   items: [
       //     {
       //       title: "تمام کالاها",
       //       path: "/products",
       //       icon: "package",
-      //       abilities: "gql.products.product.index"
       //     },
       //     {
       //       title: "پیشنهادات",
       //       path: "/offers",
       //       icon: "package",
-      //       abilities: "gql.products.offer.index.index"
       //     },
       //     {
       //       title: "مشخصه‌ها",
       //       path: "/attributes",
       //       icon: "layers",
-      //       abilities: "gql.products.attribute.index"
       //     },
       //     {
       //       title: "برندها",
       //       path: "/brands",
       //       icon: "fingerprint",
-      //       abilities: "gql.products.brand.index"
       //     },
       //     {
       //       title: "واحدهای اندازه‌گیری",
       //       path: "/uoms",
       //       icon: "ruler",
-      //       abilities: "gql.products.uom.index"
       //     }
       //   ]
       // },
@@ -156,7 +178,6 @@ const _admin: NavigationType[] = [
       //   title: "مناطق جغرافیایی",
       //   path: "/locations",
       //   icon: "map",
-      //   abilities: "gql.base.location.country.index"
       // }
     ]
   }
@@ -168,19 +189,16 @@ const _admin: NavigationType[] = [
   //       title: "دسته‌بندی‌ها",
   //       path: "/vocabularies",
   //       icon: "layout-grid",
-  //       abilities: "gql.base.taxonomy.vocabulary.index"
   //     },
   //     {
   //       title: "مناطق جغرافیایی",
   //       path: "/locations",
   //       icon: "map",
-  //       abilities: "gql.base.location.country.index"
   //     },
   //     {
   //       title: "کاربران",
   //       path: "/users",
   //       icon: "users",
-  //       abilities: "gql.users.user.index"
   //     }
   //   ]
   // }
@@ -208,25 +226,21 @@ export const _seller_panel: NavigationType[] = [
         title: "کالا",
         path: "/products",
         icon: "package",
-        abilities: "gql.products.product.index",
         items: [
           {
             title: "لیست کالاهای وردست",
             path: "/products/all-products",
-            icon: "package",
-            abilities: "gql.products.product.index"
+            icon: "package"
           },
           {
             title: "ثبت کالای جدید",
             path: "/products/new",
-            icon: "package",
-            abilities: "gql.products.product.index"
+            icon: "package"
           },
           {
             title: "مدیریت کالاهای من",
             path: "/products/my-products",
-            icon: "package",
-            abilities: "gql.products.offer.index.index"
+            icon: "package"
           }
         ]
       },

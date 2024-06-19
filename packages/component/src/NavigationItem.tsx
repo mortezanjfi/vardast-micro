@@ -6,6 +6,7 @@ import { NavigationItemType } from "@vardast/type/Navigation"
 import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
 import { LucideChevronDown } from "lucide-react"
+import { Session } from "next-auth"
 
 import DynamicIcon from "./DynamicIcon"
 import Link from "./Link"
@@ -14,6 +15,7 @@ export type NavigationItemVariant = "success" | "error" | "primary"
 type Props = {
   menu: NavigationItemType
   variant?: NavigationItemVariant
+  session: Session | null
 }
 
 const NavigationItem = (props: Props) => {
@@ -41,7 +43,6 @@ const NavigationItem = (props: Props) => {
       <li
         className={clsx([
           "app-navigation-item",
-
           menu.items && "has-child",
           isActive(menu.path as string) && "active",
           open && "open"
@@ -50,7 +51,7 @@ const NavigationItem = (props: Props) => {
         <span className={clsx(props.variant)}>
           <Link href={menu.path as string} className="app-navigation-item-link">
             <DynamicIcon
-              name={menu.icon}
+              name={menu?.icon}
               className={clsx("icon", props.variant)}
               strokeWidth={1.5}
             />
@@ -71,6 +72,33 @@ const NavigationItem = (props: Props) => {
         {menu.items && (
           <ol className="app-navigation-item-children">
             {menu.items.map((menuChildren, idx) => {
+              if (menuChildren?.items?.length) {
+                return (
+                  <ol className="app-navigation-item-children-item">
+                    {menuChildren?.title && (
+                      <li className="app-navigation-item-children-item-link">
+                        {menuChildren.title}
+                      </li>
+                    )}
+                    <div className="app-navigation-item app-navigation-item-children">
+                      {menuChildren?.items?.map(
+                        (menuItem, idx) =>
+                          ((menuItem?.abilities &&
+                            props?.session?.abilities?.includes(
+                              menuItem?.abilities
+                            )) ||
+                            !menuItem.abilities) && (
+                            <NavigationItem
+                              session={props?.session}
+                              key={idx}
+                              menu={menuItem}
+                            />
+                          )
+                      )}
+                    </div>
+                  </ol>
+                )
+              }
               return (
                 <li key={idx} className="app-navigation-item-children-item">
                   <Link

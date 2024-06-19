@@ -56,8 +56,11 @@ const getContentByApiStatus = (
 const filterSchema = z.object({ name: z.string() })
 
 export type UsersFilterFields = TypeOf<typeof filterSchema>
+type Props = {
+  roleIds?: number[]
+}
 
-const Users = () => {
+const Users = ({ roleIds }: Props) => {
   const { t } = useTranslation()
   const router = useRouter()
   const { data: session } = useSession()
@@ -69,7 +72,8 @@ const Users = () => {
 
   const users = useGetAllUsersQuery(graphqlRequestClientWithToken, {
     indexUserInput: {
-      page: currentPage
+      page: currentPage,
+      roleIds: roleIds ?? []
     }
   })
   const usersLength = useMemo(
