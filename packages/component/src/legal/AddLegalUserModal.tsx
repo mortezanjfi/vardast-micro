@@ -35,7 +35,8 @@ export type CreateLegalUserInfoType = TypeOf<typeof CreateLegalUserSchema>
 
 const CreateLegalUserSchema = z.object({
   name_company: z.string(),
-  national_id: z.string()
+  national_id: z.string(),
+  cellPhone: z.string()
 })
 
 const AddLegalUserModal = ({ open, setOpen }: Props) => {
@@ -78,8 +79,9 @@ const AddLegalUserModal = ({ open, setOpen }: Props) => {
   const onCreateLegal = (data: CreateLegalUserInfoType) => {
     createLegalMutation.mutate({
       createLegalInput: {
-        national_id: data.national_id as string,
-        name_company: data.name_company as string
+        national_id: data.national_id,
+        name_company: data.name_company as string,
+        cellphone: data.cellPhone
       }
     })
   }
@@ -112,7 +114,7 @@ const AddLegalUserModal = ({ open, setOpen }: Props) => {
               className="flex flex-col"
               onSubmit={form.handleSubmit(onCreateLegal)}
             >
-              <div className="grid w-full grid-cols-2 gap-7 ">
+              <div className="grid w-full grid-cols-3 gap-7 ">
                 <FormField
                   control={form.control}
                   name="name_company"
@@ -144,6 +146,23 @@ const AddLegalUserModal = ({ open, setOpen }: Props) => {
                           entity: t("common:national")
                         })}
                       </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          type="text"
+                          placeholder={t("common:enter")}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="cellPhone"
+                  render={({ field }) => (
+                    <FormItem className="col-span-1">
+                      <FormLabel>{t("common:cellphone")}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
