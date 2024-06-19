@@ -1,0 +1,3 @@
+mutation RemoveLegalMutation($id: Float!) {
+  deleteLegal(id: $id)
+}

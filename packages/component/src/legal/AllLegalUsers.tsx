@@ -3,13 +3,14 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
-import { useGetAllLegalUsersQuery } from "@vardast/graphql/generated"
+import { Legal, useGetAllLegalUsersQuery } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import useTranslation from "next-translate/useTranslation"
 
 import CardContainer from "../desktop/CardContainer"
 import Pagination from "../Pagination"
 import AddLegalUserModal from "./AddLegalUserModal"
+import LegalDeleteModal from "./LegalDeleteModal"
 
 type Props = {}
 
@@ -19,6 +20,8 @@ export default (props: Props) => {
   const { t } = useTranslation()
   const [open, setOpen] = useState<boolean>(false)
   const [currentPage, setCurrentPage] = useState<number>(1)
+  const [deletModalOpen, setDeleteModalOpen] = useState<boolean>(false)
+  const [legalToDelete, setLegalToDelete] = useState<Legal>()
   const router = useRouter()
   const onCreateUser = () => {
     setOpen(true)
@@ -38,6 +41,11 @@ export default (props: Props) => {
 
   return (
     <>
+      <LegalDeleteModal
+        open={deletModalOpen}
+        onOpenChange={setDeleteModalOpen}
+        legalToDelete={legalToDelete}
+      />
       <AddLegalUserModal open={open} setOpen={setOpen} />
       <CardContainer
         button={{
@@ -65,7 +73,7 @@ export default (props: Props) => {
                 {t("common:entity_count", { entity: t("common:order") })}
               </th>
               <th className={thClass}>{t("common:status")}</th>
-              {/* <th>{t("common:operation")}</th> */}
+              <th>{t("common:operation")}</th>
             </tr>
           </thead>
 
@@ -85,6 +93,18 @@ export default (props: Props) => {
                     </td>
                     <td className="border">--</td>
                     <td className="border">--</td>
+                    <td className="border">
+                      <span
+                        className="tag cursor-pointer text-error"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setLegalToDelete(user as Legal)
+                          setDeleteModalOpen(true)
+                        }}
+                      >
+                        {t("common:delete")}
+                      </span>
+                    </td>
                   </tr>
                 )
             )}
