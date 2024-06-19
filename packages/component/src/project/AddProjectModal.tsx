@@ -3,13 +3,23 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useDebouncedState } from "@mantine/hooks"
 import { useQueryClient } from "@tanstack/react-query"
 import {
   TypeProject,
-  useCreateProjectMutation
+  useCreateProjectMutation,
+  useGetAllLegalUsersQuery
 } from "@vardast/graphql/generated"
+import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem
+} from "@vardast/ui/command"
 import {
   Dialog,
   DialogContent,
@@ -25,10 +35,15 @@ import {
   FormMessage
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
+import { Popover, PopoverContent, PopoverTrigger } from "@vardast/ui/popover"
 import { ToggleGroup, ToggleGroupItem } from "@vardast/ui/toggle-group"
 import clsx from "clsx"
 import { ClientError } from "graphql-request"
-import { LucideAlertOctagon } from "lucide-react"
+import {
+  LucideAlertOctagon,
+  LucideCheck,
+  LucideChevronsUpDown
+} from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
@@ -51,15 +66,14 @@ const CreateLegalUserSchema = z.object({
   name: z.string()
 })
 
-const AddLegalUserModal = ({
-  isMobileView,
-  isAdmin,
-
-  open,
-  setOpen
-}: Props) => {
+const AddLegalUserModal = ({ isMobileView, isAdmin, open, setOpen }: Props) => {
   const { t } = useTranslation()
   const [errors, setErrors] = useState<ClientError>()
+  const [projectType, setProjectType] = useState<"LEGAL" | "REAL">("LEGAL")
+  const [legalDialog, setLegalDialog] = useState(false)
+  const [legalQuery, setLegalQuery] = useDebouncedState<string>("", 500)
+  const [legalQueryTemp, setLegalQueryTemp] = useState<string>("")
+
   const router = useRouter()
   const queryClient = useQueryClient()
 
@@ -69,6 +83,13 @@ const AddLegalUserModal = ({
       type: "LEGAL"
     }
   })
+
+  const getAllLegalUsers = useGetAllLegalUsersQuery(
+    graphqlRequestClientWithToken,
+    {
+      indexLegalInput: { nameOrUuid: legalQuery }
+    }
+  )
 
   const createProjectMutation = useCreateProjectMutation(
     graphqlRequestClientWithToken,
@@ -154,26 +175,6 @@ const AddLegalUserModal = ({
               className="flex h-full flex-col"
             >
               <div className="flex w-full grid-cols-3 flex-col gap-7 md:grid ">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem className="col-span-1">
-                      <FormLabel>نام پروژه</FormLabel>
-                      <FormControl>
-                        <Input
-                          disabled={
-                            createProjectMutation.isLoading ||
-                            createProjectMutation.isError
-                          }
-                          type="text"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
                 {isAdmin && (
                   <>
                     <FormField
@@ -192,6 +193,7 @@ const AddLegalUserModal = ({
                               type="single"
                               value={field.value}
                               onValueChange={(value: TypeProject) => {
+                                setProjectType(value)
                                 form.setValue("type", value)
                               }}
                             >
@@ -220,25 +222,145 @@ const AddLegalUserModal = ({
                         </FormItem>
                       )}
                     />
-                    <FormField
-                      control={form.control}
-                      name="cellPhone"
-                      render={({ field }) => (
-                        <FormItem className="col-span-1">
-                          <FormLabel>{t("common:cellphone")}</FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              type="text"
-                              placeholder={t("common:enter")}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    {projectType === "REAL" ? (
+                      <FormField
+                        control={form.control}
+                        name="cellPhone"
+                        render={({ field }) => (
+                          <FormItem className="col-span-1">
+                            <FormLabel>{t("common:cellphone")}</FormLabel>
+                            <FormControl>
+                              <Input
+                                {...field}
+                                type="text"
+                                placeholder={t("common:enter")}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    ) : (
+                      <FormField
+                        control={form.control}
+                        name="cellPhone"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>{t("common:legal-user")}</FormLabel>
+                            <Popover
+                              modal
+                              open={legalDialog}
+                              onOpenChange={setLegalDialog}
+                            >
+                              <PopoverTrigger asChild>
+                                <FormControl>
+                                  <Button
+                                    disabled={
+                                      getAllLegalUsers.isLoading ||
+                                      getAllLegalUsers.isError
+                                    }
+                                    noStyle
+                                    role="combobox"
+                                    className="input-field flex items-center text-start"
+                                  >
+                                    <span className="inline-block max-w-full truncate">
+                                      {field?.value
+                                        ? getAllLegalUsers?.data?.findAllLegals?.data?.find(
+                                            (user) =>
+                                              user &&
+                                              user?.owner?.cellphone ===
+                                                field?.value
+                                          )?.name_company
+                                        : t("common:legal-user")}
+                                    </span>
+                                    <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+                                  </Button>
+                                </FormControl>
+                              </PopoverTrigger>
+                              <PopoverContent className="!z-[9999]" asChild>
+                                <Command>
+                                  <CommandInput
+                                    loading={
+                                      getAllLegalUsers?.data?.findAllLegals
+                                        ?.data?.length === 0
+                                    }
+                                    value={legalQueryTemp}
+                                    onValueChange={(newQuery) => {
+                                      console.log(newQuery)
+
+                                      setLegalQuery(newQuery)
+                                      setLegalQueryTemp(newQuery)
+                                    }}
+                                    placeholder={t("common:search_entity", {
+                                      entity: t("common:legal-user")
+                                    })}
+                                  />
+                                  <CommandEmpty>
+                                    {t("common:no_entity_found", {
+                                      entity: t("common:legal-user")
+                                    })}
+                                  </CommandEmpty>
+                                  <CommandGroup>
+                                    {getAllLegalUsers?.data?.findAllLegals?.data?.map(
+                                      (user) =>
+                                        user && (
+                                          <CommandItem
+                                            value={user?.owner?.cellphone}
+                                            key={user?.id}
+                                            onSelect={(value) => {
+                                              console.log(value)
+                                              value &&
+                                                form.setValue(
+                                                  "cellPhone",
+                                                  value
+                                                )
+                                              setLegalDialog(false)
+                                            }}
+                                          >
+                                            <LucideCheck
+                                              className={mergeClasses(
+                                                "mr-2 h-4 w-4",
+                                                user?.owner?.cellphone ===
+                                                  field.value
+                                                  ? "opacity-100"
+                                                  : "opacity-0"
+                                              )}
+                                            />
+                                            {user?.name_company}
+                                          </CommandItem>
+                                        )
+                                    )}
+                                  </CommandGroup>
+                                </Command>
+                              </PopoverContent>
+                            </Popover>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
                   </>
                 )}
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem className="col-span-1">
+                      <FormLabel>نام پروژه</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={
+                            createProjectMutation.isLoading ||
+                            createProjectMutation.isError
+                          }
+                          type="text"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
               <div className="mt-auto flex w-full flex-row-reverse gap pt-6 md:mt-7 md:border-t ">
                 <Button

@@ -14,6 +14,7 @@ query GetAllLegalUsersQuery($indexLegalInput: IndexLegalInput) {
       wallet
       owner {
         fullName
+        cellphone
       }
       createdBy {
         id

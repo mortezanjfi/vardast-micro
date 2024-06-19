@@ -65,10 +65,10 @@ export default (props: Props) => {
               <th className={thClass}>
                 {t("common:entity_uuid", { entity: t("common:national") })}
               </th>
+              <th className={thClass}>{t("common:creator")}</th>
               <th className={thClass}>
                 {t("common:entity_name", { entity: t("common:manager") })}
               </th>
-              <th className={thClass}>{t("common:creator")}</th>
 
               <th className={thClass}>{t("common:wallet")} (تومان)</th>
               <th className={thClass}>

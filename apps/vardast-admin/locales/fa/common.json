@@ -346,5 +346,6 @@
   "national_id": "شناسه ملی شرکت",
   "name_company": "نام شرکت",
   "entity_type": "نوع {{entity}}",
-  "creator": "ایجاد کننده"
+  "creator": "ایجاد کننده",
+  "legal-user": "کاربر حقوقی"
 }
