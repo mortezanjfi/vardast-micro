@@ -1,13 +1,12 @@
 "use client"
 
-import { Dispatch, SetStateAction, useState } from "react"
+import { useState } from "react"
 import { Project } from "@vardast/graphql/generated"
 import { Button } from "@vardast/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@vardast/ui/dropdown-menu"
 import { LucideMoreVertical } from "lucide-react"
@@ -17,17 +16,10 @@ import { DetailsWithTitle } from "../desktop/DetailsWithTitle"
 import Link from "../Link"
 
 type ProjectCardProps = {
-  addNewProject: () => void
-  setIdToEdit: Dispatch<SetStateAction<number>>
   project: Project
 }
 
-const ProjectCard = ({
-  addNewProject,
-  setIdToEdit,
-
-  project
-}: ProjectCardProps) => {
+const ProjectCard = ({ project }: ProjectCardProps) => {
   const { t } = useTranslation()
   const [dropDownMenuOpen, setDropDownMenuOpen] = useState(false)
 
@@ -47,21 +39,17 @@ const ProjectCard = ({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem
-                onClick={() => {
-                  // setDropDownMenuOpen(false)
-                  setIdToEdit(project.id)
-                  addNewProject()
-                }}
-              >
-                <span>{t("common:edit")}</span>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <Link href={`/profile/projects/${project.id}`}>
+                <DropdownMenuItem>
+                  <span>{t("common:edit")}</span>
+                </DropdownMenuItem>
+              </Link>
+              {/* <DropdownMenuSeparator /> */}
+              {/* <DropdownMenuItem>
                 <Link href={`/profile/projects/${project.id}`}>
                   <span>{t("common:details")}</span>
                 </Link>
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

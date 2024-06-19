@@ -13,12 +13,14 @@ import NoResult from "@vardast/component/NoResult"
 import PageHeader from "@vardast/component/PageHeader"
 import Pagination from "@vardast/component/table/Pagination"
 import {
+  SellerType,
   ThreeStateSupervisionStatuses,
   useGetAllSellersQuery
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Button } from "@vardast/ui/button"
+import { checkBooleanByString } from "@vardast/util/checkBooleanByString"
 import { LucidePlus, LucideWarehouse } from "lucide-react"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
@@ -52,19 +54,18 @@ const getContentByApiStatus = (
 const filterSchema = z.object({
   name: z.string().optional(),
   brandId: z.number().optional(),
-  hasLogo: z.string().nullable().optional()
+  hasLogo: z.string().nullable().optional(),
+  type: z.string().optional()
 })
 export type SellersFilterFields = TypeOf<typeof filterSchema>
-export interface SellersQueryParams {
-  name: string | undefined
-}
+
 const Sellers = () => {
   const { t } = useTranslation()
   const { data: session } = useSession()
   const [currentPage, setCurrentPage] = useState<number>(1)
   //state for gathering form field information then set to query key
   const [sellersQueryParams, setSellersQueryParams] =
-    useState<SellersQueryParams>({ name: "" })
+    useState<SellersFilterFields>({})
 
   const form = useForm<SellersFilterFields>({
     resolver: zodResolver(filterSchema),
@@ -75,7 +76,9 @@ const Sellers = () => {
     {
       indexSellerInput: {
         page: currentPage,
-        name: sellersQueryParams.name
+        name: sellersQueryParams.name,
+        hasLogoFile: checkBooleanByString(sellersQueryParams.hasLogo),
+        type: sellersQueryParams.type as SellerType
       }
     },
     {
@@ -99,7 +102,6 @@ const Sellers = () => {
       <SellersFilter
         form={form}
         setSellersQueryParams={setSellersQueryParams}
-        sellersQueryParams={sellersQueryParams}
       />
       <Card className="table-responsive mt-8 rounded">
         <PageHeader

@@ -16,6 +16,7 @@ import { useGetAllProductsQuery } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Button } from "@vardast/ui/button"
+import { checkBooleanByString } from "@vardast/util/checkBooleanByString"
 import { setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
 import { LucidePlus } from "lucide-react"
@@ -24,7 +25,6 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-import { checkBooleanByString } from "@/app/(admin)/brands/components/Brands"
 import { ProductsFilter } from "@/app/(admin)/products/components/ProductsFilter"
 
 const renderedListStatus = {

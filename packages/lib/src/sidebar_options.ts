@@ -41,10 +41,28 @@ const _admin: NavigationType[] = [
         path: "/profile/orders"
       },
       {
-        title: "کالاها",
-        path: "/products",
+        title: "کالا",
         icon: "package",
-        abilities: "gql.products.product.index"
+        items: [
+          {
+            title: "تمام کالاها",
+            icon: "package",
+            path: "/products",
+            abilities: "gql.products.product.index"
+          },
+          {
+            title: "واحدهای اندازه‌گیری",
+            path: "/uoms",
+            icon: "ruler",
+            abilities: "gql.products.uom.index"
+          },
+          {
+            title: "مشخصه‌ها",
+            path: "/attributes",
+            icon: "layers",
+            abilities: "gql.products.attribute.index"
+          }
+        ]
       },
       {
         title: "دسته‌بندی‌ها",
@@ -94,20 +112,8 @@ const _admin: NavigationType[] = [
         path: "/offers",
         icon: "package",
         abilities: "gql.products.offer.index.index"
-      },
-      {
-        title: "مشخصه‌ها",
-        path: "/attributes",
-        icon: "layers",
-        abilities: "gql.products.attribute.index"
-      },
-
-      {
-        title: "واحدهای اندازه‌گیری",
-        path: "/uoms",
-        icon: "ruler",
-        abilities: "gql.products.uom.index"
       }
+
       // {
       //   title: "کالاها",
       //   icon: "package",

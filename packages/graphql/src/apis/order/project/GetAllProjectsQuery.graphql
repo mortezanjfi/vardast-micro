@@ -12,6 +12,7 @@ query GetAllProjectsQuery($indexProjectInput: IndexProjectInput) {
       id
       name
       createTime
+      status
       address {
         id
         address {

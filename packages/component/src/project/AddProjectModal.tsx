@@ -3,13 +3,10 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useQueryClient, UseQueryResult } from "@tanstack/react-query"
+import { useQueryClient } from "@tanstack/react-query"
 import {
-  FindOneProjectQuery,
   TypeProject,
-  useCreateProjectMutation,
-  UserTypeProject,
-  useUpdateProjectMutation
+  useCreateProjectMutation
 } from "@vardast/graphql/generated"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
@@ -40,11 +37,8 @@ import { toast } from "../../../hook/src/use-toast"
 import graphqlRequestClientWithToken from "../../../query/src/queryClients/graphqlRequestClientWithToken"
 
 type Props = {
-  setIdToEdit: Dispatch<SetStateAction<number>>
-  findOneProjectQuery?: UseQueryResult<FindOneProjectQuery, unknown>
   isMobileView: boolean
   isAdmin?: boolean
-  id: number
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }
@@ -58,11 +52,9 @@ const CreateLegalUserSchema = z.object({
 })
 
 const AddLegalUserModal = ({
-  setIdToEdit,
   isMobileView,
-  findOneProjectQuery,
   isAdmin,
-  id,
+
   open,
   setOpen
 }: Props) => {
@@ -99,9 +91,9 @@ const AddLegalUserModal = ({
             duration: 2000,
             variant: "success"
           })
-          router.push(`/profile/projects/${data.createProject.id}`)
+
+          router.push(`/profile/projects/${data.createProject.id}/?mode=new`)
           form.reset()
-          setIdToEdit(undefined)
         } else {
           toast({
             description: "خطا درایجاد پروژه",
@@ -110,58 +102,19 @@ const AddLegalUserModal = ({
           })
         }
         form.reset()
-        setIdToEdit(undefined)
-      }
-    }
-  )
-
-  const updateProjectMutation = useUpdateProjectMutation(
-    graphqlRequestClientWithToken,
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: ["FindOneProject"]
-        })
-        router.push(`/profile/projects/${id}`)
-        form.reset()
-        setIdToEdit(undefined)
       }
     }
   )
 
   const onSubmit = (data: CreateLegalUserInfoType) => {
-    if (!id) {
-      createProjectMutation.mutate({
-        createProjectInput: {
-          cellphone: data.cellPhone || undefined,
-          type: data.type as TypeProject,
-          name: data.name
-        }
-      })
-    }
-    updateProjectMutation.mutate({
-      updateProjectInput: {
-        id: +id,
-        name: data.name,
+    createProjectMutation.mutate({
+      createProjectInput: {
         cellphone: data.cellPhone || undefined,
-        type: data.type as TypeProject
+        type: data.type as TypeProject,
+        name: data.name
       }
     })
   }
-
-  useEffect(() => {
-    if (findOneProjectQuery?.data?.findOneProject?.name) {
-      form.setValue("name", findOneProjectQuery?.data?.findOneProject?.name)
-
-      form.setValue(
-        "cellPhone",
-        findOneProjectQuery?.data?.findOneProject?.user.find(
-          (user) => user && user?.type === UserTypeProject?.Manager
-        )?.user?.cellphone
-      )
-      form.setValue("type", findOneProjectQuery?.data?.findOneProject?.type)
-    }
-  }, [findOneProjectQuery?.data])
 
   useEffect(() => {
     form.reset()
@@ -210,10 +163,8 @@ const AddLegalUserModal = ({
                       <FormControl>
                         <Input
                           disabled={
-                            (findOneProjectQuery.isLoading &&
-                              findOneProjectQuery.isFetching) ||
-                            updateProjectMutation.isLoading ||
-                            createProjectMutation.isLoading
+                            createProjectMutation.isLoading ||
+                            createProjectMutation.isError
                           }
                           type="text"
                           {...field}

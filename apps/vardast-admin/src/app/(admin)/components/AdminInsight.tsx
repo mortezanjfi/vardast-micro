@@ -7,7 +7,6 @@ import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRe
 
 const AdminInsight = () => {
   const allInsightInfo = useGetTotalInfoQuery(graphqlRequestClientWithToken)
-  console.log(allInsightInfo)
 
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
