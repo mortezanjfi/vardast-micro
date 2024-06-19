@@ -1,6 +1,6 @@
 "use client"
 
-import { useContext } from "react"
+import { useContext, useMemo } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import {
   EventTrackerSubjectTypes,
@@ -22,7 +22,6 @@ import { useAtom, useSetAtom } from "jotai"
 import { ArrowRight } from "lucide-react"
 import { useSession } from "next-auth/react"
 
-import DynamicIcon from "./DynamicIcon"
 import Link from "./Link"
 import Progress from "./Progress"
 import Search from "./Search"
@@ -44,11 +43,21 @@ const MobileNavigation = ({
     ? useIsCurrentPath(propsBack)
     : propsBack
 
-  const getIsActiveNav = (activePath: string) =>
-    activePath === "/"
-      ? pathname === activePath
-      : pathname.startsWith(activePath) &&
-        pathname.split("/").length === activePath.split("/").length
+  const getIsActiveNav = (path: string) => {
+    if (path === "/" && pathname !== path) {
+      return false
+    }
+
+    // Splitting paths into arrays to handle nested paths correctly
+    const currentPathParts = pathname.split("/").filter(Boolean) // Filter to remove empty strings
+    const targetPathParts = path.split("/").filter(Boolean) // Filter to remove empty strings
+
+    // Check if the current path ends with the target path
+    return (
+      currentPathParts.slice(-targetPathParts.length).join("/") ===
+      targetPathParts.join("/")
+    )
+  }
 
   const getActiveClassName = (activePath: string) => {
     const isActiveNav = getIsActiveNav(activePath)
@@ -100,6 +109,43 @@ const MobileNavigation = ({
     }
     router.replace(`${paths.signin}?ru=${pathname}`)
   }
+
+  const navigationItems = useMemo(() => {
+    return options ? (
+      <div className="grid h-14 w-full grid-cols-4 bg-alpha-white bg-opacity-5">
+        {mobile_footer_options[`${options.name}`].map(
+          ({ button, id, title, IconPrerender }) => {
+            const href = button.value as string
+
+            return (
+              <Link
+                key={id}
+                href={href}
+                className={`group inline-flex h-full flex-col items-center justify-center gap-y-0.5 pb-2`}
+              >
+                <IconPrerender
+                  fill={getIsActiveNav(href) ? myColors.primary[600] : "none"}
+                  className={mergeClasses(
+                    "icon h-6 w-6 transform transition-all",
+                    getIsActiveNav(href) ? "text-primary-600" : "text-alpha-500"
+                  )}
+                  strokeWidth={2}
+                />
+                <p
+                  className={mergeClasses(
+                    "pt-1 text-xs font-bold",
+                    getActiveClassName(href)
+                  )}
+                >
+                  {title}
+                </p>
+              </Link>
+            )
+          }
+        )}
+      </div>
+    ) : null
+  }, [pathname])
 
   return (
     <>
@@ -167,43 +213,7 @@ const MobileNavigation = ({
           </AnimatePresence>
         </div>
       )}
-      {options && (
-        <div className="grid h-14 w-full grid-cols-4 bg-alpha-white bg-opacity-5">
-          {mobile_footer_options[`${options.name}`].map(
-            ({ icon, button, id, title }) => {
-              const href = button.value as string
-
-              return (
-                <Link
-                  key={id}
-                  href={href}
-                  className={`group inline-flex h-full flex-col items-center justify-center gap-y-0.5 pb-2`}
-                >
-                  <DynamicIcon
-                    fill={getIsActiveNav(href) ? myColors.primary[600] : "none"}
-                    name={icon}
-                    className={mergeClasses(
-                      "icon h-6 w-6 transform transition-all",
-                      getIsActiveNav(href)
-                        ? "text-primary-600"
-                        : "text-alpha-500"
-                    )}
-                    strokeWidth={2}
-                  />
-                  <p
-                    className={mergeClasses(
-                      "text-xs font-bold",
-                      getActiveClassName(href)
-                    )}
-                  >
-                    {title}
-                  </p>
-                </Link>
-              )
-            }
-          )}
-        </div>
-      )}
+      {navigationItems}
     </>
   )
 }

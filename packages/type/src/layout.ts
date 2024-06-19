@@ -28,15 +28,11 @@ type ILayoutBackground = {
   value: string
 }
 
-interface ILayoutIcon {
-  Default: LucideIcon
-  Active: LucideIcon
-}
-
 export interface ILayoutOption {
   id: number
   title: string
   icon?: keyof typeof dynamicIconImports
+  IconPrerender?: LucideIcon
   button?: ILayoutButton
 }
 
