@@ -9,9 +9,6 @@
   "exports": {
     "./*": "./src/*"
   },
-  "dependencies": {
-    "@radix-ui/react-checkbox": "^1.0.4"
-  },
   "devDependencies": {
     "@vardast/eslint-config": "workspace:*",
     "@vardast/prettier-config": "workspace:*",
