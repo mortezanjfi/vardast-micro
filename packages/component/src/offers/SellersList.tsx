@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
@@ -23,9 +23,14 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
+import { ApiCallStatusEnum } from "../../../type/src/Enums"
+import { getContentByApiStatus } from "../../../util/src/GetContentByApiStatus"
 import CardContainer from "../desktop/CardContainer"
 import SellerAdminConfirmationModal from "../desktop/SellerAdminConfirmationModal"
 import Link from "../Link"
+import Loading from "../Loading"
+import LoadingFailed from "../LoadingFailed"
+import NoResult from "../NoResult"
 import AddSellerModal from "./AddSellerModal"
 import OfferDetailModal from "./OfferDetailModal"
 import SellerMobileCart from "./SellerMobileCart"
@@ -40,6 +45,13 @@ type Props = {
 const AddOfferSchema = z.object({
   offerId: z.number()
 })
+
+const renderedListStatus = {
+  [ApiCallStatusEnum.LOADING]: <Loading />,
+  [ApiCallStatusEnum.ERROR]: <LoadingFailed />,
+  [ApiCallStatusEnum.EMPTY]: <NoResult entity="offer" />,
+  [ApiCallStatusEnum.DEFAULT]: null
+}
 
 export type ConfirmOffer = TypeOf<typeof AddOfferSchema>
 function SellersList({
@@ -154,6 +166,11 @@ function SellersList({
   }, [selectedRow])
   // z.setErrorMap(zodI18nMap)
 
+  const offerLength = useMemo(
+    () => findPreOrderByIdQuery?.data?.findPreOrderById?.offers.length,
+    [findPreOrderByIdQuery?.data?.findPreOrderById?.offers.length]
+  )
+
   return (
     <>
       <SellerAdminConfirmationModal
@@ -222,132 +239,145 @@ function SellersList({
                 </div>
               ) : (
                 <div className="flex flex-col gap-7">
-                  <table className="table border-collapse border">
-                    <thead>
-                      <tr>
-                        <th className={thClasses}>{t("common:row")}</th>
-                        <th className={thClasses}>
-                          {t("common:entity_code", {
-                            entity: t("common:price-giver")
-                          })}
-                        </th>
-                        <th className={thClasses}>
-                          {t("common:entity_name", {
-                            entity: t("common:price-giver")
-                          })}
-                        </th>
-                        <th className={thClasses}>
-                          {t("common:invoice-number")}
-                        </th>
-                        <th className={thClasses}>
-                          {t("common:invoice-total-price")}
-                        </th>
-                        <th>{t("common:offer-submition-time")}</th>
-                        {findPreOrderByIdQuery?.data?.findPreOrderById
-                          ?.status !== PreOrderStates.Closed &&
-                          !isClient && (
-                            <>
-                              <th className={thClasses}>
-                                {t("common:choose-offer")}
-                              </th>
-                            </>
-                          )}
-                        <th className={thClasses}>{t("common:operation")}</th>
-                      </tr>
-                    </thead>
+                  {renderedListStatus[
+                    getContentByApiStatus(findPreOrderByIdQuery, !!offerLength)
+                  ] || (
+                    <>
+                      <table className="table border-collapse border">
+                        <thead>
+                          <tr>
+                            <th className={thClasses}>{t("common:row")}</th>
+                            <th className={thClasses}>
+                              {t("common:entity_code", {
+                                entity: t("common:price-giver")
+                              })}
+                            </th>
+                            <th className={thClasses}>
+                              {t("common:entity_name", {
+                                entity: t("common:price-giver")
+                              })}
+                            </th>
+                            <th className={thClasses}>
+                              {t("common:invoice-number")}
+                            </th>
+                            <th className={thClasses}>
+                              {t("common:invoice-total-price")}
+                            </th>
+                            <th>{t("common:offer-submition-time")}</th>
+                            {findPreOrderByIdQuery?.data?.findPreOrderById
+                              ?.status !== PreOrderStates.Closed &&
+                              !isClient && (
+                                <>
+                                  <th className={thClasses}>
+                                    {t("common:choose-offer")}
+                                  </th>
+                                </>
+                              )}
+                            <th className={thClasses}>
+                              {t("common:operation")}
+                            </th>
+                          </tr>
+                        </thead>
 
-                    <tbody>
-                      {findPreOrderByIdQuery.data?.findPreOrderById?.offers
-                        ?.length === 0 && !isClient ? (
-                        <tr>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>
-                            <span>فروشنده مورد نظر خود را اضافه کنید!</span>
-                          </td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                      ) : (
-                        findPreOrderByIdQuery.data?.findPreOrderById?.offers?.map(
-                          (offer, index) => (
-                            <tr key={offer?.id}>
-                              <td className="w-4 border">
-                                <span>{digitsEnToFa(index + 1)}</span>
-                              </td>
-                              <td className="border">
-                                <span className="font-medium text-alpha-800">
-                                  {offer?.id && digitsEnToFa(offer?.id)}
-                                </span>
-                              </td>
-                              <td className="border">{offer?.request_name}</td>
-                              <td className="border">
-                                {digitsEnToFa(offer?.created_at)}
-                              </td>
-                              <td className="border">
-                                {digitsEnToFa(offer?.total)}
-                              </td>
+                        <tbody>
+                          {findPreOrderByIdQuery.data?.findPreOrderById?.offers
+                            ?.length === 0 && !isClient ? (
+                            <tr>
+                              <td></td>
+                              <td></td>
+                              <td></td>
                               <td>
-                                {offer?.created_at
-                                  ? digitsEnToFa(
-                                      new Date(
-                                        offer?.created_at
-                                      ).toLocaleDateString("fa-IR", {
-                                        year: "numeric",
-                                        month: "2-digit",
-                                        day: "2-digit"
-                                      })
-                                    )
-                                  : ""}
+                                <span>فروشنده مورد نظر خود را اضافه کنید!</span>
                               </td>
-                              {findPreOrderByIdQuery?.data?.findPreOrderById
-                                ?.status !== PreOrderStates.Closed &&
-                                !isClient && (
-                                  <>
-                                    <td className="border">
-                                      <FormField
-                                        control={form.control}
-                                        name="offerId"
-                                        render={({ field }) => {
-                                          return (
-                                            <FormItem className="checkbox-field">
-                                              <FormControl>
-                                                <Checkbox
-                                                  checked={
-                                                    offer?.id === selectedRow
-                                                  }
-                                                  onCheckedChange={(
-                                                    checked
-                                                  ) => {
-                                                    setSelectedRow(offer?.id)
-                                                  }}
-                                                />
-                                              </FormControl>
-                                            </FormItem>
-                                          )
-                                        }}
-                                      />
-                                    </td>
-                                  </>
-                                )}
-                              <td className="border">
-                                <span
-                                  onClick={() => {
-                                    setSelectedOfferId(offer?.id)
-                                    setDetailOpen(true)
-                                  }}
-                                  className="tag cursor-pointer text-blue-500"
-                                >
-                                  نمایش جزییات
-                                </span>
-                              </td>
+                              <td></td>
+                              <td></td>
                             </tr>
-                          )
-                        )
-                      )}
-                    </tbody>
-                  </table>
+                          ) : (
+                            findPreOrderByIdQuery.data?.findPreOrderById?.offers?.map(
+                              (offer, index) => (
+                                <tr key={offer?.id}>
+                                  <td className="w-4 border">
+                                    <span>{digitsEnToFa(index + 1)}</span>
+                                  </td>
+                                  <td className="border">
+                                    <span className="font-medium text-alpha-800">
+                                      {offer?.id && digitsEnToFa(offer?.id)}
+                                    </span>
+                                  </td>
+                                  <td className="border">
+                                    {offer?.request_name}
+                                  </td>
+                                  <td className="border">
+                                    {digitsEnToFa(offer?.created_at)}
+                                  </td>
+                                  <td className="border">
+                                    {digitsEnToFa(offer?.total)}
+                                  </td>
+                                  <td>
+                                    {offer?.created_at
+                                      ? digitsEnToFa(
+                                          new Date(
+                                            offer?.created_at
+                                          ).toLocaleDateString("fa-IR", {
+                                            year: "numeric",
+                                            month: "2-digit",
+                                            day: "2-digit"
+                                          })
+                                        )
+                                      : ""}
+                                  </td>
+                                  {findPreOrderByIdQuery?.data?.findPreOrderById
+                                    ?.status !== PreOrderStates.Closed &&
+                                    !isClient && (
+                                      <>
+                                        <td className="border">
+                                          <FormField
+                                            control={form.control}
+                                            name="offerId"
+                                            render={({ field }) => {
+                                              return (
+                                                <FormItem className="checkbox-field">
+                                                  <FormControl>
+                                                    <Checkbox
+                                                      checked={
+                                                        offer?.id ===
+                                                        selectedRow
+                                                      }
+                                                      onCheckedChange={(
+                                                        checked
+                                                      ) => {
+                                                        setSelectedRow(
+                                                          offer?.id
+                                                        )
+                                                      }}
+                                                    />
+                                                  </FormControl>
+                                                </FormItem>
+                                              )
+                                            }}
+                                          />
+                                        </td>
+                                      </>
+                                    )}
+                                  <td className="border">
+                                    <span
+                                      onClick={() => {
+                                        setSelectedOfferId(offer?.id)
+                                        setDetailOpen(true)
+                                      }}
+                                      className="tag cursor-pointer text-blue-500"
+                                    >
+                                      نمایش جزییات
+                                    </span>
+                                  </td>
+                                </tr>
+                              )
+                            )
+                          )}
+                        </tbody>
+                      </table>
+                    </>
+                  )}
                   <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] mt-5 grid w-full grid-cols-2 justify-end gap border-t bg-alpha-white pt-5 md:relative md:bottom-0 md:flex md:justify-end">
                     <Link
                       className="btn btn-md btn-secondary"
