@@ -65,9 +65,11 @@ export default (props: Props) => {
               <th className={thClass}>
                 {t("common:entity_uuid", { entity: t("common:national") })}
               </th>
+              <th className={thClass}>{t("common:creator")}</th>
               <th className={thClass}>
                 {t("common:entity_name", { entity: t("common:manager") })}
               </th>
+
               <th className={thClass}>{t("common:wallet")} (تومان)</th>
               <th className={thClass}>
                 {t("common:entity_count", { entity: t("common:order") })}
@@ -88,6 +90,7 @@ export default (props: Props) => {
                     <td className="border">{user?.name_company}</td>
                     <td className="border">{user?.national_id}</td>
                     <td className="border">{user?.createdBy?.fullName}</td>
+                    <td className="border">{user?.owner?.fullName}</td>
                     <td className="border">
                       {digitsEnToFa(addCommas(user?.wallet))}
                     </td>

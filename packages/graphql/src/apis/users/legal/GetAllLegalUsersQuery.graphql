@@ -12,6 +12,10 @@ query GetAllLegalUsersQuery($indexLegalInput: IndexLegalInput) {
       national_id
       create_at
       wallet
+      owner {
+        fullName
+        cellphone
+      }
       createdBy {
         id
         uuid

@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { dehydrate } from "@tanstack/react-query"
-import OrderOffers from "@vardast/component/order/offer/OrderOffers"
+import OffersPage from "@vardast/component/offers/OffersPage"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
@@ -19,7 +19,8 @@ export default async ({ params: { uuid } }: { params: { uuid: string } }) => {
 
   return (
     <ReactQueryHydrate state={dehydratedState}>
-      <OrderOffers isMobileView={isMobileView} uuid={uuid} />
+      {/* <OrderOffers isMobileView={isMobileView} uuid={uuid} /> */}
+      <OffersPage uuid={uuid} isMobileView={isMobileView} />
     </ReactQueryHydrate>
   )
 }

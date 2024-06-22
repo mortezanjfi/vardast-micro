@@ -28,8 +28,6 @@ import Loading from "../Loading"
 import LoadingFailed from "../LoadingFailed"
 import NoResult from "../NoResult"
 import NotFoundMessage from "../NotFound"
-import PageHeader from "../PageHeader"
-import PageTitle from "../project/PageTitle"
 import Pagination from "../table/Pagination"
 import OrderDeleteModal from "./OrderDeleteModal"
 import { OrdersFilter } from "./OrdersFilter"
@@ -139,7 +137,7 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
         onOpenChange={setDeleteModalOpen}
         orderToDelete={orderToDelete}
       />
-      {!isMobileView && !isAdmin && <PageTitle title={title} />}
+      {/* {!isMobileView && !isAdmin && <PageTitle title={title} />}
       {!isMobileView && !isAdmin && (
         <PageHeader
           pageHeaderClasses="border-b py-5 !mb-0"
@@ -159,8 +157,8 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
             })}
           </Button>
         </PageHeader>
-      )}
-      {isAdmin ? (
+      )} */}
+      {!isMobileView ? (
         <CardContainer
           button={{
             disabled: createOrderMutation.isLoading || preOrdersQuery.isLoading,

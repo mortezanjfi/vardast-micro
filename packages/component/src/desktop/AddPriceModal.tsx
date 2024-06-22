@@ -1,9 +1,11 @@
 import { Dispatch, SetStateAction, useEffect } from "react"
 import { useParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { digitsEnToFa } from "@persian-tools/persian-tools"
+import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import { useQueryClient } from "@tanstack/react-query"
 import {
+  Line,
+  MultiTypeOrder,
   useCalculatePriceOfferLineMutation,
   useCreateOrderOfferLineMutation
 } from "@vardast/graphql/generated"
@@ -34,9 +36,9 @@ import { TypeOf, z } from "zod"
 type AddPriceModalProps = {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
-  lineId: number
   offerId?: string
   fi_price?: string
+  line: Line
 }
 
 const AddPriceModal = ({
@@ -44,7 +46,7 @@ const AddPriceModal = ({
   setOpen,
   fi_price,
   offerId: propsOfferId,
-  lineId
+  line
 }: AddPriceModalProps) => {
   const { t } = useTranslation()
   const params = useParams()
@@ -107,7 +109,7 @@ const AddPriceModal = ({
     calculatePriceOfferLineMutation.mutate({
       fi_price: data.fi_price,
       with_tax: data.with_tax || false,
-      lineId: +lineId
+      lineId: +line?.id
     })
   }
 
@@ -117,10 +119,16 @@ const AddPriceModal = ({
     createOrderOfferLineMutation.mutate({
       createLineOfferInput: {
         offerOrderId: +offerId,
-        lineId: +lineId,
-        fi_price,
-        tax_price: form.watch("with_tax") ? tax_price : "0",
-        total_price
+        lineId: +line?.id,
+        fi_price:
+          line?.type === MultiTypeOrder.Product
+            ? total_price
+            : form.getValues("fi_price"),
+        tax_price: line?.type === MultiTypeOrder.Product ? tax_price : "0",
+        total_price:
+          line?.type === MultiTypeOrder.Product
+            ? total_price
+            : form.getValues("fi_price")
       }
     })
   }
@@ -170,84 +178,98 @@ const AddPriceModal = ({
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="with_tax"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="flex items-center gap-1">
-                    <FormControl>
-                      <Switch
-                        disabled={
-                          calculatePriceOfferLineMutation.isLoading ||
-                          createOrderOfferLineMutation.isLoading
-                        }
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormLabel noStyle>{t("common:tax")}</FormLabel>
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex flex-col justify-center gap-5 rounded-lg border border-blue-300 bg-blue-50 px-5 py-7">
-              {form.watch("with_tax") && (
-                <div className="flex gap">
-                  <h4>{t(`common:tax_price`)}:</h4>
-                  <p className="font-semibold">
-                    {!calculatePriceOfferLineMutation.isLoading &&
-                      calculatePriceOfferLineMutation.data
-                        ?.calculatePriceOfferLine.tax_price &&
-                      digitsEnToFa(
+            {line?.type === MultiTypeOrder.Product && (
+              <>
+                <FormField
+                  control={form.control}
+                  name="with_tax"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex items-center gap-1">
+                        <FormControl>
+                          <Switch
+                            disabled={
+                              calculatePriceOfferLineMutation.isLoading ||
+                              createOrderOfferLineMutation.isLoading
+                            }
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <FormLabel noStyle>
+                          %{digitsEnToFa(10)} {t("common:tax")}
+                        </FormLabel>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div className="flex flex-col justify-center gap-5 rounded-lg border border-blue-300 bg-blue-50 px-5 py-7">
+                  {form.watch("with_tax") && (
+                    <div className="flex gap">
+                      <h4>{t(`common:tax_price`)}:</h4>
+                      <p className="font-semibold">
+                        {!calculatePriceOfferLineMutation.isLoading &&
+                          calculatePriceOfferLineMutation.data
+                            ?.calculatePriceOfferLine.tax_price &&
+                          digitsEnToFa(
+                            addCommas(
+                              calculatePriceOfferLineMutation.data
+                                ?.calculatePriceOfferLine.tax_price
+                            )
+                          )}
+                        {` (${t(`common:toman`)})`}
+                      </p>
+                    </div>
+                  )}
+                  <div className="flex gap">
+                    <h4>{t(`common:total_price`)}:</h4>
+                    <p className="font-semibold">
+                      {!calculatePriceOfferLineMutation.isLoading &&
                         calculatePriceOfferLineMutation.data
-                          ?.calculatePriceOfferLine.tax_price
-                      )}
-                    {` (${t(`common:toman`)})`}
-                  </p>
+                          ?.calculatePriceOfferLine.total_price &&
+                        digitsEnToFa(
+                          addCommas(
+                            calculatePriceOfferLineMutation.data
+                              ?.calculatePriceOfferLine.total_price
+                          )
+                        )}
+                      {` (${t(`common:toman`)})`}
+                    </p>
+                  </div>
                 </div>
-              )}
-              <div className="flex gap">
-                <h4>{t(`common:total_price`)}:</h4>
-                <p className="font-semibold">
-                  {!calculatePriceOfferLineMutation.isLoading &&
-                    calculatePriceOfferLineMutation.data
-                      ?.calculatePriceOfferLine.total_price &&
-                    digitsEnToFa(
-                      calculatePriceOfferLineMutation.data
-                        ?.calculatePriceOfferLine.total_price
-                    )}
-                  {` (${t(`common:toman`)})`}
-                </p>
-              </div>
-            </div>
+              </>
+            )}
             <DialogFooter className="flex flex-col gap border-t pt-5 md:flex-row">
-              <Button
-                disabled={
-                  calculatePriceOfferLineMutation.isLoading ||
-                  createOrderOfferLineMutation.isLoading ||
-                  +form.watch("fi_price") < 1
-                }
-                loading={calculatePriceOfferLineMutation.isLoading}
-                type="submit"
-                variant="full-secondary"
-              >
-                {t("common:calculate", { entity: t("common:price") })}
-              </Button>
+              {line?.type === MultiTypeOrder.Product && (
+                <Button
+                  disabled={
+                    calculatePriceOfferLineMutation.isLoading ||
+                    createOrderOfferLineMutation.isLoading ||
+                    +form.watch("fi_price") < 1
+                  }
+                  loading={calculatePriceOfferLineMutation.isLoading}
+                  type="submit"
+                  variant="full-secondary"
+                >
+                  {t("common:calculate", { entity: t("common:price") })}
+                </Button>
+              )}
               <Button
                 onClick={onConfirmModal}
                 disabled={
-                  !calculatePriceOfferLineMutation.data ||
-                  calculatePriceOfferLineMutation.isLoading ||
-                  createOrderOfferLineMutation.isLoading ||
-                  !form.watch("fi_price") ||
-                  form.watch("fi_price") !==
-                    calculatePriceOfferLineMutation?.data
-                      ?.calculatePriceOfferLine?.fi_price ||
-                  form.watch("with_tax") !==
-                    !!+calculatePriceOfferLineMutation?.data
-                      ?.calculatePriceOfferLine?.tax_price
+                  line?.type === MultiTypeOrder.Product
+                    ? !calculatePriceOfferLineMutation.data ||
+                      calculatePriceOfferLineMutation.isLoading ||
+                      createOrderOfferLineMutation.isLoading ||
+                      !form.watch("fi_price") ||
+                      form.watch("fi_price") !==
+                        calculatePriceOfferLineMutation?.data
+                          ?.calculatePriceOfferLine?.fi_price ||
+                      form.watch("with_tax") !==
+                        !!+calculatePriceOfferLineMutation?.data
+                          ?.calculatePriceOfferLine?.tax_price
+                    : false
                 }
                 loading={createOrderOfferLineMutation.isLoading}
                 type="button"

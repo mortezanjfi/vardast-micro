@@ -31,12 +31,7 @@ interface OrderProductCardProps {
   imageSrc?: string | StaticImageData
   actionButtonType?: ACTION_BUTTON_TYPE
   addProductLine?: OrderProductTabContentProps["addProductLine"]
-  setLineToEdit?: Dispatch<
-    SetStateAction<{
-      lineId: number
-      fi_price: string
-    }>
-  >
+  setPriceModalData?: Dispatch<SetStateAction<{ line: Line; fi_price: string }>>
   offer?: OfferLine
   offerId?: string
   isSeller?: boolean
@@ -48,7 +43,7 @@ const OrderProductCard = forwardRef(
       offerId,
       isSeller,
       offer,
-      setLineToEdit,
+      setPriceModalData,
       line,
       addProductLine,
       actionButtonType,
@@ -101,9 +96,9 @@ const OrderProductCard = forwardRef(
             e.nativeEvent.preventDefault()
             e.nativeEvent.stopImmediatePropagation()
             if (isSeller)
-              setLineToEdit({
+              setPriceModalData({
                 fi_price: offer?.fi_price,
-                lineId: offer?.line?.id
+                line: offer?.line
               })
             if (setOpen) setOpen(true)
           }}
@@ -119,8 +114,8 @@ const OrderProductCard = forwardRef(
       <>
         {actionButtonType === ACTION_BUTTON_TYPE.ADD_PRODUCT_OFFER && (
           <AddPriceModal
+            line={line as Line}
             offerId={offerId}
-            lineId={line?.id}
             setOpen={setOpen}
             open={open}
             fi_price={line?.price?.fi_price}
