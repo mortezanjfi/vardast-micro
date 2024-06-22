@@ -26,10 +26,8 @@ import Link from "../Link"
 import Loading from "../Loading"
 import LoadingFailed from "../LoadingFailed"
 import NoResult from "../NoResult"
-import PageHeader from "../PageHeader"
 import Pagination from "../Pagination"
 import AddProjectModal from "./AddProjectModal"
-import PageTitle from "./PageTitle"
 import ProjectCard from "./ProjectCard"
 import ProjectDeleteModal from "./ProjectDeleteModal"
 import { ProjectsFilter } from "./ProjectsFilter"
@@ -145,7 +143,7 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
           open={deleteModalOpen}
           onOpenChange={setDeleteModalOpen}
         />
-        {!isMobileView && !isAdmin && <PageTitle title={title} />}
+        {/* {!isMobileView && !isAdmin && <PageTitle title={title} />}
 
         {!isMobileView && !isAdmin && (
           <PageHeader
@@ -167,9 +165,9 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
               })}
             </Button>
           </PageHeader>
-        )}
+        )} */}
         <div className={clsx("w-full", isMobileView && " h-full px-6")}>
-          {isAdmin ? (
+          {!isMobileView ? (
             <CardContainer
               button={{
                 text: "افزودن پروژه",
