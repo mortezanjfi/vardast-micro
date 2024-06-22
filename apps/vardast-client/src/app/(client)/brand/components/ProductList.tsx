@@ -9,7 +9,6 @@ import {
 } from "next/navigation"
 import { XMarkIcon } from "@heroicons/react/24/solid"
 import { useDebouncedState } from "@mantine/hooks"
-import { CheckedState } from "@radix-ui/react-checkbox"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import BrandOrSellerCategoryFilter from "@vardast/component/brand-or-seller-category-filter"
 import DesktopMobileViewOrganizer from "@vardast/component/DesktopMobileViewOrganizer"
@@ -196,7 +195,7 @@ const ProductList = ({
     status,
     id,
     value
-  }: FilterAttribute & { status: CheckedState }) => {
+  }: FilterAttribute & { status: boolean | "indeterminate" }) => {
     setFilterAttributes((values) => {
       let tmp = values
       if (status === true) {
@@ -232,7 +231,7 @@ const ProductList = ({
   const onCategoryIdsFilterChanged = ({
     status,
     value
-  }: { value: InputMaybe<number> } & { status: CheckedState }) => {
+  }: { value: InputMaybe<number> } & { status: boolean | "indeterminate" }) => {
     setCategoryIdsFilter((values) => {
       let tmp: InputMaybe<number[]> = values || []
       if (status === true) {

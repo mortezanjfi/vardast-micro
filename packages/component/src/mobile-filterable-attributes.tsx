@@ -59,7 +59,7 @@ type MobileFilterableAttributePageProps = {
   attribute: Attribute
   filterAttributes: FilterAttribute[]
   onFilterAttributesChanged: (
-    _: FilterAttribute & { status: Checkbox.CheckedState }
+    _: FilterAttribute & { status: boolean | "indeterminate" }
   ) => void
 }
 
@@ -115,7 +115,7 @@ type MobileFilterableAttributesProps = {
   selectedCategoryId: InputMaybe<number[]> | undefined
   filterAttributes: FilterAttribute[]
   onFilterAttributesChanged: (
-    _: FilterAttribute & { status: Checkbox.CheckedState }
+    _: FilterAttribute & { status: boolean | "indeterminate" }
   ) => void
   onRemoveAllFilters: () => void
 }

@@ -134,7 +134,7 @@ interface BrandOrSellerCategoriesInterface {
   sellerId?: number
   onCategoryFilterChanged: (
     _: { value: InputMaybe<number> } & {
-      status: Checkbox.CheckedState
+      status: boolean | "indeterminate"
     }
   ) => void
   categoryIdsFilter: InputMaybe<number[]> | undefined
@@ -212,7 +212,7 @@ type MobileCategoriesFilterProps = {
   sellerId?: number
   categoryIdsFilter: InputMaybe<number[]> | undefined
   onCategoryFilterChanged: (
-    _: { value: InputMaybe<number> } & { status: Checkbox.CheckedState }
+    _: { value: InputMaybe<number> } & { status: boolean | "indeterminate" }
   ) => void
 }
 
