@@ -182,7 +182,7 @@ function SellersList({ isMobileView, findPreOrderByIdQuery, uuid }: Props) {
           onSubmit={form.handleSubmit(submitButton)}
           className="flex flex-col gap-7"
         >
-          <CardContainer title="لیست فروشندگان">
+          <CardContainer title="لیست پیشنهادات">
             <div className="flex flex-col">
               {findPreOrderByIdQuery?.data?.findPreOrderById?.status !==
                 PreOrderStates.Closed && (
@@ -192,7 +192,7 @@ function SellersList({ isMobileView, findPreOrderByIdQuery, uuid }: Props) {
                     onClick={onAddSeller}
                     variant="outline-primary"
                   >
-                    {t("common:add_entity", { entity: t("common:seller") })}
+                    {t("common:add_entity", { entity: t("common:offer") })}
                   </Button>
                 </div>
               )}
