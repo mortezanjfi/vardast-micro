@@ -21,7 +21,7 @@ interface BrandCategoryFilterInterface {
   categoryIdsFilter: InputMaybe<number[]> | undefined
   onCategoryIdsFilterChanged: (
     _: { value: InputMaybe<number> } & {
-      status: Checkbox.CheckedState
+      status: boolean | "indeterminate"
     }
   ) => void
 }

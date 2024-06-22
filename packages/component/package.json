@@ -24,8 +24,7 @@
     "@vardast/provider": "workspace:*",
     "@vardast/util": "workspace:*",
     "@vardast/graphql": "workspace:*",
-    "@vardast/tailwind-config": "workspace:*",
-    "@radix-ui/react-checkbox": "^1.0.4"
+    "@vardast/tailwind-config": "workspace:*"
   },
   "devDependencies": {
     "@vardast/eslint-config": "workspace:*",
