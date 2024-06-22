@@ -117,7 +117,7 @@ function OrderProductsList({
         setOpen={setOpen}
       /> */}
       <AddPriceModal
-        line={priceModalData.line as Line}
+        line={priceModalData?.line as Line}
         setOpen={setOpen}
         open={open}
         offerId={uuid}
@@ -152,13 +152,13 @@ function OrderProductsList({
                       offer={offer as OfferLine}
                       actionButtonType={actionButtonType}
                       line={{
-                        id: offer.line.id,
-                        item_name: offer.line.item_name,
-                        type: offer.line.type,
-                        brand: offer.line.brand,
-                        descriptions: offer.line.descriptions,
-                        qty: offer.line.qty,
-                        uom: offer.line.uom
+                        id: offer?.line?.id,
+                        item_name: offer?.line?.item_name,
+                        type: offer?.line?.type,
+                        brand: offer?.line?.brand,
+                        descriptions: offer?.line?.descriptions,
+                        qty: offer?.line?.qty,
+                        uom: offer?.line?.uom
                       }}
                     />
                   </div>

@@ -121,12 +121,12 @@ const AddPriceModal = ({
         offerOrderId: +offerId,
         lineId: +line?.id,
         fi_price:
-          line.type === MultiTypeOrder.Product
+          line?.type === MultiTypeOrder.Product
             ? total_price
             : form.getValues("fi_price"),
-        tax_price: line.type === MultiTypeOrder.Product ? tax_price : "0",
+        tax_price: line?.type === MultiTypeOrder.Product ? tax_price : "0",
         total_price:
-          line.type === MultiTypeOrder.Product
+          line?.type === MultiTypeOrder.Product
             ? total_price
             : form.getValues("fi_price")
       }
@@ -258,7 +258,7 @@ const AddPriceModal = ({
               <Button
                 onClick={onConfirmModal}
                 disabled={
-                  line.type === MultiTypeOrder.Product
+                  line?.type === MultiTypeOrder.Product
                     ? !calculatePriceOfferLineMutation.data ||
                       calculatePriceOfferLineMutation.isLoading ||
                       createOrderOfferLineMutation.isLoading ||
