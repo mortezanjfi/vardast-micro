@@ -232,7 +232,7 @@
       @apply ms-10
         hidden
         flex-col
-        border-s
+        /* border-s */
         border-alpha-300
         pt-3
         dark:border-alpha-700;

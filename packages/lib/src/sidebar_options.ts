@@ -118,28 +118,28 @@ const _admin: NavigationType[] = [
           {
             title: "پیش فاکتورها",
             icon: "package",
-            path: "/"
+            path: "/test"
           },
           {
             title: "فاکتورها",
-            path: "/",
+            path: "/test",
             icon: "ruler"
           }
         ]
       },
       {
         title: "گزارشات",
-        path: "/",
+        path: "/test",
         icon: "pie-chart"
       },
       {
         title: "نقش‌ها",
-        path: "/",
+        path: "/test",
         icon: "shield-alert"
       },
       {
         title: "دسترسی‌ها",
-        path: "/",
+        path: "/test",
         icon: "key-round"
       }
       // {
