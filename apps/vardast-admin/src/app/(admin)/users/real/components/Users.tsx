@@ -112,7 +112,7 @@ const Users = ({ roleIds }: Props) => {
                     user && (
                       <tr
                         key={user.uuid}
-                        onClick={() => router.push(`/users/${user.uuid}`)}
+                        onClick={() => router.push(`/users/real/${user.uuid}`)}
                       >
                         <td>
                           <Avatar size="small">

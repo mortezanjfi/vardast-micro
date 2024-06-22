@@ -96,7 +96,7 @@
   }
 
   .app-sidebar-inner {
-    @apply relative flex overflow-auto max-h-screen md:border md:border-alpha-300 md:rounded-xl md:bg-alpha-100 md:max-h-[80vh] hide-scrollbar;
+    @apply relative flex overflow-auto max-h-screen md:border md:border-alpha-200 md:rounded-xl md:bg-alpha-100 md:max-h-[80vh] hide-scrollbar;
   }
 }
 
@@ -107,10 +107,10 @@
     transition-all;
 
   .app-navigation-container {
-    @apply flex flex-1 flex-col overflow-y-auto gap-6 md:rounded-xl;
+    @apply flex flex-1 flex-col overflow-y-auto gap-6 md:rounded-xl p;
   }
   .app-navigation-section {
-    @apply md:bg-alpha-white md:rounded-xl py;
+    @apply bg-alpha-white rounded-xl overflow-auto;
     &-list {
       @apply flex flex-col;
     }
@@ -158,9 +158,9 @@
     }
 
     .app-navigation-item-link {
-      @apply flex flex-1 items-center gap-2 px-6;
+      @apply flex flex-1 items-center gap-2 pr-4;
       > span {
-        @apply border-b py-4 flex-1 md:border-alpha-300 flex justify-between;
+        @apply border-b py-4 flex-1 md:border-alpha-300 flex justify-between pl-4;
       }
 
       .icon {

@@ -40,9 +40,9 @@ const _default: ILayoutOption[] = [
     IconPrerender: LayoutList,
     button: {
       type: "link",
-      value: "/profile/basket"
+      value: "/basket"
     },
-    title: "سفارشات"
+    title: "سبد کالا"
   },
   {
     id: 3,

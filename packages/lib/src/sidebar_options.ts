@@ -16,7 +16,7 @@ const _profile: NavigationType[] = [
       {
         title: "سبد کالا",
         icon: "shopping-cart",
-        path: "/profile/basket"
+        path: "/basket"
       },
       {
         title: "علاقه‌مندی ها",

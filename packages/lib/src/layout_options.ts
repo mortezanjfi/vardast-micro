@@ -184,6 +184,41 @@ const _profile: ILayoutProps = {
         type: "image"
       }
     },
+    main: {
+      background: { type: "color", value: "bg-alpha-100" }
+    },
+    footer: {
+      search: true,
+      back: mobile_footer_back_options._profile,
+      options: { name: "_default" }
+    }
+  }
+}
+
+const _basket: ILayoutProps = {
+  desktop: {
+    header: {
+      button: {
+        type: "link",
+        value: process.env.NEXT_PUBLIC_SELLER_VARDAST as string
+      },
+      search: true
+    },
+    main: {
+      container: true,
+      breadcrumb: true
+    },
+    sidebar: {
+      profile: true,
+      menus_name: "_profile"
+    }
+  },
+  mobile: {
+    header: {
+      title: {
+        type: "image"
+      }
+    },
     footer: {
       search: true,
       back: mobile_footer_back_options._profile,
@@ -420,7 +455,8 @@ const options = {
   _product,
   _footer,
   _admin,
-  _seller_panel
+  _seller_panel,
+  _basket
 }
 
 type OptionName = keyof typeof options

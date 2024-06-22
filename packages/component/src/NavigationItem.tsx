@@ -2,10 +2,12 @@
 
 import { useState } from "react"
 import { usePathname } from "next/navigation"
+import useWindowSize from "@vardast/hook/use-window-size"
+import { breakpoints } from "@vardast/tailwind-config/themes"
 import { NavigationItemType } from "@vardast/type/Navigation"
 import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
-import { LucideChevronDown } from "lucide-react"
+import { LucideChevronDown, LucideChevronLeft } from "lucide-react"
 import { Session } from "next-auth"
 
 import DynamicIcon from "./DynamicIcon"
@@ -21,6 +23,10 @@ type Props = {
 const NavigationItem = (props: Props) => {
   const pathname = usePathname()
   const [open, setOpen] = useState<boolean>(false)
+  const { width } = useWindowSize()
+
+  const isMobileView = width < breakpoints["md"]
+
   const { menu } = props
 
   const toggleOpen = () => {
@@ -57,15 +63,23 @@ const NavigationItem = (props: Props) => {
             />
             <span>
               {menu.title}
-              {menu.items && (
+              {isMobileView ? (
+                <div className="app-navigation-item-arrow">
+                  <LucideChevronLeft className="h-4 w-4" />
+                </div>
+              ) : menu.items ? (
                 <Button
                   className="app-navigation-item-arrow"
                   noStyle
-                  onClick={() => !isActive(menu.path as string) && toggleOpen()}
+                  onClick={() => {
+                    if (!isActive(menu.path as string)) {
+                      toggleOpen()
+                    }
+                  }}
                 >
                   <LucideChevronDown className="h-4 w-4" />
                 </Button>
-              )}
+              ) : null}
             </span>
           </Link>
         </span>

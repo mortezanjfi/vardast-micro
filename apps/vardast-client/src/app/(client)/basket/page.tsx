@@ -8,11 +8,11 @@ import { allUserFavoriteProductsQueryFns } from "@vardast/query/queryFns/allUser
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { getServerSession } from "next-auth"
 
-import BasketPageIndex from "@/app/(client)/profile/basket/components/BasketPageIndex"
+import BasketPageIndex from "@/app/(client)/basket/components/BasketPageIndex"
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "سفارشات"
+    title: "سبد کالا"
   }
 }
 

@@ -83,7 +83,7 @@ export const _clientMobileProfileMenu: NavigationType[] = [
       {
         title: "سبد کالا",
         icon: "shopping-cart",
-        path: "/profile/basket"
+        path: "/basket"
       },
       {
         title: "علاقه مندی ها",
@@ -132,7 +132,7 @@ export const _profileSidebarMenu: NavigationType[] = [
       // {
       //   title: "سبد کالا",
       //   icon: "shopping-cart",
-      //   path: "/profile/basket"
+      //   path: "/basket"
       // }
       // {
       //   title: "علاقه مندی ها",

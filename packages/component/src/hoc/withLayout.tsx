@@ -12,6 +12,7 @@ import PageBanner from "../desktop/PageBanner"
 import MobileHeader from "../header/MobileHeader"
 import MobileScrollProvider from "../header/MobileScrollProvider"
 import MobileNavigation from "../mobile-navigation"
+import { MotionSection } from "../motion/Motion"
 import { SearchActionModal } from "../Search"
 import Sidebar from "../Sidebar"
 
@@ -127,7 +128,15 @@ export default function withLayout<T>(
                 {layout?.desktop?.sidebar && (
                   <Sidebar {...layout?.desktop?.sidebar} />
                 )}
-                <div
+                <MotionSection
+                  variants={{
+                    hidden: { opacity: 0 },
+                    enter: { opacity: 1 }
+                  }}
+                  initial="hidden" // Set the initial state to variants.hidden
+                  animate="enter" // Animated state to variants.enter
+                  exit="exit" // Exit state (used later) to variants.exit
+                  transition={{ type: "linear" }} // Set the transition to linear
                   className={clsx(
                     "app-content desktop",
                     layout?.desktop?.sidebar && "md:pr-6"
@@ -139,7 +148,7 @@ export default function withLayout<T>(
                     </Suspense>
                   )}
                   <Component {...{ ...props, ...layout?.desktop?.main }} />
-                </div>
+                </MotionSection>
               </div>
             </main>
             {layout?.desktop?.footer && (

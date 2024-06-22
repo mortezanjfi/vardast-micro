@@ -44,19 +44,22 @@ const MobileNavigation = ({
     : propsBack
 
   const getIsActiveNav = (path: string) => {
-    if (path === "/" && pathname !== path) {
+    if (path === "/" && pathname !== "/") {
       return false
     }
 
-    // Splitting paths into arrays to handle nested paths correctly
-    const currentPathParts = pathname.split("/").filter(Boolean) // Filter to remove empty strings
-    const targetPathParts = path.split("/").filter(Boolean) // Filter to remove empty strings
+    const pathSplit = path.split("/").filter(Boolean).join("")
+    const pathnameSplit = pathname.split("/").filter(Boolean).join("")
 
-    // Check if the current path ends with the target path
-    return (
-      currentPathParts.slice(-targetPathParts.length).join("/") ===
-      targetPathParts.join("/")
-    )
+    if (pathnameSplit > pathSplit) {
+      if (pathnameSplit.slice(0, pathSplit.length) === pathSplit) {
+        return true
+      }
+    } else if (pathSplit === pathnameSplit) {
+      return true
+    }
+
+    return false
   }
 
   const getActiveClassName = (activePath: string) => {

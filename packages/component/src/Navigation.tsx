@@ -84,18 +84,23 @@ const Navigation = (props: Props) => {
                         />
                       )
                   )}
-                {loginToggleMenu && (
-                  <NavigationItem
-                    session={session}
-                    variant={loginToggleMenu.variant as NavigationItemVariant}
-                    menu={loginToggleMenu.menu}
-                  />
-                )}
               </ol>
             </section>
           )
         )
       })}
+
+      {loginToggleMenu && (
+        <section className="app-navigation-section">
+          <ol className="app-navigation-section-list">
+            <NavigationItem
+              session={session}
+              variant={loginToggleMenu.variant as NavigationItemVariant}
+              menu={loginToggleMenu.menu}
+            />
+          </ol>
+        </section>
+      )}
     </>
   )
 }
