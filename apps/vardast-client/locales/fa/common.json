@@ -345,5 +345,6 @@
   "add-seller-info": "افزودن اطلاعات فروشنده",
   "add-offer-price": "افزودن پیشنهاد قیمت",
   "all-products": "همه‌ی کالاهای وردست",
-  "price-giver": "قیمت گذار"
+  "price-giver": "قیمت گذار",
+  "entity_type": "نوع {{entity}}"
 }
