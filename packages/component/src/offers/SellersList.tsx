@@ -258,7 +258,7 @@ function SellersList({
 
                     <tbody>
                       {findPreOrderByIdQuery.data?.findPreOrderById?.offers
-                        ?.length === 0 ? (
+                        ?.length === 0 && !isClient ? (
                         <tr>
                           <td></td>
                           <td></td>
