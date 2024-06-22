@@ -3,7 +3,11 @@
 import { useState } from "react"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
-import { FindPreOrderByIdQuery, OfferLine } from "@vardast/graphql/generated"
+import {
+  FindPreOrderByIdQuery,
+  Line,
+  OfferLine
+} from "@vardast/graphql/generated"
 import { ACTION_BUTTON_TYPE } from "@vardast/type/OrderProductTabs"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
@@ -50,8 +54,8 @@ function OrderProductsList({
 }: OrderProductsListProps) {
   const { t } = useTranslation()
   const [open, setOpen] = useState<boolean>(false)
-  const [lineToEdit, setLineToEdit] = useState<{
-    lineId: number
+  const [priceModalData, setPriceModalData] = useState<{
+    line: Line
     fi_price: string
   }>()
 
@@ -100,7 +104,7 @@ function OrderProductsList({
 
   const submit = (data: any) => {
     console.log(data)
-    console.log("product Id:", lineToEdit)
+    console.log("product Id:", priceModalData)
     setOpen(false)
   }
 
@@ -113,11 +117,11 @@ function OrderProductsList({
         setOpen={setOpen}
       /> */}
       <AddPriceModal
-        lineId={lineToEdit?.lineId}
+        line={priceModalData.line as Line}
         setOpen={setOpen}
         open={open}
         offerId={uuid}
-        fi_price={lineToEdit?.fi_price}
+        fi_price={priceModalData?.fi_price}
       />
 
       {isMobileView ? (
@@ -141,11 +145,10 @@ function OrderProductsList({
                   className="flex grid-cols-4 flex-col gap-4 pb-6 md:grid md:pt-6"
                 >
                   <div className="col-span-3">
-                    {" "}
                     <OrderProductCard
                       offerId={uuid}
                       isSeller={isSeller}
-                      setLineToEdit={setLineToEdit}
+                      setPriceModalData={setPriceModalData}
                       offer={offer as OfferLine}
                       actionButtonType={actionButtonType}
                       line={{
@@ -292,9 +295,9 @@ function OrderProductsList({
                       <td className={clsx(tdClassName, "whitespace-nowrap")}>
                         <span
                           onClick={() => {
-                            setLineToEdit({
+                            setPriceModalData({
                               fi_price: offer?.fi_price,
-                              lineId: offer?.line?.id
+                              line: offer?.line as Line
                             })
                             setOpen(true)
                           }}
