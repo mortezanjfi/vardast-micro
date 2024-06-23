@@ -14,6 +14,7 @@ import {
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
+import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
@@ -22,7 +23,7 @@ import { ApiCallStatusEnum } from "../../../type/src/Enums"
 import { checkBooleanByString } from "../../../util/src/checkBooleanByString"
 import { getContentByApiStatus } from "../../../util/src/GetContentByApiStatus"
 import CardContainer from "../desktop/CardContainer"
-import OrderCard from "../desktop/OrderCart"
+import OrderCard, { PreOrderStatesFa } from "../desktop/OrderCart"
 import Link from "../Link"
 import Loading from "../Loading"
 import LoadingFailed from "../LoadingFailed"
@@ -203,7 +204,9 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                           <td className="w-4 border">
                             <span>{digitsEnToFa(index + 1)}</span>
                           </td>
-                          <td className="border">{preOrder?.uuid}</td>
+                          <td className="border">
+                            {digitsEnToFa(preOrder?.uuid)}
+                          </td>
                           <td className="border">{preOrder?.user?.fullName}</td>
                           <td className="border">{preOrder?.project?.name}</td>
                           <td className="border">
@@ -239,7 +242,19 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                               </span>
                             )}
                           </td>
-                          <td className="border">{preOrder?.status}</td>
+                          <td className="border">
+                            <span
+                              className={clsx(
+                                "tag",
+                                PreOrderStatesFa[preOrder?.status]?.className
+                              )}
+                            >
+                              {
+                                PreOrderStatesFa[preOrder?.status]
+                                  ?.name_fa_admin
+                              }
+                            </span>{" "}
+                          </td>
                           <td className="border">
                             {preOrder?.pickUpUser?.fullName}
                           </td>

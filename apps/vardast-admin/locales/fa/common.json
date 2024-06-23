@@ -322,7 +322,7 @@
   "add-to_entity": "افزودن به {{entity}}",
   "entity_code": "کد {{entity}}",
   "person": "شخص",
-  "person-in-charge": "مسوول سفارش",
+  "person-in-charge": "مسؤول سفارش",
   "orderDetail": "جزییات سفارش",
   "project-address": "آدرس پروژه",
   "shipping-address": "آدرس محل تحویل",

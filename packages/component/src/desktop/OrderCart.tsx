@@ -35,31 +35,43 @@ type OrderCardProps = {
 export const PreOrderStatesFa = {
   [PreOrderStates.PendingAdmin]: {
     className: "tag-warning",
+    name_fa_admin: "در انتظار تایید ادمین",
     name_fa: "جاری"
   },
   [PreOrderStates.PendingInfo]: {
     className: "tag-warning",
+    name_fa_admin: "در انتظار دریافت اطلاعات",
     name_fa: "جاری"
   },
   [PreOrderStates.PendingOffer]: {
     className: "tag-warning",
+    name_fa_admin: "در انتظار پیشنهاد قیمت",
     name_fa: "جاری"
   },
   [PreOrderStates.PendingProduct]: {
     className: "tag-warning",
+    name_fa_admin: "در انتظار افزودن کالا",
     name_fa: "جاری"
   },
   [PreOrderStates.VerifyFile]: {
     className: "tag-warning",
+    name_fa_admin: "در انتظار تایید فایل",
     name_fa: "جاری"
   },
   [PreOrderStates.Closed]: {
     className: "tag-success",
+    name_fa_admin: "بسته شده",
     name_fa: "خریداری شده"
   },
   [PreOrderStates.Completed]: {
     className: "tag-danger",
+    name_fa_admin: "خریداری نشده",
     name_fa: "خریداری نشده"
+  },
+  [PreOrderStates.PendingPayment]: {
+    className: "tag-success",
+    name_fa: "در انتظار پرداخت",
+    name_fa_admin: "در انتظار پرداخت"
   }
 }
 
