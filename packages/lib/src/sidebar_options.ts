@@ -6,22 +6,65 @@ const _profile: NavigationType[] = [
       {
         title: "پروژه ها",
         icon: "folder-open",
-        path: "/profile/projects"
+        path: "/profile/projects",
+        background_color: "bg-orange-500",
+        color: "white"
       },
       {
         title: "سفارشات",
         icon: "layout-list",
-        path: "/profile/orders"
+        path: "/profile/orders",
+        background_color: "bg-blue-500",
+        color: "white"
       },
       {
         title: "سبد کالا",
         icon: "shopping-cart",
-        path: "/basket"
+        path: "/basket",
+        background_color: "bg-green-500",
+        color: "white"
       },
       {
         title: "علاقه‌مندی ها",
         icon: "bookmark",
-        path: "/profile/favorites"
+        path: "/profile/favorites",
+        background_color: "bg-rose-500",
+        color: "white"
+      }
+    ]
+  }
+]
+
+const _profile_about: NavigationType[] = [
+  {
+    items: [
+      {
+        title: "درباره ما",
+        icon: "info",
+        path: "/about",
+        background_color: "bg-amber-500",
+        color: "white"
+      },
+      {
+        title: "تماس با ما",
+        icon: "phone",
+        path: "/contact",
+        background_color: "bg-emerald-500",
+        color: "white"
+      },
+      {
+        title: "سوالات متداول",
+        icon: "help-circle",
+        path: "/faq",
+        background_color: "bg-pink-500",
+        color: "white"
+      },
+      {
+        title: "قوانین و مققرات",
+        icon: "scale",
+        path: "/privacy",
+        background_color: "bg-violet-500",
+        color: "white"
       }
     ]
   }
@@ -261,5 +304,6 @@ export const _seller_panel: NavigationType[] = [
 export default {
   _profile,
   _admin,
+  _profile_about,
   _seller_panel
 }

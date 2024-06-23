@@ -27,7 +27,8 @@ const nextConfig = {
     "@vardast/type",
     "@vardast/ui",
     "@vardast/util",
-    "@vardast/style"
+    "@vardast/style",
+    "@vardast/tailwind-config"
   ],
   webpack: (config) => {
     config.resolve.alias.canvas = false

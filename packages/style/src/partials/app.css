@@ -107,7 +107,7 @@
     transition-all;
 
   .app-navigation-container {
-    @apply flex flex-1 flex-col overflow-y-auto gap-6 md:rounded-xl p;
+    @apply flex flex-1 flex-col overflow-y-auto gap-6 md:rounded-xl p-6 md:p;
   }
   .app-navigation-section {
     @apply bg-alpha-white rounded-xl overflow-auto;
@@ -153,31 +153,18 @@
         items-center
         gap-2
         leading-normal
-        text-alpha-700
+        text-alpha-800
         dark:text-alpha-400;
     }
 
     .app-navigation-item-link {
-      @apply flex flex-1 items-center gap-2 pr-4;
+      @apply flex flex-1 items-center gap-4 pr-4;
       > span {
         @apply border-b py-4 flex-1 md:border-alpha-300 flex justify-between pl-4;
       }
 
       .icon {
-        &.error {
-          @apply text-error-700
-        dark:text-error-600;
-        }
-
-        &.success {
-          @apply text-success-700
-        dark:text-success-600;
-        }
-        &.primary {
-          @apply text-primary-700
-        dark:text-primary-600;
-        }
-        @apply h-5 w-5 text-alpha;
+        @apply h-8 w-8 rounded-md p-1;
       }
     }
 
@@ -207,7 +194,7 @@
 
       .app-navigation-item-link {
         .icon {
-          @apply text-alpha-700
+          @apply text-alpha-800
                   dark:text-alpha-300;
         }
       }
@@ -256,13 +243,13 @@
             before:w-2
             before:rounded-full
             before:bg-alpha-300
-            hover:text-alpha-700
+            hover:text-alpha-800
             dark:text-alpha-500
             dark:before:bg-alpha-700
             dark:hover:text-alpha-400;
 
           &.active {
-            @apply text-alpha-700 before:bg-primary-600 dark:text-alpha-400;
+            @apply text-alpha-800 before:bg-primary-600 dark:text-alpha-400;
           }
         }
       }

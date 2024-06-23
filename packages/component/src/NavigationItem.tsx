@@ -13,10 +13,8 @@ import { Session } from "next-auth"
 import DynamicIcon from "./DynamicIcon"
 import Link from "./Link"
 
-export type NavigationItemVariant = "success" | "error" | "primary"
 type Props = {
   menu: NavigationItemType
-  variant?: NavigationItemVariant
   session: Session | null
 }
 
@@ -54,18 +52,19 @@ const NavigationItem = (props: Props) => {
           open && "open"
         ])}
       >
-        <span className={clsx(props.variant)}>
+        <span>
           <Link href={menu.path as string} className="app-navigation-item-link">
             <DynamicIcon
               name={menu?.icon}
-              className={clsx("icon", props.variant)}
-              strokeWidth={1.5}
+              className={clsx("icon", menu.background_color)}
+              color={menu.color || undefined}
+              strokeWidth={2}
             />
             <span>
               {menu.title}
               {isMobileView ? (
                 <div className="app-navigation-item-arrow">
-                  <LucideChevronLeft className="h-4 w-4" />
+                  <LucideChevronLeft className="h-full w-full" />
                 </div>
               ) : menu.items ? (
                 <Button
@@ -77,7 +76,7 @@ const NavigationItem = (props: Props) => {
                     }
                   }}
                 >
-                  <LucideChevronDown className="h-4 w-4" />
+                  <LucideChevronDown className="h-full w-full" />
                 </Button>
               ) : null}
             </span>
@@ -103,8 +102,8 @@ const NavigationItem = (props: Props) => {
                             )) ||
                             !menuItem.abilities) && (
                             <NavigationItem
-                              session={props?.session}
                               key={idx}
+                              session={props?.session}
                               menu={menuItem}
                             />
                           )

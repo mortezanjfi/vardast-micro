@@ -3,10 +3,10 @@
 import { ReactNode, useContext, useEffect, useState } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
 import { PencilSquareIcon } from "@heroicons/react/24/outline"
-import { WalletIcon } from "@heroicons/react/24/solid"
 import { useClickOutside } from "@mantine/hooks"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import { UserType } from "@vardast/graphql/generated"
+import { _authentication_profile_wallet } from "@vardast/lib/constants"
 import sidebar_options from "@vardast/lib/sidebar_options"
 import { LayoutContext } from "@vardast/provider/LayoutProvider"
 import { ILayoutDesktopSidebar } from "@vardast/type/layout"
@@ -15,7 +15,9 @@ import { useAtom, useAtomValue } from "jotai"
 import { Session } from "next-auth"
 import useTranslation from "next-translate/useTranslation"
 
+import DynamicIcon from "./DynamicIcon"
 import Link from "./Link"
+import { MotionSection } from "./motion/Motion"
 import Navigation from "./Navigation"
 import Progress from "./Progress"
 
@@ -27,7 +29,18 @@ export const SidebarProfile = ({ session }: { session: Session }) => {
       : session?.profile?.wallet
   return (
     session?.profile?.status && (
-      <section className="app-navigation-section">
+      <MotionSection
+        variants={{
+          hidden: { opacity: 0, y: 0, x: 0, scale: 0 },
+          enter: { opacity: 1, y: 0, x: 0, scale: 1 },
+          exit: { opacity: 0, y: 0, x: 0, scale: 0 } // Add exit variant for completeness
+        }}
+        initial="hidden" // Set the initial state to variants.hidden
+        animate="enter" // Animated state to variants.enter
+        exit="exit" // Exit state (used later) to variants.exit
+        transition={{ type: "linear", delay: 0.2 }} // Set the transition to linear with a delay of 0.5 seconds
+        className="app-navigation-section"
+      >
         <ol className="app-navigation-section-list">
           <li className="app-navigation-item flex items-center justify-between">
             <span className="not-hover">
@@ -56,19 +69,18 @@ export const SidebarProfile = ({ session }: { session: Session }) => {
           <li className="app-navigation-item flex items-center justify-between">
             <span className="not-hover">
               <div className="app-navigation-item-link">
-                <span className="flex">
-                  <div className="flex flex-1 items-center gap-4">
-                    <div className="rounded-lg bg-blue-600 p-2">
-                      <WalletIcon
-                        width={24}
-                        height={24}
-                        className="text-alpha-white"
-                        color="alpha-white"
-                      />
-                    </div>
-                    <span>کیف پول</span>
-                  </div>
-                  <div className="flex items-center gap-1 text-alpha-500">
+                <DynamicIcon
+                  name={_authentication_profile_wallet.icon}
+                  className={clsx(
+                    "icon",
+                    _authentication_profile_wallet.background_color
+                  )}
+                  color={_authentication_profile_wallet.color}
+                  strokeWidth={2}
+                />
+                <span>
+                  {"کیف پول"}
+                  <div className="app-navigation-item-arrow flex items-center gap-1">
                     <span>{digitsEnToFa(addCommas(wallet || 0))}</span>
                     <span>تومان</span>
                   </div>
@@ -77,7 +89,7 @@ export const SidebarProfile = ({ session }: { session: Session }) => {
             </span>
           </li>
         </ol>
-      </section>
+      </MotionSection>
     )
   )
 }
