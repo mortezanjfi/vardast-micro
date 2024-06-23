@@ -37,6 +37,15 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "next": "*",
+    "react-hook-form": "*",
+    "zod": "*",
+    "next-translate": "*",
+    "next-auth": "*",
+    "lucide-react": "*",
+    "@tanstack/react-query": "*",
+    "@tanstack/react-query-devtools": "*",
+    "graphql-request": "*",
     "@vardast/auth": "workspace:*",
     "@vardast/hook": "workspace:*",
     "@vardast/util": "workspace:*",

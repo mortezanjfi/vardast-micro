@@ -30,7 +30,7 @@ export const _orderSteppers: Step[] = [
     currentStep: 3
   },
   {
-    name: "پرداخت",
+    name: "تایید پرداخت",
     Icon: "badge-dollar-sign",
     currentStep: 4
   }
@@ -51,7 +51,7 @@ export const _orderUrlToStepMappers: urlToStepMapper[] = [
   },
   {
     stepNumber: 4,
-    name: "payment"
+    name: "verify"
   }
 ]
 export const _legalSteppers: Step[] = [

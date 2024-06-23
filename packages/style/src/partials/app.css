@@ -145,7 +145,7 @@
           dark:hover:bg-primary-800;
       }
       &:not(.not-hover) {
-        @apply hover:bg-alpha-200 hover:bg-opacity-50 dark:hover:bg-alpha-800 dark:hover:bg-opacity-30;
+        @apply hover:bg-alpha-200 dark:hover:bg-alpha-800;
       }
 
       @apply flex

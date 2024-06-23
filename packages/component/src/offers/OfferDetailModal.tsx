@@ -2,8 +2,6 @@
 
 import { Dispatch, SetStateAction } from "react"
 import { UseQueryResult } from "@tanstack/react-query"
-import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
-import OrderProductsList from "@vardast/component/desktop/OrderProductsList"
 import {
   FindPreOrderByIdQuery,
   PreOrderStates
@@ -18,6 +16,9 @@ import {
 import { Input } from "@vardast/ui/input"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
+
+import { DetailsWithTitle } from "../desktop/DetailsWithTitle"
+import OrderProductsList from "../desktop/OrderProductsList"
 
 export type OfferDetailModalProps = {
   isMobileView?: boolean

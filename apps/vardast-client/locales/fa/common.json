@@ -346,5 +346,6 @@
   "add-offer-price": "افزودن پیشنهاد قیمت",
   "all-products": "همه‌ی کالاهای وردست",
   "price-giver": "قیمت گذار",
-  "entity_type": "نوع {{entity}}"
+  "entity_type": "نوع {{entity}}",
+  "payment_has_been_done": "پرداخت انجام شده است."
 }

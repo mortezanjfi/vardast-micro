@@ -1,0 +1,7 @@
+mutation PaymentMutation($offerId: Int!) {
+  payment(offerId: $offerId) {
+    success
+    message
+    callbackUrl
+  }
+}
