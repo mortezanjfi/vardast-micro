@@ -244,17 +244,13 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                             {preOrder?.pickUpUser?.fullName}
                           </td>
                           <td className="border">
-                            <Link
-                              target="_blank"
-                              href={`/profile/orders/${preOrder?.id}/info`}
-                            >
+                            <Link href={`/profile/orders/${preOrder?.id}/info`}>
                               <span className="tag cursor-pointer text-blue-500">
                                 {t("common:edit")}
                               </span>
                             </Link>
                             /
                             <Link
-                              target="_blank"
                               href={`/profile/orders/${preOrder?.id}/offers`}
                             >
                               <span className="tag cursor-pointer text-error">
