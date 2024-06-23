@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react"
-import Dropzone, { FilesWithPreview } from "@vardast/component/Dropzone"
 import { Image, useAddFilePreOrderMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
 import { uploadPaths } from "@vardast/lib/uploadPaths"
@@ -9,9 +8,20 @@ import { OrderProductTabContentProps } from "@vardast/type/OrderProductTabs"
 import { Button } from "@vardast/ui/button"
 import { ClientError } from "graphql-request"
 
+import Dropzone, { CsvWithPreview, FilesWithPreview } from "../../../Dropzone"
+import Link from "../../../Link"
+
 function UploadTabContent({ uuid }: OrderProductTabContentProps) {
   const [files, setFiles] = useState<FilesWithPreview[]>([])
+  const [csvFile, setCsvFIle] = useState<CsvWithPreview[]>([])
   const [images, setImages] = useState<
+    { uuid: string; expiresAt: string; image?: Image }[]
+  >([])
+
+  const [csvImages, setCsvImages] = useState<
+    { uuid: string; expiresAt: string; image?: Image }[]
+  >([])
+  const [csv, setCsv] = useState<
     { uuid: string; expiresAt: string; image?: Image }[]
   >([])
 
@@ -88,6 +98,34 @@ function UploadTabContent({ uuid }: OrderProductTabContentProps) {
         >
           افزودن به سفارش
         </Button>
+      </div>
+
+      <div className="p-0.5">
+        <Dropzone
+          uuidForCsv={uuid}
+          isCsv={true}
+          manualFileState={[csvFile, setCsvFIle]}
+          onAddition={(file) => {
+            setCsvImages((prevImages) => [
+              ...prevImages,
+              {
+                uuid: file.uuid as string,
+                expiresAt: file.expiresAt as string
+              }
+            ])
+          }}
+          withHeight={false}
+        />
+      </div>
+      <div className="flex w-full justify-end">
+        <Link
+          href="https://storage.vardast.com/vardast/order/example-order-csv.csv"
+          target="_blank"
+        >
+          <Button type="button" variant="primary" className="py-3">
+            دانلود فایل csv نمونه
+          </Button>
+        </Link>
       </div>
     </div>
   )

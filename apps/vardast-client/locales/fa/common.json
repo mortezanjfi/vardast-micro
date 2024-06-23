@@ -29,6 +29,7 @@
   "add_entity": "افزودن {{ entity }}",
   "add_images_dropzone_description": "فایل ها را بکشید و در این کادر بیاندازید و یا کلیک کنید",
   "add_images_dropzone_title": "افزودن فایل",
+  "add_csv_dropzone_title": "افزودن فایل csv کالا",
   "address": "آدرس",
   "addresses": "آدرس‌ها",
   "admin": "مدیریت",
