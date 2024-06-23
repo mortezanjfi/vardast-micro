@@ -8,6 +8,7 @@ import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRe
 import useTranslation from "next-translate/useTranslation"
 
 import CardContainer from "../desktop/CardContainer"
+import Link from "../Link"
 import Pagination from "../Pagination"
 import AddLegalUserModal from "./AddLegalUserModal"
 import LegalDeleteModal from "./LegalDeleteModal"
@@ -97,6 +98,12 @@ export default (props: Props) => {
                     <td className="border">--</td>
                     <td className="border">--</td>
                     <td className="border">
+                      <Link href={`/users/legal/${user?.id}/address`}>
+                        <span className="tag cursor-pointer text-blue-500">
+                          {t("common:edit")}
+                        </span>
+                      </Link>
+                      /
                       <span
                         className="tag cursor-pointer text-error"
                         onClick={(e) => {

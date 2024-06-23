@@ -1,3 +1,5 @@
+"use client"
+
 import { usePathname, useRouter } from "next/navigation"
 import {
   Address,
@@ -14,7 +16,7 @@ import useTranslation from "next-translate/useTranslation"
 type AddressesTabProps = {
   relatedType: keyof typeof AddressRelatedTypes
   relatedId: number
-  addresses: Address[]
+  addresses?: Address[]
 }
 
 const AddressesTab = ({

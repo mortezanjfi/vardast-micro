@@ -1,6 +1,7 @@
 "use client"
 
 import { notFound } from "next/navigation"
+import AddressesTab from "@vardast/component/legal/address-Info/AddressesTab"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import PageHeader from "@vardast/component/PageHeader"
@@ -16,7 +17,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@vardast/ui/tabs"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 
-import AddressesTab from "@/app/(admin)/components/AddressesTab"
 import ContactInfosTab from "@/app/(admin)/components/ContactInfosTab"
 import MembersTab from "@/app/(admin)/sellers/components/MembersTab"
 import SellerForm from "@/app/(admin)/sellers/components/SellerForm"

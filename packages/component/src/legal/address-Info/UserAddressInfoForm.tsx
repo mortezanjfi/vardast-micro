@@ -4,6 +4,8 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
+  Address,
+  Legal,
   useGetAllProvincesQuery,
   useGetProvinceQuery
 } from "@vardast/graphql/generated"
@@ -36,11 +38,9 @@ import { TypeOf, z } from "zod"
 import CardContainer from "../../desktop/CardContainer"
 import Link from "../../Link"
 
-type Props = { readOnlyMode?: boolean; uuid: string }
+type Props = {legalUser: Legal; readOnlyMode?: boolean; uuid: string }
 
-export type CreateLegalUserInfoType = TypeOf<typeof CreateLegalUserSchema>
-
-const CreateLegalUserSchema = z.object({
+const LegalAddresSchema = z.object({
   phone: z.coerce.number(),
   postalCode: z.string(),
   provinceId: z.number(),
@@ -48,14 +48,21 @@ const CreateLegalUserSchema = z.object({
   address: z.string()
 })
 
-export default ({ readOnlyMode, uuid }: Props) => {
+export type CreateLegalUserInfoType = TypeOf<typeof LegalAddresSchema>
+
+export default ({legalUser, readOnlyMode, uuid }: Props) => {
   const { t } = useTranslation()
   const router = useRouter()
   const [provinceDialog, setProvinceDialog] = useState(false)
   const [provinceQueryTemp, setProvinceQueryTemp] = useState("")
   const [cityDialog, setCityDialog] = useState(false)
   const form = useForm<CreateLegalUserInfoType>({
-    resolver: zodResolver(CreateLegalUserSchema)
+    resolver: zodResolver(LegalAddresSchema),
+    defaultValues: {
+      address:legalUser?.addresses?.  ,
+      cityId:legalUser.city.id,
+      phonelegalUser.
+    }
   })
 
   const provinces = useGetAllProvincesQuery(graphqlRequestClientWithToken)
@@ -70,8 +77,9 @@ export default ({ readOnlyMode, uuid }: Props) => {
     }
   )
 
-  const submit = (data) => {
+  const submit = (data: CreateLegalUserInfoType) => {
     console.log(data)
+    const { address, cityId, phone, postalCode, provinceId } = data
 
     router.push(`/users/legal/${uuid}/info`)
   }

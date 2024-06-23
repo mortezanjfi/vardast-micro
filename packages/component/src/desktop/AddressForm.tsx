@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import Card from "@vardast/component/Card"
 import {
   Address,
   AddressRelatedTypes,
@@ -55,6 +54,8 @@ import {
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
+
+import Card from "../Card"
 
 type AddressFormProps = {
   passedAddress?: Address

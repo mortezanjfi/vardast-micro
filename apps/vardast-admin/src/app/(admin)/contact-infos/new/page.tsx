@@ -1,9 +1,8 @@
 import { redirect } from "next/navigation"
 import { authOptions } from "@vardast/auth/authOptions"
+import ContactInfoForm from "@vardast/component/desktop/ContactInfoForm"
 import { ContactInfoRelatedTypes } from "@vardast/graphql/generated"
 import { getServerSession } from "next-auth"
-
-import ContactInfoForm from "@/app/(admin)/contact-infos/components/ContactInfoForm"
 
 type CreateContactInfoPageProps = {
   params: { slug: Array<string | number> }
