@@ -41,6 +41,9 @@ query GetAllBrands($indexBrandInput: IndexBrandInput) {
       priceList {
         id
       }
+      bannerDesktop {
+        id
+      }
     }
   }
 }
