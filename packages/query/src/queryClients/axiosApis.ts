@@ -16,13 +16,23 @@ const servePdf = ({ uuid, access_token }: IServePdf) => {
   )
 }
 
+const getInvoice = ({ uuid, access_token }: IServePdf) => {
+  return axios.get(
+    `${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/pre/order/file/${uuid}`,
+    {
+      headers: { Authorization: `Bearer ${access_token}` }
+    }
+  )
+}
+
 const getVersion = () => {
   return axios.get(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/app/version`)
 }
 
 const axiosApis = {
   servePdf,
-  getVersion
+  getVersion,
+  getInvoice
 }
 
 export default axiosApis

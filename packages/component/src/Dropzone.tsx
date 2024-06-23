@@ -28,12 +28,14 @@ import useTranslation from "next-translate/useTranslation"
 import { FileWithPath, useDropzone } from "react-dropzone"
 
 interface DropzoneProps {
+  uuidForCsv?: string
+  isCsv?: boolean
   isPreOrder?: boolean
   maxFiles?: number
   existingImages?: Maybe<ImageType | ImageCategory>[]
-  uploadPath: string
+  uploadPath?: string
   onAddition: (_: FilesWithPreview) => void
-  onDelete: (_: FilesWithPreview) => void
+  onDelete?: (_: FilesWithPreview) => void
   withHeight?: boolean
   withText?: boolean
   manualFileState?: [
@@ -48,7 +50,15 @@ export interface FilesWithPreview extends FileWithPath {
   expiresAt?: string
 }
 
+export interface CsvWithPreview extends FileWithPath {
+  preview: string
+  status: "uploading" | "uploaded" | "failed" | "existed"
+  uuid?: string
+  expiresAt?: string
+}
 const Dropzone = ({
+  uuidForCsv,
+  isCsv,
   maxFiles,
   existingImages,
   uploadPath,
@@ -72,9 +82,15 @@ const Dropzone = ({
   const uploadFile = useCallback(
     (fileToUpload: FilesWithPreview) => {
       const formData = new FormData()
-      formData.append("directoryPath", uploadPath)
+      if (!isCsv) {
+        formData.append("directoryPath", uploadPath)
+      }
       formData.append("file", fileToUpload)
-      fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/base/storage/file`, {
+      const url = isCsv
+        ? `${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/order/file/line/${uuidForCsv}`
+        : `${process.env.NEXT_PUBLIC_API_ENDPOINT}/base/storage/file`
+
+      fetch(url, {
         method: "POST",
         headers: {
           authorization: `Bearer ${token}`
@@ -178,6 +194,7 @@ const Dropzone = ({
 
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     accept: {
+      csv: ["text/csv"],
       ".tgz": ["application/x-gzip", "application/x-compressed-tar"],
       ".tar": ["application/x-tar"],
       ".zip": ["application/zip", "application/x-zip-compressed"],
@@ -268,16 +285,18 @@ const Dropzone = ({
                             height={100}
                             className="relative z-0 h-full w-full object-contain"
                           />
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              onImageDelete(image.id)
-                            }}
-                            className="absolute bottom-0 left-0 z-10 m-2 flex h-6 w-6 items-center justify-center rounded bg-red-500 text-white ring-2 ring-transparent transition hover:bg-red-600 hover:ring-red-500/50"
-                          >
-                            <Trash className="h-4 w-4" strokeWidth={1.5} />
-                          </button>
+                          {!isCsv && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                onImageDelete(image.id)
+                              }}
+                              className="absolute bottom-0 left-0 z-10 m-2 flex h-6 w-6 items-center justify-center rounded bg-red-500 text-white ring-2 ring-transparent transition hover:bg-red-600 hover:ring-red-500/50"
+                            >
+                              <Trash className="h-4 w-4" strokeWidth={1.5} />
+                            </button>
+                          )}
                         </li>
                       )
                   )}
@@ -312,27 +331,29 @@ const Dropzone = ({
                       }}
                       className="relative z-0 h-full w-full object-contain"
                     />
-                    {(file.status === "uploaded" ||
-                      file.status === "failed") && (
-                      <button
-                        type="button"
-                        className="absolute bottom-0 left-0 z-10 m-2 flex h-6 w-6 items-center justify-center rounded bg-red-500 text-white ring-2 ring-transparent transition hover:bg-red-600 hover:ring-red-500/50"
-                        onClick={() => removeFile(file.name)}
-                      >
-                        <Trash className="h-4 w-4" strokeWidth={1.5} />
-                      </button>
-                    )}
+                    {(file.status === "uploaded" || file.status === "failed") &&
+                      !isCsv && (
+                        <button
+                          type="button"
+                          className="absolute bottom-0 left-0 z-10 m-2 flex h-6 w-6 items-center justify-center rounded bg-red-500 text-white ring-2 ring-transparent transition hover:bg-red-600 hover:ring-red-500/50"
+                          onClick={() => removeFile(file.name)}
+                        >
+                          <Trash className="h-4 w-4" strokeWidth={1.5} />
+                        </button>
+                      )}
                   </li>
                 ))}
-                <button
-                  onClick={open}
-                  type="button"
-                  className={
-                    "btn flex h-32 w-32 flex-col gap-1 overflow-hidden rounded border border-alpha-200"
-                  }
-                >
-                  <PlusIcon className="h-12 w-12 text-alpha-400" />
-                </button>
+                {!isCsv && (
+                  <button
+                    onClick={open}
+                    type="button"
+                    className={
+                      "btn flex h-32 w-32 flex-col gap-1 overflow-hidden rounded border border-alpha-200"
+                    }
+                  >
+                    <PlusIcon className="h-12 w-12 text-alpha-400" />
+                  </button>
+                )}
               </ul>
             </>
           ) : (
@@ -344,7 +365,9 @@ const Dropzone = ({
             >
               <PlusIcon className="h-12 w-12 text-alpha-400" />
               <span className="font-medium text-alpha-800">
-                {t("common:add_images_dropzone_title")}
+                {isCsv
+                  ? t("common:add_csv_dropzone_title")
+                  : t("common:add_images_dropzone_title")}
               </span>
               <span className="text-sm text-alpha-500">
                 {t("common:add_images_dropzone_description")}

@@ -29,14 +29,7 @@ import { FilterFields } from "@/app/(admin)/brands/components/Brands"
 
 type BrandsFilterProps = {
   form: UseFormReturn<FilterFields, any, undefined>
-  setBrandsQueryParams: Dispatch<
-    SetStateAction<{
-      brand: string
-      logoStatus: string
-      catalogStatus: string
-      priceListStatus: string
-    }>
-  >
+  setBrandsQueryParams: Dispatch<SetStateAction<FilterFields>>
 }
 
 export const BrandFilter = ({
@@ -55,19 +48,15 @@ export const BrandFilter = ({
       brand: form.getValues("brand"),
       logoStatus: form.getValues("logoStatus"),
       catalogStatus: form.getValues("catalogStatus"),
-      priceListStatus: form.getValues("priceListStatus")
+      priceListStatus: form.getValues("priceListStatus"),
+      bannerStatus: form.getValues("bannerStatus")
     })
   }
   const handleReset = () => {
     form.reset()
     setQuery("")
     setQueryTemp("")
-    setBrandsQueryParams({
-      brand: form.getValues("brand"),
-      logoStatus: form.getValues("logoStatus"),
-      catalogStatus: form.getValues("catalogStatus"),
-      priceListStatus: form.getValues("priceListStatus")
-    })
+    setBrandsQueryParams({})
   }
   const statuses = [
     {
@@ -290,16 +279,78 @@ export const BrandFilter = ({
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="bannerStatus"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("common:banner")}</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            noStyle
+                            role="combobox"
+                            className="input-field flex items-center text-start"
+                          >
+                            {
+                              statuses.find((st) => st.value === field.value)
+                                ?.status
+                            }
+
+                            <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <Command>
+                          {/* <CommandEmpty>
+                            {t("common:no_entity_found", {
+                              entity: t("common:producer")
+                            })}
+                          </CommandEmpty> */}
+                          <CommandGroup>
+                            {statuses.map((st) => (
+                              <CommandItem
+                                defaultValue="ili"
+                                value={st.value}
+                                key={st.status}
+                                onSelect={(value) => {
+                                  form.setValue("bannerStatus", value)
+                                }}
+                              >
+                                <LucideCheck
+                                  className={mergeClasses(
+                                    "mr-2 h-4 w-4",
+                                    st.value === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {st.status}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                  </FormItem>
+                )}
+              />
               <div className="col-start-4 flex justify-end gap-3">
                 <Button
-                  className="w-full"
+                  className="h-fit w-full"
                   variant="secondary"
                   type="reset"
                   onClick={handleReset}
                 >
                   {t("common:remove_filter")}
                 </Button>
-                <Button className="w-full" variant="primary" type="submit">
+                <Button
+                  className="h-fit w-full"
+                  variant="primary"
+                  type="submit"
+                >
                   {t("common:submit_filter")}
                 </Button>
               </div>

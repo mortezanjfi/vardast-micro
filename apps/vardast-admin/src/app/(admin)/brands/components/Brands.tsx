@@ -42,7 +42,8 @@ const filterSchema = z.object({
   brand: z.string(),
   logoStatus: z.string(),
   catalogStatus: z.string(),
-  priceListStatus: z.string()
+  priceListStatus: z.string(),
+  bannerStatus: z.string()
 })
 export type FilterFields = TypeOf<typeof filterSchema>
 
@@ -52,19 +53,15 @@ const Brands = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const [brandToDelete, setBrandToDelete] = useState<Brand>()
-  const [brandsQueryParams, setBrandsQueryParams] = useState({
-    brand: "",
-    logoStatus: "",
-    catalogStatus: "",
-    priceListStatus: ""
-  })
+  const [brandsQueryParams, setBrandsQueryParams] = useState<FilterFields>({})
   const form = useForm<FilterFields>({
     resolver: zodResolver(filterSchema),
     defaultValues: {
       brand: "",
       logoStatus: "",
       catalogStatus: "",
-      priceListStatus: ""
+      priceListStatus: "",
+      bannerStatus: ""
     }
   })
 
@@ -76,7 +73,8 @@ const Brands = () => {
         name: brandsQueryParams.brand,
         hasPriceList: checkBooleanByString(brandsQueryParams.priceListStatus),
         hasCatalogeFile: checkBooleanByString(brandsQueryParams.catalogStatus),
-        hasLogoFile: checkBooleanByString(brandsQueryParams.logoStatus)
+        hasLogoFile: checkBooleanByString(brandsQueryParams.logoStatus),
+        hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus)
       }
     },
     {
@@ -88,6 +86,7 @@ const Brands = () => {
             brandsQueryParams.catalogStatus
           ),
           hasLogoFile: checkBooleanByString(brandsQueryParams.logoStatus),
+          hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus),
           page: currentPage
         }
       ]
@@ -142,6 +141,7 @@ const Brands = () => {
                   {/* <th>{t("common:city")}</th> */}
                   <th>{t("common:price_list")}</th>
                   <th>{t("common:catalog")}</th>
+                  <th>{t("common:banner")}</th>
                   <th>{t("common:status")}</th>
                   <th>{t("common:operation")}</th>
                 </tr>
@@ -211,6 +211,17 @@ const Brands = () => {
                             </span>
                           )}
                         </td>
+                        <td className=" border-r-0.5 border-alpha-200">
+                          {brand?.bannerDesktop?.id ? (
+                            <span className="tag  tag-sm tag-success">
+                              {t("common:has")}
+                            </span>
+                          ) : (
+                            <span className="tag tag-sm tag-danger">
+                              {t("common:has_not")}
+                            </span>
+                          )}
+                        </td>
                         <td className=" border-r-0.5">
                           {brand.status ===
                             ThreeStateSupervisionStatuses.Confirmed && (
@@ -233,6 +244,7 @@ const Brands = () => {
                               {t("common:edit")}
                             </span>
                           </Link>
+                          /
                           <span
                             className="tag cursor-pointer text-error"
                             onClick={(e) => {

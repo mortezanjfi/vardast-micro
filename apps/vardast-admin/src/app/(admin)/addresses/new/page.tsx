@@ -1,9 +1,8 @@
 import { redirect } from "next/navigation"
 import { authOptions } from "@vardast/auth/authOptions"
+import AddressForm from "@vardast/component/desktop/AddressForm"
 import { AddressRelatedTypes } from "@vardast/graphql/generated"
 import { getServerSession } from "next-auth"
-
-import AddressForm from "@/app/(admin)/addresses/components/AddressForm"
 
 type CreateAddressPageProps = {
   params: { slug: Array<string | number> }

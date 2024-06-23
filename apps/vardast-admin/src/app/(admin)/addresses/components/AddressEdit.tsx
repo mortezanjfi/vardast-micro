@@ -1,12 +1,11 @@
 "use client"
 
 import { notFound } from "next/navigation"
+import AddressForm from "@vardast/component/desktop/AddressForm"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import { Address, useGetAddressQuery } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
-
-import AddressForm from "@/app/(admin)/addresses/components/AddressForm"
 
 type AddressEditProps = {
   uuid: string

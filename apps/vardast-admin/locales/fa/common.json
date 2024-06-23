@@ -29,6 +29,7 @@
   "add_entity": "افزودن {{ entity }}",
   "add_images_dropzone_description": "فایل ها را بکشید و در این کادر بیاندازید و یا کلیک کنید",
   "add_images_dropzone_title": "افزودن فایل",
+  "add_csv_dropzone_title": "افزودن فایل csv کالا",
   "address": "آدرس",
   "addresses": "آدرس‌ها",
   "admin": "مدیریت",
@@ -321,7 +322,7 @@
   "add-to_entity": "افزودن به {{entity}}",
   "entity_code": "کد {{entity}}",
   "person": "شخص",
-  "person-in-charge": "مسوول سفارش",
+  "person-in-charge": "مسؤول سفارش",
   "orderDetail": "جزییات سفارش",
   "project-address": "آدرس پروژه",
   "shipping-address": "آدرس محل تحویل",
@@ -359,5 +360,6 @@
   "name_company": "نام شرکت",
   "real": "حقیقی",
   "legal": "حقوقی",
-  "price-giver": "قیمت گذار"
+  "price-giver": "قیمت گذار",
+  "pre-invoice": "پیش فاکتور"
 }
