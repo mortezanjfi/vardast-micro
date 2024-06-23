@@ -14,11 +14,13 @@ import {
   useUpdateOrderOfferMutation
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
+import axiosApis, { IServePdf } from "@vardast/query/queryClients/axiosApis"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import { Checkbox } from "@vardast/ui/checkbox"
 import { Form, FormControl, FormField, FormItem } from "@vardast/ui/form"
 import { ClientError } from "graphql-request"
+import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
@@ -61,6 +63,8 @@ function SellersList({
   uuid
 }: Props) {
   const { t } = useTranslation()
+  const { data: session } = useSession()
+  const token = session?.accessToken || null
   const router = useRouter()
   const [detailOpen, setDetailOpen] = useState<boolean>(false)
   const [addSellerModalOpen, setAddSellerModalOpen] = useState<boolean>(false)
@@ -161,6 +165,16 @@ function SellersList({
     })
   }
 
+  const downLoadPreInvoice = async ({ uuid, access_token }: IServePdf) => {
+    const response = await axiosApis.getInvoice({ uuid, access_token })
+    const html = response.data
+    const blob = new Blob([html], { type: "text/html" })
+    const url = window.URL.createObjectURL(blob)
+
+    const newTab = window.open(url, "_blank")
+    newTab.focus()
+  }
+
   useEffect(() => {
     form.setValue("offerId", selectedRow)
   }, [selectedRow])
@@ -214,7 +228,9 @@ function SellersList({
                   <div className="mb-7 flex w-full flex-row-reverse">
                     <Button
                       className="py-2"
-                      onClick={onAddSeller}
+                      onClick={(e) => {
+                        onAddSeller(e)
+                      }}
                       variant="outline-primary"
                     >
                       {t("common:add_entity", { entity: t("common:offer") })}
@@ -368,6 +384,18 @@ function SellersList({
                                       className="tag cursor-pointer text-blue-500"
                                     >
                                       نمایش جزییات
+                                    </span>
+                                    /
+                                    <span
+                                      onClick={() => {
+                                        downLoadPreInvoice({
+                                          access_token: token,
+                                          uuid: offer.uuid
+                                        })
+                                      }}
+                                      className="tag cursor-pointer text-error"
+                                    >
+                                      {t("common:pre-invoice")}
                                     </span>
                                   </td>
                                 </tr>

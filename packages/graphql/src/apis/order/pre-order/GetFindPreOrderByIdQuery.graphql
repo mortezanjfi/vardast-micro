@@ -1,6 +1,7 @@
 query FindPreOrderById($id: Float!) {
   findPreOrderById(id: $id) {
     id
+    uuid
     project {
       name
       id
@@ -81,6 +82,7 @@ query FindPreOrderById($id: Float!) {
       type
       status
       created_at
+      uuid
       offerLine {
         id
         fi_price
