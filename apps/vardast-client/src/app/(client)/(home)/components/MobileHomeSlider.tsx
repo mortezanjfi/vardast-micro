@@ -91,7 +91,7 @@ const MobileHomeSlider = ({
     "h-[50vw] w-[calc(100vw-60px)] sm:h-[250px] sm:w-full sm:bg-alpha-100 md:h-[350px] 2xl:h-[500px] mx-auto"
 
   return (
-    <div>
+    <div className="bg-alpha-white pt-6 sm:relative sm:pt-0">
       <div className="overflow-hidden">
         {query.isLoading || query.isFetching || !width ? (
           <div className={clsx("animated-card", sliderClass)}></div>
