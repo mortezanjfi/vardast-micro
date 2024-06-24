@@ -5,7 +5,7 @@ import AddressesTab from "@vardast/component/legal/address-Info/AddressesTab"
 import ContactInfosTab from "@vardast/component/legal/ContactInfosTab"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
-import PageHeader from "@vardast/component/PageHeader"
+import PageTitle from "@vardast/component/project/PageTitle"
 import {
   Address,
   ContactInfo,
@@ -22,10 +22,11 @@ import MembersTab from "@/app/(admin)/sellers/components/MembersTab"
 import SellerForm from "@/app/(admin)/sellers/components/SellerForm"
 
 type Props = {
+  title: string
   uuid: string
 }
 
-const SellerEdit = ({ uuid }: Props) => {
+const SellerEdit = ({ title, uuid }: Props) => {
   const { t } = useTranslation()
   const { data: session } = useSession()
   const data = useGetSellerQuery(
@@ -43,8 +44,8 @@ const SellerEdit = ({ uuid }: Props) => {
   if (!data?.data) notFound()
 
   return (
-    <>
-      <PageHeader title={data?.data?.seller.name}></PageHeader>
+    <div className="flex h-full w-full flex-col gap-9 py-6 md:py-0">
+      <PageTitle backButtonUrl="/sellers" title={title} />
       <Tabs defaultValue="information">
         <TabsList>
           <TabsTrigger value="information">
@@ -108,7 +109,7 @@ const SellerEdit = ({ uuid }: Props) => {
             </TabsContent>
           )}
       </Tabs>
-    </>
+    </div>
   )
 }
 
