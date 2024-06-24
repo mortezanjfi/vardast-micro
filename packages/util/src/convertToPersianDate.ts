@@ -38,4 +38,39 @@ function convertToPersianDate({
   return persianDateFormat
 }
 
+// var utcDateStr = "2024-05-19T11:27:46.889Z"
+
+// Create a Date object from the UTC date string and convert to Tehran local time
+// var tehranDate = new Date(utcDateStr)
+// tehranDate.setHours(tehranDate.getHours() + 3)
+// tehranDate.setMinutes(tehranDate.getMinutes() + 30)
+
+// Format the date using toLocaleString with options for Persian calendar
+// var formattedJalaliDateTime = tehranDate.toLocaleString("fa-IR", {
+//   timeZone: "Asia/Tehran",
+//   calendar: "persian",
+//   year: "numeric",
+//   month: "long",
+//   day: "numeric",
+//   hour: "numeric",
+//   minute: "numeric",
+//   second: "numeric"
+// })
+
+export const newTimeConvertor = (dateString: string) => {
+  const tehranDate = new Date(dateString)
+  tehranDate.setHours(tehranDate.getHours() + 3)
+  tehranDate.setMinutes(tehranDate.getMinutes() + 30)
+  return tehranDate.toLocaleString("fa-IR", {
+    timeZone: "Asia/Tehran",
+    calendar: "persian",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric"
+  })
+}
+
 export default convertToPersianDate

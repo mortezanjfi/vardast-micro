@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
 import Card from "@vardast/component/Card"
 import Link from "@vardast/component/Link"
@@ -20,7 +19,7 @@ import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRe
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Avatar, AvatarFallback, AvatarImage } from "@vardast/ui/avatar"
 import { Button } from "@vardast/ui/button"
-import convertToPersianDate from "@vardast/util/convertToPersianDate"
+import { newTimeConvertor } from "@vardast/util/convertToPersianDate"
 import clsx from "clsx"
 import parsePhoneNumber from "libphonenumber-js"
 import { useSession } from "next-auth/react"
@@ -195,13 +194,7 @@ const Users = ({ roleIds }: Props) => {
                         <td>
                           {user.lastLoginAt ? (
                             <span className="ms-2 font-medium text-alpha-800">
-                              {digitsEnToFa(
-                                convertToPersianDate({
-                                  dateString: user.lastLoginAt,
-                                  withHour: true,
-                                  withMinutes: true
-                                })
-                              )}
+                              {newTimeConvertor(user?.lastLoginAt)}
                             </span>
                           ) : (
                             "--"
