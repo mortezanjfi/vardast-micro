@@ -2,9 +2,10 @@
 
 import { notFound } from "next/navigation"
 import AddressesTab from "@vardast/component/legal/address-Info/AddressesTab"
+import ContactInfosTab from "@vardast/component/legal/ContactInfosTab"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
-import PageHeader from "@vardast/component/PageHeader"
+import PageTitle from "@vardast/component/project/PageTitle"
 import {
   Address,
   ContactInfo,
@@ -17,18 +18,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@vardast/ui/tabs"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 
-import ContactInfosTab from "@/app/(admin)/components/ContactInfosTab"
 import MembersTab from "@/app/(admin)/sellers/components/MembersTab"
 import SellerForm from "@/app/(admin)/sellers/components/SellerForm"
 
 type Props = {
+  title: string
   uuid: string
 }
 
-const SellerEdit = ({ uuid }: Props) => {
+const SellerEdit = ({ title, uuid }: Props) => {
   const { t } = useTranslation()
   const { data: session } = useSession()
-  const { isLoading, error, data } = useGetSellerQuery(
+  const data = useGetSellerQuery(
     graphqlRequestClientWithToken,
     {
       id: +uuid
@@ -38,31 +39,31 @@ const SellerEdit = ({ uuid }: Props) => {
     }
   )
 
-  if (isLoading) return <Loading />
-  if (error) return <LoadingFailed />
-  if (!data) notFound()
+  if (data?.isLoading) return <Loading />
+  if (data?.error) return <LoadingFailed />
+  if (!data?.data) notFound()
 
   return (
-    <>
-      <PageHeader title={data.seller.name}></PageHeader>
+    <div className="flex h-full w-full flex-col gap-9 py-6 md:py-0">
+      <PageTitle backButtonUrl="/sellers" title={title} />
       <Tabs defaultValue="information">
         <TabsList>
           <TabsTrigger value="information">
             {t("common:information")}
           </TabsTrigger>
-          {data.seller &&
+          {data?.data?.seller &&
             session?.abilities?.includes("gql.users.address.index") && (
               <TabsTrigger value="addresses">
                 {t("common:addresses")}
               </TabsTrigger>
             )}
-          {data.seller &&
+          {data?.data?.seller &&
             session?.abilities?.includes("gql.users.contact_info.index") && (
               <TabsTrigger value="contactInfos">
                 {t("common:contactInfos")}
               </TabsTrigger>
             )}
-          {data.seller &&
+          {data?.data?.seller &&
             session?.abilities?.includes(
               "gql.products.seller_representative.index"
             ) && (
@@ -70,43 +71,45 @@ const SellerEdit = ({ uuid }: Props) => {
             )}
         </TabsList>
         <TabsContent value="information">
-          <SellerForm seller={data.seller as Seller} />
+          <SellerForm seller={data?.data?.seller as Seller} />
         </TabsContent>
-        {data.seller &&
+        {data?.data?.seller &&
           session?.abilities?.includes("gql.users.address.index") && (
             <TabsContent value="addresses">
               <AddressesTab
+                data={data}
                 relatedType="Seller"
-                relatedId={data.seller.id}
-                addresses={data.seller.addresses as Address[]}
+                relatedId={data?.data?.seller.id}
+                addresses={data?.data?.seller.addresses as Address[]}
               />
             </TabsContent>
           )}
-        {data.seller &&
+        {data?.data?.seller &&
           session?.abilities?.includes("gql.users.contact_info.index") && (
             <TabsContent value="contactInfos">
               <ContactInfosTab
+                data={data}
                 relatedType="Seller"
-                relatedId={data.seller.id}
-                contactInfos={data.seller.contacts as ContactInfo[]}
+                relatedId={data?.data?.seller.id}
+                contactInfos={data?.data?.seller.contacts as ContactInfo[]}
               />
             </TabsContent>
           )}
-        {data.seller &&
+        {data?.data?.seller &&
           session?.abilities?.includes(
             "gql.products.seller_representative.index"
           ) && (
             <TabsContent value="members">
               <MembersTab
-                sellerId={data.seller.id}
+                sellerId={data?.data?.seller.id}
                 representatives={
-                  data.seller.representatives as SellerRepresentative[]
+                  data?.data?.seller.representatives as SellerRepresentative[]
                 }
               />
             </TabsContent>
           )}
       </Tabs>
-    </>
+    </div>
   )
 }
 

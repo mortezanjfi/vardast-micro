@@ -13,11 +13,11 @@ import Pagination from "../Pagination"
 import AddLegalUserModal from "./AddLegalUserModal"
 import LegalDeleteModal from "./LegalDeleteModal"
 
-type Props = {}
+type Props = { title: string }
 
 const thClass = "border"
 
-export default (props: Props) => {
+export default ({ title }: Props) => {
   const { t } = useTranslation()
   const [open, setOpen] = useState<boolean>(false)
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -54,7 +54,7 @@ export default (props: Props) => {
           variant: "primary",
           onClick: onCreateUser
         }}
-        title="لیست‌ کاربران"
+        title={title}
       >
         <table className="table-hover table">
           <thead>
@@ -98,7 +98,7 @@ export default (props: Props) => {
                     <td className="border">--</td>
                     <td className="border">--</td>
                     <td className="border">
-                      <Link href={`/users/legal/${user?.id}/address`}>
+                      <Link href={`/users/legal/${user?.id}`}>
                         <span className="tag cursor-pointer text-blue-500">
                           {t("common:edit")}
                         </span>

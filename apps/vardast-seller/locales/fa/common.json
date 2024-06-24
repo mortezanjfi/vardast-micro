@@ -354,5 +354,7 @@
   "legal": "حقوقی",
   "price-giver": "قیمت گذار",
   "pre-invoice": "پیش فاکتور",
-  "verify": "تایید"
+  "verify": "تایید",
+  "payment_has_been_done": "پرداخت انجام شده است.",
+  "payment": "پرداخت"
 }

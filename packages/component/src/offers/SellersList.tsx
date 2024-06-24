@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { digitsEnToFa } from "@persian-tools/persian-tools"
+import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import { useQueryClient, UseQueryResult } from "@tanstack/react-query"
 import {
   FindPreOrderByIdQuery,
@@ -277,7 +277,7 @@ function SellersList({
                               {t("common:invoice-number")}
                             </th>
                             <th className={thClasses}>
-                              {t("common:invoice-total-price")}
+                              {t("common:invoice-total-price")} (تومان)
                             </th>
                             <th>{t("common:offer-submition-time")}</th>
                             {findPreOrderByIdQuery?.data?.findPreOrderById
@@ -324,10 +324,10 @@ function SellersList({
                                     {offer?.request_name}
                                   </td>
                                   <td className="border">
-                                    {digitsEnToFa(offer?.created_at)}
+                                    {digitsEnToFa(offer?.uuid)}
                                   </td>
                                   <td className="border">
-                                    {digitsEnToFa(offer?.total)}
+                                    {digitsEnToFa(addCommas(offer?.total))}
                                   </td>
                                   <td>
                                     {offer?.created_at

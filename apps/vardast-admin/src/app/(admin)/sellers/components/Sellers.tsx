@@ -211,10 +211,7 @@ const Sellers = () => {
                         <td className="w-[159px] border-r-0.5">
                           <div className="flex gap-2">
                             {" "}
-                            <Link
-                              target="_blank"
-                              href={`/sellers/${seller.id}`}
-                            >
+                            <Link href={`/sellers/${seller.id}`}>
                               <span className="tag cursor-pointer text-blue-500">
                                 {" "}
                                 {t("common:edit")}
