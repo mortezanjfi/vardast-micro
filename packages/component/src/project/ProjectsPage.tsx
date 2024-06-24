@@ -49,7 +49,7 @@ export const TypeProjectFa = {
 
 export const statusProjectFa = {
   [MultiStatuses.Confirmed]: {
-    name_fa: "تایید شدده"
+    name_fa: "تایید شده"
   },
   [MultiStatuses.Pending]: {
     name_fa: "در انتظار تایید"
