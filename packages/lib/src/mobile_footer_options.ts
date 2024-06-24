@@ -38,7 +38,7 @@ const _default: ILayoutOption[] = [
     icon: "BookmarkIcon",
     button: {
       type: "link",
-      value: "/favorites"
+      value: "/profile/favorites"
     },
     title: "علاقه‌مندی"
   },
