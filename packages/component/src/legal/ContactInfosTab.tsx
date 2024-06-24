@@ -15,6 +15,7 @@ import useTranslation from "next-translate/useTranslation"
 import { ApiCallStatusEnum } from "../../../type/src/Enums"
 import { getContentByApiStatus } from "../../../util/src/GetContentByApiStatus"
 import CardContainer from "../desktop/CardContainer"
+import Link from "../Link"
 import Loading from "../Loading"
 import LoadingFailed from "../LoadingFailed"
 import NoResult from "../NoResult"
@@ -57,14 +58,7 @@ const ContactInfosTab = ({
     <>
       {session?.abilities?.includes("gql.users.contact_info.index") && (
         <div className="mb-6 flex items-end justify-between">
-          <Button
-            className="mr-auto"
-            onClick={() =>
-              router.push(
-                `/contact-infos/new?type=${relatedType}&id=${relatedId}&fallback=${pathname}`
-              )
-            }
-          >
+          <Button className="mr-auto">
             {t("common:add_entity", { entity: t("common:contactInfo") })}
           </Button>
         </div>
@@ -80,6 +74,7 @@ const ContactInfosTab = ({
                   <th>{t("common:number")}</th>
                   <th>{t("common:status")}</th>
                   <th>{t("common:visibility")}</th>
+                  <th className="border">{t("common:operation")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -137,6 +132,15 @@ const ContactInfosTab = ({
                               <LucideX className="icon" />
                             </span>
                           )}
+                        </td>
+                        <td className="border">
+                          <Link
+                            href={`/contact-infos/${contactInfo.id}?fallback=${pathname}`}
+                          >
+                            <span className="tag cursor-pointer text-blue-500">
+                              {t("common:edit")}
+                            </span>
+                          </Link>
                         </td>
                       </tr>
                     )
