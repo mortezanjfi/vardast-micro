@@ -11,5 +11,10 @@ export const metadata: Metadata = {
 export default async () => {
   const isMobileView = await CheckIsMobileView()
 
-  return <HomeIndex isMobileView={isMobileView} />
+  return (
+    <>
+      <link rel="canonical" href={process.env.NEXT_PUBLIC_VARDAST} />
+      <HomeIndex isMobileView={isMobileView} />
+    </>
+  )
 }
