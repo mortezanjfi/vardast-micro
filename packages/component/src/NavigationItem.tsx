@@ -90,7 +90,7 @@ const NavigationItem = (props: Props) => {
                 return (
                   <ol className="app-navigation-item-children-item">
                     {menuChildren?.title && (
-                      <div className="app-navigation-item app-navigation-item-children">
+                      <div className="app-navigation-item">
                         <li className="app-navigation-item-children-item-link">
                           <span>{menuChildren.title}</span>
                         </li>

@@ -154,6 +154,29 @@ const _admin: NavigationType[] = [
         icon: "ClipboardDocumentIcon"
       },
       {
+        title: "مالی",
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "WalletIcon",
+        items: [
+          {
+            title: "پیش فاکتورها",
+            path: "/test"
+          },
+          {
+            title: "فاکتورها",
+            path: "/test"
+          }
+        ]
+      },
+      {
+        title: "گزارشات",
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "ChartPieIcon",
+        path: "/test"
+      },
+      {
         title: "تنظیمات",
         background_color: "bg-gray-400",
         color: "text-white",
@@ -166,23 +189,6 @@ const _admin: NavigationType[] = [
           {
             title: "مشخصه‌ها",
             path: "/attributes"
-          },
-          {
-            title: "مالی",
-            items: [
-              {
-                title: "پیش فاکتورها",
-                path: "/test"
-              },
-              {
-                title: "فاکتورها",
-                path: "/test"
-              }
-            ]
-          },
-          {
-            title: "گزارشات",
-            path: "/test"
           },
           {
             title: "نقش‌ها",
