@@ -6,6 +6,7 @@ import { MapPinIcon } from "@heroicons/react/24/outline"
 import { UseQueryResult } from "@tanstack/react-query"
 import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
 import Link from "@vardast/component/Link"
+import { MotionDiv } from "@vardast/component/motion/Motion"
 import SwiperNavigationButton, {
   SwiperButtonAction,
   SwiperButtonsDirection
@@ -117,7 +118,18 @@ const HomeTopSellers = ({
 
   return (
     <MobileHomeSection viewAllHref="/sellers" bgWhite title={title} block>
-      <div className="relative overflow-hidden">
+      <MotionDiv
+        variants={{
+          hidden: { opacity: 0, y: 0, x: -500, scale: 1 },
+          enter: { opacity: 1, y: 0, x: 0, scale: 1 },
+          exit: { opacity: 0, y: 0, x: -500, scale: 1 } // Add exit variant for completeness
+        }}
+        initial="hidden" // Set the initial state to variants.hidden
+        animate="enter" // Animated state to variants.enter
+        exit="exit" // Exit state (used later) to variants.exit
+        transition={{ type: "linear", delay: 0.2 }} // Set the transition to linear with a delay of 0.5 seconds
+        className="relative overflow-hidden"
+      >
         {!allSellersCount ||
         allSellersCount?.isLoading ||
         allSellersCount?.isFetching ? (
@@ -279,7 +291,7 @@ const HomeTopSellers = ({
           </>
         )}
         {/* {!isMobileView && <ShadowRectangle />} */}
-      </div>
+      </MotionDiv>
     </MobileHomeSection>
   )
 }

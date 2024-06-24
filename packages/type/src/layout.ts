@@ -1,4 +1,5 @@
 import { LucideIcon } from "lucide-react"
+import dynamicIconImports from "lucide-react/dynamicIconImports"
 
 type ILayoutTitleType = "image" | "text"
 
@@ -27,15 +28,11 @@ type ILayoutBackground = {
   value: string
 }
 
-interface ILayoutIcon {
-  Default: LucideIcon
-  Active: LucideIcon
-}
-
 export interface ILayoutOption {
   id: number
   title: string
-  icon?: ILayoutIcon
+  icon?: keyof typeof dynamicIconImports
+  IconPrerender?: LucideIcon
   button?: ILayoutButton
 }
 

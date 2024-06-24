@@ -12,7 +12,7 @@ import BasketPageIndex from "@/app/(client)/basket/components/BasketPageIndex"
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "سفارشات"
+    title: "سبد کالا"
   }
 }
 
@@ -24,10 +24,12 @@ export default async () => {
     await queryClient.prefetchQuery(
       [
         QUERY_FUNCTIONS_KEY.GET_ALL_USER_FAVORITE_PRODUCT,
-        EntityTypeEnum.Basket
+        EntityTypeEnum.Basket,
+        session?.accessToken
       ],
       () =>
         allUserFavoriteProductsQueryFns({
+          type: EntityTypeEnum.Basket,
           accessToken: session?.accessToken
         })
     )

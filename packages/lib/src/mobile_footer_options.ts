@@ -1,24 +1,11 @@
-import {
-  BookmarkIcon,
-  HomeIcon,
-  Squares2X2Icon,
-  UserCircleIcon
-} from "@heroicons/react/24/outline"
-import {
-  BookmarkIcon as SolidBookmarkIcon,
-  HomeIcon as SolidHomeIcon,
-  Squares2X2Icon as SolidSquares2X2Icon,
-  UserCircleIcon as SolidUserCircleIcon
-} from "@heroicons/react/24/solid"
 import { ILayoutOption } from "@vardast/type/layout"
+import { Home, LayoutGrid, LayoutList, User2 } from "lucide-react"
 
 const _default: ILayoutOption[] = [
   {
     id: 0,
-    icon: {
-      Default: HomeIcon,
-      Active: SolidHomeIcon
-    },
+    icon: "home",
+    IconPrerender: Home,
     button: {
       type: "link",
       value: "/"
@@ -27,46 +14,40 @@ const _default: ILayoutOption[] = [
   },
   {
     id: 1,
-    icon: {
-      Default: Squares2X2Icon,
-      Active: SolidSquares2X2Icon
-    },
+    icon: "layout-grid",
+    IconPrerender: LayoutGrid,
     button: {
       type: "link",
       value: "/category"
     },
     title: "دسته‌بندی"
   },
-  {
-    id: 2,
-    icon: {
-      Default: BookmarkIcon,
-      Active: SolidBookmarkIcon
-    },
-    button: {
-      type: "link",
-      value: "/favorites"
-    },
-    title: "علاقه‌مندی"
-  },
   // {
   //   id: 2,
   //   icon: {
-  //     Default: ListBulletIcon,
-  //     Active: SolidListBulletIcon
+  //     Default: BookmarkIcon,
+  //     Active: SolidBookmarkIcon
   //   },
   //   button: {
   //     type: "link",
-  //     value: "/basket"
+  //     value: "/favorites"
   //   },
-  //   title: "سفارشات"
+  //   title: "علاقه‌مندی"
   // },
   {
-    id: 3,
-    icon: {
-      Default: UserCircleIcon,
-      Active: SolidUserCircleIcon
+    id: 2,
+    icon: "layout-list",
+    IconPrerender: LayoutList,
+    button: {
+      type: "link",
+      value: "/basket"
     },
+    title: "سبد کالا"
+  },
+  {
+    id: 3,
+    icon: "user-2",
+    IconPrerender: User2,
     button: {
       type: "link",
       value: "/profile"

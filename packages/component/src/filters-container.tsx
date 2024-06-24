@@ -18,7 +18,7 @@ interface FiltersContainerInterface {
   sellerId?: number
   filterAttributes: FilterAttribute[]
   onFilterAttributesChanged: (
-    _: FilterAttribute & { status: Checkbox.CheckedState }
+    _: FilterAttribute & { status: boolean | "indeterminate" }
   ) => void
 }
 

@@ -1,3 +1,5 @@
+import resolveConfig from "tailwindcss/resolveConfig"
+
 const alphaColors = {
   50: "#fafafa",
   100: "#f5f5f5",
@@ -104,3 +106,5 @@ export const containerScreens = {
 export const screens = Object.fromEntries(
   Object.entries(breakpoints).map(([key, val]) => [key, `${val}px`])
 )
+
+export const config = resolveConfig

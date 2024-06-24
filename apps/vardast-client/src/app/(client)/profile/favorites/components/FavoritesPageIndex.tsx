@@ -23,10 +23,10 @@ import { allUserFavoriteSellersQueryFns } from "@vardast/query/queryFns/allUserF
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { useSession } from "next-auth/react"
 
-import BrandsTabContent from "@/app/(client)/favorites/components/BrandsTabContent"
-import FavoritesProfile from "@/app/(client)/favorites/components/FavoritesProfile"
-import { ProductsTabContent } from "@/app/(client)/favorites/components/ProductsTabContent"
-import { SellersTabContent } from "@/app/(client)/favorites/components/SellersTabContent"
+import BrandsTabContent from "@/app/(client)/profile/favorites/components/BrandsTabContent"
+import FavoritesProfile from "@/app/(client)/profile/favorites/components/FavoritesProfile"
+import { ProductsTabContent } from "@/app/(client)/profile/favorites/components/ProductsTabContent"
+import { SellersTabContent } from "@/app/(client)/profile/favorites/components/SellersTabContent"
 
 export const NotFoundItems = ({ text = "کالا" }) => {
   return (

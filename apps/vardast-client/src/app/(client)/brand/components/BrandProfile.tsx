@@ -20,6 +20,7 @@ import CategoryListItem from "@vardast/component/category/CategoryListItem"
 import CategoriesSort, {
   CategoriesSortStatic
 } from "@vardast/component/desktop/CategoriesSort"
+import FiltersSidebarContainer from "@vardast/component/filters-sidebar-container"
 import InfiniteScrollPagination from "@vardast/component/InfiniteScrollPagination"
 import Link from "@vardast/component/Link"
 import NoResult from "@vardast/component/NoResult"
@@ -179,19 +180,21 @@ export const BrandOrSellersTab = ({
   )
 
   const DesktopSidebar = productsProps.isMobileView ? null : (
-    <div className="flex items-center justify-between md:pb-8">
-      <strong>فیلترها</strong>
-      {/* {filterAttributes.length > 0 && (
+    <FiltersSidebarContainer>
+      <div className="flex items-center justify-between md:pb-8">
+        <strong>فیلترها</strong>
+        {/* {filterAttributes.length > 0 && (
                     <Button
                       size="small"
                       noStyle
                       className="ms-auto text-sm text-red-500"
                       onClick={() => setFilterAttributes([])}
-                    >
+                      >
                       حذف همه فیلترها
-                    </Button>
-                  )} */}
-    </div>
+                      </Button>
+                      )} */}
+      </div>
+    </FiltersSidebarContainer>
   )
 
   setSidebar(DesktopSidebar)

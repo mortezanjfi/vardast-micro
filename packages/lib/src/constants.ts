@@ -83,7 +83,7 @@ export const _clientMobileProfileMenu: NavigationType[] = [
       {
         title: "سبد کالا",
         icon: "shopping-cart",
-        path: "/profile/basket"
+        path: "/basket"
       },
       {
         title: "علاقه مندی ها",
@@ -99,7 +99,7 @@ export const _clientMobileProfileMenu: NavigationType[] = [
         title: "خروج از حساب کاربری",
         icon: "log-out",
         path: "/auth/signout",
-        color: "text-error-600"
+        color: "red"
       }
     ]
   }
@@ -127,12 +127,12 @@ export const _profileSidebarMenu: NavigationType[] = [
         title: "خروج از حساب کاربری",
         icon: "log-out",
         path: "/auth/signout",
-        color: "text-error-600"
+        color: "red"
       }
       // {
       //   title: "سبد کالا",
       //   icon: "shopping-cart",
-      //   path: "/profile/basket"
+      //   path: "/basket"
       // }
       // {
       //   title: "علاقه مندی ها",
@@ -146,13 +146,31 @@ export const _profileSidebarMenu: NavigationType[] = [
 export const _authentication_signin_sidebarMenu: NavigationItemType = {
   title: "ورود به حساب کاربری",
   icon: "log-in",
-  path: paths.signin
+  path: paths.signin,
+  background_color: "bg-green-500",
+  color: "white"
 }
 
 export const _authentication_signout_sidebarMenu: NavigationItemType = {
   title: "خروج از حساب کاربری",
   icon: "log-out",
-  path: "/auth/signout"
+  path: "/auth/signout",
+  background_color: "bg-red-500",
+  color: "white"
+}
+export const _authentication_profile_sidebarMenu: NavigationItemType = {
+  title: "اطلاعات حساب کاربری",
+  icon: "user",
+  path: "/profile/info",
+  background_color: "bg-green-500",
+  color: "white"
+}
+
+export const _authentication_profile_wallet: NavigationItemType = {
+  title: "کیف پول",
+  icon: "wallet-cards",
+  background_color: "bg-blue-600",
+  color: "white"
 }
 
 export const _sidebarMenu: NavigationType[] = [
@@ -221,7 +239,7 @@ export const _sidebarMenu: NavigationType[] = [
         title: "خروج از حساب کاربری",
         icon: "log-out",
         path: "/auth/signout",
-        color: "text-error-600"
+        color: "red"
       }
 
       // {
@@ -354,7 +372,7 @@ export const _sellerSidebarMenu: NavigationType[] = [
         title: "خروج از حساب کاربری",
         icon: "log-out",
         path: "/auth/signout",
-        color: "text-error-600"
+        color: "red"
       }
     ]
   }

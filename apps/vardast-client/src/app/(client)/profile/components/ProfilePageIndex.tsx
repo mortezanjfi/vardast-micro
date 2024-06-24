@@ -12,7 +12,8 @@ const ProfilePageIndex = () => {
     <div className="app-navigation">
       <div className="app-navigation-container">
         <SidebarProfile session={session} />
-        <Navigation menus={sidebar_options._profile} withLogin />
+        <Navigation menus={sidebar_options._profile} />
+        <Navigation menus={sidebar_options._profile_about} withLogin />
       </div>
     </div>
   )

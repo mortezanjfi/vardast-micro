@@ -58,5 +58,6 @@ query MyProjects {
       type
     }
     createTime
+    status
   }
 }

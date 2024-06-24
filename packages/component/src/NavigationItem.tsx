@@ -2,23 +2,29 @@
 
 import { useState } from "react"
 import { usePathname } from "next/navigation"
+import useWindowSize from "@vardast/hook/use-window-size"
+import { breakpoints } from "@vardast/tailwind-config/themes"
 import { NavigationItemType } from "@vardast/type/Navigation"
 import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
-import { LucideChevronDown } from "lucide-react"
+import { LucideChevronDown, LucideChevronLeft } from "lucide-react"
+import { Session } from "next-auth"
 
 import DynamicIcon from "./DynamicIcon"
 import Link from "./Link"
 
-export type NavigationItemVariant = "success" | "error"
 type Props = {
   menu: NavigationItemType
-  variant?: NavigationItemVariant
+  session: Session | null
 }
 
 const NavigationItem = (props: Props) => {
   const pathname = usePathname()
   const [open, setOpen] = useState<boolean>(false)
+  const { width } = useWindowSize()
+
+  const isMobileView = width < breakpoints["md"]
+
   const { menu } = props
 
   const toggleOpen = () => {
@@ -41,34 +47,71 @@ const NavigationItem = (props: Props) => {
       <li
         className={clsx([
           "app-navigation-item",
-
           menu.items && "has-child",
           isActive(menu.path as string) && "active",
           open && "open"
         ])}
       >
-        <span className={clsx(props.variant)}>
+        <span>
           <Link href={menu.path as string} className="app-navigation-item-link">
             <DynamicIcon
-              name={menu.icon}
-              className={clsx("icon", props.variant)}
-              strokeWidth={1.5}
+              name={menu?.icon}
+              className={clsx("icon", menu.background_color)}
+              color={menu.color || undefined}
+              strokeWidth={2}
             />
-            <span className="flex-1">{menu.title}</span>
+            <span>
+              {menu.title}
+              {isMobileView ? (
+                <div className="app-navigation-item-arrow">
+                  <LucideChevronLeft className="h-full w-full" />
+                </div>
+              ) : menu.items ? (
+                <Button
+                  className="app-navigation-item-arrow"
+                  noStyle
+                  onClick={() => {
+                    if (!isActive(menu.path as string)) {
+                      toggleOpen()
+                    }
+                  }}
+                >
+                  <LucideChevronDown className="h-full w-full" />
+                </Button>
+              ) : null}
+            </span>
           </Link>
-          {menu.items && (
-            <Button
-              className="app-navigation-item-arrow"
-              noStyle
-              onClick={() => !isActive(menu.path as string) && toggleOpen()}
-            >
-              <LucideChevronDown className="h-4 w-4" />
-            </Button>
-          )}
         </span>
         {menu.items && (
           <ol className="app-navigation-item-children">
             {menu.items.map((menuChildren, idx) => {
+              if (menuChildren?.items?.length) {
+                return (
+                  <ol className="app-navigation-item-children-item">
+                    {menuChildren?.title && (
+                      <li className="app-navigation-item-children-item-link">
+                        {menuChildren.title}
+                      </li>
+                    )}
+                    <div className="app-navigation-item app-navigation-item-children">
+                      {menuChildren?.items?.map(
+                        (menuItem, idx) =>
+                          ((menuItem?.abilities &&
+                            props?.session?.abilities?.includes(
+                              menuItem?.abilities
+                            )) ||
+                            !menuItem.abilities) && (
+                            <NavigationItem
+                              key={idx}
+                              session={props?.session}
+                              menu={menuItem}
+                            />
+                          )
+                      )}
+                    </div>
+                  </ol>
+                )
+              }
               return (
                 <li key={idx} className="app-navigation-item-children-item">
                   <Link

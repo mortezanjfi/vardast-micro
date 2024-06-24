@@ -74,6 +74,7 @@ const tailwind = {
     "col-span-11",
     "col-span-12"
   ],
+  // darkMode: "media",
   darkMode: "class",
   theme: {
     screens,
@@ -145,7 +146,7 @@ const tailwind = {
         alpha: {
           white: tailwindColors.white,
           ...myColors.alpha,
-          DEFAULT: tailwindColors.gray[600],
+          DEFAULT: myColors.alpha[600],
           black: tailwindColors.black
         }
       }

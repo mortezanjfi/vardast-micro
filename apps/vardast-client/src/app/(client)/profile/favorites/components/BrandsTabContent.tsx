@@ -6,7 +6,7 @@ import BrandsOrSellersContainer from "@vardast/component/BrandsOrSellersContaine
 import { Brand, GetUserFavoriteBrandsQuery } from "@vardast/graphql/generated"
 import { Session } from "next-auth"
 
-import { NotFoundItems } from "@/app/(client)/favorites/components/FavoritesPageIndex"
+import { NotFoundItems } from "@/app/(client)/profile/favorites/components/FavoritesPageIndex"
 
 type BrandsTabContentProps = {
   session: Session | null

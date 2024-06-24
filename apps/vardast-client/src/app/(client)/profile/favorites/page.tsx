@@ -1,5 +1,4 @@
 import { Metadata } from "next"
-import { redirect } from "next/navigation"
 import { dehydrate } from "@tanstack/react-query"
 import { authOptions } from "@vardast/auth/authOptions"
 import { EntityTypeEnum } from "@vardast/graphql/generated"
@@ -12,7 +11,7 @@ import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 import { getServerSession } from "next-auth"
 
-import FavoritesPageIndex from "@/app/(client)/favorites/components/FavoritesPageIndex"
+import FavoritesPageIndex from "@/app/(client)/profile/favorites/components/FavoritesPageIndex"
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -56,9 +55,6 @@ const FavoritePage = async () => {
 
   const dehydratedState = dehydrate(queryClient)
 
-  if (!isMobileView) {
-    redirect("/")
-  }
   return (
     <ReactQueryHydrate state={dehydratedState}>
       <FavoritesPageIndex isMobileView={isMobileView} />

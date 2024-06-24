@@ -9,11 +9,11 @@ import {
 } from "next/navigation"
 import { XMarkIcon } from "@heroicons/react/24/solid"
 import { useDebouncedState } from "@mantine/hooks"
-import { CheckedState } from "@radix-ui/react-checkbox"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import BrandOrSellerCategoryFilter from "@vardast/component/brand-or-seller-category-filter"
 import DesktopMobileViewOrganizer from "@vardast/component/DesktopMobileViewOrganizer"
 import FiltersContainer from "@vardast/component/filters-container"
+import FiltersSidebarContainer from "@vardast/component/filters-sidebar-container"
 import InfiniteScrollPagination from "@vardast/component/InfiniteScrollPagination"
 import ItemsCount from "@vardast/component/ItemsCount"
 import LoadingFailed from "@vardast/component/LoadingFailed"
@@ -195,7 +195,7 @@ const ProductList = ({
     status,
     id,
     value
-  }: FilterAttribute & { status: CheckedState }) => {
+  }: FilterAttribute & { status: boolean | "indeterminate" }) => {
     setFilterAttributes((values) => {
       let tmp = values
       if (status === true) {
@@ -231,7 +231,7 @@ const ProductList = ({
   const onCategoryIdsFilterChanged = ({
     status,
     value
-  }: { value: InputMaybe<number> } & { status: CheckedState }) => {
+  }: { value: InputMaybe<number> } & { status: boolean | "indeterminate" }) => {
     setCategoryIdsFilter((values) => {
       let tmp: InputMaybe<number[]> = values || []
       if (status === true) {
@@ -349,7 +349,7 @@ const ProductList = ({
   }
 
   const DesktopSidebar = (
-    <>
+    <FiltersSidebarContainer>
       {hasSearch && (
         <div className="relative flex transform items-center rounded-lg border-alpha-200 bg-alpha-100 pr-2 transition-all">
           {queryTemp !== query ? (
@@ -443,7 +443,7 @@ const ProductList = ({
           )}
         {!selectedCategoryIds && !brandId && !sellerId && <VocabularyFilter />}
       </div>
-    </>
+    </FiltersSidebarContainer>
   )
 
   const DesktopHeader = (

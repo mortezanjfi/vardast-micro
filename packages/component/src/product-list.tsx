@@ -9,7 +9,6 @@ import {
 } from "next/navigation"
 import { XMarkIcon } from "@heroicons/react/24/solid"
 import { useDebouncedState } from "@mantine/hooks"
-import { CheckedState } from "@radix-ui/react-checkbox"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import {
   FilterAttribute,
@@ -41,6 +40,7 @@ import {
 import BrandOrSellerCategoryFilter from "./brand-or-seller-category-filter"
 import DesktopMobileViewOrganizer from "./DesktopMobileViewOrganizer"
 import FiltersContainer from "./filters-container"
+import FiltersSidebarContainer from "./filters-sidebar-container"
 import InfiniteScrollPagination from "./InfiniteScrollPagination"
 import ItemsCount from "./ItemsCount"
 import LoadingFailed from "./LoadingFailed"
@@ -193,7 +193,7 @@ const ProductList = ({
     status,
     id,
     value
-  }: FilterAttribute & { status: CheckedState }) => {
+  }: FilterAttribute & { status: boolean | "indeterminate" }) => {
     setFilterAttributes((values) => {
       let tmp = values
       if (status === true) {
@@ -229,7 +229,7 @@ const ProductList = ({
   const onCategoryIdsFilterChanged = ({
     status,
     value
-  }: { value: InputMaybe<number> } & { status: CheckedState }) => {
+  }: { value: InputMaybe<number> } & { status: boolean | "indeterminate" }) => {
     setCategoryIdsFilter((values) => {
       let tmp: InputMaybe<number[]> = values || []
       if (status === true) {
@@ -300,7 +300,7 @@ const ProductList = ({
   // if (!allProductsQuery.data) notFound()
 
   const DesktopSidebar = (
-    <>
+    <FiltersSidebarContainer>
       {hasSearch && (
         <div className="relative flex transform items-center rounded-lg border-alpha-200 bg-alpha-100 pr-2 transition-all">
           {queryTemp !== query ? (
@@ -408,7 +408,7 @@ const ProductList = ({
           )}
         {!selectedCategoryIds && !brandId && !sellerId && <VocabularyFilter />}
       </div>
-    </>
+    </FiltersSidebarContainer>
   )
 
   const DesktopHeader = (

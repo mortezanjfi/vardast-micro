@@ -6,6 +6,7 @@ import { Category } from "@vardast/graphql/generated"
 import clsx from "clsx"
 
 import Link from "../Link"
+import { MotionDiv } from "../motion/Motion"
 import { ICategoryListLoader } from "./CategoryListLoader"
 
 type Props = {
@@ -56,43 +57,55 @@ export default function CategoryCircleItem({ data, isMobileView }: Props) {
     useState<ICategoryListLoader>(null)
 
   return (
-    <Link
-      onClick={() => {
-        setSelectedItemId(data.id)
+    <MotionDiv
+      variants={{
+        hidden: { opacity: 0, y: 0, x: 0, scale: 0 },
+        enter: { opacity: 1, y: 0, x: 0, scale: 1 },
+        exit: { opacity: 0, y: 0, x: 0, scale: 0 } // Add exit variant for completeness
       }}
-      href={`${
-        isMobileView
-          ? `/category/${data.id}/${data.title}`
-          : `/products/${data.id}/${data.title}`
-      }`}
+      initial="hidden" // Set the initial state to variants.hidden
+      animate="enter" // Animated state to variants.enter
+      exit="exit" // Exit state (used later) to variants.exit
+      transition={{ type: "linear", delay: Math.random() }} // Set the transition to linear with a delay of 0.5 seconds
       className={clsx(
         categoryDefaultClassName,
         isMobileView ? "" : "mx-auto",
         circleSizes.width
       )}
     >
-      <div
-        className={clsx(
-          "relative rounded-full border border-alpha-400 bg-alpha-50 p-1",
-          circleSizes.height,
-          selectedItemId === data.id ? "border-2 border-primary" : ""
-        )}
+      <Link
+        onClick={() => {
+          setSelectedItemId(data.id)
+        }}
+        href={`${
+          isMobileView
+            ? `/category/${data.id}/${data.title}`
+            : `/products/${data.id}/${data.title}`
+        }`}
       >
-        <Image
-          src={
-            data?.imageCategory
-              ? data?.imageCategory[0]?.file.presignedUrl?.url
-              : `/images/categories/1.png`
-          }
-          alt="category"
-          fill
-          sizes="100"
-          className="rounded-xl object-cover"
-        />
-      </div>
-      <h5 className="relative z-20 whitespace-pre-wrap bg-opacity-60 text-center font-semibold">
-        {data.title}
-      </h5>
-    </Link>
+        <div
+          className={clsx(
+            "relative rounded-full border border-alpha-400 bg-alpha-50 p-1",
+            circleSizes.height,
+            selectedItemId === data.id ? "border-2 border-primary" : ""
+          )}
+        >
+          <Image
+            src={
+              data?.imageCategory
+                ? data?.imageCategory[0]?.file.presignedUrl?.url
+                : `/images/categories/1.png`
+            }
+            alt="category"
+            fill
+            sizes="100"
+            className="rounded-xl object-cover"
+          />
+        </div>
+        <h5 className="relative z-20 whitespace-pre-wrap bg-opacity-60 text-center font-semibold">
+          {data.title}
+        </h5>
+      </Link>
+    </MotionDiv>
   )
 }

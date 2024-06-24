@@ -1,6 +1,6 @@
 "use client"
 
-import { useContext } from "react"
+import { useContext, useMemo } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import {
   EventTrackerSubjectTypes,
@@ -13,6 +13,7 @@ import paths from "@vardast/lib/paths"
 import { PublicContext } from "@vardast/provider/PublicProvider"
 import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
+import { myColors } from "@vardast/tailwind-config/themes"
 import { ILayoutMobileFooter } from "@vardast/type/layout"
 import { Button } from "@vardast/ui/button"
 import { AnimatePresence, motion } from "framer-motion"
@@ -42,8 +43,25 @@ const MobileNavigation = ({
     ? useIsCurrentPath(propsBack)
     : propsBack
 
-  const getIsActiveNav = (activePath: string) =>
-    pathname.split("/")[1] === activePath.split("/")[1]
+  const getIsActiveNav = (path: string) => {
+    if (path === "/" && pathname !== "/") {
+      return false
+    }
+
+    const pathSplit = path.split("/").filter(Boolean).join("")
+    const pathnameSplit = pathname.split("/").filter(Boolean).join("")
+
+    if (pathnameSplit > pathSplit) {
+      if (pathnameSplit.slice(0, pathSplit.length) === pathSplit) {
+        return true
+      }
+    } else if (pathSplit === pathnameSplit) {
+      return true
+    }
+
+    return false
+  }
+
   const getActiveClassName = (activePath: string) => {
     const isActiveNav = getIsActiveNav(activePath)
 
@@ -94,6 +112,43 @@ const MobileNavigation = ({
     }
     router.replace(`${paths.signin}?ru=${pathname}`)
   }
+
+  const navigationItems = useMemo(() => {
+    return options ? (
+      <div className="grid h-14 w-full grid-cols-4 bg-alpha-white bg-opacity-5">
+        {mobile_footer_options[`${options.name}`].map(
+          ({ button, id, title, IconPrerender }) => {
+            const href = button.value as string
+
+            return (
+              <Link
+                key={id}
+                href={href}
+                className={`group inline-flex h-full flex-col items-center justify-center gap-y-0.5 pb-2`}
+              >
+                <IconPrerender
+                  fill={getIsActiveNav(href) ? myColors.primary[600] : "none"}
+                  className={mergeClasses(
+                    "icon h-6 w-6 transform transition-all",
+                    getIsActiveNav(href) ? "text-primary-600" : "text-alpha-500"
+                  )}
+                  strokeWidth={2}
+                />
+                <p
+                  className={mergeClasses(
+                    "pt-1 text-xs font-bold",
+                    getActiveClassName(href)
+                  )}
+                >
+                  {title}
+                </p>
+              </Link>
+            )
+          }
+        )}
+      </div>
+    ) : null
+  }, [pathname])
 
   return (
     <>
@@ -161,40 +216,7 @@ const MobileNavigation = ({
           </AnimatePresence>
         </div>
       )}
-      {options && (
-        <div className="grid h-14 w-full grid-cols-4 bg-alpha-white bg-opacity-5">
-          {mobile_footer_options[`${options.name}`].map(
-            ({ icon, button, id, title }) => {
-              const href = button.value as string
-              const ShowedIcon = getIsActiveNav(href)
-                ? icon.Active
-                : icon.Default
-              return (
-                <Link
-                  key={id}
-                  href={href}
-                  className={`group inline-flex h-full flex-col items-center justify-center gap-y-0.5 pb-2`}
-                >
-                  <ShowedIcon
-                    className={mergeClasses(
-                      "h-7 w-7 transform transition-all",
-                      getActiveClassName(href)
-                    )}
-                  />
-                  <p
-                    className={mergeClasses(
-                      "text-xs font-bold",
-                      getActiveClassName(href)
-                    )}
-                  >
-                    {title}
-                  </p>
-                </Link>
-              )
-            }
-          )}
-        </div>
-      )}
+      {navigationItems}
     </>
   )
 }

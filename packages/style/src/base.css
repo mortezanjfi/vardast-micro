@@ -13,5 +13,5 @@ html {
   @apply overflow-hidden m-0 p-0 ;
 } */
 body {
-  @apply h-full;
+  @apply h-full text-alpha-800;
 }
