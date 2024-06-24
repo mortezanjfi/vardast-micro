@@ -349,5 +349,7 @@
   "price-giver": "قیمت گذار",
   "entity_type": "نوع {{entity}}",
   "payment_has_been_done": "پرداخت انجام شده است.",
-  "pre-invoice": "پیش فاکتور"
+  "pre-invoice": "پیش فاکتور",
+  "payment": "پرداخت",
+  "verify": "تایید"
 }

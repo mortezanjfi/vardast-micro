@@ -15,6 +15,15 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "next": "*",
+    "graphql-request": "*",
+    "react-hook-form": "*",
+    "zod": "*",
+    "next-translate": "*",
+    "next-auth": "*",
+    "lucide-react": "*",
+    "@tanstack/react-query": "*",
+    "@tanstack/react-query-devtools": "*",
     "@vardast/ui": "workspace:*",
     "@vardast/hook": "workspace:*",
     "@vardast/asset": "workspace:*",

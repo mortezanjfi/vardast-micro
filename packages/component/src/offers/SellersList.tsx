@@ -390,12 +390,23 @@ function SellersList({
                                       onClick={() => {
                                         downLoadPreInvoice({
                                           access_token: token,
-                                          uuid: offer.uuid
+                                          uuid: `${offer.id}`
                                         })
                                       }}
                                       className="tag cursor-pointer text-error"
                                     >
                                       {t("common:pre-invoice")}
+                                    </span>
+                                    /
+                                    <span
+                                      onClick={() => {
+                                        router.push(
+                                          `/profile/orders/${uuid}/verify/${offer.id}`
+                                        )
+                                      }}
+                                      className="tag cursor-pointer text-success"
+                                    >
+                                      {t("common:payment")}
                                     </span>
                                   </td>
                                 </tr>

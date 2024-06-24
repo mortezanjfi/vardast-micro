@@ -16,7 +16,6 @@ export enum OrderOffersPageType {
 
 type Props = {
   isMobileView?: boolean
-  uuid?: string
   offerId?: string
   isAdmin?: boolean
   type: OrderOffersPageType
@@ -29,7 +28,6 @@ type Props = {
 
 const OrderOffers: React.FC<Props> = ({
   isMobileView,
-  uuid,
   SellerAddOfferPriceChildren,
   type,
   Adminchildren,
@@ -39,15 +37,13 @@ const OrderOffers: React.FC<Props> = ({
 }) => {
   return (
     <div className="flex w-full flex-col gap-9">
-      <OrderInfoCard
-        findPreOrderByIdQuery={findPreOrderByIdQuery}
-        uuid={uuid}
-      />
-
+      <OrderInfoCard findPreOrderByIdQuery={findPreOrderByIdQuery} />
       <OrderProductsList
         isMobileView={isMobileView}
         findPreOrderByIdQuery={findPreOrderByIdQuery}
-        uuid={uuid}
+        offerId={String(
+          findPreOrderByIdQuery?.data?.findPreOrderById?.offers.length - 1
+        )}
       />
       {type === OrderOffersPageType.SELLER_ORDERS_OFFERS && SellerChildren}
       {type === OrderOffersPageType.ADMIN_ORDER_OFFERS_PAGE && Adminchildren}

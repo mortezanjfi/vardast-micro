@@ -95,7 +95,7 @@ function OfferDetailModal({
             findPreOrderByIdQuery?.data?.findPreOrderById?.status !==
             PreOrderStates.Closed
           }
-          uuid={`${selectedOfferId}`}
+          offerId={`${selectedOfferId}`}
           findPreOrderByIdQuery={findPreOrderByIdQuery}
         />
       </DialogContent>

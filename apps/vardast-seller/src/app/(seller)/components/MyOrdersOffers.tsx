@@ -19,7 +19,6 @@ const MyOrdersOffers = ({ isMobileView, uuid }: MyOrdersOffersProps) => {
     <>
       <OrderOffers
         isMobileView={isMobileView}
-        uuid={uuid}
         type={OrderOffersPageType.SELLER_MY_ORDERS_OFFERS}
         findPreOrderByIdQuery={findPreOrderByIdQuery}
         AddOfferChildren={

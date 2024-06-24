@@ -1,13 +1,15 @@
 "use client"
 
-import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import Card from "@vardast/component/Card"
+import OrderProductsList from "@vardast/component/desktop/OrderProductsList"
 import {
-  useFindOfferPreOrderByIdQuery,
+  useFindPreOrderByIdQuery,
   usePaymentMutation
 } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
+import { ACTION_BUTTON_TYPE } from "@vardast/type/OrderProductTabs"
 import { Button } from "@vardast/ui/button"
 import { Checkbox } from "@vardast/ui/checkbox"
 import {
@@ -31,12 +33,11 @@ type VerifyOfferProps = {
 }
 
 function VerifyOffer({ isMobileView, uuid, offerId }: VerifyOfferProps) {
-  const router = useRouter()
   const { t } = useTranslation()
-  const findPreOrderByIdQuery = useFindOfferPreOrderByIdQuery(
+  const findPreOrderByIdQuery = useFindPreOrderByIdQuery(
     graphqlRequestClientWithToken,
     {
-      id: +offerId
+      id: +uuid
     }
   )
 
@@ -73,37 +74,47 @@ function VerifyOffer({ isMobileView, uuid, offerId }: VerifyOfferProps) {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
-        <div>
-          پرداخت {findPreOrderByIdQuery.data?.findOfferPreOrderById?.status}با
-          موفقیت انجام شد
-        </div>
-        <FormField
-          control={form.control}
-          name="verify"
-          render={({ field }) => (
-            <FormItem className="checkbox-field">
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <FormLabel>{t("common:payment_has_been_done")}</FormLabel>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button
-          type="submit"
-          loading={form.formState.isSubmitting}
-          disabled={form.formState.isSubmitting || !form.watch("verify")}
-        >
-          پرداخت
-        </Button>
-      </form>
-    </Form>
+    <div className="flex flex-col gap-9">
+      <OrderProductsList
+        actionButtonType={ACTION_BUTTON_TYPE.ADD_PRODUCT_OFFER}
+        isMobileView={isMobileView}
+        offerId={offerId}
+        findPreOrderByIdQuery={findPreOrderByIdQuery}
+      />
+      <Card>
+        <Form {...form}>
+          <form
+            className="flex justify-between"
+            onSubmit={form.handleSubmit(onSubmit)}
+            noValidate
+          >
+            <FormField
+              control={form.control}
+              name="verify"
+              render={({ field }) => (
+                <FormItem className="checkbox-field">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormLabel>{t("common:payment_has_been_done")}</FormLabel>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              type="submit"
+              loading={form.formState.isSubmitting}
+              disabled={form.formState.isSubmitting || !form.watch("verify")}
+            >
+              پرداخت
+            </Button>
+          </form>
+        </Form>
+      </Card>
+    </div>
   )
 }
 

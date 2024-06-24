@@ -7,7 +7,7 @@ export type OrderInfoPageProps = {
   uuid?: string
 }
 
-const OrderInfoPage = async ({ isMobileView, uuid }: OrderInfoPageProps) => {
+const OrderInfoPage = ({ isMobileView, uuid }: OrderInfoPageProps) => {
   return <OrderInfoForm isMobileView={isMobileView} uuid={uuid} />
 }
 

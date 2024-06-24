@@ -12,10 +12,9 @@ import { PaymentMethodEnumFa, PreOrderStatesFa } from "./OrderCart"
 
 type OrderInfoCardProps = {
   findPreOrderByIdQuery: UseQueryResult<FindPreOrderByIdQuery, unknown>
-  uuid?: string
 }
 
-const OrderInfoCard = ({ findPreOrderByIdQuery, uuid }: OrderInfoCardProps) => {
+const OrderInfoCard = ({ findPreOrderByIdQuery }: OrderInfoCardProps) => {
   const { t } = useTranslation()
 
   const orderInfo = findPreOrderByIdQuery?.data?.findPreOrderById
@@ -32,7 +31,9 @@ const OrderInfoCard = ({ findPreOrderByIdQuery, uuid }: OrderInfoCardProps) => {
             <span>
               {t("common:entity_code", { entity: t("common:project") })}
             </span>
-            <span>{digitsEnToFa(uuid)}</span>
+            <span>
+              {digitsEnToFa(findPreOrderByIdQuery?.data?.findPreOrderById?.id)}
+            </span>
           </div>
           <div
             className={clsx(

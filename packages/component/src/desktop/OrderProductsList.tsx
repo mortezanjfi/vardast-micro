@@ -6,8 +6,10 @@ import { UseQueryResult } from "@tanstack/react-query"
 import {
   FindPreOrderByIdQuery,
   Line,
-  OfferLine
+  OfferLine,
+  useFindOfferPreOrderByIdQuery
 } from "@vardast/graphql/generated"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ACTION_BUTTON_TYPE } from "@vardast/type/OrderProductTabs"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
@@ -26,7 +28,7 @@ type OrderProductsListProps = {
   isMobileView?: boolean
   hasOperation?: boolean
   hasExtraInfo?: boolean
-  uuid: string
+  offerId: string
   findPreOrderByIdQuery: UseQueryResult<FindPreOrderByIdQuery, unknown>
 }
 
@@ -49,7 +51,7 @@ function OrderProductsList({
   isMobileView,
   hasOperation,
   hasExtraInfo,
-  uuid,
+  offerId,
   findPreOrderByIdQuery
 }: OrderProductsListProps) {
   const { t } = useTranslation()
@@ -58,6 +60,13 @@ function OrderProductsList({
     line: Line
     fi_price: string
   }>()
+
+  const offersQuery = useFindOfferPreOrderByIdQuery(
+    graphqlRequestClientWithToken,
+    {
+      id: +offerId
+    }
+  )
 
   const tableHead = [
     { colSpan: 1, display: true, element: "td", children: t("common:row") },
@@ -102,25 +111,13 @@ function OrderProductsList({
     }
   ]
 
-  const submit = (data: any) => {
-    console.log(data)
-    console.log("product Id:", priceModalData)
-    setOpen(false)
-  }
-
   return (
     <>
-      {/* <AddPriceModal
-        productId={productIdToEdit}
-        submitFunction={submit}
-        open={open}
-        setOpen={setOpen}
-      /> */}
       <AddPriceModal
         line={priceModalData?.line as Line}
         setOpen={setOpen}
         open={open}
-        offerId={uuid}
+        offerId={offerId}
         fi_price={priceModalData?.fi_price}
       />
 
@@ -137,34 +134,34 @@ function OrderProductsList({
             </OrderProductListContainer>
           ) : (
             <div className="flex flex-col divide-y">
-              {findPreOrderByIdQuery?.data?.findPreOrderById?.offers[
-                findPreOrderByIdQuery?.data?.findPreOrderById?.offers.length - 1
-              ]?.offerLine.map((offer, index) => (
-                <div
-                  key={index}
-                  className="flex grid-cols-4 flex-col gap-4 pb-6 md:grid md:pt-6"
-                >
-                  <div className="col-span-3">
-                    <OrderProductCard
-                      offerId={uuid}
-                      isSeller={isSeller}
-                      setPriceModalData={setPriceModalData}
-                      offer={offer as OfferLine}
-                      actionButtonType={actionButtonType}
-                      line={{
-                        id: offer?.line?.id,
-                        item_name: offer?.line?.item_name,
-                        type: offer?.line?.type,
-                        brand: offer?.line?.brand,
-                        descriptions: offer?.line?.descriptions,
-                        qty: offer?.line?.qty,
-                        uom: offer?.line?.uom
-                      }}
-                    />
+              {offersQuery.data?.findOfferPreOrderById?.offerLine.map(
+                (offer) => (
+                  <div
+                    key={offer.id}
+                    className="flex grid-cols-4 flex-col gap-4 pb-6 md:grid md:pt-6"
+                  >
+                    <div className="col-span-3">
+                      <OrderProductCard
+                        offerId={offerId}
+                        isSeller={isSeller}
+                        setPriceModalData={setPriceModalData}
+                        offer={offer as OfferLine}
+                        actionButtonType={actionButtonType}
+                        line={{
+                          id: offer?.line?.id,
+                          item_name: offer?.line?.item_name,
+                          type: offer?.line?.type,
+                          brand: offer?.line?.brand,
+                          descriptions: offer?.line?.descriptions,
+                          qty: offer?.line?.qty,
+                          uom: offer?.line?.uom
+                        }}
+                      />
+                    </div>
+                    <OfferCard offerLine={offer as OfferLine} />
                   </div>
-                  <OfferCard offerLine={offer as OfferLine} />
-                </div>
-              ))}
+                )
+              )}
             </div>
           )}
         </CardContainer>
@@ -211,104 +208,103 @@ function OrderProductsList({
               </thead>
 
               <tbody>
-                {findPreOrderByIdQuery?.data?.findPreOrderById?.offers[
-                  findPreOrderByIdQuery?.data?.findPreOrderById?.offers.length -
-                    1
-                ]?.offerLine.map((offer, index) => (
-                  <tr key={offer.id}>
-                    <td className={tdClassName}>
-                      <span>{digitsEnToFa(index + 1)}</span>
-                    </td>
-                    <td className={tdClassName}>
-                      <span className="font-medium text-alpha-800">
-                        {offer?.id && digitsEnToFa(offer?.id)}
-                      </span>
-                    </td>
-                    <td className={tdClassName}>
-                      <span className="font-medium text-alpha-800">
-                        {offer?.line?.item_name &&
-                          digitsEnToFa(offer?.line?.item_name)}
-                      </span>
-                    </td>
-                    <td className={tdClassName}>
-                      <span className="font-medium text-alpha-800">
-                        {offer?.line?.brand}
-                      </span>
-                    </td>
-
-                    <td className={tdClassName}>{offer?.line?.uom}</td>
-
-                    <td className={tdClassName}>
-                      {offer?.line?.qty && digitsEnToFa(offer?.line?.qty)}
-                    </td>
-                    <td className={tdClassName}>
-                      {offer?.line?.attribuite ? (
-                        <span className="tag tag-sm tag-gray">
-                          {offer?.line?.attribuite}
+                {offersQuery.data?.findOfferPreOrderById?.offerLine.map(
+                  (offer, index) => (
+                    <tr key={offer.id}>
+                      <td className={tdClassName}>
+                        <span>{digitsEnToFa(index + 1)}</span>
+                      </td>
+                      <td className={tdClassName}>
+                        <span className="font-medium text-alpha-800">
+                          {offer?.id && digitsEnToFa(offer?.id)}
                         </span>
-                      ) : (
-                        "-"
-                      )}
-                      {/* <div className="flex gap-1">
+                      </td>
+                      <td className={tdClassName}>
+                        <span className="font-medium text-alpha-800">
+                          {offer?.line?.item_name &&
+                            digitsEnToFa(offer?.line?.item_name)}
+                        </span>
+                      </td>
+                      <td className={tdClassName}>
+                        <span className="font-medium text-alpha-800">
+                          {offer?.line?.brand}
+                        </span>
+                      </td>
+
+                      <td className={tdClassName}>{offer?.line?.uom}</td>
+
+                      <td className={tdClassName}>
+                        {offer?.line?.qty && digitsEnToFa(offer?.line?.qty)}
+                      </td>
+                      <td className={tdClassName}>
+                        {offer?.line?.attribuite ? (
+                          <span className="tag tag-sm tag-gray">
+                            {offer?.line?.attribuite}
+                          </span>
+                        ) : (
+                          "-"
+                        )}
+                        {/* <div className="flex gap-1">
                           {offer?.attributes.map((attribute) => (
                             <span className="tag tag-sm tag-gray">
                               {attribute}
                             </span>
                           ))}
                         </div> */}
-                    </td>
-                    <td className="border-x px-4 py-3">
-                      {digitsEnToFa(addCommas(offer?.fi_price))}
-                    </td>
-                    <td className="border-x px-4 py-3">
-                      {digitsEnToFa(addCommas(offer?.tax_price))}
-                    </td>
-                    <td className="border-x px-4 py-3">
-                      {digitsEnToFa(addCommas(offer?.total_price))}
-                    </td>
-                    {hasExtraInfo && (
-                      <>
-                        <td className="border-x px-4 py-3">
-                          {digitsEnToFa(addCommas(offer?.fi_price))}
-                        </td>
-                        <td className="border-x px-4 py-3">
-                          {digitsEnToFa(addCommas(offer?.tax_price))}
-                        </td>
-                        <td className="border-x px-4 py-3">
-                          {digitsEnToFa(addCommas(offer?.total_price))}
-                        </td>
-                        <td className="border-x px-4 py-3">
-                          {digitsEnToFa(addCommas(offer?.fi_price))}
-                        </td>
-                        <td className="border-x px-4 py-3">
-                          {digitsEnToFa(addCommas(offer?.tax_price))}
-                        </td>
-                        <td className="border-x px-4 py-3">
-                          {digitsEnToFa(addCommas(offer?.total_price))}
-                        </td>
-                        <td className="border-x px-4 py-3">
-                          {digitsEnToFa(addCommas(offer?.total_price))}
-                        </td>
-                      </>
-                    )}
-                    {hasOperation && (
-                      <td className={clsx(tdClassName, "whitespace-nowrap")}>
-                        <span
-                          onClick={() => {
-                            setPriceModalData({
-                              fi_price: offer?.fi_price,
-                              line: offer?.line as Line
-                            })
-                            setOpen(true)
-                          }}
-                          className="cursor-pointer text-blue-500"
-                        >
-                          افزودن قیمت
-                        </span>
                       </td>
-                    )}
-                  </tr>
-                ))}
+                      <td className="border-x px-4 py-3">
+                        {digitsEnToFa(addCommas(offer?.fi_price))}
+                      </td>
+                      <td className="border-x px-4 py-3">
+                        {digitsEnToFa(addCommas(offer?.tax_price))}
+                      </td>
+                      <td className="border-x px-4 py-3">
+                        {digitsEnToFa(addCommas(offer?.total_price))}
+                      </td>
+                      {hasExtraInfo && (
+                        <>
+                          <td className="border-x px-4 py-3">
+                            {digitsEnToFa(addCommas(offer?.fi_price))}
+                          </td>
+                          <td className="border-x px-4 py-3">
+                            {digitsEnToFa(addCommas(offer?.tax_price))}
+                          </td>
+                          <td className="border-x px-4 py-3">
+                            {digitsEnToFa(addCommas(offer?.total_price))}
+                          </td>
+                          <td className="border-x px-4 py-3">
+                            {digitsEnToFa(addCommas(offer?.fi_price))}
+                          </td>
+                          <td className="border-x px-4 py-3">
+                            {digitsEnToFa(addCommas(offer?.tax_price))}
+                          </td>
+                          <td className="border-x px-4 py-3">
+                            {digitsEnToFa(addCommas(offer?.total_price))}
+                          </td>
+                          <td className="border-x px-4 py-3">
+                            {digitsEnToFa(addCommas(offer?.total_price))}
+                          </td>
+                        </>
+                      )}
+                      {hasOperation && (
+                        <td className={clsx(tdClassName, "whitespace-nowrap")}>
+                          <span
+                            onClick={() => {
+                              setPriceModalData({
+                                fi_price: offer?.fi_price,
+                                line: offer?.line as Line
+                              })
+                              setOpen(true)
+                            }}
+                            className="cursor-pointer text-blue-500"
+                          >
+                            افزودن قیمت
+                          </span>
+                        </td>
+                      )}
+                    </tr>
+                  )
+                )}
               </tbody>
             </table>
           </div>

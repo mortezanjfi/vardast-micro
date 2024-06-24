@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, useEffect } from "react"
-import { useParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import { useQueryClient } from "@tanstack/react-query"
@@ -36,21 +35,19 @@ import { TypeOf, z } from "zod"
 type AddPriceModalProps = {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
-  offerId?: string
   fi_price?: string
   line: Line
+  offerId: string
 }
 
 const AddPriceModal = ({
   open,
   setOpen,
   fi_price,
-  offerId: propsOfferId,
-  line
+  line,
+  offerId
 }: AddPriceModalProps) => {
   const { t } = useTranslation()
-  const params = useParams()
-  const offerId = propsOfferId ?? params.offerId
   const queryClient = useQueryClient()
 
   const FormSchema = z.object({
@@ -118,11 +115,11 @@ const AddPriceModal = ({
       calculatePriceOfferLineMutation.data?.calculatePriceOfferLine
     createOrderOfferLineMutation.mutate({
       createLineOfferInput: {
-        offerOrderId: +offerId,
+        offerId: +offerId,
         lineId: +line?.id,
         fi_price:
           line?.type === MultiTypeOrder.Product
-            ? total_price
+            ? fi_price
             : form.getValues("fi_price"),
         tax_price: line?.type === MultiTypeOrder.Product ? tax_price : "0",
         total_price:

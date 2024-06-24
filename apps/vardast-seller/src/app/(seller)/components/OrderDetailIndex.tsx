@@ -23,7 +23,6 @@ function OrderOffersIndex({ isMobileView, uuid }: Props) {
   return (
     <OrderOffers
       isMobileView={isMobileView}
-      uuid={uuid}
       findPreOrderByIdQuery={findPreOrderByIdQuery}
       SellerChildren={
         findPreOrderByIdQuery?.data?.findPreOrderById?.status ===
