@@ -37,7 +37,7 @@ query GetAllUsers($indexUserInput: IndexUserInput) {
       failedLoginAttempts
       isLockedOut
       lockedOutAt
-
+      wallet
       fullName
       avatarFile {
         id

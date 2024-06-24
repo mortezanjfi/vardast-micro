@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { digitsEnToFa } from "@persian-tools/persian-tools"
+import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
 import Card from "@vardast/component/Card"
 import Link from "@vardast/component/Link"
@@ -103,6 +103,7 @@ const Users = ({ roleIds }: Props) => {
                   <th>{t("common:email")}</th>
                   <th>{t("common:cellphone")}</th>
                   <th>{t("common:status")}</th>
+                  <th>{t("common:wallet")} (تومان)</th>
                   <th>{t("common:last_login")}</th>
                 </tr>
               </thead>
@@ -192,6 +193,7 @@ const Users = ({ roleIds }: Props) => {
                             </span>
                           )}
                         </td>
+                        <td>{digitsEnToFa(addCommas(user?.wallet))}</td>
                         <td>
                           {user.lastLoginAt ? (
                             <span className="ms-2 font-medium text-alpha-800">

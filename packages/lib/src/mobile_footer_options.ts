@@ -1,11 +1,11 @@
 import { ILayoutOption } from "@vardast/type/layout"
-import { Home, LayoutGrid, LayoutList, User2 } from "lucide-react"
+
+// import { Home, LayoutGrid, LayoutList, User2 } from "lucide-react";
 
 const _default: ILayoutOption[] = [
   {
     id: 0,
-    icon: "home",
-    IconPrerender: Home,
+    icon: "HomeIcon",
     button: {
       type: "link",
       value: "/"
@@ -14,8 +14,7 @@ const _default: ILayoutOption[] = [
   },
   {
     id: 1,
-    icon: "layout-grid",
-    IconPrerender: LayoutGrid,
+    icon: "Squares2X2Icon",
     button: {
       type: "link",
       value: "/category"
@@ -36,18 +35,26 @@ const _default: ILayoutOption[] = [
   // },
   {
     id: 2,
-    icon: "layout-list",
-    IconPrerender: LayoutList,
+    icon: "BookmarkIcon",
     button: {
       type: "link",
-      value: "/basket"
+      value: "/favorites"
     },
-    title: "سبد کالا"
+    title: "علاقه‌مندی"
   },
+  // {
+  //   id: 2,
+  //   icon: "layout-list",
+  //   icon: LayoutList,
+  //   button: {
+  //     type: "link",
+  //     value: "/basket"
+  //   },
+  //   title: "سبد کالا"
+  // },
   {
     id: 3,
-    icon: "user-2",
-    IconPrerender: User2,
+    icon: "UserIcon",
     button: {
       type: "link",
       value: "/profile"

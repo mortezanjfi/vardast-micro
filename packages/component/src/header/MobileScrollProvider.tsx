@@ -22,8 +22,8 @@ const MobileScrollProvider: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <MotionSection
       variants={{
-        hidden: { opacity: 0, y: 10, x: 0, scale: 1 },
-        enter: { opacity: 1, y: 0, x: 0, scale: 1 }
+        hidden: { opacity: 0, y: 10, x: 0 },
+        enter: { opacity: 1, y: 0, x: 0 }
       }}
       initial="hidden" // Set the initial state to variants.hidden
       animate="enter" // Animated state to variants.enter

@@ -145,7 +145,7 @@
           dark:hover:bg-primary-800;
       }
       &:not(.not-hover) {
-        @apply hover:bg-alpha-200 dark:hover:bg-alpha-800;
+        @apply md:hover:bg-alpha-200 dark:md:hover:bg-alpha-800;
       }
 
       @apply flex
@@ -184,18 +184,12 @@
     &:has(.active),
     &.active {
       > span {
-        @apply bg-alpha-200
-              font-medium
-              text-alpha-800
-              dark:bg-alpha-800
-              dark:bg-opacity-50
-              dark:text-alpha-200;
+        @apply font-medium text-primary after:bg-primary after:h-7 after:w-1 after:rounded-2xl after:content-[''];
       }
 
       .app-navigation-item-link {
         .icon {
-          @apply text-alpha-800
-                  dark:text-alpha-300;
+          @apply text-alpha-white;
         }
       }
       .app-navigation-item-arrow {

@@ -1,5 +1,7 @@
-import { LucideIcon } from "lucide-react"
-import dynamicIconImports from "lucide-react/dynamicIconImports"
+import * as SolidIcons from "@heroicons/react/20/solid"
+import * as OutlineIcons from "@heroicons/react/24/outline"
+
+export type THeroIconName = keyof typeof SolidIcons | keyof typeof OutlineIcons
 
 type ILayoutTitleType = "image" | "text"
 
@@ -31,8 +33,7 @@ type ILayoutBackground = {
 export interface ILayoutOption {
   id: number
   title: string
-  icon?: keyof typeof dynamicIconImports
-  IconPrerender?: LucideIcon
+  icon?: THeroIconName
   button?: ILayoutButton
 }
 

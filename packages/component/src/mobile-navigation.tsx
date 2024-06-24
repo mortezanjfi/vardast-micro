@@ -13,7 +13,6 @@ import paths from "@vardast/lib/paths"
 import { PublicContext } from "@vardast/provider/PublicProvider"
 import graphqlRequestClient from "@vardast/query/queryClients/graphqlRequestClient"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
-import { myColors } from "@vardast/tailwind-config/themes"
 import { ILayoutMobileFooter } from "@vardast/type/layout"
 import { Button } from "@vardast/ui/button"
 import { AnimatePresence, motion } from "framer-motion"
@@ -22,6 +21,7 @@ import { useAtom, useSetAtom } from "jotai"
 import { ArrowRight } from "lucide-react"
 import { useSession } from "next-auth/react"
 
+import DynamicHeroIcon from "./DynamicHeroIcon"
 import Link from "./Link"
 import Progress from "./Progress"
 import Search from "./Search"
@@ -117,7 +117,7 @@ const MobileNavigation = ({
     return options ? (
       <div className="grid h-14 w-full grid-cols-4 bg-alpha-white bg-opacity-5">
         {mobile_footer_options[`${options.name}`].map(
-          ({ button, id, title, IconPrerender }) => {
+          ({ button, id, title, icon }) => {
             const href = button.value as string
 
             return (
@@ -126,13 +126,13 @@ const MobileNavigation = ({
                 href={href}
                 className={`group inline-flex h-full flex-col items-center justify-center gap-y-0.5 pb-2`}
               >
-                <IconPrerender
-                  fill={getIsActiveNav(href) ? myColors.primary[600] : "none"}
+                <DynamicHeroIcon
+                  icon={icon}
                   className={mergeClasses(
-                    "icon h-6 w-6 transform transition-all",
+                    "icon h-7 w-7 transform transition-all",
                     getIsActiveNav(href) ? "text-primary-600" : "text-alpha-500"
                   )}
-                  strokeWidth={2}
+                  solid={getIsActiveNav(href)}
                 />
                 <p
                   className={mergeClasses(

@@ -5,31 +5,31 @@ const _profile: NavigationType[] = [
     items: [
       {
         title: "پروژه ها",
-        icon: "folder-open",
+        icon: "FolderOpenIcon",
         path: "/profile/projects",
         background_color: "bg-orange-500",
-        color: "white"
+        color: "text-white"
       },
       {
-        title: "سفارشات",
-        icon: "layout-list",
+        title: "سفارشات من",
+        icon: "ClipboardDocumentListIcon",
         path: "/profile/orders",
         background_color: "bg-blue-500",
-        color: "white"
+        color: "text-white"
       },
       {
         title: "سبد کالا",
-        icon: "shopping-cart",
+        icon: "ShoppingCartIcon",
         path: "/basket",
         background_color: "bg-green-500",
-        color: "white"
+        color: "text-white"
       },
       {
         title: "علاقه‌مندی ها",
-        icon: "bookmark",
+        icon: "BookmarkIcon",
         path: "/profile/favorites",
         background_color: "bg-rose-500",
-        color: "white"
+        color: "text-white"
       }
     ]
   }
@@ -40,31 +40,31 @@ const _profile_about: NavigationType[] = [
     items: [
       {
         title: "درباره ما",
-        icon: "info",
+        icon: "InformationCircleIcon",
         path: "/about",
         background_color: "bg-amber-500",
-        color: "white"
+        color: "text-white"
       },
       {
         title: "تماس با ما",
-        icon: "phone",
+        icon: "PhoneIcon",
         path: "/contact",
         background_color: "bg-emerald-500",
-        color: "white"
+        color: "text-white"
       },
       {
         title: "سوالات متداول",
-        icon: "help-circle",
+        icon: "QuestionMarkCircleIcon",
         path: "/faq",
         background_color: "bg-pink-500",
-        color: "white"
+        color: "text-white"
       },
       {
-        title: "قوانین و مققرات",
-        icon: "scale",
+        title: "قوانین و مقررات",
+        icon: "ScaleIcon",
         path: "/privacy",
         background_color: "bg-violet-500",
-        color: "white"
+        color: "text-white"
       }
     ]
   }
@@ -76,61 +76,56 @@ const _admin: NavigationType[] = [
       {
         title: "خانه",
         path: "/",
-        icon: "home"
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "HomeIcon"
       },
       {
         title: "کالا",
-        icon: "package",
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "CubeIcon",
         items: [
           {
             title: "تمام کالاها",
-            icon: "package",
             path: "/products"
           },
           {
             title: "پیشنهادات",
-            path: "/offers",
-            icon: "package"
-          },
-          {
-            title: "واحدهای اندازه‌گیری",
-            path: "/uoms",
-            icon: "ruler"
-          },
-          {
-            title: "مشخصه‌ها",
-            path: "/attributes",
-            icon: "layers"
+            path: "/offers"
           }
         ]
       },
       {
         title: "دسته‌بندی‌ها",
         path: "/vocabularies",
-        icon: "layout-grid"
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "Squares2X2Icon"
       },
       {
         title: "برندها",
         path: "/brands",
-        icon: "factory"
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "HomeModernIcon"
       },
       {
         title: "کاربران",
-        icon: "users-2",
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "UsersIcon",
         items: [
           {
             title: "ادمین",
-            path: "/users/admin",
-            icon: "users"
+            path: "/users/admin"
           },
           {
             title: "فروشندگان",
-            icon: "store",
             path: "/sellers"
           },
           {
             title: "خریداران",
-            icon: "users",
             items: [
               {
                 title: "حقوقی",
@@ -147,104 +142,60 @@ const _admin: NavigationType[] = [
       {
         title: "پروژه ها",
         path: "/profile/projects",
-        icon: "folder"
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "FolderOpenIcon"
       },
       {
         title: "سفارشات",
-        icon: "layout-list",
-        path: "/profile/orders"
+        path: "/profile/orders",
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "ClipboardDocumentIcon"
       },
       {
-        title: "مالی",
-        icon: "wallet",
+        title: "تنظیمات",
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "Cog6ToothIcon",
         items: [
           {
-            title: "پیش فاکتورها",
-            icon: "package",
+            title: "واحدهای اندازه‌گیری",
+            path: "/uoms"
+          },
+          {
+            title: "مشخصه‌ها",
+            path: "/attributes"
+          },
+          {
+            title: "مالی",
+            items: [
+              {
+                title: "پیش فاکتورها",
+                path: "/test"
+              },
+              {
+                title: "فاکتورها",
+                path: "/test"
+              }
+            ]
+          },
+          {
+            title: "گزارشات",
             path: "/test"
           },
           {
-            title: "فاکتورها",
-            path: "/test",
-            icon: "ruler"
+            title: "نقش‌ها",
+            path: "/test"
+          },
+          {
+            title: "دسترسی‌ها",
+            path: "/test"
           }
         ]
-      },
-      {
-        title: "گزارشات",
-        path: "/test",
-        icon: "pie-chart"
-      },
-      {
-        title: "نقش‌ها",
-        path: "/test",
-        icon: "shield-alert"
-      },
-      {
-        title: "دسترسی‌ها",
-        path: "/test",
-        icon: "key-round"
       }
-      // {
-      //   title: "کالاها",
-      //   icon: "package",
-      //   items: [
-      //     {
-      //       title: "تمام کالاها",
-      //       path: "/products",
-      //       icon: "package",
-      //     },
-      //     {
-      //       title: "پیشنهادات",
-      //       path: "/offers",
-      //       icon: "package",
-      //     },
-      //     {
-      //       title: "مشخصه‌ها",
-      //       path: "/attributes",
-      //       icon: "layers",
-      //     },
-      //     {
-      //       title: "برندها",
-      //       path: "/brands",
-      //       icon: "fingerprint",
-      //     },
-      //     {
-      //       title: "واحدهای اندازه‌گیری",
-      //       path: "/uoms",
-      //       icon: "ruler",
-      //     }
-      //   ]
-      // },
-
-      // {
-      //   title: "مناطق جغرافیایی",
-      //   path: "/locations",
-      //   icon: "map",
-      // }
     ]
   }
-  // {
-  //   title: "مدیریت",
-  //   role: "admin",
-  //   items: [
-  //     {
-  //       title: "دسته‌بندی‌ها",
-  //       path: "/vocabularies",
-  //       icon: "layout-grid",
-  //     },
-  //     {
-  //       title: "مناطق جغرافیایی",
-  //       path: "/locations",
-  //       icon: "map",
-  //     },
-  //     {
-  //       title: "کاربران",
-  //       path: "/users",
-  //       icon: "users",
-  //     }
-  //   ]
-  // }
 ]
 
 export const _seller_panel: NavigationType[] = [
@@ -253,49 +204,58 @@ export const _seller_panel: NavigationType[] = [
       {
         title: "خانه",
         path: "/",
-        icon: "home"
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "HomeIcon"
       },
       {
         title: "سفارشات",
-        icon: "list",
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "ClipboardDocumentIcon",
         path: "/orders"
       },
       {
         title: "سفارشات من",
-        icon: "list",
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "ClipboardIcon",
         path: "/my-orders"
       },
       {
-        title: "کالا",
+        title: "کالاها",
         path: "/products",
-        icon: "package",
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "CubeIcon",
         items: [
           {
             title: "لیست کالاهای وردست",
-            path: "/products/all-products",
-            icon: "package"
+            path: "/products/all-products"
           },
           {
             title: "ثبت کالای جدید",
-            path: "/products/new",
-            icon: "package"
+            path: "/products/new"
           },
           {
             title: "مدیریت کالاهای من",
-            path: "/products/my-products",
-            icon: "package"
+            path: "/products/my-products"
           }
         ]
       },
       {
         title: "دسته بندی‌های من",
         path: "/categories",
-        icon: "layers"
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "Squares2X2Icon"
       },
       {
         title: "برندهای من",
         path: "/brands",
-        icon: "layers"
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "HomeModernIcon"
       }
     ]
   }

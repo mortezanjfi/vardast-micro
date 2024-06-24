@@ -10,7 +10,7 @@ import clsx from "clsx"
 import { LucideChevronDown, LucideChevronLeft } from "lucide-react"
 import { Session } from "next-auth"
 
-import DynamicIcon from "./DynamicIcon"
+import DynamicHeroIcon from "./DynamicHeroIcon"
 import Link from "./Link"
 
 type Props = {
@@ -47,26 +47,27 @@ const NavigationItem = (props: Props) => {
       <li
         className={clsx([
           "app-navigation-item",
-          menu.items && "has-child",
+          menu?.items && "has-child",
           isActive(menu.path as string) && "active",
           open && "open"
         ])}
       >
         <span>
           <Link href={menu.path as string} className="app-navigation-item-link">
-            <DynamicIcon
-              name={menu?.icon}
-              className={clsx("icon", menu.background_color)}
-              color={menu.color || undefined}
-              strokeWidth={2}
-            />
+            {menu?.icon && (
+              <DynamicHeroIcon
+                icon={menu?.icon}
+                className={clsx("icon", menu.background_color, menu.color)}
+                solid={isActive(menu.path as string)}
+              />
+            )}
             <span>
               {menu.title}
               {isMobileView ? (
                 <div className="app-navigation-item-arrow">
                   <LucideChevronLeft className="h-full w-full" />
                 </div>
-              ) : menu.items ? (
+              ) : menu?.items ? (
                 <Button
                   className="app-navigation-item-arrow"
                   noStyle
@@ -82,16 +83,18 @@ const NavigationItem = (props: Props) => {
             </span>
           </Link>
         </span>
-        {menu.items && (
+        {menu?.items && (
           <ol className="app-navigation-item-children">
-            {menu.items.map((menuChildren, idx) => {
+            {menu?.items.map((menuChildren, idx) => {
               if (menuChildren?.items?.length) {
                 return (
                   <ol className="app-navigation-item-children-item">
                     {menuChildren?.title && (
-                      <li className="app-navigation-item-children-item-link">
-                        {menuChildren.title}
-                      </li>
+                      <div className="app-navigation-item app-navigation-item-children">
+                        <li className="app-navigation-item-children-item-link">
+                          <span>{menuChildren.title}</span>
+                        </li>
+                      </div>
                     )}
                     <div className="app-navigation-item app-navigation-item-children">
                       {menuChildren?.items?.map(

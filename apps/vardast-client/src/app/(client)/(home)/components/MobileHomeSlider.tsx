@@ -5,7 +5,6 @@ import Image from "next/image"
 import { UseQueryResult } from "@tanstack/react-query"
 import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
 import Link from "@vardast/component/Link"
-import { MotionDiv } from "@vardast/component/motion/Motion"
 import { Banner, GetBannerHomePageQuery } from "@vardast/graphql/generated"
 import useWindowSize from "@vardast/hook/use-window-size"
 import { breakpoints } from "@vardast/tailwind-config/themes"
@@ -92,18 +91,7 @@ const MobileHomeSlider = ({
     "h-[50vw] w-[calc(100vw-60px)] sm:h-[250px] sm:w-full sm:bg-alpha-100 md:h-[350px] 2xl:h-[500px] mx-auto"
 
   return (
-    <MotionDiv
-      variants={{
-        hidden: { opacity: 0, y: 0, x: 0, scale: 0 },
-        enter: { opacity: 1, y: 0, x: 0, scale: 1 },
-        exit: { opacity: 0, y: 0, x: 0, scale: 0 } // Add exit variant for completeness
-      }}
-      initial="hidden" // Set the initial state to variants.hidden
-      animate="enter" // Animated state to variants.enter
-      exit="exit" // Exit state (used later) to variants.exit
-      transition={{ type: "linear", delay: 0.2 }} // Set the transition to linear with a delay of 0.5 seconds
-      className="bg-alpha-white pt-6 sm:relative sm:pt-0"
-    >
+    <div>
       <div className="overflow-hidden">
         {query.isLoading || query.isFetching || !width ? (
           <div className={clsx("animated-card", sliderClass)}></div>
@@ -177,7 +165,7 @@ const MobileHomeSlider = ({
           handleSlideTo={handleSlideTo}
         />
       )}
-    </MotionDiv>
+    </div>
   )
 }
 
