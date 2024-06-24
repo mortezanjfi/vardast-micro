@@ -32,7 +32,8 @@ const OrderInfoCard = ({ findPreOrderByIdQuery }: OrderInfoCardProps) => {
               {t("common:entity_code", { entity: t("common:project") })}
             </span>
             <span>
-              {digitsEnToFa(findPreOrderByIdQuery?.data?.findPreOrderById?.id)}
+              {findPreOrderByIdQuery?.data?.findPreOrderById?.id &&
+                digitsEnToFa(findPreOrderByIdQuery?.data?.findPreOrderById?.id)}
             </span>
           </div>
           <div

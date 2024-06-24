@@ -79,6 +79,9 @@ const AddPriceModal = ({
         queryClient.invalidateQueries({
           queryKey: ["FindPreOrderById"]
         })
+        queryClient.invalidateQueries({
+          queryKey: ["FindOfferPreOrderById"]
+        })
         setOpen(false)
         toast({
           title: "قیمت کالا با موفقیت به روزرسانی شد",

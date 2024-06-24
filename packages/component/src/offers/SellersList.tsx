@@ -390,7 +390,7 @@ function SellersList({
                                       onClick={() => {
                                         downLoadPreInvoice({
                                           access_token: token,
-                                          uuid: `${offer.id}`
+                                          uuid: `${offer.uuid}`
                                         })
                                       }}
                                       className="tag cursor-pointer text-error"

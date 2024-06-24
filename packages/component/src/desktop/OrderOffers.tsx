@@ -42,7 +42,7 @@ const OrderOffers: React.FC<Props> = ({
         isMobileView={isMobileView}
         findPreOrderByIdQuery={findPreOrderByIdQuery}
         offerId={String(
-          findPreOrderByIdQuery?.data?.findPreOrderById?.offers.length - 1
+          findPreOrderByIdQuery?.data?.findPreOrderById?.offers?.at(-1)?.id
         )}
       />
       {type === OrderOffersPageType.SELLER_ORDERS_OFFERS && SellerChildren}
