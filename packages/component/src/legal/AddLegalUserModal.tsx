@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { digitsEnToFa, digitsFaToEn } from "@persian-tools/persian-tools"
 import { useQueryClient } from "@tanstack/react-query"
 import { useCreateLegalMutation } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
@@ -28,6 +29,7 @@ import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
 import { toast } from "../../../hook/src/use-toast"
+import { cellphoneNumberSchema } from "../../../util/src/zodValidationSchemas"
 
 type Props = { open: boolean; setOpen: Dispatch<SetStateAction<boolean>> }
 
@@ -36,7 +38,7 @@ export type CreateLegalUserInfoType = TypeOf<typeof CreateLegalUserSchema>
 const CreateLegalUserSchema = z.object({
   name_company: z.string(),
   national_id: z.string(),
-  cellPhone: z.string()
+  cellPhone: cellphoneNumberSchema
 })
 
 const AddLegalUserModal = ({ open, setOpen }: Props) => {
@@ -82,7 +84,7 @@ const AddLegalUserModal = ({ open, setOpen }: Props) => {
       createLegalInput: {
         national_id: data.national_id,
         name_company: data.name_company as string,
-        cellphone: data.cellPhone
+        cellphone: digitsFaToEn(data.cellPhone)
       }
     })
   }
@@ -112,10 +114,10 @@ const AddLegalUserModal = ({ open, setOpen }: Props) => {
           )}
           <Form {...form}>
             <form
-              className="flex flex-col"
+              className="flex flex-col gap-6"
               onSubmit={form.handleSubmit(onCreateLegal)}
             >
-              <div className="grid w-full grid-cols-3 gap-7 ">
+              <div className="grid w-full grid-cols-3 gap-6">
                 <FormField
                   control={form.control}
                   name="name_company"
@@ -158,17 +160,23 @@ const AddLegalUserModal = ({ open, setOpen }: Props) => {
                     </FormItem>
                   )}
                 />
+              </div>
+              <div className="grid grid-cols-3 gap-7 border-t pt-6">
                 <FormField
                   control={form.control}
                   name="cellPhone"
                   render={({ field }) => (
-                    <FormItem className="col-span-1">
-                      <FormLabel>{t("common:cellphone")}</FormLabel>
+                    <FormItem>
+                      <FormLabel>{t("common:cellphone")} (مدیر عامل)</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
                           type="text"
-                          placeholder={t("common:enter")}
+                          placeholder={digitsEnToFa("09*********")}
+                          onChange={(e) => {
+                            e.target.value.length <= 11 &&
+                              field.onChange(digitsEnToFa(e.target.value))
+                          }}
                         />
                       </FormControl>
                       <FormMessage />
@@ -176,7 +184,7 @@ const AddLegalUserModal = ({ open, setOpen }: Props) => {
                   )}
                 />
               </div>
-              <div className=" mt-7 flex w-full flex-row-reverse gap border-t pt-6 ">
+              <div className="flex w-full flex-row-reverse gap border-t pt-6 ">
                 <Button type="submit" variant="primary">
                   تایید و ادامه
                 </Button>
