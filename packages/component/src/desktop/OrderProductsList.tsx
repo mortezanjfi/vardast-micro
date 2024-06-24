@@ -54,8 +54,6 @@ function OrderProductsList({
   offerId,
   findPreOrderByIdQuery
 }: OrderProductsListProps) {
-  console.log({ offerId })
-
   const { t } = useTranslation()
   const [open, setOpen] = useState<boolean>(false)
   const [priceModalData, setPriceModalData] = useState<{
@@ -69,8 +67,6 @@ function OrderProductsList({
       id: +offerId
     }
   )
-
-  console.log({ offersQuery })
 
   const tableHead = [
     { colSpan: 1, display: true, element: "td", children: t("common:row") },
