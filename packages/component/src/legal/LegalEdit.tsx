@@ -10,12 +10,13 @@ import useTranslation from "next-translate/useTranslation"
 
 import graphqlRequestClientWithToken from "../../../query/src/queryClients/graphqlRequestClientWithToken"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../ui/src/tabs"
+import PageTitle from "../project/PageTitle"
 import AddressesTab from "./address-Info/AddressesTab"
 import ContactInfosTab from "./ContactInfosTab"
 
-type Props = { uuid: string }
+type Props = { title: string; uuid: string }
 
-function LegalEdit({ uuid }: Props) {
+function LegalEdit({ title, uuid }: Props) {
   const { t } = useTranslation()
   const { data: session } = useSession()
 
@@ -28,7 +29,8 @@ function LegalEdit({ uuid }: Props) {
   )
 
   return (
-    <>
+    <div className="flex h-full w-full flex-col gap-9 py-6 md:py-0">
+      <PageTitle backButtonUrl="/users/legal" title={title} />
       <Tabs
         defaultValue="addresses"
         className="flex h-full w-full flex-col gap-6"
@@ -56,7 +58,7 @@ function LegalEdit({ uuid }: Props) {
           />
         </TabsContent>
       </Tabs>
-    </>
+    </div>
   )
 }
 

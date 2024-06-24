@@ -185,7 +185,13 @@ const AddLegalUserModal = ({ open, setOpen }: Props) => {
                 />
               </div>
               <div className="flex w-full flex-row-reverse gap border-t pt-6 ">
-                <Button type="submit" variant="primary">
+                <Button
+                  loading={
+                    createLegalMutation.isLoading || createLegalMutation.isError
+                  }
+                  type="submit"
+                  variant="primary"
+                >
                   تایید و ادامه
                 </Button>
               </div>
