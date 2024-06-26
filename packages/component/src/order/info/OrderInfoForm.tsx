@@ -423,7 +423,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
                                         : "opacity-0"
                                     )}
                                   />
-                                  {address.address.address}
+                                  {`${address.address.title} - ${address.address.address}`}
                                 </CommandItem>
                               )
                           )}

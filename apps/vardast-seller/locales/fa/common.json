@@ -356,5 +356,7 @@
   "pre-invoice": "پیش فاکتور",
   "verify": "تایید",
   "payment_has_been_done": "پرداخت انجام شده است.",
-  "payment": "پرداخت"
+  "payment": "پرداخت",
+  "shipping-address": "آدرس محل تحویل",
+  "project-address": "آدرس پروژه"
 }
