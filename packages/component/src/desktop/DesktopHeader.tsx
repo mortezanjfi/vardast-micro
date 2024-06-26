@@ -126,45 +126,48 @@ const DesktopHeader = ({ search, button }: ILayoutDesktopHeader) => {
                           onPointerLeave={(event) => event.preventDefault()}
                         >
                           <div className="bg-alpha-white py-4">
-                            <NavigationMenuLink>
-                              <Link
-                                className="flex items-center justify-between gap-2 px-4 py-2"
-                                href={"/profile/info"}
-                              >
-                                {/* <Avatar className="rounded-full border border-secondary">
+                            {checkProjectName() === EProjectName.CLIENT && (
+                              <NavigationMenuLink>
+                                <Link
+                                  className="flex items-center justify-between gap-2 px-4 py-2"
+                                  href={"/profile/info"}
+                                >
+                                  {/* <Avatar className="rounded-full border border-secondary">
                                     <AvatarImage
                                       src={
                                         session?.profile?.avatarFile
                                           ?.url as string
-                                      }
+                                          }
                                       alt="seller"
                                     />
 
                                     <AvatarFallback>
-                                      {session?.profile?.firstName &&
+                                    {session?.profile?.firstName &&
                                         session?.profile?.lastName?.[0]}
-                                    </AvatarFallback>
+                                        </AvatarFallback>
                                   </Avatar> */}
-                                <div className="flex flex-col">
-                                  {session?.profile?.fullName &&
-                                  session?.profile?.fullName !== "null null" ? (
-                                    <h4 className="truncate font-semibold">
-                                      {session?.profile?.fullName}
-                                    </h4>
-                                  ) : (
-                                    "کاربر وردست"
-                                  )}
-                                  <p className="text-sm font-semibold text-alpha-400">
-                                    {session?.profile?.cellphone
-                                      ? digitsEnToFa(
-                                          session?.profile?.cellphone
-                                        )
-                                      : digitsEnToFa("09123456789")}
-                                  </p>
-                                </div>
-                                <ChevronLeft className="h-6 w-6" />
-                              </Link>
-                            </NavigationMenuLink>
+                                  <div className="flex flex-col">
+                                    {session?.profile?.fullName &&
+                                    session?.profile?.fullName !==
+                                      "null null" ? (
+                                      <h4 className="truncate font-semibold">
+                                        {session?.profile?.fullName}
+                                      </h4>
+                                    ) : (
+                                      "کاربر وردست"
+                                    )}
+                                    <p className="text-sm font-semibold text-alpha-400">
+                                      {session?.profile?.cellphone
+                                        ? digitsEnToFa(
+                                            session?.profile?.cellphone
+                                          )
+                                        : digitsEnToFa("09123456789")}
+                                    </p>
+                                  </div>
+                                  <ChevronLeft className="h-6 w-6" />
+                                </Link>
+                              </NavigationMenuLink>
+                            )}
                             {checkProjectName() === EProjectName.CLIENT &&
                               status === "authenticated" &&
                               session?.profile?.roles.some(
