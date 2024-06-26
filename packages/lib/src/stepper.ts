@@ -18,21 +18,15 @@ export const _orderSteppers: Step[] = [
     currentStep: 1
   },
   {
-    description: "کالاها و هزینه های جانبی درخواستی خود را تایید کنید.",
-    name: "تایید کالاهای سفارش",
-    Icon: "check-circle-2",
-    currentStep: 2
-  },
-  {
     description: "در این قسمت بر روی کالاهای درخواستی خود قیمت گذاری کنید.",
     name: "پیشنهادات",
     Icon: "badge-dollar-sign",
-    currentStep: 3
+    currentStep: 2
   },
   {
     name: "تایید پرداخت",
     Icon: "badge-dollar-sign",
-    currentStep: 4
+    currentStep: 3
   }
 ]
 
@@ -46,11 +40,11 @@ export const _orderUrlToStepMappers: urlToStepMapper[] = [
     name: "products"
   },
   {
-    stepNumber: 3,
+    stepNumber: 2,
     name: "offers"
   },
   {
-    stepNumber: 4,
+    stepNumber: 3,
     name: "verify"
   }
 ]

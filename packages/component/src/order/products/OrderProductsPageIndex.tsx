@@ -2,11 +2,17 @@
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { useQueryClient } from "@tanstack/react-query"
 import {
   PreOrderStates,
-  useFindPreOrderByIdQuery
+  useCreateOrderOfferMutation,
+  useFindPreOrderByIdQuery,
+  useUpdatePreOrderMutation
 } from "@vardast/graphql/generated"
+import { toast } from "@vardast/hook/use-toast"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
+import { Button } from "@vardast/ui/button"
+import { ClientError } from "graphql-request"
 
 import Link from "../../Link"
 import OrderProductsInnerLayout from "./OrderInnerLayout"
@@ -22,10 +28,73 @@ function OrderProductsPageIndex({
   uuid
 }: OrderProductsPageIndexProps) {
   const router = useRouter()
+  const queryClient = useQueryClient()
   const findPreOrderByIdQuery = useFindPreOrderByIdQuery(
     graphqlRequestClientWithToken,
     {
       id: +uuid
+    }
+  )
+
+  const createOrderOfferMutation = useCreateOrderOfferMutation(
+    graphqlRequestClientWithToken,
+    {
+      onError: (errors: ClientError) => {
+        ;(
+          errors.response.errors?.at(0)?.extensions.displayErrors as string[]
+        ).map((error) =>
+          toast({
+            description: error,
+            duration: 5000,
+            variant: "danger"
+          })
+        )
+      },
+      onSuccess: (data) => {
+        if (data?.createOrderOffer?.id) {
+          queryClient.invalidateQueries({
+            queryKey: ["FindPreOrderById"]
+          })
+          toast({
+            title: "پیشنهاد شما با موفقیت ثبت شد",
+            description:
+              "لطفا برای قیمت گذاری بر روی کالاها ادامه فرایند را انجام دهید.",
+            duration: 8000,
+            variant: "success"
+          })
+          router.push(
+            `/profile/orders/${uuid}/offers/${data.createOrderOffer.id}`
+          )
+        }
+      }
+    }
+  )
+
+  const onCreateOffer = () => {
+    createOrderOfferMutation.mutate({
+      createOrderOfferInput: {
+        preOrderId: +uuid
+      }
+    })
+  }
+
+  const updatePreOrderMutation = useUpdatePreOrderMutation(
+    graphqlRequestClientWithToken,
+    {
+      onError: (errors: ClientError) => {
+        ;(
+          errors.response.errors?.at(0)?.extensions.displayErrors as string[]
+        ).map((error) =>
+          toast({
+            description: error,
+            duration: 5000,
+            variant: "danger"
+          })
+        )
+      },
+      onSuccess: () => {
+        onCreateOffer()
+      }
     }
   )
 
@@ -38,6 +107,12 @@ function OrderProductsPageIndex({
     }
   }, [])
 
+  const onSubmit = () => {
+    updatePreOrderMutation.mutate({
+      updatePreOrderInput: { status: PreOrderStates.Completed, id: +uuid }
+    })
+  }
+
   return (
     <OrderProductsInnerLayout
       findPreOrderByIdQuery={findPreOrderByIdQuery}
@@ -49,12 +124,19 @@ function OrderProductsPageIndex({
         <Link className="btn btn-md btn-secondary" href="/profile/orders">
           بازگشت به سفارشات
         </Link>
-        <Link
-          href={`/profile/orders/${uuid}`}
-          className="btn btn-primary btn-md"
+        <Button
+          disabled={
+            findPreOrderByIdQuery.isFetching ||
+            findPreOrderByIdQuery.isLoading ||
+            updatePreOrderMutation.isLoading
+          }
+          loading={updatePreOrderMutation.isLoading}
+          onClick={onSubmit}
+          type="button"
+          variant="primary"
         >
           تایید و ادامه
-        </Link>
+        </Button>
       </div>
     </OrderProductsInnerLayout>
   )

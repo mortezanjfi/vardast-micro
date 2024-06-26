@@ -358,5 +358,6 @@
   "payment_has_been_done": "پرداخت انجام شده است.",
   "payment": "پرداخت",
   "shipping-address": "آدرس محل تحویل",
-  "project-address": "آدرس پروژه"
+  "project-address": "آدرس پروژه",
+  "order-needed-time": "زمان نیاز"
 }

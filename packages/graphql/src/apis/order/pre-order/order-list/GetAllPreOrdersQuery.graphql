@@ -17,6 +17,10 @@ query GetAllPreOrdersQuery($indexPreOrderInput: IndexPreOrderInput!) {
       descriptions
       status
       uuid
+      category {
+        id
+        title
+      }
       pickUpUser {
         id
         fullName

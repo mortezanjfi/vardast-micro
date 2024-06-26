@@ -19,7 +19,7 @@ export default async ({ params: { uuid } }: { params: { uuid: string } }) => {
 
   return (
     <ReactQueryHydrate state={dehydratedState}>
-      <OffersPage isMobileView={isMobileView} uuid={uuid} />
+      <OffersPage uuid={uuid} isMobileView={isMobileView} />
     </ReactQueryHydrate>
   )
 }

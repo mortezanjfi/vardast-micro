@@ -4,6 +4,7 @@ import { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
+import { useQueryClient } from "@tanstack/react-query"
 import {
   OrderOfferStatuses,
   PaymentMethodEnum,
@@ -74,6 +75,8 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
   const [orderToDelete, setOrderToDelete] = useState<PreOrder | null>()
   const [currentPage, setCurrentPage] = useState<number>(1)
   const router = useRouter()
+  const queryClient = useQueryClient()
+
   const [ordersQueryParams, setOrdersQueryParams] = useState<OrdersFilterType>(
     {}
   )
@@ -113,6 +116,9 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
         if (data.createPreOrder.id) {
           router.push(`/profile/orders/${data.createPreOrder.id}/info`)
         }
+        queryClient.invalidateQueries({
+          queryKey: ["GetAllPreOrdersQuery"]
+        })
       }
     }
   )
@@ -181,17 +187,18 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                     <th className="border">
                       {t("common:entity_code", { entity: t("common:order") })}
                     </th>
+                    <th>{t("common:category")}</th>
                     <th className="border">{t("common:purchaser-name")}</th>
+                    <th className="border">{t("common:person-in-charge")}</th>
                     <th className="border">
                       {t("common:entity_name", {
                         entity: t("common:project")
                       })}
                     </th>
                     <th className="border">{t("common:submission-time")}</th>
-                    <th className="border">{t("common:order-expire-time")}</th>
-                    <th className="border">{t("common:file")}</th>
+                    <th className="border">{t("common:order-needed-time")}</th>
+                    {/* <th className="border">{t("common:file")}</th> */}
                     <th className="border">{t("common:status")}</th>
-                    <th className="border">{t("common:person-in-charge")}</th>
                     <th className="border">{t("common:operation")}</th>
                   </tr>
                 </thead>
@@ -200,14 +207,26 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                   {preOrdersQuery?.data?.preOrders?.data?.map(
                     (preOrder, index) =>
                       preOrder && (
-                        <tr key={preOrder?.id}>
+                        <tr
+                          className="cursor-pointer"
+                          onClick={() => {
+                            router.push(`/profile/orders/${preOrder?.id}`)
+                          }}
+                          key={preOrder?.id}
+                        >
                           <td className="w-4 border">
                             <span>{digitsEnToFa(index + 1)}</span>
                           </td>
                           <td className="border">
                             {digitsEnToFa(preOrder?.uuid)}
                           </td>
+                          <td className="border">
+                            {preOrder?.category?.title}
+                          </td>
                           <td className="border">{preOrder?.user?.fullName}</td>
+                          <td className="border">
+                            {preOrder?.pickUpUser?.fullName}
+                          </td>
                           <td className="border">{preOrder?.project?.name}</td>
                           <td className="border">
                             {digitsEnToFa(
@@ -221,7 +240,7 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                             )}
                           </td>
                           <td className="border">
-                            {digitsEnToFa(
+                            {/* {digitsEnToFa(
                               new Date(
                                 preOrder?.expire_time
                               ).toLocaleDateString("fa-IR", {
@@ -229,9 +248,9 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                                 month: "2-digit",
                                 day: "2-digit"
                               })
-                            )}
+                            )} */}
                           </td>
-                          <td className="border">
+                          {/* <td className="border">
                             {preOrder?.files.length > 0 ? (
                               <span className="tag  tag-sm tag-success">
                                 {t("common:has")}
@@ -241,7 +260,7 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                                 {t("common:has_not")}
                               </span>
                             )}
-                          </td>
+                          </td> */}
                           <td className="border">
                             <span
                               className={clsx(
@@ -255,9 +274,7 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                               }
                             </span>
                           </td>
-                          <td className="border">
-                            {preOrder?.pickUpUser?.fullName}
-                          </td>
+
                           <td className="border">
                             {preOrder.status !== PreOrderStates.Closed && (
                               <>
@@ -324,7 +341,12 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                   createOrderMutation.isLoading || preOrdersQuery.isLoading
                 }
                 loading={createOrderMutation.isLoading}
-                onClick={onCreateOrder}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  e.nativeEvent.preventDefault()
+                  e.nativeEvent.stopImmediatePropagation()
+                  onCreateOrder()
+                }}
                 variant="primary"
                 size="medium"
                 className=" mt-auto w-full py-3"
@@ -339,7 +361,16 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
       )}
       {isMobileView && (
         <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] flex w-full justify-end md:relative md:bottom-0">
-          <Button onClick={onCreateOrder} className="w-full" variant="primary">
+          <Button
+            onClick={(e) => {
+              e.stopPropagation()
+              e.nativeEvent.preventDefault()
+              e.nativeEvent.stopImmediatePropagation()
+              onCreateOrder()
+            }}
+            className="w-full"
+            variant="primary"
+          >
             افزودن سفارش
           </Button>
         </div>
