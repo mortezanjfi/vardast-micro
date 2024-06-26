@@ -70,7 +70,7 @@ const CollapsibleOfferCart = ({
                   text={TypeOrderOfferFa[offerOrder?.type]?.name_fa}
                 />
                 <DetailsWithTitle
-                  title={t("common:offer-submition-time")}
+                  title={t("common:offer-submission-time")}
                   text={
                     offerOrder?.created_at
                       ? digitsEnToFa(
@@ -119,7 +119,7 @@ const CollapsibleOfferCart = ({
               text={TypeOrderOfferFa[offerOrder?.type]?.name_fa}
             />
             <DetailsWithTitle
-              title={t("common:offer-submition-time")}
+              title={t("common:offer-submission-time")}
               text={
                 offerOrder?.created_at
                   ? digitsEnToFa(

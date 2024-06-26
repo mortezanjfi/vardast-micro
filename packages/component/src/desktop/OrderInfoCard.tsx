@@ -99,7 +99,7 @@ const OrderInfoCard = ({ findPreOrderByIdQuery }: OrderInfoCardProps) => {
               {/* زمان ثبت سفارش*/}
               <DetailsWithTitle
                 textCustomStyle="whitespace-nowrap line-clamp-1"
-                title={t("common:submition-time")}
+                title={t("common:submission-time")}
                 text={
                   orderInfo?.request_date
                     ? digitsEnToFa(

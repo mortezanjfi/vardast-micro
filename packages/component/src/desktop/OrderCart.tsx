@@ -188,7 +188,7 @@ const OrderCard = ({
 
         <DetailsWithTitle title={"پروژه"} text={preOrder?.project?.name} />
         <DetailsWithTitle
-          title={t("common:submition-time")}
+          title={t("common:submission-time")}
           text={
             preOrder.request_date
               ? convertToPersianDate({

@@ -187,7 +187,7 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                         entity: t("common:project")
                       })}
                     </th>
-                    <th className="border">{t("common:submition-time")}</th>
+                    <th className="border">{t("common:submission-time")}</th>
                     <th className="border">{t("common:order-expire-time")}</th>
                     <th className="border">{t("common:file")}</th>
                     <th className="border">{t("common:status")}</th>
