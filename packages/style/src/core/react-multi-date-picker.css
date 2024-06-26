@@ -1,0 +1,84 @@
+:root {
+  --rmdp-primary-vardast: var(--vardast-colors-primary-500);
+  --rmdp-secondary-vardast: var(--vardast-colors-primary-400);
+  --rmdp-shadow-vardast: var(--vardast-colors-primary-200);
+  --rmdp-today-vardast: var(--vardast-colors-primary-900);
+  --rmdp-hover-vardast: var(--vardast-colors-primary-200);
+  --rmdp-deselect-vardast: var(--vardast-colors-primary-100);
+}
+
+.rmdp-wrapper.rmdp-shadow.vardast-calender {
+  @apply !w-full border rounded-lg shadow-none;
+}
+
+.vardast-calender .rmdp-rtl,
+.vardast-calender .rmdp-day-picker > div {
+  @apply w-full;
+}
+
+.vardast-calender .rmdp-panel-body li {
+  background-color: var(--rmdp-primary-vardast);
+  box-shadow: 0 0 2px var(--rmdp-secondary-vardast);
+}
+
+.vardast-calender .rmdp-week-day {
+  color: var(--rmdp-primary-vardast);
+}
+
+.vardast-calender .rmdp-day.rmdp-deactive {
+  color: var(--rmdp-secondary-vardast);
+}
+
+.vardast-calender .rmdp-range {
+  background-color: var(--rmdp-primary-vardast);
+  box-shadow: 0 0 3px var(--rmdp-shadow-vardast);
+}
+
+.vardast-calender .rmdp-arrow {
+  border: solid var(--rmdp-primary-vardast);
+  border-width: 0 2px 2px 0;
+}
+
+.vardast-calender .rmdp-arrow-container:hover {
+  background-color: var(--rmdp-primary-vardast);
+  box-shadow: 0 0 3px var(--rmdp-secondary-vardast);
+}
+
+.vardast-calender .rmdp-panel-body::-webkit-scrollbar-thumb {
+  background: var(--rmdp-primary-vardast);
+}
+
+.vardast-calender .rmdp-day.rmdp-today span {
+  background-color: var(--rmdp-today-vardast);
+}
+
+.vardast-calender .rmdp-rtl .rmdp-panel {
+  border-left: unset;
+  border-right: 1px solid var(--rmdp-secondary-vardast);
+}
+
+.vardast-calender .rmdp-day.rmdp-selected span:not(.highlight) {
+  background-color: var(--rmdp-primary-vardast);
+  box-shadow: 0 0 3px var(--rmdp-shadow-vardast);
+}
+
+.vardast-calender .rmdp-day:not(.rmdp-day-hidden) span:hover {
+  background-color: var(--rmdp-hover-vardast) !important;
+}
+
+.vardast-calender .b-deselect {
+  color: var(--rmdp-deselect-vardast);
+  background-color: white;
+}
+
+.vardast-calender .rmdp-action-button {
+  color: var(--rmdp-primary-vardast);
+}
+
+.vardast-calender .rmdp-button:not(.rmdp-action-button) {
+  background-color: var(--rmdp-primary-vardast);
+}
+
+.vardast-calender .rmdp-button:not(.rmdp-action-button):hover {
+  background-color: var(--rmdp-deselect-vardast);
+}
