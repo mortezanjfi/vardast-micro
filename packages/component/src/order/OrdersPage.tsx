@@ -4,7 +4,6 @@ import { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import { useQueryClient } from "@tanstack/react-query"
 import {
   OrderOfferStatuses,
   PaymentMethodEnum,
@@ -18,6 +17,7 @@ import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
+import { DateObject } from "react-multi-date-picker"
 import { TypeOf, z } from "zod"
 
 import { ApiCallStatusEnum } from "../../../type/src/Enums"
@@ -75,7 +75,6 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
   const [orderToDelete, setOrderToDelete] = useState<PreOrder | null>()
   const [currentPage, setCurrentPage] = useState<number>(1)
   const router = useRouter()
-  const queryClient = useQueryClient()
 
   const [ordersQueryParams, setOrdersQueryParams] = useState<OrdersFilterType>(
     {}
@@ -98,6 +97,7 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
     },
     {
       queryKey: [
+        "GetAllPreOrdersQuery",
         {
           page: currentPage,
           customerName: ordersQueryParams.customerName,
@@ -105,7 +105,8 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
           projectName: ordersQueryParams.projectName,
           hasFile: checkBooleanByString(ordersQueryParams.hasFile)
         }
-      ]
+      ],
+      refetchOnMount: "always"
     }
   )
 
@@ -116,9 +117,6 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
         if (data.createPreOrder.id) {
           router.push(`/profile/orders/${data.createPreOrder.id}/info`)
         }
-        queryClient.invalidateQueries({
-          queryKey: ["GetAllPreOrdersQuery"]
-        })
       }
     }
   )
@@ -208,8 +206,9 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                     (preOrder, index) =>
                       preOrder && (
                         <tr
-                          className="cursor-pointer"
-                          onClick={() => {
+                          className="cursor-pointer hover:bg-alpha-50"
+                          onClick={(e) => {
+                            e.preventDefault()
                             router.push(`/profile/orders/${preOrder?.id}`)
                           }}
                           key={preOrder?.id}
@@ -229,17 +228,34 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                           </td>
                           <td className="border">{preOrder?.project?.name}</td>
                           <td className="border">
-                            {digitsEnToFa(
-                              new Date(
-                                preOrder?.request_date
-                              ).toLocaleDateString("fa-IR", {
-                                year: "numeric",
-                                month: "2-digit",
-                                day: "2-digit"
-                              })
-                            )}
+                            {preOrder?.request_date
+                              ? digitsEnToFa(
+                                  new Date(
+                                    preOrder?.request_date
+                                  ).toLocaleDateString("fa-IR", {
+                                    year: "numeric",
+                                    month: "2-digit",
+                                    day: "2-digit",
+                                    hour: "numeric",
+                                    minute: "numeric"
+                                  })
+                                )
+                              : "-"}
                           </td>
                           <td className="border">
+                            {preOrder?.need_date
+                              ? digitsEnToFa(
+                                  new DateObject(new Date(preOrder?.need_date))
+                                    .toDate()
+                                    .toLocaleDateString("fa-IR", {
+                                      year: "numeric",
+                                      month: "2-digit",
+                                      day: "2-digit",
+                                      hour: "numeric",
+                                      minute: "numeric"
+                                    })
+                                )
+                              : "-"}
                             {/* {digitsEnToFa(
                               new Date(
                                 preOrder?.expire_time
@@ -279,6 +295,11 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                             {preOrder.status !== PreOrderStates.Closed && (
                               <>
                                 <Link
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    e.nativeEvent.preventDefault()
+                                    e.nativeEvent.stopImmediatePropagation()
+                                  }}
                                   href={`/profile/orders/${preOrder?.id}/info`}
                                 >
                                   <span className="tag cursor-pointer text-blue-500">
@@ -289,6 +310,11 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                               </>
                             )}
                             <Link
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                e.nativeEvent.preventDefault()
+                                e.nativeEvent.stopImmediatePropagation()
+                              }}
                               href={`/profile/orders/${preOrder?.id}/offers`}
                             >
                               <span className="tag cursor-pointer text-error">

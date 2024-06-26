@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import OrderDetailPage from "@vardast/component/order/OrderDetailPage"
+import OffersPage from "@vardast/component/offers/OffersPage"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -20,11 +20,5 @@ export default async ({
   //   redirect("/admin")
   // }
 
-  return (
-    <OrderDetailPage
-      isMobileView={isMobileView}
-      uuid={uuid}
-      offerId={offerId}
-    />
-  )
+  return <OffersPage uuid={uuid} isMobileView={isMobileView} />
 }

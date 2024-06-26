@@ -28,7 +28,7 @@ type OrderProductsListProps = {
   isMobileView?: boolean
   hasOperation?: boolean
   hasExtraInfo?: boolean
-  offerId: string
+  offerId?: string
   findPreOrderByIdQuery: UseQueryResult<FindPreOrderByIdQuery, unknown>
 }
 

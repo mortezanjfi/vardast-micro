@@ -109,7 +109,7 @@ function VerifyOffer({ isMobileView, uuid, offerId }: VerifyOfferProps) {
               loading={form.formState.isSubmitting}
               disabled={form.formState.isSubmitting || !form.watch("verify")}
             >
-              پرداخت
+              تایید قیمت
             </Button>
           </form>
         </Form>

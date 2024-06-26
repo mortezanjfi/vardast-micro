@@ -412,7 +412,7 @@ function SellersList({
                                           }}
                                           className="tag cursor-pointer text-success"
                                         >
-                                          {t("common:payment")}
+                                          تایید قیمت
                                         </span>
                                       </>
                                     )}
