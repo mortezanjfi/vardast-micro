@@ -54,11 +54,20 @@ const ContactInfosTab = ({
     [contactInfos?.length]
   )
 
+  console.log(pathname)
+
   return (
     <>
       {session?.abilities?.includes("gql.users.contact_info.index") && (
         <div className="mb-6 flex items-end justify-between">
-          <Button className="mr-auto">
+          <Button
+            className="mr-auto"
+            onClick={() =>
+              router.push(
+                `/contact-infos/new?type=${relatedType}&id=${relatedId}&fallback=${pathname}`
+              )
+            }
+          >
             {t("common:add_entity", { entity: t("common:contactInfo") })}
           </Button>
         </div>

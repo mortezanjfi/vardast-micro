@@ -63,7 +63,7 @@ const AddLegalUserModal = ({ open, setOpen }: Props) => {
             duration: 2000,
             variant: "success"
           })
-          router.push(`/users/legal/${data.createLegal.id}/address`)
+          router.push(`/users/legal/${data.createLegal.id}?tab=addresses`)
           setOpen(false)
           form.reset()
         } else {

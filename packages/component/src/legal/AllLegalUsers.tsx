@@ -98,7 +98,7 @@ export default ({ title }: Props) => {
                     <td className="border">--</td>
                     <td className="border">--</td>
                     <td className="border">
-                      <Link href={`/users/legal/${user?.id}`}>
+                      <Link href={`/users/legal/${user?.id}/?tab=addresses`}>
                         <span className="tag cursor-pointer text-blue-500">
                           {t("common:edit")}
                         </span>
