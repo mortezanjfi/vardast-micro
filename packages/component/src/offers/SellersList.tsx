@@ -280,7 +280,7 @@ function SellersList({
                             <th className={thClasses}>
                               {t("common:invoice-total-price")} (تومان)
                             </th>
-                            <th>{t("common:offer-submition-time")}</th>
+                            <th>{t("common:offer-submission-time")}</th>
                             {findPreOrderByIdQuery?.data?.findPreOrderById
                               ?.status !== PreOrderStates.Closed &&
                               !isClient && (

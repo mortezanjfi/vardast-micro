@@ -166,7 +166,7 @@ function SellerOrdersPage({
                 <th className="border">
                   {t("common:entity_name", { entity: t("common:project") })}
                 </th>
-                <th className="border">{t("common:submition-time")}</th>
+                <th className="border">{t("common:submission-time")}</th>
                 <th className="border">{t("common:order-expire-time")}</th>
 
                 <th>{t("common:status")}</th>

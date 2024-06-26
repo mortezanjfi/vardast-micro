@@ -308,10 +308,10 @@
   "total-price": "قیمت کلی",
   "vardast-offer-price": "قیمت پیشنهادی وردست (تومان)",
   "purchaser-initial-offer-price": "قیمت اولیه (تومان)",
-  "offer-submition-time": "زمان ثبت پیشنهاد قیمت",
+  "offer-submission-time": "زمان ثبت پیشنهاد قیمت",
   "offerer": "پیشنهاد دهنده",
   "price-offer": "پیشنهاد قیمت",
-  "submition-time": "زمان درخواست",
+  "submission-time": "زمان درخواست",
   "order-expire-time": "زمان اعتبار سفارش",
   "purchaser-name": "نام خریدار",
   "purchaser-number": "شماره تماس خریدار",
@@ -364,5 +364,6 @@
   "pre-invoice": "پیش فاکتور",
   "verify": "تایید",
   "payment_has_been_done": "پرداخت انجام شده است.",
-  "payment": "پرداخت"
+  "payment": "پرداخت",
+  "order-needed-time": "زمان نیاز"
 }

@@ -3,7 +3,7 @@ import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
 
 import CardContainer from "../desktop/CardContainer"
-import { inputSectionClass } from "./submition/SubmitPage"
+import { inputSectionClass } from "./submission/SubmitPage"
 
 type Props = { uuid: string }
 

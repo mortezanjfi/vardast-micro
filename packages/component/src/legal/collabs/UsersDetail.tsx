@@ -79,7 +79,7 @@ function UsersDetail({ readOnlyMode, isMobileView, uuid }: Props) {
         <div className=" mt-7 flex w-full flex-row-reverse gap border-t pt-6 ">
           <Link
             className="btn btn-md btn-primary"
-            href={`/users/legal/${uuid}/submition`}
+            href={`/users/legal/${uuid}/submission`}
           >
             تایید و ادامه
           </Link>
