@@ -11,6 +11,7 @@ import {
   PreOrderStates,
   UpdatePreOrderInput,
   useFindPreOrderByIdQuery,
+  useGetAllCategoriesQuery,
   useGetAllProjectsQuery,
   useUpdatePreOrderMutation
 } from "@vardast/graphql/generated"
@@ -58,7 +59,8 @@ const CreateOrderInfoSchema = z.object({
   expire_date: z.string(),
   addressId: z.number(),
   payment_methods: z.string(),
-  descriptions: z.string().optional()
+  descriptions: z.string().optional(),
+  categoryId: z.number()
 })
 
 const ExpireTypesFa = {
@@ -90,10 +92,22 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
   const [expireDialog, setExpireDialog] = useState(false)
   const [expireQueryTemp, setExpireQueryTemp] = useState("")
 
+  const [categoryDialog, setCategoryDialog] = useState(false)
+  const [categoryQueryTemp, setCategoryQueryTemp] = useState("")
+
   const findPreOrderByIdQuery = useFindPreOrderByIdQuery(
     graphqlRequestClientWithToken,
     {
       id: +uuid
+    }
+  )
+
+  const rootCategories = useGetAllCategoriesQuery(
+    graphqlRequestClientWithToken,
+    {
+      indexCategoryInput: {
+        onlyRoots: true
+      }
     }
   )
 
@@ -149,6 +163,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
     updatePreOrderMutation.mutate({
       updatePreOrderInput: {
         ...data,
+        categoryId: +data.categoryId,
         projectId: +data.projectId,
         id: +uuid
       } as UpdatePreOrderInput
@@ -177,6 +192,9 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
       }
       if (defaultValue?.project?.id) {
         form.setValue("projectId", `${defaultValue?.project?.id}`)
+      }
+      if (defaultValue?.category?.id) {
+        form.setValue("categoryId", defaultValue?.category?.id)
       }
     }
   }, [findPreOrderByIdQuery?.data])
@@ -436,6 +454,99 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
               )}
             />
 
+            <FormField
+              control={form.control}
+              name="categoryId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("common:category")}</FormLabel>
+                  <Popover
+                    open={categoryDialog}
+                    onOpenChange={setCategoryDialog}
+                  >
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          disabled={
+                            rootCategories?.data?.categories?.data?.length === 0
+                          }
+                          noStyle
+                          role="combobox"
+                          className="input-field flex items-center"
+                        >
+                          <span className="inline-block max-w-full truncate">
+                            {field.value
+                              ? rootCategories?.data?.categories?.data?.find(
+                                  (category) =>
+                                    category && category.id === +field.value
+                                )?.title
+                              : t("common:choose_entity", {
+                                  entity: t("common:category")
+                                })}
+                          </span>
+                          <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="!z-[9999]" asChild>
+                      <Command>
+                        <CommandInput
+                          loading={
+                            rootCategories?.data?.categories?.data?.length === 0
+                          }
+                          value={categoryQueryTemp}
+                          onValueChange={(newQuery) => {
+                            // setProvinceQuery(newQuery)
+                            setCategoryQueryTemp(newQuery)
+                          }}
+                          placeholder={t("common:search_entity", {
+                            entity: t("common:category")
+                          })}
+                        />
+                        <CommandEmpty>
+                          {t("common:no_entity_found", {
+                            entity: t("common:category")
+                          })}
+                        </CommandEmpty>
+                        <CommandGroup>
+                          {rootCategories?.data?.categories?.data?.map(
+                            (category) =>
+                              category && (
+                                <CommandItem
+                                  value={`${category?.id}`}
+                                  key={category?.id}
+                                  onSelect={(value) => {
+                                    form.setValue(
+                                      "categoryId",
+                                      rootCategories?.data?.categories?.data?.find(
+                                        (category) =>
+                                          category?.id &&
+                                          category?.id === +value
+                                      )?.id || 0
+                                    )
+                                    setCategoryDialog(false)
+                                  }}
+                                >
+                                  <LucideCheck
+                                    className={mergeClasses(
+                                      "mr-2 h-4 w-4",
+                                      category.id === +field.value
+                                        ? "opacity-100"
+                                        : "opacity-0"
+                                    )}
+                                  />
+                                  {category?.title}
+                                </CommandItem>
+                              )
+                          )}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="payment_methods"

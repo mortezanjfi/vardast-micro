@@ -18,6 +18,11 @@ query FindPreOrderById($id: Float!) {
         }
       }
     }
+    category {
+      id
+      title
+      titleEn
+    }
     user {
       id
       firstName
