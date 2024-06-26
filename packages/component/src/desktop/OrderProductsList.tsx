@@ -65,8 +65,23 @@ function OrderProductsList({
     graphqlRequestClientWithToken,
     {
       id: +offerId
+    },
+    {
+      enabled: !!offerId
     }
   )
+
+  const lines: Line[] = offerId
+    ? (offersQuery.data?.findOfferPreOrderById?.offerLine?.map(
+        (item) => item?.line
+      ) as Line[])
+    : (findPreOrderByIdQuery.data?.findPreOrderById?.lines as Line[])
+
+  const getLineOfferByLineId = (lineId: number) => {
+    return offersQuery.data?.findOfferPreOrderById?.offerLine?.find(
+      (item) => item?.line?.id === lineId
+    )
+  }
 
   const tableHead = [
     { colSpan: 1, display: true, element: "td", children: t("common:row") },
@@ -93,19 +108,19 @@ function OrderProductsList({
     },
     {
       colSpan: 3,
-      display: true,
+      display: !!offerId,
       element: "div",
       children: "قیمت (تومان)"
     },
     {
       colSpan: 3,
-      display: hasExtraInfo,
+      display: !!offerId && hasExtraInfo,
       element: "div",
       children: "قیمت فروشنده (تومان)"
     },
     {
       colSpan: 4,
-      display: hasExtraInfo,
+      display: !!offerId && hasExtraInfo,
       element: "div",
       children: "قیمت پیشنهادی وردست (تومان)"
     }
@@ -113,13 +128,15 @@ function OrderProductsList({
 
   return (
     <>
-      <AddPriceModal
-        line={priceModalData?.line as Line}
-        setOpen={setOpen}
-        open={open}
-        offerId={offerId}
-        fi_price={priceModalData?.fi_price}
-      />
+      {offerId && (
+        <AddPriceModal
+          line={priceModalData?.line as Line}
+          setOpen={setOpen}
+          open={open}
+          offerId={offerId}
+          fi_price={priceModalData?.fi_price}
+        />
+      )}
 
       {isMobileView ? (
         <CardContainer title="لیست کالاها" className="!gap-0">
@@ -134,7 +151,7 @@ function OrderProductsList({
             </OrderProductListContainer>
           ) : (
             <div className="flex flex-col divide-y">
-              {offersQuery.data?.findOfferPreOrderById?.offerLine.map(
+              {offersQuery.data?.findOfferPreOrderById?.offerLine?.map(
                 (offer) => (
                   <div
                     key={offer.id}
@@ -147,15 +164,7 @@ function OrderProductsList({
                         setPriceModalData={setPriceModalData}
                         offer={offer as OfferLine}
                         actionButtonType={actionButtonType}
-                        line={{
-                          id: offer?.line?.id,
-                          item_name: offer?.line?.item_name,
-                          type: offer?.line?.type,
-                          brand: offer?.line?.brand,
-                          descriptions: offer?.line?.descriptions,
-                          qty: offer?.line?.qty,
-                          uom: offer?.line?.uom
-                        }}
+                        line={lines[0]}
                       />
                     </div>
                     <OfferCard offerLine={offer as OfferLine} />
@@ -175,7 +184,7 @@ function OrderProductsList({
             >
               <thead>
                 <tr>
-                  {tableHead.map(
+                  {tableHead?.map(
                     (Thead) =>
                       Thead.display && (
                         <th
@@ -190,121 +199,164 @@ function OrderProductsList({
                         </th>
                       )
                   )}
-                  {hasOperation && (
+                  {offerId && hasOperation && (
                     <th colSpan={1} rowSpan={2} className={clsx(thClassName)}>
                       {t("common:operation")}
                     </th>
                   )}
                 </tr>
-                <tr>
-                  <TablePriceHead />
-                  {hasExtraInfo && (
-                    <>
-                      <TablePriceHead />
-                      <TablePriceHead isVardast={true} />
-                    </>
-                  )}
-                </tr>
+                {offerId && (
+                  <tr>
+                    <TablePriceHead />
+                    {hasExtraInfo && (
+                      <>
+                        <TablePriceHead />
+                        <TablePriceHead isVardast={true} />
+                      </>
+                    )}
+                  </tr>
+                )}
               </thead>
 
               <tbody>
-                {offersQuery.data?.findOfferPreOrderById?.offerLine.map(
-                  (offer, index) => (
-                    <tr key={offer.id}>
-                      <td className={tdClassName}>
-                        <span>{digitsEnToFa(index + 1)}</span>
-                      </td>
-                      <td className={tdClassName}>
-                        <span className="font-medium text-alpha-800">
-                          {offer?.id && digitsEnToFa(offer?.id)}
-                        </span>
-                      </td>
-                      <td className={tdClassName}>
-                        <span className="font-medium text-alpha-800">
-                          {offer?.line?.item_name &&
-                            digitsEnToFa(offer?.line?.item_name)}
-                        </span>
-                      </td>
-                      <td className={tdClassName}>
-                        <span className="font-medium text-alpha-800">
-                          {offer?.line?.brand}
-                        </span>
-                      </td>
+                {lines?.map((line, index) => (
+                  <tr key={line.id}>
+                    <td className={tdClassName}>
+                      <span>{digitsEnToFa(index + 1)}</span>
+                    </td>
+                    <td className={tdClassName}>
+                      <span className="font-medium text-alpha-800">
+                        {line?.id && digitsEnToFa(line?.id)}
+                      </span>
+                    </td>
+                    <td className={tdClassName}>
+                      <span className="font-medium text-alpha-800">
+                        {line?.item_name && digitsEnToFa(line?.item_name)}
+                      </span>
+                    </td>
+                    <td className={tdClassName}>
+                      <span className="font-medium text-alpha-800">
+                        {line?.brand}
+                      </span>
+                    </td>
 
-                      <td className={tdClassName}>{offer?.line?.uom}</td>
+                    <td className={tdClassName}>{line?.uom}</td>
 
-                      <td className={tdClassName}>
-                        {offer?.line?.qty && digitsEnToFa(offer?.line?.qty)}
-                      </td>
-                      <td className={tdClassName}>
-                        {offer?.line?.attribuite ? (
-                          <span className="tag tag-sm tag-gray">
-                            {offer?.line?.attribuite}
-                          </span>
-                        ) : (
-                          "-"
-                        )}
-                        {/* <div className="flex gap-1">
-                          {offer?.attributes.map((attribute) => (
+                    <td className={tdClassName}>
+                      {line?.qty && digitsEnToFa(line?.qty)}
+                    </td>
+                    <td className={tdClassName}>
+                      {line?.attribuite ? (
+                        <span className="tag tag-sm tag-gray">
+                          {line?.attribuite}
+                        </span>
+                      ) : (
+                        "-"
+                      )}
+                      {/* <div className="flex gap-1">
+                          {line?.attributes.map((attribute) => (
                             <span className="tag tag-sm tag-gray">
                               {attribute}
                             </span>
                           ))}
                         </div> */}
-                      </td>
-                      <td className="border-x px-4 py-3">
-                        {digitsEnToFa(addCommas(offer?.fi_price))}
-                      </td>
-                      <td className="border-x px-4 py-3">
-                        {digitsEnToFa(addCommas(offer?.tax_price))}
-                      </td>
-                      <td className="border-x px-4 py-3">
-                        {digitsEnToFa(addCommas(offer?.total_price))}
-                      </td>
-                      {hasExtraInfo && (
-                        <>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(addCommas(offer?.fi_price))}
-                          </td>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(addCommas(offer?.tax_price))}
-                          </td>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(addCommas(offer?.total_price))}
-                          </td>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(addCommas(offer?.fi_price))}
-                          </td>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(addCommas(offer?.tax_price))}
-                          </td>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(addCommas(offer?.total_price))}
-                          </td>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(addCommas(offer?.total_price))}
-                          </td>
-                        </>
-                      )}
-                      {hasOperation && (
-                        <td className={clsx(tdClassName, "whitespace-nowrap")}>
-                          <span
-                            onClick={() => {
-                              setPriceModalData({
-                                fi_price: offer?.fi_price,
-                                line: offer?.line as Line
-                              })
-                              setOpen(true)
-                            }}
-                            className="cursor-pointer text-blue-500"
-                          >
-                            افزودن قیمت
-                          </span>
+                    </td>
+                    {offerId && (
+                      <>
+                        <td className="border-x px-4 py-3">
+                          {digitsEnToFa(
+                            addCommas(getLineOfferByLineId(line.id)?.fi_price)
+                          )}
                         </td>
-                      )}
-                    </tr>
-                  )
-                )}
+                        <td className="border-x px-4 py-3">
+                          {digitsEnToFa(
+                            addCommas(getLineOfferByLineId(line.id)?.tax_price)
+                          )}
+                        </td>
+                        <td className="border-x px-4 py-3">
+                          {digitsEnToFa(
+                            addCommas(
+                              getLineOfferByLineId(line.id)?.total_price
+                            )
+                          )}
+                        </td>
+                        {hasExtraInfo && (
+                          <>
+                            <td className="border-x px-4 py-3">
+                              {digitsEnToFa(
+                                addCommas(
+                                  getLineOfferByLineId(line.id)?.fi_price
+                                )
+                              )}
+                            </td>
+                            <td className="border-x px-4 py-3">
+                              {digitsEnToFa(
+                                addCommas(
+                                  getLineOfferByLineId(line.id)?.tax_price
+                                )
+                              )}
+                            </td>
+                            <td className="border-x px-4 py-3">
+                              {digitsEnToFa(
+                                addCommas(
+                                  getLineOfferByLineId(line.id)?.total_price
+                                )
+                              )}
+                            </td>
+                            <td className="border-x px-4 py-3">
+                              {digitsEnToFa(
+                                addCommas(
+                                  getLineOfferByLineId(line.id)?.fi_price
+                                )
+                              )}
+                            </td>
+                            <td className="border-x px-4 py-3">
+                              {digitsEnToFa(
+                                addCommas(
+                                  getLineOfferByLineId(line.id)?.tax_price
+                                )
+                              )}
+                            </td>
+                            <td className="border-x px-4 py-3">
+                              {digitsEnToFa(
+                                addCommas(
+                                  getLineOfferByLineId(line.id)?.total_price
+                                )
+                              )}
+                            </td>
+                            <td className="border-x px-4 py-3">
+                              {digitsEnToFa(
+                                addCommas(
+                                  getLineOfferByLineId(line.id)?.total_price
+                                )
+                              )}
+                            </td>
+                          </>
+                        )}
+                        {hasOperation && (
+                          <td
+                            className={clsx(tdClassName, "whitespace-nowrap")}
+                          >
+                            <span
+                              onClick={() => {
+                                setPriceModalData({
+                                  fi_price: getLineOfferByLineId(line.id)
+                                    ?.fi_price,
+                                  line: getLineOfferByLineId(line.id)
+                                    ?.line as Line
+                                })
+                                setOpen(true)
+                              }}
+                              className="cursor-pointer text-blue-500"
+                            >
+                              افزودن قیمت
+                            </span>
+                          </td>
+                        )}
+                      </>
+                    )}
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

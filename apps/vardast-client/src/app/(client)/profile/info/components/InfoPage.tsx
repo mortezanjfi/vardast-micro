@@ -34,7 +34,8 @@ const InfoPage = ({ isMobileView, title }: InfoPageProps) => {
           type="single"
           value={session?.type}
           onValueChange={(value: UserType) => {
-            value !== session?.type &&
+            value &&
+              value !== session?.type &&
               refreshUserMutation.mutate({
                 refreshInput: {
                   accessToken: session?.accessToken,
