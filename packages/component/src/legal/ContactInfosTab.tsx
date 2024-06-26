@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
 import {
@@ -41,6 +41,7 @@ const ContactInfosTab = ({
   const { data: session } = useSession()
   const router = useRouter()
   const pathname = usePathname()
+  const searchParams = useSearchParams()
 
   const renderedListStatus = {
     [ApiCallStatusEnum.LOADING]: <Loading />,
@@ -54,20 +55,24 @@ const ContactInfosTab = ({
     [contactInfos?.length]
   )
 
-  console.log(pathname)
+  const createFallBack = () => {
+    const params = new URLSearchParams(searchParams as any)
+
+    if (params.has("tab")) {
+      params.delete("tab")
+    }
+    params.append("tab", "contactInfos")
+    const newFallBackUrl = `${pathname}?${params.toString()}`
+    router.push(
+      `/addresses/new?type=${relatedType}&id=${relatedId}&fallback=${newFallBackUrl}`
+    )
+  }
 
   return (
     <>
       {session?.abilities?.includes("gql.users.contact_info.index") && (
         <div className="mb-6 flex items-end justify-between">
-          <Button
-            className="mr-auto"
-            onClick={() =>
-              router.push(
-                `/contact-infos/new?type=${relatedType}&id=${relatedId}&fallback=${pathname}`
-              )
-            }
-          >
+          <Button className="mr-auto" onClick={() => createFallBack()}>
             {t("common:add_entity", { entity: t("common:contactInfo") })}
           </Button>
         </div>

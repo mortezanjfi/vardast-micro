@@ -56,7 +56,7 @@ function LegalEdit({ title, uuid }: Props) {
       <PageTitle backButtonUrl="/users/legal" title={title} />
       <Tabs
         value={activeTab}
-        // defaultValue={LEGAL_TAB.ADDRESS}
+        defaultValue={LEGAL_TAB.ADDRESS}
         onValueChange={(e) => changeTab(e)}
         className="flex h-full w-full flex-col gap-6"
       >
