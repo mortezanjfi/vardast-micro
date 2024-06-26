@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
 import {
-  ExpireTypes,
   PaymentMethodEnum,
   PreOrderStates,
   UpdatePreOrderInput,
@@ -43,8 +42,10 @@ import { ClientError } from "graphql-request"
 import { LucideCheck, LucideChevronsUpDown } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
+import { DateObject } from "react-multi-date-picker"
 import { TypeOf, z } from "zod"
 
+import DatePickerMulti from "../../date-picker/DatePicker"
 import Link from "../../Link"
 import PageTitle from "../../project/PageTitle"
 
@@ -56,27 +57,12 @@ export type CreateOrderInfoType = TypeOf<typeof CreateOrderInfoSchema>
 
 const CreateOrderInfoSchema = z.object({
   projectId: z.string(),
-  expire_date: z.string(),
+  need_date: z.string(),
   addressId: z.number(),
   payment_methods: z.string(),
   descriptions: z.string().optional(),
   categoryId: z.number()
 })
-
-const ExpireTypesFa = {
-  [ExpireTypes.OneDay]: {
-    value: ExpireTypes.OneDay,
-    name_fa: "یک روز"
-  },
-  [ExpireTypes.TwoDays]: {
-    value: ExpireTypes.TwoDays,
-    name_fa: "دو روز"
-  },
-  [ExpireTypes.ThreeDays]: {
-    value: ExpireTypes.ThreeDays,
-    name_fa: "سه روز"
-  }
-}
 
 const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
   const { t } = useTranslation()
@@ -88,9 +74,6 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
 
   const [addressDialog, setAddressDialog] = useState(false)
   const [addressQueryTemp, setAddressQueryTemp] = useState("")
-
-  const [expireDialog, setExpireDialog] = useState(false)
-  const [expireQueryTemp, setExpireQueryTemp] = useState("")
 
   const [categoryDialog, setCategoryDialog] = useState(false)
   const [categoryQueryTemp, setCategoryQueryTemp] = useState("")
@@ -184,8 +167,8 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
       if (defaultValue?.descriptions) {
         form.setValue("descriptions", defaultValue?.descriptions)
       }
-      if (defaultValue?.expire_date) {
-        form.setValue("expire_date", defaultValue?.expire_date)
+      if (defaultValue?.need_date) {
+        form.setValue("need_date", defaultValue?.need_date)
       }
       if (defaultValue?.payment_methods) {
         form.setValue("payment_methods", defaultValue?.payment_methods)
@@ -295,71 +278,38 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
 
             <FormField
               control={form.control}
-              name="expire_date"
-              render={({ field }) => (
+              name="need_date"
+              render={({ field: { onChange, value } }) => (
                 <FormItem>
-                  <FormLabel>زمان اعتبار سفارش</FormLabel>
-                  <Popover open={expireDialog} onOpenChange={setExpireDialog}>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          noStyle
-                          role="combobox"
-                          className="input-field flex items-center text-start"
-                        >
-                          <span className="inline-block max-w-full truncate">
-                            {field.value
-                              ? ExpireTypesFa[field.value as ExpireTypes]
-                                  ?.name_fa
-                              : "زمان اعتبار سفارش را انتخاب کنید"}
-                          </span>
-                          <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="!z-[9999]" asChild>
-                      <Command>
-                        <CommandInput
-                          value={expireQueryTemp}
-                          onValueChange={(newQuery) => {
-                            // setProvinceQuery(newQuery)
-                            setExpireQueryTemp(newQuery)
-                          }}
-                          placeholder="انتخاب کنید"
-                        />
-                        <CommandEmpty>
-                          {t("common:no_entity_found", {
-                            entity: t("common:address")
-                          })}
-                        </CommandEmpty>
-                        <CommandGroup>
-                          {Object.values(ExpireTypesFa).map((item, index) => (
-                            <CommandItem
-                              value={item.value}
-                              key={index}
-                              onSelect={(value) => {
-                                form.setValue(
-                                  "expire_date",
-                                  value?.toUpperCase()
-                                )
-                                setExpireDialog(false)
-                              }}
-                            >
-                              <LucideCheck
-                                className={mergeClasses(
-                                  "mr-2 h-4 w-4",
-                                  item.value === field.value?.toUpperCase()
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
-                              {item.name_fa}
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
+                  <FormLabel>زمان نیاز</FormLabel>
+                  <FormControl>
+                    <DatePickerMulti
+                      value={value ? new DateObject(new Date(value)) : ""}
+                      onChange={(dateObject: DateObject) => {
+                        onChange(
+                          dateObject?.isValid
+                            ? dateObject?.toDate?.().toString()
+                            : ""
+                        )
+                      }}
+                      render={(value, openCalendar) => {
+                        return (
+                          <Button
+                            onClick={openCalendar}
+                            noStyle
+                            type="button"
+                            role="combobox"
+                            className="input-field flex w-full items-center"
+                          >
+                            <span className="inline-block max-w-full truncate">
+                              {value || "زمان نیاز را وارد کنید"}
+                            </span>
+                            <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+                          </Button>
+                        )
+                      }}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
