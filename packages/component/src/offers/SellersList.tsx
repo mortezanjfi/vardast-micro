@@ -188,7 +188,7 @@ function SellersList({
   return (
     <>
       <SellerAdminConfirmationModal
-        updateOrderOfferMutation={updateOrderOfferMutation}
+        // updateOrderOfferMutation={updateOrderOfferMutation}
         onSubmit={submitModal}
         content={
           "در صورت تایید، سفارش شما به خریدار ارسال می شود و امکان ویرایش قیمت وجود نخواهد داشت."
