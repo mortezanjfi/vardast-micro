@@ -398,17 +398,24 @@ function SellersList({
                                     >
                                       {t("common:pre-invoice")}
                                     </span>
-                                    /
-                                    <span
-                                      onClick={() => {
-                                        router.push(
-                                          `/profile/orders/${uuid}/verify/${offer.id}`
-                                        )
-                                      }}
-                                      className="tag cursor-pointer text-success"
-                                    >
-                                      {t("common:payment")}
-                                    </span>
+                                    {findPreOrderByIdQuery?.data
+                                      ?.findPreOrderById?.status !==
+                                      PreOrderStates.Closed && (
+                                      <>
+                                        {" "}
+                                        /
+                                        <span
+                                          onClick={() => {
+                                            router.push(
+                                              `/profile/orders/${uuid}/verify/${offer.id}`
+                                            )
+                                          }}
+                                          className="tag cursor-pointer text-success"
+                                        >
+                                          {t("common:payment")}
+                                        </span>
+                                      </>
+                                    )}
                                   </td>
                                 </tr>
                               )
