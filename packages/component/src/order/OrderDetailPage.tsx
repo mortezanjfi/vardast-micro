@@ -1,11 +1,9 @@
 "use client"
 
-import { useCallback, useEffect, useMemo } from "react"
-import Image from "next/image"
+import { useCallback, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
 import {
-  Line,
   OrderOfferStatuses,
   PreOrderStates,
   useCreateOrderOfferMutation,
@@ -19,12 +17,8 @@ import { ACTION_BUTTON_TYPE } from "@vardast/type/OrderProductTabs"
 import { Button } from "@vardast/ui/button"
 import { ClientError } from "graphql-request"
 
-import OrderProductCard from "../desktop/OrderProductCard"
-import OrderProductListContainer, {
-  OrderProductCardSkeleton
-} from "../desktop/OrderProductListContainer"
+import OrderProductsList from "../desktop/OrderProductsList"
 import Link from "../Link"
-import NotFoundMessage from "../NotFound"
 import PageTitle from "../project/PageTitle"
 
 type OrderDetailPageProps = {
@@ -47,27 +41,27 @@ const OrderDetailPage = ({
     }
   )
 
-  const orderProducts = useMemo(
-    () =>
-      offerId
-        ? findPreOrderByIdQuery?.data?.findPreOrderById.offers
-            .find((offer) => offer.id === +offerId)
-            ?.offerLine.map((item) => ({
-              ...item.line,
-              price: {
-                fi_price: item.fi_price,
-                tax_price: item.tax_price,
-                total_price: item.total_price
-              }
-            }))
-        : findPreOrderByIdQuery?.data?.findPreOrderById?.lines,
-    [findPreOrderByIdQuery?.data, offerId]
-  )
+  // const orderProducts = useMemo(
+  //   () =>
+  //     offerId
+  //       ? findPreOrderByIdQuery?.data?.findPreOrderById.offers
+  //           .find((offer) => offer.id === +offerId)
+  //           ?.offerLine.map((item) => ({
+  //             ...item.line,
+  //             price: {
+  //               fi_price: item.fi_price,
+  //               tax_price: item.tax_price,
+  //               total_price: item.total_price
+  //             }
+  //           }))
+  //       : findPreOrderByIdQuery?.data?.findPreOrderById?.lines,
+  //   [findPreOrderByIdQuery?.data, offerId]
+  // )
 
-  const files = useMemo(
-    () => findPreOrderByIdQuery?.data?.findPreOrderById?.files,
-    [findPreOrderByIdQuery?.data]
-  )
+  // const files = useMemo(
+  //   () => findPreOrderByIdQuery?.data?.findPreOrderById?.files,
+  //   [findPreOrderByIdQuery?.data]
+  // )
 
   const createOrderOfferMutation = useCreateOrderOfferMutation(
     graphqlRequestClientWithToken,
@@ -192,7 +186,18 @@ const OrderDetailPage = ({
           title={"لیست کالاهای سفارش"}
         />
       )}
-      {findPreOrderByIdQuery.isLoading && findPreOrderByIdQuery.isFetching ? (
+      <OrderProductsList
+        isSeller={true}
+        actionButtonType={ACTION_BUTTON_TYPE.ADD_PRODUCT_OFFER}
+        isMobileView={isMobileView}
+        hasOperation={
+          findPreOrderByIdQuery?.data?.findPreOrderById?.status !==
+            PreOrderStates.Closed && !!offerId
+        }
+        offerId={offerId}
+        findPreOrderByIdQuery={findPreOrderByIdQuery}
+      />
+      {/* {findPreOrderByIdQuery.isLoading && findPreOrderByIdQuery.isFetching ? (
         <OrderProductListContainer>
           {() => (
             <>
@@ -234,7 +239,7 @@ const OrderDetailPage = ({
         </OrderProductListContainer>
       ) : (
         <NotFoundMessage text="کالایی به سفارش خود" />
-      )}
+      )} */}
 
       <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] grid w-full !grid-cols-2 gap pt-4 md:relative md:bottom-0 md:mt-0 md:flex md:justify-end">
         <Link className="btn btn-md btn-secondary" href="/profile/orders">

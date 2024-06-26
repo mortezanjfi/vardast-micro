@@ -559,7 +559,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
                       type="single"
                       value={field.value}
                       onValueChange={(value: PaymentMethodEnum) => {
-                        form.setValue("payment_methods", value)
+                        value && form.setValue("payment_methods", value)
                       }}
                     >
                       <ToggleGroupItem

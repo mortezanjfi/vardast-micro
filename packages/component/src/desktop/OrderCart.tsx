@@ -60,7 +60,7 @@ export const PreOrderStatesFa = {
   },
   [PreOrderStates.Closed]: {
     className: "tag-success",
-    name_fa_admin: "بسته شده",
+    name_fa_admin: "خریداری شده",
     name_fa: "خریداری شده"
   },
   [PreOrderStates.Completed]: {

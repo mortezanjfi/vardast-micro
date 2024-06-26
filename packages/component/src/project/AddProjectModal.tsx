@@ -193,8 +193,10 @@ const AddLegalUserModal = ({ isMobileView, isAdmin, open, setOpen }: Props) => {
                               type="single"
                               value={field.value}
                               onValueChange={(value: TypeProject) => {
-                                setProjectType(value)
-                                form.setValue("type", value)
+                                if (value) {
+                                  setProjectType(value)
+                                  form.setValue("type", value)
+                                }
                               }}
                             >
                               <ToggleGroupItem

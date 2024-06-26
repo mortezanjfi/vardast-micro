@@ -38,7 +38,7 @@ export const SidebarProfile = ({ session }: { session: Session }) => {
                   <div className="flex flex-1 flex-col gap-y-1">
                     {session?.profile?.fullName &&
                     session?.profile?.fullName !== "null null" ? (
-                      <h4 className="font-semibold">{`${session?.profile?.fullName} (${session?.type === UserType.Legal ? session?.profile?.legal?.name_company : t("common:real")})`}</h4>
+                      <h4 className="font-semibold">{`${session?.profile?.fullName} (${session?.type === UserType.Legal ? session?.profile?.legal?.name_company ?? " - " : t("common:real")})`}</h4>
                     ) : (
                       "کاربر وردست"
                     )}

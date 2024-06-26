@@ -87,7 +87,7 @@ const _admin: NavigationType[] = [
         icon: "CubeIcon",
         items: [
           {
-            title: "تمام کالاها",
+            title: "کالاها",
             path: "/products"
           },
           {
