@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo } from "react"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { UseQueryResult } from "@tanstack/react-query"
 import {
   Address,
@@ -48,8 +48,21 @@ const AddressesTab = ({
   const { data: session } = useSession()
   const router = useRouter()
   const pathname = usePathname()
+  const searchParams = useSearchParams()
 
   const addressLength = useMemo(() => addresses?.length, [addresses?.length])
+
+  const createFallBack = () => {
+    const params = new URLSearchParams(searchParams as any)
+    if (params.has("tab")) {
+      params.delete("tab")
+    }
+    params.append("tab", "addresses")
+    const newFallBackUrl = `${pathname}?${params.toString()}`
+    router.push(
+      `/addresses/new?type=${relatedType}&id=${relatedId}&fallback=${newFallBackUrl}`
+    )
+  }
 
   return (
     <>
@@ -58,9 +71,10 @@ const AddressesTab = ({
           <Button
             className="mr-auto"
             onClick={() =>
-              router.push(
-                `/addresses/new?type=${relatedType}&id=${relatedId}&fallback=${pathname}`
-              )
+              // router.push(
+              //   `/addresses/new?type=${relatedType}&id=${relatedId}&fallback=${pathname}`
+              // )
+              createFallBack()
             }
           >
             {t("common:add_entity", { entity: t("common:address") })}

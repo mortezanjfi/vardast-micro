@@ -1,6 +1,7 @@
 "use client"
 
-import { notFound } from "next/navigation"
+import { useState } from "react"
+import { notFound, usePathname, useSearchParams } from "next/navigation"
 import AddressesTab from "@vardast/component/legal/address-Info/AddressesTab"
 import ContactInfosTab from "@vardast/component/legal/ContactInfosTab"
 import Loading from "@vardast/component/Loading"
@@ -21,6 +22,13 @@ import useTranslation from "next-translate/useTranslation"
 import MembersTab from "@/app/(admin)/sellers/components/MembersTab"
 import SellerForm from "@/app/(admin)/sellers/components/SellerForm"
 
+export enum SELLER_EDIT_TAB {
+  INFO = "information",
+  ADDRESS = "addresses",
+  CONTACT = "contactInfos",
+  MEMBERS = "members"
+}
+
 type Props = {
   title: string
   uuid: string
@@ -29,6 +37,12 @@ type Props = {
 const SellerEdit = ({ title, uuid }: Props) => {
   const { t } = useTranslation()
   const { data: session } = useSession()
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const [activeTab, setActiveTab] = useState<SELLER_EDIT_TAB>(
+    (searchParams.get("tab") as SELLER_EDIT_TAB) || SELLER_EDIT_TAB.INFO
+  )
+
   const data = useGetSellerQuery(
     graphqlRequestClientWithToken,
     {
@@ -39,6 +53,17 @@ const SellerEdit = ({ title, uuid }: Props) => {
     }
   )
 
+  const changeTab = (e: string) => {
+    const params = new URLSearchParams(searchParams as any)
+    if (params.has("tab")) {
+      params.delete("tab")
+    }
+    params.append("tab", e)
+    const newUrl = `${pathname}?${params.toString()}`
+    window.history.pushState({}, "", newUrl)
+    setActiveTab(e as SELLER_EDIT_TAB)
+  }
+
   if (data?.isLoading) return <Loading />
   if (data?.error) return <LoadingFailed />
   if (!data?.data) notFound()
@@ -46,20 +71,24 @@ const SellerEdit = ({ title, uuid }: Props) => {
   return (
     <div className="flex h-full w-full flex-col gap-9 py-6 md:py-0">
       <PageTitle backButtonUrl="/sellers" title={title} />
-      <Tabs defaultValue="information">
+      <Tabs
+        value={activeTab}
+        onValueChange={(e) => changeTab(e)}
+        defaultValue={SELLER_EDIT_TAB.INFO}
+      >
         <TabsList>
-          <TabsTrigger value="information">
+          <TabsTrigger value={SELLER_EDIT_TAB.INFO}>
             {t("common:information")}
           </TabsTrigger>
           {data?.data?.seller &&
             session?.abilities?.includes("gql.users.address.index") && (
-              <TabsTrigger value="addresses">
+              <TabsTrigger value={SELLER_EDIT_TAB.ADDRESS}>
                 {t("common:addresses")}
               </TabsTrigger>
             )}
           {data?.data?.seller &&
             session?.abilities?.includes("gql.users.contact_info.index") && (
-              <TabsTrigger value="contactInfos">
+              <TabsTrigger value={SELLER_EDIT_TAB.CONTACT}>
                 {t("common:contactInfos")}
               </TabsTrigger>
             )}
@@ -67,15 +96,17 @@ const SellerEdit = ({ title, uuid }: Props) => {
             session?.abilities?.includes(
               "gql.products.seller_representative.index"
             ) && (
-              <TabsTrigger value="members">{t("common:members")}</TabsTrigger>
+              <TabsTrigger value={SELLER_EDIT_TAB.MEMBERS}>
+                {t("common:members")}
+              </TabsTrigger>
             )}
         </TabsList>
-        <TabsContent value="information">
+        <TabsContent value={SELLER_EDIT_TAB.INFO}>
           <SellerForm seller={data?.data?.seller as Seller} />
         </TabsContent>
         {data?.data?.seller &&
           session?.abilities?.includes("gql.users.address.index") && (
-            <TabsContent value="addresses">
+            <TabsContent value={SELLER_EDIT_TAB.ADDRESS}>
               <AddressesTab
                 data={data}
                 relatedType="Seller"
@@ -86,7 +117,7 @@ const SellerEdit = ({ title, uuid }: Props) => {
           )}
         {data?.data?.seller &&
           session?.abilities?.includes("gql.users.contact_info.index") && (
-            <TabsContent value="contactInfos">
+            <TabsContent value={SELLER_EDIT_TAB.CONTACT}>
               <ContactInfosTab
                 data={data}
                 relatedType="Seller"
@@ -99,7 +130,7 @@ const SellerEdit = ({ title, uuid }: Props) => {
           session?.abilities?.includes(
             "gql.products.seller_representative.index"
           ) && (
-            <TabsContent value="members">
+            <TabsContent value={SELLER_EDIT_TAB.MEMBERS}>
               <MembersTab
                 sellerId={data?.data?.seller.id}
                 representatives={

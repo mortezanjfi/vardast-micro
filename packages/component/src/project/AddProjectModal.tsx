@@ -366,6 +366,11 @@ const AddLegalUserModal = ({ isMobileView, isAdmin, open, setOpen }: Props) => {
               </div>
               <div className="mt-auto flex w-full flex-row-reverse gap pt-6 md:mt-7 md:border-t ">
                 <Button
+                  loading={
+                    createProjectMutation.isLoading ||
+                    createProjectMutation.isError
+                  }
+                  disabled={getAllLegalUsers.isError}
                   className="w-full md:w-fit"
                   type="submit"
                   variant="primary"

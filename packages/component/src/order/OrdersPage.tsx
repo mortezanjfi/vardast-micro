@@ -253,18 +253,24 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
                                 PreOrderStatesFa[preOrder?.status]
                                   ?.name_fa_admin
                               }
-                            </span>{" "}
+                            </span>
                           </td>
                           <td className="border">
                             {preOrder?.pickUpUser?.fullName}
                           </td>
                           <td className="border">
-                            <Link href={`/profile/orders/${preOrder?.id}/info`}>
-                              <span className="tag cursor-pointer text-blue-500">
-                                {t("common:edit")}
-                              </span>
-                            </Link>
-                            /
+                            {preOrder.status !== PreOrderStates.Closed && (
+                              <>
+                                <Link
+                                  href={`/profile/orders/${preOrder?.id}/info`}
+                                >
+                                  <span className="tag cursor-pointer text-blue-500">
+                                    {t("common:edit")}
+                                  </span>
+                                </Link>
+                                /
+                              </>
+                            )}
                             <Link
                               href={`/profile/orders/${preOrder?.id}/offers`}
                             >

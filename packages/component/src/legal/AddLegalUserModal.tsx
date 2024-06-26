@@ -167,7 +167,9 @@ const AddLegalUserModal = ({ open, setOpen }: Props) => {
                   name="cellPhone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t("common:cellphone")} (مدیر عامل)</FormLabel>
+                      <FormLabel>
+                        {t("common:cellphone")} ({t("common:manager")} )
+                      </FormLabel>
                       <FormControl>
                         <Input
                           {...field}

@@ -235,8 +235,13 @@ function AddSellerModal({
                 />
               </div>
 
-              <div className="mt-auto flex w-full flex-row-reverse pt-5 md:mt-0 md:w-fit md:border-t">
-                <Button className="py-2" type="submit" variant="primary">
+              <div className="mt-auto flex w-full flex-row-reverse pt-5 md:mt-0 md:border-t">
+                <Button
+                  loading={addSellerOrderOfferMutation.isLoading}
+                  className="py-2"
+                  type="submit"
+                  variant="primary"
+                >
                   تایید و ادامه
                 </Button>
               </div>
