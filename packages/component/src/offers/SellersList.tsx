@@ -188,6 +188,7 @@ function SellersList({
   return (
     <>
       <SellerAdminConfirmationModal
+        updateOrderOfferMutation={updateOrderOfferMutation}
         onSubmit={submitModal}
         content={
           "در صورت تایید، سفارش شما به خریدار ارسال می شود و امکان ویرایش قیمت وجود نخواهد داشت."
@@ -480,6 +481,7 @@ function SellersList({
             !isClient && (
               <div className="justify between flex flex-row-reverse pt-5 md:border-t">
                 <Button
+                  loading={updateOrderOfferMutation.isLoading}
                   disabled={!form.watch("offerId")}
                   className="w-full py-2 md:w-fit"
                   type="submit"

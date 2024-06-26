@@ -2,16 +2,32 @@
 
 import { Dispatch, SetStateAction } from "react"
 import { CheckCircleIcon } from "@heroicons/react/24/outline"
-import { Button } from "@vardast/ui/button"
+import { UseMutationResult } from "@tanstack/react-query"
+import {
+  Exact,
+  UpdateOrderOfferInput,
+  UpdateOrderOfferMutation
+} from "@vardast/graphql/generated"
+import { ClientError } from "graphql-request"
+import useTranslation from "next-translate/useTranslation"
+
+import { Button } from "../../../ui/src/button"
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader
-} from "@vardast/ui/dialog"
-import useTranslation from "next-translate/useTranslation"
+} from "../../../ui/src/dialog"
 
 type Props = {
+  updateOrderOfferMutation: UseMutationResult<
+    UpdateOrderOfferMutation,
+    ClientError,
+    Exact<{
+      updateOrderOfferInput: UpdateOrderOfferInput
+    }>,
+    unknown
+  >
   onSubmit: Function
   content: string
   open: boolean
@@ -20,6 +36,7 @@ type Props = {
 }
 
 function SellerAdminConfirmationModal({
+  updateOrderOfferMutation,
   onSubmit,
   open,
   onOpenChange,
@@ -42,6 +59,7 @@ function SellerAdminConfirmationModal({
         <DialogFooter>
           <div className="flex items-center gap-2">
             <Button
+              loading={updateOrderOfferMutation?.isLoading}
               variant="ghost"
               onClick={() => {
                 onOpenChange(false)
@@ -50,7 +68,11 @@ function SellerAdminConfirmationModal({
             >
               {t("common:cancel")}
             </Button>
-            <Button variant="danger" onClick={() => onSubmit()}>
+            <Button
+              disabled={updateOrderOfferMutation?.isLoading}
+              variant="danger"
+              onClick={() => onSubmit()}
+            >
               {t("common:confirm")}
             </Button>
           </div>
