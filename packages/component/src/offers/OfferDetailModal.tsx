@@ -21,6 +21,7 @@ import { DetailsWithTitle } from "../desktop/DetailsWithTitle"
 import OrderProductsList from "../desktop/OrderProductsList"
 
 export type OfferDetailModalProps = {
+  isClient?: boolean
   isMobileView?: boolean
   selectedOfferId: number
   findPreOrderByIdQuery: UseQueryResult<FindPreOrderByIdQuery, unknown>
@@ -30,6 +31,7 @@ export type OfferDetailModalProps = {
 
 function OfferDetailModal({
   isMobileView,
+  isClient,
   findPreOrderByIdQuery,
   selectedOfferId,
   open,
@@ -48,45 +50,47 @@ function OfferDetailModal({
         <DialogHeader className="h-fit">
           <DialogTitle>{t("common:details")}</DialogTitle>
         </DialogHeader>
-        <div className="flex grid-cols-4 flex-col gap-7 md:grid">
-          {isMobileView ? (
-            <DetailsWithTitle
-              title={t("common:entity_name", { entity: t("common:seller") })}
-              text={
-                findPreOrderByIdQuery?.data?.findPreOrderById?.offers.find(
-                  (item) => item.id === selectedOfferId
-                )?.request_name
-              }
-            />
-          ) : (
-            <div className="flex flex-col gap-1">
-              <span>
-                {t("common:entity_name", { entity: t("common:seller") })}
-              </span>
-              <Input
-                disabled
-                className="w-full"
-                value={
+        {!isClient && (
+          <div className="flex grid-cols-4 flex-col gap-7 md:grid">
+            {isMobileView ? (
+              <DetailsWithTitle
+                title={t("common:entity_name", { entity: t("common:seller") })}
+                text={
                   findPreOrderByIdQuery?.data?.findPreOrderById?.offers.find(
                     (item) => item.id === selectedOfferId
                   )?.request_name
                 }
               />
-            </div>
-          )}
-          {/* <div className="flex flex-col gap-1">
+            ) : (
+              <div className="flex flex-col gap-1">
+                <span>
+                  {t("common:entity_name", { entity: t("common:seller") })}
+                </span>
+                <Input
+                  disabled
+                  className="w-full"
+                  value={
+                    findPreOrderByIdQuery?.data?.findPreOrderById?.offers.find(
+                      (item) => item.id === selectedOfferId
+                    )?.request_name
+                  }
+                />
+              </div>
+            )}
+            {/* <div className="flex flex-col gap-1">
             <span>{t("common:cellPhone")}</span>
             <Input disabled className="w-full" value="8888888888" />
-          </div>
-          <div className="flex flex-col gap-1">
+            </div>
+            <div className="flex flex-col gap-1">
             <span>{t("common:province")}</span>
             <Input disabled className="w-full" value="Tehran" />
-          </div>
-          <div className="flex flex-col gap-1">
+            </div>
+            <div className="flex flex-col gap-1">
             <span>{t("common:city")}</span>
             <Input disabled className="w-full" value="Tehran" />
-          </div> */}
-        </div>
+            </div> */}
+          </div>
+        )}
         <OrderProductsList
           isSeller={true}
           actionButtonType={ACTION_BUTTON_TYPE.ADD_PRODUCT_OFFER}

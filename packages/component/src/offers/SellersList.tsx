@@ -202,6 +202,7 @@ function SellersList({
         onOpenChange={seConfirmModalOpen}
       />
       <OfferDetailModal
+        isClient={isClient}
         isMobileView={isMobileView}
         findPreOrderByIdQuery={findPreOrderByIdQuery}
         selectedOfferId={selectedOfferId}
