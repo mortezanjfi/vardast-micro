@@ -197,8 +197,8 @@ const OrdersPage = ({
                       })}
                     </th>
                     <th>{t("common:category")}</th>
-                    <th className="border">{t("common:expert_name")}</th>
                     <th className="border">{t("common:person-in-charge")}</th>
+                    <th className="border">{t("common:expert_name")}</th>
                     <th className="border">{t("common:submission-time")}</th>
                     <th className="border">{t("common:order-needed-time")}</th>
                     {/* <th className="border">{t("common:file")}</th> */}
@@ -229,8 +229,8 @@ const OrdersPage = ({
                           <td className="border">
                             {preOrder?.category?.title}
                           </td>
-                          <td className="border">{preOrder?.expert_name}</td>
                           <td className="border">{preOrder?.applicant_name}</td>
+                          <td className="border">{preOrder?.expert_name}</td>
                           <td className="border">
                             {preOrder?.request_date
                               ? digitsEnToFa(
