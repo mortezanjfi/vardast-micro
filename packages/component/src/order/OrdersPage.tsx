@@ -197,7 +197,7 @@ const OrdersPage = ({
                       })}
                     </th>
                     <th>{t("common:category")}</th>
-                    <th className="border">{t("common:person-in-charge")}</th>
+                    <th className="border">{t("common:applicant_name")}</th>
                     <th className="border">{t("common:expert_name")}</th>
                     <th className="border">{t("common:submission-time")}</th>
                     <th className="border">{t("common:order-needed-time")}</th>

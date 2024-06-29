@@ -208,10 +208,7 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                               <td className="w-4 border">
                                 <span>{digitsEnToFa(index + 1)}</span>
                               </td>
-                              <td className="border">
-                                {` ${project.name} -
-                                ${TypeProjectFa[project.type]?.name_fa}`}
-                              </td>
+                              <td className="border">{project.name}</td>
                               <td className="border">
                                 {project.user.find(
                                   (user) =>
