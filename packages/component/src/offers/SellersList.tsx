@@ -268,36 +268,28 @@ function SellersList({
                       <table className="table border-collapse border">
                         <thead>
                           <tr>
-                            <th className={thClasses}>{t("common:row")}</th>
-                            <th className={thClasses}>
+                            <th>{t("common:row")}</th>
+                            <th>
                               {t("common:entity_code", {
                                 entity: t("common:price-giver")
                               })}
                             </th>
-                            <th className={thClasses}>
+                            <th>
                               {t("common:entity_name", {
                                 entity: t("common:price-giver")
                               })}
                             </th>
-                            <th className={thClasses}>
-                              {t("common:invoice-number")}
-                            </th>
-                            <th className={thClasses}>
-                              {t("common:invoice-total-price")} (تومان)
-                            </th>
+                            <th>{t("common:invoice-number")}</th>
+                            <th>{t("common:invoice-total-price")} (تومان)</th>
                             <th>{t("common:offer-submission-time")}</th>
                             {findPreOrderByIdQuery?.data?.findPreOrderById
                               ?.status !== PreOrderStates.Closed &&
                               !isClient && (
                                 <>
-                                  <th className={thClasses}>
-                                    {t("common:choose-offer")}
-                                  </th>
+                                  <th>{t("common:choose-offer")}</th>
                                 </>
                               )}
-                            <th className={thClasses}>
-                              {t("common:operation")}
-                            </th>
+                            <th>{t("common:operation")}</th>
                           </tr>
                         </thead>
 
@@ -318,21 +310,17 @@ function SellersList({
                             findPreOrderByIdQuery.data?.findPreOrderById?.offers?.map(
                               (offer, index) => (
                                 <tr key={offer?.id}>
-                                  <td className="w-4 border">
+                                  <td className="w-4 ">
                                     <span>{digitsEnToFa(index + 1)}</span>
                                   </td>
-                                  <td className="border">
+                                  <td>
                                     <span className="font-medium text-alpha-800">
                                       {offer?.id && digitsEnToFa(offer?.id)}
                                     </span>
                                   </td>
-                                  <td className="border">
-                                    {offer?.request_name}
-                                  </td>
-                                  <td className="border">
-                                    {digitsEnToFa(offer?.uuid)}
-                                  </td>
-                                  <td className="border">
+                                  <td>{offer?.request_name}</td>
+                                  <td>{digitsEnToFa(offer?.uuid)}</td>
+                                  <td>
                                     {digitsEnToFa(addCommas(offer?.total))}
                                   </td>
                                   <td>
@@ -352,7 +340,7 @@ function SellersList({
                                     ?.status !== PreOrderStates.Closed &&
                                     !isClient && (
                                       <>
-                                        <td className="border">
+                                        <td>
                                           <FormField
                                             control={form.control}
                                             name="offerId"
@@ -381,7 +369,7 @@ function SellersList({
                                         </td>
                                       </>
                                     )}
-                                  <td className="border">
+                                  <td>
                                     <span
                                       onClick={() => {
                                         setSelectedOfferId(offer?.id)

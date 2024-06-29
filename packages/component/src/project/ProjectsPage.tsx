@@ -183,20 +183,18 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                   <table className="table-hover table">
                     <thead>
                       <tr>
-                        <th className="border">{t("common:row")}</th>
-                        <th className="border">
+                        <th>{t("common:row")}</th>
+                        <th>
                           {t("common:entity_name", {
                             entity: t("common:project")
                           })}
                         </th>
-                        <th className="border">
-                          {t("common:project-manager")}
-                        </th>
-                        <th className="border">{t("common:open_orders")}</th>
-                        <th className="border">{t("common:closed_orders")}</th>
-                        <th className="border">{t("common:total_orders")}</th>
+                        <th>{t("common:project-manager")}</th>
+                        <th>{t("common:open_orders")}</th>
+                        <th>{t("common:closed_orders")}</th>
+                        <th>{t("common:total_orders")}</th>
 
-                        <th className="border">{t("common:operation")}</th>
+                        <th>{t("common:operation")}</th>
                       </tr>
                     </thead>
 
@@ -208,23 +206,17 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                               <td className="w-4 border">
                                 <span>{digitsEnToFa(index + 1)}</span>
                               </td>
-                              <td className="border">{project.name}</td>
-                              <td className="border">
+                              <td>{project.name}</td>
+                              <td>
                                 {project.user.find(
                                   (user) =>
                                     user?.type === UserTypeProject.Manager
                                 )?.user?.fullName || "--"}
                               </td>
-                              <td className="border">
-                                {digitsEnToFa(project.openOrdersCount)}
-                              </td>
-                              <td className="border">
-                                {digitsEnToFa(project.closedOrdersCount)}
-                              </td>
-                              <td className="border">
-                                {digitsEnToFa(project.totalOrdersCount)}
-                              </td>
-                              <td className="border">
+                              <td>{digitsEnToFa(project.openOrdersCount)}</td>
+                              <td>{digitsEnToFa(project.closedOrdersCount)}</td>
+                              <td>{digitsEnToFa(project.totalOrdersCount)}</td>
+                              <td>
                                 <Link href={`/profile/projects/${project.id}`}>
                                   <span className="tag cursor-pointer text-error">
                                     {t("common:edit")}

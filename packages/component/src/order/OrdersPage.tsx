@@ -200,23 +200,23 @@ const OrdersPage = ({
               <table className="table-hover table">
                 <thead>
                   <tr>
-                    <th className="border">{t("common:row")}</th>
-                    <th className="border">
+                    <th>{t("common:row")}</th>
+                    <th>
                       {t("common:entity_code", { entity: t("common:order") })}
                     </th>
-                    <th className="border">
+                    <th>
                       {t("common:entity_name", {
                         entity: t("common:project")
                       })}
                     </th>
                     <th>{t("common:category")}</th>
-                    <th className="border">{t("common:applicant_name")}</th>
-                    <th className="border">{t("common:expert_name")}</th>
-                    <th className="border">{t("common:submission-time")}</th>
-                    <th className="border">{t("common:order-needed-time")}</th>
-                    {/* <th className="border">{t("common:file")}</th> */}
-                    <th className="border">{t("common:status")}</th>
-                    <th className="border">{t("common:operation")}</th>
+                    <th>{t("common:applicant_name")}</th>
+                    <th>{t("common:expert_name")}</th>
+                    <th>{t("common:submission-time")}</th>
+                    <th>{t("common:order-needed-time")}</th>
+                    {/* <th >{t("common:file")}</th> */}
+                    <th>{t("common:status")}</th>
+                    <th>{t("common:operation")}</th>
                   </tr>
                 </thead>
 
@@ -235,16 +235,12 @@ const OrdersPage = ({
                           <td className="w-4 border">
                             <span>{digitsEnToFa(index + 1)}</span>
                           </td>
-                          <td className="border">
-                            {digitsEnToFa(preOrder?.uuid)}
-                          </td>
-                          <td className="border">{preOrder?.project?.name}</td>
-                          <td className="border">
-                            {preOrder?.category?.title}
-                          </td>
-                          <td className="border">{preOrder?.applicant_name}</td>
-                          <td className="border">{preOrder?.expert_name}</td>
-                          <td className="border">
+                          <td>{digitsEnToFa(preOrder?.uuid)}</td>
+                          <td>{preOrder?.project?.name}</td>
+                          <td>{preOrder?.category?.title}</td>
+                          <td>{preOrder?.applicant_name}</td>
+                          <td>{preOrder?.expert_name}</td>
+                          <td>
                             {preOrder?.request_date
                               ? digitsEnToFa(
                                   new Date(
@@ -259,7 +255,7 @@ const OrdersPage = ({
                                 )
                               : "-"}
                           </td>
-                          <td className="border">
+                          <td>
                             {preOrder?.need_date
                               ? digitsEnToFa(
                                   new DateObject(new Date(preOrder?.need_date))
@@ -275,7 +271,7 @@ const OrdersPage = ({
                               : "-"}
                           </td>
 
-                          <td className="border">
+                          <td>
                             <span
                               className={clsx(
                                 "tag",
@@ -289,7 +285,7 @@ const OrdersPage = ({
                             </span>
                           </td>
 
-                          <td className="border">
+                          <td>
                             {preOrder.status === PreOrderStates.Closed ? (
                               <>
                                 <span

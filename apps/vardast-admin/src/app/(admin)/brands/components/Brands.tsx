@@ -179,16 +179,14 @@ const Brands = () => {
                             {brand.name}
                           </span>
                         </td>
-                        <td className=" border-r-0.5">
-                          {digitsEnToFa(addCommas(brand.sum))}
-                        </td>
-                        {/* <td className=" border-r-0.5"></td> */}
-                        {/* <td className=" border-r-0.5">
+                        <td>{digitsEnToFa(addCommas(brand.sum))}</td>
+                        {/* <td ></td> */}
+                        {/* <td >
                           {brand.addresses.map(
                             (address) => address.city.name
                           ) && "-"}
                         </td> */}
-                        <td className=" border-r-0.5">
+                        <td>
                           {" "}
                           {brand.priceList?.id ? (
                             <span className="tag  tag-sm tag-success">
@@ -200,7 +198,7 @@ const Brands = () => {
                             </span>
                           )}
                         </td>
-                        <td className=" border-r-0.5 border-alpha-200">
+                        <td>
                           {brand.catalog?.id ? (
                             <span className="tag  tag-sm tag-success">
                               {t("common:has")}
@@ -211,7 +209,7 @@ const Brands = () => {
                             </span>
                           )}
                         </td>
-                        <td className=" border-r-0.5 border-alpha-200">
+                        <td>
                           {brand?.bannerDesktop?.id ? (
                             <span className="tag  tag-sm tag-success">
                               {t("common:has")}
@@ -222,7 +220,7 @@ const Brands = () => {
                             </span>
                           )}
                         </td>
-                        <td className=" border-r-0.5">
+                        <td>
                           {brand.status ===
                             ThreeStateSupervisionStatuses.Confirmed && (
                             <span className="">{t("common:confirmed")}</span>
@@ -237,7 +235,7 @@ const Brands = () => {
                           )}
                         </td>
 
-                        <td className=" border-r-0.5">
+                        <td>
                           <Link target="_blank" href={`/brands/${brand.id}`}>
                             <span className="tag cursor-pointer text-blue-500">
                               {" "}

@@ -87,13 +87,13 @@ const AddressesTab = ({
           <table className="table-hover table">
             <thead>
               <tr>
-                <th className="border">{t("common:title")}</th>
-                <th className="border">{t("common:city")}</th>
-                <th className="border">{t("common:address")}</th>
-                <th className="border">{t("common:postalCode")}</th>
-                <th className="border">{t("common:status")}</th>
-                <th className="border">{t("common:visibility")}</th>
-                <th className="border">{t("common:operation")}</th>
+                <th>{t("common:title")}</th>
+                <th>{t("common:city")}</th>
+                <th>{t("common:address")}</th>
+                <th>{t("common:postalCode")}</th>
+                <th>{t("common:status")}</th>
+                <th>{t("common:visibility")}</th>
+                <th>{t("common:operation")}</th>
               </tr>
             </thead>
             <tbody className="border-collapse border">
@@ -108,19 +108,19 @@ const AddressesTab = ({
                       //   )
                       // }
                     >
-                      <td className="border">
+                      <td>
                         <span className="font-bold">{address.title}</span>
                       </td>
-                      <td className="border">
+                      <td>
                         {address.province.name}, {address.city.name}
                       </td>
-                      <td className="border">{address.address}</td>
+                      <td>{address.address}</td>
                       <td className="text-center">
                         <span className="font-mono tracking-widest">
                           {address.postalCode || "--"}
                         </span>
                       </td>
-                      <td className="border">
+                      <td>
                         {address.status ===
                           ThreeStateSupervisionStatuses.Confirmed && (
                           <span className="tag tag-light tag-sm tag-success">
@@ -140,7 +140,7 @@ const AddressesTab = ({
                           </span>
                         )}
                       </td>
-                      <td className="border">
+                      <td>
                         {address.isPublic ? (
                           <span className="tag tag-light tag-icon tag-success tag-sm h-8 w-8 rounded-full">
                             <LucideCheck className="icon" />
@@ -151,7 +151,7 @@ const AddressesTab = ({
                           </span>
                         )}
                       </td>
-                      <td className="border">
+                      <td>
                         <Link
                           href={`/addresses/${address.id}?fallback=${pathname}`}
                         >
