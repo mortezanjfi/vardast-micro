@@ -185,36 +185,17 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                       <tr>
                         <th className="border">{t("common:row")}</th>
                         <th className="border">
-                          {t("common:entity_uuid", {
-                            entity: t("common:project")
-                          })}
-                        </th>
-                        <th className="border">
                           {t("common:entity_name", {
                             entity: t("common:project")
                           })}
                         </th>
-                        {/* <th className="border">
-                {t("common:entity_count", { entity: t("common:order") })}
-              </th> */}
-                        <th className="border">
-                          {t("common:entity_type", {
-                            entity: t("common:project")
-                          })}
-                        </th>
-                        <th className="border">
-                          {t("common:last-order-date")}
-                        </th>
                         <th className="border">
                           {t("common:project-manager")}
                         </th>
-                        <th className="border">{t("common:created_at")}</th>
+                        <th className="border">{t("common:open_orders")}</th>
+                        <th className="border">{t("common:closed_orders")}</th>
+                        <th className="border">{t("common:total_orders")}</th>
 
-                        <th className="border">
-                          {t("common:last-updated-at")}
-                        </th>
-
-                        <th className="border">{t("common:status")}</th>
                         <th className="border">{t("common:operation")}</th>
                       </tr>
                     </thead>
@@ -227,40 +208,24 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                               <td className="w-4 border">
                                 <span>{digitsEnToFa(index + 1)}</span>
                               </td>
-                              {/* شناسه پروژه */}
-                              <td className="border">{project?.uuid}</td>
-                              <td className="border">{project.name}</td>
-                              {/* تعداد سفارش */}
-                              {/* <td className="border">--</td> */}
-                              {/* تاریخ آخرین سفارش */}
-
                               <td className="border">
-                                {TypeProjectFa[project.type]?.name_fa}
+                                {` ${project.name} -
+                                ${TypeProjectFa[project.type]?.name_fa}`}
                               </td>
-                              <td className="border">--</td>
                               <td className="border">
                                 {project.user.find(
                                   (user) =>
                                     user?.type === UserTypeProject.Manager
                                 )?.user?.fullName || "--"}
                               </td>
-                              {/* تاریخ ایجاد */}
                               <td className="border">
-                                {digitsEnToFa(
-                                  new Date(
-                                    project.createTime
-                                  ).toLocaleDateString("fa-IR", {
-                                    year: "numeric",
-                                    month: "2-digit",
-                                    day: "2-digit"
-                                  })
-                                )}
+                                {digitsEnToFa(project.openOrdersCount)}
                               </td>
-                              {/* آخرین بروز رسانی */}
-                              <td className="border">--</td>
-                              {/* وضعیت */}
                               <td className="border">
-                                {statusProjectFa[project?.status]?.name_fa}
+                                {digitsEnToFa(project.closedOrdersCount)}
+                              </td>
+                              <td className="border">
+                                {digitsEnToFa(project.totalOrdersCount)}
                               </td>
                               <td className="border">
                                 <Link href={`/profile/projects/${project.id}`}>

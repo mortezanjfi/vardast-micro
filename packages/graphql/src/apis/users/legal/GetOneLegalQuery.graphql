@@ -18,6 +18,10 @@ query GetOneLegalQuery($id: Float!) {
       isPublic
       status
       rejectionReason
+      country {
+        id
+        phonePrefix
+      }
     }
 
     addresses {

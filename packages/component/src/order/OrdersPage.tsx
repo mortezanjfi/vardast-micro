@@ -191,14 +191,14 @@ const OrdersPage = ({
                     <th className="border">
                       {t("common:entity_code", { entity: t("common:order") })}
                     </th>
-                    <th>{t("common:category")}</th>
-                    <th className="border">{t("common:purchaser-name")}</th>
-                    <th className="border">{t("common:person-in-charge")}</th>
                     <th className="border">
                       {t("common:entity_name", {
                         entity: t("common:project")
                       })}
                     </th>
+                    <th>{t("common:category")}</th>
+                    <th className="border">{t("common:expert_name")}</th>
+                    <th className="border">{t("common:person-in-charge")}</th>
                     <th className="border">{t("common:submission-time")}</th>
                     <th className="border">{t("common:order-needed-time")}</th>
                     {/* <th className="border">{t("common:file")}</th> */}
@@ -225,14 +225,12 @@ const OrdersPage = ({
                           <td className="border">
                             {digitsEnToFa(preOrder?.uuid)}
                           </td>
+                          <td className="border">{preOrder?.project?.name}</td>
                           <td className="border">
                             {preOrder?.category?.title}
                           </td>
-                          <td className="border">{preOrder?.user?.fullName}</td>
-                          <td className="border">
-                            {preOrder?.pickUpUser?.fullName}
-                          </td>
-                          <td className="border">{preOrder?.project?.name}</td>
+                          <td className="border">{preOrder?.expert_name}</td>
+                          <td className="border">{preOrder?.applicant_name}</td>
                           <td className="border">
                             {preOrder?.request_date
                               ? digitsEnToFa(
@@ -262,27 +260,8 @@ const OrdersPage = ({
                                     })
                                 )
                               : "-"}
-                            {/* {digitsEnToFa(
-                              new Date(
-                                preOrder?.expire_time
-                              ).toLocaleDateString("fa-IR", {
-                                year: "numeric",
-                                month: "2-digit",
-                                day: "2-digit"
-                              })
-                            )} */}
                           </td>
-                          {/* <td className="border">
-                            {preOrder?.files.length > 0 ? (
-                              <span className="tag  tag-sm tag-success">
-                                {t("common:has")}
-                              </span>
-                            ) : (
-                              <span className="tag tag-sm tag-danger">
-                                {t("common:has_not")}
-                              </span>
-                            )}
-                          </td> */}
+
                           <td className="border">
                             <span
                               className={clsx(

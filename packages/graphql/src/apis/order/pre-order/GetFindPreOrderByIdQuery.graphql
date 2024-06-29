@@ -2,6 +2,8 @@ query FindPreOrderById($id: Float!) {
   findPreOrderById(id: $id) {
     id
     uuid
+    expert_name
+    applicant_name
     project {
       name
       id
