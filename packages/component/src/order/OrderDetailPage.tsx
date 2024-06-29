@@ -14,11 +14,12 @@ import {
 import { toast } from "@vardast/hook/use-toast"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ACTION_BUTTON_TYPE } from "@vardast/type/OrderProductTabs"
+import { Button } from "@vardast/ui/button"
 import { ClientError } from "graphql-request"
 
 import OrderInfoCard from "../desktop/OrderInfoCard"
 import OrderProductsList from "../desktop/OrderProductsList"
-import SellersList from "../offers/SellersList"
+import Link from "../Link"
 import PageTitle from "../project/PageTitle"
 
 type OrderDetailPageProps = {
@@ -199,12 +200,12 @@ const OrderDetailPage = ({
         offerId={offerId}
         findPreOrderByIdQuery={findPreOrderByIdQuery}
       />
-      <SellersList
+      {/* <SellersList
         isClient
         isMobileView={false}
         findPreOrderByIdQuery={findPreOrderByIdQuery}
         uuid={uuid}
-      />
+      /> */}
       {/* {findPreOrderByIdQuery.isLoading && findPreOrderByIdQuery.isFetching ? (
         <OrderProductListContainer>
           {() => (
@@ -249,7 +250,7 @@ const OrderDetailPage = ({
         <NotFoundMessage text="کالایی به سفارش خود" />
       )} */}
 
-      {/* <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] grid w-full !grid-cols-2 gap pt-4 md:relative md:bottom-0 md:mt-0 md:flex md:justify-end">
+      <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] grid w-full !grid-cols-2 gap pt-4 md:relative md:bottom-0 md:mt-0 md:flex md:justify-end">
         <Link className="btn btn-md btn-secondary" href="/profile/orders">
           بازگشت به سفارشات
         </Link>
@@ -266,7 +267,7 @@ const OrderDetailPage = ({
         >
           تایید و ادامه
         </Button>
-      </div> */}
+      </div>
     </div>
   )
 }

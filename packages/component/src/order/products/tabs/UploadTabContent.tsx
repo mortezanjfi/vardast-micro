@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react"
+import { useQueryClient } from "@tanstack/react-query"
 import { Image, useAddFilePreOrderMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
 import { uploadPaths } from "@vardast/lib/uploadPaths"
@@ -14,6 +15,7 @@ import Link from "../../../Link"
 function UploadTabContent({ uuid }: OrderProductTabContentProps) {
   const [files, setFiles] = useState<FilesWithPreview[]>([])
   const [csvFile, setCsvFIle] = useState<CsvWithPreview[]>([])
+  const queryClient = useQueryClient()
   const [images, setImages] = useState<
     { uuid: string; expiresAt: string; image?: Image }[]
   >([])
@@ -113,6 +115,9 @@ function UploadTabContent({ uuid }: OrderProductTabContentProps) {
                 expiresAt: file.expiresAt as string
               }
             ])
+            queryClient.invalidateQueries({
+              queryKey: ["FindPreOrderById"]
+            })
           }}
           withHeight={false}
         />

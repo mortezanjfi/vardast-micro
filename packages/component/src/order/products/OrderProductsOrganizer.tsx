@@ -12,7 +12,6 @@ import { setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
 import { useQueryState } from "next-usequerystate"
 
-import MoreInfo from "../MoreInfo"
 import { OrderProductsTabsEnum } from "./OrderProductsTabs"
 
 export type OrderProductsOrganizerTab = {
@@ -55,7 +54,7 @@ const OrderProductsOrganizer = ({
       <Segments
         value={activeTab}
         onValueChange={onTabValueChange}
-        className="flex w-full flex-col bg-alpha-white"
+        className="flex w-full flex-col bg-alpha-white pb-6"
       >
         <SegmentsList
           wrap={false}
@@ -99,11 +98,11 @@ const OrderProductsOrganizer = ({
           </SegmentsContent>
         ))}
       </Segments>
-      <MoreInfo
+      {/* <MoreInfo
         tabs={tabs}
         activeTab={activeTab}
         onTabValueChange={onTabValueChange}
-      />
+      /> */}
     </>
   )
 }

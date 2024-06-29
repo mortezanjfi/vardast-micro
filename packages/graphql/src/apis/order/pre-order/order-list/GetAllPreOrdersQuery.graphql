@@ -34,6 +34,7 @@ query GetAllPreOrdersQuery($indexPreOrderInput: IndexPreOrderInput!) {
       }
       project {
         name
+        id
       }
       deleted_at
       lines {

@@ -38,11 +38,13 @@ type OrdersPageProps = {
   isAdmin?: boolean
   isMobileView?: boolean
   title: string
+  filters?: OrdersFilterType
 }
+
 export const OrdersFilterSchema = z.object({
   status: z.string().optional(),
   hasFile: z.string().optional(),
-  projectName: z.string().optional(),
+  projectId: z.string().optional(),
   customerName: z.string().optional()
 })
 
@@ -69,16 +71,20 @@ const renderedListStatus = {
   [ApiCallStatusEnum.DEFAULT]: null
 }
 
-const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
+const OrdersPage = ({
+  isAdmin,
+  isMobileView,
+  title,
+  filters = {}
+}: OrdersPageProps) => {
   const { t } = useTranslation()
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const [orderToDelete, setOrderToDelete] = useState<PreOrder | null>()
   const [currentPage, setCurrentPage] = useState<number>(1)
   const router = useRouter()
 
-  const [ordersQueryParams, setOrdersQueryParams] = useState<OrdersFilterType>(
-    {}
-  )
+  const [ordersQueryParams, setOrdersQueryParams] =
+    useState<OrdersFilterType>(filters)
 
   const form = useForm<OrdersFilterType>({
     resolver: zodResolver(OrdersFilterSchema)
@@ -91,7 +97,7 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
         page: currentPage,
         customerName: ordersQueryParams.customerName,
         status: ordersQueryParams.status as PreOrderStates,
-        projectName: ordersQueryParams.projectName,
+        projectId: +ordersQueryParams.projectId,
         hasFile: checkBooleanByString(ordersQueryParams.hasFile)
       }
     },
@@ -102,7 +108,7 @@ const OrdersPage = ({ isAdmin, isMobileView, title }: OrdersPageProps) => {
           page: currentPage,
           customerName: ordersQueryParams.customerName,
           status: ordersQueryParams.status as PreOrderStates,
-          projectName: ordersQueryParams.projectName,
+          projectId: +ordersQueryParams.projectId,
           hasFile: checkBooleanByString(ordersQueryParams.hasFile)
         }
       ],

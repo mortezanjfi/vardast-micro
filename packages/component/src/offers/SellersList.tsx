@@ -139,16 +139,21 @@ function SellersList({
           queryClient.invalidateQueries({
             queryKey: ["FindPreOrderById"]
           })
-          !isMobileView &&
-            toast({
-              title: "پیشنهاد شما با موفقیت ثبت شد",
-              description:
-                "لطفا برای قیمت گذاری بر روی کالاها ادامه فرایند را انجام دهید.",
-              duration: 8000,
-              variant: "success"
-            })
-          setOrderId(data.createOrderOffer.id)
-          setAddSellerModalOpen(true)
+          // !isMobileView &&
+          //   toast({
+          //     title: "پیشنهاد شما با موفقیت ثبت شد",
+          //     description:
+          //       "لطفا برای قیمت گذاری بر روی کالاها ادامه فرایند را انجام دهید.",
+          //     duration: 8000,
+          //     variant: "success"
+          //   })
+          if (isClient) {
+            setSelectedOfferId(data?.createOrderOffer.id)
+            setDetailOpen(true)
+          } else {
+            setOrderId(data.createOrderOffer.id)
+            setAddSellerModalOpen(true)
+          }
           // router.push(`/my-orders/${uuid}/offers/${data.createOrderOffer.id}`)
         }
       }
@@ -224,20 +229,19 @@ function SellersList({
           <CardContainer title="لیست پیشنهادات">
             <div className="flex flex-col">
               {findPreOrderByIdQuery?.data?.findPreOrderById?.status !==
-                PreOrderStates.Closed &&
-                !isClient && (
-                  <div className="mb-7 flex w-full flex-row-reverse">
-                    <Button
-                      className="py-2"
-                      onClick={(e) => {
-                        onAddSeller(e)
-                      }}
-                      variant="outline-primary"
-                    >
-                      {t("common:add_entity", { entity: t("common:offer") })}
-                    </Button>
-                  </div>
-                )}
+                PreOrderStates.Closed && (
+                <div className="mb-7 flex w-full flex-row-reverse">
+                  <Button
+                    className="py-2"
+                    onClick={(e) => {
+                      onAddSeller(e)
+                    }}
+                    variant="outline-primary"
+                  >
+                    {t("common:add_entity", { entity: t("common:offer") })}
+                  </Button>
+                </div>
+              )}
               {isMobileView ? (
                 <div className="flex flex-col divide-y">
                   {findPreOrderByIdQuery?.data?.findPreOrderById?.offers.map(

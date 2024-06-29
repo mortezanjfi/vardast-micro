@@ -85,7 +85,7 @@ export const OrdersFilter = ({
     console.log(data)
     setOrdersQueryParams({
       customerName: form.getValues("customerName"),
-      projectName: form.getValues("projectName"),
+      projectId: form.getValues("projectId"),
       hasFile: form.getValues("hasFile"),
       status: form.getValues("status")
     })
@@ -198,7 +198,7 @@ export const OrdersFilter = ({
 
               <FormField
                 control={form.control}
-                name="projectName"
+                name="projectId"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{t("common:project")}</FormLabel>
@@ -221,8 +221,8 @@ export const OrdersFilter = ({
                               {field.value
                                 ? myProjectsQuery.data?.projects.data.find(
                                     (project) =>
-                                      project && project.name === field.value
-                                  )?.name
+                                      project && project.id === +field.value
+                                  )?.id
                                 : t("common:choose_entity", {
                                     entity: t("common:project")
                                   })}
@@ -256,12 +256,12 @@ export const OrdersFilter = ({
                               (project) =>
                                 project && (
                                   <CommandItem
-                                    value={`${project.name}`}
+                                    value={`${project.id}`}
                                     key={project.id}
                                     onSelect={(value) => {
                                       console.log(value)
 
-                                      form.setValue("projectName", value)
+                                      form.setValue("projectId", value)
                                       setProjectDialog(false)
                                     }}
                                   >

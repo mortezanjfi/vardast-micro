@@ -37,7 +37,7 @@ export type WithNavigationRouteItem = {
 
 export const _authentication_signin_sidebarMenu: NavigationItemType = {
   title: "ورود به حساب کاربری",
-  icon: "ArrowLeftStartOnRectangleIcon",
+  icon: "ArrowLeftEndOnRectangleIcon",
   path: paths.signin,
   background_color: "bg-green-500",
   color: "text-white"
@@ -45,7 +45,7 @@ export const _authentication_signin_sidebarMenu: NavigationItemType = {
 
 export const _authentication_signout_sidebarMenu: NavigationItemType = {
   title: "خروج از حساب کاربری",
-  icon: "ArrowLeftEndOnRectangleIcon",
+  icon: "ArrowLeftStartOnRectangleIcon",
   path: "/auth/signout",
   background_color: "bg-red-500",
   color: "text-white"

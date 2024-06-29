@@ -268,6 +268,14 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                                     {t("common:edit")}
                                   </span>
                                 </Link>
+                                /
+                                <Link
+                                  href={`/profile/projects/${project.id}/orders`}
+                                >
+                                  <span className="tag cursor-pointer text-info">
+                                    {t("common:orders")}
+                                  </span>
+                                </Link>
                               </td>
                             </tr>
                           )

@@ -134,12 +134,18 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
 
   const addresses = useMemo(
     () =>
-      form.watch("projectId")
+      form.watch("projectId") && myProjectsQuery.data
         ? myProjectsQuery.data?.projects.data.find(
             (project) => project.id === +form.watch("projectId")
           )?.address
         : [],
-    [form.watch("projectId"), form.watch("addressId"), router]
+    [
+      form.watch("projectId"),
+      form.watch("addressId"),
+      router,
+      findPreOrderByIdQuery.data,
+      myProjectsQuery.data
+    ]
   )
 
   const submit = (data: CreateOrderInfoType) => {

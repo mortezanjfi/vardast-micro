@@ -95,7 +95,8 @@ function OrderProductsPageIndex({
         )
       },
       onSuccess: () => {
-        onCreateOffer()
+        // onCreateOffer()
+        router.push(`/profile/orders/${uuid}/offers`)
       }
     }
   )
