@@ -33,7 +33,7 @@ const Toggle = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof TogglePrimitive.Root> &
     VariantProps<typeof toggleVariants>
 >(({ className, variant, size, ...props }, ref) => (
-  <TogglePrimitive.RootX
+  <TogglePrimitive.Root
     ref={ref}
     className={mergeClasses({ variant, size, className })}
     {...props}
