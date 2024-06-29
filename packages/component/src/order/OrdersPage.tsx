@@ -12,9 +12,11 @@ import {
   useCreatePreOrderMutation,
   useGetAllPreOrdersQuery
 } from "@vardast/graphql/generated"
+import axiosApis, { IServePdf } from "@vardast/query/queryClients/axiosApis"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
+import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { DateObject } from "react-multi-date-picker"
@@ -77,6 +79,7 @@ const OrdersPage = ({
   title,
   filters = {}
 }: OrdersPageProps) => {
+  const { data: session } = useSession()
   const { t } = useTranslation()
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const [orderToDelete, setOrderToDelete] = useState<PreOrder | null>()
@@ -126,6 +129,16 @@ const OrdersPage = ({
       }
     }
   )
+
+  const downLoadInvoice = async ({ uuid, access_token }: IServePdf) => {
+    const response = await axiosApis.getInvoice({ uuid, access_token })
+    const html = response.data
+    const blob = new Blob([html], { type: "text/html" })
+    const url = window.URL.createObjectURL(blob)
+
+    const newTab = window.open(url, "_blank")
+    newTab.focus()
+  }
 
   const onCreateOrder = () => {
     createOrderMutation.mutate({
@@ -277,7 +290,22 @@ const OrdersPage = ({
                           </td>
 
                           <td className="border">
-                            {preOrder.status !== PreOrderStates.Closed && (
+                            {preOrder.status === PreOrderStates.Closed ? (
+                              <>
+                                <span
+                                  onClick={() => {
+                                    downLoadInvoice({
+                                      access_token: session.accessToken,
+                                      uuid: `${preOrder.uuid}`
+                                    })
+                                  }}
+                                  className="tag cursor-pointer text-success"
+                                >
+                                  {t("common:invoice")}
+                                </span>
+                                /
+                              </>
+                            ) : (
                               <>
                                 <Link
                                   onClick={(e) => {

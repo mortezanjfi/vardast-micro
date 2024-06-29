@@ -171,7 +171,7 @@ function SellersList({
   }
 
   const downLoadPreInvoice = async ({ uuid, access_token }: IServePdf) => {
-    const response = await axiosApis.getInvoice({ uuid, access_token })
+    const response = await axiosApis.getPreInvoice({ uuid, access_token })
     const html = response.data
     const blob = new Blob([html], { type: "text/html" })
     const url = window.URL.createObjectURL(blob)

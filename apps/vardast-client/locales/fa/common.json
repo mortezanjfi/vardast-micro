@@ -350,6 +350,7 @@
   "entity_type": "نوع {{entity}}",
   "payment_has_been_done": "پرداخت انجام شده است.",
   "pre-invoice": "پیش فاکتور",
+  "invoice": "فاکتور",
   "payment": "پرداخت",
   "verify": "تایید",
   "order-needed-time": "زمان نیاز",

@@ -50,6 +50,12 @@
     text-align: -webkit-match-parent;
   }
 
+  & td,
+  td > span,
+  td > a > span {
+    @apply text-sm;
+  }
+
   &-striped {
     & > tbody > tr:nth-of-type(even) > * {
       --table-accent-bg: var(--table-striped-bg);
