@@ -5,6 +5,7 @@ import { UseQueryResult } from "@tanstack/react-query"
 import { FindPreOrderByIdQuery } from "@vardast/graphql/generated"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
+import { DateObject } from "react-multi-date-picker"
 
 import Card from "../Card"
 import { DetailsWithTitle } from "./DetailsWithTitle"
@@ -29,11 +30,13 @@ const OrderInfoCard = ({ findPreOrderByIdQuery }: OrderInfoCardProps) => {
         <div className="flex gap-5">
           <div className="tag flex w-fit gap-2 border border-alpha-400 bg-alpha-50 px-4 py-1">
             <span>
-              {t("common:entity_code", { entity: t("common:project") })}
+              {t("common:entity_code", { entity: t("common:order") })}
             </span>
             <span>
-              {findPreOrderByIdQuery?.data?.findPreOrderById?.id &&
-                digitsEnToFa(findPreOrderByIdQuery?.data?.findPreOrderById?.id)}
+              {findPreOrderByIdQuery?.data?.findPreOrderById?.uuid &&
+                digitsEnToFa(
+                  findPreOrderByIdQuery?.data?.findPreOrderById?.uuid
+                )}
             </span>
           </div>
           <div
@@ -47,19 +50,29 @@ const OrderInfoCard = ({ findPreOrderByIdQuery }: OrderInfoCardProps) => {
           </div>
         </div>
         <div className={"flex grid-cols-2 flex-col md:grid 2xl:grid-cols-3"}>
-          {/* نام خریدار */}
           <div className="flex flex-col">
+            {/* نام درخواست کننده */}
             <DetailsWithTitle
               textCustomStyle="whitespace-nowrap line-clamp-1"
-              title={t("common:entity_name", { entity: t("common:purchaser") })}
-              text={orderInfo?.user?.fullName}
+              title={t("common:entity_name", {
+                entity: t("common:applicant_name")
+              })}
+              text={orderInfo?.applicant_name}
+            />
+            {/* کارشناس خرید */}
+            <DetailsWithTitle
+              textCustomStyle="whitespace-nowrap line-clamp-1"
+              title={t("common:entity_name", {
+                entity: t("common:expert_name")
+              })}
+              text={orderInfo?.expert_name}
             />
             {/* شماره تماس خریدار */}
-            <DetailsWithTitle
+            {/* <DetailsWithTitle
               textCustomStyle="whitespace-nowrap line-clamp-1"
               title={t("common:purchaser-number")}
               text={orderInfo?.user?.cellphone}
-            />
+            /> */}
             {/* نام پروژه */}
             <DetailsWithTitle
               textCustomStyle="whitespace-nowrap line-clamp-1"
@@ -108,7 +121,9 @@ const OrderInfoCard = ({ findPreOrderByIdQuery }: OrderInfoCardProps) => {
                           {
                             year: "numeric",
                             month: "2-digit",
-                            day: "2-digit"
+                            day: "2-digit",
+                            hour: "numeric",
+                            minute: "numeric"
                           }
                         )
                       )
@@ -127,23 +142,24 @@ const OrderInfoCard = ({ findPreOrderByIdQuery }: OrderInfoCardProps) => {
               title={t("common:pay-method-description")}
               text={"-"}
             /> */}
-            {/*زمان اعتبار سفارش*/}
+            {/*زمان نیاز*/}
             <DetailsWithTitle
               textCustomStyle="whitespace-nowrap line-clamp-1"
-              title={t("common:order-expire-time")}
+              title={t("common:order-needed-time")}
               text={
-                orderInfo?.expire_time
+                orderInfo?.need_date
                   ? digitsEnToFa(
-                      new Date(orderInfo?.expire_time).toLocaleDateString(
-                        "fa-IR",
-                        {
+                      new DateObject(new Date(orderInfo?.need_date))
+                        .toDate()
+                        .toLocaleDateString("fa-IR", {
                           year: "numeric",
                           month: "2-digit",
-                          day: "2-digit"
-                        }
-                      )
+                          day: "2-digit",
+                          hour: "numeric",
+                          minute: "numeric"
+                        })
                     )
-                  : ""
+                  : "-"
               }
             />{" "}
             {/*توضیحات*/}
