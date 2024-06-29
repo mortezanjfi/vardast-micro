@@ -5,7 +5,6 @@ import { UseQueryResult } from "@tanstack/react-query"
 import { FindPreOrderByIdQuery } from "@vardast/graphql/generated"
 
 import PageTitle from "../../project/PageTitle"
-import OrderInfoCard from "./OrderInfoCard"
 
 export interface IOrderProductsInnerLayout extends PropsWithChildren {
   uuid: string
@@ -22,13 +21,13 @@ const OrderProductsInnerLayout: React.FC<IOrderProductsInnerLayout> = ({
   return (
     <div className="flex h-full flex-col-reverse justify-end gap-x-9 gap-y-1 p-0.5 2xl:grid 2xl:grid-cols-4">
       <div className="col-span-3 flex h-full flex-col">{children}</div>
-      {!isMobileView && (
+      {/* {!isMobileView && (
         <OrderInfoCard
           isMobileView={isMobileView}
           findPreOrderByIdQuery={findPreOrderByIdQuery}
           uuid={uuid}
         />
-      )}
+      )} */}
       {isMobileView && (
         <div className="flex flex-col pb-5">
           <PageTitle titleClass="text-sm" title={"افزودن کالا"} />

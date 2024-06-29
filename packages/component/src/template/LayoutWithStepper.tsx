@@ -16,7 +16,7 @@ const Layout = ({
   children
 }: LayoutProps) => {
   return (
-    <div className="flex h-full flex-col gap-8">
+    <div className="flex h-full flex-col">
       {!isMobileView && (
         <OfferItemStepper
           steppers={steppers}
@@ -24,9 +24,6 @@ const Layout = ({
         />
       )}
       <div className="h-full">{children}</div>
-      <div>
-        
-      </div>
     </div>
   )
 }
