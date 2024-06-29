@@ -4,6 +4,8 @@ mutation UpdatePreOrder($updatePreOrderInput: UpdatePreOrderInput!) {
     project {
       name
     }
+    expert_name
+    applicant_name
     request_date
     expire_date
     shipping_address

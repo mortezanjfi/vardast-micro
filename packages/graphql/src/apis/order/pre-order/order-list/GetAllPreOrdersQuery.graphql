@@ -18,6 +18,8 @@ query GetAllPreOrdersQuery($indexPreOrderInput: IndexPreOrderInput!) {
       descriptions
       status
       uuid
+      expert_name
+      applicant_name
       category {
         id
         title

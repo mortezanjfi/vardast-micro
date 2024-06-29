@@ -45,6 +45,7 @@ import { useForm } from "react-hook-form"
 import { DateObject } from "react-multi-date-picker"
 import { TypeOf, z } from "zod"
 
+import { Input } from "../../../../ui/src/input"
 import DatePickerMulti from "../../date-picker/DatePicker"
 import Link from "../../Link"
 import PageTitle from "../../project/PageTitle"
@@ -61,7 +62,9 @@ const CreateOrderInfoSchema = z.object({
   addressId: z.number(),
   payment_methods: z.string(),
   descriptions: z.string().optional(),
-  categoryId: z.number()
+  categoryId: z.number(),
+  expert_name: z.string().optional(),
+  applicant_name: z.string().optional()
 })
 
 const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
@@ -146,6 +149,8 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
     updatePreOrderMutation.mutate({
       updatePreOrderInput: {
         ...data,
+        expert_name: data.expert_name,
+        applicant_name: data.applicant_name,
         categoryId: +data.categoryId,
         projectId: +data.projectId,
         id: +uuid
@@ -179,6 +184,12 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
       if (defaultValue?.category?.id) {
         form.setValue("categoryId", defaultValue?.category?.id)
       }
+      if (defaultValue?.expert_name) {
+        form.setValue("expert_name", defaultValue?.expert_name)
+      }
+      if (defaultValue?.applicant_name) {
+        form.setValue("applicant_name", defaultValue?.applicant_name)
+      }
     }
   }, [findPreOrderByIdQuery?.data])
 
@@ -192,7 +203,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
         />
       )}
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(submit)}>
+        <form onSubmit={form.handleSubmit(submit)} className="pt-6">
           <div className="flex grid-cols-3 grid-rows-3 flex-col gap-x-7 gap-y-5 border-b pb-4 md:grid">
             <FormField
               control={form.control}
@@ -493,6 +504,40 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
                       </Command>
                     </PopoverContent>
                   </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="expert_name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("common:expert_name")}</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={updatePreOrderMutation.isLoading}
+                      type="text"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="applicant_name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("common:applicant_name")}</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={updatePreOrderMutation.isLoading}
+                      type="text"
+                      {...field}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

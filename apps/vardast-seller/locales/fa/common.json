@@ -360,5 +360,10 @@
   "shipping-address": "آدرس محل تحویل",
   "project-address": "آدرس پروژه",
   "order-needed-time": "زمان نیاز",
-  "contact-infos": "اطلاعات تماس"
+  "contact-infos": "اطلاعات تماس",
+  "expert_name": "سفارش دهنده",
+  "applicant_name": "درخواست کننده",
+  "open_orders": "سفارشات در جریان",
+  "closed_orders": "سفارشات خریداری شده",
+  "total_orders": "کل سفارشات"
 }
