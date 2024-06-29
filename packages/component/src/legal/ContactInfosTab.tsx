@@ -64,7 +64,7 @@ const ContactInfosTab = ({
     params.append("tab", "contactInfos")
     const newFallBackUrl = `${pathname}?${params.toString()}`
     router.push(
-      `/addresses/new?type=${relatedType}&id=${relatedId}&fallback=${newFallBackUrl}`
+      `/contact-infos/new?type=${relatedType}&id=${relatedId}&fallback=${newFallBackUrl}`
     )
   }
 
