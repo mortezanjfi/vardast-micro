@@ -8,12 +8,12 @@ import { Brand, Category } from "@vardast/graphql/generated"
 import clsx from "clsx"
 
 import { IHomeProps } from "@/app/(client)/(home)/components/HomeIndex"
-import HomeTopSellers from "@/app/(client)/(home)/components/HomeTopSellers"
 import MobileHomeNewestProducts from "@/app/(client)/(home)/components/MobileHomeNewestProducts"
 import MobileHomeSection from "@/app/(client)/(home)/components/MobileHomeSection"
 import MobileHomeSlider from "@/app/(client)/(home)/components/MobileHomeSlider"
 import MobileHomeTopBlogs from "@/app/(client)/(home)/components/MobileHomeTopBlogs"
 import MobileHomeTopEntities from "@/app/(client)/(home)/components/MobileHomeTopEntities"
+import NewestPriceProductSection from "@/app/(client)/(home)/components/NewestPriceProductSection"
 
 const DesktopHomeIndex = ({
   getVocabularyQueryFcQuery,
@@ -39,6 +39,9 @@ const DesktopHomeIndex = ({
             query={homeSlidersQuery}
           />
         </div>
+      </div>
+      <div className="container mx-auto py-8">
+        <NewestPriceProductSection />
       </div>
       <div className="border-t-2 bg-alpha-white">
         <div className="container mx-auto py-8">
@@ -67,7 +70,7 @@ const DesktopHomeIndex = ({
           </MobileHomeSection>
         </div>
       </div>
-      <div className="border-t-2 bg-alpha-white py-8">
+      {/* <div className="border-t-2 bg-alpha-white py-8">
         <div className="container mx-auto ">
           <HomeTopSellers
             isMobileView={false}
@@ -75,7 +78,7 @@ const DesktopHomeIndex = ({
             allSellersCount={allSellersCount}
           />
         </div>
-      </div>
+      </div> */}
       {allBrandsCount.data && (
         <div className="border-t-2 bg-alpha-white py-8">
           <div className="container mx-auto ">
