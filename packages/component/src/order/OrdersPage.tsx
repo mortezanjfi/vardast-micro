@@ -27,7 +27,6 @@ import { checkBooleanByString } from "../../../util/src/checkBooleanByString"
 import { getContentByApiStatus } from "../../../util/src/GetContentByApiStatus"
 import CardContainer from "../desktop/CardContainer"
 import OrderCard, { PreOrderStatesFa } from "../desktop/OrderCart"
-import Link from "../Link"
 import Loading from "../Loading"
 import LoadingFailed from "../LoadingFailed"
 import NoResult from "../NoResult"
@@ -216,7 +215,7 @@ const OrdersPage = ({
                     <th className="border">{t("common:order-needed-time")}</th>
                     {/* <th className="border">{t("common:file")}</th> */}
                     <th className="border">{t("common:status")}</th>
-                    <th className="border">{t("common:operation")}</th>
+                    {/* <th className="border">{t("common:operation")}</th> */}
                   </tr>
                 </thead>
 
@@ -289,7 +288,7 @@ const OrdersPage = ({
                             </span>
                           </td>
 
-                          <td className="border">
+                          {/* <td className="border">
                             {preOrder.status === PreOrderStates.Closed ? (
                               <>
                                 <span
@@ -334,7 +333,7 @@ const OrdersPage = ({
                                 {t("common:offers")}
                               </span>
                             </Link>
-                          </td>
+                          </td> */}
                         </tr>
                       )
                   )}

@@ -47,8 +47,7 @@ import { TypeOf, z } from "zod"
 
 import { Input } from "../../../../ui/src/input"
 import DatePickerMulti from "../../date-picker/DatePicker"
-import Link from "../../Link"
-import PageTitle from "../../project/PageTitle"
+import CardContainer from "../../desktop/CardContainer"
 
 type OrderInfoFormProps = {
   isMobileView: boolean
@@ -116,7 +115,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
           queryKey: ["FindPreOrderById"]
         })
 
-        router.push(`/profile/orders/${uuid}/products`)
+        router.push(`/profile/orders/${uuid}`)
       }
     }
   )
@@ -201,427 +200,431 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
 
   return (
     <>
-      {isMobileView && (
+      {/* {isMobileView && (
         <PageTitle
           className="pb"
           titleClass="text-sm"
           title={"ثبت اطلاعات سفارش"}
         />
-      )}
+      )} */}
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(submit)} className="pt-6">
-          <div className="flex grid-cols-3 grid-rows-3 flex-col gap-x-7 gap-y-5 border-b pb-4 md:grid">
-            <FormField
-              control={form.control}
-              name="projectId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("common:project")}</FormLabel>
-                  <Popover open={projectDialog} onOpenChange={setProjectDialog}>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          // disabled={myProjectsQuery.data?.myProjects.length === 0}
-                          noStyle
-                          role="combobox"
-                          className="input-field flex items-center text-start"
-                        >
-                          <span className="inline-block max-w-full truncate">
-                            {field.value
-                              ? myProjectsQuery.data?.projects.data.find(
-                                  (project) =>
-                                    project && project.id === +field.value
-                                )?.name
-                              : t("common:choose_entity", {
-                                  entity: t("common:project")
-                                })}
-                          </span>
-                          <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="!z-[9999]" asChild>
-                      <Command>
-                        <CommandInput
-                          loading={
-                            myProjectsQuery.data?.projects.data.length === 0
-                          }
-                          value={projectQueryTemp}
-                          onValueChange={(newQuery) => {
-                            // setProvinceQuery(newQuery)
-                            setProjectQueryTemp(newQuery)
-                          }}
-                          placeholder={t("common:search_entity", {
-                            entity: t("common:project")
-                          })}
-                        />
-                        <CommandEmpty>
-                          {t("common:no_entity_found", {
-                            entity: t("common:project")
-                          })}
-                        </CommandEmpty>
-                        <CommandGroup>
-                          {myProjectsQuery.data?.projects.data.map(
-                            (project) =>
-                              project && (
-                                <CommandItem
-                                  value={`${project.id}`}
-                                  key={project.id}
-                                  onSelect={(value) => {
-                                    form.setValue("projectId", value)
-                                    setProjectDialog(false)
-                                  }}
-                                >
-                                  <LucideCheck
-                                    className={mergeClasses(
-                                      "mr-2 h-4 w-4",
-                                      project.id === +field.value
-                                        ? "opacity-100"
-                                        : "opacity-0"
-                                    )}
-                                  />
-                                  {project.name}
-                                </CommandItem>
-                              )
-                          )}
-                        </CommandGroup>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="need_date"
-              render={({ field: { onChange, value } }) => (
-                <FormItem>
-                  <FormLabel>زمان نیاز</FormLabel>
-                  <FormControl>
-                    <DatePickerMulti
-                      value={value ? new DateObject(new Date(value)) : ""}
-                      onChange={(dateObject: DateObject) => {
-                        onChange(
-                          dateObject?.isValid
-                            ? dateObject?.toDate?.().toString()
-                            : ""
-                        )
-                      }}
-                      render={(value, openCalendar) => {
-                        return (
-                          <Button
-                            onClick={openCalendar}
-                            noStyle
-                            type="button"
-                            role="combobox"
-                            className="input-field flex w-full items-center"
-                          >
-                            <span className="inline-block max-w-full truncate">
-                              {value || "زمان نیاز را وارد کنید"}
-                            </span>
-                            <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
-                          </Button>
-                        )
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="addressId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("common:address")}</FormLabel>
-                  <Popover open={addressDialog} onOpenChange={setAddressDialog}>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          disabled={addresses?.length === 0}
-                          noStyle
-                          role="combobox"
-                          className="input-field flex items-center"
-                        >
-                          <span className="inline-block max-w-full truncate">
-                            {field.value
-                              ? addresses?.find(
-                                  (address) =>
-                                    address && address.id === field.value
-                                )?.address?.address
-                              : t("common:choose_entity", {
-                                  entity: t("common:address")
-                                })}
-                          </span>
-                          <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="!z-[9999]" asChild>
-                      <Command>
-                        <CommandInput
-                          loading={addresses?.length === 0}
-                          value={addressQueryTemp}
-                          onValueChange={(newQuery) => {
-                            // setProvinceQuery(newQuery)
-                            setAddressQueryTemp(newQuery)
-                          }}
-                          placeholder={t("common:search_entity", {
-                            entity: t("common:address")
-                          })}
-                        />
-                        <CommandEmpty>
-                          {t("common:no_entity_found", {
-                            entity: t("common:address")
-                          })}
-                        </CommandEmpty>
-                        <CommandGroup>
-                          {addresses?.map(
-                            (address) =>
-                              address && (
-                                <CommandItem
-                                  value={`${address.address.id}`}
-                                  key={address.id}
-                                  onSelect={(value) => {
-                                    form.setValue(
-                                      "addressId",
-                                      addresses?.find(
-                                        (address) =>
-                                          address?.address?.id &&
-                                          String(
-                                            address.address.id
-                                          ).toLowerCase() === value
-                                      )?.id || 0
-                                    )
-                                    setAddressDialog(false)
-                                  }}
-                                >
-                                  <LucideCheck
-                                    className={mergeClasses(
-                                      "mr-2 h-4 w-4",
-                                      address.id === field.value
-                                        ? "opacity-100"
-                                        : "opacity-0"
-                                    )}
-                                  />
-                                  {`${address.address.title} - ${address.address.address}`}
-                                </CommandItem>
-                              )
-                          )}
-                        </CommandGroup>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="categoryId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("common:category")}</FormLabel>
-                  <Popover
-                    open={categoryDialog}
-                    onOpenChange={setCategoryDialog}
-                  >
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          disabled={
-                            rootCategories?.data?.categories?.data?.length === 0
-                          }
-                          noStyle
-                          role="combobox"
-                          className="input-field flex items-center"
-                        >
-                          <span className="inline-block max-w-full truncate">
-                            {field.value
-                              ? rootCategories?.data?.categories?.data?.find(
-                                  (category) =>
-                                    category && category.id === +field.value
-                                )?.title
-                              : t("common:choose_entity", {
-                                  entity: t("common:category")
-                                })}
-                          </span>
-                          <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="!z-[9999]" asChild>
-                      <Command>
-                        <CommandInput
-                          loading={
-                            rootCategories?.data?.categories?.data?.length === 0
-                          }
-                          value={categoryQueryTemp}
-                          onValueChange={(newQuery) => {
-                            // setProvinceQuery(newQuery)
-                            setCategoryQueryTemp(newQuery)
-                          }}
-                          placeholder={t("common:search_entity", {
-                            entity: t("common:category")
-                          })}
-                        />
-                        <CommandEmpty>
-                          {t("common:no_entity_found", {
-                            entity: t("common:category")
-                          })}
-                        </CommandEmpty>
-                        <CommandGroup>
-                          {rootCategories?.data?.categories?.data?.map(
-                            (category) =>
-                              category && (
-                                <CommandItem
-                                  value={`${category?.id}`}
-                                  key={category?.id}
-                                  onSelect={(value) => {
-                                    form.setValue(
-                                      "categoryId",
-                                      rootCategories?.data?.categories?.data?.find(
-                                        (category) =>
-                                          category?.id &&
-                                          category?.id === +value
-                                      )?.id || 0
-                                    )
-                                    setCategoryDialog(false)
-                                  }}
-                                >
-                                  <LucideCheck
-                                    className={mergeClasses(
-                                      "mr-2 h-4 w-4",
-                                      category.id === +field.value
-                                        ? "opacity-100"
-                                        : "opacity-0"
-                                    )}
-                                  />
-                                  {category?.title}
-                                </CommandItem>
-                              )
-                          )}
-                        </CommandGroup>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="expert_name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("common:expert_name")}</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={updatePreOrderMutation.isLoading}
-                      type="text"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="applicant_name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("common:applicant_name")}</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={updatePreOrderMutation.isLoading}
-                      type="text"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="payment_methods"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>روش پرداخت</FormLabel>
-                  <FormControl toggleInputGroup="h-full" className="h-14">
-                    <ToggleGroup
-                      className="input-field grid grid-cols-2 p-0.5"
-                      type="single"
-                      value={field.value}
-                      onValueChange={(value: PaymentMethodEnum) => {
-                        value && form.setValue("payment_methods", value)
-                      }}
-                    >
-                      <ToggleGroupItem
-                        className={clsx(
-                          "h-full rounded-xl p-0.5 text-alpha-500",
-                          form.watch("payment_methods") ===
-                            PaymentMethodEnum.Cash &&
-                            "!bg-alpha-white !text-alpha-black shadow-lg"
-                        )}
-                        value={PaymentMethodEnum.Cash}
-                      >
-                        نقدی
-                      </ToggleGroupItem>
-                      <ToggleGroupItem
-                        className={clsx(
-                          "h-full rounded-xl p-0.5 text-alpha-500",
-                          form.watch("payment_methods") ===
-                            PaymentMethodEnum.Credit &&
-                            "!bg-alpha-white !text-alpha-black shadow-lg"
-                        )}
-                        value={PaymentMethodEnum.Credit}
-                      >
-                        غیرنقدی
-                      </ToggleGroupItem>
-                    </ToggleGroup>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="descriptions"
-              render={({ field }) => (
-                <FormItem className="col-span-3">
-                  <FormLabel>توضیحات سفارش</FormLabel>
-                  <FormControl>
-                    <Textarea style={{ resize: "none" }} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] grid w-full !grid-cols-2 gap pt-4 md:relative md:bottom-0 md:flex md:justify-end">
-            <Link className="btn btn-md btn-secondary" href={"/profile/orders"}>
-              بازگشت به سفارشات
-            </Link>
-            <Button
-              disabled={
+        <form onSubmit={form.handleSubmit(submit)}>
+          <CardContainer
+            title="ثبت اطلاعات سفارش"
+            button={{
+              text: t("common:verify"),
+              type: "submit",
+              loading: updatePreOrderMutation.isLoading,
+              disabled:
                 findPreOrderByIdQuery.isFetching ||
                 findPreOrderByIdQuery.isLoading ||
                 updatePreOrderMutation.isLoading
-              }
-              loading={updatePreOrderMutation.isLoading}
-              type="submit"
-              variant="primary"
-            >
-              تایید و ادامه
-            </Button>
-          </div>
+            }}
+          >
+            <div className="flex grid-cols-3 grid-rows-3 flex-col gap-x-7 gap-y-5 pb-4 md:grid">
+              <FormField
+                control={form.control}
+                name="projectId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("common:project")}</FormLabel>
+                    <Popover
+                      open={projectDialog}
+                      onOpenChange={setProjectDialog}
+                    >
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            // disabled={myProjectsQuery.data?.myProjects.length === 0}
+                            noStyle
+                            role="combobox"
+                            className="input-field flex items-center text-start"
+                          >
+                            <span className="inline-block max-w-full truncate">
+                              {field.value
+                                ? myProjectsQuery.data?.projects.data.find(
+                                    (project) =>
+                                      project && project.id === +field.value
+                                  )?.name
+                                : t("common:choose_entity", {
+                                    entity: t("common:project")
+                                  })}
+                            </span>
+                            <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="!z-[9999]" asChild>
+                        <Command>
+                          <CommandInput
+                            loading={
+                              myProjectsQuery.data?.projects.data.length === 0
+                            }
+                            value={projectQueryTemp}
+                            onValueChange={(newQuery) => {
+                              // setProvinceQuery(newQuery)
+                              setProjectQueryTemp(newQuery)
+                            }}
+                            placeholder={t("common:search_entity", {
+                              entity: t("common:project")
+                            })}
+                          />
+                          <CommandEmpty>
+                            {t("common:no_entity_found", {
+                              entity: t("common:project")
+                            })}
+                          </CommandEmpty>
+                          <CommandGroup>
+                            {myProjectsQuery.data?.projects.data.map(
+                              (project) =>
+                                project && (
+                                  <CommandItem
+                                    value={`${project.id}`}
+                                    key={project.id}
+                                    onSelect={(value) => {
+                                      form.setValue("projectId", value)
+                                      setProjectDialog(false)
+                                    }}
+                                  >
+                                    <LucideCheck
+                                      className={mergeClasses(
+                                        "mr-2 h-4 w-4",
+                                        project.id === +field.value
+                                          ? "opacity-100"
+                                          : "opacity-0"
+                                      )}
+                                    />
+                                    {project.name}
+                                  </CommandItem>
+                                )
+                            )}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="need_date"
+                render={({ field: { onChange, value } }) => (
+                  <FormItem>
+                    <FormLabel>زمان نیاز</FormLabel>
+                    <FormControl>
+                      <DatePickerMulti
+                        value={value ? new DateObject(new Date(value)) : ""}
+                        onChange={(dateObject: DateObject) => {
+                          onChange(
+                            dateObject?.isValid
+                              ? dateObject?.toDate?.().toString()
+                              : ""
+                          )
+                        }}
+                        render={(value, openCalendar) => {
+                          return (
+                            <Button
+                              onClick={openCalendar}
+                              noStyle
+                              type="button"
+                              role="combobox"
+                              className="input-field flex w-full items-center"
+                            >
+                              <span className="inline-block max-w-full truncate">
+                                {value || "زمان نیاز را وارد کنید"}
+                              </span>
+                              <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+                            </Button>
+                          )
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="addressId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("common:address")}</FormLabel>
+                    <Popover
+                      open={addressDialog}
+                      onOpenChange={setAddressDialog}
+                    >
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            disabled={addresses?.length === 0}
+                            noStyle
+                            role="combobox"
+                            className="input-field flex items-center"
+                          >
+                            <span className="inline-block max-w-full truncate">
+                              {field.value
+                                ? addresses?.find(
+                                    (address) =>
+                                      address && address.id === field.value
+                                  )?.address?.address
+                                : t("common:choose_entity", {
+                                    entity: t("common:address")
+                                  })}
+                            </span>
+                            <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="!z-[9999]" asChild>
+                        <Command>
+                          <CommandInput
+                            loading={addresses?.length === 0}
+                            value={addressQueryTemp}
+                            onValueChange={(newQuery) => {
+                              // setProvinceQuery(newQuery)
+                              setAddressQueryTemp(newQuery)
+                            }}
+                            placeholder={t("common:search_entity", {
+                              entity: t("common:address")
+                            })}
+                          />
+                          <CommandEmpty>
+                            {t("common:no_entity_found", {
+                              entity: t("common:address")
+                            })}
+                          </CommandEmpty>
+                          <CommandGroup>
+                            {addresses?.map(
+                              (address) =>
+                                address && (
+                                  <CommandItem
+                                    value={`${address.address.id}`}
+                                    key={address.id}
+                                    onSelect={(value) => {
+                                      form.setValue(
+                                        "addressId",
+                                        addresses?.find(
+                                          (address) =>
+                                            address?.address?.id &&
+                                            String(
+                                              address.address.id
+                                            ).toLowerCase() === value
+                                        )?.id || 0
+                                      )
+                                      setAddressDialog(false)
+                                    }}
+                                  >
+                                    <LucideCheck
+                                      className={mergeClasses(
+                                        "mr-2 h-4 w-4",
+                                        address.id === field.value
+                                          ? "opacity-100"
+                                          : "opacity-0"
+                                      )}
+                                    />
+                                    {`${address.address.title} - ${address.address.address}`}
+                                  </CommandItem>
+                                )
+                            )}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="categoryId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("common:category")}</FormLabel>
+                    <Popover
+                      open={categoryDialog}
+                      onOpenChange={setCategoryDialog}
+                    >
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            disabled={
+                              rootCategories?.data?.categories?.data?.length ===
+                              0
+                            }
+                            noStyle
+                            role="combobox"
+                            className="input-field flex items-center"
+                          >
+                            <span className="inline-block max-w-full truncate">
+                              {field.value
+                                ? rootCategories?.data?.categories?.data?.find(
+                                    (category) =>
+                                      category && category.id === +field.value
+                                  )?.title
+                                : t("common:choose_entity", {
+                                    entity: t("common:category")
+                                  })}
+                            </span>
+                            <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="!z-[9999]" asChild>
+                        <Command>
+                          <CommandInput
+                            loading={
+                              rootCategories?.data?.categories?.data?.length ===
+                              0
+                            }
+                            value={categoryQueryTemp}
+                            onValueChange={(newQuery) => {
+                              // setProvinceQuery(newQuery)
+                              setCategoryQueryTemp(newQuery)
+                            }}
+                            placeholder={t("common:search_entity", {
+                              entity: t("common:category")
+                            })}
+                          />
+                          <CommandEmpty>
+                            {t("common:no_entity_found", {
+                              entity: t("common:category")
+                            })}
+                          </CommandEmpty>
+                          <CommandGroup>
+                            {rootCategories?.data?.categories?.data?.map(
+                              (category) =>
+                                category && (
+                                  <CommandItem
+                                    value={`${category?.id}`}
+                                    key={category?.id}
+                                    onSelect={(value) => {
+                                      form.setValue(
+                                        "categoryId",
+                                        rootCategories?.data?.categories?.data?.find(
+                                          (category) =>
+                                            category?.id &&
+                                            category?.id === +value
+                                        )?.id || 0
+                                      )
+                                      setCategoryDialog(false)
+                                    }}
+                                  >
+                                    <LucideCheck
+                                      className={mergeClasses(
+                                        "mr-2 h-4 w-4",
+                                        category.id === +field.value
+                                          ? "opacity-100"
+                                          : "opacity-0"
+                                      )}
+                                    />
+                                    {category?.title}
+                                  </CommandItem>
+                                )
+                            )}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="expert_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("common:expert_name")}</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={updatePreOrderMutation.isLoading}
+                        type="text"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="applicant_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("common:applicant_name")}</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={updatePreOrderMutation.isLoading}
+                        type="text"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="payment_methods"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>روش پرداخت</FormLabel>
+                    <FormControl toggleInputGroup="h-full" className="h-14">
+                      <ToggleGroup
+                        className="input-field grid grid-cols-2 p-0.5"
+                        type="single"
+                        value={field.value}
+                        onValueChange={(value: PaymentMethodEnum) => {
+                          value && form.setValue("payment_methods", value)
+                        }}
+                      >
+                        <ToggleGroupItem
+                          className={clsx(
+                            "h-full rounded-xl p-0.5 text-alpha-500",
+                            form.watch("payment_methods") ===
+                              PaymentMethodEnum.Cash &&
+                              "!bg-alpha-white !text-alpha-black shadow-lg"
+                          )}
+                          value={PaymentMethodEnum.Cash}
+                        >
+                          نقدی
+                        </ToggleGroupItem>
+                        <ToggleGroupItem
+                          className={clsx(
+                            "h-full rounded-xl p-0.5 text-alpha-500",
+                            form.watch("payment_methods") ===
+                              PaymentMethodEnum.Credit &&
+                              "!bg-alpha-white !text-alpha-black shadow-lg"
+                          )}
+                          value={PaymentMethodEnum.Credit}
+                        >
+                          غیرنقدی
+                        </ToggleGroupItem>
+                      </ToggleGroup>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="descriptions"
+                render={({ field }) => (
+                  <FormItem className="col-span-3">
+                    <FormLabel>توضیحات سفارش</FormLabel>
+                    <FormControl>
+                      <Textarea style={{ resize: "none" }} {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </CardContainer>
         </form>
       </Form>
     </>

@@ -29,7 +29,6 @@ import { ApiCallStatusEnum } from "../../../type/src/Enums"
 import { getContentByApiStatus } from "../../../util/src/GetContentByApiStatus"
 import CardContainer from "../desktop/CardContainer"
 import SellerAdminConfirmationModal from "../desktop/SellerAdminConfirmationModal"
-import Link from "../Link"
 import Loading from "../Loading"
 import LoadingFailed from "../LoadingFailed"
 import NoResult from "../NoResult"
@@ -148,8 +147,11 @@ function SellersList({
           //     variant: "success"
           //   })
           if (isClient) {
-            setSelectedOfferId(data?.createOrderOffer.id)
-            setDetailOpen(true)
+            // setSelectedOfferId(data?.createOrderOffer.id)
+            // setDetailOpen(true)
+            router.push(
+              `/profile/orders/${uuid}/offers/${data?.createOrderOffer?.id}`
+            )
           } else {
             setOrderId(data.createOrderOffer.id)
             setAddSellerModalOpen(true)
@@ -227,22 +229,21 @@ function SellersList({
           onSubmit={form.handleSubmit(submitButton)}
           className="flex flex-col gap-7"
         >
-          <CardContainer title="لیست پیشنهادات">
+          <CardContainer
+            title="لیست پیشنهادات"
+            button={
+              findPreOrderByIdQuery?.data?.findPreOrderById?.status !==
+                PreOrderStates.Closed && {
+                onClick: (e) => {
+                  onAddSeller(e)
+                },
+                text: t("common:add_entity", { entity: t("common:offer") }),
+                className: "py-2",
+                type: "button"
+              }
+            }
+          >
             <div className="flex flex-col">
-              {findPreOrderByIdQuery?.data?.findPreOrderById?.status !==
-                PreOrderStates.Closed && (
-                <div className="mb-7 flex w-full flex-row-reverse">
-                  <Button
-                    className="py-2"
-                    onClick={(e) => {
-                      onAddSeller(e)
-                    }}
-                    variant="outline-primary"
-                  >
-                    {t("common:add_entity", { entity: t("common:offer") })}
-                  </Button>
-                </div>
-              )}
               {isMobileView ? (
                 <div className="flex flex-col divide-y">
                   {findPreOrderByIdQuery?.data?.findPreOrderById?.offers.map(
@@ -384,8 +385,11 @@ function SellersList({
                                   <td className="border">
                                     <span
                                       onClick={() => {
-                                        setSelectedOfferId(offer?.id)
-                                        setDetailOpen(true)
+                                        // setSelectedOfferId(offer?.id)
+                                        // setDetailOpen(true)
+                                        router.push(
+                                          `/profile/orders/${uuid}/offers/${offer?.id}`
+                                        )
                                       }}
                                       className="tag cursor-pointer text-blue-500"
                                     >
@@ -430,14 +434,14 @@ function SellersList({
                       </table>
                     </>
                   )}
-                  <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] mt-5 grid w-full grid-cols-2 justify-end gap border-t bg-alpha-white pt-5 md:relative md:bottom-0 md:flex md:justify-end">
+                  {/* <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] mt-5 grid w-full grid-cols-2 justify-end gap border-t bg-alpha-white pt-5 md:relative md:bottom-0 md:flex md:justify-end">
                     <Link
                       className="btn btn-md btn-secondary"
                       href="/profile/orders/"
                     >
                       بازگشت به سفارشات
-                    </Link>
-                    {/* {findPreOrderByIdQuery.data?.findPreOrderById.status ===
+                    </Link> 
+                    {findPreOrderByIdQuery.data?.findPreOrderById.status ===
                       PreOrderStates.Completed && (
                       <Button
                         disabled={
@@ -451,8 +455,8 @@ function SellersList({
                       >
                         قیمت پایین تر دارم!
                       </Button>
-                    )} */}
-                  </div>
+                    )} 
+                     </div> */}
                 </div>
               )}
             </div>

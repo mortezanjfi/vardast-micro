@@ -59,6 +59,16 @@ const nextConfig = {
         source: "/auth",
         destination: "/auth/signin",
         permanent: true
+      },
+      {
+        source: "/addresses",
+        destination: "/addresses/new",
+        permanent: true
+      },
+      {
+        source: "/contact-infos",
+        destination: "/contact-infos/new",
+        permanent: true
       }
     ]
   },

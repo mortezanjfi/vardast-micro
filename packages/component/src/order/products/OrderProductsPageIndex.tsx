@@ -2,18 +2,12 @@
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { useQueryClient } from "@tanstack/react-query"
 import {
   PreOrderStates,
-  useCreateOrderOfferMutation,
-  useFindPreOrderByIdQuery,
-  useUpdatePreOrderMutation
+  useFindPreOrderByIdQuery
 } from "@vardast/graphql/generated"
-import { toast } from "@vardast/hook/use-toast"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ACTION_BUTTON_TYPE } from "@vardast/type/OrderProductTabs"
-import { Button } from "@vardast/ui/button"
-import { ClientError } from "graphql-request"
 
 import OrderProductsList from "../../desktop/OrderProductsList"
 import Link from "../../Link"
@@ -22,15 +16,17 @@ import OrderProductsTabs from "./OrderProductsTabs"
 
 type OrderProductsPageIndexProps = {
   isMobileView: boolean
+  basket?: boolean
   uuid: string
 }
 
 function OrderProductsPageIndex({
   isMobileView,
+  basket,
   uuid
 }: OrderProductsPageIndexProps) {
   const router = useRouter()
-  const queryClient = useQueryClient()
+  // const queryClient = useQueryClient()
   const findPreOrderByIdQuery = useFindPreOrderByIdQuery(
     graphqlRequestClientWithToken,
     {
@@ -38,68 +34,68 @@ function OrderProductsPageIndex({
     }
   )
 
-  const createOrderOfferMutation = useCreateOrderOfferMutation(
-    graphqlRequestClientWithToken,
-    {
-      onError: (errors: ClientError) => {
-        ;(
-          errors.response.errors?.at(0)?.extensions.displayErrors as string[]
-        ).map((error) =>
-          toast({
-            description: error,
-            duration: 5000,
-            variant: "danger"
-          })
-        )
-      },
-      onSuccess: (data) => {
-        if (data?.createOrderOffer?.id) {
-          queryClient.invalidateQueries({
-            queryKey: ["FindPreOrderById"]
-          })
-          toast({
-            title: "پیشنهاد شما با موفقیت ثبت شد",
-            description:
-              "لطفا برای قیمت گذاری بر روی کالاها ادامه فرایند را انجام دهید.",
-            duration: 8000,
-            variant: "success"
-          })
-          router.push(
-            `/profile/orders/${uuid}/offers/${data.createOrderOffer.id}`
-          )
-        }
-      }
-    }
-  )
+  // const createOrderOfferMutation = useCreateOrderOfferMutation(
+  //   graphqlRequestClientWithToken,
+  //   {
+  //     onError: (errors: ClientError) => {
+  //       ;(
+  //         errors.response.errors?.at(0)?.extensions.displayErrors as string[]
+  //       ).map((error) =>
+  //         toast({
+  //           description: error,
+  //           duration: 5000,
+  //           variant: "danger"
+  //         })
+  //       )
+  //     },
+  //     onSuccess: (data) => {
+  //       if (data?.createOrderOffer?.id) {
+  //         queryClient.invalidateQueries({
+  //           queryKey: ["FindPreOrderById"]
+  //         })
+  //         toast({
+  //           title: "پیشنهاد شما با موفقیت ثبت شد",
+  //           description:
+  //             "لطفا برای قیمت گذاری بر روی کالاها ادامه فرایند را انجام دهید.",
+  //           duration: 8000,
+  //           variant: "success"
+  //         })
+  //         router.push(
+  //           `/profile/orders/${uuid}/offers/${data.createOrderOffer.id}`
+  //         )
+  //       }
+  //     }
+  //   }
+  // )
 
-  const onCreateOffer = () => {
-    createOrderOfferMutation.mutate({
-      createOrderOfferInput: {
-        preOrderId: +uuid
-      }
-    })
-  }
+  // const onCreateOffer = () => {
+  //   createOrderOfferMutation.mutate({
+  //     createOrderOfferInput: {
+  //       preOrderId: +uuid
+  //     }
+  //   })
+  // }
 
-  const updatePreOrderMutation = useUpdatePreOrderMutation(
-    graphqlRequestClientWithToken,
-    {
-      onError: (errors: ClientError) => {
-        ;(
-          errors.response.errors?.at(0)?.extensions.displayErrors as string[]
-        ).map((error) =>
-          toast({
-            description: error,
-            duration: 5000,
-            variant: "danger"
-          })
-        )
-      },
-      onSuccess: () => {
-        // onCreateOffer()
-        router.push(`/profile/orders/${uuid}/offers`)
-      }
-    }
-  )
+  // const updatePreOrderMutation = useUpdatePreOrderMutation(
+  //   graphqlRequestClientWithToken,
+  //   {
+  //     onError: (errors: ClientError) => {
+  //       ;(
+  //         errors.response.errors?.at(0)?.extensions.displayErrors as string[]
+  //       ).map((error) =>
+  //         toast({
+  //           description: error,
+  //           duration: 5000,
+  //           variant: "danger"
+  //         })
+  //       )
+  //     },
+  //     onSuccess: () => {
+  //       // onCreateOffer()
+  //       router.push(`/profile/orders/${uuid}/offers`)
+  //     }
+  //   }
+  // )
 
   useEffect(() => {
     if (
@@ -110,11 +106,11 @@ function OrderProductsPageIndex({
     }
   }, [])
 
-  const onSubmit = () => {
-    updatePreOrderMutation.mutate({
-      updatePreOrderInput: { status: PreOrderStates.Completed, id: +uuid }
-    })
-  }
+  // const onSubmit = () => {
+  //   updatePreOrderMutation.mutate({
+  //     updatePreOrderInput: { status: PreOrderStates.Completed, id: +uuid }
+  //   })
+  // }
 
   return (
     <OrderProductsInnerLayout
@@ -122,17 +118,20 @@ function OrderProductsPageIndex({
       isMobileView={isMobileView}
       uuid={uuid}
     >
-      <OrderProductsTabs uuid={uuid} />
+      <OrderProductsTabs basket={basket} uuid={uuid} />
       <OrderProductsList
         actionButtonType={ACTION_BUTTON_TYPE.ADD_PRODUCT_OFFER}
         isMobileView={isMobileView}
         findPreOrderByIdQuery={findPreOrderByIdQuery}
       />
       <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] mt-auto grid w-full !grid-cols-2 gap pt-4 md:relative md:bottom-0 md:mt-0 md:flex md:justify-end">
-        <Link className="btn btn-md btn-secondary" href="/profile/orders">
-          بازگشت به سفارشات
+        <Link
+          className="btn btn-md btn-secondary"
+          href={`/profile/orders/${uuid}`}
+        >
+          بازگشت به سفارش
         </Link>
-        <Button
+        {/* <Button
           disabled={
             findPreOrderByIdQuery.isFetching ||
             findPreOrderByIdQuery.isLoading ||
@@ -144,7 +143,7 @@ function OrderProductsPageIndex({
           variant="primary"
         >
           تایید و ادامه
-        </Button>
+        </Button> */}
       </div>
     </OrderProductsInnerLayout>
   )

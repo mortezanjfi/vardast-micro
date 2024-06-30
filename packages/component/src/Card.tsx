@@ -66,8 +66,8 @@ const Card = ({
             <Button
               disabled={button.disabled}
               loading={button.loading}
-              onClick={() => {
-                button.onClick()
+              onClick={(e) => {
+                button?.onClick && button.onClick(e)
               }}
               type={button.type}
               variant={button.variant}

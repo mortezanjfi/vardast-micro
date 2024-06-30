@@ -31,6 +31,7 @@ type OrderProductsTabType = {
 
 type OrderProductsTabsProps = {
   uuid: string
+  basket?: boolean
 }
 
 export enum OrderProductsTabsEnum {
@@ -40,7 +41,7 @@ export enum OrderProductsTabsEnum {
   EXTRA_PRICE = "EXTRA_PRICE"
 }
 
-const OrderProductsTabs = ({ uuid }: OrderProductsTabsProps) => {
+const OrderProductsTabs = ({ uuid, basket }: OrderProductsTabsProps) => {
   const queryClient = useQueryClient()
   const form = useForm<CreateOrderLineType>({
     resolver: zodResolver(CreateOrderLineSchema)
@@ -96,13 +97,18 @@ const OrderProductsTabs = ({ uuid }: OrderProductsTabsProps) => {
     form
   }
 
-  const tabs: OrderProductsTabType[] = useMemo(
-    () => [
-      {
-        value: OrderProductsTabsEnum.ORDER_PRODUCT_TAB,
-        title: <TabTitleWithExtraData title="انتخاب از سبد کالا" />,
-        Content: () => <OrderProductTabContent {...tabProps} />
-      },
+  const tabs: OrderProductsTabType[] = useMemo(() => {
+    const initialTabs = basket
+      ? [
+          {
+            value: OrderProductsTabsEnum.ORDER_PRODUCT_TAB,
+            title: <TabTitleWithExtraData title="انتخاب از سبد کالا" />,
+            Content: () => <OrderProductTabContent {...tabProps} />
+          }
+        ]
+      : []
+
+    const existingTabs = [
       {
         value: OrderProductsTabsEnum.ORDER_MANUAL_TAB,
         title: <TabTitleWithExtraData title="افزودن دستی کالا" />,
@@ -118,10 +124,10 @@ const OrderProductsTabs = ({ uuid }: OrderProductsTabsProps) => {
         title: <TabTitleWithExtraData title="هزینه های جانبی" />,
         Content: () => <OrderExtraPriceTabContent {...tabProps} />
       }
-    ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
+    ]
+
+    return initialTabs.concat(existingTabs)
+  }, [basket, tabProps])
 
   return <OrderProductsOrganizer tabs={tabs} isMobileView={false} />
 }

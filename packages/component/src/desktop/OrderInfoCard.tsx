@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
 import { FindPreOrderByIdQuery } from "@vardast/graphql/generated"
@@ -17,13 +18,21 @@ type OrderInfoCardProps = {
 
 const OrderInfoCard = ({ findPreOrderByIdQuery }: OrderInfoCardProps) => {
   const { t } = useTranslation()
-
+  const router = useRouter()
   const orderInfo = findPreOrderByIdQuery?.data?.findPreOrderById
 
   return (
     <Card
       title={t("common:order-info")}
-      className="h-fit"
+      className="h-fit px-6"
+      button={{
+        onClick: () =>
+          router.push(
+            `/profile/orders/${findPreOrderByIdQuery?.data?.findPreOrderById?.id}/info`
+          ),
+        text: "ویرایش",
+        type: "button"
+      }}
       titleClass="text-base pb-2 border-b-2 border-primary-600"
     >
       <div className="flex flex-col gap-4 pt-5">

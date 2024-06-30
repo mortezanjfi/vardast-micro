@@ -32,7 +32,7 @@ const OrderProductsOrganizer = ({
 }: IOrderProductsOrganizer) => {
   const [openTabName, setOpenTabName] = useQueryState("tab")
   const [activeTab, setActiveTab] = useState<OrderProductsTabsEnum>(
-    OrderProductsTabsEnum.ORDER_PRODUCT_TAB
+    tabs.at(0).value as OrderProductsTabsEnum
   )
 
   setDefaultOptions({

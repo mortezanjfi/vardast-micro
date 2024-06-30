@@ -14,12 +14,12 @@ import {
 import { toast } from "@vardast/hook/use-toast"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ACTION_BUTTON_TYPE } from "@vardast/type/OrderProductTabs"
-import { Button } from "@vardast/ui/button"
 import { ClientError } from "graphql-request"
 
 import OrderInfoCard from "../desktop/OrderInfoCard"
 import OrderProductsList from "../desktop/OrderProductsList"
 import Link from "../Link"
+import SellersList from "../offers/SellersList"
 import PageTitle from "../project/PageTitle"
 
 type OrderDetailPageProps = {
@@ -190,6 +190,14 @@ const OrderDetailPage = ({
       <OrderInfoCard findPreOrderByIdQuery={findPreOrderByIdQuery} />
 
       <OrderProductsList
+        button={{
+          onClick: () =>
+            router.push(
+              `/profile/orders/${findPreOrderByIdQuery?.data?.findPreOrderById?.id}/products`
+            ),
+          text: "افزودن کالا",
+          type: "button"
+        }}
         isSeller={true}
         actionButtonType={ACTION_BUTTON_TYPE.ADD_PRODUCT_OFFER}
         isMobileView={isMobileView}
@@ -200,12 +208,12 @@ const OrderDetailPage = ({
         offerId={offerId}
         findPreOrderByIdQuery={findPreOrderByIdQuery}
       />
-      {/* <SellersList
+      <SellersList
         isClient
         isMobileView={false}
         findPreOrderByIdQuery={findPreOrderByIdQuery}
         uuid={uuid}
-      /> */}
+      />
       {/* {findPreOrderByIdQuery.isLoading && findPreOrderByIdQuery.isFetching ? (
         <OrderProductListContainer>
           {() => (
@@ -254,7 +262,7 @@ const OrderDetailPage = ({
         <Link className="btn btn-md btn-secondary" href="/profile/orders">
           بازگشت به سفارشات
         </Link>
-        <Button
+        {/* <Button
           disabled={
             findPreOrderByIdQuery.isFetching ||
             findPreOrderByIdQuery.isLoading ||
@@ -266,7 +274,7 @@ const OrderDetailPage = ({
           variant="primary"
         >
           تایید و ادامه
-        </Button>
+        </Button> */}
       </div>
     </div>
   )

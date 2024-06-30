@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import OrderDetailPage from "@vardast/component/order/OrderDetailPage"
+import OfferPage from "@vardast/component/offers/OfferPage"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -14,17 +14,5 @@ export default async ({
 }) => {
   const isMobileView = await CheckIsMobileView()
 
-  // const session = await getServerSession(authOptions)
-
-  // if (!session?.abilities?.includes("gql.products.brand.index")) {
-  //   redirect("/admin")
-  // }
-
-  return (
-    <OrderDetailPage
-      isMobileView={isMobileView}
-      uuid={uuid}
-      offerId={offerId}
-    />
-  )
+  return <OfferPage isMobileView={isMobileView} offerId={offerId} uuid={uuid} />
 }

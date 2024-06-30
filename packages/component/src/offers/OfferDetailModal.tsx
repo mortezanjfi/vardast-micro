@@ -43,7 +43,7 @@ function OfferDetailModal({
     <Dialog modal={!isMobileView} open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className={clsx(
-          "flex flex-col gap-7 md:!w-fit md:!min-w-[50rem] md:max-w-full",
+          "hide-scrollbar flex flex-col gap-7 md:!w-2/3 md:!min-w-[50rem] md:max-w-full",
           isMobileView && "h-full max-h-full w-screen max-w-screen rounded-none"
         )}
       >
