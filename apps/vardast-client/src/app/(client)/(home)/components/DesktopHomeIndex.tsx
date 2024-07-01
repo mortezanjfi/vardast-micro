@@ -17,6 +17,7 @@ import NewestPriceProductSection from "@/app/(client)/(home)/components/NewestPr
 
 const DesktopHomeIndex = ({
   getVocabularyQueryFcQuery,
+  recentPriceProductsQuery,
   allSellersCount,
   allBrandsCount,
   allProductsQuery,
@@ -41,7 +42,7 @@ const DesktopHomeIndex = ({
         </div>
       </div>
       <div className="container mx-auto py-8">
-        <NewestPriceProductSection />
+        <NewestPriceProductSection query={recentPriceProductsQuery} />
       </div>
       <div className="border-t-2 bg-alpha-white">
         <div className="container mx-auto py-8">

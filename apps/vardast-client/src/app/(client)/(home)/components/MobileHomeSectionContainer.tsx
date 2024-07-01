@@ -22,7 +22,7 @@ const MobileHomeSectionContainer: React.FC<
   return (
     <div
       className={clsx(
-        "flex flex-col pt-8 md:pt-4",
+        "flex flex-col overflow-hidden pt-8 md:pt-4",
         bgWhite && "bg-alpha-white"
       )}
     >

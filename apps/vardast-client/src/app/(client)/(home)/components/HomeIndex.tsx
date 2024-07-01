@@ -2,7 +2,13 @@
 
 import { useMemo } from "react"
 import dynamic from "next/dynamic"
-import { useQuery, UseQueryResult } from "@tanstack/react-query"
+import {
+  useInfiniteQuery,
+  UseInfiniteQueryResult,
+  useQuery,
+  UseQueryResult
+} from "@tanstack/react-query"
+import { checkLimitPageByCondition } from "@vardast/component/product-list"
 import {
   FileModelTypeEnum,
   GetAllBlogsQuery,
@@ -10,7 +16,9 @@ import {
   GetAllProductsQuery,
   GetAllSellersCountQuery,
   GetBannerHomePageQuery,
-  GetVocabularyQuery
+  GetVocabularyQuery,
+  SortDirection,
+  SortFieldProduct
 } from "@vardast/graphql/generated"
 import { getAllBrandsCountQueryFn } from "@vardast/query/queryFns/allBrandsCountQueryFns"
 import { getAllProductsQueryFn } from "@vardast/query/queryFns/allProductsQueryFns"
@@ -31,6 +39,7 @@ const PwaNotificationProvider = dynamic(
 )
 
 export type IHomeProps = {
+  recentPriceProductsQuery: UseInfiniteQueryResult<GetAllProductsQuery, unknown>
   isMobileView: boolean
   allProductsQuery: UseQueryResult<GetAllProductsQuery, unknown>
   homeSlidersQuery: UseQueryResult<GetBannerHomePageQuery, unknown>
@@ -109,10 +118,40 @@ const HomeIndex = ({ isMobileView }: HomeIndexProps) => {
       staleTime: 999999999
     }
   )
+  const recentPriceProductsQuery = useInfiniteQuery<GetAllProductsQuery>(
+    [
+      QUERY_FUNCTIONS_KEY.ALL_PRODUCTS_QUERY_KEY,
+      {
+        page: 1,
+        sortField: SortFieldProduct.Price,
+        sortDirection: SortDirection.Desc
+      }
+    ],
+    ({ pageParam = 1 }) => {
+      return getAllProductsQueryFn({
+        page: pageParam
+      })
+    },
+    {
+      keepPreviousData: true,
+      getNextPageParam(lastPage, allPages) {
+        return 2
+          ? checkLimitPageByCondition(
+              lastPage.products.currentPage <= 2,
+              allPages
+            )
+          : checkLimitPageByCondition(
+              lastPage.products.currentPage < lastPage.products.lastPage,
+              allPages
+            )
+      }
+    }
+  )
 
   const homeProps: IHomeProps = useMemo(
     () => ({
       // session,
+      recentPriceProductsQuery,
       isMobileView,
       allProductsQuery,
       homeSlidersQuery,
@@ -123,6 +162,7 @@ const HomeIndex = ({ isMobileView }: HomeIndexProps) => {
     }),
     [
       // session
+      recentPriceProductsQuery,
       isMobileView,
       allProductsQuery,
       homeSlidersQuery,

@@ -50,12 +50,12 @@ const NewPriceSlider = ({
               setActiveSlide(swiper.realIndex)
             }}
             modules={[Autoplay]}
-            // autoplay={{
-            //   delay: 0,
-            //   disableOnInteraction: false
-            // }}
-            speed={5000}
-            className="h-full w-full divide-x-1 sm:px-0"
+            autoplay={{
+              delay: 0,
+              disableOnInteraction: false
+            }}
+            speed={7000}
+            className="h-full w-full divide-x-0.5 sm:px-0"
             // spaceBetween={15}
           >
             {query?.data?.pages[0]?.products?.data.map((product, index) => {
