@@ -84,7 +84,6 @@ const DesktopHomeIndex = ({
           <div className="container mx-auto ">
             <MobileHomeTopEntities
               __typename="Brand"
-              centeredSlides={false}
               title="جدیدترین برندها"
               query={allBrandsCount.data?.brands.data.slice(0, 8) as Brand[]}
             />
@@ -94,7 +93,11 @@ const DesktopHomeIndex = ({
       {allProductsQuery.data && (
         <div className="border-t-2 bg-alpha-white pb-12">
           <div className="container mx-auto rounded-xl py-8">
-            <MobileHomeNewestProducts allProductsQuery={allProductsQuery} />
+            <MobileHomeNewestProducts
+              centeredSlides={false}
+              title="جدیدترین کالاها"
+              query={allProductsQuery}
+            />
           </div>
         </div>
       )}

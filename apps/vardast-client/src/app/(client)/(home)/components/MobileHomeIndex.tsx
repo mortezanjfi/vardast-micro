@@ -3,7 +3,6 @@
 import { Brand } from "@vardast/graphql/generated"
 
 import { IHomeProps } from "@/app/(client)/(home)/components/HomeIndex"
-import HomeTopSellers from "@/app/(client)/(home)/components/HomeTopSellers"
 import MobileHomeCategory from "@/app/(client)/(home)/components/MobileHomeCategory"
 import MobileHomeNewestProducts from "@/app/(client)/(home)/components/MobileHomeNewestProducts"
 import MobileHomeSlider from "@/app/(client)/(home)/components/MobileHomeSlider"
@@ -31,19 +30,22 @@ const MobileHomeIndex = ({
         title="جدیدترین فروشنده‌ها"
         query={allSellersCount.data?.sellers.data.slice(0, 8) as Seller[]}
       /> */}
-      <HomeTopSellers
+      {/* <HomeTopSellers
         title="جدیدترین فروشنده‌ها"
         allSellersCount={allSellersCount}
-      />
+      /> */}
       <MobileHomeTopEntities
-        centeredSlides
         isMobileView
         __typename="Brand"
         title="جدیدترین برندها"
         query={allBrandsCount.data?.brands.data.slice(0, 8) as Brand[]}
       />
       {allProductsQuery.data && (
-        <MobileHomeNewestProducts allProductsQuery={allProductsQuery} />
+        <MobileHomeNewestProducts
+          isMobileView
+          title="جدیدترین کالاها"
+          query={allProductsQuery}
+        />
       )}
       {getAllBlogsQuery.data && (
         <MobileHomeTopBlogs getAllBlogsQuery={getAllBlogsQuery} isMobileView />

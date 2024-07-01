@@ -1,11 +1,12 @@
 "use client"
 
 import { useState } from "react"
+import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
 import SwiperNavigationButton, {
   SwiperButtonAction,
   SwiperButtonsDirection
 } from "@vardast/component/SwiperNavigationButton"
-import { GetAllBrandsCountQuery } from "@vardast/graphql/generated"
+import { Brand, GetAllBrandsCountQuery } from "@vardast/graphql/generated"
 import clsx from "clsx"
 import { useInView } from "react-intersection-observer"
 import { Swiper, SwiperSlide } from "swiper/react"
@@ -18,19 +19,18 @@ type Props = {
   query?: GetAllBrandsCountQuery["brands"]["data"]
   title: string
   __typename: "Seller" | "Brand"
-  centeredSlides?: boolean
   isMobileView?: boolean
 }
 
 const MobileHomeTopEntities = ({
   query,
   title,
-  centeredSlides,
   isMobileView,
   __typename
 }: Props) => {
   const [swiperRef, setSwiperRef] = useState<SwiperClass>()
-
+  const [selectedItemId, setSelectedItemId] =
+    useState<ICategoryListLoader>(null)
   const { ref: refNext, inView: inViewNext } = useInView({ threshold: 0.1 })
   const { ref: refPrev, inView: inViewPrev } = useInView({ threshold: 0.1 })
 
@@ -57,15 +57,22 @@ const MobileHomeTopEntities = ({
           // }}
           // modules={[FreeMode]}
           onSwiper={setSwiperRef}
-          centeredSlides={centeredSlides ?? true}
-          slidesPerView={isMobileView ? 1.2 : "auto"}
-          spaceBetween={16}
-          className="h-full w-full pb-12 sm:px-5 sm:py-8 md:px-0"
+          // centeredSlides={centeredSlides ?? true}
+          slidesPerView={"auto"}
+          spaceBetween={15}
+          // className="h-full pb-12 sm:px-5 sm:py-8 md:px-0"
+          className="px-4 pb-12 sm:pb-8 sm:pt-8 md:px-0"
         >
-          {query?.map(({ id, bannerFile, logoFile, name, sum }, index) => (
+          {query?.map((brand, index) => (
             <SwiperSlide
-              key={id}
-              className={clsx(!isMobileView && "w-[260px]")}
+              key={brand.id}
+              className={clsx(
+                "overflow-hidden rounded-2xl border bg-alpha-white shadow-lg",
+                isMobileView ? "w-[calc(100vw-45px)]" : "w-[350px]",
+                selectedItemId === brand?.id
+                  ? "border-2 border-primary"
+                  : "border-alpha-50"
+              )}
             >
               <div
                 ref={
@@ -76,16 +83,7 @@ const MobileHomeTopEntities = ({
                       : undefined
                 }
               >
-                <BigSliderItem
-                  data={{
-                    id,
-                    name,
-                    imageUrl: bannerFile?.presignedUrl.url ?? "",
-                    avatarUrl: logoFile?.presignedUrl.url ?? "",
-                    sum,
-                    href: `/${__typename?.toLowerCase()}/${id}`
-                  }}
-                />
+                <BigSliderItem brand={brand as Brand} />
               </div>
             </SwiperSlide>
           ))}

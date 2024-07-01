@@ -150,16 +150,19 @@ const ProductCard = forwardRef(
     return (
       <Link
         ref={ref}
+        target="_blank"
         href={checkSellerRedirectUrl(`/product/${product.id}/${product.name}`)}
-        onClick={() => {
+        onClick={(e) => {
           // if (isSellerPanel) {
-          //   e.preventDefault()
+          // e.preventDefault()
           // }
-          setSelectedItemId && setSelectedItemId(product.id)
+          setSelectedItemId(product.id)
+          console.log(product?.id)
+          console.log(selectedItemId)
         }}
         className={clsx(
           homeSlider
-            ? "relative grid w-full gap-2 border-x-0.5 bg-transparent px-3 transition hover:z-10"
+            ? "relative grid w-[421px] max-w-[421px] gap-2 border-x-0.5 bg-transparent px-3 transition hover:z-10"
             : "sm:h-none relative grid h-[calc((100vw-1.5rem)/2)] max-h-[calc((100vw-1.5rem)/2)] min-h-[calc((100vw-1.5rem)/2)] w-full flex-1 gap-2 bg-alpha-white transition hover:z-10 sm:flex sm:h-full sm:max-h-full sm:min-h-full sm:flex-col sm:px-4 sm:py sm:ring-2 sm:!ring-alpha-200 sm:hover:shadow-lg",
           ref && "!border-b !border-alpha-200 sm:!border-none",
 
@@ -170,13 +173,16 @@ const ProductCard = forwardRef(
         )}
       >
         {product.id === selectedItemId && (
-          <div className="absolute left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center bg-alpha-white bg-opacity-50">
+          <div className="absolute left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center border-2 border-primary bg-alpha-white bg-opacity-50">
             {/* <Loader2Icon className="h-10 w-10 animate-spin text-primary" /> */}
           </div>
         )}
         <div
           ref={productContainerRef}
-          className={`relative flex flex-shrink-0 transform flex-col items-center justify-center bg-center bg-no-repeat align-middle opacity-0 transition-all duration-1000 ease-out`}
+          className={clsx(
+            `relative flex flex-shrink-0 transform flex-col items-center justify-center bg-center bg-no-repeat align-middle opacity-0 transition-all duration-1000 ease-out`,
+            homeSlider && "h-36"
+          )}
         >
           <div
             style={{
@@ -207,7 +213,7 @@ const ProductCard = forwardRef(
           <div
             className={clsx(
               "sm:col-span1 col-span-2 grid h-full grid-rows-8",
-              homeSlider && "!col-span-2 h-36"
+              homeSlider && "!col-span-2 !h-36"
             )}
           >
             <div></div>

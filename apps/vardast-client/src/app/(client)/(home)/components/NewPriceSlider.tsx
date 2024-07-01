@@ -4,28 +4,13 @@ import { useEffect, useRef, useState } from "react"
 import { UseInfiniteQueryResult } from "@tanstack/react-query"
 import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
 import ProductCard from "@vardast/component/product-card"
-import {
-  Banner,
-  GetAllProductsQuery,
-  Product
-} from "@vardast/graphql/generated"
+import { GetAllProductsQuery, Product } from "@vardast/graphql/generated"
 import useWindowSize from "@vardast/hook/use-window-size"
-import { breakpoints } from "@vardast/tailwind-config/themes"
 import clsx from "clsx"
+import { useInView } from "react-intersection-observer"
 import { Autoplay } from "swiper/modules"
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react"
-
-const chooseBannerImageSize = (banner: Banner, width: number) => {
-  if (width >= breakpoints["2xl"]) {
-    return banner.xlarge
-  } else if (width >= breakpoints.md) {
-    return banner.large
-  } else if (width >= breakpoints.sm) {
-    return banner.medium
-  } else {
-    return banner.small
-  }
-}
+import { Swiper as SwiperClass } from "swiper/types"
 
 const NewPriceSlider = ({
   query
@@ -37,6 +22,11 @@ const NewPriceSlider = ({
     useState<ICategoryListLoader>(null)
   const [activeSlide, setActiveSlide] = useState(0)
   const sliderRef = useRef<SwiperRef>(null)
+
+  const [swiperRef, setSwiperRef] = useState<SwiperClass>()
+
+  const { ref: refNext, inView: inViewNext } = useInView({ threshold: 0.1 })
+  const { ref: refPrev, inView: inViewPrev } = useInView({ threshold: 0.1 })
 
   useEffect(() => {
     if (sliderRef.current) {
@@ -53,30 +43,45 @@ const NewPriceSlider = ({
           <div className={clsx("animated-card", sliderClass)}></div>
         ) : (
           <Swiper
-            ref={sliderRef}
             loop
             centeredSlides
-            slidesPerView={4}
+            slidesPerView={"auto"}
             onAutoplay={(swiper) => {
               setActiveSlide(swiper.realIndex)
             }}
             modules={[Autoplay]}
-            autoplay={{
-              delay: 0,
-              disableOnInteraction: false
-            }}
+            // autoplay={{
+            //   delay: 0,
+            //   disableOnInteraction: false
+            // }}
             speed={5000}
             className="h-full w-full divide-x-1 sm:px-0"
             // spaceBetween={15}
           >
-            {query?.data?.pages[0]?.products?.data.map((product) => {
+            {query?.data?.pages[0]?.products?.data.map((product, index) => {
               return (
-                <SwiperSlide key={product.id} className={sliderClass}>
-                  <ProductCard
-                    homeSlider={true}
-                    key={product.id}
-                    product={product as Product}
-                  />
+                <SwiperSlide
+                  key={product.id}
+                  className={clsx("!w-[421px] min-w-[421px]")}
+                >
+                  <div
+                    ref={
+                      index ===
+                      query?.data?.pages[0]?.products?.data?.length - 1
+                        ? refNext
+                        : index === 0
+                          ? refPrev
+                          : undefined
+                    }
+                  >
+                    <ProductCard
+                      setSelectedItemId={setSelectedItemId}
+                      selectedItemId={selectedItemId}
+                      homeSlider={true}
+                      key={product.id}
+                      product={product as Product}
+                    />
+                  </div>
                 </SwiperSlide>
               )
             })}
