@@ -19,10 +19,7 @@ export default async () => {
 
   return (
     <ReactQueryHydrate state={dehydratedState}>
-      <OrdersPage
-        isMobileView={isMobileView}
-        title={(await generateMetadata()).title?.toString() as string}
-      />
+      <OrdersPage isMobileView={isMobileView} />
     </ReactQueryHydrate>
   )
 }

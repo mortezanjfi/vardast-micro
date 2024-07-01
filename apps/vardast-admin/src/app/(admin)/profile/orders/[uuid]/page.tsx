@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import OrderDetailPage from "@vardast/component/order/OrderDetailPage"
+import OrderPage from "@vardast/component/order/OrderPage"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -10,5 +10,5 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async ({ params: { uuid } }: { params: { uuid: string } }) => {
   const isMobileView = await CheckIsMobileView()
 
-  return <OrderDetailPage isMobileView={isMobileView} uuid={uuid} />
+  return <OrderPage isMobileView={isMobileView} uuid={uuid} />
 }

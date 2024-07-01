@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
 import {
@@ -10,7 +9,6 @@ import {
   useFindOfferPreOrderByIdQuery
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
-import { ACTION_BUTTON_TYPE } from "@vardast/type/OrderProductTabs"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
 
@@ -19,11 +17,7 @@ import AddPriceModal from "./AddPriceModal"
 import CardContainer from "./CardContainer"
 
 type OrderProductsListProps = {
-  isSeller?: boolean
-  actionButtonType?: ACTION_BUTTON_TYPE
   isMobileView?: boolean
-  hasOperation?: boolean
-  hasExtraInfo?: boolean
   button?: cardButton
   offerId?: string
   findPreOrderByIdQuery: UseQueryResult<FindPreOrderByIdQuery, unknown>
@@ -43,16 +37,10 @@ const TablePriceHead = ({ isVardast }: { isVardast?: boolean }) => {
 }
 
 function OrderProductsList({
-  isSeller,
-  actionButtonType,
   button,
-  isMobileView,
-  hasOperation,
-  hasExtraInfo,
   offerId,
   findPreOrderByIdQuery
 }: OrderProductsListProps) {
-  const router = useRouter()
   const { t } = useTranslation()
   const [open, setOpen] = useState<boolean>(false)
   const [priceModalData, setPriceModalData] = useState<{
@@ -110,18 +98,6 @@ function OrderProductsList({
       display: !!offerId,
       element: "div",
       children: "قیمت (تومان)"
-    },
-    {
-      colSpan: 3,
-      display: !!offerId && hasExtraInfo,
-      element: "div",
-      children: "قیمت فروشنده (تومان)"
-    },
-    {
-      colSpan: 4,
-      display: !!offerId && hasExtraInfo,
-      element: "div",
-      children: "قیمت پیشنهادی وردست (تومان)"
     }
   ]
 
@@ -160,7 +136,7 @@ function OrderProductsList({
                       </th>
                     )
                 )}
-                {offerId && hasOperation && (
+                {offerId && (
                   <th colSpan={1} rowSpan={2} className={clsx(thClassName)}>
                     {t("common:operation")}
                   </th>
@@ -169,12 +145,6 @@ function OrderProductsList({
               {offerId && (
                 <tr>
                   <TablePriceHead />
-                  {hasExtraInfo && (
-                    <>
-                      <TablePriceHead />
-                      <TablePriceHead isVardast={true} />
-                    </>
-                  )}
                 </tr>
               )}
             </thead>
@@ -214,13 +184,6 @@ function OrderProductsList({
                     ) : (
                       "-"
                     )}
-                    {/* <div className="flex gap-1">
-                          {line?.attributes.map((attribute) => (
-                            <span className="tag tag-sm tag-gray">
-                              {attribute}
-                            </span>
-                          ))}
-                        </div> */}
                   </td>
                   {offerId && (
                     <>
@@ -239,73 +202,20 @@ function OrderProductsList({
                           addCommas(getLineOfferByLineId(line.id)?.total_price)
                         )}
                       </td>
-                      {hasExtraInfo && (
-                        <>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(
-                              addCommas(getLineOfferByLineId(line.id)?.fi_price)
-                            )}
-                          </td>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(
-                              addCommas(
-                                getLineOfferByLineId(line.id)?.tax_price
-                              )
-                            )}
-                          </td>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(
-                              addCommas(
-                                getLineOfferByLineId(line.id)?.total_price
-                              )
-                            )}
-                          </td>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(
-                              addCommas(getLineOfferByLineId(line.id)?.fi_price)
-                            )}
-                          </td>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(
-                              addCommas(
-                                getLineOfferByLineId(line.id)?.tax_price
-                              )
-                            )}
-                          </td>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(
-                              addCommas(
-                                getLineOfferByLineId(line.id)?.total_price
-                              )
-                            )}
-                          </td>
-                          <td className="border-x px-4 py-3">
-                            {digitsEnToFa(
-                              addCommas(
-                                getLineOfferByLineId(line.id)?.total_price
-                              )
-                            )}
-                          </td>
-                        </>
-                      )}
-                      {hasOperation && (
-                        <td className={clsx(tdClassName, "whitespace-nowrap")}>
-                          <span
-                            onClick={() => {
-                              setPriceModalData({
-                                fi_price: getLineOfferByLineId(line.id)
-                                  ?.fi_price,
-                                line: getLineOfferByLineId(line.id)
-                                  ?.line as Line
-                              })
-                              setOpen(true)
-                            }}
-                            className="cursor-pointer text-blue-500"
-                          >
-                            افزودن قیمت
-                          </span>
-                        </td>
-                      )}
+                      <td className={clsx(tdClassName, "whitespace-nowrap")}>
+                        <span
+                          onClick={() => {
+                            setPriceModalData({
+                              fi_price: getLineOfferByLineId(line.id)?.fi_price,
+                              line: getLineOfferByLineId(line.id)?.line as Line
+                            })
+                            setOpen(true)
+                          }}
+                          className="cursor-pointer text-blue-500"
+                        >
+                          افزودن قیمت
+                        </span>
+                      </td>
                     </>
                   )}
                 </tr>

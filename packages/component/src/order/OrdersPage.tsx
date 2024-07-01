@@ -12,11 +12,10 @@ import {
   useCreatePreOrderMutation,
   useGetAllPreOrdersQuery
 } from "@vardast/graphql/generated"
-import axiosApis, { IServePdf } from "@vardast/query/queryClients/axiosApis"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
-import { useSession } from "next-auth/react"
+import { LucideTrash } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { DateObject } from "react-multi-date-picker"
@@ -26,19 +25,16 @@ import { ApiCallStatusEnum } from "../../../type/src/Enums"
 import { checkBooleanByString } from "../../../util/src/checkBooleanByString"
 import { getContentByApiStatus } from "../../../util/src/GetContentByApiStatus"
 import CardContainer from "../desktop/CardContainer"
-import OrderCard, { PreOrderStatesFa } from "../desktop/OrderCart"
+import { PreOrderStatesFa } from "../desktop/OrderCart"
 import Loading from "../Loading"
 import LoadingFailed from "../LoadingFailed"
 import NoResult from "../NoResult"
-import NotFoundMessage from "../NotFound"
 import Pagination from "../table/Pagination"
 import OrderDeleteModal from "./OrderDeleteModal"
 import { OrdersFilter } from "./OrdersFilter"
 
 type OrdersPageProps = {
-  isAdmin?: boolean
   isMobileView?: boolean
-  title: string
   filters?: OrdersFilterType
 }
 
@@ -72,15 +68,8 @@ const renderedListStatus = {
   [ApiCallStatusEnum.DEFAULT]: null
 }
 
-const OrdersPage = ({
-  isAdmin,
-  isMobileView,
-  title,
-  filters = {}
-}: OrdersPageProps) => {
-  const { data: session } = useSession()
+const OrdersPage = ({ filters = {} }: OrdersPageProps) => {
   const { t } = useTranslation()
-  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const [orderToDelete, setOrderToDelete] = useState<PreOrder | null>()
   const [currentPage, setCurrentPage] = useState<number>(1)
   const router = useRouter()
@@ -129,16 +118,6 @@ const OrdersPage = ({
     }
   )
 
-  const downLoadInvoice = async ({ uuid, access_token }: IServePdf) => {
-    const response = await axiosApis.getInvoice({ uuid, access_token })
-    const html = response.data
-    const blob = new Blob([html], { type: "text/html" })
-    const url = window.URL.createObjectURL(blob)
-
-    const newTab = window.open(url, "_blank")
-    newTab.focus()
-  }
-
   const onCreateOrder = () => {
     createOrderMutation.mutate({
       createPreOrderInput: {}
@@ -152,218 +131,130 @@ const OrdersPage = ({
 
   return (
     <div className="flex flex-col gap-7">
-      {isAdmin && (
-        <OrdersFilter setOrdersQueryParams={setOrdersQueryParams} form={form} />
-      )}
       <OrderDeleteModal
-        open={deleteModalOpen}
-        onOpenChange={setDeleteModalOpen}
+        open={!!orderToDelete}
+        onCloseModal={() => setOrderToDelete(null)}
         orderToDelete={orderToDelete}
       />
-      {/* {!isMobileView && !isAdmin && <PageTitle title={title} />}
-      {!isMobileView && !isAdmin && (
-        <PageHeader
-          pageHeaderClasses="border-b py-5 !mb-0"
-          title={"سفارش خود را ثبت کنید و بهترین قیمت را از وردست بخواهید."}
-          titleClasses="text-[14px] font-normal"
-          containerClass="items-center"
-        >
-          <Button
-            disabled={createOrderMutation.isLoading || preOrdersQuery.isLoading}
-            loading={createOrderMutation.isLoading}
-            onClick={onCreateOrder}
-            variant="primary"
-            size="medium"
-          >
-            {t("common:add_new_entity", {
-              entity: t("common:order")
-            })}
-          </Button>
-        </PageHeader>
-      )} */}
-      {!isMobileView ? (
-        <CardContainer
-          button={{
-            disabled: createOrderMutation.isLoading || preOrdersQuery.isLoading,
-            loading: createOrderMutation.isLoading,
-            onClick: onCreateOrder,
-            text: "افزودن سفارش",
-            variant: "primary"
-          }}
-          title="لیست‌ سفارشات"
-        >
-          {renderedListStatus[
-            getContentByApiStatus(preOrdersQuery, !!ordersLength)
-          ] || (
-            <>
-              <table className="table-hover table">
-                <thead>
-                  <tr>
-                    <th className="border">{t("common:row")}</th>
-                    <th className="border">
-                      {t("common:entity_code", { entity: t("common:order") })}
-                    </th>
-                    <th className="border">
-                      {t("common:entity_name", {
-                        entity: t("common:project")
-                      })}
-                    </th>
-                    <th>{t("common:category")}</th>
-                    <th className="border">{t("common:applicant_name")}</th>
-                    <th className="border">{t("common:expert_name")}</th>
-                    <th className="border">{t("common:submission-time")}</th>
-                    <th className="border">{t("common:order-needed-time")}</th>
-                    {/* <th className="border">{t("common:file")}</th> */}
-                    <th className="border">{t("common:status")}</th>
-                    {/* <th className="border">{t("common:operation")}</th> */}
-                  </tr>
-                </thead>
+      <OrdersFilter setOrdersQueryParams={setOrdersQueryParams} form={form} />
+      <CardContainer
+        button={{
+          disabled: createOrderMutation.isLoading || preOrdersQuery.isLoading,
+          loading: createOrderMutation.isLoading,
+          onClick: onCreateOrder,
+          text: "افزودن سفارش",
+          variant: "primary"
+        }}
+        title="لیست‌ سفارشات"
+      >
+        {renderedListStatus[
+          getContentByApiStatus(preOrdersQuery, !!ordersLength)
+        ] || (
+          <>
+            <table className="table-hover table">
+              <thead>
+                <tr>
+                  <th className="border">{t("common:row")}</th>
+                  <th className="border">
+                    {t("common:entity_code", { entity: t("common:order") })}
+                  </th>
+                  <th className="border">
+                    {t("common:entity_name", {
+                      entity: t("common:project")
+                    })}
+                  </th>
+                  <th>{t("common:category")}</th>
+                  <th className="border">{t("common:applicant_name")}</th>
+                  <th className="border">{t("common:expert_name")}</th>
+                  <th className="border">{t("common:submission-time")}</th>
+                  <th className="border">{t("common:order-needed-time")}</th>
+                  <th className="border">{t("common:status")}</th>
+                  <th className="border">{t("common:operation")}</th>
+                </tr>
+              </thead>
 
-                <tbody className="border-collapse border">
-                  {preOrdersQuery?.data?.preOrders?.data?.map(
-                    (preOrder, index) =>
-                      preOrder && (
-                        <tr
-                          className="cursor-pointer hover:bg-alpha-50"
-                          onClick={(e) => {
-                            e.preventDefault()
-                            router.push(`/profile/orders/${preOrder?.id}`)
-                          }}
-                          key={preOrder?.id}
-                        >
-                          <td className="w-4 border">
-                            <span>{digitsEnToFa(index + 1)}</span>
-                          </td>
-                          <td className="border">
-                            {digitsEnToFa(preOrder?.uuid)}
-                          </td>
-                          <td className="border">{preOrder?.project?.name}</td>
-                          <td className="border">
-                            {preOrder?.category?.title}
-                          </td>
-                          <td className="border">{preOrder?.applicant_name}</td>
-                          <td className="border">{preOrder?.expert_name}</td>
-                          <td className="border">
-                            {preOrder?.request_date
-                              ? digitsEnToFa(
-                                  new Date(
-                                    preOrder?.request_date
-                                  ).toLocaleDateString("fa-IR", {
+              <tbody className="border-collapse border">
+                {preOrdersQuery?.data?.preOrders?.data?.map(
+                  (preOrder, index) =>
+                    preOrder && (
+                      <tr
+                        className="cursor-pointer hover:bg-alpha-50"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          router.push(`/profile/orders/${preOrder?.id}`)
+                        }}
+                        key={preOrder?.id}
+                      >
+                        <td className="w-4 border">
+                          <span>{digitsEnToFa(index + 1)}</span>
+                        </td>
+                        <td className="border">
+                          {digitsEnToFa(preOrder?.uuid)}
+                        </td>
+                        <td className="border">{preOrder?.project?.name}</td>
+                        <td className="border">{preOrder?.category?.title}</td>
+                        <td className="border">{preOrder?.applicant_name}</td>
+                        <td className="border">{preOrder?.expert_name}</td>
+                        <td className="border">
+                          {preOrder?.request_date
+                            ? digitsEnToFa(
+                                new Date(
+                                  preOrder?.request_date
+                                ).toLocaleDateString("fa-IR", {
+                                  year: "numeric",
+                                  month: "2-digit",
+                                  day: "2-digit",
+                                  hour: "numeric",
+                                  minute: "numeric"
+                                })
+                              )
+                            : "-"}
+                        </td>
+                        <td className="border">
+                          {preOrder?.need_date
+                            ? digitsEnToFa(
+                                new DateObject(new Date(preOrder?.need_date))
+                                  .toDate()
+                                  .toLocaleDateString("fa-IR", {
                                     year: "numeric",
                                     month: "2-digit",
                                     day: "2-digit",
                                     hour: "numeric",
                                     minute: "numeric"
                                   })
-                                )
-                              : "-"}
-                          </td>
-                          <td className="border">
-                            {preOrder?.need_date
-                              ? digitsEnToFa(
-                                  new DateObject(new Date(preOrder?.need_date))
-                                    .toDate()
-                                    .toLocaleDateString("fa-IR", {
-                                      year: "numeric",
-                                      month: "2-digit",
-                                      day: "2-digit",
-                                      hour: "numeric",
-                                      minute: "numeric"
-                                    })
-                                )
-                              : "-"}
-                          </td>
+                              )
+                            : "-"}
+                        </td>
 
-                          <td className="border">
-                            <span
-                              className={clsx(
-                                "tag",
-                                PreOrderStatesFa[preOrder?.status]?.className
-                              )}
-                            >
-                              {
-                                PreOrderStatesFa[preOrder?.status]
-                                  ?.name_fa_admin
-                              }
-                            </span>
-                          </td>
-
-                          {/* <td className="border">
-                            {preOrder.status === PreOrderStates.Closed ? (
-                              <>
-                                <span
-                                  onClick={() => {
-                                    downLoadInvoice({
-                                      access_token: session.accessToken,
-                                      uuid: `${preOrder.uuid}`
-                                    })
-                                  }}
-                                  className="tag cursor-pointer text-success"
-                                >
-                                  {t("common:invoice")}
-                                </span>
-                                /
-                              </>
-                            ) : (
-                              <>
-                                <Link
-                                  onClick={(e) => {
-                                    e.stopPropagation()
-                                    e.nativeEvent.preventDefault()
-                                    e.nativeEvent.stopImmediatePropagation()
-                                  }}
-                                  href={`/profile/orders/${preOrder?.id}/info`}
-                                >
-                                  <span className="tag cursor-pointer text-blue-500">
-                                    {t("common:edit")}
-                                  </span>
-                                </Link>
-                                /
-                              </>
+                        <td className="border">
+                          <span
+                            className={clsx(
+                              "tag",
+                              PreOrderStatesFa[preOrder?.status]?.className
                             )}
-                            <Link
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                e.nativeEvent.preventDefault()
-                                e.nativeEvent.stopImmediatePropagation()
-                              }}
-                              href={`/profile/orders/${preOrder?.id}/offers`}
-                            >
-                              <span className="tag cursor-pointer text-error">
-                                {t("common:offers")}
-                              </span>
-                            </Link>
-                          </td> */}
-                        </tr>
-                      )
-                  )}
-                </tbody>
-              </table>
-              <Pagination
-                total={preOrdersQuery?.data?.preOrders?.lastPage ?? 0}
-                page={currentPage}
-                onChange={(page) => {
-                  setCurrentPage(page)
-                }}
-              />
-            </>
-          )}
-        </CardContainer>
-      ) : preOrdersQuery.isFetching && preOrdersQuery.isLoading ? (
-        <div className="flex h-full items-center justify-center pt-6">
-          <Loading hideMessage />
-        </div>
-      ) : preOrdersQuery.data?.preOrders?.data.length > 0 ? (
-        <>
-          {preOrdersQuery?.data?.preOrders?.data.map((preOrder, index) => (
-            <OrderCard
-              key={index}
-              preOrder={preOrder as PreOrder}
-              setOrderToDelete={setOrderToDelete}
-              setDeleteModalOpen={setDeleteModalOpen}
-            />
-          ))}
-          {preOrdersQuery?.data?.preOrders?.lastPage > 1 && (
+                          >
+                            {PreOrderStatesFa[preOrder?.status]?.name_fa_admin}
+                          </span>
+                        </td>
+                        <td className="border">
+                          <Button
+                            variant="danger"
+                            iconOnly
+                            type="button"
+                            size="small"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              setOrderToDelete(preOrder as PreOrder)
+                            }}
+                          >
+                            <LucideTrash className="icon" />
+                          </Button>
+                        </td>
+                      </tr>
+                    )
+                )}
+              </tbody>
+            </table>
             <Pagination
               total={preOrdersQuery?.data?.preOrders?.lastPage ?? 0}
               page={currentPage}
@@ -371,48 +262,9 @@ const OrdersPage = ({
                 setCurrentPage(page)
               }}
             />
-          )}
-          {isMobileView && (
-            <div className="absolute bottom-0 w-full border-y border-alpha-200 bg-alpha-white px-6 py-5">
-              <Button
-                disabled={
-                  createOrderMutation.isLoading || preOrdersQuery.isLoading
-                }
-                loading={createOrderMutation.isLoading}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  e.nativeEvent.preventDefault()
-                  e.nativeEvent.stopImmediatePropagation()
-                  onCreateOrder()
-                }}
-                variant="primary"
-                size="medium"
-                className=" mt-auto w-full py-3"
-              >
-                {t("common:addOrderInfo")}
-              </Button>
-            </div>
-          )}
-        </>
-      ) : (
-        <NotFoundMessage text="سفارشی" />
-      )}
-      {isMobileView && (
-        <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] flex w-full justify-end md:relative md:bottom-0">
-          <Button
-            onClick={(e) => {
-              e.stopPropagation()
-              e.nativeEvent.preventDefault()
-              e.nativeEvent.stopImmediatePropagation()
-              onCreateOrder()
-            }}
-            className="w-full"
-            variant="primary"
-          >
-            افزودن سفارش
-          </Button>
-        </div>
-      )}
+          </>
+        )}
+      </CardContainer>
     </div>
   )
 }

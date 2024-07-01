@@ -28,7 +28,6 @@ export default async ({ params }: ProductIndexProps) => {
           projectId: params.uuid
         }}
         isMobileView={isMobileView}
-        title={(await generateMetadata()).title?.toString() as string}
       />
     </ReactQueryHydrate>
   )

@@ -44,7 +44,7 @@
     "../../packages/component/src/project/ProjectAddressesTab.tsx",
     "../../packages/component/src/order/OrderDeleteModal.tsx",
     "../../packages/component/src/order/OrdersPage.tsx",
-    "../../packages/component/src/order/OrderDetailPage.tsx",
+    "../../packages/component/src/order/OrderPage.tsx",
     "../../packages/component/src/order/OfferItemStepper.tsx",
     "../../packages/component/src/order/ProductDeleteModal.tsx",
     "../../packages/component/src/order/products/tabs/TabOrderProductCard.tsx",

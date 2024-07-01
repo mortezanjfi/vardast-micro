@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 "use client"
 
-import { Dispatch, SetStateAction, useState } from "react"
+import { useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { PreOrder, useRemovePreOrderMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
@@ -21,13 +21,13 @@ import useTranslation from "next-translate/useTranslation"
 
 type OrderDeleteModalProps = {
   open: boolean
-  onOpenChange: Dispatch<SetStateAction<boolean>>
+  onCloseModal: () => void
   orderToDelete: PreOrder
 }
 
 const OrderDeleteModal = ({
   open,
-  onOpenChange,
+  onCloseModal,
   orderToDelete
 }: OrderDeleteModalProps) => {
   const { t } = useTranslation()
@@ -54,7 +54,7 @@ const OrderDeleteModal = ({
           queryClient.invalidateQueries({
             queryKey: ["PreOrders"]
           })
-          onOpenChange(false)
+          onCloseModal()
           toast({
             title: "سفارش شما حذف شد",
             duration: 5000,
@@ -72,7 +72,7 @@ const OrderDeleteModal = ({
   }
 
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
+    <AlertDialog open={open} onOpenChange={onCloseModal}>
       <AlertDialogContent>
         <div className="flex">
           <div className="me-6 flex-1 shrink-0">
@@ -109,7 +109,7 @@ const OrderDeleteModal = ({
             </p>
             <AlertDialogFooter>
               <div className="flex items-center gap-2">
-                <Button variant="ghost" onClick={() => onOpenChange(false)}>
+                <Button variant="ghost" onClick={onCloseModal}>
                   {t("common:cancel")}
                 </Button>
                 <Button variant="danger" onClick={onDelete}>
