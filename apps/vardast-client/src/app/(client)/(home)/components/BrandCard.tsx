@@ -75,7 +75,7 @@ const BrandCard = forwardRef(
                   {brand?.catalog?.id ? (
                     <CheckIcon width={16} height={16} />
                   ) : (
-                    <Minus />
+                    <Minus width={16} height={16} />
                   )}
                 </span>
               </div>
@@ -86,7 +86,7 @@ const BrandCard = forwardRef(
                   {brand?.priceList?.id ? (
                     <CheckIcon width={16} height={16} />
                   ) : (
-                    <Minus />
+                    <Minus width={16} height={16} />
                   )}
                 </span>
               </div>
