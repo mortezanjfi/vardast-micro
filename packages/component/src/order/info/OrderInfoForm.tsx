@@ -64,7 +64,9 @@ const CreateOrderInfoSchema = z.object({
   descriptions: z.string().optional(),
   categoryId: z.number(),
   expert_name: z.string().optional(),
-  applicant_name: z.string().optional()
+  applicant_name: z.string().optional(),
+  bid_start: z.string(),
+  bid_end: z.string()
 })
 
 const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
@@ -195,6 +197,12 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
       }
       if (defaultValue?.applicant_name) {
         form.setValue("applicant_name", defaultValue?.applicant_name)
+      }
+      if (defaultValue?.bid_end) {
+        form.setValue("bid_end", defaultValue?.bid_end)
+      }
+      if (defaultValue?.bid_start) {
+        form.setValue("bid_start", defaultValue?.bid_start)
       }
     }
   }, [findPreOrderByIdQuery?.data])
@@ -590,7 +598,82 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
                 </FormItem>
               )}
             />
-
+            <FormField
+              control={form.control}
+              name="bid_start"
+              render={({ field: { onChange, value } }) => (
+                <FormItem>
+                  <FormLabel>{t("common:bid-start-time")}</FormLabel>
+                  <FormControl>
+                    <DatePickerMulti
+                      value={value ? new DateObject(new Date(value)) : ""}
+                      onChange={(dateObject: DateObject) => {
+                        onChange(
+                          dateObject?.isValid
+                            ? dateObject?.toDate?.().toString()
+                            : ""
+                        )
+                      }}
+                      render={(value, openCalendar) => {
+                        return (
+                          <Button
+                            onClick={openCalendar}
+                            noStyle
+                            type="button"
+                            role="combobox"
+                            className="input-field flex w-full items-center"
+                          >
+                            <span className="inline-block max-w-full truncate">
+                              {value || "زمان شروع مناقصه را وارد کنید"}
+                            </span>
+                            <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+                          </Button>
+                        )
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="bid_end"
+              render={({ field: { onChange, value } }) => (
+                <FormItem>
+                  <FormLabel>{t("common:bid-end-time")}</FormLabel>
+                  <FormControl>
+                    <DatePickerMulti
+                      value={value ? new DateObject(new Date(value)) : ""}
+                      onChange={(dateObject: DateObject) => {
+                        onChange(
+                          dateObject?.isValid
+                            ? dateObject?.toDate?.().toString()
+                            : ""
+                        )
+                      }}
+                      render={(value, openCalendar) => {
+                        return (
+                          <Button
+                            onClick={openCalendar}
+                            noStyle
+                            type="button"
+                            role="combobox"
+                            className="input-field flex w-full items-center"
+                          >
+                            <span className="inline-block max-w-full truncate">
+                              {value || "زمان پایان مناقصه را وارد کنید"}
+                            </span>
+                            <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+                          </Button>
+                        )
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="descriptions"

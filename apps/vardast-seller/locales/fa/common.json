@@ -366,5 +366,7 @@
   "applicant_name": "درخواست کننده",
   "open_orders": "سفارشات در جریان",
   "closed_orders": "سفارشات خریداری شده",
-  "total_orders": "کل سفارشات"
+  "total_orders": "کل سفارشات",
+  "bid-start-time": "زمان شروع مناقصه",
+  "bid-end-time": "زمان پایان مناقصه"
 }
