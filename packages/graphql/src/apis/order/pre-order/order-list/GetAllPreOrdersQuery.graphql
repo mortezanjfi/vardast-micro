@@ -12,6 +12,8 @@ query GetAllPreOrdersQuery($indexPreOrderInput: IndexPreOrderInput!) {
       expire_date
       expire_time
       need_date
+      bid_end
+      bid_start
       shipping_address
       payment_methods
       offersNum

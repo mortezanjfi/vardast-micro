@@ -215,6 +215,9 @@ const OrdersPage = ({
                     <th className="border">{t("common:submission-time")}</th>
                     <th className="border">{t("common:order-needed-time")}</th>
                     {/* <th className="border">{t("common:file")}</th> */}
+                    <th className="border">{t("common:bid-start-time")}</th>
+                    <th className="border">{t("common:bid-end-time")}</th>
+
                     <th className="border">{t("common:status")}</th>
                     <th className="border">{t("common:operation")}</th>
                   </tr>
@@ -274,7 +277,36 @@ const OrdersPage = ({
                                 )
                               : "-"}
                           </td>
-
+                          <td className="border">
+                            {preOrder?.bid_start
+                              ? digitsEnToFa(
+                                  new DateObject(new Date(preOrder?.bid_start))
+                                    .toDate()
+                                    .toLocaleDateString("fa-IR", {
+                                      year: "numeric",
+                                      month: "2-digit",
+                                      day: "2-digit",
+                                      hour: "numeric",
+                                      minute: "numeric"
+                                    })
+                                )
+                              : "-"}
+                          </td>{" "}
+                          <td className="border">
+                            {preOrder?.bid_end
+                              ? digitsEnToFa(
+                                  new DateObject(new Date(preOrder?.bid_end))
+                                    .toDate()
+                                    .toLocaleDateString("fa-IR", {
+                                      year: "numeric",
+                                      month: "2-digit",
+                                      day: "2-digit",
+                                      hour: "numeric",
+                                      minute: "numeric"
+                                    })
+                                )
+                              : "-"}
+                          </td>
                           <td className="border">
                             <span
                               className={clsx(
@@ -288,7 +320,6 @@ const OrdersPage = ({
                               }
                             </span>
                           </td>
-
                           <td className="border">
                             {preOrder.status === PreOrderStates.Closed ? (
                               <>
