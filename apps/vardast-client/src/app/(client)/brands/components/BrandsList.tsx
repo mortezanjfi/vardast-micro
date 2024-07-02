@@ -3,12 +3,12 @@
 import { useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useInfiniteQuery } from "@tanstack/react-query"
-import BrandOrSellerCard, {
-  BrandOrSellerCardSkeleton
-} from "@vardast/component/BrandOrSellerCard"
+import BrandSortFilter from "@vardast/component/brand/BrandSortFilter"
+import { BrandOrSellerCardSkeleton } from "@vardast/component/BrandOrSellerCard"
 import BrandsOrSellersContainer, {
   BrandContainerType
 } from "@vardast/component/BrandsOrSellersContainer"
+import ListHeader from "@vardast/component/desktop/ListHeader"
 import DesktopMobileViewOrganizer from "@vardast/component/DesktopMobileViewOrganizer"
 import FiltersSidebarContainer from "@vardast/component/filters-sidebar-container"
 import InfiniteScrollPagination from "@vardast/component/InfiniteScrollPagination"
@@ -19,14 +19,16 @@ import {
   Brand,
   GetAllBrandsQuery,
   IndexBrandInput,
-  SortBrandEnum
+  SortBrandEnum,
+  useGetAllBrandsQuery
 } from "@vardast/graphql/generated"
 import { setSidebar } from "@vardast/provider/LayoutProvider/use-layout"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { getAllBrandsQueryFn } from "@vardast/query/queryFns/allBrandsQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { Button } from "@vardast/ui/button"
 
-import BrandSort from "@/app/(client)/brands/components/BrandSort"
+import BrandCard from "@/app/(client)/(home)/components/BrandCard"
 
 type BrandsListProps = {
   limitPage?: number
@@ -47,6 +49,8 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
   const searchParams = useSearchParams()
 
   const [filterAttributes, setFilterAttributes] = useState<[]>([])
+
+  const allBrandsNumber = useGetAllBrandsQuery(graphqlRequestClientWithToken)
 
   const allBrandsQuery = useInfiniteQuery<GetAllBrandsQuery>(
     [
@@ -79,23 +83,23 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
     }
   )
 
-  const DesktopHeader = (
-    <div className="flex items-center justify-between md:pb-8">
-      <BrandSort
-        sort={sort}
-        onSortChanged={(sort) => {
-          setSort(sort)
-          const params = new URLSearchParams(searchParams as any)
-          params.set("orderBy", `${sort}`)
-          push(pathname + "?" + params.toString())
-        }}
-      />
-    </div>
-  )
+  // const DesktopHeader = (
+  //   <div className="flex items-center justify-between md:pb-8">
+  //     <BrandSort
+  //       sort={sort}
+  //       onSortChanged={(sort) => {
+  //         setSort(sort)
+  //         const params = new URLSearchParams(searchParams as any)
+  //         params.set("orderBy", `${sort}`)
+  //         push(pathname + "?" + params.toString())
+  //       }}
+  //     />
+  //   </div>
+  // )
 
   const Content =
     allBrandsQuery.isFetching && allBrandsQuery.isLoading ? (
-      <BrandsOrSellersContainer type={BrandContainerType.Brands_Page_List}>
+      <BrandsOrSellersContainer type={BrandContainerType.BRANDS_PAGE_LIST}>
         {() => (
           <>
             {[...Array(20)].map((_, index) => (
@@ -107,7 +111,7 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
     ) : !allBrandsQuery.data ? (
       <NoResult entity="brand" />
     ) : allBrandsQuery.data.pages.length ? (
-      <BrandsOrSellersContainer type={BrandContainerType.Brands_Page_List}>
+      <BrandsOrSellersContainer type={BrandContainerType.BRANDS_PAGE_LIST}>
         {({ selectedItemId, setSelectedItemId }) => (
           <InfiniteScrollPagination
             CardLoader={() => <BrandOrSellerCardSkeleton />}
@@ -118,17 +122,29 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
                 {page.brands.data.map(
                   (brand, index) =>
                     brand && (
-                      <BrandOrSellerCard
-                        selectedItemId={selectedItemId}
-                        setSelectedItemId={setSelectedItemId}
-                        ref={
-                          page.brands.data.length - 1 === index
-                            ? ref
-                            : undefined
-                        }
-                        key={brand.id}
-                        content={{ ...(brand as Brand), __typename: "Brand" }}
-                      />
+                      <div className="p-3 ring-alpha-200 sm:ring-1">
+                        <BrandCard
+                          isMobileView={isMobileView}
+                          ref={
+                            page.brands.data.length - 1 === index
+                              ? ref
+                              : undefined
+                          }
+                          brand={brand as Brand}
+                        />
+                      </div>
+
+                      // <BrandOrSellerCard
+                      //   selectedItemId={selectedItemId}
+                      //   setSelectedItemId={setSelectedItemId}
+                      //   ref={
+                      //     page.brands.data.length - 1 === index
+                      //       ? ref
+                      //       : undefined
+                      //   }
+                      //   key={brand.id}
+                      //   content={{ ...(brand as Brand), __typename: "Brand" }}
+                      // />
                     )
                 )}
               </>
@@ -156,6 +172,16 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
             </Button>
           )}
         </div>
+        <BrandSortFilter
+          sort={sort}
+          onSortChanged={(sort) => {
+            console.log(sort)
+            setSort(sort)
+            const params = new URLSearchParams(searchParams as any)
+            params.set("orderBy", `${sort}`)
+            push(pathname + "?" + params.toString())
+          }}
+        />
       </div>
     </FiltersSidebarContainer>
   )
@@ -166,7 +192,12 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
     <DesktopMobileViewOrganizer
       isMobileView={isMobileView}
       Content={Content}
-      DesktopHeader={DesktopHeader}
+      DesktopHeader={
+        <ListHeader
+          total={allBrandsNumber?.data?.brands?.total}
+          listName={"brands"}
+        />
+      }
       DesktopSidebar={<></>}
     />
   )

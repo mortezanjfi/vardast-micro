@@ -33,7 +33,7 @@ type OrderProductsListProps = {
 }
 
 const thClassName = "whitespace-nowrap border align-middle"
-const tdClassName = "border"
+
 const TablePriceHead = ({ isVardast }: { isVardast?: boolean }) => {
   return (
     <>
@@ -221,31 +221,29 @@ function OrderProductsList({
               <tbody>
                 {lines?.map((line, index) => (
                   <tr key={line.id}>
-                    <td className={tdClassName}>
+                    <td>
                       <span>{digitsEnToFa(index + 1)}</span>
                     </td>
-                    <td className={tdClassName}>
+                    <td>
                       <span className="font-medium text-alpha-800">
                         {line?.id && digitsEnToFa(line?.id)}
                       </span>
                     </td>
-                    <td className={tdClassName}>
+                    <td>
                       <span className="font-medium text-alpha-800">
                         {line?.item_name && digitsEnToFa(line?.item_name)}
                       </span>
                     </td>
-                    <td className={tdClassName}>
+                    <td>
                       <span className="font-medium text-alpha-800">
                         {line?.brand}
                       </span>
                     </td>
 
-                    <td className={tdClassName}>{line?.uom}</td>
+                    <td>{line?.uom}</td>
 
-                    <td className={tdClassName}>
-                      {line?.qty && digitsEnToFa(line?.qty)}
-                    </td>
-                    <td className={tdClassName}>
+                    <td>{line?.qty && digitsEnToFa(line?.qty)}</td>
+                    <td>
                       {line?.attribuite ? (
                         <span className="tag tag-sm tag-gray">
                           {line?.attribuite}
@@ -263,17 +261,17 @@ function OrderProductsList({
                     </td>
                     {offerId && (
                       <>
-                        <td className="border-x px-4 py-3">
+                        <td>
                           {digitsEnToFa(
                             addCommas(getLineOfferByLineId(line.id)?.fi_price)
                           )}
                         </td>
-                        <td className="border-x px-4 py-3">
+                        <td>
                           {digitsEnToFa(
                             addCommas(getLineOfferByLineId(line.id)?.tax_price)
                           )}
                         </td>
-                        <td className="border-x px-4 py-3">
+                        <td>
                           {digitsEnToFa(
                             addCommas(
                               getLineOfferByLineId(line.id)?.total_price
@@ -282,49 +280,49 @@ function OrderProductsList({
                         </td>
                         {hasExtraInfo && (
                           <>
-                            <td className="border-x px-4 py-3">
+                            <td>
                               {digitsEnToFa(
                                 addCommas(
                                   getLineOfferByLineId(line.id)?.fi_price
                                 )
                               )}
                             </td>
-                            <td className="border-x px-4 py-3">
+                            <td>
                               {digitsEnToFa(
                                 addCommas(
                                   getLineOfferByLineId(line.id)?.tax_price
                                 )
                               )}
                             </td>
-                            <td className="border-x px-4 py-3">
+                            <td>
                               {digitsEnToFa(
                                 addCommas(
                                   getLineOfferByLineId(line.id)?.total_price
                                 )
                               )}
                             </td>
-                            <td className="border-x px-4 py-3">
+                            <td>
                               {digitsEnToFa(
                                 addCommas(
                                   getLineOfferByLineId(line.id)?.fi_price
                                 )
                               )}
                             </td>
-                            <td className="border-x px-4 py-3">
+                            <td>
                               {digitsEnToFa(
                                 addCommas(
                                   getLineOfferByLineId(line.id)?.tax_price
                                 )
                               )}
                             </td>
-                            <td className="border-x px-4 py-3">
+                            <td>
                               {digitsEnToFa(
                                 addCommas(
                                   getLineOfferByLineId(line.id)?.total_price
                                 )
                               )}
                             </td>
-                            <td className="border-x px-4 py-3">
+                            <td>
                               {digitsEnToFa(
                                 addCommas(
                                   getLineOfferByLineId(line.id)?.total_price
@@ -334,9 +332,7 @@ function OrderProductsList({
                           </>
                         )}
                         {hasOperation && (
-                          <td
-                            className={clsx(tdClassName, "whitespace-nowrap")}
-                          >
+                          <td className="whitespace-nowrap">
                             <span
                               onClick={() => {
                                 setPriceModalData({

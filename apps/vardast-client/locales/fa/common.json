@@ -360,6 +360,7 @@
   "open_orders": "سفارشات در جریان",
   "closed_orders": "سفارشات خریداری شده",
   "total_orders": "کل سفارشات",
+  "newest-price": "جدیدترین قیمت ها",
   "bid-start-time": "زمان شروع مناقصه",
   "bid-end-time": "زمان پایان مناقصه"
 }

@@ -158,16 +158,16 @@ function SellerOrdersPage({
           <table className="table-hover table">
             <thead>
               <tr>
-                <th className="border">{t("common:row")}</th>
-                <th className="border">
+                <th>{t("common:row")}</th>
+                <th>
                   {t("common:entity_code", { entity: t("common:order") })}
                 </th>
-                <th className="border">{t("common:purchaser")}</th>
-                <th className="border">
+                <th>{t("common:purchaser")}</th>
+                <th>
                   {t("common:entity_name", { entity: t("common:project") })}
                 </th>
-                <th className="border">{t("common:submission-time")}</th>
-                <th className="border">{t("common:order-expire-time")}</th>
+                <th>{t("common:submission-time")}</th>
+                <th>{t("common:order-expire-time")}</th>
 
                 <th>{t("common:status")}</th>
               </tr>
@@ -184,18 +184,16 @@ function SellerOrdersPage({
                       : router.push(`/orders/${preOrder?.id}`)
                   }}
                 >
-                  <td className="w-4 border">
+                  <td className="w-4">
                     <span>{digitsEnToFa(index + 1)}</span>
                   </td>
-                  <td className="border">
-                    {preOrder?.id && digitsEnToFa(preOrder?.id)}
-                  </td>
-                  <td className="border">
+                  <td>{preOrder?.id && digitsEnToFa(preOrder?.id)}</td>
+                  <td>
                     {preOrder?.user?.fullName &&
                       digitsEnToFa(preOrder?.user?.fullName)}
                   </td>
-                  <td className="border">{preOrder?.project?.name}</td>
-                  <td className="border">
+                  <td>{preOrder?.project?.name}</td>
+                  <td>
                     {digitsEnToFa(
                       new Date(preOrder?.request_date).toLocaleDateString(
                         "fa-IR",
@@ -207,7 +205,7 @@ function SellerOrdersPage({
                       )
                     )}
                   </td>
-                  <td className="border">
+                  <td>
                     {digitsEnToFa(
                       new Date(preOrder?.expire_time).toLocaleDateString(
                         "fa-IR",
@@ -220,7 +218,7 @@ function SellerOrdersPage({
                     )}
                   </td>
 
-                  <td className="border">
+                  <td>
                     <div
                       className={clsx(
                         "tag",

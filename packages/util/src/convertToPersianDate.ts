@@ -59,8 +59,8 @@ function convertToPersianDate({
 
 export const newTimeConvertor = (dateString: string) => {
   const tehranDate = new Date(dateString)
-  tehranDate.setHours(tehranDate.getHours() + 3)
-  tehranDate.setMinutes(tehranDate.getMinutes() + 30)
+  tehranDate.setHours(tehranDate.getHours())
+  tehranDate.setMinutes(tehranDate.getMinutes())
   return tehranDate.toLocaleString("fa-IR", {
     timeZone: "Asia/Tehran",
     calendar: "persian",

@@ -43,6 +43,10 @@ query GetAllBrands($indexBrandInput: IndexBrandInput) {
       }
       bannerDesktop {
         id
+        presignedUrl {
+          url
+          expiresAt
+        }
       }
     }
   }

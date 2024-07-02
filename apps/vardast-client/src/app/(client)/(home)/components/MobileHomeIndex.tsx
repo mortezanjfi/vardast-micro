@@ -3,17 +3,17 @@
 import { Brand } from "@vardast/graphql/generated"
 
 import { IHomeProps } from "@/app/(client)/(home)/components/HomeIndex"
-import HomeTopSellers from "@/app/(client)/(home)/components/HomeTopSellers"
 import MobileHomeCategory from "@/app/(client)/(home)/components/MobileHomeCategory"
 import MobileHomeNewestProducts from "@/app/(client)/(home)/components/MobileHomeNewestProducts"
 import MobileHomeSlider from "@/app/(client)/(home)/components/MobileHomeSlider"
 import MobileHomeTopBlogs from "@/app/(client)/(home)/components/MobileHomeTopBlogs"
 import MobileHomeTopEntities from "@/app/(client)/(home)/components/MobileHomeTopEntities"
+import NewestPriceProductSection from "@/app/(client)/(home)/components/NewestPriceProductSection"
 
 const MobileHomeIndex = ({
   allBrandsCount,
+  recentPriceProductsQuery,
   allProductsQuery,
-  allSellersCount,
   getVocabularyQueryFcQuery,
   homeSlidersQuery,
   getAllBlogsQuery,
@@ -22,6 +22,11 @@ const MobileHomeIndex = ({
   return (
     <>
       <MobileHomeSlider query={homeSlidersQuery} isMobileView={isMobileView} />
+      <NewestPriceProductSection
+        isMobileView
+        query={recentPriceProductsQuery}
+      />
+
       <MobileHomeCategory
         getVocabularyQueryFcQuery={getVocabularyQueryFcQuery}
       />
@@ -31,19 +36,22 @@ const MobileHomeIndex = ({
         title="جدیدترین فروشنده‌ها"
         query={allSellersCount.data?.sellers.data.slice(0, 8) as Seller[]}
       /> */}
-      <HomeTopSellers
+      {/* <HomeTopSellers
         title="جدیدترین فروشنده‌ها"
         allSellersCount={allSellersCount}
-      />
+      /> */}
       <MobileHomeTopEntities
-        centeredSlides
         isMobileView
         __typename="Brand"
         title="جدیدترین برندها"
         query={allBrandsCount.data?.brands.data.slice(0, 8) as Brand[]}
       />
       {allProductsQuery.data && (
-        <MobileHomeNewestProducts allProductsQuery={allProductsQuery} />
+        <MobileHomeNewestProducts
+          isMobileView
+          title="جدیدترین کالاها"
+          query={allProductsQuery}
+        />
       )}
       {getAllBlogsQuery.data && (
         <MobileHomeTopBlogs getAllBlogsQuery={getAllBlogsQuery} isMobileView />

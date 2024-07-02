@@ -190,7 +190,7 @@ export const SellerDesktopMyProducts = ({
                             <span>{product.product.sku}</span>
                           </div>
                         </td>
-                        <td className="w-[159px] border-r-0.5">
+                        <td>
                           <div className="flex flex-col">
                             <div className="text-success-600">
                               {product.product.highestPrice ? (
@@ -226,7 +226,7 @@ export const SellerDesktopMyProducts = ({
                             </div>
                           </div>
                         </td>
-                        <td className="border-r-0.5">
+                        <td>
                           {product.product.status ===
                             ThreeStateSupervisionStatuses.Confirmed && (
                             <span className="">{t("common:confirmed")}</span>
@@ -240,7 +240,7 @@ export const SellerDesktopMyProducts = ({
                             <span className="">{t("common:rejected")}</span>
                           )}
                         </td>
-                        <td className="border-r-0.5">
+                        <td>
                           {product.product.myPrice ? (
                             <span>
                               {digitsEnToFa(
@@ -251,7 +251,7 @@ export const SellerDesktopMyProducts = ({
                             "_"
                           )}
                         </td>
-                        <td className="border-r-0.5">
+                        <td>
                           {product.lastPublicConsumerPrice?.discount?.[0]
                             ?.value ? (
                             <span>
@@ -265,7 +265,7 @@ export const SellerDesktopMyProducts = ({
                             <span>_</span>
                           )}
                         </td>
-                        <td className=" border-r-0.5">
+                        <td className="">
                           <span
                             className="tag cursor-pointer text-blue-500"
                             onClick={(e) => {
