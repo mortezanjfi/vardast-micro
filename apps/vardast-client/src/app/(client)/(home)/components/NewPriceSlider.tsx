@@ -37,7 +37,7 @@ const NewPriceSlider = ({
   const sliderClass = " w-[calc(100vw-60px)] !ml-0 sm:w-full"
 
   return (
-    <div className="pt-6 sm:relative sm:pt-0 ">
+    <div className="pb-7 sm:relative sm:pb-0 sm:pt-0">
       <div className="overflow-hidden">
         {query.isLoading || query.isFetching || !width ? (
           <div className={clsx("animated-card", sliderClass)}></div>
@@ -55,7 +55,7 @@ const NewPriceSlider = ({
               disableOnInteraction: false
             }}
             speed={7000}
-            className="h-full w-full divide-x-0.5 sm:px-0"
+            className="h-full w-full sm:px-0"
             // spaceBetween={15}
           >
             {query?.data?.pages[0]?.products?.data.map((product, index) => {

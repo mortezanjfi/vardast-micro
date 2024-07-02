@@ -8,11 +8,12 @@ import MobileHomeNewestProducts from "@/app/(client)/(home)/components/MobileHom
 import MobileHomeSlider from "@/app/(client)/(home)/components/MobileHomeSlider"
 import MobileHomeTopBlogs from "@/app/(client)/(home)/components/MobileHomeTopBlogs"
 import MobileHomeTopEntities from "@/app/(client)/(home)/components/MobileHomeTopEntities"
+import NewestPriceProductSection from "@/app/(client)/(home)/components/NewestPriceProductSection"
 
 const MobileHomeIndex = ({
   allBrandsCount,
+  recentPriceProductsQuery,
   allProductsQuery,
-  allSellersCount,
   getVocabularyQueryFcQuery,
   homeSlidersQuery,
   getAllBlogsQuery,
@@ -21,6 +22,11 @@ const MobileHomeIndex = ({
   return (
     <>
       <MobileHomeSlider query={homeSlidersQuery} isMobileView={isMobileView} />
+      <NewestPriceProductSection
+        isMobileView
+        query={recentPriceProductsQuery}
+      />
+
       <MobileHomeCategory
         getVocabularyQueryFcQuery={getVocabularyQueryFcQuery}
       />

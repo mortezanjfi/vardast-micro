@@ -18,7 +18,6 @@ import NewestPriceProductSection from "@/app/(client)/(home)/components/NewestPr
 const DesktopHomeIndex = ({
   getVocabularyQueryFcQuery,
   recentPriceProductsQuery,
-  allSellersCount,
   allBrandsCount,
   allProductsQuery,
   getAllBlogsQuery,

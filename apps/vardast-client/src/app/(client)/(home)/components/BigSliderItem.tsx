@@ -55,23 +55,23 @@ const BigSliderItem = ({ isMobileView, brand }: SliderItemProps) => {
         <CardAvatar url={brand?.logoFile?.presignedUrl?.url ?? ""} />
         <div className="flex flex-col items-start gap-2">
           <span>{brand?.name}</span>
-          <div className="flex  text-sm text-alpha-500">
+          <div className="flex text-sm font-normal text-alpha-500">
             <div className="flex items-center gap-1 border-l-0.5 pl-2">
               <span>{t("common:catalog")}</span>
               <span>
                 {brand?.catalog?.id ? (
-                  <CheckIcon width={10} height={10} />
+                  <CheckIcon width={16} height={16} />
                 ) : (
                   <Minus />
                 )}
               </span>
             </div>
-            <div className="flex items-center gap-1 p-2">
+            <div className="flex items-center gap-1 p-2 ">
               {" "}
               <span>{t("common:price_list")}</span>
               <span>
                 {brand?.priceList?.id ? (
-                  <CheckIcon width={10} height={10} />
+                  <CheckIcon width={16} height={16} />
                 ) : (
                   <Minus />
                 )}
@@ -79,16 +79,18 @@ const BigSliderItem = ({ isMobileView, brand }: SliderItemProps) => {
             </div>
           </div>
           <div className="flex gap-2 text-sm">
-            <h5 className="tag tag-secondary text-sm">{brand?.sum} کالا</h5>
+            <span className="tag  tag-secondary text-sm font-medium">
+              {brand?.sum} کالا
+            </span>
             {brand?.categoriesCount && (
-              <h5 className="tag tag-secondary text-sm">
+              <span className="tag  tag-secondary text-sm font-medium">
                 {brand?.categoriesCount} دسته بندی
-              </h5>
+              </span>
             )}
             {brand?.sellersCount && (
-              <h5 className="tag tag-secondary text-sm">
+              <span className="tag  tag-secondary text-sm font-medium">
                 {brand?.sellersCount} فروشنده
-              </h5>
+              </span>
             )}
           </div>
         </div>

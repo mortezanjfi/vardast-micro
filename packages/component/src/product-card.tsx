@@ -162,7 +162,7 @@ const ProductCard = forwardRef(
         }}
         className={clsx(
           homeSlider
-            ? "relative grid w-[421px] max-w-[421px] gap-2 border-x-0.5 bg-transparent px-3 transition hover:z-10"
+            ? "border-x- relative grid w-[421px] max-w-[421px] gap-2 border-r bg-transparent px-3 transition hover:z-10"
             : "sm:h-none relative grid h-[calc((100vw-1.5rem)/2)] max-h-[calc((100vw-1.5rem)/2)] min-h-[calc((100vw-1.5rem)/2)] w-full flex-1 gap-2 bg-alpha-white transition hover:z-10 sm:flex sm:h-full sm:max-h-full sm:min-h-full sm:flex-col sm:px-4 sm:py sm:ring-2 sm:!ring-alpha-200 sm:hover:shadow-lg",
           ref && "!border-b !border-alpha-200 sm:!border-none",
 
@@ -231,7 +231,7 @@ const ProductCard = forwardRef(
               ) : (
                 ""
               )} */}
-              {product?.lowestPrice?.createdAt && (
+              {product?.lowestPrice?.createdAt && !homeSlider && (
                 <div className="flex flex-wrap items-start justify-between text-xs text-alpha-500">
                   آخرین بروزرسانی قیمت{" "}
                   <span className="pr-1 font-medium text-error">
