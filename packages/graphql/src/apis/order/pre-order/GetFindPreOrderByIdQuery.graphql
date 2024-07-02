@@ -54,6 +54,8 @@ query FindPreOrderById($id: Float!) {
     request_date
     expire_date
     need_date
+    bid_end
+    bid_start
     expire_time
     shipping_address
     payment_methods

@@ -210,13 +210,17 @@ const OrdersPage = ({
                       })}
                     </th>
                     <th>{t("common:category")}</th>
-                    <th>{t("common:applicant_name")}</th>
-                    <th>{t("common:expert_name")}</th>
-                    <th>{t("common:submission-time")}</th>
-                    <th>{t("common:order-needed-time")}</th>
-                    {/* <th >{t("common:file")}</th> */}
-                    <th>{t("common:status")}</th>
-                    <th>{t("common:operation")}</th>
+
+                    <th className="border">{t("common:applicant_name")}</th>
+                    <th className="border">{t("common:expert_name")}</th>
+                    <th className="border">{t("common:submission-time")}</th>
+                    <th className="border">{t("common:order-needed-time")}</th>
+                    {/* <th className="border">{t("common:file")}</th> */}
+                    <th className="border">{t("common:bid-start-time")}</th>
+                    <th className="border">{t("common:bid-end-time")}</th>
+
+                    <th className="border">{t("common:status")}</th>
+                    <th className="border">{t("common:operation")}</th>
                   </tr>
                 </thead>
 
@@ -271,7 +275,37 @@ const OrdersPage = ({
                               : "-"}
                           </td>
 
-                          <td>
+                          <td className="border">
+                            {preOrder?.bid_start
+                              ? digitsEnToFa(
+                                  new DateObject(new Date(preOrder?.bid_start))
+                                    .toDate()
+                                    .toLocaleDateString("fa-IR", {
+                                      year: "numeric",
+                                      month: "2-digit",
+                                      day: "2-digit",
+                                      hour: "numeric",
+                                      minute: "numeric"
+                                    })
+                                )
+                              : "-"}
+                          </td>{" "}
+                          <td className="border">
+                            {preOrder?.bid_end
+                              ? digitsEnToFa(
+                                  new DateObject(new Date(preOrder?.bid_end))
+                                    .toDate()
+                                    .toLocaleDateString("fa-IR", {
+                                      year: "numeric",
+                                      month: "2-digit",
+                                      day: "2-digit",
+                                      hour: "numeric",
+                                      minute: "numeric"
+                                    })
+                                )
+                              : "-"}
+                          </td>
+                          <td className="border">
                             <span
                               className={clsx(
                                 "tag",
@@ -284,8 +318,7 @@ const OrdersPage = ({
                               }
                             </span>
                           </td>
-
-                          <td>
+                          <td className="border">
                             {preOrder.status === PreOrderStates.Closed ? (
                               <>
                                 <span
