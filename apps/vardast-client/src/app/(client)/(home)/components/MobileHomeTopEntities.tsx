@@ -12,7 +12,7 @@ import { useInView } from "react-intersection-observer"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Swiper as SwiperClass } from "swiper/types"
 
-import BigSliderItem from "@/app/(client)/(home)/components/BigSliderItem"
+import BrandCard from "@/app/(client)/(home)/components/BrandCard"
 import MobileHomeSection from "@/app/(client)/(home)/components/MobileHomeSection"
 
 type Props = {
@@ -83,7 +83,7 @@ const MobileHomeTopEntities = ({
                       : undefined
                 }
               >
-                <BigSliderItem brand={brand as Brand} />
+                <BrandCard brand={brand as Brand} />
               </div>
             </SwiperSlide>
           ))}

@@ -12,12 +12,12 @@ import clsx from "clsx"
 import { CheckIcon, Minus } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
-export type SliderItemProps = {
+export type BrandCardProps = {
   isMobileView?: boolean
   brand: Brand
 }
 
-const BigSliderItem = ({ isMobileView, brand }: SliderItemProps) => {
+const BrandCard = ({ isMobileView, brand }: BrandCardProps) => {
   const { t } = useTranslation()
   const [selectedItemId, setSelectedItemId] =
     useState<ICategoryListLoader>(null)
@@ -99,4 +99,4 @@ const BigSliderItem = ({ isMobileView, brand }: SliderItemProps) => {
   )
 }
 
-export default BigSliderItem
+export default BrandCard
