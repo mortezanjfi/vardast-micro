@@ -2,13 +2,7 @@
 
 import { useMemo } from "react"
 import dynamic from "next/dynamic"
-import {
-  useInfiniteQuery,
-  UseInfiniteQueryResult,
-  useQuery,
-  UseQueryResult
-} from "@tanstack/react-query"
-import { checkLimitPageByCondition } from "@vardast/component/product-list"
+import { useQuery, UseQueryResult } from "@tanstack/react-query"
 import {
   FileModelTypeEnum,
   GetAllBlogsQuery,
@@ -39,7 +33,7 @@ const PwaNotificationProvider = dynamic(
 )
 
 export type IHomeProps = {
-  recentPriceProductsQuery: UseInfiniteQueryResult<GetAllProductsQuery, unknown>
+  recentPriceProductsQuery: UseQueryResult<GetAllProductsQuery, unknown>
   isMobileView: boolean
   allProductsQuery: UseQueryResult<GetAllProductsQuery, unknown>
   homeSlidersQuery: UseQueryResult<GetBannerHomePageQuery, unknown>
@@ -118,7 +112,7 @@ const HomeIndex = ({ isMobileView }: HomeIndexProps) => {
       staleTime: 999999999
     }
   )
-  const recentPriceProductsQuery = useInfiniteQuery<GetAllProductsQuery>(
+  const recentPriceProductsQuery = useQuery<GetAllProductsQuery>(
     [
       QUERY_FUNCTIONS_KEY.ALL_PRODUCTS_QUERY_KEY,
       {
@@ -127,25 +121,12 @@ const HomeIndex = ({ isMobileView }: HomeIndexProps) => {
         sortDirection: SortDirection.Desc
       }
     ],
-    ({ pageParam = 1 }) => {
-      return getAllProductsQueryFn({
-        page: pageParam
+    () =>
+      getAllProductsQueryFn({
+        page: 1,
+        sortField: SortFieldProduct.Price,
+        sortDirection: SortDirection.Desc
       })
-    },
-    {
-      keepPreviousData: true,
-      getNextPageParam(lastPage, allPages) {
-        return 2
-          ? checkLimitPageByCondition(
-              lastPage.products.currentPage <= 2,
-              allPages
-            )
-          : checkLimitPageByCondition(
-              lastPage.products.currentPage < lastPage.products.lastPage,
-              allPages
-            )
-      }
-    }
   )
 
   const homeProps: IHomeProps = useMemo(

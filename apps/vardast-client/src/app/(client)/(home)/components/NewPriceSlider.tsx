@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { UseInfiniteQueryResult } from "@tanstack/react-query"
+import { UseQueryResult } from "@tanstack/react-query"
 import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
 import ProductCard from "@vardast/component/product-card"
 import { GetAllProductsQuery, Product } from "@vardast/graphql/generated"
@@ -15,7 +15,7 @@ import { Swiper as SwiperClass } from "swiper/types"
 const NewPriceSlider = ({
   query
 }: {
-  query: UseInfiniteQueryResult<GetAllProductsQuery, unknown>
+  query: UseQueryResult<GetAllProductsQuery, unknown>
 }) => {
   const { width } = useWindowSize()
   const [selectedItemId, setSelectedItemId] =
@@ -58,7 +58,7 @@ const NewPriceSlider = ({
             className="h-full w-full sm:px-0"
             // spaceBetween={15}
           >
-            {query?.data?.pages[0]?.products?.data.map((product, index) => {
+            {query?.data?.products?.data.map((product, index) => {
               return (
                 <SwiperSlide
                   key={product.id}
@@ -66,8 +66,7 @@ const NewPriceSlider = ({
                 >
                   <div
                     ref={
-                      index ===
-                      query?.data?.pages[0]?.products?.data?.length - 1
+                      index === query?.data?.products?.data?.length - 1
                         ? refNext
                         : index === 0
                           ? refPrev

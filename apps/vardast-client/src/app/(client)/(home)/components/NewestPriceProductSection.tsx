@@ -1,4 +1,4 @@
-import { UseInfiniteQueryResult } from "@tanstack/react-query"
+import { UseQueryResult } from "@tanstack/react-query"
 import { GetAllProductsQuery } from "@vardast/graphql/generated"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
@@ -8,7 +8,7 @@ import NewPriceSlider from "@/app/(client)/(home)/components/NewPriceSlider"
 
 type Props = {
   isMobileView?: boolean
-  query: UseInfiniteQueryResult<GetAllProductsQuery, unknown>
+  query: UseQueryResult<GetAllProductsQuery, unknown>
 }
 
 const NewestPriceProductSection = ({ isMobileView, query }: Props) => {
@@ -17,7 +17,7 @@ const NewestPriceProductSection = ({ isMobileView, query }: Props) => {
 
   return (
     <div className={clsx(!isMobileView && "overflow-x-hidden")}>
-      {query?.data?.pages[0].products?.data?.length > 0 && (
+      {query?.data?.products?.data?.length > 0 && (
         <MobileHomeSection bgWhite title={t("common:newest-price")}>
           <NewPriceSlider query={query} />
         </MobileHomeSection>
