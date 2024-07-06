@@ -197,180 +197,192 @@ const OrdersPage = ({
             getContentByApiStatus(preOrdersQuery, !!ordersLength)
           ] || (
             <>
-              <table className="table-hover table">
-                <thead>
-                  <tr>
-                    <th className="border">{t("common:row")}</th>
-                    <th className="border">
-                      {t("common:entity_code", { entity: t("common:order") })}
-                    </th>
-                    <th className="border">
-                      {t("common:entity_name", {
-                        entity: t("common:project")
-                      })}
-                    </th>
-                    <th>{t("common:category")}</th>
-                    <th className="border">{t("common:applicant_name")}</th>
-                    <th className="border">{t("common:expert_name")}</th>
-                    <th className="border">{t("common:submission-time")}</th>
-                    <th className="border">{t("common:order-needed-time")}</th>
-                    {/* <th className="border">{t("common:file")}</th> */}
-                    <th className="border">{t("common:bid-start-time")}</th>
-                    <th className="border">{t("common:bid-end-time")}</th>
+              <div className="overflow-x-scroll">
+                <table className="table-hover table">
+                  <thead>
+                    <tr>
+                      <th className="border">{t("common:row")}</th>
+                      <th className="border">
+                        {t("common:entity_code", { entity: t("common:order") })}
+                      </th>
+                      <th className="border">
+                        {t("common:entity_name", {
+                          entity: t("common:project")
+                        })}
+                      </th>
+                      <th>{t("common:category")}</th>
+                      <th className="border">{t("common:applicant_name")}</th>
+                      <th className="border">{t("common:expert_name")}</th>
+                      <th className="border">{t("common:submission-time")}</th>
+                      <th className="border">
+                        {t("common:order-needed-time")}
+                      </th>
+                      {/* <th className="border">{t("common:file")}</th> */}
+                      <th className="border">{t("common:bid-start-time")}</th>
+                      <th className="border">{t("common:bid-end-time")}</th>
 
-                    <th className="border">{t("common:status")}</th>
-                    <th className="border">{t("common:operation")}</th>
-                  </tr>
-                </thead>
+                      <th className="border">{t("common:status")}</th>
+                      <th className="border">{t("common:operation")}</th>
+                    </tr>
+                  </thead>
 
-                <tbody className="border-collapse border">
-                  {preOrdersQuery?.data?.preOrders?.data?.map(
-                    (preOrder, index) =>
-                      preOrder && (
-                        <tr
-                          className="cursor-pointer hover:bg-alpha-50"
-                          onClick={(e) => {
-                            e.preventDefault()
-                            router.push(`/profile/orders/${preOrder?.id}`)
-                          }}
-                          key={preOrder?.id}
-                        >
-                          <td className="w-4 border">
-                            <span>{digitsEnToFa(index + 1)}</span>
-                          </td>
-                          <td className="border">
-                            {digitsEnToFa(preOrder?.uuid)}
-                          </td>
-                          <td className="border">{preOrder?.project?.name}</td>
-                          <td className="border">
-                            {preOrder?.category?.title}
-                          </td>
-                          <td className="border">{preOrder?.applicant_name}</td>
-                          <td className="border">{preOrder?.expert_name}</td>
-                          <td className="border">
-                            {preOrder?.request_date
-                              ? digitsEnToFa(
-                                  new Date(
-                                    preOrder?.request_date
-                                  ).toLocaleDateString("fa-IR", {
-                                    year: "numeric",
-                                    month: "2-digit",
-                                    day: "2-digit",
-                                    hour: "numeric",
-                                    minute: "numeric"
-                                  })
-                                )
-                              : "-"}
-                          </td>
-                          <td className="border">
-                            {preOrder?.need_date
-                              ? digitsEnToFa(
-                                  new DateObject(new Date(preOrder?.need_date))
-                                    .toDate()
-                                    .toLocaleDateString("fa-IR", {
+                  <tbody className="border-collapse border">
+                    {preOrdersQuery?.data?.preOrders?.data?.map(
+                      (preOrder, index) =>
+                        preOrder && (
+                          <tr
+                            className="cursor-pointer hover:bg-alpha-50"
+                            onClick={(e) => {
+                              e.preventDefault()
+                              router.push(`/profile/orders/${preOrder?.id}`)
+                            }}
+                            key={preOrder?.id}
+                          >
+                            <td className="w-4 border">
+                              <span>{digitsEnToFa(index + 1)}</span>
+                            </td>
+                            <td className="border">
+                              {digitsEnToFa(preOrder?.uuid)}
+                            </td>
+                            <td className="border">
+                              {preOrder?.project?.name}
+                            </td>
+                            <td className="border">
+                              {preOrder?.category?.title}
+                            </td>
+                            <td className="border">
+                              {preOrder?.applicant_name}
+                            </td>
+                            <td className="border">{preOrder?.expert_name}</td>
+                            <td className="border">
+                              {preOrder?.request_date
+                                ? digitsEnToFa(
+                                    new Date(
+                                      preOrder?.request_date
+                                    ).toLocaleDateString("fa-IR", {
                                       year: "numeric",
                                       month: "2-digit",
                                       day: "2-digit",
                                       hour: "numeric",
                                       minute: "numeric"
                                     })
-                                )
-                              : "-"}
-                          </td>
-                          <td className="border">
-                            {preOrder?.bid_start
-                              ? digitsEnToFa(
-                                  new DateObject(new Date(preOrder?.bid_start))
-                                    .toDate()
-                                    .toLocaleDateString("fa-IR", {
-                                      year: "numeric",
-                                      month: "2-digit",
-                                      day: "2-digit",
-                                      hour: "numeric",
-                                      minute: "numeric"
-                                    })
-                                )
-                              : "-"}
-                          </td>{" "}
-                          <td className="border">
-                            {preOrder?.bid_end
-                              ? digitsEnToFa(
-                                  new DateObject(new Date(preOrder?.bid_end))
-                                    .toDate()
-                                    .toLocaleDateString("fa-IR", {
-                                      year: "numeric",
-                                      month: "2-digit",
-                                      day: "2-digit",
-                                      hour: "numeric",
-                                      minute: "numeric"
-                                    })
-                                )
-                              : "-"}
-                          </td>
-                          <td className="border">
-                            <span
-                              className={clsx(
-                                "tag",
-                                PreOrderStatesFa[preOrder?.status]?.className
-                              )}
-                            >
-                              {
-                                PreOrderStatesFa[preOrder?.status]
-                                  ?.name_fa_admin
-                              }
-                            </span>
-                          </td>
-                          <td className="border">
-                            {preOrder.status === PreOrderStates.Closed ? (
-                              <>
-                                <span
-                                  onClick={() => {
-                                    downLoadInvoice({
-                                      access_token: session.accessToken,
-                                      uuid: `${preOrder.uuid}`
-                                    })
-                                  }}
-                                  className="tag cursor-pointer text-success"
-                                >
-                                  {t("common:invoice")}
-                                </span>
-                                /
-                              </>
-                            ) : (
-                              <>
-                                <Link
-                                  onClick={(e) => {
-                                    e.stopPropagation()
-                                    e.nativeEvent.preventDefault()
-                                    e.nativeEvent.stopImmediatePropagation()
-                                  }}
-                                  href={`/profile/orders/${preOrder?.id}/info`}
-                                >
-                                  <span className="tag cursor-pointer text-blue-500">
-                                    {t("common:edit")}
-                                  </span>
-                                </Link>
-                                /
-                              </>
-                            )}
-                            <Link
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                e.nativeEvent.preventDefault()
-                                e.nativeEvent.stopImmediatePropagation()
-                              }}
-                              href={`/profile/orders/${preOrder?.id}/offers`}
-                            >
-                              <span className="tag cursor-pointer text-error">
-                                {t("common:offers")}
+                                  )
+                                : "-"}
+                            </td>
+                            <td className="border">
+                              {preOrder?.need_date
+                                ? digitsEnToFa(
+                                    new DateObject(
+                                      new Date(preOrder?.need_date)
+                                    )
+                                      .toDate()
+                                      .toLocaleDateString("fa-IR", {
+                                        year: "numeric",
+                                        month: "2-digit",
+                                        day: "2-digit",
+                                        hour: "numeric",
+                                        minute: "numeric"
+                                      })
+                                  )
+                                : "-"}
+                            </td>
+                            <td className="border">
+                              {preOrder?.bid_start
+                                ? digitsEnToFa(
+                                    new DateObject(
+                                      new Date(preOrder?.bid_start)
+                                    )
+                                      .toDate()
+                                      .toLocaleDateString("fa-IR", {
+                                        year: "numeric",
+                                        month: "2-digit",
+                                        day: "2-digit",
+                                        hour: "numeric",
+                                        minute: "numeric"
+                                      })
+                                  )
+                                : "-"}
+                            </td>{" "}
+                            <td className="border">
+                              {preOrder?.bid_end
+                                ? digitsEnToFa(
+                                    new DateObject(new Date(preOrder?.bid_end))
+                                      .toDate()
+                                      .toLocaleDateString("fa-IR", {
+                                        year: "numeric",
+                                        month: "2-digit",
+                                        day: "2-digit",
+                                        hour: "numeric",
+                                        minute: "numeric"
+                                      })
+                                  )
+                                : "-"}
+                            </td>
+                            <td className="border">
+                              <span
+                                className={clsx(
+                                  "tag",
+                                  PreOrderStatesFa[preOrder?.status]?.className
+                                )}
+                              >
+                                {
+                                  PreOrderStatesFa[preOrder?.status]
+                                    ?.name_fa_admin
+                                }
                               </span>
-                            </Link>
-                          </td>
-                        </tr>
-                      )
-                  )}
-                </tbody>
-              </table>
+                            </td>
+                            <td className="border">
+                              {preOrder.status === PreOrderStates.Closed ? (
+                                <>
+                                  <span
+                                    onClick={() => {
+                                      downLoadInvoice({
+                                        access_token: session.accessToken,
+                                        uuid: `${preOrder.uuid}`
+                                      })
+                                    }}
+                                    className="tag cursor-pointer text-success"
+                                  >
+                                    {t("common:invoice")}
+                                  </span>
+                                  /
+                                </>
+                              ) : (
+                                <>
+                                  <Link
+                                    onClick={(e) => {
+                                      e.stopPropagation()
+                                      e.nativeEvent.preventDefault()
+                                      e.nativeEvent.stopImmediatePropagation()
+                                    }}
+                                    href={`/profile/orders/${preOrder?.id}/info`}
+                                  >
+                                    <span className="tag cursor-pointer text-blue-500">
+                                      {t("common:edit")}
+                                    </span>
+                                  </Link>
+                                  /
+                                </>
+                              )}
+                              <Link
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  e.nativeEvent.preventDefault()
+                                  e.nativeEvent.stopImmediatePropagation()
+                                }}
+                                href={`/profile/orders/${preOrder?.id}/offers`}
+                              >
+                                <span className="tag cursor-pointer text-error">
+                                  {t("common:offers")}
+                                </span>
+                              </Link>
+                            </td>
+                          </tr>
+                        )
+                    )}
+                  </tbody>
+                </table>
+              </div>
               <Pagination
                 total={preOrdersQuery?.data?.preOrders?.lastPage ?? 0}
                 page={currentPage}
