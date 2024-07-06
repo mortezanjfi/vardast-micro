@@ -150,7 +150,6 @@ const ProductCard = forwardRef(
     return (
       <Link
         ref={ref}
-        target="_blank"
         href={checkSellerRedirectUrl(`/product/${product.id}/${product.name}`)}
         onClick={(e) => {
           // if (isSellerPanel) {
