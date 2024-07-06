@@ -12,7 +12,7 @@ type BrandCategoryFilterProps = {
   sort: SortBrandEnum
 }
 
-const sortBrand = {
+export const sortBrand = {
   [SortBrandEnum.Newest]: {
     value: SortBrandEnum.Newest,
     name_fa: "جدیدترین"

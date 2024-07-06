@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import BrandSortFilter from "@vardast/component/brand/BrandSortFilter"
@@ -23,12 +23,17 @@ import {
   useGetAllBrandsQuery
 } from "@vardast/graphql/generated"
 import { setSidebar } from "@vardast/provider/LayoutProvider/use-layout"
+import { PublicContext } from "@vardast/provider/PublicProvider"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { getAllBrandsQueryFn } from "@vardast/query/queryFns/allBrandsQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { Button } from "@vardast/ui/button"
+import { useSetAtom } from "jotai"
+import { LucideSortDesc } from "lucide-react"
 
 import BrandCard from "@/app/(client)/(home)/components/BrandCard"
+
+import MobileBrandSortFilter from "./MobilBrandSortFilter"
 
 type BrandsListProps = {
   limitPage?: number
@@ -41,8 +46,14 @@ type BrandsListProps = {
 }
 
 const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
+  const { sortFilterVisibilityAtom, filtersVisibilityAtom } =
+    useContext(PublicContext)
+
+  const setSortFilterVisibility = useSetAtom(sortFilterVisibilityAtom)
+  const setFiltersVisibility = useSetAtom(filtersVisibilityAtom)
+
   const [sort, setSort] = useState<SortBrandEnum>(
-    args.sortType || SortBrandEnum.Newest
+    args.sortType || SortBrandEnum.Sum
   )
   const pathname = usePathname()
   const { push } = useRouter()
@@ -175,7 +186,6 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
         <BrandSortFilter
           sort={sort}
           onSortChanged={(sort) => {
-            console.log(sort)
             setSort(sort)
             const params = new URLSearchParams(searchParams as any)
             params.set("orderBy", `${sort}`)
@@ -186,12 +196,52 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
     </FiltersSidebarContainer>
   )
 
+  //mobile--------------------->
+  const MobileHeader = (
+    <div className="sticky top-0 z-50 border-b bg-alpha-white p">
+      <div className="flex flex-col gap-y-4">
+        <div className="grid grid-cols-2">
+          <MobileBrandSortFilter
+            sort={sort}
+            onSortChanged={(sort) => {
+              console.log(sort)
+              setSort(sort)
+              const params = new URLSearchParams(searchParams as any)
+              params.set("orderBy", `${sort}`)
+              push(pathname + "?" + params.toString())
+              setSortFilterVisibility(false)
+            }}
+          />
+          <Button
+            onClick={() => setSortFilterVisibility(true)}
+            size="small"
+            variant="ghost"
+            className=" h-full  w-full rounded-none !border-l !text-alpha-black"
+          >
+            <LucideSortDesc className="icon text-alpha" />
+            مرتب‌سازی
+          </Button>
+          <Button
+            disabled
+            onClick={() => setFiltersVisibility(true)}
+            size="small"
+            variant="ghost"
+            className=" h-full  w-full rounded-none  !text-alpha-black"
+          >
+            <LucideSortDesc className="icon text-alpha" />
+            فیلترها
+          </Button>
+        </div>
+      </div>
+    </div>
+  )
   setSidebar(DesktopSidebar)
 
   return (
     <DesktopMobileViewOrganizer
       isMobileView={isMobileView}
       Content={Content}
+      MobileHeader={MobileHeader}
       DesktopHeader={
         <ListHeader
           total={allBrandsNumber?.data?.brands?.total}
