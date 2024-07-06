@@ -54,7 +54,7 @@ const NewPriceSlider = ({
               delay: 0,
               disableOnInteraction: false
             }}
-            speed={7000}
+            speed={10000}
             className="h-full w-full sm:px-0"
             // spaceBetween={15}
           >
@@ -62,7 +62,8 @@ const NewPriceSlider = ({
               return (
                 <SwiperSlide
                   key={product.id}
-                  className={clsx("!w-[421px] min-w-[421px]")}
+                  className="w-fit"
+                  // className={clsx("!w-[421px] min-w-[421px]")}
                 >
                   <div
                     ref={

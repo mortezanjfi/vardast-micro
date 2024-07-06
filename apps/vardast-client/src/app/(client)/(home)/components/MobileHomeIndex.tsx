@@ -21,11 +21,13 @@ const MobileHomeIndex = ({
 }: IHomeProps) => {
   return (
     <>
+      {recentPriceProductsQuery?.data?.products?.data.length > 0 && (
+        <NewestPriceProductSection
+          isMobileView
+          query={recentPriceProductsQuery}
+        />
+      )}
       <MobileHomeSlider query={homeSlidersQuery} isMobileView={isMobileView} />
-      <NewestPriceProductSection
-        isMobileView
-        query={recentPriceProductsQuery}
-      />
 
       <MobileHomeCategory
         getVocabularyQueryFcQuery={getVocabularyQueryFcQuery}
