@@ -9,7 +9,8 @@ interface getAllBrandsFnArgs extends IndexBrandInput {}
 
 export const getAllBrandsQueryFn = async ({
   name,
-  page
+  page,
+  sortType
 }: getAllBrandsFnArgs = {}): Promise<GetAllBrandsQuery> => {
   return await request(
     process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT as string,
@@ -17,7 +18,8 @@ export const getAllBrandsQueryFn = async ({
     {
       indexBrandInput: {
         name,
-        page
+        page,
+        sortType
       }
     }
   )

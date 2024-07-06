@@ -32,6 +32,11 @@ const DesktopHomeIndex = ({
 
   return (
     <>
+      {recentPriceProductsQuery?.data?.products?.data?.length > 0 && (
+        <div className="container mx-auto py-8">
+          <NewestPriceProductSection query={recentPriceProductsQuery} />
+        </div>
+      )}
       <div className="bg-alpha-100 sm:bg-alpha-white">
         <div className="">
           <MobileHomeSlider
@@ -39,9 +44,6 @@ const DesktopHomeIndex = ({
             query={homeSlidersQuery}
           />
         </div>
-      </div>
-      <div className="container mx-auto py-8">
-        <NewestPriceProductSection query={recentPriceProductsQuery} />
       </div>
       <div className="border-t-2 bg-alpha-white">
         <div className="container mx-auto py-8">

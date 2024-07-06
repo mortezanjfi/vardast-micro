@@ -65,8 +65,8 @@ const CreateOrderInfoSchema = z.object({
   categoryId: z.number(),
   expert_name: z.string().optional(),
   applicant_name: z.string().optional(),
-  bid_start: z.string(),
-  bid_end: z.string()
+  bid_start: z.string().optional(),
+  bid_end: z.string().optional()
 })
 
 const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {

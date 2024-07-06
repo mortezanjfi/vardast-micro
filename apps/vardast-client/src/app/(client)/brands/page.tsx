@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { dehydrate } from "@tanstack/react-query"
-import { IndexBrandInput } from "@vardast/graphql/generated"
+import { IndexBrandInput, SortBrandEnum } from "@vardast/graphql/generated"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 import { getAllBrandsQueryFn } from "@vardast/query/queryFns/allBrandsQueryFns"
@@ -30,6 +30,7 @@ const BrandsIndex = async ({ searchParams }: BrandsIndexProps) => {
   if (searchParams.query && searchParams.query.length)
     args["name"] = searchParams.query as string
   args["name"] = ""
+  args["orderBy"] = searchParams.sortType as SortBrandEnum
 
   await queryClient.prefetchInfiniteQuery(
     [QUERY_FUNCTIONS_KEY.GET_ALL_BRANDS_QUERY_KEY, args],

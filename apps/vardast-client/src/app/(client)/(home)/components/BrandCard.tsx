@@ -4,6 +4,7 @@ import "@heroicons/react/24/solid"
 
 import { forwardRef, Ref, useRef, useState } from "react"
 import Image from "next/image"
+import { digitsEnToFa } from "@persian-tools/persian-tools"
 import CardAvatar from "@vardast/component/CardAvatar"
 import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
 import Link from "@vardast/component/Link"
@@ -93,16 +94,16 @@ const BrandCard = forwardRef(
             </div>
             <div className="flex gap-2 text-sm">
               <span className="tag  tag-secondary text-sm font-medium">
-                {brand?.sum} کالا
+                {digitsEnToFa(brand?.sum)} کالا
               </span>
               {brand?.categoriesCount && (
                 <span className="tag  tag-secondary text-sm font-medium">
-                  {brand?.categoriesCount} دسته بندی
+                  {digitsEnToFa(brand?.categoriesCount)} دسته بندی
                 </span>
               )}
               {brand?.sellersCount && (
                 <span className="tag  tag-secondary text-sm font-medium">
-                  {brand?.sellersCount} فروشنده
+                  {digitsEnToFa(brand?.sellersCount)} فروشنده
                 </span>
               )}
             </div>
