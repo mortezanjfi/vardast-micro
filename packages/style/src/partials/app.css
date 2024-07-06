@@ -21,7 +21,7 @@
     @apply h-full flex flex-col gap-1 overflow-y-scroll overflow-x-hidden bg-transparent;
   }
   &.desktop {
-    @apply flex-1 w-full pb-6 overscroll-contain;
+    @apply flex-1 w-full pb-6 overscroll-contain overflow-hidden pl-1;
   }
 }
 
