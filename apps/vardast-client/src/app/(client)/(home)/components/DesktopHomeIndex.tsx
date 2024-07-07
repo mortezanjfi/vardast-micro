@@ -47,13 +47,15 @@ const DesktopHomeIndex = ({
           />
         </div>
       </div>
-      <div className="border-t-2 bg-alpha-white">
-        <div className="container mx-auto py-8">
-          <MobileHomeSection title="سفارشات">
-            <PublicPreOrdersSection query={publicOrdersQuery} />
-          </MobileHomeSection>
+      {publicOrdersQuery && (
+        <div className="border-t-2 bg-alpha-white">
+          <div className="container mx-auto py-8">
+            <MobileHomeSection title="سفارشات">
+              <PublicPreOrdersSection query={publicOrdersQuery} />
+            </MobileHomeSection>
+          </div>
         </div>
-      </div>
+      )}
       <div className="border-t-2 bg-alpha-white">
         <div className="container mx-auto py-8">
           <MobileHomeSection viewAllHref="/category" title="دسته‌بندی‌ها">
