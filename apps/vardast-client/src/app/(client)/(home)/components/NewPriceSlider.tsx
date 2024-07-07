@@ -37,7 +37,7 @@ const NewPriceSlider = ({
   const sliderClass = " w-[calc(100vw-60px)] !ml-0 sm:w-full"
 
   return (
-    <div className="pb-7 sm:relative sm:pb-0 sm:pt-0">
+    <div className=" pb-0 sm:relative sm:pt-0 ">
       <div className="overflow-hidden">
         {query.isLoading || query.isFetching || !width ? (
           <div className={clsx("animated-card", sliderClass)}></div>

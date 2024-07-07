@@ -39,8 +39,10 @@ function PublicPreOrderCard({ data }: Props) {
   const { t } = useTranslation()
   return (
     data && (
-      <div className="flex flex-col divide-y border-l px-5">
-        <span className="pb-5 text-lg font-semibold">{data.categoryName}</span>
+      <div className="flex flex-col divide-y  px-5 pt-5">
+        <span className="pb-5 text-base font-semibold">
+          {data.categoryName}
+        </span>
         {data.orders.map((order, index) => (
           <OrderPreviewCard key={order.id} order={order as PreOrderDto} />
         ))}
