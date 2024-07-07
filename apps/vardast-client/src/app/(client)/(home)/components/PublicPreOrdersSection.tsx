@@ -80,7 +80,17 @@ const PublicPreOrdersSection = ({ query, isMobileView }: Props) => {
                     isMobileView ? "w-[calc(100vw-45px)]" : "w-[350px]"
                   )}
                 >
-                  <PublicPreOrderCard data={data as PublicPreOrderDto} />
+                  <div
+                    ref={
+                      index === query?.data?.publicOrders?.length - 1
+                        ? refNext
+                        : index === 0
+                          ? refPrev
+                          : undefined
+                    }
+                  >
+                    <PublicPreOrderCard data={data as PublicPreOrderDto} />
+                  </div>
                 </SwiperSlide>
               )
           )

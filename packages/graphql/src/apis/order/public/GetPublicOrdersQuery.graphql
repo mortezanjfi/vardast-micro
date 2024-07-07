@@ -6,6 +6,9 @@ query GetPublicOrdersQuery($indexPublicOrderInput: IndexPublicOrderInput) {
       uuid
       id
       need_date
+      bid_start
+      request_date
+      bid_end
       lines {
         id
         status
