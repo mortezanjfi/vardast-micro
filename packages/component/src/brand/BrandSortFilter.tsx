@@ -24,6 +24,10 @@ export const sortBrand = {
   [SortBrandEnum.Sum]: {
     value: SortBrandEnum.Sum,
     name_fa: "بیشترین کالا"
+  },
+  [SortBrandEnum.View]: {
+    value: SortBrandEnum.View,
+    name_fa: "پربازدیدترین"
   }
 }
 
@@ -52,7 +56,7 @@ const BrandOrSellerCategoryFilter = ({
                     data-[state='checked']:border-primary-500
                     data-[state='checked']:bg-primary-500"
               checked={sort === value.value}
-              onCheckedChange={(checked) => {
+              onCheckedChange={() => {
                 onSortChanged(value.value)
               }}
             >
