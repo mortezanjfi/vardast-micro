@@ -362,5 +362,7 @@
   "total_orders": "کل سفارشات",
   "newest-price": "جدیدترین قیمت ها",
   "bid-start-time": "زمان شروع مناقصه",
-  "bid-end-time": "زمان پایان مناقصه"
+  "bid-end-time": "زمان پایان مناقصه",
+  "destination": "مقصد",
+  "needed-time": "تاریخ نیاز"
 }

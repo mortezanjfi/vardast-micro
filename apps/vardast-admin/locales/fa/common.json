@@ -374,5 +374,7 @@
   "closed_orders": "سفارشات خریداری شده",
   "total_orders": "کل سفارشات",
   "bid-start-time": "زمان شروع مناقصه",
-  "bid-end-time": "زمان پایان مناقصه"
+  "bid-end-time": "زمان پایان مناقصه",
+  "destination": "مقصد",
+  "needed-time": "تاریخ نیاز"
 }
