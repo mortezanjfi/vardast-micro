@@ -16,9 +16,8 @@ import { useInView } from "react-intersection-observer"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Swiper as SwiperClass } from "swiper/types"
 
-import PublicPreOrderCard, {
-  PublicPreOrderCardSkeleton
-} from "@/app/(client)/(home)/components/PublicPreOrderCard"
+import { OrderPreviewCardSkeleton } from "@/app/(client)/(home)/components/OrderPreviewCard"
+import PublicPreOrderCard from "@/app/(client)/(home)/components/PublicPreOrderCard"
 
 type Props = {
   query: UseQueryResult<GetPublicOrdersQuery, unknown>
@@ -66,7 +65,7 @@ const PublicPreOrdersSection = ({ query, isMobileView }: Props) => {
                     isMobileView ? "w-[calc(100vw-45px)]" : "w-[350px]"
                   )}
                 >
-                  <PublicPreOrderCardSkeleton />
+                  <OrderPreviewCardSkeleton />
                 </SwiperSlide>
               ))}
             </>
