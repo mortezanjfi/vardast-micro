@@ -8,7 +8,7 @@ import MobileHomeNewestProducts from "@/app/(client)/(home)/components/MobileHom
 import MobileHomeSlider from "@/app/(client)/(home)/components/MobileHomeSlider"
 import MobileHomeTopBlogs from "@/app/(client)/(home)/components/MobileHomeTopBlogs"
 import MobileHomeTopEntities from "@/app/(client)/(home)/components/MobileHomeTopEntities"
-import NewestPriceProductSection from "@/app/(client)/(home)/components/NewestPriceProductSection"
+import NewPriceSlider from "@/app/(client)/(home)/components/NewPriceSlider"
 
 const MobileHomeIndex = ({
   allBrandsCount,
@@ -22,10 +22,9 @@ const MobileHomeIndex = ({
   return (
     <>
       {recentPriceProductsQuery?.data?.products?.data.length > 0 && (
-        <NewestPriceProductSection
-          isMobileView
-          query={recentPriceProductsQuery}
-        />
+        <div className="flex items-center gap-3 bg-alpha-white">
+          <NewPriceSlider query={recentPriceProductsQuery} />
+        </div>
       )}
       <MobileHomeSlider query={homeSlidersQuery} isMobileView={isMobileView} />
 

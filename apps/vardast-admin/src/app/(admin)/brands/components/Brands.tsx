@@ -137,6 +137,9 @@ const Brands = () => {
                   <th>
                     {t("common:entity_count", { entity: t("common:product") })}
                   </th>
+                  <th>
+                    {t("common:entity_count", { entity: t("common:views") })}
+                  </th>
                   {/* <th>{t("common:category")}</th> */}
                   {/* <th>{t("common:city")}</th> */}
                   <th>{t("common:price_list")}</th>
@@ -180,6 +183,7 @@ const Brands = () => {
                           </span>
                         </td>
                         <td>{digitsEnToFa(addCommas(brand.sum))}</td>
+                        <td>{digitsEnToFa(addCommas(brand.views))}</td>
                         {/* <td ></td> */}
                         {/* <td >
                           {brand.addresses.map(

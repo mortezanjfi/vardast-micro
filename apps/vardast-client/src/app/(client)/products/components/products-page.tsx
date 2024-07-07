@@ -42,15 +42,6 @@ const ProductsPage = ({
   //     })
   //   : [selectedCategoryId]
 
-  args["categoryIds"] =
-    selectedCategoryId === 0
-      ? []
-      : getCategoryQuery.data?.category?.children?.length
-        ? getCategoryQuery.data.category.children.map((children) => {
-            return children?.id as number
-          })
-        : [selectedCategoryId]
-
   return (
     <>
       {slug && slug.length > 0 ? (

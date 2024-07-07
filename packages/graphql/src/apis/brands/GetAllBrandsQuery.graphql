@@ -13,6 +13,7 @@ query GetAllBrands($indexBrandInput: IndexBrandInput) {
       rating
       sum
       status
+      views
       addresses {
         city {
           name

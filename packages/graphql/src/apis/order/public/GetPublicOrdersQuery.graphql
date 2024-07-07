@@ -1,0 +1,25 @@
+query GetPublicOrdersQuery($indexPublicOrderInput: IndexPublicOrderInput) {
+  publicOrders(indexPublicOrderInput: $indexPublicOrderInput) {
+    categoryName
+    categoryId
+    orders {
+      uuid
+      id
+      need_date
+      bid_start
+      request_date
+      bid_end
+      lines {
+        id
+        status
+        type
+        userId
+        item_name
+        uom
+        brand
+        qty
+        descriptions
+      }
+    }
+  }
+}

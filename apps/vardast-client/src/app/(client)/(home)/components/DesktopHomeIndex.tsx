@@ -13,9 +13,11 @@ import MobileHomeSection from "@/app/(client)/(home)/components/MobileHomeSectio
 import MobileHomeSlider from "@/app/(client)/(home)/components/MobileHomeSlider"
 import MobileHomeTopBlogs from "@/app/(client)/(home)/components/MobileHomeTopBlogs"
 import MobileHomeTopEntities from "@/app/(client)/(home)/components/MobileHomeTopEntities"
-import NewestPriceProductSection from "@/app/(client)/(home)/components/NewestPriceProductSection"
+import NewPriceSlider from "@/app/(client)/(home)/components/NewPriceSlider"
+import PublicPreOrdersSection from "@/app/(client)/(home)/components/PublicPreOrdersSection"
 
 const DesktopHomeIndex = ({
+  publicOrdersQuery,
   getVocabularyQueryFcQuery,
   recentPriceProductsQuery,
   allBrandsCount,
@@ -33,9 +35,7 @@ const DesktopHomeIndex = ({
   return (
     <>
       {recentPriceProductsQuery?.data?.products?.data?.length > 0 && (
-        <div className="container mx-auto py-8">
-          <NewestPriceProductSection query={recentPriceProductsQuery} />
-        </div>
+        <NewPriceSlider query={recentPriceProductsQuery} />
       )}
       <div className="bg-alpha-100 sm:bg-alpha-white">
         <div className="">
@@ -71,7 +71,16 @@ const DesktopHomeIndex = ({
             </div>
           </MobileHomeSection>
         </div>
-      </div>
+      </div>{" "}
+      {publicOrdersQuery && (
+        <div className="border-t-2 bg-alpha-white">
+          <div className="container mx-auto py-8">
+            <MobileHomeSection title="جدیدترین سفارشات">
+              <PublicPreOrdersSection query={publicOrdersQuery} />
+            </MobileHomeSection>
+          </div>
+        </div>
+      )}
       {/* <div className="border-t-2 bg-alpha-white py-8">
         <div className="container mx-auto ">
           <HomeTopSellers

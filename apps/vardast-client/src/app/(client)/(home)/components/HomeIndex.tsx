@@ -10,10 +10,13 @@ import {
   GetAllProductsQuery,
   GetAllSellersCountQuery,
   GetBannerHomePageQuery,
+  GetPublicOrdersQuery,
   GetVocabularyQuery,
   SortDirection,
-  SortFieldProduct
+  SortFieldProduct,
+  useGetPublicOrdersQuery
 } from "@vardast/graphql/generated"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { getAllBrandsCountQueryFn } from "@vardast/query/queryFns/allBrandsCountQueryFns"
 import { getAllProductsQueryFn } from "@vardast/query/queryFns/allProductsQueryFns"
 import { getAllSellersCountQueryFn } from "@vardast/query/queryFns/allSellersCountQueryFns"
@@ -33,6 +36,7 @@ const PwaNotificationProvider = dynamic(
 )
 
 export type IHomeProps = {
+  publicOrdersQuery: UseQueryResult<GetPublicOrdersQuery, unknown>
   recentPriceProductsQuery: UseQueryResult<GetAllProductsQuery, unknown>
   isMobileView: boolean
   allProductsQuery: UseQueryResult<GetAllProductsQuery, unknown>
@@ -129,8 +133,13 @@ const HomeIndex = ({ isMobileView }: HomeIndexProps) => {
       })
   )
 
+  const publicOrdersQuery = useGetPublicOrdersQuery(
+    graphqlRequestClientWithToken
+  )
+
   const homeProps: IHomeProps = useMemo(
     () => ({
+      publicOrdersQuery,
       // session,
       recentPriceProductsQuery,
       isMobileView,
@@ -142,6 +151,7 @@ const HomeIndex = ({ isMobileView }: HomeIndexProps) => {
       getAllBlogsQuery
     }),
     [
+      publicOrdersQuery,
       // session
       recentPriceProductsQuery,
       isMobileView,
