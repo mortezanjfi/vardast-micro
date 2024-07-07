@@ -93,8 +93,6 @@ const SearchIndex = async ({
     }
   }
 
-  args["categoryIds"] = []
-
   if (searchParams.categoryId && searchParams.categoryId.length)
     args["categoryIds"] = Array.isArray(searchParams.categoryId)
       ? searchParams.categoryId.map((item) => +item)
