@@ -55,29 +55,37 @@ const OrderPreviewCard = ({ order }: Props) => {
         <li>
           <DetailsWithTitle
             title={t("common:bid-start-time")}
-            text={digitsEnToFa(
-              new Date(order.bid_start).toLocaleDateString("fa-IR", {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-                hour: "2-digit",
-                minute: "2-digit"
-              })
-            )}
+            text={
+              order.bid_start
+                ? digitsEnToFa(
+                    new Date(order.bid_start).toLocaleDateString("fa-IR", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                      hour: "2-digit",
+                      minute: "2-digit"
+                    })
+                  )
+                : "-"
+            }
           />
         </li>
         <li>
           <DetailsWithTitle
             title={t("common:bid-end-time")}
-            text={digitsEnToFa(
-              new Date(order.bid_end).toLocaleDateString("fa-IR", {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-                hour: "2-digit",
-                minute: "2-digit"
-              })
-            )}
+            text={
+              order.bid_end
+                ? digitsEnToFa(
+                    new Date(order.bid_end).toLocaleDateString("fa-IR", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                      hour: "2-digit",
+                      minute: "2-digit"
+                    })
+                  )
+                : "-"
+            }
           />
         </li>
       </ol>
