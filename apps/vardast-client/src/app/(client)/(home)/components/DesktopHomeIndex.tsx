@@ -49,7 +49,7 @@ const DesktopHomeIndex = ({
       </div>
       <div className="border-t-2 bg-alpha-white">
         <div className="container mx-auto py-8">
-          <MobileHomeSection viewAllHref="/orders" title="سفارشات">
+          <MobileHomeSection title="سفارشات">
             <PublicPreOrdersSection query={publicOrdersQuery} />
           </MobileHomeSection>
         </div>
