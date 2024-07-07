@@ -14,8 +14,10 @@ import MobileHomeSlider from "@/app/(client)/(home)/components/MobileHomeSlider"
 import MobileHomeTopBlogs from "@/app/(client)/(home)/components/MobileHomeTopBlogs"
 import MobileHomeTopEntities from "@/app/(client)/(home)/components/MobileHomeTopEntities"
 import NewestPriceProductSection from "@/app/(client)/(home)/components/NewestPriceProductSection"
+import PublicPreOrdersSection from "@/app/(client)/(home)/components/PublicPreOrdersSection"
 
 const DesktopHomeIndex = ({
+  publicOrdersQuery,
   getVocabularyQueryFcQuery,
   recentPriceProductsQuery,
   allBrandsCount,
@@ -43,6 +45,13 @@ const DesktopHomeIndex = ({
             isMobileView={isMobileView}
             query={homeSlidersQuery}
           />
+        </div>
+      </div>
+      <div className="border-t-2 bg-alpha-white">
+        <div className="container mx-auto py-8">
+          <MobileHomeSection viewAllHref="/orders" title="سفارشات">
+            <PublicPreOrdersSection query={publicOrdersQuery} />
+          </MobileHomeSection>
         </div>
       </div>
       <div className="border-t-2 bg-alpha-white">
