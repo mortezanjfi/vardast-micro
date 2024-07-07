@@ -75,7 +75,6 @@ const MobileHomeSlider = ({
     useState<ICategoryListLoader>(null)
   const [activeSlide, setActiveSlide] = useState(0)
   const sliderRef = useRef<SwiperRef>(null)
-
   const handleSlideTo = useCallback((index: number) => {
     if (!sliderRef.current) return
     sliderRef.current?.swiper.slideTo(index)
@@ -129,7 +128,7 @@ const MobileHomeSlider = ({
                     onClick={() => {
                       responsiveImage.url && setSelectedItemId(banner.id)
                     }}
-                    href={responsiveImage.url as string}
+                    href={banner.url && `${banner.url}`}
                   >
                     <Image
                       src={responsiveImage.presignedUrl.url}
