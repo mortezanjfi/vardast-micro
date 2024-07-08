@@ -93,15 +93,17 @@ const BrandCard = forwardRef(
               </div>
             </div>
             <div className="flex gap-2 text-sm">
-              <span className="tag  tag-secondary text-sm font-medium">
-                {digitsEnToFa(brand?.sum)} کالا
-              </span>
-              {brand?.categoriesCount && (
+              {brand.sum > 0 && (
+                <span className="tag  tag-secondary text-sm font-medium">
+                  {digitsEnToFa(brand?.sum)} کالا
+                </span>
+              )}
+              {brand?.categoriesCount > 0 && (
                 <span className="tag  tag-secondary text-sm font-medium">
                   {digitsEnToFa(brand?.categoriesCount)} دسته بندی
                 </span>
               )}
-              {brand?.sellersCount && (
+              {brand?.sellersCount > 0 && (
                 <span className="tag  tag-secondary text-sm font-medium">
                   {digitsEnToFa(brand?.sellersCount)} فروشنده
                 </span>
