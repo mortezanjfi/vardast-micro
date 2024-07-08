@@ -8,6 +8,7 @@ query GetPublicOrdersQuery($indexPublicOrderInput: IndexPublicOrderInput) {
       need_date
       bid_start
       request_date
+      destination
       bid_end
       lines {
         id

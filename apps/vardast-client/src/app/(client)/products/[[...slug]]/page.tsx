@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 import { dehydrate } from "@tanstack/react-query"
+import ProductsPage from "@vardast/component/products/products-page"
 import {
   IndexProductInput,
   ProductSortablesEnum
@@ -11,8 +12,6 @@ import { getCategoryQueryFn } from "@vardast/query/queryFns/categoryQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { getVocabularyQueryFn } from "@vardast/query/queryFns/vocabularyQueryFns"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
-
-import ProductsPage from "@/app/(client)/products/components/products-page"
 
 type SearchIndexProps = {
   params: { slug: Array<string | number> }

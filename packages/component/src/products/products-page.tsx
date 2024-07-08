@@ -1,10 +1,6 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import DesktopCategoriesCardsSection from "@vardast/component/category/DesktopCategoriesCardsSection"
-import ProductDescription from "@vardast/component/product-description"
-import ProductList from "@vardast/component/product-list"
-import ProductsHeader from "@vardast/component/search-header"
 import {
   GetCategoryQuery,
   GetCategoryQueryVariables,
@@ -12,6 +8,11 @@ import {
 } from "@vardast/graphql/generated"
 import { getCategoryQueryFn } from "@vardast/query/queryFns/categoryQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
+
+import DesktopCategoriesCardsSection from "../category/DesktopCategoriesCardsSection"
+import ProductDescription from "../product-description"
+import ProductList from "../product-list"
+import ProductsHeader from "../search-header"
 
 interface ProductsPageProps {
   isMobileView: boolean
@@ -30,10 +31,10 @@ const ProductsPage = ({
 }: ProductsPageProps) => {
   const selectedCategoryId = slug && slug.length > 0 ? +slug[0] : 0
 
-  const caategoryArgs: GetCategoryQueryVariables = {}
-  caategoryArgs["id"] = selectedCategoryId
+  const categoryArgs: GetCategoryQueryVariables = {}
+  categoryArgs["id"] = selectedCategoryId
   const getCategoryQuery = useQuery<GetCategoryQuery>({
-    queryKey: [QUERY_FUNCTIONS_KEY.CATEGORY_QUERY_KEY, caategoryArgs],
+    queryKey: [QUERY_FUNCTIONS_KEY.CATEGORY_QUERY_KEY, categoryArgs],
     queryFn: () => getCategoryQueryFn(selectedCategoryId)
   })
   // args["categoryIds"] = getCategoryQuery.data?.category?.children?.length
