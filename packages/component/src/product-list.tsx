@@ -433,7 +433,7 @@ const ProductList = ({
 
   const MobileHeader = (
     <div className="sticky top-0 z-50 border-b bg-alpha-white p">
-      <div className="flex flex-col gap-y-4">
+      <div>
         {hasSearch && (
           <div className="relative flex transform items-center rounded-lg border-alpha-200 bg-alpha-100 pr-2 transition-all">
             {queryTemp !== query ? (
@@ -475,7 +475,7 @@ const ProductList = ({
             </Button>
           </div>
         )}
-        <div className="flex items-start gap-3">
+        <div className="grid grid-cols-2">
           <MobileCategoriesFilter
             categoryId={selectedCategoryIds}
             brandId={brandId}
@@ -505,8 +505,8 @@ const ProductList = ({
                 <Button
                   onClick={() => setFiltersVisibility(true)}
                   size="small"
-                  variant="secondary"
-                  className="rounded-full border border-alpha-200"
+                  variant="ghost"
+                  className=" h-full  w-full rounded-none  !text-alpha-black"
                 >
                   {filterAttributes.length > 0 && (
                     <span className="absolute -right-1 -top-1 block h-2.5 w-2.5 rounded-full bg-primary-500"></span>
@@ -542,8 +542,8 @@ const ProductList = ({
           <Button
             onClick={() => setSortFilterVisibility(true)}
             size="small"
-            variant="secondary"
-            className="rounded-full border border-alpha-200"
+            variant="ghost"
+            className=" h-full  w-full rounded-none !border-l !text-alpha-black"
           >
             <LucideSortDesc className="icon text-alpha" />
             مرتب‌سازی
