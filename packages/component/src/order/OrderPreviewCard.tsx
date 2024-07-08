@@ -1,15 +1,16 @@
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
-import DynamicHeroIcon from "@vardast/component/DynamicHeroIcon"
 import { PreOrderDto } from "@vardast/graphql/generated"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import useTranslation from "next-translate/useTranslation"
+
+import { DetailsWithTitle } from "../desktop/DetailsWithTitle"
+import DynamicHeroIcon from "../DynamicHeroIcon"
 
 type Props = { order: PreOrderDto }
 
 export const OrderPreviewCardSkeleton = () => {
   return (
-    <div className="flex flex-col divide-y border-l px-5 pt-5">
+    <div className="flex flex-col divide-y px-5 pt-5">
       <span className="animated-card mb-5 h-5 w-1/2 text-lg font-semibold"></span>
       <div className="flex flex-col gap-3 py-5">
         <div className="flex w-full items-center justify-between">

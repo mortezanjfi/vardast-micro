@@ -27,6 +27,13 @@ const CategoryListContainer: React.FC<ICategoryListContainer> = ({
     useState<ICategoryListLoader>(null)
   return (
     <>
+      <ul
+        className={clsx(
+          "mt-6 grid grid-cols-2 grid-rows-none gap-4 divide-alpha-200 p-6 pt-0 md:grid-cols-5 md:grid-rows-1"
+        )}
+      >
+        {children({ selectedItemId, setSelectedItemId })}
+      </ul>
       {description && (
         <>
           <div className="flex flex-col gap-y bg-alpha-white p">
@@ -50,13 +57,6 @@ const CategoryListContainer: React.FC<ICategoryListContainer> = ({
           </div>
         </>
       )}
-      <ul
-        className={clsx(
-          "mt-6 grid grid-cols-2 grid-rows-none gap-4 divide-alpha-200 p-6 pt-0 md:grid-cols-5 md:grid-rows-1"
-        )}
-      >
-        {children({ selectedItemId, setSelectedItemId })}
-      </ul>
     </>
   )
 }

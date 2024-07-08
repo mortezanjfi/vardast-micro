@@ -1,7 +1,6 @@
+import OrderPreviewCard from "@vardast/component/order/OrderPreviewCard"
 import { PreOrderDto, PublicPreOrderDto } from "@vardast/graphql/generated"
 import useTranslation from "next-translate/useTranslation"
-
-import OrderPreviewCard from "@/app/(client)/(home)/components/OrderPreviewCard"
 
 type Props = { data: PublicPreOrderDto }
 

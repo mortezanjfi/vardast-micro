@@ -9,10 +9,10 @@ import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@vardast/ui/tabs"
 import useTranslation from "next-translate/useTranslation"
 
-import Link from "../Link"
 import ProductList from "../product-list"
 import SearchHeader from "../search-header"
 import CategoriesList from "./CategoriesList"
+import CategoriesPublicOrders from "./CategoriesPublicOrders"
 
 export enum CATEGORY_PAGE_TABS {
   SUBCATEGORIES = "subCategories",
@@ -60,7 +60,7 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
         onValueChange={(e) => setActiveTab(e as CATEGORY_PAGE_TABS)}
         className="flex h-full w-full flex-col bg-alpha-white"
       >
-        <TabsList className="grid w-full grid-cols-4 border-b md:flex">
+        <TabsList className="sticky top-0 z-50 grid w-full grid-cols-4 border-b bg-alpha-white pt-6 md:flex">
           <TabsTrigger value={CATEGORY_PAGE_TABS.SUBCATEGORIES}>
             {t(`common:${CATEGORY_PAGE_TABS.SUBCATEGORIES}`)}
           </TabsTrigger>
@@ -79,13 +79,16 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
           value={CATEGORY_PAGE_TABS.SUBCATEGORIES}
         >
           <CategoriesList
+            description={categoryQuery?.data?.category?.description}
             data={categoryQuery?.data?.category.children}
             isLoading={categoryQuery.isLoading}
             isSubcategory
             isMobileView={isMobileView}
           />
         </TabsContent>
-        <TabsContent value={CATEGORY_PAGE_TABS.ORDERS}></TabsContent>
+        <TabsContent value={CATEGORY_PAGE_TABS.ORDERS}>
+          <CategoriesPublicOrders categoryId={categoryId} />
+        </TabsContent>
         <TabsContent value={CATEGORY_PAGE_TABS.BRANDS}></TabsContent>
         <TabsContent value={CATEGORY_PAGE_TABS.PRODUCTS}>
           <ProductList
@@ -95,31 +98,6 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
           />
         </TabsContent>
       </Tabs>
-      {categoryQuery?.data?.category.description && (
-        <>
-          <div className="flex flex-col gap-y bg-alpha-white p">
-            <h4 className="text-alpha-500">معرفی</h4>
-            <div className={`${more ? "" : "line-clamp-2"}`}>
-              {categoryQuery?.data?.category.description
-                .split("\n\n")
-                .map((paragraph, index) => (
-                  <p key={index} className="text-justify text-sm leading-6">
-                    {paragraph}
-                  </p>
-                ))}
-            </div>
-            <Link
-              className="text-left text-primary"
-              // onClick={() => {
-              //   setMore(!more)
-              // }}
-              href={categoryQuery?.data?.category.url || ""}
-            >
-              {more ? "کمتر" : "بیشتر"}
-            </Link>
-          </div>
-        </>
-      )}
     </div>
   )
 }

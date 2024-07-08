@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { UseQueryResult } from "@tanstack/react-query/build/lib/types"
 import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
+import { OrderPreviewCardSkeleton } from "@vardast/component/order/OrderPreviewCard"
 import SwiperNavigationButton, {
   SwiperButtonAction,
   SwiperButtonsDirection
@@ -16,7 +17,6 @@ import { useInView } from "react-intersection-observer"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Swiper as SwiperClass } from "swiper/types"
 
-import { OrderPreviewCardSkeleton } from "@/app/(client)/(home)/components/OrderPreviewCard"
 import PublicPreOrderCard from "@/app/(client)/(home)/components/PublicPreOrderCard"
 
 type Props = {
