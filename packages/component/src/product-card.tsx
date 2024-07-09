@@ -249,13 +249,14 @@ const ProductCard = forwardRef(
                   )}
                 >
                   آخرین بروزرسانی قیمت
-                  <div className="pr-1 font-medium text-error">
+                  <div className="flex gap-0.5 pr-1 font-medium text-error">
                     {product.lowestPrice.createdAt &&
                       digitsEnToFa(
                         formatDistanceToNow(
                           new Date(product.lowestPrice.createdAt).getTime()
                         )
                       )}
+                    <span>قبل</span>
                   </div>
                 </div>
               )}
