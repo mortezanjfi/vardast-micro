@@ -7,11 +7,17 @@ import { DetailsWithTitle } from "../desktop/DetailsWithTitle"
 import DynamicHeroIcon from "../DynamicHeroIcon"
 
 type Props = { order: PreOrderDto }
-
-export const OrderPreviewCardSkeleton = () => {
+type orderPreviewCardSkeleton = {
+  categoryName?: boolean
+}
+export const OrderPreviewCardSkeleton = ({
+  categoryName = true
+}: orderPreviewCardSkeleton) => {
   return (
     <div className="flex flex-col divide-y px-5 pt-5">
-      <span className="animated-card mb-5 h-5 w-1/2 text-lg font-semibold"></span>
+      {categoryName && (
+        <span className="animated-card mb-5 h-5 w-1/2 text-lg font-semibold" />
+      )}
       <div className="flex flex-col gap-3 py-5">
         <div className="flex w-full items-center justify-between">
           <div className="flex items-center gap-2">

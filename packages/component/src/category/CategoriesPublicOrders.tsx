@@ -24,7 +24,7 @@ function CategoriesPublicOrders({ categoryId }: Props) {
       {publicPreOrders.isFetching || publicPreOrders.isLoading ? (
         <>
           {[...Array(10)].map((_, index) => (
-            <OrderPreviewCardSkeleton key={index} />
+            <OrderPreviewCardSkeleton categoryName={false} key={index} />
           ))}
         </>
       ) : publicPreOrders.data.publicOrders.length ? (

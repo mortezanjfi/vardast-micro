@@ -506,10 +506,10 @@ const ProductList = ({
                   onClick={() => setFiltersVisibility(true)}
                   size="small"
                   variant="ghost"
-                  className=" h-full  w-full rounded-none  !text-alpha-black"
+                  className=" h-full w-full rounded-none !border-l  !text-alpha-black"
                 >
                   {filterAttributes.length > 0 && (
-                    <span className="absolute -right-1 -top-1 block h-2.5 w-2.5 rounded-full bg-primary-500"></span>
+                    <span className="absolute right-1 top-1 block h-2.5 w-2.5 rounded-full bg-primary-500"></span>
                   )}
                   <LucideSlidersHorizontal className="icon text-alpha" />
                   فیلترها
@@ -543,7 +543,7 @@ const ProductList = ({
             onClick={() => setSortFilterVisibility(true)}
             size="small"
             variant="ghost"
-            className=" h-full  w-full rounded-none !border-l !text-alpha-black"
+            className=" h-full  w-full rounded-none  !text-alpha-black"
           >
             <LucideSortDesc className="icon text-alpha" />
             مرتب‌سازی
