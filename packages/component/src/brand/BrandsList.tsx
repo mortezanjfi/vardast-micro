@@ -4,7 +4,7 @@ import { useContext, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useSetAtom } from "jotai"
-import { LucideSortDesc } from "lucide-react"
+import { LucideSlidersHorizontal, LucideSortDesc } from "lucide-react"
 
 import MobileBrandSortFilter from "../../../../apps/vardast-client/src/app/(client)/brands/components/MobilBrandSortFilter"
 import {
@@ -227,7 +227,7 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
             variant="ghost"
             className=" h-full  w-full rounded-none  !text-alpha-black"
           >
-            <LucideSortDesc className="icon text-alpha" />
+            <LucideSlidersHorizontal className="icon text-alpha" />
             فیلترها
           </Button>
         </div>

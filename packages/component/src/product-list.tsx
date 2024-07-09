@@ -496,38 +496,19 @@ const ProductList = ({
               push(pathname + "?" + params.toString())
             }}
           />
-          {selectedCategoryIds &&
-            selectedCategoryIds.length > 0 &&
-            getFilterableAttributesQuery.data &&
-            getFilterableAttributesQuery.data.filterableAttributes.filters
-              .length > 0 && (
-              <>
-                <Button
-                  onClick={() => setFiltersVisibility(true)}
-                  size="small"
-                  variant="ghost"
-                  className=" h-full w-full rounded-none !border-l  !text-alpha-black"
-                >
-                  {filterAttributes.length > 0 && (
-                    <span className="absolute right-1 top-1 block h-2.5 w-2.5 rounded-full bg-primary-500"></span>
-                  )}
-                  <LucideSlidersHorizontal className="icon text-alpha" />
-                  فیلترها
-                </Button>
-                <MobileFilterableAttributes
-                  filterAttributes={filterAttributes}
-                  selectedCategoryId={selectedCategoryIds}
-                  onFilterAttributesChanged={({ status, id, value }) => {
-                    onFilterAttributesChanged({ status, id, value })
-                    setFiltersVisibility(false)
-                  }}
-                  onRemoveAllFilters={() => {
-                    removeAllFilters()
-                    setFiltersVisibility(false)
-                  }}
-                />
-              </>
-            )}
+          <MobileFilterableAttributes
+            filterAttributes={filterAttributes}
+            selectedCategoryId={selectedCategoryIds}
+            onFilterAttributesChanged={({ status, id, value }) => {
+              onFilterAttributesChanged({ status, id, value })
+              setFiltersVisibility(false)
+            }}
+            onRemoveAllFilters={() => {
+              removeAllFilters()
+              setFiltersVisibility(false)
+            }}
+          />
+
           {/* 
         dont use this part of code
         <Button
@@ -547,6 +528,27 @@ const ProductList = ({
           >
             <LucideSortDesc className="icon text-alpha" />
             مرتب‌سازی
+          </Button>
+          <Button
+            disabled={
+              !selectedCategoryIds ||
+              !(selectedCategoryIds.length > 0) ||
+              !getFilterableAttributesQuery.data ||
+              !(
+                getFilterableAttributesQuery.data.filterableAttributes.filters
+                  .length > 0
+              )
+            }
+            onClick={() => setFiltersVisibility(true)}
+            size="small"
+            variant="ghost"
+            className=" h-full w-full rounded-none !border-l  !text-alpha-black"
+          >
+            {filterAttributes.length > 0 && (
+              <span className="absolute right-1 top-1 block h-2.5 w-2.5 rounded-full bg-primary-500"></span>
+            )}
+            <LucideSlidersHorizontal className="icon text-alpha" />
+            فیلترها
           </Button>
         </div>
       </div>

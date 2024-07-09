@@ -57,7 +57,7 @@ const ProductsPage = ({
       ) : null}
 
       <div className={clsx("flex flex-col gap-9", isMobileView && "!gap-0")}>
-        {isMobileView ? (
+        {isMobileView && selectedCategoryId ? (
           <MobileCategoriesCardSection getCategoryQuery={getCategoryQuery} />
         ) : (
           <DesktopCategoriesCardsSection
