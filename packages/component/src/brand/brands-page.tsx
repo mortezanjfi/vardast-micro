@@ -3,7 +3,7 @@
 import { IndexBrandInput } from "@vardast/graphql/generated"
 import clsx from "clsx"
 
-import BrandsList from "@/app/(client)/brands/components/BrandsList"
+import BrandsList from "./BrandsList"
 
 // import BrandsList from "@/app/(client)/brands/BrandsList"
 

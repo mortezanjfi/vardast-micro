@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import BrandCard from "@vardast/component/brand/BrandCard"
 import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
 import SwiperNavigationButton, {
   SwiperButtonAction,
@@ -12,7 +13,6 @@ import { useInView } from "react-intersection-observer"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Swiper as SwiperClass } from "swiper/types"
 
-import BrandCard from "@/app/(client)/(home)/components/BrandCard"
 import MobileHomeSection from "@/app/(client)/(home)/components/MobileHomeSection"
 
 type Props = {

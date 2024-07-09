@@ -3,12 +3,17 @@
 import { useState } from "react"
 import { notFound, useSearchParams } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
-import { GetCategoryQuery, IndexProductInput } from "@vardast/graphql/generated"
+import {
+  GetCategoryQuery,
+  IndexBrandInput,
+  IndexProductInput
+} from "@vardast/graphql/generated"
 import { getCategoryQueryFn } from "@vardast/query/queryFns/categoryQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@vardast/ui/tabs"
 import useTranslation from "next-translate/useTranslation"
 
+import BrandsPage from "../brand/brands-page"
 import ProductList from "../product-list"
 import SearchHeader from "../search-header"
 import CategoriesList from "./CategoriesList"
@@ -39,9 +44,15 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
     queryFn: () => getCategoryQueryFn(+categoryId)
   })
 
-  //args needed fot products tab to pass as porps------->
-  const args: IndexProductInput = {}
-  if (categoryId && categoryId.length > 0) args["categoryIds"] = [+categoryId]
+  //args need for products tab------->
+  const productArgs: IndexProductInput = {}
+  if (categoryId && categoryId.length > 0)
+    productArgs["categoryIds"] = [+categoryId]
+
+  //args need for brands tab-------->
+  const brandsArgs: IndexBrandInput = {}
+  if (categoryId && categoryId.length > 0)
+    brandsArgs["categoryId"] = +categoryId[0]
 
   if (!categoryQuery) {
     // return <NoProductFound />
@@ -89,11 +100,13 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
         <TabsContent value={CATEGORY_PAGE_TABS.ORDERS}>
           <CategoriesPublicOrders categoryId={categoryId} />
         </TabsContent>
-        <TabsContent value={CATEGORY_PAGE_TABS.BRANDS}></TabsContent>
+        <TabsContent value={CATEGORY_PAGE_TABS.BRANDS}>
+          <BrandsPage limitPage={5} args={brandsArgs} isMobileView />
+        </TabsContent>
         <TabsContent value={CATEGORY_PAGE_TABS.PRODUCTS}>
           <ProductList
             isMobileView={true}
-            args={args}
+            args={productArgs}
             selectedCategoryIds={[+categoryId]}
           />
         </TabsContent>

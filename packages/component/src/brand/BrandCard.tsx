@@ -5,13 +5,14 @@ import "@heroicons/react/24/solid"
 import { forwardRef, Ref, useRef, useState } from "react"
 import Image from "next/image"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import CardAvatar from "@vardast/component/CardAvatar"
-import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
-import Link from "@vardast/component/Link"
-import { Brand } from "@vardast/graphql/generated"
 import clsx from "clsx"
 import { CheckIcon, Minus } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
+
+import { Brand } from "../../../graphql/src/generated"
+import CardAvatar from "../CardAvatar"
+import { ICategoryListLoader } from "../category/CategoryListLoader"
+import Link from "../Link"
 
 export type BrandCardProps = {
   isMobileView?: boolean
