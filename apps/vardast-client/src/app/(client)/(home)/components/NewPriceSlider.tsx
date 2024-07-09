@@ -44,6 +44,7 @@ const NewPriceSlider = ({
         ) : (
           <Swiper
             loop
+            key="new-price-slider"
             centeredSlides
             slidesPerView={"auto"}
             onAutoplay={(swiper) => {

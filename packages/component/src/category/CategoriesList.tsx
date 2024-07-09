@@ -1,12 +1,15 @@
 "use client"
 
-import { GetCategoryQuery } from "@vardast/graphql/generated"
+import { UseQueryResult } from "@tanstack/react-query"
+import { GetAllBlogsQuery, GetCategoryQuery } from "@vardast/graphql/generated"
 
 import CategoryListContainer from "./CategoryListContainer"
 import CategoryListItem from "./CategoryListItem"
 import CategorySkeleton from "./CategorySkeleton"
 
 interface CategoriesListProps {
+  getAllBlogsQuery?: UseQueryResult<GetAllBlogsQuery>
+  categoryId?: string
   isMobileView?: boolean
   isLoading: boolean
   isSubcategory?: boolean
@@ -16,6 +19,8 @@ interface CategoriesListProps {
 }
 
 const CategoriesList = ({
+  categoryId,
+  getAllBlogsQuery,
   isMobileView,
   isLoading,
   description,
@@ -33,6 +38,7 @@ const CategoriesList = ({
 
   return (
     <CategoryListContainer
+      getAllBlogsQuery={getAllBlogsQuery}
       isSubcategory={isSubcategory}
       description={description}
       href={href}
@@ -48,11 +54,9 @@ const CategoriesList = ({
                     setSelectedItemId(category.id)
                   }}
                   href={
-                    isMobileView && category.childrenCount > 0
-                      ? `/category/${category.id}/${category.title}`
-                      : isMobileView && category.childrenCount! > 0
-                        ? `/products/${category.id}/${category.title}`
-                        : `/products/${category.id}/${category.title}`
+                    isMobileView && !categoryId
+                      ? `/category/${category.id}`
+                      : `/products/${category.id}/${category.title}`
                   }
                   selectedItemId={selectedItemId}
                   key={category.id}

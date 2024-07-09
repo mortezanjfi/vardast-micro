@@ -1,12 +1,12 @@
 "use client"
 
+import MobileHomeTopBlogs from "@vardast/component/home/MobileHomeTopBlogs"
 import { Brand } from "@vardast/graphql/generated"
 
 import { IHomeProps } from "@/app/(client)/(home)/components/HomeIndex"
 import MobileHomeCategory from "@/app/(client)/(home)/components/MobileHomeCategory"
 import MobileHomeNewestProducts from "@/app/(client)/(home)/components/MobileHomeNewestProducts"
 import MobileHomeSlider from "@/app/(client)/(home)/components/MobileHomeSlider"
-import MobileHomeTopBlogs from "@/app/(client)/(home)/components/MobileHomeTopBlogs"
 import MobileHomeTopEntities from "@/app/(client)/(home)/components/MobileHomeTopEntities"
 import NewPriceSlider from "@/app/(client)/(home)/components/NewPriceSlider"
 

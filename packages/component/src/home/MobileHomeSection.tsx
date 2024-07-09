@@ -6,7 +6,7 @@ import clsx from "clsx"
 
 import MobileHomeSectionContainer, {
   IMobileHomeSectionContainer
-} from "@/app/(client)/(home)/components/MobileHomeSectionContainer"
+} from "./MobileHomeSectionContainer"
 
 enum HEIGHT {
   EIGHTY_EIGHT = "h-[88vw]",

@@ -3,37 +3,36 @@
 import { useContext, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useInfiniteQuery } from "@tanstack/react-query"
-import BrandSortFilter from "@vardast/component/brand/BrandSortFilter"
-import { BrandOrSellerCardSkeleton } from "@vardast/component/BrandOrSellerCard"
-import BrandsOrSellersContainer, {
-  BrandContainerType
-} from "@vardast/component/BrandsOrSellersContainer"
-import ListHeader from "@vardast/component/desktop/ListHeader"
-import DesktopMobileViewOrganizer from "@vardast/component/DesktopMobileViewOrganizer"
-import FiltersSidebarContainer from "@vardast/component/filters-sidebar-container"
-import InfiniteScrollPagination from "@vardast/component/InfiniteScrollPagination"
-import NoResult from "@vardast/component/NoResult"
-import NotFoundMessage from "@vardast/component/NotFound"
-import { checkLimitPageByCondition } from "@vardast/component/product-list"
+import { useSetAtom } from "jotai"
+import { LucideSlidersHorizontal, LucideSortDesc } from "lucide-react"
+
+import MobileBrandSortFilter from "../../../../apps/vardast-client/src/app/(client)/brands/components/MobilBrandSortFilter"
 import {
   Brand,
   GetAllBrandsQuery,
   IndexBrandInput,
   SortBrandEnum,
   useGetAllBrandsQuery
-} from "@vardast/graphql/generated"
-import { setSidebar } from "@vardast/provider/LayoutProvider/use-layout"
-import { PublicContext } from "@vardast/provider/PublicProvider"
-import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
-import { getAllBrandsQueryFn } from "@vardast/query/queryFns/allBrandsQueryFns"
-import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
-import { Button } from "@vardast/ui/button"
-import { useSetAtom } from "jotai"
-import { LucideSortDesc } from "lucide-react"
-
-import BrandCard from "@/app/(client)/(home)/components/BrandCard"
-
-import MobileBrandSortFilter from "./MobilBrandSortFilter"
+} from "../../../graphql/src/generated"
+import { setSidebar } from "../../../provider/src/LayoutProvider/use-layout"
+import { PublicContext } from "../../../provider/src/PublicProvider"
+import graphqlRequestClientWithToken from "../../../query/src/queryClients/graphqlRequestClientWithToken"
+import { getAllBrandsQueryFn } from "../../../query/src/queryFns/allBrandsQueryFns"
+import QUERY_FUNCTIONS_KEY from "../../../query/src/queryFns/queryFunctionsKey"
+import { Button } from "../../../ui/src/button"
+import { BrandOrSellerCardSkeleton } from "../BrandOrSellerCard"
+import BrandsOrSellersContainer, {
+  BrandContainerType
+} from "../BrandsOrSellersContainer"
+import ListHeader from "../desktop/ListHeader"
+import DesktopMobileViewOrganizer from "../DesktopMobileViewOrganizer"
+import FiltersSidebarContainer from "../filters-sidebar-container"
+import InfiniteScrollPagination from "../InfiniteScrollPagination"
+import NoResult from "../NoResult"
+import NotFoundMessage from "../NotFound"
+import { checkLimitPageByCondition } from "../product-list"
+import BrandCard from "./BrandCard"
+import BrandSortFilter from "./BrandSortFilter"
 
 type BrandsListProps = {
   limitPage?: number
@@ -198,8 +197,7 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
 
   //mobile--------------------->
   const MobileHeader = (
-    <div className="sticky top-0 z-50 border-b bg-alpha-white p">
-      {" "}
+    <div className="sticky top-0 z-30 border-b bg-alpha-white p">
       <div className="grid grid-cols-2">
         <MobileBrandSortFilter
           sort={sort}
@@ -228,7 +226,7 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
           variant="ghost"
           className=" h-full  w-full rounded-none  !text-alpha-black"
         >
-          <LucideSortDesc className="icon text-alpha" />
+          <LucideSlidersHorizontal className="icon text-alpha" />
           فیلترها
         </Button>
       </div>

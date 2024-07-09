@@ -5,13 +5,13 @@ import "@heroicons/react/24/solid"
 import { forwardRef, Ref, useRef, useState } from "react"
 import Image from "next/image"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import CardAvatar from "@vardast/component/CardAvatar"
-import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
-import Link from "@vardast/component/Link"
-import { Brand } from "@vardast/graphql/generated"
 import clsx from "clsx"
-import { CheckIcon, Minus } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
+
+import { Brand } from "../../../graphql/src/generated"
+import CardAvatar from "../CardAvatar"
+import { ICategoryListLoader } from "../category/CategoryListLoader"
+import Link from "../Link"
 
 export type BrandCardProps = {
   isMobileView?: boolean
@@ -69,43 +69,21 @@ const BrandCard = forwardRef(
           <CardAvatar url={brand?.logoFile?.presignedUrl?.url ?? ""} />
           <div className="flex flex-col items-start gap-2">
             <span>{brand?.name}</span>
-            <div className="flex text-sm font-normal text-alpha-500">
-              <div className="flex items-center gap-1 border-l-0.5 pl-2">
-                <span>{t("common:catalog")}</span>
-                <span>
-                  {brand?.catalog?.id ? (
-                    <CheckIcon width={16} height={16} />
-                  ) : (
-                    <Minus width={16} height={16} />
-                  )}
-                </span>
-              </div>
-              <div className="flex items-center gap-1 p-2 ">
-                {" "}
-                <span>{t("common:price_list")}</span>
-                <span>
-                  {brand?.priceList?.id ? (
-                    <CheckIcon width={16} height={16} />
-                  ) : (
-                    <Minus width={16} height={16} />
-                  )}
-                </span>
-              </div>
-            </div>
-            <div className="flex gap-2 text-sm">
-              {brand.sum > 0 && (
+
+            <div className="flex flex-wrap gap-2 text-sm">
+              {brand?.sum > 0 && (
                 <span className="tag  tag-secondary text-sm font-medium">
                   {digitsEnToFa(brand?.sum)} کالا
                 </span>
               )}
-              {brand?.categoriesCount > 0 && (
+              {brand?.catalog?.id && (
                 <span className="tag  tag-secondary text-sm font-medium">
-                  {digitsEnToFa(brand?.categoriesCount)} دسته بندی
+                  {t("common:catalog")}
                 </span>
               )}
-              {brand?.sellersCount > 0 && (
+              {brand?.priceList?.id && (
                 <span className="tag  tag-secondary text-sm font-medium">
-                  {digitsEnToFa(brand?.sellersCount)} فروشنده
+                  {t("common:price_list")}
                 </span>
               )}
             </div>

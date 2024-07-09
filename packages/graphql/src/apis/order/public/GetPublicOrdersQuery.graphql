@@ -2,12 +2,14 @@ query GetPublicOrdersQuery($indexPublicOrderInput: IndexPublicOrderInput) {
   publicOrders(indexPublicOrderInput: $indexPublicOrderInput) {
     categoryName
     categoryId
+    categoryImage
     orders {
       uuid
       id
       need_date
       bid_start
       request_date
+      destination
       bid_end
       lines {
         id
@@ -20,6 +22,7 @@ query GetPublicOrdersQuery($indexPublicOrderInput: IndexPublicOrderInput) {
         qty
         descriptions
       }
+      lineDetail
     }
   }
 }

@@ -1,16 +1,24 @@
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
-import DynamicHeroIcon from "@vardast/component/DynamicHeroIcon"
 import { PreOrderDto } from "@vardast/graphql/generated"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
+import { newTimeConvertor } from "@vardast/util/convertToPersianDate"
 import useTranslation from "next-translate/useTranslation"
 
-type Props = { order: PreOrderDto }
+import { DetailsWithTitle } from "../desktop/DetailsWithTitle"
+import DynamicHeroIcon from "../DynamicHeroIcon"
 
-export const OrderPreviewCardSkeleton = () => {
+type Props = { order: PreOrderDto }
+type orderPreviewCardSkeleton = {
+  categoryName?: boolean
+}
+export const OrderPreviewCardSkeleton = ({
+  categoryName = true
+}: orderPreviewCardSkeleton) => {
   return (
-    <div className="flex flex-col divide-y border-l px-5 pt-5">
-      <span className="animated-card mb-5 h-5 w-1/2 text-lg font-semibold"></span>
+    <div className="flex flex-col divide-y px-5 pt-5">
+      {categoryName && (
+        <span className="animated-card mb-5 h-5 w-1/2 text-lg font-semibold" />
+      )}
       <div className="flex flex-col gap-3 py-5">
         <div className="flex w-full items-center justify-between">
           <div className="flex items-center gap-2">
@@ -44,83 +52,57 @@ const OrderPreviewCard = ({ order }: Props) => {
 
   return (
     <div className="flex flex-col gap-3 py-5">
-      <div className="flex w-full items-center justify-between">
-        <div className="flex items-center gap-2">
+      <div className="grid w-full grid-cols-12 items-center justify-between">
+        <div className="col-span-9 flex items-center gap-2">
           <DynamicHeroIcon
             icon="ClipboardDocumentListIcon"
             className={mergeClasses(
-              "icon h-7 w-7 transform rounded-md bg-primary-600 p-1 text-alpha-white transition-all"
+              "icon h-7 w-7 flex-shrink-0 transform rounded-md bg-primary-600 p-1 text-alpha-white transition-all"
             )}
             solid={false}
           />
 
-          <span className="font-semibold">
-            سفارش شماره ({digitsEnToFa(order.uuid)})
+          <span className="line-clamp-2 text-sm font-semibold">
+            {order.lineDetail}
           </span>
         </div>
-        <span className="tag tag-info text-xs">
-          {digitsEnToFa(
-            new Date(order.request_date).toLocaleDateString("fa-IR", {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit"
-            })
-          )}
+        <span className="tag tag-info col-span-3 !flex !items-center !justify-center text-xs">
+          {newTimeConvertor(order.request_date)}
         </span>
       </div>
       <ol className="gap-2">
         <li>
           <DetailsWithTitle
+            className="text-sm"
             title={t("common:destination")}
             text={order.destination ? order.destination : "-"}
           />
         </li>
         <li>
           <DetailsWithTitle
+            className="text-sm"
             title={t("common:needed-time")}
-            text={digitsEnToFa(
-              new Date(order.need_date).toLocaleDateString("fa-IR", {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-                hour: "2-digit",
-                minute: "2-digit"
-              })
-            )}
+            text={digitsEnToFa(newTimeConvertor(order.need_date))}
           />
         </li>
         <li>
           <DetailsWithTitle
+            className="text-sm"
             title={t("common:bid-start-time")}
             text={
               order.bid_start
-                ? digitsEnToFa(
-                    new Date(order.bid_start).toLocaleDateString("fa-IR", {
-                      year: "numeric",
-                      month: "2-digit",
-                      day: "2-digit",
-                      hour: "2-digit",
-                      minute: "2-digit"
-                    })
-                  )
+                ? digitsEnToFa(newTimeConvertor(order.bid_start))
                 : "-"
             }
           />
         </li>
         <li>
           <DetailsWithTitle
+            className="text-sm"
             title={t("common:bid-end-time")}
             text={
-              order.bid_end
-                ? digitsEnToFa(
-                    new Date(order.bid_end).toLocaleDateString("fa-IR", {
-                      year: "numeric",
-                      month: "2-digit",
-                      day: "2-digit",
-                      hour: "2-digit",
-                      minute: "2-digit"
-                    })
-                  )
+              order.bid_start
+                ? digitsEnToFa(newTimeConvertor(order.bid_end))
                 : "-"
             }
           />
