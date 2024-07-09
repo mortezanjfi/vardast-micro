@@ -253,10 +253,7 @@ const ProductCard = forwardRef(
                     {product.lowestPrice.createdAt &&
                       digitsEnToFa(
                         formatDistanceToNow(
-                          new Date(product.lowestPrice.createdAt).getTime(),
-                          {
-                            addSuffix: true
-                          }
+                          new Date(product.lowestPrice.createdAt).getTime()
                         )
                       )}
                   </div>
