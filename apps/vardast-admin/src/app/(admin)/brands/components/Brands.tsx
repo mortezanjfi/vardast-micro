@@ -240,7 +240,7 @@ const Brands = () => {
                         </td>
 
                         <td>
-                          <Link target="_blank" href={`/brands/${brand.id}`}>
+                          <Link href={`/brands/${brand.id}`}>
                             <span className="tag cursor-pointer text-blue-500">
                               {" "}
                               {t("common:edit")}
