@@ -39,8 +39,9 @@ const CategoryListContainer: React.FC<ICategoryListContainer> = ({
       >
         {children({ selectedItemId, setSelectedItemId })}
       </ul>
-      <MobileHomeTopBlogs getAllBlogsQuery={getAllBlogsQuery} isMobileView />
-
+      {isSubcategory && (
+        <MobileHomeTopBlogs getAllBlogsQuery={getAllBlogsQuery} isMobileView />
+      )}
       {description && (
         <>
           <div className="flex flex-col gap-y bg-alpha-white p">
