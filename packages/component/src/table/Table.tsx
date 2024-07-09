@@ -1,16 +1,24 @@
-"use client"
-
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQuery } from "@tanstack/react-query"
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  PaginationState,
+  useReactTable
+} from "@tanstack/react-table"
 import {
   ApiArgsType,
   ApiResponseType,
   TableResponseType
 } from "@vardast/query/type"
+import { Checkbox } from "@vardast/ui/checkbox"
 import { Form } from "@vardast/ui/form"
 import { useForm } from "react-hook-form"
-import { usePagination, useTable } from "react-table"
 import { TypeOf, ZodSchema } from "zod"
 
 import { ITableProps } from "./type"
@@ -20,70 +28,117 @@ const Table = <
   TSchema extends ZodSchema<any> = ZodSchema<any>
 >({
   columns,
+  selectable,
   fetchApiData,
   accessToken = "",
   handleResponse,
   filters
 }: ITableProps<T, TSchema>) => {
-  const [page, setPage] = useState<number>(0)
-  const [pageSize, setPageSize] = useState<number>(16)
+  const defaultPagination = {
+    pageIndex: 0,
+    pageSize: 10
+  }
+  const [pagination, setPagination] =
+    useState<PaginationState>(defaultPagination)
   const [filter, setFilter] = useState<{} | undefined>(undefined)
 
-  const fetchArgs: ApiArgsType<any> = {
-    page: page + 1, // Convert to 1-based index
-    perPage: pageSize,
-    ...filter
-  }
+  const [rowSelection, setRowSelection] = useState({})
 
-  type FilterFieldsType = TypeOf<TSchema>
+  const fetchArgs: ApiArgsType<any> = useMemo(
+    () => ({
+      page: pagination.pageIndex + 1, // Convert to 1-based index
+      perPage: pagination.pageSize,
+      ...filter
+    }),
+    [pagination, filter]
+  )
 
-  const form = useForm<FilterFieldsType>({
-    resolver: zodResolver(filters.schema)
-  })
-
-  const { data, isLoading } = useQuery<ApiResponseType<T>>({
+  const { data, isLoading, isFetching } = useQuery<ApiResponseType<T>>({
     queryKey: ["table", fetchArgs],
     queryFn: async () => {
       const response = await fetchApiData(fetchArgs, accessToken)
 
       if (handleResponse) {
-        handleResponse(
-          response[Object.keys(response)[0]] as unknown as TableResponseType<T>
-        )
+        handleResponse(response)
       }
+
       return response
     },
     keepPreviousData: true,
     enabled: accessToken === undefined ? true : !!accessToken
   })
 
-  const key = data ? Object.keys(data)[0] : null
-  const finalData = key ? data[key] : null
+  const serializedData = useMemo(
+    () =>
+      data
+        ? (data[Object.keys(data)[0]] as unknown as TableResponseType<T>)
+        : ([] as unknown as TableResponseType<T>),
+    [data]
+  )
+
+  const selectableColumns = useMemo<ColumnDef<T>>(
+    () =>
+      selectable && {
+        id: "selection",
+        header: ({ table }) => (
+          <Checkbox
+            checked={table.getIsAllRowsSelected()}
+            onCheckedChange={(value) =>
+              table.toggleAllRowsSelected(value as boolean)
+            }
+          />
+        ),
+        cell: ({ row }) => (
+          <Checkbox
+            checked={row.getIsSelected()}
+            onCheckedChange={(value) => row.toggleSelected(value as boolean)}
+            disabled={!row.getCanSelect()}
+          />
+        )
+      },
+    []
+  )
 
   const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    page: tablePage,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    state: { pageIndex },
-    gotoPage,
-    nextPage,
+    getHeaderGroups,
+    getRowModel,
+    firstPage,
     previousPage,
-    setPageSize: updatePageSize
-  } = useTable<T>(
-    {
-      columns,
-      data: finalData?.data ?? [],
-      initialState: { pageIndex: 0 },
-      manualPagination: true,
-      pageCount: finalData?.lastPage ?? 0
+    getCanPreviousPage,
+    nextPage,
+    lastPage,
+    getCanNextPage,
+    getPageCount,
+    getState,
+    setPageIndex,
+    setPageSize
+  } = useReactTable({
+    data: serializedData?.data,
+    columns: selectable ? [...columns, selectableColumns] : columns,
+    pageCount: serializedData?.lastPage ?? 0,
+    state: {
+      pagination,
+      rowSelection
     },
-    usePagination
-  )
+    enableRowSelection: selectable, //enable row selection for all rows
+    onRowSelectionChange: setRowSelection,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    onPaginationChange: setPagination,
+    onGlobalFilterChange: setFilter,
+    getSortedRowModel: getSortedRowModel(),
+    manualPagination: true, //we're doing manual "server-side" pagination
+    debugTable: true,
+    debugHeaders: true,
+    debugColumns: true
+  })
+
+  type FilterFieldsType = TypeOf<TSchema>
+
+  const form = useForm<FilterFieldsType>({
+    resolver: zodResolver(filters.schema)
+  })
 
   const onSubmit = (filter: {}) => {
     const temp = { ...filter }
@@ -93,7 +148,7 @@ const Table = <
       }
     })
     setFilter(temp)
-    setPage(0) // Reset to first page on filter change
+    setPagination(defaultPagination) // Reset to first page on filter change
   }
 
   return (
@@ -115,100 +170,107 @@ const Table = <
         <div>Loading...</div>
       ) : (
         <>
-          <table {...getTableProps()}>
+          <table>
             <thead>
-              {headerGroups.map((headerGroup) => (
-                <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
-                    <th {...column.getHeaderProps()}>
-                      {column.render("Header")}
-                    </th>
-                  ))}
+              {getHeaderGroups().map((headerGroup) => (
+                <tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <th key={header.id} colSpan={header.colSpan}>
+                        {header.isPlaceholder ? null : (
+                          <div>
+                            {flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                          </div>
+                        )}
+                      </th>
+                    )
+                  })}
                 </tr>
               ))}
             </thead>
-            <tbody {...getTableBodyProps()}>
-              {tablePage.map((row) => {
-                prepareRow(row)
+            <tbody>
+              {getRowModel().rows.map((row) => {
                 return (
-                  <tr key={row.id} {...row.getRowProps()}>
-                    {row.cells.map((cell) => (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                    ))}
+                  <tr key={row.id}>
+                    {row.getVisibleCells().map((cell) => {
+                      return (
+                        <td key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </td>
+                      )
+                    })}
                   </tr>
                 )
               })}
             </tbody>
           </table>
-          <div>
+          <div className="flex items-center gap-2">
             <button
-              onClick={() => {
-                setPage(0)
-                gotoPage(0)
-              }}
-              disabled={!canPreviousPage}
+              className="rounded border p-1"
+              onClick={() => firstPage()}
+              disabled={!getCanPreviousPage()}
             >
               {"<<"}
             </button>
             <button
-              onClick={() => {
-                setPage(pageIndex - 1)
-                previousPage()
-              }}
-              disabled={!canPreviousPage}
+              className="rounded border p-1"
+              onClick={() => previousPage()}
+              disabled={!getCanPreviousPage()}
             >
               {"<"}
             </button>
             <button
-              onClick={() => {
-                setPage(pageIndex + 1)
-                nextPage()
-              }}
-              disabled={!canNextPage}
+              className="rounded border p-1"
+              onClick={() => nextPage()}
+              disabled={!getCanNextPage()}
             >
               {">"}
             </button>
             <button
-              onClick={() => {
-                setPage(pageOptions.length - 1)
-                gotoPage(pageOptions.length - 1)
-              }}
-              disabled={!canNextPage}
+              className="rounded border p-1"
+              onClick={() => lastPage()}
+              disabled={!getCanNextPage()}
             >
               {">>"}
             </button>
-            <span>
-              Page{" "}
+            <span className="flex items-center gap-1">
+              <div>Page</div>
               <strong>
-                {pageIndex + 1} of {pageOptions.length}
-              </strong>{" "}
+                {getState().pagination.pageIndex + 1} of{" "}
+                {getPageCount().toLocaleString()}
+              </strong>
             </span>
-            <span>
-              | Go to page:{" "}
+            <span className="flex items-center gap-1">
+              | Go to page:
               <input
                 type="number"
-                defaultValue={pageIndex + 1}
+                defaultValue={getState().pagination.pageIndex + 1}
                 onChange={(e) => {
                   const page = e.target.value ? Number(e.target.value) - 1 : 0
-                  setPage(page)
-                  gotoPage(page)
+                  setPageIndex(page)
                 }}
-                style={{ width: "100px" }}
+                className="w-16 rounded border p-1"
               />
             </span>
             <select
-              value={pageSize}
+              value={getState().pagination.pageSize}
               onChange={(e) => {
-                updatePageSize(Number(e.target.value))
                 setPageSize(Number(e.target.value))
               }}
             >
-              {[10, 20, 30, 40, 50].map((size) => (
-                <option key={size} value={size}>
-                  Show {size}
+              {[10, 20, 30, 40, 50].map((pageSize) => (
+                <option key={pageSize} value={pageSize}>
+                  Show {pageSize}
                 </option>
               ))}
             </select>
+            {isFetching ? "Loading..." : null}
           </div>
         </>
       )}

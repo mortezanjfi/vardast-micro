@@ -93,6 +93,7 @@ export const OrdersFilter = ({ form }: IFilterProps<OrdersFilterType>) => {
                           px-4
                           py-3.5
                            focus:!ring-0 disabled:bg-alpha-100"
+                  {...form.register("customerName")}
                 />
               </div>
             </FormControl>
@@ -142,6 +143,7 @@ export const OrdersFilter = ({ form }: IFilterProps<OrdersFilterType>) => {
                           setStatusDialog(false)
                           form.setValue("status", value.toUpperCase())
                         }}
+                        {...form.register("status")}
                       >
                         <LucideCheck
                           className={mergeClasses(
@@ -203,6 +205,7 @@ export const OrdersFilter = ({ form }: IFilterProps<OrdersFilterType>) => {
                     placeholder={t("common:search_entity", {
                       entity: t("common:project")
                     })}
+                    {...form.register("projectId")}
                   />
                   <CommandEmpty>
                     {t("common:no_entity_found", {

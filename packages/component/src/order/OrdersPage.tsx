@@ -47,6 +47,7 @@ const OrdersPage = (_: OrdersPageProps) => {
 
   const tableProps: ITableProps<PreOrder, typeof OrdersFilterSchema> = useMemo(
     () => ({
+      selectable: true,
       accessToken: session?.accessToken,
       handleResponse: (response) => {
         console.log({ response })
@@ -55,35 +56,35 @@ const OrdersPage = (_: OrdersPageProps) => {
       columns: [
         {
           id: "row",
-          Header: t("common:row"),
-          accessor: (_, index) => digitsEnToFa(index + 1)
+          header: t("common:row"),
+          accessorFn: (_, index) => digitsEnToFa(index + 1)
         },
         {
-          Header: t("common:entity_code", { entity: t("common:order") }),
-          accessor: "uuid"
+          header: t("common:entity_code", { entity: t("common:order") }),
+          accessorKey: "uuid"
         },
         {
           id: "name",
-          Header: t("common:entity_name", { entity: t("common:project") }),
-          accessor: (item) => item?.project?.name
+          header: t("common:entity_name", { entity: t("common:project") }),
+          accessorFn: (item) => item?.project?.name
         },
         {
           id: "title",
-          Header: t("common:category"),
-          accessor: (item) => item?.category?.title
+          header: t("common:category"),
+          accessorFn: (item) => item?.category?.title
         },
         {
-          Header: t("common:applicant_name"),
-          accessor: "applicant_name"
+          header: t("common:applicant_name"),
+          accessorKey: "applicant_name"
         },
         {
-          Header: t("common:expert_name"),
-          accessor: "expert_name"
+          header: t("common:expert_name"),
+          accessorKey: "expert_name"
         },
         {
           id: "request_date",
-          Header: t("common:submission-time"),
-          accessor: (item) =>
+          header: t("common:submission-time"),
+          accessorFn: (item) =>
             item?.request_date
               ? digitsEnToFa(
                   new Date(item?.request_date).toLocaleDateString("fa-IR", {
@@ -98,8 +99,8 @@ const OrdersPage = (_: OrdersPageProps) => {
         },
         {
           id: "need_date",
-          Header: t("common:order-needed-time"),
-          accessor: (item) =>
+          header: t("common:order-needed-time"),
+          accessorFn: (item) =>
             item?.need_date
               ? digitsEnToFa(
                   new DateObject(new Date(item?.need_date))
@@ -116,8 +117,8 @@ const OrdersPage = (_: OrdersPageProps) => {
         },
         {
           id: "status",
-          Header: t("common:status"),
-          accessor: (item) => PreOrderStatesFa[item?.status]?.name_fa_admin
+          header: t("common:status"),
+          accessorFn: (item) => PreOrderStatesFa[item?.status]?.name_fa_admin
         }
       ],
       filters: {

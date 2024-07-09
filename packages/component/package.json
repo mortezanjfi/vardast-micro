@@ -17,6 +17,7 @@
   "dependencies": {
     "@tanstack/react-query": "*",
     "@tanstack/react-query-devtools": "*",
+    "@tanstack/react-table": "^8.19.2",
     "@vardast/asset": "workspace:*",
     "@vardast/graphql": "workspace:*",
     "@vardast/hook": "workspace:*",
@@ -27,7 +28,6 @@
     "@vardast/type": "workspace:*",
     "@vardast/ui": "workspace:*",
     "@vardast/util": "workspace:*",
-    "react-table": "^7.8.0",
     "graphql-request": "*",
     "lucide-react": "*",
     "next": "*",
