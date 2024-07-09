@@ -9,6 +9,7 @@ import Link from "../Link"
 import { ICategoryListLoader } from "./CategoryListLoader"
 
 type Props = {
+  slug: Array<string | number>
   isProductsPage?: boolean
   data: Category
   isMobileView: boolean
@@ -59,6 +60,7 @@ export function CategoryCircleItemLoader({
 }
 
 export default function CategoryCircleItem({
+  slug,
   isProductsPage,
   data,
   isMobileView
@@ -72,7 +74,7 @@ export default function CategoryCircleItem({
         setSelectedItemId(data.id)
       }}
       href={`${
-        isMobileView
+        isMobileView && !(slug?.length > 0)
           ? `/category/${data.id}/${data.title}`
           : `/products/${data.id}/${data.title}`
       }`}

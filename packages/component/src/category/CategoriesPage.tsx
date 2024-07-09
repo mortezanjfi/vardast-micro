@@ -101,15 +101,19 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
           className="bg-alpha-50"
           value={CATEGORY_PAGE_TABS.SUBCATEGORIES}
         >
-          <CategoriesList
-            categoryId={categoryId}
-            getAllBlogsQuery={getAllBlogsQuery}
-            description={categoryQuery?.data?.category?.description}
-            data={categoryQuery?.data?.category.children}
-            isLoading={categoryQuery.isLoading}
-            isSubcategory
-            isMobileView={isMobileView}
-          />
+          {categoryQuery?.data?.category?.children.length > 0 ? (
+            <CategoriesList
+              categoryId={categoryId}
+              getAllBlogsQuery={getAllBlogsQuery}
+              description={categoryQuery?.data?.category?.description}
+              data={categoryQuery?.data?.category.children}
+              isLoading={categoryQuery.isLoading}
+              isSubcategory
+              isMobileView={isMobileView}
+            />
+          ) : (
+            ""
+          )}
         </TabsContent>
         <TabsContent value={CATEGORY_PAGE_TABS.ORDERS}>
           <CategoriesPublicOrders categoryId={categoryId} />

@@ -13,10 +13,11 @@ import CategoryCircleItem, {
 } from "./CategoryCircleItem"
 
 type Props = {
+  slug: Array<string | number>
   getCategoryQuery: UseQueryResult<GetCategoryQuery, unknown>
 }
 
-const MobileCategoriesCardSection = ({ getCategoryQuery }: Props) => {
+const MobileCategoriesCardSection = ({ slug, getCategoryQuery }: Props) => {
   const [swiperRef, setSwiperRef] = useState<SwiperClass>()
   const [selectedItemId, setSelectedItemId] =
     useState<ICategoryListLoader>(null)
@@ -64,6 +65,7 @@ const MobileCategoriesCardSection = ({ getCategoryQuery }: Props) => {
                     }
                   >
                     <CategoryCircleItem
+                      slug={slug}
                       isMobileView
                       isProductsPage
                       data={category as Category}
