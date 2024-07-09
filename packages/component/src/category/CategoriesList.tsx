@@ -9,7 +9,7 @@ import CategorySkeleton from "./CategorySkeleton"
 
 interface CategoriesListProps {
   getAllBlogsQuery?: UseQueryResult<GetAllBlogsQuery>
-  categoryId: string
+  categoryId?: string
   isMobileView?: boolean
   isLoading: boolean
   isSubcategory?: boolean
