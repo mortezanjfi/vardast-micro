@@ -101,7 +101,12 @@ export default function CategoryCircleItem({
           className="rounded-xl object-cover"
         />
       </div>
-      <h5 className="relative z-20 whitespace-pre-wrap bg-opacity-60 text-center font-semibold">
+      <h5
+        className={clsx(
+          "relative z-20 whitespace-pre-wrap bg-opacity-60 text-center font-semibold",
+          selectedItemId === data.id ? "text-primary-600" : ""
+        )}
+      >
         {data.title}
       </h5>
     </Link>
