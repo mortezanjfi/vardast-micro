@@ -52,21 +52,21 @@ const OrderPreviewCard = ({ order }: Props) => {
 
   return (
     <div className="flex flex-col gap-3 py-5">
-      <div className="flex w-full items-center justify-between">
-        <div className="flex items-center gap-2">
+      <div className="grid w-full grid-cols-12 items-center justify-between">
+        <div className="col-span-9 flex items-center gap-2">
           <DynamicHeroIcon
             icon="ClipboardDocumentListIcon"
             className={mergeClasses(
-              "icon h-7 w-7 transform rounded-md bg-primary-600 p-1 text-alpha-white transition-all"
+              "icon h-7 w-7 flex-shrink-0 transform rounded-md bg-primary-600 p-1 text-alpha-white transition-all"
             )}
             solid={false}
           />
 
-          <span className="font-semibold">
-            سفارش شماره ({digitsEnToFa(order.uuid)})
+          <span className="line-clamp-1 font-semibold">
+            {order.lineDetail}{" "}
           </span>
         </div>
-        <span className="tag tag-info text-xs">
+        <span className="tag tag-info col-span-3 !flex !items-center !justify-center text-xs">
           {newTimeConvertor(order.request_date)}
         </span>
       </div>

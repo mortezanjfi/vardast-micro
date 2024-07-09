@@ -21,6 +21,7 @@ query GetPublicOrdersQuery($indexPublicOrderInput: IndexPublicOrderInput) {
         qty
         descriptions
       }
+      lineDetail
     }
   }
 }
