@@ -9,6 +9,7 @@ import Link from "../Link"
 import { ICategoryListLoader } from "./CategoryListLoader"
 
 type Props = {
+  isProductsPage?: boolean
   data: Category
   isMobileView: boolean
 }
@@ -24,26 +25,32 @@ export const smallCircleSizes = {
   height: "h-[50px]"
 }
 
+const productPageSizes = {
+  width: "w-20",
+  height: "h-20"
+}
 const categoryDefaultClassName =
   "ml-3 sm:mx-auto flex h-full flex-shrink-0 flex-col justify-start gap-y-4"
 
 export function CategoryCircleItemLoader({
+  isProductsPage,
   isMobileView
 }: {
   isMobileView: boolean
+  isProductsPage: boolean
 }) {
   return (
     <div
       className={clsx(
         categoryDefaultClassName,
         isMobileView ? "" : "mx-auto",
-        circleSizes.width
+        isProductsPage ? productPageSizes.width : circleSizes.width
       )}
     >
       <div
         className={clsx(
           "animated-card relative rounded-full border border-alpha-400 bg-alpha-50 p-1",
-          circleSizes.height
+          isProductsPage ? productPageSizes.height : circleSizes.height
         )}
       ></div>
       <h5 className="animated-card relative z-20 h-10 whitespace-pre-wrap bg-opacity-60 text-center font-semibold"></h5>
@@ -51,7 +58,11 @@ export function CategoryCircleItemLoader({
   )
 }
 
-export default function CategoryCircleItem({ data, isMobileView }: Props) {
+export default function CategoryCircleItem({
+  isProductsPage,
+  data,
+  isMobileView
+}: Props) {
   const [selectedItemId, setSelectedItemId] =
     useState<ICategoryListLoader>(null)
 
@@ -68,13 +79,13 @@ export default function CategoryCircleItem({ data, isMobileView }: Props) {
       className={clsx(
         categoryDefaultClassName,
         isMobileView ? "" : "mx-auto",
-        circleSizes.width
+        isProductsPage ? productPageSizes.width : circleSizes.width
       )}
     >
       <div
         className={clsx(
-          "relative rounded-full border border-alpha-400 bg-alpha-50 p-1",
-          circleSizes.height,
+          "relative overflow-hidden rounded-full border border-alpha-400 bg-alpha-50 p-1",
+          isProductsPage ? productPageSizes.height : circleSizes.height,
           selectedItemId === data.id ? "border-2 border-primary" : ""
         )}
       >

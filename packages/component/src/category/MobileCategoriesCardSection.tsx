@@ -8,9 +8,9 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import { Swiper as SwiperClass } from "swiper/types"
 
 import { ICategoryListLoader } from "../category/CategoryListLoader"
-import CategoryCircleImage, {
-  CategoryCircleImageSkeleton
-} from "./CategoryCircleImage"
+import CategoryCircleItem, {
+  CategoryCircleItemLoader
+} from "./CategoryCircleItem"
 
 type Props = {
   getCategoryQuery: UseQueryResult<GetCategoryQuery, unknown>
@@ -44,7 +44,7 @@ const MobileCategoriesCardSection = ({ getCategoryQuery }: Props) => {
                 key={index}
                 className="overflow-hidden bg-alpha-white"
               >
-                <CategoryCircleImageSkeleton />
+                <CategoryCircleItemLoader isMobileView isProductsPage />
               </SwiperSlide>
             ))}
           </>
@@ -63,7 +63,11 @@ const MobileCategoriesCardSection = ({ getCategoryQuery }: Props) => {
                           : undefined
                     }
                   >
-                    <CategoryCircleImage category={category as Category} />
+                    <CategoryCircleItem
+                      isMobileView
+                      isProductsPage
+                      data={category as Category}
+                    />
                   </div>
                 </SwiperSlide>
               )
