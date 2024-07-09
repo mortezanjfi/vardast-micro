@@ -62,8 +62,8 @@ const OrderPreviewCard = ({ order }: Props) => {
             solid={false}
           />
 
-          <span className="line-clamp-1 font-semibold">
-            {order.lineDetail}{" "}
+          <span className="line-clamp-2 text-sm font-semibold">
+            {order.lineDetail}
           </span>
         </div>
         <span className="tag tag-info col-span-3 !flex !items-center !justify-center text-xs">
@@ -73,18 +73,21 @@ const OrderPreviewCard = ({ order }: Props) => {
       <ol className="gap-2">
         <li>
           <DetailsWithTitle
+            className="text-sm"
             title={t("common:destination")}
             text={order.destination ? order.destination : "-"}
           />
         </li>
         <li>
           <DetailsWithTitle
+            className="text-sm"
             title={t("common:needed-time")}
             text={digitsEnToFa(newTimeConvertor(order.need_date))}
           />
         </li>
         <li>
           <DetailsWithTitle
+            className="text-sm"
             title={t("common:bid-start-time")}
             text={
               order.bid_start
@@ -95,6 +98,7 @@ const OrderPreviewCard = ({ order }: Props) => {
         </li>
         <li>
           <DetailsWithTitle
+            className="text-sm"
             title={t("common:bid-end-time")}
             text={
               order.bid_start

@@ -2,6 +2,7 @@ query GetPublicOrdersQuery($indexPublicOrderInput: IndexPublicOrderInput) {
   publicOrders(indexPublicOrderInput: $indexPublicOrderInput) {
     categoryName
     categoryId
+    categoryImage
     orders {
       uuid
       id

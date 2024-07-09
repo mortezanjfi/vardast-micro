@@ -51,7 +51,6 @@ const PublicPreOrdersSection = ({ query, isMobileView }: Props) => {
           onSwiper={setSwiperRef}
           // centeredSlides={centeredSlides ?? true}
           slidesPerView={"auto"}
-          spaceBetween={15}
           // className="h-full pb-12 sm:px-5 sm:py-8 md:px-0"
           className="rounded-xl border px-4 pb-12 sm:mt-8 sm:pb-0 md:px-0"
         >
@@ -62,7 +61,7 @@ const PublicPreOrdersSection = ({ query, isMobileView }: Props) => {
                   key={index}
                   className={clsx(
                     "!ml-0 overflow-hidden bg-alpha-white",
-                    isMobileView ? "w-[calc(100vw-45px)]" : "w-[350px]"
+                    isMobileView ? "w-[calc(100vw-45px)]" : "w-[402px]"
                   )}
                 >
                   <OrderPreviewCardSkeleton />
@@ -77,7 +76,7 @@ const PublicPreOrdersSection = ({ query, isMobileView }: Props) => {
                     key={index}
                     className={clsx(
                       "!ml-0 overflow-hidden  bg-alpha-white",
-                      isMobileView ? "w-[calc(100vw-45px)]" : "w-[350px]",
+                      isMobileView ? "w-[calc(100vw-45px)]" : "w-[402px]",
                       index !== query?.data?.publicOrders?.length - 1 &&
                         "border-l"
                     )}
