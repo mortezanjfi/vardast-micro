@@ -71,7 +71,7 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
         onValueChange={(e) => setActiveTab(e as CATEGORY_PAGE_TABS)}
         className="flex h-full w-full flex-col bg-alpha-white"
       >
-        <TabsList className="sticky top-0 z-50 grid w-full grid-cols-4 border-b bg-alpha-white pt-6 md:flex">
+        <TabsList className="sticky top-0 z-50 grid w-full grid-cols-4 bg-alpha-white pt-6 md:flex">
           <TabsTrigger value={CATEGORY_PAGE_TABS.SUBCATEGORIES}>
             {t(`common:${CATEGORY_PAGE_TABS.SUBCATEGORIES}`)}
           </TabsTrigger>
