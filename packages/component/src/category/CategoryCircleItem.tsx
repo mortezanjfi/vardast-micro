@@ -9,10 +9,10 @@ import Link from "../Link"
 import { ICategoryListLoader } from "./CategoryListLoader"
 
 type Props = {
-  slug: Array<string | number>
+  slug?: Array<string | number>
   isProductsPage?: boolean
   data: Category
-  isMobileView: boolean
+  isMobileView?: boolean
 }
 
 export const circleSizes = {
@@ -37,8 +37,8 @@ export function CategoryCircleItemLoader({
   isProductsPage,
   isMobileView
 }: {
-  isMobileView: boolean
-  isProductsPage: boolean
+  isMobileView?: boolean
+  isProductsPage?: boolean
 }) {
   return (
     <div

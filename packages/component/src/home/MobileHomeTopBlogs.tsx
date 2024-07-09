@@ -55,7 +55,7 @@ const MobileHomeTopBlogs = ({
           key="blog-swiper"
           slidesPerView={"auto"}
           spaceBetween={15}
-          className="px-4 pb-12 sm:pb-8 sm:pt-8 md:px-0"
+          className="px-6 pb-12 sm:pb-8 sm:pt-8 md:px-0"
         >
           {getAllBlogsQuery?.data?.getAllBlogs?.data?.map((blog, index) => (
             <SwiperSlide
