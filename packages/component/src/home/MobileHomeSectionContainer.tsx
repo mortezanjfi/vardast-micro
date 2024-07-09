@@ -2,9 +2,10 @@
 
 import { PropsWithChildren, ReactNode } from "react"
 import { ChevronLeftIcon } from "@heroicons/react/24/outline"
-import Link from "@vardast/component/Link"
 import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
+
+import Link from "../Link"
 
 export interface IMobileHomeSectionContainer {
   title?: string | ReactNode

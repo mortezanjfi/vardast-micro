@@ -6,7 +6,8 @@ import {
 import request from "graphql-request"
 
 export const getAllBlogsQueryFn = async ({
-  page
+  page,
+  categoryId
 }: IndexBlogInput): Promise<GetAllBlogsQuery> => {
   return await request(
     process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT as string,
@@ -14,7 +15,8 @@ export const getAllBlogsQueryFn = async ({
     {
       indexBlogInput: {
         page,
-        perPage: 5
+        perPage: 5,
+        categoryId
       }
     }
   )

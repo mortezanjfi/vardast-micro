@@ -1,12 +1,16 @@
 "use client"
 
 import React, { ReactElement, useState } from "react"
+import { UseQueryResult } from "@tanstack/react-query"
 import { clsx } from "clsx"
 
+import { GetAllBlogsQuery } from "../../../graphql/src/generated"
+import MobileHomeTopBlogs from "../home/MobileHomeTopBlogs"
 import Link from "../Link"
 import { ICategoryListLoader } from "./CategoryListLoader"
 
 interface ICategoryListContainer {
+  getAllBlogsQuery?: UseQueryResult<GetAllBlogsQuery>
   isSubcategory?: boolean
   description?: string
   href?: string
@@ -17,6 +21,7 @@ interface ICategoryListContainer {
 }
 
 const CategoryListContainer: React.FC<ICategoryListContainer> = ({
+  getAllBlogsQuery,
   isSubcategory,
   description,
   href,
@@ -34,6 +39,8 @@ const CategoryListContainer: React.FC<ICategoryListContainer> = ({
       >
         {children({ selectedItemId, setSelectedItemId })}
       </ul>
+      <MobileHomeTopBlogs getAllBlogsQuery={getAllBlogsQuery} isMobileView />
+
       {description && (
         <>
           <div className="flex flex-col gap-y bg-alpha-white p">

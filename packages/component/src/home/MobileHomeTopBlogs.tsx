@@ -4,12 +4,6 @@ import { useState } from "react"
 import Image from "next/image"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
-import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
-import Link from "@vardast/component/Link"
-import SwiperNavigationButton, {
-  SwiperButtonAction,
-  SwiperButtonsDirection
-} from "@vardast/component/SwiperNavigationButton"
 import { GetAllBlogsQuery } from "@vardast/graphql/generated"
 import convertToPersianDate from "@vardast/util/convertToPersianDate"
 import clsx from "clsx"
@@ -17,7 +11,13 @@ import { useInView } from "react-intersection-observer"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Swiper as SwiperClass } from "swiper/types"
 
-import MobileHomeSection from "@/app/(client)/(home)/components/MobileHomeSection"
+import { ICategoryListLoader } from "../category/CategoryListLoader"
+import Link from "../Link"
+import SwiperNavigationButton, {
+  SwiperButtonAction,
+  SwiperButtonsDirection
+} from "../SwiperNavigationButton"
+import MobileHomeSection from "./MobileHomeSection"
 
 const MobileHomeTopBlogs = ({
   getAllBlogsQuery,

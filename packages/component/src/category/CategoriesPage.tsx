@@ -4,11 +4,13 @@ import { useState } from "react"
 import { notFound, useSearchParams } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
 import {
+  GetAllBlogsQuery,
   GetCategoryQuery,
   IndexBrandInput,
   IndexProductInput
 } from "@vardast/graphql/generated"
 import { getCategoryQueryFn } from "@vardast/query/queryFns/categoryQueryFns"
+import { getAllBlogsQueryFn } from "@vardast/query/queryFns/getAllBlogsQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@vardast/ui/tabs"
 import useTranslation from "next-translate/useTranslation"
@@ -43,6 +45,16 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
     queryKey: [QUERY_FUNCTIONS_KEY.CATEGORY_QUERY_KEY, { id: categoryId }],
     queryFn: () => getCategoryQueryFn(+categoryId)
   })
+
+  //blog---------------->
+  const getAllBlogsQuery = useQuery<GetAllBlogsQuery>(
+    [QUERY_FUNCTIONS_KEY.GET_ALL_BLOGS, { page: 1 }],
+    () => getAllBlogsQueryFn({ page: 1, categoryId: +categoryId }),
+    {
+      keepPreviousData: true,
+      staleTime: 999999999
+    }
+  )
 
   //args need for products tab------->
   const productArgs: IndexProductInput = {}
@@ -90,6 +102,8 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
           value={CATEGORY_PAGE_TABS.SUBCATEGORIES}
         >
           <CategoriesList
+            categoryId={categoryId}
+            getAllBlogsQuery={getAllBlogsQuery}
             description={categoryQuery?.data?.category?.description}
             data={categoryQuery?.data?.category.children}
             isLoading={categoryQuery.isLoading}
