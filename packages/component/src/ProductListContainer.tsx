@@ -30,7 +30,7 @@ const ProductListContainer: React.FC<IProductListContainer> = ({
   return (
     <div
       className={clsx(
-        "grid bg-alpha-white",
+        "grid bg-alpha-white ",
         type === ProductContainerType.LARGE_LIST
           ? "grid-cols-1 divide-y divide-alpha-300 px-6 sm:grid-cols-2 md:grid-cols-3 md:divide-none md:px-0 lg:grid-cols-4 xl:grid-cols-6"
           : type === ProductContainerType.PRODUCT_PAGE_LIST

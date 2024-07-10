@@ -2,11 +2,11 @@
 
 import "@heroicons/react/24/solid"
 
-import { forwardRef, Ref, useRef, useState } from "react"
-import Image from "next/image"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
+import Image from "next/image"
+import { forwardRef, Ref, useRef, useState } from "react"
 
 import { Brand } from "../../../graphql/src/generated"
 import CardAvatar from "../CardAvatar"
@@ -65,7 +65,7 @@ const BrandCard = forwardRef(
           />
         </div>
 
-        <div className="relative z-20 flex items-center gap-4  bg-opacity-60  py-4 text-center font-semibold">
+        <div className="relative z-20 flex items-center gap-4  bg-opacity-60  pt-4 text-center font-semibold">
           <CardAvatar url={brand?.logoFile?.presignedUrl?.url ?? ""} />
           <div className="flex flex-col items-start gap-2">
             <span>{brand?.name}</span>
