@@ -35,7 +35,7 @@ import Filter from "../table/Filter"
 
 export const OrdersFilterSchema = z.object({
   status: z.string().optional(),
-  projectId: z.string().optional(),
+  projectId: z.number().optional(),
   customerName: z.string().optional()
 })
 export type OrdersFilterType = TypeOf<typeof OrdersFilterSchema>
@@ -184,7 +184,7 @@ export const OrdersFilter = ({ form }: IFilterProps<OrdersFilterType>) => {
                       {field.value
                         ? myProjectsQuery.data?.projects.data.find(
                             (project) => project && project.id === +field.value
-                          )?.id
+                          )?.name
                         : t("common:choose_entity", {
                             entity: t("common:project")
                           })}
@@ -220,9 +220,7 @@ export const OrdersFilter = ({ form }: IFilterProps<OrdersFilterType>) => {
                             value={`${project.id}`}
                             key={project.id}
                             onSelect={(value) => {
-                              console.log(value)
-
-                              form.setValue("projectId", value)
+                              form.setValue("projectId", +value)
                               setProjectDialog(false)
                             }}
                           >

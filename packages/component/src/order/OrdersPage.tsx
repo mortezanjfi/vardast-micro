@@ -47,11 +47,10 @@ const OrdersPage = (_: OrdersPageProps) => {
 
   const tableProps: ITableProps<PreOrder, typeof OrdersFilterSchema> = useMemo(
     () => ({
-      selectable: true,
-      accessToken: session?.accessToken,
-      handleResponse: (response) => {
-        console.log({ response })
+      getTableState: (sate) => {
+        console.log({ getTableState: sate })
       },
+      accessToken: session?.accessToken,
       fetchApiData: getAllPreOrdersQueryFn,
       columns: [
         {

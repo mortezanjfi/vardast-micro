@@ -1,5 +1,6 @@
 import {
-  ColumnDef // Importing Column from react-table
+  ColumnDef, // Importing Column from react-table
+  TableState
 } from "@tanstack/react-table"
 import { ApiArgsType, ApiResponseType } from "@vardast/query/type"
 import { UseFormReturn } from "react-hook-form"
@@ -16,7 +17,8 @@ export interface ITableProps<
     args: ApiArgsType<TSchema>,
     accessToken?: string
   ) => Promise<ApiResponseType<T>>
-  handleResponse?: (args: ApiResponseType<T>) => void
+  // handleResponse?: (args: ApiResponseType<T>) => void
+  getTableState?: (args: Partial<TableState> & { data: T[] }) => void
   filters?: {
     schema: TSchema
     Component: React.FC<IFilterProps<TypeOf<TSchema>>>

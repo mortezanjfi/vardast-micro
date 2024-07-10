@@ -1,14 +1,12 @@
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQuery } from "@tanstack/react-query"
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  PaginationState,
   useReactTable
 } from "@tanstack/react-table"
 import {
@@ -18,6 +16,7 @@ import {
 } from "@vardast/query/type"
 import { Checkbox } from "@vardast/ui/checkbox"
 import { Form } from "@vardast/ui/form"
+import { parseAsInteger, useQueryStates } from "next-usequerystate"
 import { useForm } from "react-hook-form"
 import { TypeOf, ZodSchema } from "zod"
 
@@ -30,17 +29,15 @@ const Table = <
   columns,
   selectable,
   fetchApiData,
+  getTableState,
   accessToken = "",
-  handleResponse,
   filters
 }: ITableProps<T, TSchema>) => {
-  const defaultPagination = {
-    pageIndex: 0,
-    pageSize: 10
-  }
-  const [pagination, setPagination] =
-    useState<PaginationState>(defaultPagination)
-  const [filter, setFilter] = useState<{} | undefined>(undefined)
+  const [pagination, setPagination] = useQueryStates({
+    pageIndex: parseAsInteger.withDefault(0),
+    pageSize: parseAsInteger.withDefault(10)
+  })
+  const [filter, setFilter] = useState<FilterFieldsType | undefined>(undefined)
 
   const [rowSelection, setRowSelection] = useState({})
 
@@ -57,11 +54,10 @@ const Table = <
     queryKey: ["table", fetchArgs],
     queryFn: async () => {
       const response = await fetchApiData(fetchArgs, accessToken)
-
-      if (handleResponse) {
-        handleResponse(response)
-      }
-
+      setPagination((prev) => {
+        return { ...prev, pageIndex: 0 }
+      })
+      setRowSelection({})
       return response
     },
     keepPreviousData: true,
@@ -78,7 +74,7 @@ const Table = <
 
   const selectableColumns = useMemo<ColumnDef<T>>(
     () =>
-      selectable && {
+      !!selectable && {
         id: "selection",
         header: ({ table }) => (
           <Checkbox
@@ -110,28 +106,31 @@ const Table = <
     getCanNextPage,
     getPageCount,
     getState,
-    setPageIndex,
-    setPageSize
+    setPageIndex: setTablePageIndex,
+    setPageSize: setTablePageSize
   } = useReactTable({
     data: serializedData?.data,
-    columns: selectable ? [...columns, selectableColumns] : columns,
+    columns: !!selectable ? [...columns, selectableColumns] : columns,
     pageCount: serializedData?.lastPage ?? 0,
     state: {
       pagination,
       rowSelection
     },
-    enableRowSelection: selectable, //enable row selection for all rows
+    enableRowSelection: !!selectable, //enable row selection for all rows
     onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onPaginationChange: setPagination,
-    onGlobalFilterChange: setFilter,
     getSortedRowModel: getSortedRowModel(),
-    manualPagination: true, //we're doing manual "server-side" pagination
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: true
+    onPaginationChange: (updater) => {
+      setPagination((prev) => {
+        const newState = typeof updater === "function" ? updater(prev) : updater
+        return { ...prev, ...newState }
+      })
+    },
+    manualPagination: true //we're doing manual "server-side" pagination
+    // debugTable: true,
+    // debugHeaders: true,
+    // debugColumns: true
   })
 
   type FilterFieldsType = TypeOf<TSchema>
@@ -140,7 +139,7 @@ const Table = <
     resolver: zodResolver(filters.schema)
   })
 
-  const onSubmit = (filter: {}) => {
+  const onSubmit = (filter: FilterFieldsType) => {
     const temp = { ...filter }
     Object.entries(filter).forEach(([key, value]) => {
       if (!value) {
@@ -148,8 +147,15 @@ const Table = <
       }
     })
     setFilter(temp)
-    setPagination(defaultPagination) // Reset to first page on filter change
   }
+
+  useEffect(() => {
+    getTableState({
+      pagination,
+      rowSelection,
+      data: serializedData.data
+    })
+  }, [pagination, rowSelection])
 
   return (
     <>
@@ -253,7 +259,7 @@ const Table = <
                 defaultValue={getState().pagination.pageIndex + 1}
                 onChange={(e) => {
                   const page = e.target.value ? Number(e.target.value) - 1 : 0
-                  setPageIndex(page)
+                  setTablePageIndex(page)
                 }}
                 className="w-16 rounded border p-1"
               />
@@ -261,7 +267,7 @@ const Table = <
             <select
               value={getState().pagination.pageSize}
               onChange={(e) => {
-                setPageSize(Number(e.target.value))
+                setTablePageSize(Number(e.target.value))
               }}
             >
               {[10, 20, 30, 40, 50].map((pageSize) => (
