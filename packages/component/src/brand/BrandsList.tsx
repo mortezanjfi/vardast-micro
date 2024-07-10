@@ -68,14 +68,16 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
       {
         ...args,
         page: args.page,
-        sortType: sort
+        sortType: sort,
+        categoryId: args.categoryId
       }
     ],
     ({ pageParam = 1 }) =>
       getAllBrandsQueryFn({
         ...args,
         page: pageParam,
-        sortType: sort
+        sortType: sort,
+        categoryId: args.categoryId
       }),
     {
       keepPreviousData: true,

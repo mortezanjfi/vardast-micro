@@ -70,6 +70,7 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
     // return <NoProductFound />
     return notFound()
   }
+
   return (
     <div className="flex flex-col">
       {isMobileView ? (
