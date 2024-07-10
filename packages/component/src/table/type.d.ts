@@ -13,11 +13,12 @@ export interface ITableProps<
   columns: Array<ColumnDef<T>>
   accessToken?: string
   selectable?: boolean
+  paginable?: boolean
   fetchApiData: (
     args: ApiArgsType<TSchema>,
     accessToken?: string
   ) => Promise<ApiResponseType<T>>
-  // handleResponse?: (args: ApiResponseType<T>) => void
+  handleResponse?: (args: ApiResponseType<T>) => void
   getTableState?: (args: Partial<TableState> & { data: T[] }) => void
   filters?: {
     schema: TSchema

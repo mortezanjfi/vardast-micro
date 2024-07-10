@@ -47,11 +47,20 @@ const OrdersPage = (_: OrdersPageProps) => {
 
   const tableProps: ITableProps<PreOrder, typeof OrdersFilterSchema> = useMemo(
     () => ({
-      getTableState: (sate) => {
-        console.log({ getTableState: sate })
+      selectable: true,
+      paginable: true,
+      getTableState: (getTableState) => {
+        console.log({ getTableState })
+      },
+      handleResponse: (handleResponse) => {
+        console.log({ handleResponse })
       },
       accessToken: session?.accessToken,
       fetchApiData: getAllPreOrdersQueryFn,
+      filters: {
+        schema: OrdersFilterSchema,
+        Component: OrdersFilter
+      },
       columns: [
         {
           id: "row",
@@ -59,8 +68,9 @@ const OrdersPage = (_: OrdersPageProps) => {
           accessorFn: (_, index) => digitsEnToFa(index + 1)
         },
         {
+          id: "uuid",
           header: t("common:entity_code", { entity: t("common:order") }),
-          accessorKey: "uuid"
+          accessorFn: ({ uuid }) => digitsEnToFa(uuid)
         },
         {
           id: "name",
@@ -119,11 +129,7 @@ const OrdersPage = (_: OrdersPageProps) => {
           header: t("common:status"),
           accessorFn: (item) => PreOrderStatesFa[item?.status]?.name_fa_admin
         }
-      ],
-      filters: {
-        schema: OrdersFilterSchema,
-        Component: OrdersFilter
-      }
+      ]
     }),
     [session]
   )

@@ -72,6 +72,11 @@ export const PreOrderStatesFa = {
     className: "tag-success",
     name_fa: "در انتظار پرداخت",
     name_fa_admin: "در انتظار پرداخت"
+  },
+  [PreOrderStates.Rejected]: {
+    className: "tag-danger",
+    name_fa: "رد شده",
+    name_fa_admin: "رد شده"
   }
 }
 

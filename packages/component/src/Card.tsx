@@ -55,30 +55,34 @@ const Card = ({
       className={mergeClasses(cardVariants({ template, className }))}
       {...props}
     >
-      <div className="flex">
-        <div className="flex w-full justify-between">
-          {title && (
-            <h2 className={clsx("font-medium text-alpha-800 ", titleClass)}>
-              {title}
-            </h2>
-          )}
-          {button && (
-            <Button
-              disabled={button.disabled}
-              loading={button.loading}
-              onClick={(e) => {
-                button?.onClick && button.onClick(e)
-              }}
-              type={button.type}
-              variant={button.variant}
-              className={clsx("py-2", button.className)}
-            >
-              {button.text}
-            </Button>
+      {(title || button || description) && (
+        <div className="flex">
+          <div className="flex w-full justify-between">
+            {title && (
+              <h2 className={clsx("font-medium text-alpha-800 ", titleClass)}>
+                {title}
+              </h2>
+            )}
+            {button && (
+              <Button
+                disabled={button.disabled}
+                loading={button.loading}
+                onClick={(e) => {
+                  button?.onClick && button.onClick(e)
+                }}
+                type={button.type}
+                variant={button.variant}
+                className={clsx("py-2", button.className)}
+              >
+                {button.text}
+              </Button>
+            )}
+          </div>
+          {description && (
+            <p className="text-sm text-alpha-500">{description}</p>
           )}
         </div>
-        {description && <p className="text-sm text-alpha-500">{description}</p>}
-      </div>
+      )}
       {children}
     </div>
   )

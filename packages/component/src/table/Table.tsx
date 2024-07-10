@@ -20,6 +20,9 @@ import { parseAsInteger, useQueryStates } from "next-usequerystate"
 import { useForm } from "react-hook-form"
 import { TypeOf, ZodSchema } from "zod"
 
+import Card from "../Card"
+import Loading from "../Loading"
+import TablePagination from "./TablePagination"
 import { ITableProps } from "./type"
 
 const Table = <
@@ -27,8 +30,10 @@ const Table = <
   TSchema extends ZodSchema<any> = ZodSchema<any>
 >({
   columns,
+  paginable,
   selectable,
   fetchApiData,
+  handleResponse,
   getTableState,
   accessToken = "",
   filters
@@ -38,7 +43,6 @@ const Table = <
     pageSize: parseAsInteger.withDefault(10)
   })
   const [filter, setFilter] = useState<FilterFieldsType | undefined>(undefined)
-
   const [rowSelection, setRowSelection] = useState({})
 
   const fetchArgs: ApiArgsType<any> = useMemo(
@@ -54,10 +58,10 @@ const Table = <
     queryKey: ["table", fetchArgs],
     queryFn: async () => {
       const response = await fetchApiData(fetchArgs, accessToken)
-      setPagination((prev) => {
-        return { ...prev, pageIndex: 0 }
-      })
       setRowSelection({})
+      if (handleResponse) {
+        handleResponse(response)
+      }
       return response
     },
     keepPreviousData: true,
@@ -95,22 +99,9 @@ const Table = <
     []
   )
 
-  const {
-    getHeaderGroups,
-    getRowModel,
-    firstPage,
-    previousPage,
-    getCanPreviousPage,
-    nextPage,
-    lastPage,
-    getCanNextPage,
-    getPageCount,
-    getState,
-    setPageIndex: setTablePageIndex,
-    setPageSize: setTablePageSize
-  } = useReactTable({
+  const table = useReactTable({
     data: serializedData?.data,
-    columns: !!selectable ? [...columns, selectableColumns] : columns,
+    columns: !!selectable ? [selectableColumns, ...columns] : columns,
     pageCount: serializedData?.lastPage ?? 0,
     state: {
       pagination,
@@ -136,7 +127,7 @@ const Table = <
   type FilterFieldsType = TypeOf<TSchema>
 
   const form = useForm<FilterFieldsType>({
-    resolver: zodResolver(filters.schema)
+    resolver: zodResolver(filters?.schema)
   })
 
   const onSubmit = (filter: FilterFieldsType) => {
@@ -146,16 +137,20 @@ const Table = <
         delete temp[key]
       }
     })
+    setPagination((prev) => {
+      return { ...prev, pageIndex: 0 }
+    })
     setFilter(temp)
   }
 
   useEffect(() => {
-    getTableState({
-      pagination,
-      rowSelection,
-      data: serializedData.data
-    })
-  }, [pagination, rowSelection])
+    getTableState &&
+      getTableState({
+        ...(paginable ? { pagination } : {}),
+        ...(selectable ? { rowSelection } : {}),
+        data: serializedData.data
+      })
+  }, [pagination, rowSelection, selectable])
 
   return (
     <>
@@ -172,113 +167,63 @@ const Table = <
           </form>
         </Form>
       )}
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
+      {data ? (
         <>
-          <table>
-            <thead>
-              {getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <th key={header.id} colSpan={header.colSpan}>
-                        {header.isPlaceholder ? null : (
-                          <div>
-                            {flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                          </div>
-                        )}
-                      </th>
-                    )
-                  })}
-                </tr>
-              ))}
-            </thead>
-            <tbody>
-              {getRowModel().rows.map((row) => {
-                return (
-                  <tr key={row.id}>
-                    {row.getVisibleCells().map((cell) => {
+          <Card className="min-h-250 relative overflow-x-auto p-0">
+            {isFetching && (
+              <div className="z-docked absolute left-0 top-0 flex h-full w-full items-center justify-center bg-alpha-50 bg-opacity-80">
+                <Loading />
+              </div>
+            )}
+            <table className="table-bordered table">
+              <thead>
+                {table?.getHeaderGroups()?.map((headerGroup) => (
+                  <tr key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
                       return (
-                        <td key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
+                        <th key={header.id} colSpan={header.colSpan}>
+                          {header.isPlaceholder ? null : (
+                            <div>
+                              {flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                            </div>
                           )}
-                        </td>
+                        </th>
                       )
                     })}
                   </tr>
-                )
-              })}
-            </tbody>
-          </table>
-          <div className="flex items-center gap-2">
-            <button
-              className="rounded border p-1"
-              onClick={() => firstPage()}
-              disabled={!getCanPreviousPage()}
-            >
-              {"<<"}
-            </button>
-            <button
-              className="rounded border p-1"
-              onClick={() => previousPage()}
-              disabled={!getCanPreviousPage()}
-            >
-              {"<"}
-            </button>
-            <button
-              className="rounded border p-1"
-              onClick={() => nextPage()}
-              disabled={!getCanNextPage()}
-            >
-              {">"}
-            </button>
-            <button
-              className="rounded border p-1"
-              onClick={() => lastPage()}
-              disabled={!getCanNextPage()}
-            >
-              {">>"}
-            </button>
-            <span className="flex items-center gap-1">
-              <div>Page</div>
-              <strong>
-                {getState().pagination.pageIndex + 1} of{" "}
-                {getPageCount().toLocaleString()}
-              </strong>
-            </span>
-            <span className="flex items-center gap-1">
-              | Go to page:
-              <input
-                type="number"
-                defaultValue={getState().pagination.pageIndex + 1}
-                onChange={(e) => {
-                  const page = e.target.value ? Number(e.target.value) - 1 : 0
-                  setTablePageIndex(page)
-                }}
-                className="w-16 rounded border p-1"
-              />
-            </span>
-            <select
-              value={getState().pagination.pageSize}
-              onChange={(e) => {
-                setTablePageSize(Number(e.target.value))
-              }}
-            >
-              {[10, 20, 30, 40, 50].map((pageSize) => (
-                <option key={pageSize} value={pageSize}>
-                  Show {pageSize}
-                </option>
-              ))}
-            </select>
-            {isFetching ? "Loading..." : null}
-          </div>
+                ))}
+              </thead>
+              <tbody>
+                {table?.getRowModel()?.rows.map((row) => {
+                  return (
+                    <tr key={row.id}>
+                      {row.getVisibleCells()?.map((cell) => {
+                        return (
+                          <td key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </td>
+                        )
+                      })}
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </Card>
+          {paginable && (
+            <TablePagination table={table} total={serializedData?.total} />
+          )}
         </>
+      ) : isLoading ? (
+        <Loading />
+      ) : (
+        <p>داده ای یافت نشد</p>
       )}
     </>
   )

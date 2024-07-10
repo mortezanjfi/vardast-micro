@@ -80,7 +80,6 @@ export const OrdersFilter = ({ form }: IFilterProps<OrdersFilterType>) => {
                 <LucideSearch className="h-6 w-6 text-primary" />
 
                 <Input
-                  autoFocus
                   onChange={(e) => {
                     form.setValue("customerName", e.target.value)
                   }}
