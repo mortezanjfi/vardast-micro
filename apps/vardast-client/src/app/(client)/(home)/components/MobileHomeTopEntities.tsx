@@ -66,7 +66,7 @@ const MobileHomeTopEntities = ({
             <SwiperSlide
               key={brand.id}
               className={clsx(
-                "overflow-hidden rounded-2xl border bg-alpha-white shadow-lg",
+                "overflow-hidden rounded-2xl bg-alpha-white",
                 isMobileView ? "w-[calc(100vw-45px)]" : "w-[350px]",
                 selectedItemId === brand?.id
                   ? "border-2 border-primary"
