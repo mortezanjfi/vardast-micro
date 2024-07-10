@@ -64,7 +64,7 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
   //args need for brands tab-------->
   const brandsArgs: IndexBrandInput = {}
   if (categoryId && categoryId.length > 0)
-    brandsArgs["categoryId"] = +categoryId[0]
+    brandsArgs["categoryId"] = +categoryId
 
   if (!categoryQuery) {
     // return <NoProductFound />
