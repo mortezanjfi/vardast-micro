@@ -111,7 +111,7 @@ const FavoritesPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.replace(`${paths.signin}?ru=/favorites`)
+      router.replace(`${paths.signin}?ru=/profile/favorites`)
     } else if (!cacheFlag) {
       brandQuery.refetch()
       sellerQuery.refetch()
