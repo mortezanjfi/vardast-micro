@@ -377,5 +377,8 @@
   "bid-end-time": "زمان پایان مناقصه",
   "destination": "مقصد",
   "needed-time": "تاریخ نیاز",
-  "views": "بازدید"
+  "views": "بازدید",
+  "order-view-base": "بر اساس سفارش",
+  "product-view-base": "بر اساس اقلام ",
+  "items": "اقلام"
 }
