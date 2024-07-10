@@ -162,6 +162,9 @@ const Products = () => {
                   <th>
                     {t("common:entity_count", { entity: t("common:sellers") })}
                   </th>
+                  <th>
+                    {t("common:entity_count", { entity: t("common:views") })}
+                  </th>
                   <th>{t("common:price")}</th>
                   <th>{t("common:stock")}</th>
                   <th>{t("common:updated")}</th>
@@ -206,6 +209,7 @@ const Products = () => {
                           <span>-</span>
                         </td>
                         <td>-</td>
+                        <td>{digitsEnToFa(product.views)}</td>
                         <td>
                           <div className="flex flex-col">
                             <div className="text-success-600">
