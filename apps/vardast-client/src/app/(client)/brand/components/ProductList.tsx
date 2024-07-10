@@ -543,7 +543,7 @@ const ProductList = ({
                   onClick={() => setFiltersVisibility(true)}
                   size="small"
                   variant="secondary"
-                  className="rounded-full border border-alpha-200"
+                  className="rounded-full border border-alpha-200 py-0"
                 >
                   {filterAttributes.length > 0 && (
                     <span className="absolute -right-1 -top-1 block h-2.5 w-2.5 rounded-full bg-primary-500"></span>
@@ -580,7 +580,7 @@ const ProductList = ({
             onClick={() => setSortFilterVisibility(true)}
             size="small"
             variant="secondary"
-            className="rounded-full border border-alpha-200"
+            className="rounded-full border border-alpha-200 py-0"
           >
             <LucideSortDesc className="icon text-alpha" />
             مرتب‌سازی

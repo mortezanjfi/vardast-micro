@@ -60,17 +60,17 @@ const MobileHomeTopEntities = ({
           slidesPerView={"auto"}
           spaceBetween={15}
           // className="h-full pb-12 sm:px-5 sm:py-8 md:px-0"
-          className="px-4 pb-12 sm:pb-8 sm:pt-8 md:px-0"
+          className="px-4 pb-8 sm:!pb-4 sm:pt-8 md:px-0"
         >
           {query?.map((brand, index) => (
             <SwiperSlide
               key={brand.id}
               className={clsx(
                 "overflow-hidden rounded-2xl bg-alpha-white",
-                isMobileView ? "w-[calc(100vw-45px)]" : "w-[350px]",
-                selectedItemId === brand?.id
-                  ? "border-2 border-primary"
-                  : "border-alpha-50"
+                isMobileView ? "w-[calc(100vw-45px)]" : "w-[350px]"
+                // selectedItemId === brand?.id
+                //   ? "border-2 border-primary"
+                //   : "border-alpha-50"
               )}
             >
               <div

@@ -2,11 +2,12 @@
 
 import "@heroicons/react/24/solid"
 
+import { forwardRef, Ref, useRef, useState } from "react"
+import Image from "next/image"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import clsx from "clsx"
+import { Check, Minus } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
-import Image from "next/image"
-import { forwardRef, Ref, useRef, useState } from "react"
 
 import { Brand } from "../../../graphql/src/generated"
 import CardAvatar from "../CardAvatar"
@@ -41,10 +42,10 @@ const BrandCard = forwardRef(
           setSelectedItemId(brand?.id)
         }}
         className={clsx(
-          "flex h-full flex-col justify-between overflow-hidden rounded-2xl bg-alpha-white",
-          selectedItemId === brand?.id
-            ? "border-2 border-primary"
-            : "border-alpha-50"
+          "flex h-full flex-col justify-between overflow-hidden rounded-2xl bg-alpha-white"
+          // selectedItemId === brand?.id
+          //   ? "border-2 border-primary"
+          //   : "border-alpha-50"
         )}
         href={`/brand/${brand?.id}`}
       >
@@ -72,20 +73,26 @@ const BrandCard = forwardRef(
 
             <div className="flex divide-x divide-x-reverse divide-alpha-400 text-sm">
               {brand?.sum > 0 && (
-                <div className="pl-2 text-sm font-medium">
+                <div className="pl-2 text-sm font-medium text-alpha-500">
                   {digitsEnToFa(brand?.sum)} کالا
                 </div>
               )}
-              {brand?.catalog?.id && (
-                <div className="px-2 text-sm font-medium">
-                  {t("common:catalog")}
-                </div>
-              )}
-              {brand?.priceList?.id && (
-                <div className="px-2 text-sm font-medium">
-                  {t("common:price_list")}
-                </div>
-              )}
+              <div className="flex items-center gap-1 px-2 text-sm font-medium text-alpha-500">
+                {t("common:catalog")}
+                {brand?.catalog?.id ? (
+                  <Check width={15} height={15} />
+                ) : (
+                  <Minus width={15} height={15} />
+                )}
+              </div>
+              <div className="flex items-center gap-1 px-2 text-sm font-medium text-alpha-500">
+                {t("common:price_list")}
+                {brand?.priceList?.id ? (
+                  <Check width={15} height={15} />
+                ) : (
+                  <Minus width={15} height={15} />
+                )}
+              </div>
             </div>
           </div>
         </div>

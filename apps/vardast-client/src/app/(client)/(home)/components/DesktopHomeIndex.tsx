@@ -4,14 +4,14 @@ import { useState } from "react"
 import CategoryCircleItem, {
   CategoryCircleItemLoader
 } from "@vardast/component/category/CategoryCircleItem"
+import MobileHomeSection from "@vardast/component/home/MobileHomeSection"
+import MobileHomeTopBlogs from "@vardast/component/home/MobileHomeTopBlogs"
 import { Brand, Category } from "@vardast/graphql/generated"
 import clsx from "clsx"
 
 import { IHomeProps } from "@/app/(client)/(home)/components/HomeIndex"
 import MobileHomeNewestProducts from "@/app/(client)/(home)/components/MobileHomeNewestProducts"
-import MobileHomeSection from "@vardast/component/home/MobileHomeSection"
 import MobileHomeSlider from "@/app/(client)/(home)/components/MobileHomeSlider"
-import MobileHomeTopBlogs from "@vardast/component/home/MobileHomeTopBlogs"
 import MobileHomeTopEntities from "@/app/(client)/(home)/components/MobileHomeTopEntities"
 import NewPriceSlider from "@/app/(client)/(home)/components/NewPriceSlider"
 import PublicPreOrdersSection from "@/app/(client)/(home)/components/PublicPreOrdersSection"
@@ -102,7 +102,7 @@ const DesktopHomeIndex = ({
         </div>
       )}
       {allProductsQuery.data && (
-        <div className="border-t-2 bg-alpha-white pb-12">
+        <div className="border-t-2 bg-alpha-white ">
           <div className="container mx-auto rounded-xl py-8">
             <MobileHomeNewestProducts
               centeredSlides={false}

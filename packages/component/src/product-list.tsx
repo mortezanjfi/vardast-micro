@@ -432,7 +432,7 @@ const ProductList = ({
   )
 
   const MobileHeader = (
-    <div className="sticky top-0 z-30 border-b bg-alpha-white p">
+    <div className="sticky top-0 z-30 border-b border-b-alpha-300 bg-alpha-white p-4">
       <div>
         {hasSearch && (
           <div className="relative flex transform items-center rounded-lg border-alpha-200 bg-alpha-100 pr-2 transition-all">
@@ -524,7 +524,7 @@ const ProductList = ({
             onClick={() => setSortFilterVisibility(true)}
             size="small"
             variant="ghost"
-            className=" h-full  w-full rounded-none !border-l  !text-alpha-black"
+            className=" h-full w-full rounded-none !border-l border-alpha-300  py-0 !text-alpha-black"
           >
             <LucideSortDesc className="icon text-alpha" />
             مرتب‌سازی
@@ -542,7 +542,7 @@ const ProductList = ({
             onClick={() => setFiltersVisibility(true)}
             size="small"
             variant="ghost"
-            className=" h-full w-full rounded-none   !text-alpha-black"
+            className=" h-full w-full rounded-none  py-0 !text-alpha-black"
           >
             {filterAttributes.length > 0 && (
               <span className="absolute right-1 top-1 block h-2.5 w-2.5 rounded-full bg-primary-500"></span>

@@ -74,7 +74,7 @@ const OrderPreviewCard = ({ order }: Props) => {
         <li>
           <DetailsWithTitle
             className="text-sm"
-            title={t("common:destination")}
+            title={t("common:city")}
             text={order.destination ? order.destination : "-"}
           />
         </li>

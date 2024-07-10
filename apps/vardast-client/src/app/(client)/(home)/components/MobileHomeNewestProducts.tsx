@@ -80,7 +80,7 @@ const MobileHomeNewestProducts = ({
             centeredSlides={centeredSlides ?? true}
             slidesPerView={"auto"}
             // spaceBetween={16}
-            className="h-full w-full pb-12 sm:px-5 sm:py-8 md:px-0"
+            className="h-full w-full pb-12 sm:p-4 sm:px-5 sm:pt-8 md:px-0"
           >
             {query?.data?.products?.data?.map((product, index) => (
               <SwiperSlide key={product.id} className={clsx("w-72")}>

@@ -33,7 +33,7 @@ const PublicPreOrdersSection = ({ query, isMobileView }: Props) => {
 
   return (
     query && (
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden sm:pb-4">
         {!inViewNext && !isMobileView && (
           <SwiperNavigationButton
             swiperRef={swiperRef}

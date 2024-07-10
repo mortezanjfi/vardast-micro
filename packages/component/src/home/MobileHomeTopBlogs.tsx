@@ -55,13 +55,13 @@ const MobileHomeTopBlogs = ({
           key="blog-swiper"
           slidesPerView={"auto"}
           spaceBetween={15}
-          className="px-6 pb-12 sm:pb-8 sm:pt-8 md:px-0"
+          className="px-6 pb-4 sm:!pb-0 sm:pt-8 md:px-0"
         >
           {getAllBlogsQuery?.data?.getAllBlogs?.data?.map((blog, index) => (
             <SwiperSlide
               key={blog?.id}
               className={clsx(
-                "overflow-hidden rounded-2xl border bg-alpha-white shadow-lg",
+                "overflow-hidden rounded-2xl  bg-alpha-white",
                 isMobileView ? "w-[calc(100vw-45px)]" : "w-[350px]",
                 selectedItemId === blog?.id
                   ? "border-2 border-primary"
@@ -97,14 +97,14 @@ const MobileHomeTopBlogs = ({
                       fill
                       // width={400}
                       // height={300}
-                      className="h-full w-full object-fill"
+                      className="h-full w-full rounded-2xl object-fill"
                     />
                   </div>
                   <div className="relative z-20 flex flex-col items-start justify-between gap-y-2 bg-alpha-white bg-opacity-60 px py-4 text-center">
                     <h4 className="w-full truncate text-justify font-semibold">
                       {blog?.title}
                     </h4>
-                    <div className="w-full truncate text-justify text-alpha-500">
+                    <div className="flex w-full flex-row-reverse truncate text-justify text-sm font-medium text-alpha-500">
                       {blog?.date &&
                         digitsEnToFa(
                           convertToPersianDate({ dateString: blog.date })
