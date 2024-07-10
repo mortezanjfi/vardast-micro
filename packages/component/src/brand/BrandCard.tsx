@@ -2,11 +2,11 @@
 
 import "@heroicons/react/24/solid"
 
-import { forwardRef, Ref, useRef, useState } from "react"
-import Image from "next/image"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
+import Image from "next/image"
+import { forwardRef, Ref, useRef, useState } from "react"
 
 import { Brand } from "../../../graphql/src/generated"
 import CardAvatar from "../CardAvatar"
@@ -41,7 +41,7 @@ const BrandCard = forwardRef(
           setSelectedItemId(brand?.id)
         }}
         className={clsx(
-          "flex h-full flex-col justify-between overflow-hidden rounded-2xl border bg-alpha-white shadow-lg",
+          "flex h-full flex-col justify-between overflow-hidden rounded-2xl bg-alpha-white",
           selectedItemId === brand?.id
             ? "border-2 border-primary"
             : "border-alpha-50"
@@ -61,30 +61,30 @@ const BrandCard = forwardRef(
             fill
             // width={300}
             // height={400}
-            className="object-fill"
+            className="rounded-2xl object-fill"
           />
         </div>
 
-        <div className="relative z-20 flex items-center gap-4 bg-alpha-50 bg-opacity-60 px py-4 text-center font-semibold">
+        <div className="relative z-20 flex items-center gap-4  bg-opacity-60  pt-4 text-center font-semibold">
           <CardAvatar url={brand?.logoFile?.presignedUrl?.url ?? ""} />
           <div className="flex flex-col items-start gap-2">
             <span>{brand?.name}</span>
 
-            <div className="flex flex-wrap gap-2 text-sm">
+            <div className="flex divide-x divide-x-reverse divide-alpha-400 text-sm">
               {brand?.sum > 0 && (
-                <span className="tag  tag-secondary text-sm font-medium">
+                <div className="pl-2 text-sm font-medium">
                   {digitsEnToFa(brand?.sum)} کالا
-                </span>
+                </div>
               )}
               {brand?.catalog?.id && (
-                <span className="tag  tag-secondary text-sm font-medium">
+                <div className="px-2 text-sm font-medium">
                   {t("common:catalog")}
-                </span>
+                </div>
               )}
               {brand?.priceList?.id && (
-                <span className="tag  tag-secondary text-sm font-medium">
+                <div className="px-2 text-sm font-medium">
                   {t("common:price_list")}
-                </span>
+                </div>
               )}
             </div>
           </div>

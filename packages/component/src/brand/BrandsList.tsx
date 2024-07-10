@@ -68,14 +68,16 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
       {
         ...args,
         page: args.page,
-        sortType: sort
+        sortType: sort,
+        categoryId: args.categoryId
       }
     ],
     ({ pageParam = 1 }) =>
       getAllBrandsQueryFn({
         ...args,
         page: pageParam,
-        sortType: sort
+        sortType: sort,
+        categoryId: args.categoryId
       }),
     {
       keepPreviousData: true,
@@ -132,7 +134,7 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
                 {page.brands.data.map(
                   (brand, index) =>
                     brand && (
-                      <div className="p-3 ring-alpha-200 sm:ring-1">
+                      <div className="px-3 py-6 ring-alpha-200 sm:ring-1">
                         <BrandCard
                           isMobileView={isMobileView}
                           ref={
