@@ -199,7 +199,7 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
 
   //mobile--------------------->
   const MobileHeader = (
-    <div className="sticky top-0 z-30 border-b bg-alpha-white p">
+    <div className="sticky top-0 z-30 border-b border-b-alpha-300 bg-alpha-white p-4">
       <div className="grid grid-cols-2">
         <MobileBrandSortFilter
           sort={sort}
@@ -216,7 +216,7 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
           onClick={() => setSortFilterVisibility(true)}
           size="small"
           variant="ghost"
-          className=" h-full  w-full rounded-none !border-l !text-alpha-black"
+          className=" h-full w-full rounded-none !border-l border-alpha-300 py-0 !text-alpha-black"
         >
           <LucideSortDesc className="icon text-alpha" />
           مرتب‌سازی
@@ -226,7 +226,7 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
           onClick={() => setFiltersVisibility(true)}
           size="small"
           variant="ghost"
-          className=" h-full  w-full rounded-none  !text-alpha-black"
+          className=" h-full w-full rounded-none py-0  !text-alpha-black"
         >
           <LucideSlidersHorizontal className="icon text-alpha" />
           فیلترها
