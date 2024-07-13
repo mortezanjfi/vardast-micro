@@ -33,16 +33,6 @@ export async function generateMetadata(
       const sellerId = params.slug[0] as number
       const seller = await getSellerQueryFn({ id: sellerId })
 
-      const meta = {
-        title: seller.seller.name,
-        alternates: {
-          canonical: encodeURI(
-            `${process.env.NEXTAUTH_URL}/seller/${seller.seller.id}/${seller.seller.name}`
-          )
-        },
-        robots: "noindex, nofollow"
-      }
-
       return {
         title: seller.seller.name,
         alternates: {
@@ -50,7 +40,7 @@ export async function generateMetadata(
             `${process.env.NEXTAUTH_URL}/seller/${seller.seller.id}/${seller.seller.name}`
           )
         },
-        robots: "noindex,nofollow"
+        robots: { index: false, follow: false }
       }
     } catch (error) {
       console.log("generateMetadata seller")

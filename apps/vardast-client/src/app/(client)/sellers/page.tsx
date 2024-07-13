@@ -16,7 +16,7 @@ interface SellersIndexProps {
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "فروشندگان",
-    robots: "noindex, nofollow"
+    robots: { index: false, follow: false }
   }
 }
 
