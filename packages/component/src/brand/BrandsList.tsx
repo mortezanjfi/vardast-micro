@@ -11,12 +11,10 @@ import {
   Brand,
   GetAllBrandsQuery,
   IndexBrandInput,
-  SortBrandEnum,
-  useGetAllBrandsQuery
+  SortBrandEnum
 } from "../../../graphql/src/generated"
 import { setSidebar } from "../../../provider/src/LayoutProvider/use-layout"
 import { PublicContext } from "../../../provider/src/PublicProvider"
-import graphqlRequestClientWithToken from "../../../query/src/queryClients/graphqlRequestClientWithToken"
 import { getAllBrandsQueryFn } from "../../../query/src/queryFns/allBrandsQueryFns"
 import QUERY_FUNCTIONS_KEY from "../../../query/src/queryFns/queryFunctionsKey"
 import { Button } from "../../../ui/src/button"
@@ -58,8 +56,6 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
   const searchParams = useSearchParams()
 
   const [filterAttributes, setFilterAttributes] = useState<[]>([])
-
-  const allBrandsNumber = useGetAllBrandsQuery(graphqlRequestClientWithToken)
 
   const allBrandsQuery = useInfiniteQuery<GetAllBrandsQuery>(
     [
@@ -242,7 +238,7 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
       MobileHeader={MobileHeader}
       DesktopHeader={
         <ListHeader
-          total={allBrandsNumber?.data?.brands?.total}
+          total={allBrandsQuery?.data?.pages[0].brands?.total}
           listName={"brands"}
         />
       }

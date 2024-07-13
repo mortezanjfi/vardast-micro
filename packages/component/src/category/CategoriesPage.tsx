@@ -15,7 +15,7 @@ import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@vardast/ui/tabs"
 import useTranslation from "next-translate/useTranslation"
 
-import BrandsPage from "../brand/brands-page"
+import BrandsList from "../brand/BrandsList"
 import ProductList from "../product-list"
 import SearchHeader from "../search-header"
 import CategoriesList from "./CategoriesList"
@@ -84,7 +84,7 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
         onValueChange={(e) => setActiveTab(e as CATEGORY_PAGE_TABS)}
         className="flex h-full w-full flex-col bg-alpha-white"
       >
-        <TabsList className="sticky top-0 z-50 grid w-full grid-cols-4  bg-alpha-white font-medium  md:flex">
+        <TabsList className="sticky top-0 z-50 grid w-full grid-cols-4 bg-alpha-white font-medium sm:z-0 sm:border-b-0.5 md:flex">
           <TabsTrigger
             className="py-4"
             value={CATEGORY_PAGE_TABS.SUBCATEGORIES}
@@ -102,7 +102,7 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
           </TabsTrigger>
         </TabsList>
         <TabsContent
-          className="bg-alpha-50"
+          className="bg-alpha-50 sm:bg-alpha-white"
           value={CATEGORY_PAGE_TABS.SUBCATEGORIES}
         >
           {categoryQuery?.data?.category?.children.length > 0 ? (
@@ -119,20 +119,29 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
             ""
           )}
         </TabsContent>
-        <TabsContent value={CATEGORY_PAGE_TABS.ORDERS}>
-          <CategoriesPublicOrders categoryId={categoryId} />
+        <TabsContent className="sm:pt-5" value={CATEGORY_PAGE_TABS.ORDERS}>
+          <CategoriesPublicOrders
+            isMobileView={isMobileView}
+            categoryId={categoryId}
+          />
         </TabsContent>
-        <TabsContent value={CATEGORY_PAGE_TABS.BRANDS}>
-          <BrandsPage limitPage={5} args={brandsArgs} isMobileView />
+        <TabsContent className="sm:pt-5" value={CATEGORY_PAGE_TABS.BRANDS}>
+          {/* <BrandsPage
+            limitPage={5}
+            args={brandsArgs}
+            isMobileView={isMobileView}
+          /> */}
+          <BrandsList args={brandsArgs} isMobileView={isMobileView} />
         </TabsContent>
-        <TabsContent value={CATEGORY_PAGE_TABS.PRODUCTS}>
+        <TabsContent className="sm:pt-5" value={CATEGORY_PAGE_TABS.PRODUCTS}>
           <ProductList
-            isMobileView={true}
+            isMobileView={isMobileView}
             args={productArgs}
             selectedCategoryIds={[+categoryId]}
           />
         </TabsContent>
       </Tabs>
+      {/* <BrandsList args={brandsArgs} isMobileView={isMobileView} /> */}
     </div>
   )
 }
