@@ -19,7 +19,7 @@ const ProductIntroduce = ({ product }: IProductIntroduce) => {
 
   return (
     <ProductSectionContainer>
-      <h3 className="font-semibold">{product.name}</h3>
+      <h1 className="text-lg font-semibold">{product.name}</h1>
       <div className="flex justify-between">
         <Link
           className="flex-shrink-0 pt"

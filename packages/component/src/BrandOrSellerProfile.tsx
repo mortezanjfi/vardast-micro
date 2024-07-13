@@ -142,7 +142,7 @@ const BrandOrSellerProfile = ({
               </div>
               {(!isMobileView || isSellerQuery()) && (
                 <div className="flex flex-col items-center gap-y-2 pt">
-                  <p>{data.name}</p>
+                  <h1 className="text-base">{data.name}</h1>
                   {data?.addresses?.length > 0 &&
                     data.addresses[0].city.name && (
                       <p className="flex h-4 items-center gap-x-1 py-1 text-xs text-alpha-600">

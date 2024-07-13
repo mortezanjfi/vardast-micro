@@ -69,7 +69,7 @@ const BrandCard = forwardRef(
         <div className="relative z-20 flex items-center gap-4  bg-opacity-60  pt-4 text-center font-semibold">
           <CardAvatar url={brand?.logoFile?.presignedUrl?.url ?? ""} />
           <div className="flex flex-col items-start gap-2">
-            <span>{brand?.name}</span>
+            <h1 className="te text-base font-semibold">{brand?.name}</h1>
 
             <div className="flex divide-x divide-x-reverse divide-alpha-400 text-sm">
               {brand?.sum > 0 && (

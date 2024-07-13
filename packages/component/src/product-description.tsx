@@ -41,14 +41,14 @@ const ProductDescription = ({ description }: ProductDescriptionProps) => {
       }
     >
       <div className="flex flex-col items-start gap-7">
-        <p
+        <h3
           ref={descriptionRef}
-          className={`w-full text-justify text-alpha-500 ${
+          className={`w-full text-justify text-sm  text-alpha-500 ${
             !descriptionMoreFlag ? "line-clamp-3" : ""
           }`}
         >
           {description}
-        </p>
+        </h3>
       </div>
     </ProductSectionContainer>
   )
