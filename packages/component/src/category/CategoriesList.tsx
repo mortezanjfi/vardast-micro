@@ -76,7 +76,7 @@ const CategoriesList = ({
                     setSelectedItemId(category.id)
                   }}
                   href={
-                    isMobileView && !categoryId
+                    category.childrenCount > 0
                       ? `/category/${category.id}`
                       : `/products/${category.id}/${category.title}`
                   }

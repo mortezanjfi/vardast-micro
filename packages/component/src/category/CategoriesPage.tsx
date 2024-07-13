@@ -7,7 +7,8 @@ import {
   GetAllBlogsQuery,
   GetCategoryQuery,
   IndexBrandInput,
-  IndexProductInput
+  IndexProductInput,
+  useGetPublicOrdersQuery
 } from "@vardast/graphql/generated"
 import { getCategoryQueryFn } from "@vardast/query/queryFns/categoryQueryFns"
 import { getAllBlogsQueryFn } from "@vardast/query/queryFns/getAllBlogsQueryFns"
@@ -15,6 +16,7 @@ import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@vardast/ui/tabs"
 import useTranslation from "next-translate/useTranslation"
 
+import graphqlRequestClientWithToken from "../../../query/src/queryClients/graphqlRequestClientWithToken"
 import BrandsList from "../brand/BrandsList"
 import ProductList from "../product-list"
 import SearchHeader from "../search-header"
@@ -34,6 +36,7 @@ interface CategoriesPageProps {
 
 const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
   const { t } = useTranslation()
+  const [showBrand, setShowBrand] = useState<boolean>(true)
   const [more] = useState(false)
   const searchParams = useSearchParams()
   const [activeTab, setActiveTab] = useState<CATEGORY_PAGE_TABS>(
@@ -45,6 +48,16 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
     queryKey: [QUERY_FUNCTIONS_KEY.CATEGORY_QUERY_KEY, { id: categoryId }],
     queryFn: () => getCategoryQueryFn(+categoryId)
   })
+  //public preOrders------------>
+  const publicPreOrders = useGetPublicOrdersQuery(
+    graphqlRequestClientWithToken,
+    {
+      indexPublicOrderInput: {
+        categoryId: +categoryId,
+        number: 15
+      }
+    }
+  )
 
   //blog---------------->
   const getAllBlogsQuery = useQuery<GetAllBlogsQuery>(
@@ -91,12 +104,16 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
           >
             {t(`common:${CATEGORY_PAGE_TABS.SUBCATEGORIES}`)}
           </TabsTrigger>
-          <TabsTrigger className="py-4" value={CATEGORY_PAGE_TABS.ORDERS}>
-            {t(`common:${CATEGORY_PAGE_TABS.ORDERS}`)}
-          </TabsTrigger>
-          <TabsTrigger className="py-4" value={CATEGORY_PAGE_TABS.BRANDS}>
-            {t(`common:${CATEGORY_PAGE_TABS.BRANDS}`)}
-          </TabsTrigger>
+          {publicPreOrders?.data?.publicOrders?.length > 0 && (
+            <TabsTrigger className="py-4" value={CATEGORY_PAGE_TABS.ORDERS}>
+              {t(`common:${CATEGORY_PAGE_TABS.ORDERS}`)}
+            </TabsTrigger>
+          )}
+          {showBrand && (
+            <TabsTrigger className="py-4" value={CATEGORY_PAGE_TABS.BRANDS}>
+              {t(`common:${CATEGORY_PAGE_TABS.BRANDS}`)}
+            </TabsTrigger>
+          )}
           <TabsTrigger className="py-4" value={CATEGORY_PAGE_TABS.PRODUCTS}>
             {t(`common:${CATEGORY_PAGE_TABS.PRODUCTS}`)}
           </TabsTrigger>
@@ -121,17 +138,17 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
         </TabsContent>
         <TabsContent className="sm:pt-5" value={CATEGORY_PAGE_TABS.ORDERS}>
           <CategoriesPublicOrders
+            publicPreOrders={publicPreOrders}
             isMobileView={isMobileView}
             categoryId={categoryId}
           />
         </TabsContent>
         <TabsContent className="sm:pt-5" value={CATEGORY_PAGE_TABS.BRANDS}>
-          {/* <BrandsPage
-            limitPage={5}
+          <BrandsList
+            setShowBrand={setShowBrand}
             args={brandsArgs}
             isMobileView={isMobileView}
-          /> */}
-          <BrandsList args={brandsArgs} isMobileView={isMobileView} />
+          />
         </TabsContent>
         <TabsContent className="sm:pt-5" value={CATEGORY_PAGE_TABS.PRODUCTS}>
           <ProductList

@@ -1,4 +1,7 @@
+import { UseQueryResult } from "@tanstack/react-query"
+
 import {
+  GetPublicOrdersQuery,
   PreOrderDto,
   useGetPublicOrdersQuery
 } from "../../../graphql/src/generated"
@@ -8,19 +11,17 @@ import OrderPreviewCard, {
   OrderPreviewCardSkeleton
 } from "../order/OrderPreviewCard"
 
-type Props = { isMobileView: boolean; categoryId: string | number }
+type Props = {
+  publicPreOrders: UseQueryResult<GetPublicOrdersQuery, unknown>
+  isMobileView: boolean
+  categoryId: string | number
+}
 
-function CategoriesPublicOrders({ isMobileView, categoryId }: Props) {
-  const publicPreOrders = useGetPublicOrdersQuery(
-    graphqlRequestClientWithToken,
-    {
-      indexPublicOrderInput: {
-        categoryId: +categoryId,
-        number: 15
-      }
-    }
-  )
-
+function CategoriesPublicOrders({
+  publicPreOrders,
+  isMobileView,
+  categoryId
+}: Props) {
   return (
     <div className="flex flex-col divide-y px-6 sm:!px-0">
       {!isMobileView && (
