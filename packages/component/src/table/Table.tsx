@@ -24,7 +24,7 @@ import { parseAsInteger, useQueryStates } from "next-usequerystate"
 import { useForm } from "react-hook-form"
 import { TypeOf, ZodSchema } from "zod"
 
-import Card from "../Card"
+import CardContainer from "../desktop/CardContainer"
 import Loading from "../Loading"
 import TablePagination from "./TablePagination"
 import { ITableProps } from "./type"
@@ -33,6 +33,7 @@ const Table = <
   T extends object,
   TSchema extends ZodSchema<any> = ZodSchema<any>
 >({
+  name,
   columns,
   onRow,
   paginable,
@@ -40,6 +41,7 @@ const Table = <
   fetch,
   handleResponse,
   getTableState,
+  container,
   filters
 }: ITableProps<T, TSchema>) => {
   const [pagination, setPagination] = useQueryStates({
@@ -60,7 +62,7 @@ const Table = <
   )
 
   const { data, isLoading, isFetching } = useQuery<ApiResponseType<T>>({
-    queryKey: ["table", fetchArgs],
+    queryKey: [name, "table", fetchArgs],
     queryFn: async () => {
       const response = await fetch.api(
         fetchArgs,
@@ -182,7 +184,10 @@ const Table = <
               <Loading />
             </div>
           )}
-          <Card className="min-h-250 overflow-x-auto p-0">
+          <CardContainer
+            {...container}
+            className="min-h-250 overflow-x-auto py-6"
+          >
             <table className="table-bordered table">
               <thead>
                 {table?.getHeaderGroups()?.map((headerGroup) => (
@@ -255,7 +260,7 @@ const Table = <
                 })}
               </tbody>
             </table>
-          </Card>
+          </CardContainer>
           {paginable && (
             <TablePagination table={table} total={serializedData?.total} />
           )}

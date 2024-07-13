@@ -3,7 +3,7 @@ import clsx from "clsx"
 
 import Card, { cardButton } from "../Card"
 
-type Props = {
+export type CardContainerProps = {
   titleClass?: string
   button?: cardButton
   className?: string
@@ -17,7 +17,7 @@ function CardContainer({
   className,
   children,
   title
-}: Props) {
+}: CardContainerProps) {
   return (
     <Card
       titleClass={clsx(

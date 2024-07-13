@@ -45,6 +45,7 @@ const OrdersPage = (_: OrdersPageProps) => {
 
   const tableProps: ITableProps<PreOrder, typeof OrdersFilterSchema> = useMemo(
     () => ({
+      name: "orders",
       paginable: true,
       fetch: {
         api: getAllPreOrdersQueryFn,

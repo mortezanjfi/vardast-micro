@@ -7,15 +7,19 @@ import { ApiArgsType, ApiResponseType } from "@vardast/query/type"
 import { UseFormReturn } from "react-hook-form"
 import { TypeOf, ZodType } from "zod"
 
+import { CardContainerProps } from "../desktop/CardContainer"
+
 export type OnRowFunctionType = (row: Row<T>) => void
 
 export interface ITableProps<
   T,
   TSchema extends ZodType<any, any> | undefined = undefined
 > {
+  name: string
   columns: Array<ColumnDef<T>>
   selectable?: boolean
   paginable?: boolean
+  container?: Omit<CardContainerProps, "children">
   onRow?: {
     onClick?: (row: Row<T>) => void
     url?: (row: Row<T>) => string | string

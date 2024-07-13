@@ -42,6 +42,10 @@ const TablePagination = <T,>({ table, total }: Props<T>) => {
           <p>برو به صفحه:</p>
           <Input
             className="w-16"
+            disabled={
+              digitsEnToFa(getState().pagination.pageIndex + 1) ===
+              digitsEnToFa(getPageCount().toLocaleString())
+            }
             value={digitsEnToFa(getState().pagination.pageIndex + 1)}
             onChange={(e) => {
               const page = e.target.value ? Number(e.target.value) - 1 : 0
@@ -131,7 +135,7 @@ const TablePagination = <T,>({ table, total }: Props<T>) => {
             <Command>
               <CommandGroup>
                 {pageSizeOptions
-                  .filter((item) => +item.value <= total)
+                  .filter((item, index) => +item.value <= total || index < 2)
                   .map((option) => (
                     <CommandItem
                       value={option.value}

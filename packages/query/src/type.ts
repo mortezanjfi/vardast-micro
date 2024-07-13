@@ -19,5 +19,5 @@ export type ApiResponseType<T> = {
 
 export type TableFetchApiFunctionType = <T, K>(
   args: ApiArgsType<K>,
-  accessToken: string
+  accessToken?: string
 ) => Promise<ApiResponseType<T>>
