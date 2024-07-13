@@ -41,7 +41,7 @@ const TablePagination = <T,>({ table, total }: Props<T>) => {
         <div className="flex items-center gap">
           <p>برو به صفحه:</p>
           <Input
-            className="w-12"
+            className="w-16"
             value={digitsEnToFa(getState().pagination.pageIndex + 1)}
             onChange={(e) => {
               const page = e.target.value ? Number(e.target.value) - 1 : 0

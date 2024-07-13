@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQuery } from "@tanstack/react-query"
@@ -16,6 +18,8 @@ import {
 } from "@vardast/query/type"
 import { Checkbox } from "@vardast/ui/checkbox"
 import { Form } from "@vardast/ui/form"
+import { clsx } from "clsx"
+import { useSession } from "next-auth/react"
 import { parseAsInteger, useQueryStates } from "next-usequerystate"
 import { useForm } from "react-hook-form"
 import { TypeOf, ZodSchema } from "zod"
@@ -30,12 +34,12 @@ const Table = <
   TSchema extends ZodSchema<any> = ZodSchema<any>
 >({
   columns,
+  onRow,
   paginable,
   selectable,
-  fetchApiData,
+  fetch,
   handleResponse,
   getTableState,
-  accessToken = "",
   filters
 }: ITableProps<T, TSchema>) => {
   const [pagination, setPagination] = useQueryStates({
@@ -44,6 +48,7 @@ const Table = <
   })
   const [filter, setFilter] = useState<FilterFieldsType | undefined>(undefined)
   const [rowSelection, setRowSelection] = useState({})
+  const { data: session } = useSession()
 
   const fetchArgs: ApiArgsType<any> = useMemo(
     () => ({
@@ -57,7 +62,10 @@ const Table = <
   const { data, isLoading, isFetching } = useQuery<ApiResponseType<T>>({
     queryKey: ["table", fetchArgs],
     queryFn: async () => {
-      const response = await fetchApiData(fetchArgs, accessToken)
+      const response = await fetch.api(
+        fetchArgs,
+        fetch?.accessToken && session?.accessToken
+      )
       setRowSelection({})
       if (handleResponse) {
         handleResponse(response)
@@ -65,7 +73,7 @@ const Table = <
       return response
     },
     keepPreviousData: true,
-    enabled: accessToken === undefined ? true : !!accessToken
+    enabled: fetch?.accessToken ? !!session?.accessToken : true
   })
 
   const serializedData = useMemo(
@@ -168,13 +176,13 @@ const Table = <
         </Form>
       )}
       {data ? (
-        <>
-          <Card className="min-h-250 relative overflow-x-auto p-0">
-            {isFetching && (
-              <div className="z-docked absolute left-0 top-0 flex h-full w-full items-center justify-center bg-alpha-50 bg-opacity-80">
-                <Loading />
-              </div>
-            )}
+        <div className="relative flex flex-col gap-y">
+          {isFetching && (
+            <div className="absolute inset-0 z-[99] flex h-full w-full items-center justify-center bg-alpha-50 bg-opacity-80">
+              <Loading />
+            </div>
+          )}
+          <Card className="min-h-250 overflow-x-auto p-0">
             <table className="table-bordered table">
               <thead>
                 {table?.getHeaderGroups()?.map((headerGroup) => (
@@ -199,10 +207,42 @@ const Table = <
               <tbody>
                 {table?.getRowModel()?.rows.map((row) => {
                   return (
-                    <tr key={row.id}>
+                    <tr
+                      key={row.id}
+                      className={clsx(row.getIsSelected() && "!bg-primary-50")}
+                    >
                       {row.getVisibleCells()?.map((cell) => {
+                        const clickable =
+                          onRow && cell.column.id !== "selection"
                         return (
-                          <td key={cell.id}>
+                          <td
+                            onClick={() => {
+                              if (clickable && onRow?.onClick) {
+                                onRow.onClick(row)
+                              }
+                            }}
+                            className={clsx(
+                              clickable && "relative cursor-pointer"
+                            )}
+                            key={cell.id}
+                          >
+                            {clickable && onRow?.url && (
+                              <a
+                                className={clsx(
+                                  "absolute inset-0 h-full w-full cursor-pointer"
+                                )}
+                                href={
+                                  typeof onRow.url === "string"
+                                    ? onRow.url
+                                    : onRow.url(row)
+                                }
+                                aria-label={
+                                  typeof onRow.url === "string"
+                                    ? onRow.url
+                                    : onRow.url(row)
+                                }
+                              ></a>
+                            )}
                             {flexRender(
                               cell.column.columnDef.cell,
                               cell.getContext()
@@ -219,7 +259,7 @@ const Table = <
           {paginable && (
             <TablePagination table={table} total={serializedData?.total} />
           )}
-        </>
+        </div>
       ) : isLoading ? (
         <Loading />
       ) : (

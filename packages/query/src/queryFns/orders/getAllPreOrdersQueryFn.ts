@@ -1,15 +1,12 @@
-import {
-  GetAllPreOrdersQueryDocument,
-  IndexPreOrderInput
-} from "@vardast/graphql/generated"
+import { GetAllPreOrdersQueryDocument } from "@vardast/graphql/generated"
 import request from "graphql-request"
 
-import { ApiArgsType, ApiResponseType } from "../../type"
+import { TableFetchApiFunctionType } from "../../type"
 
-export const getAllPreOrdersQueryFn = async <T>(
-  args: ApiArgsType<IndexPreOrderInput>,
-  accessToken: string
-): Promise<ApiResponseType<T>> => {
+export const getAllPreOrdersQueryFn: TableFetchApiFunctionType = async (
+  args,
+  accessToken
+) => {
   return await request(
     process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT as string,
     GetAllPreOrdersQueryDocument,

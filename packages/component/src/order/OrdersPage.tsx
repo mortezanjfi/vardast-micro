@@ -8,7 +8,6 @@ import {
   PreOrder
 } from "@vardast/graphql/generated"
 import { getAllPreOrdersQueryFn } from "@vardast/query/queryFns/orders/getAllPreOrdersQueryFn"
-import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 import { DateObject } from "react-multi-date-picker"
 
@@ -43,20 +42,17 @@ export const PaymentMethodEnumFa = {
 
 const OrdersPage = (_: OrdersPageProps) => {
   const { t } = useTranslation()
-  const { data: session } = useSession()
 
   const tableProps: ITableProps<PreOrder, typeof OrdersFilterSchema> = useMemo(
     () => ({
-      selectable: true,
       paginable: true,
-      getTableState: (getTableState) => {
-        console.log({ getTableState })
+      fetch: {
+        api: getAllPreOrdersQueryFn,
+        accessToken: true
       },
-      handleResponse: (handleResponse) => {
-        console.log({ handleResponse })
+      onRow: {
+        url: (row) => `/profile/orders/${row.original.id}`
       },
-      accessToken: session?.accessToken,
-      fetchApiData: getAllPreOrdersQueryFn,
       filters: {
         schema: OrdersFilterSchema,
         Component: OrdersFilter
@@ -131,7 +127,7 @@ const OrdersPage = (_: OrdersPageProps) => {
         }
       ]
     }),
-    [session]
+    []
   )
 
   return (

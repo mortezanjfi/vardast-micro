@@ -139,7 +139,7 @@ export default function withLayout<T>(
                   transition={{ type: "linear" }} // Set the transition to linear
                   className={clsx(
                     "app-content desktop",
-                    layout?.desktop?.sidebar && "md:pr-6"
+                    layout?.desktop?.sidebar ? "pr-6" : "pr-0.5"
                   )}
                 >
                   {layout?.desktop?.main?.breadcrumb && (
