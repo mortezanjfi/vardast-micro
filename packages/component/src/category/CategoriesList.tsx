@@ -1,12 +1,17 @@
 "use client"
 
-import { GetCategoryQuery } from "@vardast/graphql/generated"
+import { UseQueryResult } from "@tanstack/react-query"
+import { GetAllBlogsQuery, GetCategoryQuery } from "@vardast/graphql/generated"
 
+import { setSidebar } from "../../../provider/src/LayoutProvider/use-layout"
+import FiltersSidebarContainer from "../filters-sidebar-container"
 import CategoryListContainer from "./CategoryListContainer"
 import CategoryListItem from "./CategoryListItem"
 import CategorySkeleton from "./CategorySkeleton"
 
 interface CategoriesListProps {
+  getAllBlogsQuery?: UseQueryResult<GetAllBlogsQuery>
+  categoryId?: string
   isMobileView?: boolean
   isLoading: boolean
   isSubcategory?: boolean
@@ -16,6 +21,8 @@ interface CategoriesListProps {
 }
 
 const CategoriesList = ({
+  categoryId,
+  getAllBlogsQuery,
   isMobileView,
   isLoading,
   description,
@@ -31,8 +38,29 @@ const CategoriesList = ({
     )
   }
 
+  const DesktopSidebar = (
+    <FiltersSidebarContainer>
+      <div className="flex flex-col gap-9">
+        <div className=" flex items-center border-b-2 border-b-alpha-200 py-4">
+          <strong>فیلترها</strong>
+          {/* {filterAttributes.length > 0 && (
+            <Button
+              size="small"
+              noStyle
+              className="ms-auto text-sm text-red-500"
+              onClick={() => setFilterAttributes([])}
+            >
+              حذف همه فیلترها
+            </Button>
+          )} */}
+        </div>
+      </div>
+    </FiltersSidebarContainer>
+  )
+  setSidebar(DesktopSidebar)
   return (
     <CategoryListContainer
+      getAllBlogsQuery={getAllBlogsQuery}
       isSubcategory={isSubcategory}
       description={description}
       href={href}
@@ -48,11 +76,9 @@ const CategoriesList = ({
                     setSelectedItemId(category.id)
                   }}
                   href={
-                    isMobileView && category.childrenCount > 0
-                      ? `/category/${category.id}/${category.title}`
-                      : isMobileView && category.childrenCount! > 0
-                        ? `/products/${category.id}/${category.title}`
-                        : `/products/${category.id}/${category.title}`
+                    isMobileView && !categoryId
+                      ? `/category/${category.id}`
+                      : `/products/${category.id}/${category.title}`
                   }
                   selectedItemId={selectedItemId}
                   key={category.id}

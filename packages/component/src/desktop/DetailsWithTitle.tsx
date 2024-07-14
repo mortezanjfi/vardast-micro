@@ -1,6 +1,5 @@
 "use client"
 
-import { ListBulletIcon } from "@heroicons/react/24/outline"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import clsx from "clsx"
 
@@ -20,7 +19,7 @@ export const DetailsWithTitle = ({
   return (
     <div className={clsx("flex items-center gap-2 py-1", className)}>
       <div className="flex items-center gap-2">
-        <ListBulletIcon className="text-alpha-500" width={6} height={6} />
+        <div className="h-1 w-1 rounded-full bg-alpha-500" />
         <span className="whitespace-nowrap text-alpha-500">{title}:</span>
       </div>
       <div className="flex gap-1">

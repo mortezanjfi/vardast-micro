@@ -39,7 +39,8 @@ export async function generateMetadata(
           canonical: encodeURI(
             `${process.env.NEXTAUTH_URL}/seller/${seller.seller.id}/${seller.seller.name}`
           )
-        }
+        },
+        robots: { index: false, follow: false }
       }
     } catch (error) {
       console.log("generateMetadata seller")

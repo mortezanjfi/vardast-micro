@@ -24,6 +24,8 @@ interface BrandIndexProps {
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
+const brandPageTitle = process.env.NEXT_PUBLIC_BRAND_TITLE
+
 export async function generateMetadata(
   { params }: BrandIndexProps
   // parent: ResolvingMetadata
@@ -34,7 +36,7 @@ export async function generateMetadata(
       const brand = await getBrandQueryFn({ id: brandId })
 
       return {
-        title: brand.brand.name,
+        title: `${brandPageTitle} ${brand.brand.name}`,
         alternates: {
           canonical: encodeURI(
             `${process.env.NEXTAUTH_URL}/brand/${brand.brand.id}/${brand.brand.name}`

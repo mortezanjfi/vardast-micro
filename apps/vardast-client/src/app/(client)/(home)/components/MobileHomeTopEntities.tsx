@@ -1,7 +1,9 @@
 "use client"
 
 import { useState } from "react"
+import BrandCard from "@vardast/component/brand/BrandCard"
 import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
+import MobileHomeSection from "@vardast/component/home/MobileHomeSection"
 import SwiperNavigationButton, {
   SwiperButtonAction,
   SwiperButtonsDirection
@@ -11,9 +13,6 @@ import clsx from "clsx"
 import { useInView } from "react-intersection-observer"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Swiper as SwiperClass } from "swiper/types"
-
-import BrandCard from "@/app/(client)/(home)/components/BrandCard"
-import MobileHomeSection from "@/app/(client)/(home)/components/MobileHomeSection"
 
 type Props = {
   query?: GetAllBrandsCountQuery["brands"]["data"]
@@ -61,17 +60,17 @@ const MobileHomeTopEntities = ({
           slidesPerView={"auto"}
           spaceBetween={15}
           // className="h-full pb-12 sm:px-5 sm:py-8 md:px-0"
-          className="px-4 pb-12 sm:pb-8 sm:pt-8 md:px-0"
+          className="px-4 pb-8 sm:!pb-4 sm:pt-8 md:px-0"
         >
           {query?.map((brand, index) => (
             <SwiperSlide
               key={brand.id}
               className={clsx(
-                "overflow-hidden rounded-2xl border bg-alpha-white shadow-lg",
-                isMobileView ? "w-[calc(100vw-45px)]" : "w-[350px]",
-                selectedItemId === brand?.id
-                  ? "border-2 border-primary"
-                  : "border-alpha-50"
+                "overflow-hidden rounded-2xl bg-alpha-white",
+                isMobileView ? "w-[calc(100vw-45px)]" : "w-[350px]"
+                // selectedItemId === brand?.id
+                //   ? "border-2 border-primary"
+                //   : "border-alpha-50"
               )}
             >
               <div

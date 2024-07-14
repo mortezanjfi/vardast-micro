@@ -16,7 +16,7 @@ import { useInView } from "react-intersection-observer"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Swiper as SwiperClass } from "swiper/types"
 
-import MobileHomeSection from "@/app/(client)/(home)/components/MobileHomeSection"
+import MobileHomeSection from "@vardast/component/home/MobileHomeSection"
 
 type Props = {
   allSellersCount: UseQueryResult<GetAllSellersCountQuery>

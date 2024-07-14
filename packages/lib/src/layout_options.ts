@@ -64,6 +64,7 @@ const _category: ILayoutProps = {
 
 const _category_item: ILayoutProps = {
   desktop: {
+    sidebar: {},
     footer: {},
     header: {
       button: {

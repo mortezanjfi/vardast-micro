@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { UseQueryResult } from "@tanstack/react-query"
 import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
+import MobileHomeSection from "@vardast/component/home/MobileHomeSection"
 import ProductCard, {
   ProductCardSkeleton
 } from "@vardast/component/product-card"
@@ -16,8 +17,6 @@ import clsx from "clsx"
 import { useInView } from "react-intersection-observer"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Swiper as SwiperClass } from "swiper/types"
-
-import MobileHomeSection from "@/app/(client)/(home)/components/MobileHomeSection"
 
 const MobileHomeNewestProducts = ({
   isMobileView,
@@ -81,7 +80,7 @@ const MobileHomeNewestProducts = ({
             centeredSlides={centeredSlides ?? true}
             slidesPerView={"auto"}
             // spaceBetween={16}
-            className="h-full w-full pb-12 sm:px-5 sm:py-8 md:px-0"
+            className="h-full w-full pb-12 sm:p-4 sm:px-5 sm:pt-8 md:px-0"
           >
             {query?.data?.products?.data?.map((product, index) => (
               <SwiperSlide key={product.id} className={clsx("w-72")}>

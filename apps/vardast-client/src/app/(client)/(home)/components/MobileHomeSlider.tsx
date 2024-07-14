@@ -96,6 +96,7 @@ const MobileHomeSlider = ({
           <div className={clsx("animated-card", sliderClass)}></div>
         ) : (
           <Swiper
+            key="home-banner-slider"
             ref={sliderRef}
             loop
             centeredSlides

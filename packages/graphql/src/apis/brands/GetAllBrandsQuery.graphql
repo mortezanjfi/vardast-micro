@@ -14,6 +14,8 @@ query GetAllBrands($indexBrandInput: IndexBrandInput) {
       sum
       status
       views
+      sellersCount
+      categoriesCount
       addresses {
         city {
           name
