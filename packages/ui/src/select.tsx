@@ -9,6 +9,8 @@ const Select = SelectPrimitive.Root
 
 const SelectGroup = SelectPrimitive.Group
 
+const SelectPortal = SelectPrimitive.Portal
+
 const SelectValue = SelectPrimitive.Value
 
 const SelectTrigger = forwardRef<
@@ -110,6 +112,7 @@ export {
   SelectGroup,
   SelectItem,
   SelectLabel,
+  SelectPortal,
   SelectSeparator,
   SelectTrigger,
   SelectValue

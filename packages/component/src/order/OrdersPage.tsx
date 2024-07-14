@@ -5,25 +5,27 @@ import { digitsEnToFa } from "@persian-tools/persian-tools"
 import {
   OrderOfferStatuses,
   PaymentMethodEnum,
-  PreOrder
+  PreOrder,
+  PreOrderStates
 } from "@vardast/graphql/generated"
 import { getAllPreOrdersQueryFn } from "@vardast/query/queryFns/orders/getAllPreOrdersQueryFn"
+import { getEnumValues } from "@vardast/util/getEnumValues"
 import useTranslation from "next-translate/useTranslation"
 import { DateObject } from "react-multi-date-picker"
+import { z } from "zod"
 
 import { PreOrderStatesFa } from "../desktop/OrderCart"
 import Table from "../table/Table"
-import { ITableProps } from "../table/type"
-import {
-  OrdersFilter,
-  OrdersFilterSchema,
-  OrdersFilterType
-} from "./OrdersFilter"
+import { FilterComponentTypeEnum, ITableProps } from "../table/type"
 
 type OrdersPageProps = {
   isMobileView?: boolean
-  filters?: OrdersFilterType
 }
+
+const OrdersFilterSchema = z.object({
+  status: z.string().optional(),
+  customerName: z.string().optional()
+})
 
 export const OrderOfferStatusesFa = {
   [OrderOfferStatuses.Closed]: { className: "tag-success", name_fa: "بسته شده" }
@@ -39,6 +41,8 @@ export const PaymentMethodEnumFa = {
     name_fa: "غیر نقدی"
   }
 }
+
+const orderStatus = [...getEnumValues(PreOrderStates)]
 
 const OrdersPage = (_: OrdersPageProps) => {
   const { t } = useTranslation()
@@ -56,7 +60,22 @@ const OrdersPage = (_: OrdersPageProps) => {
       },
       filters: {
         schema: OrdersFilterSchema,
-        Component: OrdersFilter
+        options: [
+          {
+            type: FilterComponentTypeEnum.INPUT,
+            name: "customerName",
+            title: t("common:purchaser-name")
+          },
+          {
+            type: FilterComponentTypeEnum.SELECT,
+            name: "status",
+            title: t("common:status"),
+            options: orderStatus.map((item) => ({
+              key: PreOrderStatesFa[item as PreOrderStates]?.name_fa_admin,
+              value: item.toUpperCase()
+            }))
+          }
+        ]
       },
       columns: [
         {

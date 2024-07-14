@@ -26,6 +26,7 @@ import { TypeOf, ZodSchema } from "zod"
 
 import CardContainer from "../desktop/CardContainer"
 import Loading from "../Loading"
+import Filter from "./Filter"
 import TablePagination from "./TablePagination"
 import { ITableProps } from "./type"
 
@@ -173,7 +174,7 @@ const Table = <
             }}
             noValidate
           >
-            <filters.Component form={form} />
+            <Filter form={form} filters={filters} />
           </form>
         </Form>
       )}

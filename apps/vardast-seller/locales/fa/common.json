@@ -366,5 +366,6 @@
   "applicant_name": "درخواست کننده",
   "open_orders": "سفارشات در جریان",
   "closed_orders": "سفارشات خریداری شده",
-  "total_orders": "کل سفارشات"
+  "total_orders": "کل سفارشات",
+  "entity_enter_placeholder": "{{ entity }} را وارد کنید"
 }

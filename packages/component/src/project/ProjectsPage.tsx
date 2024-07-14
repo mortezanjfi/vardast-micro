@@ -5,17 +5,23 @@ import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { Project, UserTypeProject } from "@vardast/graphql/generated"
 import { getAllProjectsQueryFn } from "@vardast/query/queryFns/orders/getAllProjectsQueryFn"
 import useTranslation from "next-translate/useTranslation"
+import { z } from "zod"
 
 import Table from "../table/Table"
-import { ITableProps } from "../table/type"
+import { FilterComponentTypeEnum, ITableProps } from "../table/type"
 import AddProjectModal from "./AddProjectModal"
-import { ProjectsFilter, ProjectsFilterSchema } from "./ProjectsFilter"
 
 type ProjectsPageProps = {
   isAdmin?: boolean
   title: string
   isMobileView: boolean
 }
+
+const ProjectsFilterSchema = z.object({
+  nameEmployer: z.string().nullish(),
+  nameManager: z.string().nullish(),
+  nameOrUuid: z.string().nullish()
+})
 
 const ProjectsPage = ({ isMobileView, isAdmin }: ProjectsPageProps) => {
   const [addProjectOpen, setAddProjectOpen] = useState<boolean>(false)
@@ -42,7 +48,23 @@ const ProjectsPage = ({ isMobileView, isAdmin }: ProjectsPageProps) => {
       },
       filters: {
         schema: ProjectsFilterSchema,
-        Component: ProjectsFilter
+        options: [
+          {
+            type: FilterComponentTypeEnum.INPUT,
+            name: "nameOrUuid",
+            title: t("common:entity_name", { entity: t("common:project") })
+          },
+          {
+            type: FilterComponentTypeEnum.INPUT,
+            name: "nameManager",
+            title: t("common:project-manager")
+          },
+          {
+            type: FilterComponentTypeEnum.INPUT,
+            name: "nameEmployer",
+            title: t("common:entity_name", { entity: t("common:users") })
+          }
+        ]
       },
       columns: [
         {
