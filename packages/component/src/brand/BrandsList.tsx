@@ -1,12 +1,6 @@
 "use client"
 
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState
-} from "react"
+import { useContext, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useSetAtom } from "jotai"
@@ -38,7 +32,6 @@ import { checkLimitPageByCondition } from "../product-list"
 import BrandSortFilter from "./BrandSortFilter"
 
 type BrandsListProps = {
-  setShowBrand?: Dispatch<SetStateAction<boolean>>
   limitPage?: number
   args: IndexBrandInput
   isMobileView: boolean
@@ -48,12 +41,7 @@ type BrandsListProps = {
   isSellerPanel?: boolean
 }
 
-const BrandsList = ({
-  setShowBrand,
-  limitPage,
-  args,
-  isMobileView
-}: BrandsListProps) => {
+const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
   const { sortFilterVisibilityAtom, filtersVisibilityAtom } =
     useContext(PublicContext)
 
@@ -101,12 +89,6 @@ const BrandsList = ({
       }
     }
   )
-
-  useEffect(() => {
-    if (setShowBrand && allBrandsQuery?.data?.pages[0]?.brands?.total === 0) {
-      setShowBrand(false)
-    }
-  }, [allBrandsQuery])
 
   // const DesktopHeader = (
   //   <div className="flex items-center justify-between md:pb-8">

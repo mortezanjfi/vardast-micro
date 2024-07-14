@@ -97,7 +97,7 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
         onValueChange={(e) => setActiveTab(e as CATEGORY_PAGE_TABS)}
         className="flex h-full w-full flex-col bg-alpha-white"
       >
-        <TabsList className="sticky top-0 z-50 grid w-full grid-cols-4 bg-alpha-white font-medium sm:z-0 sm:border-b-0.5 md:flex">
+        <TabsList className="sticky top-0 z-50 grid w-full grid-cols-4 bg-alpha-white font-medium sm:z-0  md:flex">
           <TabsTrigger
             className="py-4"
             value={CATEGORY_PAGE_TABS.SUBCATEGORIES}
@@ -109,11 +109,9 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
               {t(`common:${CATEGORY_PAGE_TABS.ORDERS}`)}
             </TabsTrigger>
           )}
-          {showBrand && (
-            <TabsTrigger className="py-4" value={CATEGORY_PAGE_TABS.BRANDS}>
-              {t(`common:${CATEGORY_PAGE_TABS.BRANDS}`)}
-            </TabsTrigger>
-          )}
+          <TabsTrigger className="py-4" value={CATEGORY_PAGE_TABS.BRANDS}>
+            {t(`common:${CATEGORY_PAGE_TABS.BRANDS}`)}
+          </TabsTrigger>
           <TabsTrigger className="py-4" value={CATEGORY_PAGE_TABS.PRODUCTS}>
             {t(`common:${CATEGORY_PAGE_TABS.PRODUCTS}`)}
           </TabsTrigger>
@@ -144,11 +142,7 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
           />
         </TabsContent>
         <TabsContent className="sm:pt-5" value={CATEGORY_PAGE_TABS.BRANDS}>
-          <BrandsList
-            setShowBrand={setShowBrand}
-            args={brandsArgs}
-            isMobileView={isMobileView}
-          />
+          <BrandsList args={brandsArgs} isMobileView={isMobileView} />
         </TabsContent>
         <TabsContent className="sm:pt-5" value={CATEGORY_PAGE_TABS.PRODUCTS}>
           <ProductList

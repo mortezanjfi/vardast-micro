@@ -1,6 +1,6 @@
 "use client"
 
-import React, { ReactElement, useState } from "react"
+import React, { ReactElement, useEffect, useRef, useState } from "react"
 import { UseQueryResult } from "@tanstack/react-query"
 import { clsx } from "clsx"
 
@@ -23,12 +23,23 @@ const CategoryListContainer: React.FC<ICategoryListContainer> = ({
   getAllBlogsQuery,
   isSubcategory,
   description,
-  href,
   children
 }) => {
   const [more, setMore] = useState(false)
   const [selectedItemId, setSelectedItemId] =
     useState<ICategoryListLoader>(null)
+  const [isOverflowing, setIsOverflowing] = useState(false)
+  const descriptionRef = useRef<HTMLDivElement>(null)
+
+  //check if the description has more than 2 lines------>
+  useEffect(() => {
+    if (descriptionRef.current) {
+      const element = descriptionRef.current
+      const isOverflowing = element.scrollHeight > element.clientHeight
+      setIsOverflowing(isOverflowing)
+    }
+  }, [description])
+
   return (
     <>
       <ul
@@ -51,22 +62,27 @@ const CategoryListContainer: React.FC<ICategoryListContainer> = ({
       {description && (
         <>
           <div className="flex flex-col gap-y px-6 py-8 sm:border-t-2">
-            <h4 className=" text-alpha-500">معرفی</h4>
-            <div className={`${more ? "" : "line-clamp-2"}`}>
+            <h4 className="text-alpha-500">معرفی</h4>
+            <div
+              ref={descriptionRef}
+              className={`${more ? "" : "line-clamp-2"}`}
+            >
               {description.split("\n\n").map((paragraph, index) => (
                 <p key={index} className="text-justify text-sm leading-6">
                   {paragraph}
                 </p>
               ))}
             </div>
-            <span
-              className="text-left text-primary"
-              onClick={() => {
-                setMore(!more)
-              }}
-            >
-              {more ? "کمتر" : "بیشتر"}
-            </span>
+            {isOverflowing && (
+              <span
+                className="cursor-pointer text-left text-primary"
+                onClick={() => {
+                  setMore(!more)
+                }}
+              >
+                {more ? "کمتر" : "بیشتر"}
+              </span>
+            )}
           </div>
         </>
       )}
