@@ -2,12 +2,13 @@ import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { PreOrderDto } from "@vardast/graphql/generated"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { newTimeConvertor } from "@vardast/util/convertToPersianDate"
+import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
 
 import { DetailsWithTitle } from "../desktop/DetailsWithTitle"
 import DynamicHeroIcon from "../DynamicHeroIcon"
 
-type Props = { order: PreOrderDto }
+type Props = { singleCard?: boolean; order: PreOrderDto }
 type orderPreviewCardSkeleton = {
   categoryName?: boolean
 }
@@ -47,13 +48,18 @@ export const OrderPreviewCardSkeleton = ({
   )
 }
 
-const OrderPreviewCard = ({ order }: Props) => {
+const OrderPreviewCard = ({ order, singleCard }: Props) => {
   const { t } = useTranslation()
 
   return (
-    <div className="flex flex-col gap-3 py-5">
-      <div className="grid w-full grid-cols-12 items-center justify-between">
-        <div className="col-span-9 flex items-center gap-2">
+    <div
+      className={clsx(
+        "flex flex-col gap-3 py-5",
+        singleCard && "px-5 ring-1 ring-alpha-200"
+      )}
+    >
+      <div className="flex w-full items-center justify-between">
+        <div className=" flex items-center gap-2">
           <DynamicHeroIcon
             icon="ClipboardDocumentListIcon"
             className={mergeClasses(
@@ -66,7 +72,7 @@ const OrderPreviewCard = ({ order }: Props) => {
             {order.lineDetail}
           </span>
         </div>
-        <span className="tag tag-info col-span-3 !flex !items-center !justify-center text-xs">
+        <span className="tag tag-info  !flex w-fit !items-center !justify-center text-xs">
           {newTimeConvertor(order.request_date)}
         </span>
       </div>

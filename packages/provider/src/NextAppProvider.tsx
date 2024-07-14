@@ -27,7 +27,7 @@ export const viewport: Viewport = {
 }
 export const metadata: Metadata = {
   title: {
-    template: `${process.env.NEXT_PUBLIC_TITLE} | %s`,
+    template: `%s | ${process.env.NEXT_PUBLIC_TITLE} `,
     default: process.env.NEXT_PUBLIC_TITLE as string
   },
   appleWebApp: {

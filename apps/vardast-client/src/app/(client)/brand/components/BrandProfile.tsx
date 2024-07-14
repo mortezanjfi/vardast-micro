@@ -25,6 +25,7 @@ import InfiniteScrollPagination from "@vardast/component/InfiniteScrollPaginatio
 import Link from "@vardast/component/Link"
 import NoResult from "@vardast/component/NoResult"
 import NotFoundMessage from "@vardast/component/NotFound"
+import ProductList from "@vardast/component/product-list"
 import {
   Brand,
   EntityTypeEnum,
@@ -62,7 +63,7 @@ import SellersSort, {
   SellerSortStatic
 } from "@/app/(client)/sellers/components/SellerSort"
 
-import ProductList, { checkLimitPageByCondition } from "./ProductList"
+import { checkLimitPageByCondition } from "./ProductList"
 
 export interface IBrandOrSellerProfile {
   limitPage?: number
@@ -421,8 +422,6 @@ export const CategoriesTab = ({
     }
   }, [allCategoriesQuery.data?.pages])
 
-  productsProps.args.categoryIds = [+activeTab]
-
   const dynamicHref = ({
     sellerName,
     sellerId,
@@ -545,12 +544,12 @@ export const CategoriesTab = ({
             }
             title="کالاهای این دسته بندی"
           /> */}
-          <ProductList
+          {/* <ProductList
             desktopSideBarClass={!productsProps.isMobileView ? "!top-0" : ""}
             isMobileView={productsProps.isMobileView}
             args={productsProps.args}
-            selectedCategoryIds={[+activeTab]}
-          />
+            selectedCategoryIds={[]}
+          /> */}
         </>
       ) : (
         <>

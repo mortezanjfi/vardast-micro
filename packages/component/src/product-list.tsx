@@ -38,6 +38,7 @@ import {
 } from "lucide-react"
 
 import BrandOrSellerCategoryFilter from "./brand-or-seller-category-filter"
+import ListHeader from "./desktop/ListHeader"
 import DesktopMobileViewOrganizer from "./DesktopMobileViewOrganizer"
 import FiltersContainer from "./filters-container"
 import FiltersSidebarContainer from "./filters-sidebar-container"
@@ -381,7 +382,15 @@ const ProductList = ({
             </Button>
           </div>
         )}
-
+        <ProductSort
+          sort={sort}
+          onSortChanged={(sort) => {
+            setSort(sort)
+            const params = new URLSearchParams(searchParams as any)
+            params.set("orderBy", `${sort}`)
+            push(pathname + "?" + params.toString())
+          }}
+        />
         {brandId && isMobileView && (
           <BrandOrSellerCategoryFilter
             categoryIdsFilter={categoryIdsFilter}
@@ -413,15 +422,6 @@ const ProductList = ({
 
   const DesktopHeader = (
     <div className="flex items-center justify-between md:pb-8">
-      <ProductSort
-        sort={sort}
-        onSortChanged={(sort) => {
-          setSort(sort)
-          const params = new URLSearchParams(searchParams as any)
-          params.set("orderBy", `${sort}`)
-          push(pathname + "?" + params.toString())
-        }}
-      />
       {allProductsQuery.data?.pages[0].products.total && (
         <ItemsCount
           countItemTitle={"product"}
@@ -610,7 +610,12 @@ const ProductList = ({
     <DesktopMobileViewOrganizer
       isMobileView={isMobileView}
       DesktopSidebar={<></>}
-      DesktopHeader={DesktopHeader}
+      DesktopHeader={
+        <ListHeader
+          total={allProductsQuery?.data?.pages[0]?.products?.total}
+          listName={"products"}
+        />
+      }
       // DesktopHeader={<></>}
       MobileHeader={hasFilter ? MobileHeader : <></>}
       Content={Content}

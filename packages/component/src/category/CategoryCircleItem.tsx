@@ -73,11 +73,7 @@ export default function CategoryCircleItem({
       onClick={() => {
         setSelectedItemId(data.id)
       }}
-      href={`${
-        isMobileView && !(slug?.length > 0)
-          ? `/category/${data.id}/${data.title}`
-          : `/products/${data.id}/${data.title}`
-      }`}
+      href={`${!(slug?.length > 0) && `/category/${data.id}/${data.title}`}`}
       className={clsx(
         categoryDefaultClassName,
         isMobileView ? "" : "mx-auto",

@@ -11,16 +11,14 @@ import {
   Brand,
   GetAllBrandsQuery,
   IndexBrandInput,
-  SortBrandEnum,
-  useGetAllBrandsQuery
+  SortBrandEnum
 } from "../../../graphql/src/generated"
 import { setSidebar } from "../../../provider/src/LayoutProvider/use-layout"
 import { PublicContext } from "../../../provider/src/PublicProvider"
-import graphqlRequestClientWithToken from "../../../query/src/queryClients/graphqlRequestClientWithToken"
 import { getAllBrandsQueryFn } from "../../../query/src/queryFns/allBrandsQueryFns"
 import QUERY_FUNCTIONS_KEY from "../../../query/src/queryFns/queryFunctionsKey"
 import { Button } from "../../../ui/src/button"
-import { BrandOrSellerCardSkeleton } from "../BrandOrSellerCard"
+import BrandCard, { BrandCardSkeleton } from "../brand/BrandCard"
 import BrandsOrSellersContainer, {
   BrandContainerType
 } from "../BrandsOrSellersContainer"
@@ -31,7 +29,6 @@ import InfiniteScrollPagination from "../InfiniteScrollPagination"
 import NoResult from "../NoResult"
 import NotFoundMessage from "../NotFound"
 import { checkLimitPageByCondition } from "../product-list"
-import BrandCard from "./BrandCard"
 import BrandSortFilter from "./BrandSortFilter"
 
 type BrandsListProps = {
@@ -59,8 +56,6 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
   const searchParams = useSearchParams()
 
   const [filterAttributes, setFilterAttributes] = useState<[]>([])
-
-  const allBrandsNumber = useGetAllBrandsQuery(graphqlRequestClientWithToken)
 
   const allBrandsQuery = useInfiniteQuery<GetAllBrandsQuery>(
     [
@@ -115,7 +110,7 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
         {() => (
           <>
             {[...Array(20)].map((_, index) => (
-              <BrandOrSellerCardSkeleton key={`brand-page-skeleton-${index}`} />
+              <BrandCardSkeleton key={`brand-page-skeleton-${index}`} />
             ))}
           </>
         )}
@@ -126,7 +121,7 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
       <BrandsOrSellersContainer type={BrandContainerType.BRANDS_PAGE_LIST}>
         {({ selectedItemId, setSelectedItemId }) => (
           <InfiniteScrollPagination
-            CardLoader={() => <BrandOrSellerCardSkeleton />}
+            CardLoader={() => <BrandCardSkeleton />}
             infiniteQuery={allBrandsQuery}
           >
             {(page, ref) => (
@@ -243,7 +238,7 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
       MobileHeader={MobileHeader}
       DesktopHeader={
         <ListHeader
-          total={allBrandsNumber?.data?.brands?.total}
+          total={allBrandsQuery?.data?.pages[0].brands?.total}
           listName={"brands"}
         />
       }
