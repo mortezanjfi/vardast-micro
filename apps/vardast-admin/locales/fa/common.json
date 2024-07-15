@@ -378,6 +378,9 @@
   "destination": "مقصد",
   "needed-time": "تاریخ نیاز",
   "views": "بازدید",
-  "subCategories": "زیر دسته ها",
-  "mobile-banner": "بنر موبایل"
+  "mobile-banner": "بنر موبایل",
+  "order-view-base": "بر اساس سفارش",
+  "product-view-base": "بر اساس اقلام ",
+  "items": "اقلام",
+  "subCategories": "زیر دسته ها"
 }

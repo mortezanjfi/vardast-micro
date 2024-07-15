@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { dehydrate } from "@tanstack/react-query"
-import OrdersPage from "@vardast/component/order/OrdersPage"
+import Orders from "@vardast/component/order/Orders"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
@@ -19,8 +19,7 @@ export default async () => {
 
   return (
     <ReactQueryHydrate state={dehydratedState}>
-      <OrdersPage
-        isAdmin={true}
+      <Orders
         isMobileView={isMobileView}
         title={(await generateMetadata()).title?.toString() as string}
       />

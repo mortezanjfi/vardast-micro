@@ -1,0 +1,24 @@
+query GetOrderLinesQuery($indexLineInput: IndexLineInput!) {
+  Orderlines(indexLineInput: $indexLineInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    data {
+      created_at
+      type
+      id
+      uom
+      pre_order_uuid
+      project_name
+      expert_name
+      applicant_name
+      need_date
+      item_name
+      attribuite
+      brand
+      qty
+      descriptions
+    }
+  }
+}
