@@ -117,18 +117,17 @@ const BrandOrSellerProfile = ({
   const PageHeader = (
     <div className="w-full md:flex md:gap-6">
       <div className="relative flex flex-col justify-start overflow-hidden md:w-80 md:min-w-80 md:flex-shrink-0 md:justify-center md:rounded-2xl md:border">
-        <div className="flex h-72 min-h-72 flex-col gap-y bg-alpha-white px py-5 md:h-auto md:min-h-full md:py-9">
-          <div className="grid h-full grid-cols-9 items-center justify-center gap-y bg-alpha-white px py-5 md:flex md:py-9">
-            <div></div>
-            <div className="col-span-7 flex flex-col items-center justify-center">
-              <div className="rounded-full border-2 border-alpha-400 p-0.5 md:h-full">
+        <div className="flex  flex-col gap-y bg-alpha-white md:h-auto md:min-h-full ">
+          <div className="flex h-full flex-col items-center justify-center gap-y bg-alpha-white">
+            <div className="flex h-72 min-h-72 w-full flex-col items-center justify-center md:!h-fit md:!min-h-fit md:gap-7 md:py-10">
+              <div className="h-full w-full border-alpha-400  p-0.5 md:h-36 md:!min-h-36  md:w-36 md:rounded-full md:border-2">
                 {isSellerQuery() && (data as SellerQuery).isBlueTik && (
                   <>
                     <CheckBadgeIcon className="w-h-7 absolute right-1 top-0 z-20 h-7 -translate-y-1 translate-x-1 text-info" />
                     <span className="absolute right-2 top-1 h-3 w-3 rounded-full bg-alpha-white"></span>
                   </>
                 )}
-                <div className="aspect-square">
+                <div className="aspect-square h-full w-full">
                   <Image
                     src={
                       isMobileView && !isSellerQuery()
@@ -140,7 +139,7 @@ const BrandOrSellerProfile = ({
                     alt="seller"
                     width={100}
                     height={100}
-                    className="h-full w-full rounded-full object-contain"
+                    className="h-full w-full object-contain md:rounded-full"
                   />
                 </div>
               </div>
@@ -157,14 +156,27 @@ const BrandOrSellerProfile = ({
                 </div>
               )}
             </div>
-            <div className="hidden md:block"></div>
-            <div className="left-3 top-3 flex h-full flex-col justify-start md:absolute">
-              <FavoriteIcon
-                entityId={+slug[0]}
-                isFavoriteQuery={isFavoriteQuery}
-                type={type}
-              />
-              <ShareIcon name={data.name} />
+            <div className="flex w-full grid-cols-2 justify-between px-6 pb-6 pt-2 md:grid md:!p-0">
+              {isMobileView && (
+                <div className=" flex items-center gap-2">
+                  <Image
+                    alt="logo"
+                    className="rounded-full border border-alpha-400"
+                    width={64}
+                    height={64}
+                    src={data?.logoFile?.presignedUrl?.url ?? ""}
+                  />
+                  <h1 className="text-base font-semibold">{data?.name}</h1>
+                </div>
+              )}
+              <div className="col-span-2 flex grid-cols-2 gap-5 md:grid md:gap-0 md:divide-x md:divide-x-reverse md:border-t md:py-3">
+                <FavoriteIcon
+                  entityId={+slug[0]}
+                  isFavoriteQuery={isFavoriteQuery}
+                  type={type}
+                />
+                <ShareIcon name={data.name} />
+              </div>
             </div>
           </div>
         </div>
