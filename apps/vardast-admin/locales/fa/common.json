@@ -381,5 +381,7 @@
   "order-view-base": "بر اساس سفارش",
   "product-view-base": "بر اساس اقلام ",
   "items": "اقلام",
-  "subCategories": "زیر دسته ها"
+  "subCategories": "زیر دسته ها",
+  "app-management": "مدیریت اپلیکیشن",
+  "main": "صفحه اصلی"
 }

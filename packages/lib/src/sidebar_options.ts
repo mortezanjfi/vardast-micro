@@ -199,6 +199,18 @@ const _admin: NavigationType[] = [
             path: "/test"
           }
         ]
+      },
+      {
+        title: "مدیریت اپلیکیشن",
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "DevicePhoneMobileIcon",
+        items: [
+          {
+            title: "صفحه اصلی",
+            path: "/app-management/main"
+          }
+        ]
       }
     ]
   }
