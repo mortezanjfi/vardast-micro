@@ -44,6 +44,7 @@ const CategoryListContainer: React.FC<ICategoryListContainer> = ({
     <>
       <ul
         className={clsx(
+          !isSubcategory && "mt-6",
           "grid grid-cols-2 grid-rows-none gap-4 divide-alpha-200 p-6 pt-0 sm:!px-0 md:grid-cols-5 md:grid-rows-1"
         )}
       >
