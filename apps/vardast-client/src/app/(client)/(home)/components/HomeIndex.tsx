@@ -8,7 +8,6 @@ import {
   GetAllBlogsQuery,
   GetAllBrandsCountQuery,
   GetAllProductsQuery,
-  GetAllSellersCountQuery,
   GetBannerHomePageQuery,
   GetPublicOrdersQuery,
   GetVocabularyQuery,
@@ -19,7 +18,6 @@ import {
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { getAllBrandsCountQueryFn } from "@vardast/query/queryFns/allBrandsCountQueryFns"
 import { getAllProductsQueryFn } from "@vardast/query/queryFns/allProductsQueryFns"
-import { getAllSellersCountQueryFn } from "@vardast/query/queryFns/allSellersCountQueryFns"
 import { bannerHomePageQueryFns } from "@vardast/query/queryFns/bannerHomePageQueryFns"
 import { getAllBlogsQueryFn } from "@vardast/query/queryFns/getAllBlogsQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
@@ -41,16 +39,13 @@ export type IHomeProps = {
   isMobileView: boolean
   allProductsQuery: UseQueryResult<GetAllProductsQuery, unknown>
   homeSlidersQuery: UseQueryResult<GetBannerHomePageQuery, unknown>
-  allSellersCount: UseQueryResult<GetAllSellersCountQuery>
   allBrandsCount: UseQueryResult<GetAllBrandsCountQuery>
   getVocabularyQueryFcQuery: UseQueryResult<GetVocabularyQuery>
   getAllBlogsQuery: UseQueryResult<GetAllBlogsQuery>
-  // session: Session | null
 }
 
 type HomeIndexProps = {
   isMobileView: boolean
-  // session: Session | null
 }
 
 const HomeIndex = ({ isMobileView }: HomeIndexProps) => {
@@ -84,15 +79,6 @@ const HomeIndex = ({ isMobileView }: HomeIndexProps) => {
   const allBrandsCount = useQuery<GetAllBrandsCountQuery>(
     [QUERY_FUNCTIONS_KEY.GET_ALL_BRANDS_COUNT_QUERY_KEY],
     getAllBrandsCountQueryFn,
-    {
-      keepPreviousData: true,
-      staleTime: 999999999
-    }
-  )
-
-  const allSellersCount = useQuery<GetAllSellersCountQuery>(
-    [QUERY_FUNCTIONS_KEY.ALL_SELLERS_COUNT_QUERY_KEY],
-    getAllSellersCountQueryFn,
     {
       keepPreviousData: true,
       staleTime: 999999999
@@ -140,24 +126,20 @@ const HomeIndex = ({ isMobileView }: HomeIndexProps) => {
   const homeProps: IHomeProps = useMemo(
     () => ({
       publicOrdersQuery,
-      // session,
       recentPriceProductsQuery,
       isMobileView,
       allProductsQuery,
       homeSlidersQuery,
-      allSellersCount,
       allBrandsCount,
       getVocabularyQueryFcQuery,
       getAllBlogsQuery
     }),
     [
       publicOrdersQuery,
-      // session
       recentPriceProductsQuery,
       isMobileView,
       allProductsQuery,
       homeSlidersQuery,
-      allSellersCount,
       allBrandsCount,
       getVocabularyQueryFcQuery,
       getAllBlogsQuery

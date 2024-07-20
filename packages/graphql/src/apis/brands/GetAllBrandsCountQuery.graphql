@@ -3,14 +3,14 @@ query GetAllBrandsCount($indexBrandInput: IndexBrandInput) {
     data {
       id
       categoriesCount
-      sellersCount
       bannerMobile {
-        id
         presignedUrl {
-          url
           expiresAt
+          url
         }
+        id
       }
+      sellersCount
       bannerDesktop {
         id
         presignedUrl {

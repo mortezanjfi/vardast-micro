@@ -31,16 +31,6 @@ const MobileHomeIndex = ({
       <MobileHomeCategory
         getVocabularyQueryFcQuery={getVocabularyQueryFcQuery}
       />
-      {/* <MobileHomeTopEntities
-      width={width * 0.9}
-      __typename="Seller"
-        title="جدیدترین فروشنده‌ها"
-        query={allSellersCount.data?.sellers.data.slice(0, 8) as Seller[]}
-      /> */}
-      {/* <HomeTopSellers
-        title="جدیدترین فروشنده‌ها"
-        allSellersCount={allSellersCount}
-      /> */}
       <MobileHomeTopEntities
         isMobileView
         __typename="Brand"
