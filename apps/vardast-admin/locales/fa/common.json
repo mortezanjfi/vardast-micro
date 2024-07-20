@@ -383,5 +383,10 @@
   "items": "اقلام",
   "subCategories": "زیر دسته ها",
   "app-management": "مدیریت اپلیکیشن",
-  "main": "صفحه اصلی"
+  "main": "صفحه اصلی",
+  "slider": "اسلایدر",
+  "entity_size": "سایز {{entity}}",
+  "link": "لینک",
+  "new-slider": "افزودن اسلایدر",
+  "show": "نمایش"
 }
