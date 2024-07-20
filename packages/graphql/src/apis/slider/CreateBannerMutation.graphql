@@ -1,0 +1,6 @@
+mutation CreateBannerMutation($createBannerInput: CreateBannerInput!) {
+  createBanner(createBannerInput: $createBannerInput) {
+    id
+    name
+  }
+}
