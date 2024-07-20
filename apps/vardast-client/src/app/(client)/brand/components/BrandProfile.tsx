@@ -115,11 +115,15 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
                 <div className="aspect-square h-full w-full">
                   <Image
                     src={
-                      isMobileView &&
-                      brandQuery?.data?.brand?.bannerMobile?.presignedUrl?.url
+                      isMobileView
                         ? brandQuery?.data?.brand?.bannerMobile?.presignedUrl
                             ?.url
-                        : brandSellerBlank
+                          ? brandQuery?.data?.brand?.bannerMobile?.presignedUrl
+                              ?.url
+                          : brandSellerBlank
+                        : brandQuery?.data?.brand?.logoFile?.presignedUrl?.url
+                          ? brandQuery?.data?.brand?.logoFile?.presignedUrl?.url
+                          : brandSellerBlank
                     }
                     alt="seller"
                     width={100}
