@@ -15,7 +15,10 @@ import {
   GetIsFavoriteQuery,
   IndexProductInput
 } from "@vardast/graphql/generated"
-import { setPageHeader } from "@vardast/provider/LayoutProvider/use-layout"
+import {
+  setBreadCrumb,
+  setPageHeader
+} from "@vardast/provider/LayoutProvider/use-layout"
 import { getBrandQueryFn } from "@vardast/query/queryFns/brandQueryFns"
 import { getIsFavoriteQueryFns } from "@vardast/query/queryFns/getIsFavoriteQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
@@ -183,6 +186,18 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
   )
 
   setPageHeader(PageHeader)
+  setBreadCrumb([
+    {
+      label: t("common:brands"),
+      path: "/brands",
+      isCurrent: false
+    },
+    {
+      label: brandQuery?.data?.brand?.name,
+      path: `${`brands/${brandQuery?.data?.brand?.id}`}`,
+      isCurrent: true
+    }
+  ])
   return (
     <div className="flex flex-col">
       <Tabs

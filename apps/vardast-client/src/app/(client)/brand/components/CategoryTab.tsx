@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import CategoryListContainer from "@vardast/component/category/CategoryListContainer"
 import CategoryListItem from "@vardast/component/category/CategoryListItem"
@@ -43,12 +44,21 @@ const CategoriesTab = ({
   brandName?: string | undefined
   productsProps: IBrandOrSellerProfile
 }) => {
+  const { push } = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   const [activeTab, setActiveTab] = useState<string>("")
   const sliderRef = useRef<HTMLDivElement>(null)
   const [slideWidth, setSlideWidth] = useState(0)
   const [sort, setSort] = useState<CategoriesSortStatic>(
     CategoriesSortStatic.Sum
   )
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams as any)
+    params.set("orderBy", CategoriesSortStatic.Sum)
+    push(pathname + "?" + params.toString())
+  }, [])
 
   const allCategoriesQuery = useInfiniteQuery<GetAllCategoriesQuery>(
     [
@@ -146,6 +156,9 @@ const CategoriesTab = ({
           sort={sort}
           onSortChanged={(sort) => {
             setSort(sort)
+            const params = new URLSearchParams(searchParams as any)
+            params.set("orderBy", `${sort}`)
+            push(pathname + "?" + params.toString())
           }}
         />
       </div>
