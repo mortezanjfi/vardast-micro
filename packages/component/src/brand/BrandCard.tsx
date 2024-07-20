@@ -84,10 +84,8 @@ const BrandCard = forwardRef(
         <div
           ref={containerRef}
           className={clsx(
-            "relative",
-            isMobileView
-              ? " h-[50vw] w-full"
-              : "h-[127px] lg:h-[174px]  xl:h-[127px]  2xl:h-[138px] "
+            "relative h-[127px] lg:h-[174px]  xl:h-[127px]  2xl:h-[138px]",
+            isMobileView && "w-full"
           )}
         >
           <Image
@@ -100,7 +98,10 @@ const BrandCard = forwardRef(
             fill
             // width={300}
             // height={400}
-            className="rounded-2xl object-fill"
+            className={clsx(
+              "transform rounded-2xl object-fill transition",
+              selectedItemId === brand?.id ? "border-2 border-primary" : ""
+            )}
           />
         </div>
 

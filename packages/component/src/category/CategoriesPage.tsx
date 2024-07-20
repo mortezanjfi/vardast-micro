@@ -97,7 +97,7 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
         onValueChange={(e) => setActiveTab(e as CATEGORY_PAGE_TABS)}
         className="flex h-full w-full flex-col bg-alpha-white"
       >
-        <TabsList className="sticky top-0 z-50 mb-5 grid w-full grid-cols-4 bg-alpha-white font-medium sm:z-0  md:flex">
+        <TabsList className="sticky top-0 z-50 grid w-full grid-cols-4 bg-alpha-white font-medium sm:z-0  md:flex">
           <TabsTrigger
             className="py-4"
             value={CATEGORY_PAGE_TABS.SUBCATEGORIES}
@@ -117,7 +117,7 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
           </TabsTrigger>
         </TabsList>
         <TabsContent
-          className="bg-alpha-50 sm:bg-alpha-white"
+          className="bg-alpha-50 pt-6 sm:bg-alpha-white"
           value={CATEGORY_PAGE_TABS.SUBCATEGORIES}
         >
           {categoryQuery?.data?.category?.children.length > 0 ? (
@@ -134,7 +134,7 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
             ""
           )}
         </TabsContent>
-        <TabsContent value={CATEGORY_PAGE_TABS.ORDERS}>
+        <TabsContent className="pt-6" value={CATEGORY_PAGE_TABS.ORDERS}>
           <CategoriesPublicOrders
             publicPreOrders={publicPreOrders}
             isMobileView={isMobileView}
