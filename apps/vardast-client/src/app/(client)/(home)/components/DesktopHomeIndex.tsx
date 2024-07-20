@@ -81,15 +81,6 @@ const DesktopHomeIndex = ({
           </div>
         </div>
       )}
-      {/* <div className="border-t-2 bg-alpha-white py-8">
-        <div className="container mx-auto ">
-          <HomeTopSellers
-            isMobileView={false}
-            title="جدیدترین فروشنده‌ها"
-            allSellersCount={allSellersCount}
-          />
-        </div>
-      </div> */}
       {allBrandsCount.data && (
         <div className="border-t-2 bg-alpha-white py-8">
           <div className="container mx-auto ">

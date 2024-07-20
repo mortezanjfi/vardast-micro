@@ -5,6 +5,7 @@ import "@heroicons/react/24/solid"
 import { forwardRef, Ref, useRef, useState } from "react"
 import Image from "next/image"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
+import brandSellerBlank from "@vardast/asset/brand-seller-blank.svg"
 import frameLessImage from "@vardast/asset/images/frameLess.png"
 import clsx from "clsx"
 import { Check, Minus } from "lucide-react"
@@ -73,7 +74,7 @@ const BrandCard = forwardRef(
           setSelectedItemId(brand?.id)
         }}
         className={clsx(
-          "overrounded-2xl flex h-full  flex-col bg-alpha-white"
+          "flex h-full flex-col overflow-hidden  rounded-2xl bg-alpha-white"
           // selectedItemId === brand?.id
           //   ? "border-2 border-primary"
           //   : "border-alpha-50"
@@ -90,7 +91,11 @@ const BrandCard = forwardRef(
           )}
         >
           <Image
-            src={brand?.bannerDesktop?.presignedUrl?.url ?? ""}
+            src={
+              brand?.bannerMobile?.presignedUrl?.url
+                ? brand.bannerMobile.presignedUrl.url
+                : brandSellerBlank
+            }
             alt="category"
             fill
             // width={300}

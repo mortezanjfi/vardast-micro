@@ -23,6 +23,13 @@ query GetBrand($id: Int!) {
         expiresAt
       }
     }
+    bannerMobile {
+      id
+      presignedUrl {
+        url
+        expiresAt
+      }
+    }
     catalog {
       id
       uuid

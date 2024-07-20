@@ -238,6 +238,7 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
       MobileHeader={MobileHeader}
       DesktopHeader={
         <ListHeader
+          borderBottom
           total={allBrandsQuery?.data?.pages[0].brands?.total}
           listName={"brands"}
         />

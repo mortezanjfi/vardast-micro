@@ -44,7 +44,16 @@ query GetAllBrands($indexBrandInput: IndexBrandInput) {
       priceList {
         id
       }
+
       bannerDesktop {
+        id
+
+        presignedUrl {
+          url
+          expiresAt
+        }
+      }
+      bannerMobile {
         id
         presignedUrl {
           url

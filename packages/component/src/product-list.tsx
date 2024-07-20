@@ -96,7 +96,7 @@ const ProductList = ({
   const [queryTemp, setQueryTemp] = useState<string>("")
 
   const [sort, setSort] = useState<ProductSortablesEnum>(
-    args.orderBy || ProductSortablesEnum.Newest
+    ProductSortablesEnum.Newest
   )
   const [filterAttributes, setFilterAttributes] = useState<FilterAttribute[]>(
     args["attributes"] || []
@@ -188,6 +188,13 @@ const ProductList = ({
     }
     return <LoadingFailed />
   }
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams as any)
+    params.set("orderBy", ProductSortablesEnum.Newest)
+    push(pathname + "?" + params.toString())
+  }, [])
+
   // if (!allProductsQuery.data) return <NoResult entity="product" />
 
   const onFilterAttributesChanged = ({
