@@ -113,49 +113,44 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
       <div className="relative flex flex-col justify-start overflow-hidden md:w-80 md:min-w-80 md:flex-shrink-0 md:justify-center md:rounded-2xl md:border">
         <div className="flex  flex-col gap-y bg-alpha-white md:h-auto md:min-h-full ">
           <div className="flex h-full flex-col items-center justify-center gap-y bg-alpha-white">
-            <div className="flex h-72 min-h-72 w-full flex-col items-center justify-center md:!h-fit md:!min-h-fit md:gap-7 md:py-10">
-              <div className="h-full w-full border-alpha-400  p-0.5 md:h-36 md:!min-h-36  md:w-36 md:rounded-full md:border-2">
-                <div className="aspect-square h-full w-full">
-                  <Image
-                    src={
-                      isMobileView
-                        ? brandQuery?.data?.brand?.bannerMobile?.presignedUrl
-                            ?.url
-                          ? brandQuery?.data?.brand?.bannerMobile?.presignedUrl
-                              ?.url
-                          : brandSellerBlank
-                        : brandQuery?.data?.brand?.logoFile?.presignedUrl?.url
-                          ? brandQuery?.data?.brand?.logoFile?.presignedUrl?.url
-                          : brandSellerBlank
-                    }
-                    alt="seller"
-                    width={100}
-                    height={100}
-                    className="h-full w-full object-contain md:rounded-full"
-                  />
+            {isMobileView && (
+              <div className="flex h-40 max-h-40 min-h-40 w-full flex-col items-center justify-center ">
+                <div className="h-full w-full border-alpha-400 ">
+                  <div className="aspect-square h-full w-full">
+                    <Image
+                      src={
+                        brandQuery?.data?.brand?.bannerDesktop?.presignedUrl
+                          ?.url
+                      }
+                      alt="seller"
+                      height={140}
+                      width={400}
+                      className="object-contain md:rounded-full"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             <div className="flex w-full grid-cols-2 justify-between px-6 pb-6 pt-2 md:grid md:!p-0">
-              {isMobileView && (
-                <div className=" flex items-center gap-2">
+              <div className=" flex items-center justify-center gap-2 md:col-span-2 md:flex-col md:gap-7 md:py-9">
+                <div className="flex h-20 w-20 flex-col items-center justify-center overflow-hidden rounded-full border-2 md:h-36  md:!min-h-36 md:w-36">
                   <Image
                     alt="logo"
-                    className="rounded-full border border-alpha-400"
-                    width={64}
-                    height={64}
+                    width={100}
+                    height={100}
                     src={
                       brandQuery?.data?.brand?.logoFile?.presignedUrl?.url
                         ? brandQuery?.data?.brand?.logoFile?.presignedUrl?.url
                         : brandSellerBlank
                     }
                   />
-                  <h1 className="text-base font-semibold">
-                    {brandQuery?.data?.brand?.name}
-                  </h1>
                 </div>
-              )}
+                <h1 className="text-base font-semibold">
+                  {brandQuery?.data?.brand?.name}
+                </h1>
+              </div>
+
               <div className="col-span-2 flex grid-cols-2 gap-5 md:grid md:gap-0 md:divide-x md:divide-x-reverse md:border-t md:py-3">
                 <FavoriteIcon
                   type={EntityTypeEnum.Brand}

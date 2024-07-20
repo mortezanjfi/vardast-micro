@@ -92,8 +92,8 @@ const BrandCard = forwardRef(
         >
           <Image
             src={
-              brand?.bannerMobile?.presignedUrl?.url
-                ? brand.bannerMobile.presignedUrl.url
+              brand?.bannerDesktop?.presignedUrl?.url
+                ? brand?.bannerDesktop?.presignedUrl?.url
                 : brandSellerBlank
             }
             alt="category"
