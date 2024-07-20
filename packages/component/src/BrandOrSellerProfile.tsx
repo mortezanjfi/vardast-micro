@@ -47,7 +47,7 @@ export type BrandQuery = GetBrandQuery["brand"]
 interface IBrandOrSellerProfile {
   slug: Array<string | number>
   type: EntityTypeEnum.Brand | EntityTypeEnum.Seller
-  data?: SellerQuery | BrandQuery
+  data?: BrandQuery | SellerQuery
   isFavoriteQuery: UseQueryResult<GetIsFavoriteQuery, unknown>
   tabs: BrandOrSellerProfileTab[]
   isMobileView: boolean
@@ -112,6 +112,8 @@ const BrandOrSellerProfile = ({
     setActiveTab(openTabName || tabs[0].value)
   }, [openTabName, tabs])
 
+  console.log(data)
+
   const PageHeader = (
     <div className="w-full md:flex md:gap-6">
       <div className="relative flex flex-col justify-start overflow-hidden md:w-80 md:min-w-80 md:flex-shrink-0 md:justify-center md:rounded-2xl md:border">
@@ -129,9 +131,11 @@ const BrandOrSellerProfile = ({
                 <div className="aspect-square">
                   <Image
                     src={
-                      data?.logoFile?.presignedUrl.url
-                        ? data?.logoFile?.presignedUrl.url
-                        : sellerUserImage
+                      isMobileView && !isSellerQuery()
+                        ? (data as BrandQuery)?.bannerMobile?.presignedUrl?.url
+                        : data?.logoFile?.presignedUrl.url
+                          ? data?.logoFile?.presignedUrl.url
+                          : sellerUserImage
                     }
                     alt="seller"
                     width={100}
