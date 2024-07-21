@@ -13,6 +13,9 @@ query GetAllBrands($indexBrandInput: IndexBrandInput) {
       rating
       sum
       status
+      views
+      sellersCount
+      categoriesCount
       addresses {
         city {
           name
@@ -41,8 +44,21 @@ query GetAllBrands($indexBrandInput: IndexBrandInput) {
       priceList {
         id
       }
+
       bannerDesktop {
         id
+
+        presignedUrl {
+          url
+          expiresAt
+        }
+      }
+      bannerMobile {
+        id
+        presignedUrl {
+          url
+          expiresAt
+        }
       }
     }
   }

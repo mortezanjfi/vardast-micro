@@ -4,7 +4,7 @@ import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
-import OrdersPage from "@/app/(bid)/orders/components/OrdersPage"
+import OrdersPage from "@/app/(bid)/orders/components/Orders"
 
 // set dynamic metadata
 export async function generateMetadata(): Promise<Metadata> {
@@ -17,7 +17,7 @@ interface ProductIndexProps {
   params: { uuid: string }
 }
 
-export default async ({ params }: ProductIndexProps) => {
+export default async (_: ProductIndexProps) => {
   const queryClient = getQueryClient()
   const dehydratedState = dehydrate(queryClient)
   const isMobileView = await CheckIsMobileView()

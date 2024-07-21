@@ -29,7 +29,10 @@ type IFilter<T extends FilterComponentTypeEnum, TName> = IFilterMap<T> & {
 
 export type OnRowFunctionType<T> = (row: Row<T>) => void
 
-export interface ITableProps<T, TSchema extends ZodType<any, any, any>> {
+export interface ITableProps<
+  T,
+  TSchema extends ZodType<any, any, any> = undefined
+> {
   name: string
   columns: Array<ColumnDef<T>>
   selectable?: boolean
@@ -44,7 +47,7 @@ export interface ITableProps<T, TSchema extends ZodType<any, any, any>> {
     api: (
       args: ApiArgsType<TSchema>,
       accessToken?: string
-    ) => Promise<ApiResponseType<T>>
+    ) => Promise<ApiResponseType<T | unknown>>
   }
   handleResponse?: (args: ApiResponseType<T>) => void
   getTableState?: (args: Partial<TableState> & { data: T[] }) => void

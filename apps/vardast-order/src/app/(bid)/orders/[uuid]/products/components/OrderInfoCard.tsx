@@ -5,7 +5,7 @@ import Card from "@vardast/component/Card"
 import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
 import useTranslation from "next-translate/useTranslation"
 
-import { PaymentMethodEnumFa } from "@/app/(bid)/orders/components/OrdersPage"
+import { PaymentMethodEnumFa } from "@/app/(bid)/orders/components/Orders"
 
 import { IOrderProductsInnerLayout } from "./OrderInnerLayout"
 

@@ -1,6 +1,7 @@
 query GetBannerHomePage($IndexBannerInput: IndexBannerInput!) {
   getBanners(IndexBannerInput: $IndexBannerInput) {
     id
+    url
     small {
       id
       url

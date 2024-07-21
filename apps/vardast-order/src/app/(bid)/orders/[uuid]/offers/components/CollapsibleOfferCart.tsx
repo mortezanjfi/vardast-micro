@@ -11,7 +11,7 @@ import clsx from "clsx"
 import { LucideChevronDown } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
-import { OrderOfferStatusesFa } from "@/app/(bid)/orders/components/OrdersPage"
+import { OrderOfferStatusesFa } from "@/app/(bid)/orders/components/Orders"
 
 type CollapsibleOfferCartProps = {
   isMobileView: boolean

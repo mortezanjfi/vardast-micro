@@ -71,11 +71,6 @@ const ProjectsPage = ({ isMobileView }: ProjectsPageProps) => {
       },
       columns: [
         {
-          id: "row",
-          header: t("common:row"),
-          accessorFn: (_, index) => digitsEnToFa(index + 1)
-        },
-        {
           header: t("common:entity_name", { entity: t("common:project") }),
           accessorKey: "name"
         },

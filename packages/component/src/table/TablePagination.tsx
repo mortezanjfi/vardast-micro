@@ -35,6 +35,33 @@ const TablePagination = <T,>({ table, total }: Props<T>) => {
     setPageSize: setTablePageSize
   } = table
 
+  // const pageRange = useCallback(() => {
+  //   const range = []
+  //   if (getPageCount() <= 10) {
+  //     for (let i = 1; i <= getPageCount(); i++) {
+  //       range.push(i)
+  //     }
+  //   } else {
+  //     const start = Math.max(1, getState().pagination.pageIndex - 4)
+  //     const end = Math.min(getPageCount(), getState().pagination.pageIndex + 4)
+
+  //     for (let i = start; i <= end; i++) {
+  //       range.push(i)
+  //     }
+
+  //     if (start > 1) {
+  //       range.unshift("...")
+  //       range.unshift(1)
+  //     }
+
+  //     if (end < getPageCount()) {
+  //       range.push("...")
+  //       range.push(getPageCount())
+  //     }
+  //   }
+  //   return range
+  // }, [])
+
   return (
     <div className="flex justify-start">
       <div className="flex items-center justify-start gap-10">
@@ -84,6 +111,20 @@ const TablePagination = <T,>({ table, total }: Props<T>) => {
             <p className="font-medium">
               {digitsEnToFa(getPageCount().toLocaleString() || 0)}
             </p>
+            {/* {pageRange().map((page, index) => (
+              <Button
+                key={index}
+                variant="secondary"
+                onClick={() => {
+                  if (typeof page === "number") {
+                    setTablePageIndex(page - 1)
+                  }
+                }}
+                disabled={getState().pagination.pageIndex === page - 1}
+              >
+                {digitsEnToFa(page || 0)}
+              </Button>
+            ))} */}
           </div>
           <Button
             variant="secondary"

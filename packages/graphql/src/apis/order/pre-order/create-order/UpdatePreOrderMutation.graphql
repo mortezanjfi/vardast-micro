@@ -8,6 +8,9 @@ mutation UpdatePreOrder($updatePreOrderInput: UpdatePreOrderInput!) {
     applicant_name
     request_date
     expire_date
+    need_date
+    bid_end
+    bid_start
     shipping_address
     payment_methods
     descriptions

@@ -2,6 +2,33 @@ query GetAllBrandsCount($indexBrandInput: IndexBrandInput) {
   brands(indexBrandInput: $indexBrandInput) {
     data {
       id
+      categoriesCount
+      bannerMobile {
+        presignedUrl {
+          expiresAt
+          url
+        }
+        id
+      }
+      sellersCount
+      bannerDesktop {
+        id
+        presignedUrl {
+          url
+        }
+      }
+      priceList {
+        id
+        presignedUrl {
+          url
+        }
+      }
+      catalog {
+        id
+        presignedUrl {
+          url
+        }
+      }
       bannerFile {
         id
         presignedUrl {
