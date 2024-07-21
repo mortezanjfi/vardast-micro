@@ -1,5 +1,5 @@
-mutation CreateBannerMutation($createBannerInput: CreateBannerInput!) {
-  createBanner(createBannerInput: $createBannerInput) {
+query FindOneBannerQuery($id: Float!) {
+  findOneBanner(id: $id) {
     id
     name
     small {

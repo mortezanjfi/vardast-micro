@@ -78,7 +78,6 @@ function SliderForm({ slider }: Props) {
   const { data: session } = useSession()
   const router = useRouter()
   const { toast } = useToast()
-  const logoFileFieldRef = useRef<HTMLInputElement>(null)
   const token = session?.accessToken || null
   const [statusDialog, setStatusDialog] = useState<boolean>(false)
   //small--------------->
@@ -101,11 +100,6 @@ function SliderForm({ slider }: Props) {
   const [xlargeFile, setXlargeFile] = useState<File | null>(null)
   const [xlargePreview, setXlargePreview] = useState<string>("")
 
-  // const [smallUuid, setSmallUuid] = useState<string>("")
-  // const [mediumUuid, setMediumUuid] = useState<string>("")
-  // const [largeUuid, setLargeUuid] = useState<string>("")
-  // const [xlargeUuid, setXlargeUuid] = useState<string>("")
-
   const form = useForm<CreateSliderType>({
     resolver: zodResolver(SliderSchema),
     defaultValues: {
@@ -114,6 +108,10 @@ function SliderForm({ slider }: Props) {
       status: slider?.status
     }
   })
+
+  if (slider) {
+    console.log(slider)
+  }
 
   const createSliderMutation = useCreateBannerMutation(
     graphqlRequestClientWithToken,
@@ -646,7 +644,15 @@ function SliderForm({ slider }: Props) {
           <Button type="submit" variant="primary">
             {t("common:submit")}
           </Button>
-          <Button variant="ghost">{t("common:cancel")}</Button>
+          <Button
+            onClick={() => {
+              router.push("/app-management/main")
+            }}
+            type="button"
+            variant="ghost"
+          >
+            {t("common:cancel")}
+          </Button>
         </div>
       </form>
     </Form>
