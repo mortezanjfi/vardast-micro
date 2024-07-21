@@ -40,8 +40,7 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
   const [more] = useState(false)
   const searchParams = useSearchParams()
   const [activeTab, setActiveTab] = useState<CATEGORY_PAGE_TABS>(
-    (searchParams.get("tab") as CATEGORY_PAGE_TABS) ||
-      CATEGORY_PAGE_TABS.SUBCATEGORIES
+    CATEGORY_PAGE_TABS.SUBCATEGORIES
   )
 
   const categoryQuery = useQuery<GetCategoryQuery>({
@@ -84,6 +83,23 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
     return notFound()
   }
 
+  const tabListLoader = (
+    <div className="sticky top-0 z-50 mb-5 grid w-full grid-cols-4 bg-alpha-white font-medium sm:z-0  md:flex">
+      <div className="flex h-14 w-20 items-center justify-center">
+        <span className="animated-card h-4 w-12" />
+      </div>
+      <div className="flex h-14 w-20 items-center justify-center">
+        <span className="animated-card h-4 w-12" />
+      </div>
+      <div className="flex h-14 w-20 items-center justify-center">
+        <span className="animated-card h-4 w-12" />
+      </div>
+      <div className="flex h-14 w-20 items-center justify-center">
+        <span className="animated-card h-4 w-12" />
+      </div>
+    </div>
+  )
+
   return (
     <div className="flex flex-col">
       {isMobileView ? (
@@ -93,34 +109,49 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
         />
       ) : null}
       <Tabs
-        value={activeTab}
+        value={
+          !categoryQuery.isLoading &&
+          categoryQuery?.data?.category?.childrenCount > 0
+            ? activeTab
+            : CATEGORY_PAGE_TABS.BRANDS
+        }
         onValueChange={(e) => setActiveTab(e as CATEGORY_PAGE_TABS)}
         className="flex h-full w-full flex-col bg-alpha-white"
       >
-        <TabsList className="sticky top-0 z-50 mb-5 grid w-full grid-cols-4 bg-alpha-white font-medium sm:z-0  md:flex">
-          <TabsTrigger
-            className="py-4"
+        {categoryQuery.isLoading ||
+        categoryQuery.isFetching ||
+        publicPreOrders.isLoading ||
+        publicPreOrders.isFetching ? (
+          tabListLoader
+        ) : (
+          <TabsList className="sticky top-0 z-50 mb-5 grid w-full grid-cols-4 bg-alpha-white font-medium sm:z-0  md:flex">
+            {categoryQuery?.data?.category?.childrenCount > 0 && (
+              <TabsTrigger
+                className="py-4"
+                value={CATEGORY_PAGE_TABS.SUBCATEGORIES}
+              >
+                {t(`common:${CATEGORY_PAGE_TABS.SUBCATEGORIES}`)}
+              </TabsTrigger>
+            )}
+
+            {publicPreOrders?.data?.publicOrders?.length > 0 && (
+              <TabsTrigger className="py-4" value={CATEGORY_PAGE_TABS.ORDERS}>
+                {t(`common:${CATEGORY_PAGE_TABS.ORDERS}`)}
+              </TabsTrigger>
+            )}
+            <TabsTrigger className="py-4" value={CATEGORY_PAGE_TABS.BRANDS}>
+              {t(`common:${CATEGORY_PAGE_TABS.BRANDS}`)}
+            </TabsTrigger>
+            <TabsTrigger className="py-4" value={CATEGORY_PAGE_TABS.PRODUCTS}>
+              {t(`common:${CATEGORY_PAGE_TABS.PRODUCTS}`)}
+            </TabsTrigger>
+          </TabsList>
+        )}
+        {categoryQuery?.data?.category?.childrenCount > 0 && (
+          <TabsContent
+            className="bg-alpha-50 sm:bg-alpha-white"
             value={CATEGORY_PAGE_TABS.SUBCATEGORIES}
           >
-            {t(`common:${CATEGORY_PAGE_TABS.SUBCATEGORIES}`)}
-          </TabsTrigger>
-          {publicPreOrders?.data?.publicOrders?.length > 0 && (
-            <TabsTrigger className="py-4" value={CATEGORY_PAGE_TABS.ORDERS}>
-              {t(`common:${CATEGORY_PAGE_TABS.ORDERS}`)}
-            </TabsTrigger>
-          )}
-          <TabsTrigger className="py-4" value={CATEGORY_PAGE_TABS.BRANDS}>
-            {t(`common:${CATEGORY_PAGE_TABS.BRANDS}`)}
-          </TabsTrigger>
-          <TabsTrigger className="py-4" value={CATEGORY_PAGE_TABS.PRODUCTS}>
-            {t(`common:${CATEGORY_PAGE_TABS.PRODUCTS}`)}
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent
-          className="bg-alpha-50 sm:bg-alpha-white"
-          value={CATEGORY_PAGE_TABS.SUBCATEGORIES}
-        >
-          {categoryQuery?.data?.category?.children.length > 0 ? (
             <CategoriesList
               categoryId={categoryId}
               getAllBlogsQuery={getAllBlogsQuery}
@@ -130,10 +161,8 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
               isSubcategory
               isMobileView={isMobileView}
             />
-          ) : (
-            ""
-          )}
-        </TabsContent>
+          </TabsContent>
+        )}
         <TabsContent value={CATEGORY_PAGE_TABS.ORDERS}>
           <CategoriesPublicOrders
             publicPreOrders={publicPreOrders}

@@ -75,11 +75,7 @@ const CategoriesList = ({
                   onClick={() => {
                     setSelectedItemId(category.id)
                   }}
-                  href={
-                    isMobileView && !categoryId
-                      ? `/category/${category.id}`
-                      : `/products/${category.id}/${category.title}`
-                  }
+                  href={`/category/${category.id}`}
                   selectedItemId={selectedItemId}
                   key={category.id}
                   title={category.title}
