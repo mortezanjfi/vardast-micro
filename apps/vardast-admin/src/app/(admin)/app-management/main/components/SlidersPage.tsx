@@ -4,6 +4,7 @@ import { useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import CardContainer from "@vardast/component/desktop/CardContainer"
+import Link from "@vardast/component/Link"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
@@ -131,9 +132,26 @@ function SlidersPage({}: Props) {
                               XL
                             </span>
                           </td>
-                          {/* <td></td> */}
                           <td>{statusSliderFa[slider?.status]?.name_fa}</td>
-                          <td></td>
+                          <td>
+                            <Link
+                              target="_blank"
+                              href={`/app-management/main/${slider?.id}`}
+                            >
+                              <span className="tag cursor-pointer text-blue-500">
+                                {t("common:edit")}
+                              </span>
+                            </Link>
+                            {/* /
+                            <span
+                              className="tag cursor-pointer text-error"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                              }}
+                            >
+                              {t("common:delete")}
+                            </span> */}
+                          </td>
                         </tr>
                       )
                   )}

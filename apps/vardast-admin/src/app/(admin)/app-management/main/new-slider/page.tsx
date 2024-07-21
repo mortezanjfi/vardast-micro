@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 
-import NewSliderForm from "../components/NewSliderForm"
+import SliderForm from "../components/SliderForm"
 
 type Props = {}
 
@@ -11,5 +11,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default (props: Props) => {
-  return <NewSliderForm />
+  return <SliderForm />
 }
