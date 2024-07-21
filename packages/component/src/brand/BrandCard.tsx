@@ -26,7 +26,7 @@ export const BrandCardSkeleton = () => {
     <div className="flex h-full w-full flex-col lg:px-4">
       <div className="grid flex-1 items-start sm:grid-rows-7 sm:py lg:flex lg:flex-col">
         <div
-          className={`relative row-span-4 h-[50vw] w-full transform transition-all sm:py  md:h-[200px] lg:h-[174px]  xl:h-[127px] 2xl:h-[138px] `}
+          className={`relative row-span-4 h-[50vw] w-full transform transition-all sm:py  md:h-[127px] lg:h-[174px]  xl:h-[127px] 2xl:h-[138px] `}
         >
           <Image
             src={frameLessImage}
@@ -74,20 +74,18 @@ const BrandCard = forwardRef(
           setSelectedItemId(brand?.id)
         }}
         className={clsx(
-          "flex h-full flex-col overflow-hidden  rounded-2xl bg-alpha-white"
+          "flex h-full flex-col overflow-hidden rounded-2xl bg-alpha-white"
           // selectedItemId === brand?.id
           //   ? "border-2 border-primary"
           //   : "border-alpha-50"
         )}
-        href={`/brand/${brand?.id}`}
+        href={`/brand/${brand?.id}?orderBy=NEWEST`}
       >
         <div
           ref={containerRef}
           className={clsx(
-            "relative",
-            isMobileView
-              ? " h-[50vw] w-full"
-              : "h-[200px] lg:h-[174px]  xl:h-[127px]  2xl:h-[138px] "
+            "relative h-[127px] lg:h-[174px]  xl:h-[127px]  2xl:h-[138px]",
+            isMobileView && "w-full"
           )}
         >
           <Image
@@ -100,7 +98,10 @@ const BrandCard = forwardRef(
             fill
             // width={300}
             // height={400}
-            className="rounded-2xl object-fill"
+            className={clsx(
+              "transform rounded-2xl object-fill transition",
+              selectedItemId === brand?.id ? "border-2 border-primary" : ""
+            )}
           />
         </div>
 

@@ -172,7 +172,7 @@ const ProductCard = forwardRef(
         )}
       >
         {product.id === selectedItemId && (
-          <div className="absolute left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center border-2 border-primary bg-alpha-white bg-opacity-50">
+          <div className="absolute left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center bg-alpha-white bg-opacity-50">
             {/* <Loader2Icon className="h-10 w-10 animate-spin text-primary" /> */}
           </div>
         )}

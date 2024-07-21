@@ -55,7 +55,7 @@ const OrderPreviewCard = ({ order, singleCard }: Props) => {
     <div
       className={clsx(
         "flex flex-col gap-3 py-5",
-        singleCard && "px-5 ring-1 ring-alpha-200"
+        singleCard && "ring-y-1 md:ring-x-1 px-5 ring-alpha-200"
       )}
     >
       <div className="flex w-full items-center justify-between">

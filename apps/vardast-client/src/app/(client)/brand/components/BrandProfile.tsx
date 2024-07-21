@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { useQuery } from "@tanstack/react-query"
 import brandSellerBlank from "@vardast/asset/brand-seller-blank.svg"
+import CardAvatar from "@vardast/component/CardAvatar"
 import FavoriteIcon from "@vardast/component/FavoriteIcon"
 import ShareIcon from "@vardast/component/ShareIcon"
 import {
@@ -114,27 +115,28 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
         <div className="flex  flex-col gap-y bg-alpha-white md:h-auto md:min-h-full ">
           <div className="flex h-full flex-col items-center justify-center gap-y bg-alpha-white">
             {isMobileView && (
-              <div className="flex h-40 max-h-40 min-h-40 w-full flex-col items-center justify-center ">
-                <div className="h-full w-full border-alpha-400 ">
-                  <div className="aspect-square h-full w-full">
-                    <Image
-                      src={
-                        brandQuery?.data?.brand?.bannerDesktop?.presignedUrl
-                          ?.url
-                      }
-                      alt="seller"
-                      height={140}
-                      width={400}
-                      className="object-contain md:rounded-full"
-                    />
-                  </div>
-                </div>
+              <div className="relative flex aspect-square h-40 max-h-40 min-h-40 w-full flex-col items-center justify-center">
+                <Image
+                  src={
+                    brandQuery?.data?.brand?.bannerDesktop?.presignedUrl?.url
+                  }
+                  alt="seller"
+                  fill
+                  className="h-full w-full md:rounded-full"
+                />
               </div>
             )}
 
             <div className="flex w-full grid-cols-2 justify-between px-6 pb-6 pt-2 md:grid md:!p-0">
               <div className=" flex items-center justify-center gap-2 md:col-span-2 md:flex-col md:gap-7 md:py-9">
-                <div className="flex h-20 w-20 flex-col items-center justify-center overflow-hidden rounded-full border-2 md:h-36  md:!min-h-36 md:w-36">
+                <CardAvatar
+                  url={
+                    brandQuery?.data?.brand?.logoFile?.presignedUrl?.url
+                      ? brandQuery?.data?.brand?.logoFile?.presignedUrl?.url
+                      : brandSellerBlank
+                  }
+                />
+                {/* <div className="flex h-20 w-20 flex-col items-center justify-center overflow-hidden rounded-full border-2 md:h-36  md:!min-h-36 md:w-36">
                   <Image
                     alt="logo"
                     width={100}
@@ -145,7 +147,7 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
                         : brandSellerBlank
                     }
                   />
-                </div>
+                </div> */}
                 <h1 className="text-base font-semibold">
                   {brandQuery?.data?.brand?.name}
                 </h1>

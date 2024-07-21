@@ -356,8 +356,9 @@ const _seller_or_brand_with_header: ILayoutProps = {
     },
     main: { page_header: true },
     footer: {
-      back: true,
-      action: true
+      search: true,
+      options: { name: "_default" },
+      back: true
     }
   }
 }
