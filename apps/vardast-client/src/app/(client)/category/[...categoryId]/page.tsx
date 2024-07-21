@@ -13,7 +13,6 @@ interface CategoryIdPageIndexProps {
   }
 }
 const siteTitle = process.env.NEXT_PUBLIC_TITLE
-console.log(siteTitle)
 
 export async function generateMetadata(
   { params }: CategoryIdPageIndexProps

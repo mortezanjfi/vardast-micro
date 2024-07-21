@@ -57,7 +57,6 @@ function SlidersPage({}: Props) {
     [sliders?.data?.getBanners?.length]
   )
 
-  console.log(sliders?.data?.getBanners)
   const addSlider = () => {
     router.push("/app-management/main/new-slider")
   }
@@ -165,8 +164,6 @@ function SlidersPage({}: Props) {
                                 className="tag cursor-pointer text-error"
                                 onClick={(e) => {
                                   e.stopPropagation()
-                                  console.log(slider.id)
-
                                   setDeleteModalOpen(true)
                                   setSliderToDelete(slider as Banner)
                                 }}

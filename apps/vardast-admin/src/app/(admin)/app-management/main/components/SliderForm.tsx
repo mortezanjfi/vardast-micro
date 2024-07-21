@@ -109,10 +109,6 @@ function SliderForm({ slider }: Props) {
     }
   })
 
-  if (slider) {
-    console.log(slider)
-  }
-
   const createSliderMutation = useCreateBannerMutation(
     graphqlRequestClientWithToken,
     {
@@ -210,8 +206,6 @@ function SliderForm({ slider }: Props) {
 
         const uploadResult = await response.json()
         form.setValue(formValue, uploadResult.uuid)
-        console.log(form.getValues(formValue))
-
         setFile(fileToUpload)
         setFilePreview(URL.createObjectURL(fileToUpload))
       })
@@ -574,70 +568,6 @@ function SliderForm({ slider }: Props) {
                 )}
               </div>
             </div>
-            {/* <div className="col-span-2 flex flex-col gap-2">
-              <span>{t("common:entity_size", { entity: "Small" })}</span>
-              <Dropzone
-                maxFiles={1}
-                withHeight={false}
-                uploadPath={uploadPaths.brandCatalog}
-                onAddition={(file) => {
-                  form.setValue("smallUuid", file.uuid)
-                }}
-                onDelete={(file) => {
-                  // setSmallUuid("")
-                }}
-              />
-            </div>
-
-            <div className="col-span-2 flex flex-col gap-2">
-              <span>{t("common:entity_size", { entity: "Medium" })}</span>
-              <Dropzone
-                withHeight={false}
-                uploadPath={uploadPaths.brandCatalog}
-                onAddition={(file) => {
-                  console.log("add")
-                  // setMediumUuid(file.uuid)
-                  form.setValue("mediumUuid", file.uuid)
-                }}
-                onDelete={(file) => {
-                  console.log("delete")
-                  // setMediumUuid("")
-                }}
-              />
-            </div>
-            <div className="col-span-2 flex flex-col gap-2">
-              <span>{t("common:entity_size", { entity: "Large" })}</span>{" "}
-              <Dropzone
-                withHeight={false}
-                uploadPath={uploadPaths.brandCatalog}
-                onAddition={(file) => {
-                  console.log("add")
-                  form.setValue("largeUuid", file.uuid)
-
-                  // setLargeUuid(file.uuid)
-                }}
-                onDelete={(file) => {
-                  console.log("delete")
-                  // setLargeUuid("")
-                }}
-              />
-            </div>
-            <div className="col-span-2 flex flex-col gap-2">
-              <span>{t("common:entity_size", { entity: "Xlarge" })}</span>{" "}
-              <Dropzone
-                withHeight={false}
-                uploadPath={uploadPaths.brandCatalog}
-                onAddition={(file) => {
-                  console.log("add")
-                  form.setValue("xlargeUuid", file.uuid)
-                  // setXlargeUuid(file.uuid)
-                }}
-                onDelete={(file) => {
-                  console.log("delete")
-                  // setXlargeUuid("")
-                }}
-              />
-            </div> */}
           </div>
         </CardContainer>
         <div className="mt-7 flex justify-end gap-3 border-t py-7">

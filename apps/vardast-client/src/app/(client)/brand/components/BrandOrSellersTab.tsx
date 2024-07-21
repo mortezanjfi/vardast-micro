@@ -175,7 +175,6 @@ const BrandOrSellersTab = ({
                   sort={sort}
                   onSortChanged={(sort) => {
                     setSort(sort)
-                    console.log(sort)
                   }}
                 />{" "}
                 {!productsProps.isMobileView && (
