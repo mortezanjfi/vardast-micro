@@ -17,8 +17,8 @@ import { Input } from "@vardast/ui/input"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
 
+import OrderProductsList from "../../../../apps/vardast-order/src/app/(bid)/orders/[uuid]/components/OrderProductsList"
 import { DetailsWithTitle } from "../desktop/DetailsWithTitle"
-import OrderProductsList from "../desktop/OrderProductsList"
 
 export type OfferDetailModalProps = {
   isClient?: boolean

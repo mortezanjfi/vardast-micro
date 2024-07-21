@@ -16,8 +16,8 @@ import { LucideEdit, LucideMoreVertical } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 import { UseFormReturn } from "react-hook-form"
 
+import { ConfirmOffer } from "../../../../apps/vardast-order/src/app/(bid)/orders/[uuid]/components/SellersList"
 import { DetailsWithTitle } from "../desktop/DetailsWithTitle"
-import { ConfirmOffer } from "./SellersList"
 
 type SellerMobileCartProps = {
   setSelectedOfferId: Dispatch<SetStateAction<number>>

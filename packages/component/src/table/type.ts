@@ -3,7 +3,7 @@ import {
   Row,
   TableState
 } from "@tanstack/react-table"
-import { ApiArgsType, ApiResponseType } from "@vardast/query/type"
+import { ApiArgsType } from "@vardast/query/type"
 import { SelectPopoverPropsType } from "@vardast/ui/src/select-popover"
 import { UseFormReturn } from "react-hook-form"
 import { TypeOf, ZodType } from "zod"
@@ -27,16 +27,21 @@ type IFilter<T extends FilterComponentTypeEnum, TName> = IFilterMap<T> & {
   title: string
 }
 
+export type CheckedTypeByArgs<T, K> = T extends undefined ? K : T
+
 export type OnRowFunctionType<T> = (row: Row<T>) => void
 
 export interface ITableProps<
   T,
-  TSchema extends ZodType<any, any, any> = undefined
+  TSchema extends ZodType<any, any, any> = undefined,
+  TState extends Object = undefined,
+  TResponse = undefined
 > {
   name: string
   columns: Array<ColumnDef<T>>
   selectable?: boolean
   indexable?: boolean
+  internalState?: TState | undefined
   paginable?: boolean
   container?: Omit<CardContainerProps, "children">
   onRow?: {
@@ -46,11 +51,11 @@ export interface ITableProps<
   fetch: {
     accessToken?: boolean
     api: (
-      args: ApiArgsType<TSchema>,
+      args: CheckedTypeByArgs<TState, ApiArgsType<TSchema>>,
       accessToken?: string
-    ) => Promise<ApiResponseType<T | unknown>>
+    ) => Promise<any>
   }
-  handleResponse?: (args: ApiResponseType<T | unknown>) => void
+  handleResponse?: (args: TResponse) => Array<Partial<T>>
   getTableState?: (args: Partial<TableState> & { data: T[] }) => void
   filters?: FilterOptions<TSchema>
 }

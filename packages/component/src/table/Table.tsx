@@ -87,6 +87,10 @@ function getDefaults<Schema extends AnyZodObject>(schema: Schema) {
   )
 }
 
+const getConvertedApiData = (data) => {
+  return data[Object.keys(data)[0]]
+}
+
 const Table = <
   T extends object,
   TSchema extends ZodSchema<any> = ZodSchema<any>
@@ -96,6 +100,7 @@ const Table = <
   onRow,
   paginable,
   selectable,
+  internalState,
   indexable = true,
   fetch,
   handleResponse,
@@ -112,14 +117,17 @@ const Table = <
   const [rowSelection, setRowSelection] = useState({})
   const { data: session } = useSession()
 
-  const memoizeFetchArgs: ApiArgsType<TSchema> = useMemo(() => {
-    const args = convertArgsToNumber(fetchArgs.args)
-    return {
-      page: fetchArgs.pageIndex + 1,
-      perPage: fetchArgs.pageSize,
-      ...args
-    }
-  }, [fetchArgs.pageIndex, fetchArgs.pageSize, fetchArgs.args])
+  const memoizeFetchArgs: ApiArgsType<TSchema> =
+    internalState ??
+    useMemo(() => {
+      const args = convertArgsToNumber(fetchArgs.args)
+      return {
+        ...(paginable
+          ? { page: fetchArgs.pageIndex + 1, perPage: fetchArgs.pageSize }
+          : {}),
+        ...args
+      }
+    }, [fetchArgs.pageIndex, fetchArgs.pageSize, fetchArgs.args, internalState])
 
   const memoizePagination: PaginationState = useMemo(
     () => ({
@@ -134,9 +142,7 @@ const Table = <
     [filters?.schema]
   )
 
-  const { data, isLoading, isFetching } = useQuery<
-    ApiResponseType<T | unknown>
-  >({
+  const { data, isLoading, isFetching } = useQuery<ApiResponseType<T>>({
     queryKey: [name, "table", memoizeFetchArgs],
     queryFn: async () => {
       const response = await fetch.api(
@@ -144,9 +150,10 @@ const Table = <
         fetch?.accessToken && session?.accessToken
       )
       setRowSelection({})
-      if (handleResponse) {
-        handleResponse(response)
+      if (!!handleResponse) {
+        return handleResponse(getConvertedApiData(response))
       }
+
       return response
     },
     keepPreviousData: true,
@@ -156,9 +163,11 @@ const Table = <
   const serializedData = useMemo(
     () =>
       data
-        ? (data[Object.keys(data)[0]] as unknown as TableResponseType<T>)
+        ? handleResponse
+          ? ({ data } as unknown as TableResponseType<T>)
+          : (data[Object.keys(data)[0]] as unknown as TableResponseType<T>)
         : ([] as unknown as TableResponseType<T>),
-    [data]
+    [data, handleResponse]
   )
 
   const indexColumns = useMemo<ColumnDef<T>[]>(
@@ -210,7 +219,7 @@ const Table = <
     columns,
     pageCount: serializedData?.lastPage ?? 0,
     state: {
-      pagination: memoizePagination,
+      ...(paginable ? { pagination: memoizePagination } : {}),
       rowSelection
     },
     enableRowSelection: !!selectable, //enable row selection for all rows
@@ -224,7 +233,7 @@ const Table = <
         return { ...prev, ...newState }
       })
     },
-    manualPagination: true
+    manualPagination: paginable
   })
 
   type FilterFieldsType = TypeOf<TSchema>
@@ -320,7 +329,7 @@ const Table = <
                   ))}
                 </thead>
                 <tbody>
-                  {table?.getRowModel()?.rows.map((row) => {
+                  {table?.getRowModel()?.rows?.map((row) => {
                     return (
                       <tr
                         key={row.id}
@@ -376,7 +385,7 @@ const Table = <
               </table>
               {!isFetching &&
                 !isLoading &&
-                !table?.getRowModel()?.rows.length && (
+                !table?.getRowModel()?.rows?.length && (
                   <div className="flex h-full w-full flex-col items-center justify-center gap-y-7 bg-alpha-white px-6 py-10">
                     <NotFoundIcon />
                     <p className="text-center text-alpha-500">پیدا نشد!</p>

@@ -1,4 +1,6 @@
-export type ApiArgsType<TFilter> = {
+import { CheckedTypeByArgs } from "./../../component/src/table/type"
+
+export type ApiArgsType<TFilter = {}> = {
   page: number
   perPage: number
 } & TFilter
@@ -17,7 +19,7 @@ export type ApiResponseType<T> = {
   [K in string]: TableResponseType<T>
 }
 
-export type TableFetchApiFunctionType = <T, K>(
-  args: ApiArgsType<K>,
+export type TableFetchApiFunctionType = <T, K, TState extends Object>(
+  args: CheckedTypeByArgs<TState, ApiArgsType<K>>,
   accessToken?: string
 ) => Promise<ApiResponseType<T>>

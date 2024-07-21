@@ -5,7 +5,7 @@ import { useFindPreOrderByIdQuery } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ACTION_BUTTON_TYPE } from "@vardast/type/OrderProductTabs"
 
-import OrderProductsList from "../desktop/OrderProductsList"
+import OrderProductsList from "../../../../apps/vardast-order/src/app/(bid)/orders/[uuid]/components/OrderProductsList"
 
 type Props = {
   uuid: string

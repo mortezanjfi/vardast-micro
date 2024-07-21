@@ -8,6 +8,7 @@ import {
   PreOrder,
   PreOrderStates
 } from "@vardast/graphql/generated"
+import { Badge, BadgeVariantsType } from "@vardast/ui/badge"
 import { Button } from "@vardast/ui/button"
 import {
   DropdownMenu,
@@ -17,7 +18,6 @@ import {
   DropdownMenuTrigger
 } from "@vardast/ui/dropdown-menu"
 import convertToPersianDate from "@vardast/util/convertToPersianDate"
-import { clsx } from "clsx"
 import { LucideEdit, LucideMoreVertical, LucideTrash } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
@@ -32,49 +32,52 @@ type OrderCardProps = {
   setDeleteModalOpen?: Dispatch<SetStateAction<boolean>>
 }
 
-export const PreOrderStatesFa = {
+export const PreOrderStatesFa: Record<
+  PreOrderStates,
+  { variant: BadgeVariantsType; name_fa_admin: string; name_fa: string }
+> = {
   [PreOrderStates.PendingAdmin]: {
-    className: "tag-warning",
+    variant: "warning",
     name_fa_admin: "در انتظار تایید ادمین",
     name_fa: "جاری"
   },
   [PreOrderStates.PendingInfo]: {
-    className: "tag-warning",
+    variant: "warning",
     name_fa_admin: "در انتظار دریافت اطلاعات",
     name_fa: "جاری"
   },
   [PreOrderStates.PendingOffer]: {
-    className: "tag-warning",
+    variant: "warning",
     name_fa_admin: "در انتظار پیشنهاد قیمت",
     name_fa: "جاری"
   },
   [PreOrderStates.PendingProduct]: {
-    className: "tag-warning",
+    variant: "warning",
     name_fa_admin: "در انتظار افزودن کالا",
     name_fa: "جاری"
   },
   [PreOrderStates.VerifyFile]: {
-    className: "tag-warning",
+    variant: "warning",
     name_fa_admin: "در انتظار تایید فایل",
     name_fa: "جاری"
   },
   [PreOrderStates.Closed]: {
-    className: "tag-success",
+    variant: "success",
     name_fa_admin: "خریداری شده",
     name_fa: "خریداری شده"
   },
   [PreOrderStates.Completed]: {
-    className: "tag-danger",
+    variant: "danger",
     name_fa_admin: "خریداری نشده",
     name_fa: "خریداری نشده"
   },
   [PreOrderStates.PendingPayment]: {
-    className: "tag-success",
+    variant: "success",
     name_fa: "در انتظار پرداخت",
     name_fa_admin: "در انتظار پرداخت"
   },
   [PreOrderStates.Rejected]: {
-    className: "tag-danger",
+    variant: "danger",
     name_fa: "رد شده",
     name_fa_admin: "رد شده"
   }
@@ -124,15 +127,10 @@ const OrderCard = ({
               <span>{preOrder?.id}</span>
             </div>
           )}
-          <div
-            className={clsx(
-              "tag",
-              PreOrderStatesFa[preOrder?.status]?.className
-            )}
-          >
+          <Badge variant={PreOrderStatesFa[preOrder?.status]?.variant}>
             {/* <Dot /> */}
             <span>{PreOrderStatesFa[preOrder?.status]?.name_fa}</span>
-          </div>
+          </Badge>
 
           {!isSellerPanel && (
             <Link href={`/profile/orders/${preOrder?.id}/offers`}>

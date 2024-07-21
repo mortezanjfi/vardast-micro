@@ -40,7 +40,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "**/*.svg"
+    "**/*.svg",
+    "../../apps/vardast-order/src/app/(bid)/orders/[uuid]/components/OrderProductsList.tsx",
+    "../../apps/vardast-order/src/app/(bid)/orders/[uuid]/components/SellersList.tsx",
+    "../../apps/vardast-order/src/app/(bid)/orders/components/OrderInfoCard.tsx"
   ],
   "exclude": [
     "node_modules",
