@@ -42,11 +42,8 @@ const TablePagination = <T,>({ table, total }: Props<T>) => {
           <p>برو به صفحه:</p>
           <Input
             className="w-16"
-            disabled={
-              digitsEnToFa(getState().pagination.pageIndex + 1) ===
-              digitsEnToFa(getPageCount().toLocaleString())
-            }
-            value={digitsEnToFa(getState().pagination.pageIndex + 1)}
+            disabled={getState().pagination.pageIndex + 1 === getPageCount()}
+            value={digitsEnToFa(getState().pagination.pageIndex + 1 || 0)}
             onChange={(e) => {
               const page = e.target.value ? Number(e.target.value) - 1 : 0
               setTablePageIndex(page)
@@ -81,11 +78,11 @@ const TablePagination = <T,>({ table, total }: Props<T>) => {
           </Button>
           <div className="flex items-center gap-2">
             <p className="font-medium">
-              {digitsEnToFa(getState().pagination.pageIndex + 1)}
+              {digitsEnToFa(getState().pagination.pageIndex + 1) || 0}
             </p>
             <p>از</p>
             <p className="font-medium">
-              {digitsEnToFa(getPageCount().toLocaleString())}
+              {digitsEnToFa(getPageCount().toLocaleString() || 0)}
             </p>
           </div>
           <Button
@@ -123,7 +120,7 @@ const TablePagination = <T,>({ table, total }: Props<T>) => {
                 role="combobox"
                 className="input-field flex items-center gap-1"
               >
-                {digitsEnToFa(getState().pagination.pageSize)}
+                {digitsEnToFa(getState().pagination.pageSize || 0)}
                 <DynamicHeroIcon
                   icon="ChevronDownIcon"
                   className="icon h-4 w-4"
@@ -145,7 +142,7 @@ const TablePagination = <T,>({ table, total }: Props<T>) => {
                         setPageSizeModalOpen(false)
                       }}
                     >
-                      {digitsEnToFa(option.label)}
+                      {digitsEnToFa(option.label || 0)}
                       {+option.value === getState().pagination.pageSize && (
                         <DynamicHeroIcon icon="CheckIcon" className="h-4 w-4" />
                       )}
@@ -157,7 +154,7 @@ const TablePagination = <T,>({ table, total }: Props<T>) => {
         </Popover>
         <div className="flex items-center gap-1">
           <p>تعداد کل:</p>
-          <p className="font-medium">{digitsEnToFa(total)}</p>
+          <p className="font-medium">{digitsEnToFa(total || 0)}</p>
         </div>
       </div>
     </div>

@@ -1,57 +1,96 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
-import { LucideCheck, LucideChevronsUpDown } from "lucide-react"
+import { LucideCheck, LucideChevronsUpDown, RefreshCcw } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
 import { Button } from "./button"
-import { Command, CommandEmpty, CommandGroup, CommandItem } from "./command"
+import { Command, CommandGroup, CommandItem } from "./command"
 import { Popover, PopoverContent, PopoverTrigger } from "./popover"
 
-type Props = {
+export type SelectPopoverPropsType = {
   value?: string
-  options: { key: string; value: string }[]
   onSelect: (value: string) => void
+  options: { key: string; value: string }[]
+  loading?: boolean
+  setSearch?: (query?: string) => void
 }
 
-const SelectPopover = ({ value, options, onSelect }: Props) => {
+const SelectPopover = ({
+  value,
+  options,
+  onSelect,
+  loading
+  // setSearch
+}: SelectPopoverPropsType) => {
   const [popoverOpen, setPopoverOpen] = useState(false)
-
+  const [label, setLabel] = useState("")
+  // const [query, setQuery] = useDebouncedState<string>("", 500)
+  // const [queryTemp, setQueryTemp] = useState<string>("")
   const { t } = useTranslation()
+
+  // useEffect(() => {
+  //   if (setSearch) {
+  //     setSearch(query)
+  //   }
+  // }, [query, setSearch])
+
+  useEffect(() => {
+    setLabel(() =>
+      !!value
+        ? loading
+          ? "در حال بارگزاری..."
+          : options.find((item) => item.value === value)?.key
+        : t("common:select_placeholder")
+    )
+  }, [value, label, options, loading])
+
+  // console.log({ value, label })
 
   return (
     <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
       <PopoverTrigger asChild>
         <Button
           noStyle
+          disabled={loading}
           role="combobox"
           className="input-field flex items-center text-start"
         >
-          {value
-            ? options.find((item) => item.value === value)?.key
-            : t("common:select_placeholder")}
-          <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+          {loading ? (
+            <>
+              در حال بارگزاری...
+              <RefreshCcw className="ms-auto h-4 w-4 shrink-0 animate-spin" />
+            </>
+          ) : (
+            <>
+              {label}
+              <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+            </>
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent>
         <Command>
-          {/* <CommandInput
-            placeholder={t("common:search_entity", {
-              entity: t("common:uom")
-            })}
-          /> */}
-          <CommandEmpty>
-            {t("common:no_entity_found", {
-              entity: t("common:uom")
-            })}
-          </CommandEmpty>
+          {/* {setSearch && (
+            <CommandInput
+              loading={loading}
+              value={queryTemp}
+              onValueChange={(newQuery) => {
+                setQuery(newQuery)
+                setQueryTemp(newQuery)
+              }}
+              placeholder={"جستجو"}
+            />
+          )}
+          <CommandEmpty>یافت نشد</CommandEmpty> */}
           <CommandGroup>
-            {options.map((item) => (
+            {options?.map((item) => (
               <CommandItem
                 value={item.value}
                 key={item.value}
                 onSelect={(value) => {
+                  setLabel(item.key)
                   onSelect(value)
                   setPopoverOpen(false)
                 }}

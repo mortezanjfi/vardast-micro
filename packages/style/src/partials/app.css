@@ -74,7 +74,6 @@
 .app-sidebar {
   @apply fixed
     top-0
-    md:top-[calc(theme('spacing.header')+theme('spacing.6'))]
     z-20
     h-full
     flex-shrink-0
@@ -91,6 +90,9 @@
     dark:bg-alpha-950
     dark:bg-opacity-10;
 
+  &-has-header {
+    @apply md:top-[calc(theme('spacing.header')+theme('spacing.6'))];
+  }
   &.open {
     @apply translate-x-0 z-50 hide-scrollbar rounded-l-lg bg-opacity-80 bg-alpha-white;
   }

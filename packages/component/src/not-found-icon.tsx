@@ -21,22 +21,22 @@ const NotFoundIcon = () => {
         fill="#F15B22"
       />
       <circle cx="52" cy="33" r="2" fill="#466473" />
-      <circle cx="9" cy="15" r="2.25" stroke="#466473" stroke-width="0.5" />
-      <circle cx="46" cy="14" r="2.25" stroke="#D9D9D9" stroke-width="0.5" />
-      <g clip-path="url(#clip0_2196_33388)">
+      <circle cx="9" cy="15" r="2.25" stroke="#466473" strokeWidth="0.5" />
+      <circle cx="46" cy="14" r="2.25" stroke="#D9D9D9" strokeWidth="0.5" />
+      <g clipPath="url(#clip0_2196_33388)">
         <rect
           width="36"
           height="36"
           transform="translate(10 18)"
           fill="white"
-          fill-opacity="0.01"
+          fillOpacity="0.01"
         />
         <path
           d="M28 22.5C30.838 22.5 33.6377 22.6642 36.39 22.9836C38.0409 23.1752 39.25 24.5985 39.25 26.2605V49.5L28 43.875L16.75 49.5V26.2605C16.75 24.5985 17.9591 23.1752 19.61 22.9836C20.8669 22.8377 22.1336 22.7243 23.4094 22.644"
           stroke="#262626"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
       <defs>

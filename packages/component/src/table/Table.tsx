@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { FormEvent, useCallback, useEffect, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQuery } from "@tanstack/react-query"
 import {
@@ -9,6 +9,7 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  PaginationState,
   useReactTable
 } from "@tanstack/react-table"
 import {
@@ -20,15 +21,66 @@ import { Checkbox } from "@vardast/ui/checkbox"
 import { Form } from "@vardast/ui/form"
 import { clsx } from "clsx"
 import { useSession } from "next-auth/react"
-import { parseAsInteger, useQueryStates } from "next-usequerystate"
-import { useForm } from "react-hook-form"
-import { TypeOf, ZodSchema } from "zod"
+import {
+  createParser,
+  parseAsInteger,
+  useQueryStates
+} from "next-usequerystate"
+import { DefaultValues, useForm } from "react-hook-form"
+import { AnyZodObject, TypeOf, ZodDefault, ZodSchema } from "zod"
 
 import CardContainer from "../desktop/CardContainer"
 import Loading from "../Loading"
+import NotFoundIcon from "../not-found-icon"
 import Filter from "./Filter"
 import TablePagination from "./TablePagination"
 import { ITableProps } from "./type"
+
+const filtersParser = createParser({
+  parse: (value) => (value ? JSON.parse(value) : {}),
+  serialize: (value) => JSON.stringify(value)
+})
+
+const serializedDefaultForm = (data, setValue) => {
+  Object.entries(data).forEach(([key, value]) => {
+    if (value) {
+      setValue(key, `${value}`)
+    }
+  })
+}
+
+const convertArgsToNumber = (data: any) => {
+  const args = { ...data }
+  Object.entries(args).forEach(([key, value]) => {
+    if (value) {
+      if (Number(value)) {
+        args[key] = Number(value)
+      }
+    } else {
+      delete args[key]
+    }
+  })
+  return args
+}
+
+const clearData = <T,>(filter: T) => {
+  const args = { ...filter }
+  Object.entries(filter).forEach(([key, value]) => {
+    if (!value) {
+      delete args[key]
+    }
+  })
+  return args
+}
+
+function getDefaults<Schema extends AnyZodObject>(schema: Schema) {
+  return Object.fromEntries(
+    Object.entries(schema.shape).map(([key, value]) => {
+      if (value instanceof ZodDefault) return [key, value._def.defaultValue()]
+      return [key, ""]
+    })
+  )
+}
 
 const Table = <
   T extends object,
@@ -45,28 +97,41 @@ const Table = <
   container,
   filters
 }: ITableProps<T, TSchema>) => {
-  const [pagination, setPagination] = useQueryStates({
+  const [fetchArgs, setFetchArgs] = useQueryStates({
     pageIndex: parseAsInteger.withDefault(0),
-    pageSize: parseAsInteger.withDefault(10)
+    pageSize: parseAsInteger.withDefault(10),
+    args: filtersParser.withDefault({})
   })
-  const [filter, setFilter] = useState<FilterFieldsType | undefined>(undefined)
   const [rowSelection, setRowSelection] = useState({})
   const { data: session } = useSession()
 
-  const fetchArgs: ApiArgsType<any> = useMemo(
+  const memoizeFetchArgs: ApiArgsType<TSchema> = useMemo(() => {
+    const args = convertArgsToNumber(fetchArgs.args)
+    return {
+      page: fetchArgs.pageIndex + 1,
+      perPage: fetchArgs.pageSize,
+      ...args
+    }
+  }, [fetchArgs.pageIndex, fetchArgs.pageSize, fetchArgs.args])
+
+  const memoizePagination: PaginationState = useMemo(
     () => ({
-      page: pagination.pageIndex + 1, // Convert to 1-based index
-      perPage: pagination.pageSize,
-      ...filter
+      pageIndex: fetchArgs.pageIndex ?? 0,
+      pageSize: fetchArgs.pageSize ?? 10
     }),
-    [pagination, filter]
+    [fetchArgs.pageIndex, fetchArgs.pageSize]
+  )
+
+  const memoizedDefaultValues = useMemo(
+    () => getDefaults(filters?.schema as unknown as AnyZodObject),
+    [filters?.schema]
   )
 
   const { data, isLoading, isFetching } = useQuery<ApiResponseType<T>>({
-    queryKey: [name, "table", fetchArgs],
+    queryKey: [name, "table", memoizeFetchArgs],
     queryFn: async () => {
       const response = await fetch.api(
-        fetchArgs,
+        memoizeFetchArgs,
         fetch?.accessToken && session?.accessToken
       )
       setRowSelection({})
@@ -115,7 +180,7 @@ const Table = <
     columns: !!selectable ? [selectableColumns, ...columns] : columns,
     pageCount: serializedData?.lastPage ?? 0,
     state: {
-      pagination,
+      pagination: memoizePagination,
       rowSelection
     },
     enableRowSelection: !!selectable, //enable row selection for all rows
@@ -124,44 +189,53 @@ const Table = <
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onPaginationChange: (updater) => {
-      setPagination((prev) => {
+      setFetchArgs((prev) => {
         const newState = typeof updater === "function" ? updater(prev) : updater
         return { ...prev, ...newState }
       })
     },
-    manualPagination: true //we're doing manual "server-side" pagination
-    // debugTable: true,
-    // debugHeaders: true,
-    // debugColumns: true
+    manualPagination: true
   })
 
   type FilterFieldsType = TypeOf<TSchema>
 
   const form = useForm<FilterFieldsType>({
-    resolver: zodResolver(filters?.schema)
+    resolver: zodResolver(filters?.schema),
+    defaultValues: memoizedDefaultValues as DefaultValues<TypeOf<TSchema>>,
+    reValidateMode: "onChange"
   })
 
-  const onSubmit = (filter: FilterFieldsType) => {
-    const temp = { ...filter }
-    Object.entries(filter).forEach(([key, value]) => {
-      if (!value) {
-        delete temp[key]
-      }
+  const onSubmit = useCallback((filter: FilterFieldsType) => {
+    setFetchArgs((prev) => {
+      return { ...prev, args: clearData(filter), pageIndex: 0 }
     })
-    setPagination((prev) => {
-      return { ...prev, pageIndex: 0 }
-    })
-    setFilter(temp)
-  }
+  }, [])
+
+  const onReset = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      setFetchArgs({
+        pageIndex: 0,
+        pageSize: 10,
+        args: {}
+      })
+      form.reset()
+    },
+    [form]
+  )
+
+  useEffect(() => {
+    serializedDefaultForm(fetchArgs.args, form.setValue)
+  }, [fetchArgs.args, form])
 
   useEffect(() => {
     getTableState &&
       getTableState({
-        ...(paginable ? { pagination } : {}),
-        ...(selectable ? { rowSelection } : {}),
+        ...(paginable ? memoizePagination : {}),
+        ...(selectable ? rowSelection : {}),
         data: serializedData.data
       })
-  }, [pagination, rowSelection, selectable])
+  }, [memoizePagination, rowSelection, selectable])
 
   return (
     <>
@@ -172,6 +246,7 @@ const Table = <
               e.preventDefault()
               form.handleSubmit(onSubmit)(e)
             }}
+            onReset={onReset}
             noValidate
           >
             <Filter form={form} filters={filters} />
@@ -219,7 +294,9 @@ const Table = <
                     >
                       {row.getVisibleCells()?.map((cell) => {
                         const clickable =
-                          onRow && cell.column.id !== "selection"
+                          onRow &&
+                          cell.column.id !== "selection" &&
+                          cell.column.id !== "action"
                         return (
                           <td
                             onClick={() => {
@@ -261,6 +338,14 @@ const Table = <
                 })}
               </tbody>
             </table>
+            {!isFetching &&
+              !isLoading &&
+              !table?.getRowModel()?.rows.length && (
+                <div className="flex h-full w-full flex-col items-center justify-center gap-y-7 bg-alpha-white px-6 py-10">
+                  <NotFoundIcon />
+                  <p className="text-center text-alpha-500">پیدا نشد!</p>
+                </div>
+              )}
           </CardContainer>
           {paginable && (
             <TablePagination table={table} total={serializedData?.total} />
@@ -269,7 +354,7 @@ const Table = <
       ) : isLoading ? (
         <Loading />
       ) : (
-        <p>داده ای یافت نشد</p>
+        <p className="text-error">خطا!</p>
       )}
     </>
   )

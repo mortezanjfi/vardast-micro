@@ -1,19 +1,40 @@
 import { NavigationType } from "@vardast/type/Navigation"
 
+const _bidding: NavigationType[] = [
+  {
+    items: [
+      {
+        title: "پروژه ها",
+        path: `${process.env.NEXT_PUBLIC_BIDDIN_PATH}projects`,
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "FolderOpenIcon"
+      },
+      {
+        title: "سفارشات",
+        path: `${process.env.NEXT_PUBLIC_BIDDIN_PATH}orders`,
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "ClipboardDocumentIcon"
+      }
+    ]
+  }
+]
+
 const _profile: NavigationType[] = [
   {
     items: [
       {
         title: "پروژه ها",
         icon: "FolderOpenIcon",
-        path: "/profile/projects",
+        path: `${process.env.NEXT_PUBLIC_BIDDIN_PATH}projects`,
         background_color: "bg-orange-500",
         color: "text-white"
       },
       {
         title: "سفارشات من",
         icon: "ClipboardDocumentListIcon",
-        path: "/profile/orders",
+        path: `${process.env.NEXT_PUBLIC_BIDDIN_PATH}orders`,
         background_color: "bg-blue-500",
         color: "text-white"
       },
@@ -141,14 +162,14 @@ const _admin: NavigationType[] = [
       },
       {
         title: "پروژه ها",
-        path: "/profile/projects",
+        path: `${process.env.NEXT_PUBLIC_BIDDIN_PATH}projects`,
         background_color: "bg-gray-400",
         color: "text-white",
         icon: "FolderOpenIcon"
       },
       {
         title: "سفارشات",
-        path: "/profile/orders",
+        path: `${process.env.NEXT_PUBLIC_BIDDIN_PATH}orders`,
         background_color: "bg-gray-400",
         color: "text-white",
         icon: "ClipboardDocumentIcon"
@@ -219,14 +240,14 @@ export const _seller_panel: NavigationType[] = [
         background_color: "bg-gray-400",
         color: "text-white",
         icon: "ClipboardDocumentIcon",
-        path: "/orders"
+        path: `${process.env.NEXT_PUBLIC_BIDDIN_PATH}orders`
       },
       {
         title: "سفارشات من",
         background_color: "bg-gray-400",
         color: "text-white",
         icon: "ClipboardIcon",
-        path: "/my-orders"
+        path: `${process.env.NEXT_PUBLIC_BIDDIN_PATH}my-orders"`
       },
       {
         title: "کالاها",
@@ -268,6 +289,7 @@ export const _seller_panel: NavigationType[] = [
 ]
 
 export default {
+  _bidding,
   _profile,
   _admin,
   _profile_about,

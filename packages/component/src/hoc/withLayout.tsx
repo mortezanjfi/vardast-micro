@@ -126,7 +126,10 @@ export default function withLayout<T>(
                 )}
               >
                 {layout?.desktop?.sidebar && (
-                  <Sidebar {...layout?.desktop?.sidebar} />
+                  <Sidebar
+                    {...layout?.desktop?.sidebar}
+                    withHeader={!!layout?.desktop?.header}
+                  />
                 )}
                 <MotionSection
                   variants={{

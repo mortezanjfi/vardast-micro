@@ -4,6 +4,7 @@ import {
   TableState
 } from "@tanstack/react-table"
 import { ApiArgsType, ApiResponseType } from "@vardast/query/type"
+import { SelectPopoverPropsType } from "@vardast/ui/src/select-popover"
 import { UseFormReturn } from "react-hook-form"
 import { TypeOf, ZodType } from "zod"
 
@@ -18,11 +19,7 @@ type IFilterMap<T extends FilterComponentTypeEnum> =
   T extends FilterComponentTypeEnum.SELECT
     ? {
         type: FilterComponentTypeEnum.SELECT
-        options: {
-          key: string
-          value: string
-        }[]
-      }
+      } & Omit<SelectPopoverPropsType, "value" | "onSelect">
     : { type: FilterComponentTypeEnum.INPUT }
 
 type IFilter<T extends FilterComponentTypeEnum, TName> = IFilterMap<T> & {

@@ -417,6 +417,30 @@ const _admin: ILayoutProps = {
   }
 }
 
+const _bidding: ILayoutProps = {
+  desktop: {
+    main: {
+      container: true,
+      breadcrumb: true
+    },
+    sidebar: {
+      menus_name: "_bidding"
+    }
+  },
+  mobile: {
+    sidebar: {
+      menus_name: "_bidding"
+    },
+    header: {
+      progress: true,
+      hamburger: true,
+      title: {
+        type: "image"
+      }
+    }
+  }
+}
+
 const _seller_panel: ILayoutProps = {
   desktop: {
     header: {},
@@ -455,6 +479,7 @@ const options = {
   _product,
   _footer,
   _admin,
+  _bidding,
   _seller_panel,
   _basket
 }

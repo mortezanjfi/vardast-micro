@@ -1,0 +1,113 @@
+{
+  "errors": {
+    "invalid_type": "مقدار ورودی باید {{expected}} باشد, مقدار وارد شده {{received}} است",
+    "invalid_type_received_undefined": "پر کردن این فیلد الزامیست",
+    "invalid_literal": "Invalid literal value, expected {{expected}}",
+    "unrecognized_keys": "Unrecognized key(s) in object: {{- keys}}",
+    "invalid_union": "مقدار ورودی صحیح نیست",
+    "invalid_union_discriminator": "Invalid discriminator value. Expected {{- options}}",
+    "invalid_enum_value": "Invalid enum value. Expected {{- options}}, received '{{received}}'",
+    "invalid_arguments": "Invalid function arguments",
+    "invalid_return_type": "Invalid function return type",
+    "invalid_date": "Invalid date",
+    "custom": "مقدار ورودی صحیح نیست",
+    "invalid_intersection_types": "Intersection results could not be merged",
+    "not_multiple_of": "Number must be a multiple of {{multipleOf}}",
+    "not_finite": "Number must be finite",
+    "invalid_chars_just_persian_allowed": "مقدار فیلد باید فارسی باشد",
+    "invalid_string": {
+      "email": "آدرس ایمیل معتبر نیست",
+      "url": "Invalid {{validation}}",
+      "uuid": "Invalid {{validation}}",
+      "cuid": "Invalid {{validation}}",
+      "regex": "Invalid",
+      "datetime": "Invalid {{validation}}",
+      "startsWith": "Invalid input: must start with \"{{startsWith}}\"",
+      "endsWith": "Invalid input: must end with \"{{endsWith}}\""
+    },
+    "too_small": {
+      "array": {
+        "exact": "Array must contain exactly {{minimum}} element(s)",
+        "inclusive": "Array must contain at least {{minimum}} element(s)",
+        "not_inclusive": "Array must contain more than {{minimum}} element(s)"
+      },
+      "string": {
+        "exact": "مقدار وارد شده باید دقیقاً {{minimum}} کاراکتر باشد",
+        "inclusive": "مقدار وارد شده باید حداقل {{minimum}} کاراکتر باشد",
+        "not_inclusive": "مقدار وارد شده باید بیش از {{minimum}} کاراکتر باشد"
+      },
+      "number": {
+        "exact": "Number must be exactly {{minimum}}",
+        "inclusive": "Number must be greater than or equal to {{minimum}}",
+        "not_inclusive": "Number must be greater than {{minimum}}"
+      },
+      "set": {
+        "exact": "Invalid input",
+        "inclusive": "Invalid input",
+        "not_inclusive": "Invalid input"
+      },
+      "date": {
+        "exact": "Date must be exactly {{- minimum, datetime}}",
+        "inclusive": "Date must be greater than or equal to {{- minimum, datetime}}",
+        "not_inclusive": "Date must be greater than {{- minimum, datetime}}"
+      }
+    },
+    "too_big": {
+      "array": {
+        "exact": "Array must contain exactly {{maximum}} element(s)",
+        "inclusive": "Array must contain at most {{maximum}} element(s)",
+        "not_inclusive": "Array must contain less than {{maximum}} element(s)"
+      },
+      "string": {
+        "exact": "مقدار وارد شده باید دقیقاً {{maximum}} کاراکتر باشد",
+        "inclusive": "مقدار وارد شده می‌تواند حداکثر {{maximum}} کاراکتر باشد",
+        "not_inclusive": "مقدار وارد شده باید کمتر از {{maximum}} کاراکتر باشد"
+      },
+      "number": {
+        "exact": "Number must be exactly {{maximum}}",
+        "inclusive": "Number must be less than or equal to {{maximum}}",
+        "not_inclusive": "Number must be less than {{maximum}}"
+      },
+      "set": {
+        "exact": "Invalid input",
+        "inclusive": "Invalid input",
+        "not_inclusive": "Invalid input"
+      },
+      "date": {
+        "exact": "Date must be exactly {{- maximum, datetime}}",
+        "inclusive": "Date must be smaller than or equal to {{- maximum, datetime}}",
+        "not_inclusive": "Date must be smaller than {{- maximum, datetime}}"
+      }
+    }
+  },
+  "validations": {
+    "email": "email",
+    "url": "url",
+    "uuid": "uuid",
+    "cuid": "cuid",
+    "regex": "regex",
+    "datetime": "datetime"
+  },
+  "types": {
+    "function": "تابع",
+    "number": "عدد",
+    "string": "متن",
+    "nan": "nan",
+    "integer": "عدد صحیح",
+    "float": "عدد عشاری",
+    "boolean": "منطقی",
+    "date": "تاریخ",
+    "bigint": "bigint",
+    "undefined": "undefined",
+    "symbol": "symbol",
+    "null": "null",
+    "array": "آرایه",
+    "object": "شیء",
+    "unknown": "unknown",
+    "promise": "promise",
+    "void": "void",
+    "never": "never",
+    "map": "map",
+    "set": "set"
+  }
+}

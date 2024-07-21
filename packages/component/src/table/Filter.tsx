@@ -1,3 +1,4 @@
+import { useCallback } from "react"
 import { Button } from "@vardast/ui/button"
 import {
   FormControl,
@@ -20,47 +21,51 @@ const Filter = <T extends ZodType<any, any, any>>({
 }: IFilterProps<T>) => {
   const { t } = useTranslation()
 
-  const renderItem: RenderItemType<T> = (filter, value) => {
-    if (filter.type === FilterComponentTypeEnum.INPUT) {
-      return (
-        <Input
-          type="text"
-          placeholder={t("common:entity_enter_placeholder", {
-            entity: filter.title
-          })}
-          onChange={(e) => {
-            form.setValue(filter.name as any, e.target.value as any)
-          }}
-          {...form.register(filter.name as any)}
-        />
-      )
-    }
-    if (filter.type === FilterComponentTypeEnum.SELECT) {
-      return (
-        <SelectPopover
-          onSelect={(value) => {
-            form.setValue(filter.name as any, value.toUpperCase() as any)
-          }}
-          options={filter.options}
-          value={value}
-        />
-      )
-    }
-  }
+  const renderItem: RenderItemType<T> = useCallback(
+    (filter, value) => {
+      if (filter.type === FilterComponentTypeEnum.INPUT) {
+        return (
+          <Input
+            type="text"
+            placeholder={t("common:entity_enter_placeholder", {
+              entity: filter.title
+            })}
+            onChange={(e) => {
+              form.setValue(filter.name as any, e.target.value as any)
+            }}
+            {...form.register(filter.name as any)}
+          />
+        )
+      }
+      if (filter.type === FilterComponentTypeEnum.SELECT) {
+        return (
+          <SelectPopover
+            onSelect={(value) => {
+              form.setValue(filter.name as any, value.toUpperCase() as any)
+            }}
+            loading={filter.loading}
+            setSearch={filter.setSearch}
+            options={filter.options}
+            value={value}
+          />
+        )
+      }
+    },
+    [filters]
+  )
 
   return (
     <Card className="flex flex-col justify-between gap-6 p-6">
       <div className="grid grid-cols-4 gap-6">
         {filters.options?.map((filter) => (
           <FormField
+            key={filter.title}
             control={form.control}
             name={filter.name as any}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{filter.title}</FormLabel>
-                <FormControl>
-                  {renderItem(filter, field.value as string)}
-                </FormControl>
+                <FormControl>{renderItem(filter, field.value)}</FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -71,20 +76,18 @@ const Filter = <T extends ZodType<any, any, any>>({
         <Button
           size="medium"
           variant="outline-primary"
+          type="reset"
           className="py-2"
-          disabled={form.formState.isSubmitting}
-          loading={form.formState.isSubmitting}
-          onClick={() => {
-            form.reset()
-          }}
+          disabled={form.formState.isSubmitting || form.formState.isLoading}
+          loading={form.formState.isSubmitting || form.formState.isLoading}
         >
           حذف فیلتر
         </Button>
         <Button
           size="medium"
           className="py-2"
-          loading={form.formState.isSubmitting}
-          disabled={form.formState.isSubmitting || !form.formState.isDirty}
+          loading={form.formState.isSubmitting || form.formState.isLoading}
+          disabled={form.formState.isSubmitting || form.formState.isLoading}
           type="submit"
         >
           اعمال فیلتر
