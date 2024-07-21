@@ -1,0 +1,27 @@
+mutation CreateBannerMutation($createBannerInput: CreateBannerInput!) {
+  createBanner(createBannerInput: $createBannerInput) {
+    id
+    name
+    small {
+      presignedUrl {
+        url
+      }
+    }
+    medium {
+      presignedUrl {
+        url
+      }
+    }
+    large {
+      presignedUrl {
+        url
+      }
+    }
+    xlarge {
+      presignedUrl {
+        url
+      }
+    }
+    status
+  }
+}

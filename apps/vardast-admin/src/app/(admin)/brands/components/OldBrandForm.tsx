@@ -269,8 +269,6 @@ const BrandForm = ({ brand }: BrandFormProps) => {
 
         const uploadResult = await response.json()
 
-        console.log(uploadResult.uuid)
-
         if (type === "desktop") {
           form.setValue("bannerUuid", uploadResult.uuid)
           setBannerFile(fileToUpload)

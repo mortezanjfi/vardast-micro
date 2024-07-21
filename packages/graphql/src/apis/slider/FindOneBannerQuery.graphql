@@ -1,0 +1,27 @@
+query FindOneBannerQuery($id: Float!) {
+  findOneBanner(id: $id) {
+    id
+    name
+    small {
+      presignedUrl {
+        url
+      }
+    }
+    medium {
+      presignedUrl {
+        url
+      }
+    }
+    large {
+      presignedUrl {
+        url
+      }
+    }
+    xlarge {
+      presignedUrl {
+        url
+      }
+    }
+    status
+  }
+}
