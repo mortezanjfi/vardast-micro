@@ -36,6 +36,7 @@ export interface ITableProps<
   name: string
   columns: Array<ColumnDef<T>>
   selectable?: boolean
+  indexable?: boolean
   paginable?: boolean
   container?: Omit<CardContainerProps, "children">
   onRow?: {
@@ -49,7 +50,7 @@ export interface ITableProps<
       accessToken?: string
     ) => Promise<ApiResponseType<T | unknown>>
   }
-  handleResponse?: (args: ApiResponseType<T>) => void
+  handleResponse?: (args: ApiResponseType<T | unknown>) => void
   getTableState?: (args: Partial<TableState> & { data: T[] }) => void
   filters?: FilterOptions<TSchema>
 }

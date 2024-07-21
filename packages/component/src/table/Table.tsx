@@ -198,8 +198,8 @@ const Table = <
 
   const columns = useMemo<ColumnDef<T>[]>(
     () => [
-      ...(indexable ? indexColumns : []),
       ...(selectable ? selectableColumns : []),
+      ...(indexable ? indexColumns : []),
       ...columnsProp
     ],
     [indexable, selectable, columnsProp]
