@@ -191,7 +191,12 @@ const ProductList = ({
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams as any)
-    params.set("orderBy", ProductSortablesEnum.Newest)
+    const paramsKeys = params.keys()
+    for (const key of paramsKeys) {
+      if (key.includes("orderBy")) {
+        params.delete(key)
+      }
+    }
     push(pathname + "?" + params.toString())
   }, [])
 

@@ -116,6 +116,17 @@ const CategoriesTab = ({
     }
   }, [allCategoriesQuery.data?.pages])
 
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams as any)
+    const paramsKeys = params.keys()
+    for (const key of paramsKeys) {
+      if (key.includes("orderBy")) {
+        params.delete(key)
+      }
+    }
+    push(pathname + "?" + params.toString())
+  }, [])
+
   productsProps.args.categoryIds = [+activeTab]
 
   const dynamicHref = ({
