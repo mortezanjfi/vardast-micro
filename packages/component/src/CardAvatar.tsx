@@ -1,9 +1,27 @@
 import Image from "next/image"
+import { cva } from "class-variance-authority"
 
-const CardAvatar = ({ url = "", name }: { url: string; name?: string }) => {
+const cardAvatarVariants = cva(
+  "relative overflow-hidden rounded-full border border-alpha-400",
+  {
+    variants: {
+      size: { small: " h-14 w-14", medium: "h-28 w-28" }
+    }
+  }
+)
+
+const CardAvatar = ({
+  url = "",
+  name,
+  size = "small"
+}: {
+  url: string
+  name?: string
+  size?: "small" | "medium"
+}) => {
   return (
-    <div className="flex items-center justify-start gap-x">
-      <div className="relative h-14 w-14 overflow-hidden rounded-full border border-alpha-400">
+    <div className="flex  items-center justify-start gap-x">
+      <div className={cardAvatarVariants({ size })}>
         <Image
           src={url}
           alt="category"

@@ -130,6 +130,7 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
             <div className="flex w-full grid-cols-2 justify-between px-6 pb-6 pt-2 md:grid md:!p-0">
               <div className=" flex items-center justify-center gap-2 md:col-span-2 md:flex-col md:gap-7 md:py-9">
                 <CardAvatar
+                  size={isMobileView ? "small" : "medium"}
                   url={
                     brandQuery?.data?.brand?.logoFile?.presignedUrl?.url
                       ? brandQuery?.data?.brand?.logoFile?.presignedUrl?.url
