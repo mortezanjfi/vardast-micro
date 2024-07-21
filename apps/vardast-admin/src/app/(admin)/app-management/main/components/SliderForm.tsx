@@ -103,8 +103,8 @@ function SliderForm({ slider }: Props) {
   const form = useForm<CreateSliderType>({
     resolver: zodResolver(SliderSchema),
     defaultValues: {
-      link: slider?.url || "",
-      name: slider?.name || "",
+      link: slider?.url,
+      name: slider?.name,
       status: slider?.status
     }
   })
