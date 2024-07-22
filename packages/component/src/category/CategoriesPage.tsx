@@ -68,6 +68,14 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
     }
   )
 
+  useEffect(() => {
+    if (categoryQuery?.data?.category?.childrenCount > 0) {
+      setActiveTab(CATEGORY_PAGE_TABS.SUBCATEGORIES)
+    } else {
+      setActiveTab(CATEGORY_PAGE_TABS.BRANDS)
+    }
+  }, [categoryQuery?.data?.category?.childrenCount])
+
   //args need for products tab------->
   const productArgs: IndexProductInput = {}
   if (categoryId && categoryId.length > 0)
@@ -109,12 +117,7 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
         />
       ) : null}
       <Tabs
-        value={
-          !categoryQuery.isLoading &&
-          categoryQuery?.data?.category?.childrenCount > 0
-            ? activeTab
-            : CATEGORY_PAGE_TABS.BRANDS
-        }
+        value={activeTab}
         onValueChange={(e) => setActiveTab(e as CATEGORY_PAGE_TABS)}
         className="flex h-full w-full flex-col bg-alpha-white"
       >
@@ -124,9 +127,10 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
         publicPreOrders.isFetching ? (
           tabListLoader
         ) : (
-          <TabsList className="sticky top-0 z-50 grid w-full grid-cols-4 bg-alpha-white font-medium sm:z-0 md:mb-5  md:flex">
+          <TabsList className="sticky top-0 z-50 grid w-full auto-cols-auto grid-flow-col bg-alpha-white font-medium sm:z-0 md:mb-5  md:flex">
             {categoryQuery?.data?.category?.childrenCount > 0 && (
               <TabsTrigger
+                onClick={(value) => console.log(value)}
                 className="py-4"
                 value={CATEGORY_PAGE_TABS.SUBCATEGORIES}
               >
