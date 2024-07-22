@@ -13,6 +13,7 @@ import PageHeader from "@vardast/component/PageHeader"
 import Pagination from "@vardast/component/table/Pagination"
 import {
   Brand,
+  SortBrandEnum,
   ThreeStateSupervisionStatuses,
   useGetAllBrandsQuery
 } from "@vardast/graphql/generated"
@@ -74,12 +75,14 @@ const Brands = () => {
         hasPriceList: checkBooleanByString(brandsQueryParams.priceListStatus),
         hasCatalogeFile: checkBooleanByString(brandsQueryParams.catalogStatus),
         hasLogoFile: checkBooleanByString(brandsQueryParams.logoStatus),
-        hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus)
+        hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus),
+        sortType: SortBrandEnum.Sum
       }
     },
     {
       queryKey: [
         {
+          page: currentPage,
           name: brandsQueryParams.brand,
           hasPriceList: checkBooleanByString(brandsQueryParams.priceListStatus),
           hasCatalogeFile: checkBooleanByString(
@@ -87,7 +90,7 @@ const Brands = () => {
           ),
           hasLogoFile: checkBooleanByString(brandsQueryParams.logoStatus),
           hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus),
-          page: currentPage
+          sortType: SortBrandEnum.Sum
         }
       ]
     }
