@@ -9,6 +9,7 @@ import MobileHomeTopBlogs from "../home/MobileHomeTopBlogs"
 import { ICategoryListLoader } from "./CategoryListLoader"
 
 interface ICategoryListContainer {
+  isMobileView?: boolean
   blog?: boolean
   getAllBlogsQuery?: UseQueryResult<GetAllBlogsQuery>
   isSubcategory?: boolean
@@ -21,6 +22,7 @@ interface ICategoryListContainer {
 }
 
 const CategoryListContainer: React.FC<ICategoryListContainer> = ({
+  isMobileView,
   blog,
   getAllBlogsQuery,
   isSubcategory,
@@ -56,7 +58,7 @@ const CategoryListContainer: React.FC<ICategoryListContainer> = ({
         <div className="border-t-2 bg-alpha-white">
           <div className="container mx-auto sm:py-8">
             <MobileHomeTopBlogs
-              isMobileView={false}
+              isMobileView={isMobileView}
               getAllBlogsQuery={getAllBlogsQuery}
             />
           </div>

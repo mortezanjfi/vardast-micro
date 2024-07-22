@@ -62,6 +62,7 @@ const CategoriesList = ({
   setSidebar(DesktopSidebar)
   return (
     <CategoryListContainer
+      isMobileView={isMobileView}
       blog={blog}
       getAllBlogsQuery={getAllBlogsQuery}
       isSubcategory={isSubcategory}
