@@ -30,6 +30,7 @@ import { LucideCheck, LucideChevronsUpDown, LucideSearch } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 import { UseFormReturn } from "react-hook-form"
 
+import { statusesOfAvailability } from "../../../lib/src/AvailabilityStatus"
 import Card from "../../src/Card"
 import { OrdersFilterType } from "./OrdersPage"
 
@@ -68,18 +69,6 @@ export const OrdersFilter = ({
       }
     }
   )
-
-  const statuses = [
-    {
-      status: "دارد",
-      value: "true"
-    },
-    { status: "ندارد", value: "false" },
-    {
-      status: "همه",
-      value: ""
-    }
-  ]
 
   const submit = (data: OrdersFilterType) => {
     console.log(data)
@@ -300,8 +289,9 @@ export const OrdersFilter = ({
                             className="input-field flex items-center text-start"
                           >
                             {field.value
-                              ? statuses.find((st) => st.value === field.value)
-                                  ?.status
+                              ? statusesOfAvailability.find(
+                                  (st) => st.value === field.value
+                                )?.status
                               : t("common:choose_entity", {
                                   entity: t("common:status")
                                 })}
@@ -318,7 +308,7 @@ export const OrdersFilter = ({
                             })}
                           </CommandEmpty> */}
                           <CommandGroup>
-                            {statuses.map((st) => (
+                            {statusesOfAvailability.map((st) => (
                               <CommandItem
                                 defaultValue="ili"
                                 value={st.value}

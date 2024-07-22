@@ -3,6 +3,8 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useDebouncedState } from "@mantine/hooks"
 import Card from "@vardast/component/Card"
+import { statusesOfAvailability } from "@vardast/lib/AvailabilityStatus"
+import { brandSorts } from "@vardast/lib/BrandSort"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
 import {
@@ -38,6 +40,10 @@ export const BrandFilter = ({
 }: BrandsFilterProps) => {
   const [query, setQuery] = useDebouncedState<string>("", 500)
   const [queryTemp, setQueryTemp] = useState<string>("")
+  const [sortDialog, setSortDialog] = useState<boolean>(false)
+  const [logoDialog, setLogoDialog] = useState<boolean>(false)
+  const [catalogDialog, setCatalogDialog] = useState<boolean>(false)
+  const [priceListDialog, setPriceListDialog] = useState<boolean>(false)
 
   const { t } = useTranslation()
   useEffect(() => {
@@ -49,7 +55,8 @@ export const BrandFilter = ({
       logoStatus: form.getValues("logoStatus"),
       catalogStatus: form.getValues("catalogStatus"),
       priceListStatus: form.getValues("priceListStatus"),
-      bannerStatus: form.getValues("bannerStatus")
+      bannerStatus: form.getValues("bannerStatus"),
+      sort: form.getValues("sort")
     })
   }
   const handleReset = () => {
@@ -58,17 +65,7 @@ export const BrandFilter = ({
     setQueryTemp("")
     setBrandsQueryParams({})
   }
-  const statuses = [
-    {
-      status: "دارد",
-      value: "true"
-    },
-    { status: "ندارد", value: "false" },
-    {
-      status: "همه",
-      value: ""
-    }
-  ]
+
   return (
     <Form {...form}>
       <form noValidate onSubmit={form.handleSubmit(handleSubmit)}>
@@ -113,7 +110,7 @@ export const BrandFilter = ({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{t("common:logo")}</FormLabel>
-                    <Popover>
+                    <Popover open={logoDialog} onOpenChange={setLogoDialog}>
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
@@ -122,8 +119,9 @@ export const BrandFilter = ({
                             className="input-field flex items-center text-start"
                           >
                             {
-                              statuses.find((st) => st.value === field.value)
-                                ?.status
+                              statusesOfAvailability.find(
+                                (st) => st.value === field.value
+                              )?.status
                             }
                             <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
                           </Button>
@@ -137,12 +135,13 @@ export const BrandFilter = ({
                             })}
                           </CommandEmpty>
                           <CommandGroup>
-                            {statuses.map((st) => (
+                            {statusesOfAvailability.map((st) => (
                               <CommandItem
                                 value={st.value}
                                 key={st.status}
                                 onSelect={(value) => {
                                   form.setValue("logoStatus", value)
+                                  setLogoDialog(false)
                                 }}
                               >
                                 <LucideCheck
@@ -171,7 +170,10 @@ export const BrandFilter = ({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{t("common:catalog")}</FormLabel>
-                    <Popover>
+                    <Popover
+                      open={catalogDialog}
+                      onOpenChange={setCatalogDialog}
+                    >
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
@@ -180,8 +182,9 @@ export const BrandFilter = ({
                             className="input-field flex items-center text-start"
                           >
                             {
-                              statuses.find((st) => st.value === field.value)
-                                ?.status
+                              statusesOfAvailability.find(
+                                (st) => st.value === field.value
+                              )?.status
                             }
                             <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
                           </Button>
@@ -195,12 +198,13 @@ export const BrandFilter = ({
                             })}
                           </CommandEmpty> */}
                           <CommandGroup>
-                            {statuses.map((st) => (
+                            {statusesOfAvailability.map((st) => (
                               <CommandItem
                                 value={st.value}
                                 key={st.status}
                                 onSelect={(value) => {
                                   form.setValue("catalogStatus", value)
+                                  setCatalogDialog(false)
                                 }}
                               >
                                 <LucideCheck
@@ -227,7 +231,10 @@ export const BrandFilter = ({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{t("common:price_list")}</FormLabel>
-                    <Popover>
+                    <Popover
+                      open={priceListDialog}
+                      onOpenChange={setPriceListDialog}
+                    >
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
@@ -236,8 +243,9 @@ export const BrandFilter = ({
                             className="input-field flex items-center text-start"
                           >
                             {
-                              statuses.find((st) => st.value === field.value)
-                                ?.status
+                              statusesOfAvailability.find(
+                                (st) => st.value === field.value
+                              )?.status
                             }
 
                             <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
@@ -252,13 +260,14 @@ export const BrandFilter = ({
                             })}
                           </CommandEmpty> */}
                           <CommandGroup>
-                            {statuses.map((st) => (
+                            {statusesOfAvailability.map((st) => (
                               <CommandItem
                                 defaultValue="ili"
                                 value={st.value}
                                 key={st.status}
                                 onSelect={(value) => {
                                   form.setValue("priceListStatus", value)
+                                  setPriceListDialog(false)
                                 }}
                               >
                                 <LucideCheck
@@ -294,8 +303,9 @@ export const BrandFilter = ({
                             className="input-field flex items-center text-start"
                           >
                             {
-                              statuses.find((st) => st.value === field.value)
-                                ?.status
+                              statusesOfAvailability.find(
+                                (st) => st.value === field.value
+                              )?.status
                             }
 
                             <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
@@ -310,7 +320,7 @@ export const BrandFilter = ({
                             })}
                           </CommandEmpty> */}
                           <CommandGroup>
-                            {statuses.map((st) => (
+                            {statusesOfAvailability.map((st) => (
                               <CommandItem
                                 defaultValue="ili"
                                 value={st.value}
@@ -328,6 +338,65 @@ export const BrandFilter = ({
                                   )}
                                 />
                                 {st.status}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="sort"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("common:sorting")}</FormLabel>
+                    <Popover open={sortDialog} onOpenChange={setSortDialog}>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            noStyle
+                            role="combobox"
+                            className="input-field flex items-center text-start"
+                          >
+                            {field.value
+                              ? brandSorts.find(
+                                  (st) => st.value === field.value
+                                )?.status
+                              : t("common:select_placeholder")}
+
+                            <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <Command>
+                          {/* <CommandEmpty>
+                            {t("common:no_entity_found", {
+                              entity: t("common:producer")
+                            })}
+                          </CommandEmpty> */}
+                          <CommandGroup>
+                            {brandSorts.map((sort) => (
+                              <CommandItem
+                                value={sort.value}
+                                key={sort.value}
+                                onSelect={(value) => {
+                                  form.setValue("sort", value.toUpperCase())
+                                  setSortDialog(false)
+                                }}
+                              >
+                                <LucideCheck
+                                  className={mergeClasses(
+                                    "mr-2 h-4 w-4",
+                                    sort.value === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {sort.status}
                               </CommandItem>
                             ))}
                           </CommandGroup>

@@ -5,6 +5,7 @@ import {
   useGetAllBrandsWithoutPaginationQuery,
   useGetAllCategoriesV2Query
 } from "@vardast/graphql/generated"
+import { statusesOfAvailability } from "@vardast/lib/AvailabilityStatus"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
@@ -106,17 +107,7 @@ export const ProductsFilter = ({
       value: "false"
     }
   ]
-  const statusesOfAvailability = [
-    {
-      status: "دارد",
-      value: "true"
-    },
-    { status: "ندارد", value: "false" },
-    {
-      status: "همه",
-      value: ""
-    }
-  ]
+
   useEffect(() => {
     const uniqueCategoryIds = [...new Set(categoryIds)]
     form.setValue("categoryIds", uniqueCategoryIds)

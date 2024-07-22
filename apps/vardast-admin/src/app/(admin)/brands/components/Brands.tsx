@@ -13,6 +13,7 @@ import PageHeader from "@vardast/component/PageHeader"
 import Pagination from "@vardast/component/table/Pagination"
 import {
   Brand,
+  SortBrandEnum,
   ThreeStateSupervisionStatuses,
   useGetAllBrandsQuery
 } from "@vardast/graphql/generated"
@@ -43,7 +44,8 @@ const filterSchema = z.object({
   logoStatus: z.string(),
   catalogStatus: z.string(),
   priceListStatus: z.string(),
-  bannerStatus: z.string()
+  bannerStatus: z.string(),
+  sort: z.string().optional()
 })
 export type FilterFields = TypeOf<typeof filterSchema>
 
@@ -74,7 +76,8 @@ const Brands = () => {
         hasPriceList: checkBooleanByString(brandsQueryParams.priceListStatus),
         hasCatalogeFile: checkBooleanByString(brandsQueryParams.catalogStatus),
         hasLogoFile: checkBooleanByString(brandsQueryParams.logoStatus),
-        hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus)
+        hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus),
+        sortType: brandsQueryParams.sort as SortBrandEnum
       }
     },
     {
@@ -87,7 +90,8 @@ const Brands = () => {
           ),
           hasLogoFile: checkBooleanByString(brandsQueryParams.logoStatus),
           hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus),
-          page: currentPage
+          page: currentPage,
+          sortType: brandsQueryParams.sort as SortBrandEnum
         }
       ]
     }
@@ -97,7 +101,6 @@ const Brands = () => {
     () => brands.data?.brands.data.length,
     [brands.data?.brands.data.length]
   )
-  // console.log(brands.data?.brands.);
 
   return (
     <>
