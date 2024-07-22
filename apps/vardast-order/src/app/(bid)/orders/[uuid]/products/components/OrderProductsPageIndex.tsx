@@ -60,7 +60,7 @@ function OrderProductsPageIndex({
   //           variant: "success"
   //         })
   //         router.push(
-  //           `${process.env.NEXT_PUBLIC_BIDDIN_PATH}orders/${uuid}/offers/${data.createOrderOffer.id}`
+  //           `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders/${uuid}/offers/${data.createOrderOffer.id}`
   //         )
   //       }
   //     }
@@ -91,7 +91,7 @@ function OrderProductsPageIndex({
   //     },
   //     onSuccess: () => {
   //       // onCreateOffer()
-  //       router.push(`${process.env.NEXT_PUBLIC_BIDDIN_PATH}orders/${uuid}/offers`)
+  //       router.push(`${process.env.NEXT_PUBLIC_BIDDING_PATH}orders/${uuid}/offers`)
   //     }
   //   }
   // )
@@ -101,7 +101,7 @@ function OrderProductsPageIndex({
       findPreOrderByIdQuery?.data?.findPreOrderById.status ===
       PreOrderStates.Closed
     ) {
-      router.push(`${process.env.NEXT_PUBLIC_BIDDIN_PATH}orders`)
+      router.push(`${process.env.NEXT_PUBLIC_BIDDING_PATH}orders`)
     }
   }, [])
 
@@ -125,7 +125,7 @@ function OrderProductsPageIndex({
       <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] mt-auto grid w-full !grid-cols-2 gap pt-4 md:relative md:bottom-0 md:mt-0 md:flex md:justify-end">
         <Link
           className="btn btn-md btn-secondary"
-          href={`${process.env.NEXT_PUBLIC_BIDDIN_PATH}orders/${uuid}`}
+          href={`${process.env.NEXT_PUBLIC_BIDDING_PATH}orders/${uuid}`}
         >
           بازگشت به سفارش
         </Link>

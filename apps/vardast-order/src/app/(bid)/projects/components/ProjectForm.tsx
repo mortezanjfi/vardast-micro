@@ -75,7 +75,7 @@ const ProjectForm = ({
     <div className="flex h-full w-full flex-col gap-9 py-6 md:py-0">
       {!isMobileView && (
         <PageTitle
-          backButtonUrl={`${process.env.NEXT_PUBLIC_BIDDIN_PATH}projects`}
+          backButtonUrl={`${process.env.NEXT_PUBLIC_BIDDING_PATH}projects`}
           title={title}
         />
       )}

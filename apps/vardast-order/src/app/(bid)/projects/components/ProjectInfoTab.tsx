@@ -69,7 +69,7 @@ const ProjectInfoTab = ({
             variant: "success"
           })
           router.push(
-            `${process.env.NEXT_PUBLIC_BIDDIN_PATH}projects/${data.createProject.id}`
+            `${process.env.NEXT_PUBLIC_BIDDING_PATH}projects/${data.createProject.id}`
           )
         } else {
           toast({

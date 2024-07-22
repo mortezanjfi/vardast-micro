@@ -1,6 +1,7 @@
 "use client"
 
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react"
+import { usePathname, useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { useQuery } from "@tanstack/react-query"
@@ -100,7 +101,7 @@ const Table = <
   onRow,
   paginable,
   selectable,
-  internalState,
+  internalArgs,
   indexable = true,
   fetch,
   handleResponse,
@@ -108,6 +109,8 @@ const Table = <
   container,
   filters
 }: ITableProps<T, TSchema>) => {
+  const router = useRouter()
+  const pathname = usePathname()
   const [fetchArgs, setFetchArgs] = useQueryStates({
     pageIndex: parseAsInteger.withDefault(0),
     pageSize: parseAsInteger.withDefault(10),
@@ -118,7 +121,7 @@ const Table = <
   const { data: session } = useSession()
 
   const memoizeFetchArgs: ApiArgsType<TSchema> =
-    internalState ??
+    internalArgs ??
     useMemo(() => {
       const args = convertArgsToNumber(fetchArgs.args)
       return {
@@ -127,7 +130,7 @@ const Table = <
           : {}),
         ...args
       }
-    }, [fetchArgs.pageIndex, fetchArgs.pageSize, fetchArgs.args, internalState])
+    }, [fetchArgs.pageIndex, fetchArgs.pageSize, fetchArgs.args, internalArgs])
 
   const memoizePagination: PaginationState = useMemo(
     () => ({
@@ -146,6 +149,9 @@ const Table = <
     {
       queryKey: [name, "table", memoizeFetchArgs],
       queryFn: async () => {
+        if (fetch.directData) {
+          return fetch.directData
+        }
         const response = await fetch.api(
           memoizeFetchArgs,
           fetch?.accessToken && session?.accessToken
@@ -255,12 +261,10 @@ const Table = <
   const onReset = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      setFetchArgs({
-        pageIndex: 0,
-        pageSize: 10,
-        args: {}
-      })
+      setFetchArgs({})
       form.reset()
+
+      router.push(pathname)
     },
     [form]
   )
@@ -287,6 +291,7 @@ const Table = <
               e.preventDefault()
               form.handleSubmit(onSubmit)(e)
             }}
+            className="pb-6"
             onReset={onReset}
             noValidate
           >
@@ -299,7 +304,11 @@ const Table = <
           {...container}
           button={{
             ...container.button,
-            disabled: container.button.disabled || isLoading || isFetching
+            disabled:
+              container.button.disabled ||
+              isLoading ||
+              fetch?.directData?.directLoading ||
+              isFetching
           }}
         >
           {data ? (
@@ -382,7 +391,7 @@ const Table = <
                   </tbody>
                 </table>
                 {!isFetching &&
-                  !isLoading &&
+                  !(isLoading || fetch?.directData?.directLoading) &&
                   !table?.getRowModel()?.rows?.length && (
                     <div className="flex h-full w-full flex-col items-center justify-center gap-y-7 bg-alpha-white px-6 py-10">
                       <NotFoundIcon />
@@ -394,7 +403,7 @@ const Table = <
                 <TablePagination table={table} total={serializedData?.total} />
               )}
             </>
-          ) : isLoading ? (
+          ) : isLoading || fetch?.directData?.directLoading ? (
             <Loading />
           ) : (
             isError && <p className="text-error">خطا!</p>

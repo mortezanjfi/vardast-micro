@@ -39,7 +39,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <Link
-                href={`${process.env.NEXT_PUBLIC_BIDDIN_PATH}projects/${project.id}`}
+                href={`${process.env.NEXT_PUBLIC_BIDDING_PATH}projects/${project.id}`}
               >
                 <DropdownMenuItem>
                   <span>{t("common:edit")}</span>
@@ -47,7 +47,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               </Link>
               {/* <DropdownMenuSeparator /> */}
               {/* <DropdownMenuItem>
-                <Link href={`${process.env.NEXT_PUBLIC_BIDDIN_PATH}projects/${project.id}`}>
+                <Link href={`${process.env.NEXT_PUBLIC_BIDDING_PATH}projects/${project.id}`}>
                   <span>{t("common:details")}</span>
                 </Link>
               </DropdownMenuItem> */}

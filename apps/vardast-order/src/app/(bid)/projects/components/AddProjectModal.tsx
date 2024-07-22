@@ -114,7 +114,7 @@ const AddLegalUserModal = ({ isMobileView, isAdmin, open, setOpen }: Props) => {
           })
 
           router.push(
-            `${process.env.NEXT_PUBLIC_BIDDIN_PATH}projects/${data.createProject.id}/?mode=new`
+            `${process.env.NEXT_PUBLIC_BIDDING_PATH}projects/${data.createProject.id}/?mode=new`
           )
           form.reset()
         } else {

@@ -41,7 +41,9 @@ const Filter = <T extends ZodType<any, any, any>>({
         return (
           <SelectPopover
             onSelect={(value) => {
-              form.setValue(filter.name as any, value.toUpperCase() as any)
+              form.setValue(filter.name as any, value.toUpperCase() as any, {
+                shouldDirty: true
+              })
             }}
             loading={filter.loading}
             setSearch={filter.setSearch}
@@ -51,7 +53,12 @@ const Filter = <T extends ZodType<any, any, any>>({
         )
       }
     },
-    [filters]
+    [
+      filters,
+      form.formState.isLoading ||
+        form.formState.isSubmitting ||
+        form.formState.isDirty
+    ]
   )
 
   return (
@@ -78,7 +85,11 @@ const Filter = <T extends ZodType<any, any, any>>({
           variant="outline-primary"
           type="reset"
           className="py-2"
-          disabled={form.formState.isSubmitting || form.formState.isLoading}
+          disabled={
+            form.formState.isSubmitting ||
+            form.formState.isLoading ||
+            !form.formState.isDirty
+          }
           loading={form.formState.isSubmitting || form.formState.isLoading}
         >
           حذف فیلتر

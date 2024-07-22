@@ -1,10 +1,10 @@
 "use client"
 
-import { useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import Table from "@vardast/component/table/Table"
 import { ITableProps } from "@vardast/component/table/type"
+import useTable from "@vardast/component/table/useTable"
 import {
   LineDto,
   MultiTypeOrder,
@@ -40,8 +40,8 @@ const OrderLines = (_: OrderLinesProps) => {
     })
   }
 
-  const tableProps: ITableProps<LineDto> = useMemo(
-    () => ({
+  const tableProps: ITableProps<LineDto> = useTable({
+    model: {
       name: "orders-line",
       container: {
         button: {
@@ -60,7 +60,7 @@ const OrderLines = (_: OrderLinesProps) => {
       },
       onRow: {
         url: (row) =>
-          `${process.env.NEXT_PUBLIC_BIDDIN_PATH}orders/${row.original.id}`
+          `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders/${row.original.id}`
       },
       columns: [
         {
@@ -104,15 +104,10 @@ const OrderLines = (_: OrderLinesProps) => {
               : type === MultiTypeOrder.Service && "خدمات"
         }
       ]
-    }),
-    []
-  )
+    }
+  })
 
-  return (
-    <div className="flex flex-col gap-7">
-      <Table {...tableProps} />
-    </div>
-  )
+  return <Table {...tableProps} />
 }
 
 export default OrderLines

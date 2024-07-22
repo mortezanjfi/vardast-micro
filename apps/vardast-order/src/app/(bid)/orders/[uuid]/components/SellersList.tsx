@@ -1,9 +1,9 @@
 "use client"
 
-import { useMemo } from "react"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import Table from "@vardast/component/table/Table"
 import { ITableProps } from "@vardast/component/table/type"
+import useTable from "@vardast/component/table/useTable"
 import { OfferOrder, PreOrder } from "@vardast/graphql/generated"
 import axiosApis, { IServePdf } from "@vardast/query/queryClients/axiosApis"
 import { findPreOrderByIdQueryFn } from "@vardast/query/queryFns/orders/findPreOrderByIdQueryFn"
@@ -51,8 +51,8 @@ function SellersList({ uuid }: Props) {
     undefined,
     { id: number },
     PreOrder
-  > = useMemo(
-    () => ({
+  > = useTable({
+    model: {
       name: "order-offers",
       container: {
         button: {
@@ -66,17 +66,17 @@ function SellersList({ uuid }: Props) {
           className: "py-2",
           type: "button"
         },
-        title: "لیست‌ کالاها"
+        title: t("common:entity_list", { entity: t(`common:offers`) })
       },
       onRow: {
         url: (row) =>
-          `${process.env.NEXT_PUBLIC_BIDDIN_PATH}orders/${row.original.id}`
+          `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders/${row.original.id}`
       },
       fetch: {
         api: findPreOrderByIdQueryFn,
         accessToken: true
       },
-      internalState: { id: +uuid },
+      internalArgs: { id: +uuid },
       handleResponse: (response) => {
         return response.offers
       },
@@ -136,15 +136,10 @@ function SellersList({ uuid }: Props) {
           }
         }
       ]
-    }),
-    []
-  )
+    }
+  })
 
-  return (
-    <div className="flex flex-col gap-7">
-      <Table {...tableProps} />
-    </div>
-  )
+  return <Table {...tableProps} />
 }
 
 export default SellersList

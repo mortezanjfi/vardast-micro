@@ -31,30 +31,46 @@ export type CheckedTypeByArgs<T, K> = T extends undefined ? K : T
 
 export type OnRowFunctionType<T> = (row: Row<T>) => void
 
+type FetchWithData<T> = {
+  directData: {
+    directLoading?: boolean
+    data: Array<Partial<T>>
+  }
+  accessToken?: never
+  api?: never
+}
+
+type FetchWithApi<_T, TArgs, TSchema> = {
+  directData?: never
+  accessToken?: boolean
+  api: (
+    args: CheckedTypeByArgs<TArgs, ApiArgsType<TSchema>>,
+    accessToken?: string
+  ) => Promise<any>
+}
+
+type FetchConfig<T, TArgs, TSchema> =
+  | FetchWithData<T>
+  | FetchWithApi<T, TArgs, TSchema>
+
 export interface ITableProps<
   T,
   TSchema extends ZodType<any, any, any> = undefined,
-  TState extends Object = any,
+  TArgs extends Object = any,
   TResponse = undefined
 > {
   name: string
   columns: Array<ColumnDef<T>>
   selectable?: boolean
   indexable?: boolean
-  internalState?: TState
+  internalArgs?: TArgs
   paginable?: boolean
   container?: Omit<CardContainerProps, "children">
   onRow?: {
     onClick?: (row: Row<T>) => void
     url?: (row: Row<T>) => string | string
   }
-  fetch: {
-    accessToken?: boolean
-    api: (
-      args: CheckedTypeByArgs<TState, ApiArgsType<TSchema>>,
-      accessToken?: string
-    ) => Promise<any>
-  }
+  fetch: FetchConfig<T, TArgs, TSchema>
   handleResponse?: (args: TResponse) => Array<Partial<T>>
   getTableState?: (args: Partial<TableState> & { data: T[] }) => void
   filters?: FilterOptions<TSchema>

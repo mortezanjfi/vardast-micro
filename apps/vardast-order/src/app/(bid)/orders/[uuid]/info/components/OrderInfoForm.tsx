@@ -114,7 +114,7 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
           queryKey: ["FindPreOrderById"]
         })
 
-        router.push(`${process.env.NEXT_PUBLIC_BIDDIN_PATH}orders/${uuid}`)
+        router.push(`${process.env.NEXT_PUBLIC_BIDDING_PATH}orders/${uuid}`)
       }
     }
   )
@@ -167,7 +167,7 @@ const OrderInfoForm = ({ uuid }: OrderInfoFormProps) => {
       findPreOrderByIdQuery?.data?.findPreOrderById.status ===
       PreOrderStates.Closed
     ) {
-      router.push(`${process.env.NEXT_PUBLIC_BIDDIN_PATH}orders`)
+      router.push(`${process.env.NEXT_PUBLIC_BIDDING_PATH}orders`)
     } else if (findPreOrderByIdQuery?.data?.findPreOrderById) {
       const defaultValue = findPreOrderByIdQuery?.data?.findPreOrderById
       if (defaultValue?.address?.id) {

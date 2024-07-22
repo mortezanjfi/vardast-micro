@@ -1,10 +1,10 @@
 "use client"
 
-import { useMemo } from "react"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { cardButton } from "@vardast/component/Card"
 import Table from "@vardast/component/table/Table"
 import { ITableProps } from "@vardast/component/table/type"
+import useTable from "@vardast/component/table/useTable"
 import { Line, PreOrder } from "@vardast/graphql/generated"
 import { findPreOrderByIdQueryFn } from "@vardast/query/queryFns/orders/findPreOrderByIdQueryFn"
 import useTranslation from "next-translate/useTranslation"
@@ -17,20 +17,19 @@ type OrderProductsListProps = {
 
 function OrderProductsList({ button, uuid }: OrderProductsListProps) {
   const { t } = useTranslation()
-
   const tableProps: ITableProps<Line, undefined, { id: number }, PreOrder> =
-    useMemo(
-      () => ({
+    useTable({
+      model: {
         name: "order-lines",
         container: {
           button,
-          title: "لیست‌ کالاها"
+          title: t("common:entity_list", { entity: t(`common:products`) })
         },
         fetch: {
           api: findPreOrderByIdQueryFn,
           accessToken: true
         },
-        internalState: { id: +uuid },
+        internalArgs: { id: +uuid },
         handleResponse: (response) => {
           return response.lines
         },
@@ -64,15 +63,10 @@ function OrderProductsList({ button, uuid }: OrderProductsListProps) {
             accessorFn: ({ attribuite }) => attribuite || "-"
           }
         ]
-      }),
-      []
-    )
+      }
+    })
 
-  return (
-    <div className="flex flex-col gap-7">
-      <Table {...tableProps} />
-    </div>
-  )
+  return <Table {...tableProps} />
 }
 
 export default OrderProductsList
