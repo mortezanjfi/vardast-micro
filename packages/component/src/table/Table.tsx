@@ -142,23 +142,25 @@ const Table = <
     [filters?.schema]
   )
 
-  const { data, isLoading, isFetching } = useQuery<ApiResponseType<T>>({
-    queryKey: [name, "table", memoizeFetchArgs],
-    queryFn: async () => {
-      const response = await fetch.api(
-        memoizeFetchArgs,
-        fetch?.accessToken && session?.accessToken
-      )
-      setRowSelection({})
-      if (!!handleResponse) {
-        return handleResponse(getConvertedApiData(response))
-      }
+  const { data, isLoading, isFetching, isError } = useQuery<ApiResponseType<T>>(
+    {
+      queryKey: [name, "table", memoizeFetchArgs],
+      queryFn: async () => {
+        const response = await fetch.api(
+          memoizeFetchArgs,
+          fetch?.accessToken && session?.accessToken
+        )
+        setRowSelection({})
+        if (!!handleResponse) {
+          return handleResponse(getConvertedApiData(response))
+        }
 
-      return response
-    },
-    keepPreviousData: true,
-    enabled: fetch?.accessToken ? !!session?.accessToken : true
-  })
+        return response
+      },
+      keepPreviousData: true,
+      enabled: fetch?.accessToken ? !!session?.accessToken : true
+    }
+  )
 
   const serializedData = useMemo(
     () =>
@@ -292,116 +294,118 @@ const Table = <
           </form>
         </Form>
       )}
-      {data ? (
-        <div className="relative flex flex-col gap-y">
-          {isFetching && (
+      <div className="relative flex flex-col gap-y">
+        <CardContainer
+          {...container}
+          button={{
+            ...container.button,
+            disabled: container.button.disabled || isLoading || isFetching
+          }}
+        >
+          {data ? (
+            <>
+              <div className="min-h-250 overflow-x-auto">
+                <table className="table-bordered table">
+                  <thead>
+                    {table?.getHeaderGroups()?.map((headerGroup) => (
+                      <tr key={headerGroup.id}>
+                        {headerGroup.headers.map((header) => {
+                          return (
+                            <th key={header.id} colSpan={header.colSpan}>
+                              {header.isPlaceholder ? null : (
+                                <div>
+                                  {flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext()
+                                  )}
+                                </div>
+                              )}
+                            </th>
+                          )
+                        })}
+                      </tr>
+                    ))}
+                  </thead>
+                  <tbody>
+                    {table?.getRowModel()?.rows?.map((row) => {
+                      return (
+                        <tr
+                          key={row.id}
+                          className={clsx(
+                            row.getIsSelected() && "!bg-primary-50"
+                          )}
+                        >
+                          {row.getVisibleCells()?.map((cell) => {
+                            const clickable =
+                              onRow &&
+                              cell.column.id !== "selection" &&
+                              cell.column.id !== "action"
+                            return (
+                              <td
+                                onClick={() => {
+                                  if (clickable && onRow?.onClick) {
+                                    onRow.onClick(row)
+                                  }
+                                }}
+                                className={clsx(
+                                  clickable && "relative cursor-pointer"
+                                )}
+                                key={cell.id}
+                              >
+                                {clickable && onRow?.url && (
+                                  <a
+                                    className={clsx(
+                                      "absolute inset-0 h-full w-full cursor-pointer"
+                                    )}
+                                    href={
+                                      typeof onRow.url === "string"
+                                        ? onRow.url
+                                        : onRow.url(row)
+                                    }
+                                    aria-label={
+                                      typeof onRow.url === "string"
+                                        ? onRow.url
+                                        : onRow.url(row)
+                                    }
+                                  ></a>
+                                )}
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext()
+                                )}
+                              </td>
+                            )
+                          })}
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+                {!isFetching &&
+                  !isLoading &&
+                  !table?.getRowModel()?.rows?.length && (
+                    <div className="flex h-full w-full flex-col items-center justify-center gap-y-7 bg-alpha-white px-6 py-10">
+                      <NotFoundIcon />
+                      <p className="text-center text-alpha-500">پیدا نشد!</p>
+                    </div>
+                  )}
+              </div>
+              {paginable && (
+                <TablePagination table={table} total={serializedData?.total} />
+              )}
+            </>
+          ) : isLoading ? (
+            <Loading />
+          ) : (
+            isError && <p className="text-error">خطا!</p>
+          )}
+          {data && isFetching && (
             <div className="absolute inset-0 z-[99] flex h-full w-full items-center justify-center bg-alpha-50 bg-opacity-80">
               <Loading />
             </div>
           )}
-          <CardContainer
-            {...container}
-            button={{
-              ...container.button,
-              disabled: container.button.disabled || isLoading || isFetching
-            }}
-          >
-            <div className="min-h-250 overflow-x-auto">
-              <table className="table-bordered table">
-                <thead>
-                  {table?.getHeaderGroups()?.map((headerGroup) => (
-                    <tr key={headerGroup.id}>
-                      {headerGroup.headers.map((header) => {
-                        return (
-                          <th key={header.id} colSpan={header.colSpan}>
-                            {header.isPlaceholder ? null : (
-                              <div>
-                                {flexRender(
-                                  header.column.columnDef.header,
-                                  header.getContext()
-                                )}
-                              </div>
-                            )}
-                          </th>
-                        )
-                      })}
-                    </tr>
-                  ))}
-                </thead>
-                <tbody>
-                  {table?.getRowModel()?.rows?.map((row) => {
-                    return (
-                      <tr
-                        key={row.id}
-                        className={clsx(
-                          row.getIsSelected() && "!bg-primary-50"
-                        )}
-                      >
-                        {row.getVisibleCells()?.map((cell) => {
-                          const clickable =
-                            onRow &&
-                            cell.column.id !== "selection" &&
-                            cell.column.id !== "action"
-                          return (
-                            <td
-                              onClick={() => {
-                                if (clickable && onRow?.onClick) {
-                                  onRow.onClick(row)
-                                }
-                              }}
-                              className={clsx(
-                                clickable && "relative cursor-pointer"
-                              )}
-                              key={cell.id}
-                            >
-                              {clickable && onRow?.url && (
-                                <a
-                                  className={clsx(
-                                    "absolute inset-0 h-full w-full cursor-pointer"
-                                  )}
-                                  href={
-                                    typeof onRow.url === "string"
-                                      ? onRow.url
-                                      : onRow.url(row)
-                                  }
-                                  aria-label={
-                                    typeof onRow.url === "string"
-                                      ? onRow.url
-                                      : onRow.url(row)
-                                  }
-                                ></a>
-                              )}
-                              {flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext()
-                              )}
-                            </td>
-                          )
-                        })}
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-              {!isFetching &&
-                !isLoading &&
-                !table?.getRowModel()?.rows?.length && (
-                  <div className="flex h-full w-full flex-col items-center justify-center gap-y-7 bg-alpha-white px-6 py-10">
-                    <NotFoundIcon />
-                    <p className="text-center text-alpha-500">پیدا نشد!</p>
-                  </div>
-                )}
-            </div>
-          </CardContainer>
-          {paginable && (
-            <TablePagination table={table} total={serializedData?.total} />
-          )}
-        </div>
-      ) : isLoading ? (
-        <Loading />
-      ) : (
-        <p className="text-error">خطا!</p>
-      )}
+        </CardContainer>
+      </div>
     </>
   )
 }
