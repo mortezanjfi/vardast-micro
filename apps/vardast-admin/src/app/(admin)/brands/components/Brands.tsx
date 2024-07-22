@@ -44,7 +44,8 @@ const filterSchema = z.object({
   logoStatus: z.string(),
   catalogStatus: z.string(),
   priceListStatus: z.string(),
-  bannerStatus: z.string()
+  bannerStatus: z.string(),
+  sort: z.string().optional()
 })
 export type FilterFields = TypeOf<typeof filterSchema>
 
@@ -90,6 +91,7 @@ const Brands = () => {
           ),
           hasLogoFile: checkBooleanByString(brandsQueryParams.logoStatus),
           hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus),
+          page: currentPage,
           sortType: SortBrandEnum.Sum
         }
       ]
@@ -100,7 +102,6 @@ const Brands = () => {
     () => brands.data?.brands.data.length,
     [brands.data?.brands.data.length]
   )
-  // console.log(brands.data?.brands.);
 
   return (
     <>

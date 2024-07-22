@@ -58,6 +58,7 @@ import ProductListContainer, {
 import VocabularyFilter from "./vocabulary-filter"
 
 interface ProductListProps {
+  hasTitle?: boolean
   desktopSideBarClass?: string
   isMobileView: boolean
   args: IndexProductInput
@@ -76,6 +77,7 @@ export const checkLimitPageByCondition = (condition: boolean, result: any[]) =>
   condition ? result.length + 1 : undefined
 
 const ProductList = ({
+  hasTitle = true,
   desktopSideBarClass,
   isMobileView,
   args,
@@ -623,10 +625,12 @@ const ProductList = ({
       isMobileView={isMobileView}
       DesktopSidebar={<></>}
       DesktopHeader={
-        <ListHeader
-          total={allProductsQuery?.data?.pages[0]?.products?.total}
-          listName={"products"}
-        />
+        hasTitle && (
+          <ListHeader
+            total={allProductsQuery?.data?.pages[0]?.products?.total}
+            listName={"products"}
+          />
+        )
       }
       // DesktopHeader={<></>}
       MobileHeader={hasFilter ? MobileHeader : <></>}

@@ -5,6 +5,7 @@ import {
   SellerType,
   useGetAllBrandsWithoutPaginationQuery
 } from "@vardast/graphql/generated"
+import { statusesOfAvailability } from "@vardast/lib/AvailabilityStatus"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
@@ -34,18 +35,6 @@ type SellersFilterProps = {
   form: UseFormReturn<SellersFilterFields>
   setSellersQueryParams: Dispatch<SetStateAction<SellersFilterFields>>
 }
-
-const statusesOfAvailability = [
-  {
-    status: "دارد",
-    value: "true"
-  },
-  { status: "ندارد", value: "false" },
-  {
-    status: "همه",
-    value: ""
-  }
-]
 
 export const SellersFilter = ({
   form,

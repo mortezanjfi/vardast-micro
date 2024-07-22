@@ -9,6 +9,8 @@ import MobileHomeTopBlogs from "../home/MobileHomeTopBlogs"
 import { ICategoryListLoader } from "./CategoryListLoader"
 
 interface ICategoryListContainer {
+  isMobileView?: boolean
+  blog?: boolean
   getAllBlogsQuery?: UseQueryResult<GetAllBlogsQuery>
   isSubcategory?: boolean
   description?: string
@@ -20,6 +22,8 @@ interface ICategoryListContainer {
 }
 
 const CategoryListContainer: React.FC<ICategoryListContainer> = ({
+  isMobileView,
+  blog,
   getAllBlogsQuery,
   isSubcategory,
   description,
@@ -50,11 +54,11 @@ const CategoryListContainer: React.FC<ICategoryListContainer> = ({
       >
         {children({ selectedItemId, setSelectedItemId })}
       </ul>
-      {isSubcategory && (
-        <div className="bg-alpha-white sm:border-t-2">
+      {blog && (
+        <div className="border-t-2 bg-alpha-white">
           <div className="container mx-auto sm:py-8">
             <MobileHomeTopBlogs
-              isMobileView={false}
+              isMobileView={isMobileView}
               getAllBlogsQuery={getAllBlogsQuery}
             />
           </div>
@@ -62,7 +66,7 @@ const CategoryListContainer: React.FC<ICategoryListContainer> = ({
       )}
       {description && (
         <>
-          <div className="flex flex-col gap-y px-6 py-8 sm:border-t-2">
+          <div className="flex flex-col gap-y border-t-2 px-6 py-8">
             <h4 className="text-alpha-500">معرفی</h4>
             <div
               ref={descriptionRef}

@@ -15,14 +15,7 @@ import {
 import { useToast } from "@vardast/hook/use-toast"
 import { uploadPaths } from "@vardast/lib/uploadPaths"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
-import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem
-} from "@vardast/ui/command"
 import {
   Form,
   FormControl,
@@ -32,14 +25,8 @@ import {
   FormMessage
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
-import { Popover, PopoverContent, PopoverTrigger } from "@vardast/ui/popover"
 import { ClientError } from "graphql-request"
-import {
-  LucideCheck,
-  LucideChevronsUpDown,
-  LucideTrash,
-  LucideWarehouse
-} from "lucide-react"
+import { LucideTrash, LucideWarehouse } from "lucide-react"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
@@ -243,7 +230,7 @@ function SliderForm({ slider }: Props) {
                 </FormItem>
               )}
             />
-            <FormField
+            {/* <FormField
               control={form.control}
               disabled
               name="sort"
@@ -256,8 +243,8 @@ function SliderForm({ slider }: Props) {
                   <FormMessage />
                 </FormItem>
               )}
-            />
-            <FormField
+            /> */}
+            {/* <FormField
               control={form.control}
               name="status"
               render={({ field }) => (
@@ -318,14 +305,14 @@ function SliderForm({ slider }: Props) {
                   </Popover>
                 </FormItem>
               )}
-            />
+            /> */}
             <ul className="col-span-4 list-disc  text-error-500">
               <li>فرمت فایل بایستی PNG و یا JPG باشد.</li>
               <li>حجم آن نباید بیشتر از 50 مگابایت باشد.</li>
               <li>امکان آپلود چند فایل به صورت همزمان وجود ندارد.</li>
             </ul>
             {/* divide----------------> */}
-            <div className="col-span-3 row-start-2 flex items-center gap-5 py-7">
+            <div className="col-span-4 row-start-2 flex items-center gap-5 py-7">
               <hr className="h-0.5 w-6 bg-alpha-200" />
               <span className="text-alpha-500">تصاویر</span>
               <hr className="h-0.5 w-full bg-alpha-200" />
