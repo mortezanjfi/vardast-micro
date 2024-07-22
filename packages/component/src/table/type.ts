@@ -34,14 +34,14 @@ export type OnRowFunctionType<T> = (row: Row<T>) => void
 export interface ITableProps<
   T,
   TSchema extends ZodType<any, any, any> = undefined,
-  TState extends Object = undefined,
+  TState extends Object = any,
   TResponse = undefined
 > {
   name: string
   columns: Array<ColumnDef<T>>
   selectable?: boolean
   indexable?: boolean
-  internalState?: TState | undefined
+  internalState?: TState
   paginable?: boolean
   container?: Omit<CardContainerProps, "children">
   onRow?: {
