@@ -32,6 +32,7 @@ import { checkLimitPageByCondition } from "../product-list"
 import BrandSortFilter from "./BrandSortFilter"
 
 type BrandsListProps = {
+  hasTitle?: boolean
   limitPage?: number
   args: IndexBrandInput
   isMobileView: boolean
@@ -41,7 +42,12 @@ type BrandsListProps = {
   isSellerPanel?: boolean
 }
 
-const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
+const BrandsList = ({
+  hasTitle = true,
+  limitPage,
+  args,
+  isMobileView
+}: BrandsListProps) => {
   const { sortFilterVisibilityAtom, filtersVisibilityAtom } =
     useContext(PublicContext)
 
@@ -237,11 +243,13 @@ const BrandsList = ({ limitPage, args, isMobileView }: BrandsListProps) => {
       Content={Content}
       MobileHeader={MobileHeader}
       DesktopHeader={
-        <ListHeader
-          borderBottom
-          total={allBrandsQuery?.data?.pages[0].brands?.total}
-          listName={"brands"}
-        />
+        hasTitle && (
+          <ListHeader
+            borderBottom
+            total={allBrandsQuery?.data?.pages[0].brands?.total}
+            listName={"brands"}
+          />
+        )
       }
       DesktopSidebar={<></>}
     />
