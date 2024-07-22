@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { notFound, useSearchParams } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
 import {
@@ -84,7 +84,7 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
   }
 
   const tabListLoader = (
-    <div className="sticky top-0 z-50 mb-5 grid w-full grid-cols-4 bg-alpha-white font-medium sm:z-0  md:flex">
+    <div className="sticky top-0 z-50 grid w-full grid-cols-4 bg-alpha-white font-medium sm:z-0 md:mb-5  md:flex">
       <div className="flex h-14 w-20 items-center justify-center">
         <span className="animated-card h-4 w-12" />
       </div>
@@ -124,7 +124,7 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
         publicPreOrders.isFetching ? (
           tabListLoader
         ) : (
-          <TabsList className="sticky top-0 z-50 mb-5 grid w-full grid-cols-4 bg-alpha-white font-medium sm:z-0  md:flex">
+          <TabsList className="sticky top-0 z-50 grid w-full grid-cols-4 bg-alpha-white font-medium sm:z-0 md:mb-5  md:flex">
             {categoryQuery?.data?.category?.childrenCount > 0 && (
               <TabsTrigger
                 className="py-4"
@@ -149,10 +149,15 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
         )}
         {categoryQuery?.data?.category?.childrenCount > 0 && (
           <TabsContent
-            className="bg-alpha-50 sm:bg-alpha-white"
+            className="bg-alpha-white py-5 md:!py-0"
             value={CATEGORY_PAGE_TABS.SUBCATEGORIES}
           >
             <CategoriesList
+              blog={
+                categoryQuery?.data?.category?.parentsChain.length > 0
+                  ? false
+                  : true
+              }
               categoryId={categoryId}
               getAllBlogsQuery={getAllBlogsQuery}
               description={categoryQuery?.data?.category?.description}
@@ -171,10 +176,15 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
           />
         </TabsContent>
         <TabsContent value={CATEGORY_PAGE_TABS.BRANDS}>
-          <BrandsList args={brandsArgs} isMobileView={isMobileView} />
+          <BrandsList
+            hasTitle={false}
+            args={brandsArgs}
+            isMobileView={isMobileView}
+          />
         </TabsContent>
         <TabsContent value={CATEGORY_PAGE_TABS.PRODUCTS}>
           <ProductList
+            hasTitle={false}
             isMobileView={isMobileView}
             args={productArgs}
             selectedCategoryIds={[+categoryId]}

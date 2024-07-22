@@ -10,6 +10,7 @@ import CategoryListItem from "./CategoryListItem"
 import CategorySkeleton from "./CategorySkeleton"
 
 interface CategoriesListProps {
+  blog?: boolean
   getAllBlogsQuery?: UseQueryResult<GetAllBlogsQuery>
   categoryId?: string
   isMobileView?: boolean
@@ -21,6 +22,7 @@ interface CategoriesListProps {
 }
 
 const CategoriesList = ({
+  blog,
   categoryId,
   getAllBlogsQuery,
   isMobileView,
@@ -60,6 +62,7 @@ const CategoriesList = ({
   setSidebar(DesktopSidebar)
   return (
     <CategoryListContainer
+      blog={blog}
       getAllBlogsQuery={getAllBlogsQuery}
       isSubcategory={isSubcategory}
       description={description}
