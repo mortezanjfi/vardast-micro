@@ -91,7 +91,6 @@ const Brands = () => {
           ),
           hasLogoFile: checkBooleanByString(brandsQueryParams.logoStatus),
           hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus),
-          page: currentPage,
           sortType: SortBrandEnum.Sum
         }
       ]
