@@ -77,12 +77,13 @@ const Brands = () => {
         hasCatalogeFile: checkBooleanByString(brandsQueryParams.catalogStatus),
         hasLogoFile: checkBooleanByString(brandsQueryParams.logoStatus),
         hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus),
-        sortType: brandsQueryParams.sort as SortBrandEnum
+        sortType: SortBrandEnum.Sum
       }
     },
     {
       queryKey: [
         {
+          page: currentPage,
           name: brandsQueryParams.brand,
           hasPriceList: checkBooleanByString(brandsQueryParams.priceListStatus),
           hasCatalogeFile: checkBooleanByString(
@@ -91,7 +92,7 @@ const Brands = () => {
           hasLogoFile: checkBooleanByString(brandsQueryParams.logoStatus),
           hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus),
           page: currentPage,
-          sortType: brandsQueryParams.sort as SortBrandEnum
+          sortType: SortBrandEnum.Sum
         }
       ]
     }
