@@ -1,0 +1,15 @@
+query GetMegaMenu {
+  mega_menu {
+    id
+    image_url
+    title
+    children {
+      id
+      title
+      children {
+        id
+        title
+      }
+    }
+  }
+}

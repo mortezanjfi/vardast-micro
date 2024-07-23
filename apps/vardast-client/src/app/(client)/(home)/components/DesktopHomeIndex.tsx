@@ -10,6 +10,9 @@ import { Brand, Category } from "@vardast/graphql/generated"
 import clsx from "clsx"
 
 import { IHomeProps } from "@/app/(client)/(home)/components/HomeIndex"
+import MegaMenu, {
+  MegaMenuLoader
+} from "@/app/(client)/(home)/components/MegaMenu"
 import MobileHomeNewestProducts from "@/app/(client)/(home)/components/MobileHomeNewestProducts"
 import MobileHomeSlider from "@/app/(client)/(home)/components/MobileHomeSlider"
 import MobileHomeTopEntities from "@/app/(client)/(home)/components/MobileHomeTopEntities"
@@ -17,6 +20,7 @@ import NewPriceSlider from "@/app/(client)/(home)/components/NewPriceSlider"
 import PublicPreOrdersSection from "@/app/(client)/(home)/components/PublicPreOrdersSection"
 
 const DesktopHomeIndex = ({
+  megaMenuData,
   publicOrdersQuery,
   getVocabularyQueryFcQuery,
   recentPriceProductsQuery,
@@ -34,8 +38,17 @@ const DesktopHomeIndex = ({
 
   return (
     <>
+      <div className="container relative mx-auto">
+        {megaMenuData.isLoading || megaMenuData.isFetching ? (
+          <MegaMenuLoader />
+        ) : (
+          <MegaMenu megaMenuData={megaMenuData} />
+        )}
+      </div>
       {recentPriceProductsQuery?.data?.products?.data?.length > 0 && (
-        <NewPriceSlider query={recentPriceProductsQuery} />
+        <div className="border-t-2 bg-alpha-white">
+          <NewPriceSlider query={recentPriceProductsQuery} />
+        </div>
       )}
       <div className="bg-alpha-100 sm:bg-alpha-white">
         <div className="">
