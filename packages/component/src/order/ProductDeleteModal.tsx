@@ -2,10 +2,17 @@
 "use client"
 
 import { Dispatch, SetStateAction, useState } from "react"
+import { useQueryClient } from "@tanstack/react-query"
+import { toast } from "@vardast/hook/use-toast"
 import { ClientError } from "graphql-request"
 import { LucideAlertOctagon } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
+import {
+  Product,
+  useRemoveProductMutation
+} from "../../../graphql/src/generated"
+import graphqlRequestClientWithToken from "../../../query/src/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "../../../ui/src/alert"
 import {
   AlertDialog,
@@ -17,7 +24,7 @@ import {
 import { Button } from "../../../ui/src/button"
 
 type ProductDeleteModalProps = {
-  productToDelete: any
+  productToDelete: Product
   open: boolean
   onOpenChange: Dispatch<SetStateAction<boolean>>
 }
@@ -29,9 +36,31 @@ const ProductDeleteModal = ({
 }: ProductDeleteModalProps) => {
   const { t } = useTranslation()
   const [errors, setErrors] = useState<ClientError>()
+  const queryClient = useQueryClient()
+  const removeProductMutation = useRemoveProductMutation(
+    graphqlRequestClientWithToken,
+    {
+      onError: (errors: ClientError) => {
+        setErrors(errors)
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["GetAllProducts"]
+        })
+        onOpenChange(false)
+        toast({
+          description: t("common:entity_removed_successfully", {
+            entity: `${t(`common:product`)}`
+          }),
+          duration: 2000,
+          variant: "success"
+        })
+      }
+    }
+  )
 
   const onDelete = () => {
-    console.log("delete")
+    removeProductMutation.mutate({ id: productToDelete.id })
   }
 
   return (

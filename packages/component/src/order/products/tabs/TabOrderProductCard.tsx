@@ -25,7 +25,6 @@ import PriceTitle from "../../..//PriceTitle"
 import { ProductContainerType } from "../../..//ProductListContainer"
 import { DetailsWithTitle } from "../../../desktop/DetailsWithTitle"
 import Link from "../../../Link"
-import ProductDeleteModal from "../../ProductDeleteModal"
 
 interface TabOrderProductCardProps {
   isDefault?: boolean
@@ -135,11 +134,11 @@ const TabOrderProductCard = forwardRef(
 
     return (
       <>
-        <ProductDeleteModal
+        {/* <ProductDeleteModal
           productToDelete={productToDelete}
           open={open}
           onOpenChange={onOpenChange}
-        />
+        /> */}
         <Link
           ref={ref}
           href={checkSellerRedirectUrl(

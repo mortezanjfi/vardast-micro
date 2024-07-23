@@ -10,9 +10,10 @@ import Link from "@vardast/component/Link"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
+import ProductDeleteModal from "@vardast/component/order/ProductDeleteModal"
 import PageHeader from "@vardast/component/PageHeader"
 import Pagination from "@vardast/component/table/Pagination"
-import { useGetAllProductsQuery } from "@vardast/graphql/generated"
+import { Product, useGetAllProductsQuery } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Button } from "@vardast/ui/button"
@@ -71,6 +72,8 @@ export interface ProductQueryParams {
 const Products = () => {
   const { t } = useTranslation()
   const { data: session } = useSession()
+  const [productToDelete, setProductToDelete] = useState<Product>()
+  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [productQueryParams, setProductQueryParams] =
     useState<ProductQueryParams>({
@@ -130,6 +133,11 @@ const Products = () => {
   // }
   return (
     <>
+      <ProductDeleteModal
+        open={deleteModalOpen}
+        onOpenChange={setDeleteModalOpen}
+        productToDelete={productToDelete}
+      />
       <ProductsFilter
         form={form}
         setProductQueryParams={setProductQueryParams}
@@ -275,11 +283,11 @@ const Products = () => {
                             </Link>
                             <span
                               className="tag cursor-pointer text-error"
-                              // onClick={(e) => {
-                              //   e.stopPropagation()
-                              //   setDeleteModalOpen(true)
-                              //   setBrandToDelete(brand as Brand)
-                              // }}
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                setDeleteModalOpen(true)
+                                setProductToDelete(product as Product)
+                              }}
                             >
                               {t("common:delete")}
                             </span>
