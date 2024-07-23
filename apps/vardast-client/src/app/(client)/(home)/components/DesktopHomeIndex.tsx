@@ -39,7 +39,7 @@ const DesktopHomeIndex = ({
   return (
     <>
       <div className="">
-        <div className="container mx-auto ">
+        <div className="container relative mx-auto">
           {megaMenuData.isLoading || megaMenuData.isFetching ? (
             <MegaMenuLoader />
           ) : (

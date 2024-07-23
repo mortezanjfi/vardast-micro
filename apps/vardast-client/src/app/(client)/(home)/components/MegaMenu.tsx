@@ -28,10 +28,10 @@ const MegaMenu = ({ megaMenuData }: Props) => {
   }, [megaMenuData])
 
   return (
-    <div className="group relative inline-flex w-[70%] items-center gap-4  py-4 text-base text-alpha-800 hover:text-gray-700">
+    <div className="group  inline-flex  items-center gap-4  py-4 text-base text-alpha-800 hover:text-gray-700">
       <Menu width={18} height={18} />
       دسته بندی کالا
-      <div className="absolute top-full z-50 hidden max-h-[calc(100vh-300px)]  grid-cols-5 overflow-hidden rounded-b-2xl bg-white text-gray-900 shadow-lg hover:grid group-hover:grid">
+      <div className="absolute top-full z-50 hidden  max-h-[calc(100vh-300px)] w-[calc(100%-40px)]  grid-cols-5 overflow-hidden rounded-b-2xl bg-white text-gray-900 shadow-lg hover:grid group-hover:grid">
         {/* Category Sidebar */}
         <div className="col-span-1  max-h-[calc(100vh-300px)] overflow-y-auto  bg-alpha-100 py-5">
           {megaMenuData?.data?.mega_menu?.map((category) => (
