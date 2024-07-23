@@ -38,14 +38,12 @@ const DesktopHomeIndex = ({
 
   return (
     <>
-      <div className="">
-        <div className="container relative mx-auto">
-          {megaMenuData.isLoading || megaMenuData.isFetching ? (
-            <MegaMenuLoader />
-          ) : (
-            <MegaMenu megaMenuData={megaMenuData} />
-          )}
-        </div>
+      <div className="container relative mx-auto">
+        {megaMenuData.isLoading || megaMenuData.isFetching ? (
+          <MegaMenuLoader />
+        ) : (
+          <MegaMenu megaMenuData={megaMenuData} />
+        )}
       </div>
       {recentPriceProductsQuery?.data?.products?.data?.length > 0 && (
         <div className="border-t-2 bg-alpha-white">
