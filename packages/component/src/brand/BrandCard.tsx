@@ -64,10 +64,6 @@ const BrandCard = forwardRef(
 
     ref: Ref<HTMLAnchorElement> | undefined
   ) => {
-    console.log(brand.name)
-    console.log(brand.name_fa)
-    console.log(brand.name_en)
-
     const { t } = useTranslation()
     const [selectedItemId, setSelectedItemId] =
       useState<ICategoryListLoader>(null)

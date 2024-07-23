@@ -9,10 +9,12 @@ import {
   GetAllBrandsCountQuery,
   GetAllProductsQuery,
   GetBannerHomePageQuery,
+  GetMegaMenuQuery,
   GetPublicOrdersQuery,
   GetVocabularyQuery,
   SortDirection,
   SortFieldProduct,
+  useGetMegaMenuQuery,
   useGetPublicOrdersQuery
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
@@ -34,6 +36,7 @@ const PwaNotificationProvider = dynamic(
 )
 
 export type IHomeProps = {
+  megaMenuData: UseQueryResult<GetMegaMenuQuery, unknown>
   publicOrdersQuery: UseQueryResult<GetPublicOrdersQuery, unknown>
   recentPriceProductsQuery: UseQueryResult<GetAllProductsQuery, unknown>
   isMobileView: boolean
@@ -123,8 +126,11 @@ const HomeIndex = ({ isMobileView }: HomeIndexProps) => {
     graphqlRequestClientWithToken
   )
 
+  const megaMenuData = useGetMegaMenuQuery(graphqlRequestClientWithToken)
+
   const homeProps: IHomeProps = useMemo(
     () => ({
+      megaMenuData,
       publicOrdersQuery,
       recentPriceProductsQuery,
       isMobileView,
@@ -135,6 +141,7 @@ const HomeIndex = ({ isMobileView }: HomeIndexProps) => {
       getAllBlogsQuery
     }),
     [
+      megaMenuData,
       publicOrdersQuery,
       recentPriceProductsQuery,
       isMobileView,
