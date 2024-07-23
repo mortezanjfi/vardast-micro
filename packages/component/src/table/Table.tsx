@@ -14,15 +14,10 @@ import {
   PaginationState,
   useReactTable
 } from "@tanstack/react-table"
-import {
-  ApiArgsType,
-  ApiResponseType,
-  TableResponseType
-} from "@vardast/query/type"
+import { ApiArgsType, TableResponseType } from "@vardast/query/type"
 import { Checkbox } from "@vardast/ui/checkbox"
 import { Form } from "@vardast/ui/form"
 import { clsx } from "clsx"
-import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 import {
   createParser,
@@ -32,7 +27,8 @@ import {
 import { DefaultValues, useForm } from "react-hook-form"
 import { AnyZodObject, TypeOf, ZodDefault, ZodSchema } from "zod"
 
-import CardContainer from "../desktop/CardContainer"
+import Card from "../Card"
+import Link from "../Link"
 import Loading from "../Loading"
 import NotFoundIcon from "../not-found-icon"
 import Filter from "./Filter"
@@ -45,6 +41,9 @@ const filtersParser = createParser({
 })
 
 const serializedDefaultForm = (data, setValue) => {
+  if (!data) {
+    return
+  }
   Object.entries(data).forEach(([key, value]) => {
     if (value) {
       setValue(key, `${value}`)
@@ -111,14 +110,17 @@ const Table = <
 }: ITableProps<T, TSchema>) => {
   const router = useRouter()
   const pathname = usePathname()
-  const [fetchArgs, setFetchArgs] = useQueryStates({
-    pageIndex: parseAsInteger.withDefault(0),
-    pageSize: parseAsInteger.withDefault(10),
-    args: filtersParser.withDefault({})
-  })
+  const [fetchArgs, setFetchArgs] = useQueryStates(
+    fetch?.directData?.data
+      ? {}
+      : {
+          pageIndex: parseAsInteger.withDefault(0),
+          pageSize: parseAsInteger.withDefault(10),
+          args: filtersParser.withDefault({})
+        }
+  )
   const { t } = useTranslation()
   const [rowSelection, setRowSelection] = useState({})
-  const { data: session } = useSession()
 
   const memoizeFetchArgs: ApiArgsType<TSchema> =
     internalArgs ??
@@ -145,26 +147,44 @@ const Table = <
     [filters?.schema]
   )
 
-  const { data, isLoading, isFetching, isError } = useQuery<ApiResponseType<T>>(
-    {
-      queryKey: [name, "table", memoizeFetchArgs],
-      queryFn: async () => {
-        if (fetch.directData) {
-          return fetch.directData
-        }
-        const response = await fetch.api(
-          memoizeFetchArgs,
-          fetch?.accessToken && session?.accessToken
-        )
-        setRowSelection({})
-        if (!!handleResponse) {
-          return handleResponse(getConvertedApiData(response))
-        }
+  const { data, isLoading, isFetching, isError } = useQuery(
+    [name, "table", memoizeFetchArgs, fetch?.directData?.data],
+    async () => {
+      let response: Partial<T>[]
+      // console.log("Starting data fetch...")
 
-        return response
-      },
-      keepPreviousData: true,
-      enabled: fetch?.accessToken ? !!session?.accessToken : true
+      if (fetch?.directData?.data) {
+        response = fetch.directData.data
+        // console.log("Using direct data:", response)
+      } else if (fetch?.api) {
+        try {
+          // console.log("Fetching data from API with args:", memoizeFetchArgs)
+          response = await fetch.api(memoizeFetchArgs)
+          // console.log("API response:", response)
+        } catch (error) {
+          // console.log("API error:", error)
+          throw new Error("Failed to fetch data from API")
+        }
+      } else {
+        // console.log("No direct data or API to fetch data from")
+      }
+
+      if (!response) {
+        throw new Error("No data fetched")
+      }
+
+      if (handleResponse) {
+        const handledResponse = handleResponse(getConvertedApiData(response))
+        // console.log("Handled response:", handledResponse)
+        return handledResponse
+      }
+
+      // console.log("Final response:", response)
+      setRowSelection({})
+      return response
+    },
+    {
+      keepPreviousData: true
     }
   )
 
@@ -173,7 +193,11 @@ const Table = <
       data
         ? handleResponse
           ? ({ data } as unknown as TableResponseType<T>)
-          : (data[Object.keys(data)[0]] as unknown as TableResponseType<T>)
+          : fetch?.directData?.data
+            ? ({
+                data: fetch?.directData?.data
+              } as unknown as TableResponseType<T>)
+            : (data[Object.keys(data)[0]] as unknown as TableResponseType<T>)
         : ([] as unknown as TableResponseType<T>),
     [data, handleResponse]
   )
@@ -237,7 +261,10 @@ const Table = <
     getSortedRowModel: getSortedRowModel(),
     onPaginationChange: (updater) => {
       setFetchArgs((prev) => {
-        const newState = typeof updater === "function" ? updater(prev) : updater
+        const newState =
+          typeof updater === "function"
+            ? updater(prev as PaginationState)
+            : updater
         return { ...prev, ...newState }
       })
     },
@@ -253,18 +280,21 @@ const Table = <
   })
 
   const onSubmit = useCallback((filter: FilterFieldsType) => {
-    setFetchArgs((prev) => {
-      return { ...prev, args: clearData(filter), pageIndex: 0 }
-    })
+    if (!fetch?.directData) {
+      setFetchArgs((prev) => {
+        return { ...prev, args: clearData(filter), pageIndex: 0 }
+      })
+    }
   }, [])
 
   const onReset = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault()
-      setFetchArgs({})
-      form.reset()
-
-      router.push(pathname)
+      if (!fetch?.directData) {
+        e.preventDefault()
+        setFetchArgs({})
+        form.reset()
+        router.push(pathname)
+      }
     },
     [form]
   )
@@ -300,7 +330,7 @@ const Table = <
         </Form>
       )}
       <div className="relative flex flex-col gap-y">
-        <CardContainer
+        <Card
           {...container}
           button={{
             ...container.button,
@@ -313,14 +343,18 @@ const Table = <
         >
           {data ? (
             <>
-              <div className="min-h-250 overflow-x-auto">
+              <div className="min-h-250 overflow-x-auto pt">
                 <table className="table-bordered table">
                   <thead>
                     {table?.getHeaderGroups()?.map((headerGroup) => (
                       <tr key={headerGroup.id}>
                         {headerGroup.headers.map((header) => {
                           return (
-                            <th key={header.id} colSpan={header.colSpan}>
+                            <th
+                              className={clsx(header.id === "row" && "w-16")}
+                              key={header.id}
+                              colSpan={header.colSpan}
+                            >
                               {header.isPlaceholder ? null : (
                                 <div>
                                   {flexRender(
@@ -357,12 +391,14 @@ const Table = <
                                   }
                                 }}
                                 className={clsx(
-                                  clickable && "relative cursor-pointer"
+                                  clickable && "relative cursor-pointer",
+                                  cell.column.id === "row" &&
+                                    "!px-2 text-center"
                                 )}
                                 key={cell.id}
                               >
                                 {clickable && onRow?.url && (
-                                  <a
+                                  <Link
                                     className={clsx(
                                       "absolute inset-0 h-full w-full cursor-pointer"
                                     )}
@@ -376,7 +412,7 @@ const Table = <
                                         ? onRow.url
                                         : onRow.url(row)
                                     }
-                                  ></a>
+                                  ></Link>
                                 )}
                                 {flexRender(
                                   cell.column.columnDef.cell,
@@ -413,7 +449,7 @@ const Table = <
               <Loading />
             </div>
           )}
-        </CardContainer>
+        </Card>
       </div>
     </>
   )

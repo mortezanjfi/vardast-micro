@@ -3,7 +3,7 @@
 
 import { useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
-import { useRemoveUserProjectMutation } from "@vardast/graphql/generated"
+import { User, useRemoveUserProjectMutation } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import {
@@ -18,13 +18,14 @@ import { ClientError } from "graphql-request"
 import { LucideAlertOctagon } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
-import { ProjectUserCartProps, SELECTED_ITEM_TYPE } from "./ProjectUsersTab"
+import { IProjectPageSectionModalProps } from "@/app/(bid)/projects/[uuid]/components/ProjectPage"
 
 const UserDeleteModal = ({
-  selectedUsers,
+  row,
+  open,
   onCloseModal,
   uuid
-}: ProjectUserCartProps) => {
+}: IProjectPageSectionModalProps<User>) => {
   const { t } = useTranslation()
   const [errors, setErrors] = useState<ClientError>()
   const queryClient = useQueryClient()
@@ -46,16 +47,13 @@ const UserDeleteModal = ({
 
   const onDelete = () => {
     removeUserProjectMutation.mutate({
-      userId: +selectedUsers?.data.id,
+      userId: +row?.data.id,
       projectId: +uuid
     })
   }
 
   return (
-    <AlertDialog
-      open={selectedUsers?.type === SELECTED_ITEM_TYPE.DELETE}
-      onOpenChange={onCloseModal}
-    >
+    <AlertDialog open={open} onOpenChange={onCloseModal}>
       <AlertDialogContent>
         <div className="flex">
           <div className="me-6 flex-1 shrink-0">
@@ -86,7 +84,7 @@ const UserDeleteModal = ({
                 "common:are_you_sure_you_want_to_delete_x_entity_this_action_cannot_be_undone_and_all_associated_data_will_be_permanently_removed",
                 {
                   entity: `${t(`common:user`)}`,
-                  name: selectedUsers?.data?.fullName
+                  name: row?.data?.fullName
                 }
               )}
             </p>

@@ -99,8 +99,7 @@ const Orders = (_: OrdersProps) => {
         },
         paginable: true,
         fetch: {
-          api: getAllPreOrdersQueryFn,
-          accessToken: true
+          api: getAllPreOrdersQueryFn
         },
         onRow: {
           url: (row) =>

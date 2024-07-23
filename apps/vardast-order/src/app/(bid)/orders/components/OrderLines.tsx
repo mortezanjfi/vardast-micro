@@ -55,8 +55,7 @@ const OrderLines = (_: OrderLinesProps) => {
       },
       paginable: true,
       fetch: {
-        api: getOrderLinesQueryFn,
-        accessToken: true
+        api: getOrderLinesQueryFn
       },
       onRow: {
         url: (row) =>

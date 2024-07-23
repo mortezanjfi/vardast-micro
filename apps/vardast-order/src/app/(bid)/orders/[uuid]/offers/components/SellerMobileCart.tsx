@@ -2,6 +2,7 @@
 
 import { Dispatch, SetStateAction, useState } from "react"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
+import { DetailsWithTitle } from "@vardast/component/src/desktop/DetailsWithTitle"
 import { OfferOrder } from "@vardast/graphql/generated"
 import { Button } from "@vardast/ui/button"
 import { Checkbox } from "@vardast/ui/checkbox"
@@ -17,7 +18,6 @@ import useTranslation from "next-translate/useTranslation"
 import { UseFormReturn } from "react-hook-form"
 
 import { ConfirmOffer } from "../../../../apps/vardast-order/src/app/(bid)/orders/[uuid]/components/SellersList"
-import { DetailsWithTitle } from "../desktop/DetailsWithTitle"
 
 type SellerMobileCartProps = {
   setSelectedOfferId: Dispatch<SetStateAction<number>>

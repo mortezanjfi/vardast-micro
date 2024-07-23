@@ -63,7 +63,7 @@ const TablePagination = <T,>({ table, total }: Props<T>) => {
   // }, [])
 
   return (
-    <div className="flex justify-start">
+    <div className="flex justify-start pt">
       <div className="flex items-center justify-start gap-10">
         <div className="flex items-center gap">
           <p>برو به صفحه:</p>

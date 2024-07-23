@@ -8,7 +8,7 @@ import { SelectPopoverPropsType } from "@vardast/ui/src/select-popover"
 import { UseFormReturn } from "react-hook-form"
 import { TypeOf, ZodType } from "zod"
 
-import { CardContainerProps } from "../desktop/CardContainer"
+import { CardProps } from "../Card"
 
 export enum FilterComponentTypeEnum {
   INPUT = "INPUT",
@@ -42,17 +42,14 @@ type FetchWithData<T> = {
 
 type FetchWithApi<_T, TArgs, TSchema> = {
   directData?: never
-  accessToken?: boolean
-  api: (
-    args: CheckedTypeByArgs<TArgs, ApiArgsType<TSchema>>,
-    accessToken?: string
-  ) => Promise<any>
+  api: (args: CheckedTypeByArgs<TArgs, ApiArgsType<TSchema>>) => Promise<any>
 }
 
 type FetchConfig<T, TArgs, TSchema> =
   | FetchWithData<T>
   | FetchWithApi<T, TArgs, TSchema>
 
+type InternalArgsType<T, TArgs> = T extends { directData: any } ? never : TArgs
 export interface ITableProps<
   T,
   TSchema extends ZodType<any, any, any> = undefined,
@@ -63,9 +60,9 @@ export interface ITableProps<
   columns: Array<ColumnDef<T>>
   selectable?: boolean
   indexable?: boolean
-  internalArgs?: TArgs
+  internalArgs?: InternalArgsType<FetchConfig<T, TArgs, TSchema>, TArgs>
   paginable?: boolean
-  container?: Omit<CardContainerProps, "children">
+  container?: Omit<CardProps, "children">
   onRow?: {
     onClick?: (row: Row<T>) => void
     url?: (row: Row<T>) => string | string

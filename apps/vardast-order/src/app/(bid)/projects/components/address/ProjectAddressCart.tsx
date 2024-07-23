@@ -12,7 +12,10 @@ import {
 import { LucideEdit, LucideMoreVertical, LucideTrash } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
-import { SELECTED_ITEM, SELECTED_ITEM_TYPE } from "../ProjectAddressesTab"
+import {
+  SELECTED_ITEM,
+  SELECTED_ITEM_TYPE
+} from "../../[uuid]/components/ProjectAddresses"
 
 type ProjectAddressCartProps = {
   address: ProjectAddress

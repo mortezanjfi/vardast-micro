@@ -3,6 +3,7 @@
 import { Dispatch, SetStateAction, useEffect } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
+import CardContainer from "@vardast/component/src/desktop/CardContainer"
 import {
   AddSellerOrderOffer,
   useAddSellerOrderOfferMutation
@@ -32,7 +33,6 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-import CardContainer from "../desktop/CardContainer"
 import { OfferDetailModalProps } from "./OfferDetailModal"
 
 const CreateSellerSchema = z.object({

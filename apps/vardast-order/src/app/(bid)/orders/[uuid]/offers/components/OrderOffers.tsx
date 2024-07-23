@@ -21,7 +21,8 @@ const AddOfferSchema = z.object({
 })
 
 export type ConfirmOffer = TypeOf<typeof AddOfferSchema>
-function SellersList({ uuid }: Props) {
+
+function OrderOffers({ uuid }: Props) {
   const { t } = useTranslation()
   const { data: session } = useSession()
   const token = session?.accessToken || null
@@ -63,7 +64,6 @@ function SellersList({ uuid }: Props) {
             })
           },
           text: t("common:add_entity", { entity: t("common:offer") }),
-          className: "py-2",
           type: "button"
         },
         title: t("common:entity_list", { entity: t(`common:offers`) })
@@ -73,8 +73,7 @@ function SellersList({ uuid }: Props) {
           `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders/${row.original.id}`
       },
       fetch: {
-        api: findPreOrderByIdQueryFn,
-        accessToken: true
+        api: findPreOrderByIdQueryFn
       },
       internalArgs: { id: +uuid },
       handleResponse: (response) => {
@@ -142,4 +141,4 @@ function SellersList({ uuid }: Props) {
   return <Table {...tableProps} />
 }
 
-export default SellersList
+export default OrderOffers

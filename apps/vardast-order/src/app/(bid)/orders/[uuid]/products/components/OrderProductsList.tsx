@@ -1,7 +1,7 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import { cardButton } from "@vardast/component/Card"
 import Table from "@vardast/component/table/Table"
 import { ITableProps } from "@vardast/component/table/type"
 import useTable from "@vardast/component/table/useTable"
@@ -10,24 +10,29 @@ import { findPreOrderByIdQueryFn } from "@vardast/query/queryFns/orders/findPreO
 import useTranslation from "next-translate/useTranslation"
 
 type OrderProductsListProps = {
-  isMobileView?: boolean
-  button?: cardButton
   uuid: string
 }
 
-function OrderProductsList({ button, uuid }: OrderProductsListProps) {
+function OrderProductsList({ uuid }: OrderProductsListProps) {
+  const router = useRouter()
   const { t } = useTranslation()
   const tableProps: ITableProps<Line, undefined, { id: number }, PreOrder> =
     useTable({
       model: {
         name: "order-lines",
         container: {
-          button,
+          button: {
+            onClick: () =>
+              router.push(
+                `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders/${uuid}/products`
+              ),
+            text: t("common:add_new_entity", { entity: t(`common:product`) }),
+            type: "button"
+          },
           title: t("common:entity_list", { entity: t(`common:products`) })
         },
         fetch: {
-          api: findPreOrderByIdQueryFn,
-          accessToken: true
+          api: findPreOrderByIdQueryFn
         },
         internalArgs: { id: +uuid },
         handleResponse: (response) => {

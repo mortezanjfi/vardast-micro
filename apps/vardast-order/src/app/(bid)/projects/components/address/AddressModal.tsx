@@ -4,6 +4,7 @@ import { digitsEnToFa, digitsFaToEn } from "@persian-tools/persian-tools"
 import { useQueryClient } from "@tanstack/react-query"
 import {
   CreateAddressProjectInput,
+  ProjectAddress,
   useAssignAddressProjectMutation,
   useGetAllProvincesQuery,
   useGetProvinceQuery,
@@ -51,10 +52,7 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-import {
-  ProjectAddressCartProps,
-  SELECTED_ITEM_TYPE
-} from "../ProjectAddressesTab"
+import { IProjectPageSectionModalProps } from "@/app/(bid)/projects/[uuid]/components/ProjectPage"
 
 export const AddAddressModalFormSchema = z.object({
   title: z.string(),
@@ -70,9 +68,10 @@ export type AddAddressModalFormType = TypeOf<typeof AddAddressModalFormSchema>
 
 export const AddressModal = ({
   onCloseModal,
-  selectedAddresses,
+  open,
+  row,
   uuid
-}: ProjectAddressCartProps) => {
+}: IProjectPageSectionModalProps<ProjectAddress>) => {
   const { t } = useTranslation()
   const [errors, setErrors] = useState<ClientError>()
   const [provinceDialog, setProvinceDialog] = useState(false)
@@ -86,11 +85,17 @@ export const AddressModal = ({
 
   z.setErrorMap(zodI18nMap)
 
-  const provinces = useGetAllProvincesQuery(graphqlRequestClientWithToken, {
-    indexProvinceInput: {
-      perPage: 32
+  const provinces = useGetAllProvincesQuery(
+    graphqlRequestClientWithToken,
+    {
+      indexProvinceInput: {
+        perPage: 32
+      }
+    },
+    {
+      enabled: open
     }
-  })
+  )
 
   const cities = useGetProvinceQuery(
     graphqlRequestClientWithToken,
@@ -98,7 +103,7 @@ export const AddressModal = ({
       id: form.watch("provinceId")
     },
     {
-      enabled: !!form.watch("provinceId")
+      enabled: !!form.watch("provinceId") && open
     }
   )
 
@@ -133,11 +138,11 @@ export const AddressModal = ({
   )
 
   const onSubmit = (data: AddAddressModalFormType) => {
-    if (selectedAddresses?.data) {
+    if (row?.data) {
       return updateProjectAddressMutation.mutate({
         updateProjectAddressInput: {
           ...data,
-          addressId: selectedAddresses?.data?.id,
+          addressId: row?.data?.id,
           postalCode: digitsFaToEn(data.postalCode),
           projectId: +uuid
         }
@@ -150,49 +155,34 @@ export const AddressModal = ({
   }
 
   useEffect(() => {
-    if (
-      selectedAddresses?.type === SELECTED_ITEM_TYPE.EDIT &&
-      selectedAddresses?.data
-    ) {
-      if (selectedAddresses?.data?.title) {
-        form.setValue("title", selectedAddresses?.data?.title)
+    if (row?.data) {
+      if (row?.data?.title) {
+        form.setValue("title", row?.data?.title)
       }
-      if (+selectedAddresses?.data?.province.id) {
-        form.setValue("provinceId", +selectedAddresses?.data?.province.id)
+      if (+row?.data?.province?.id) {
+        form.setValue("provinceId", +row?.data?.province?.id)
       }
-      if (+selectedAddresses?.data?.city.id) {
-        form.setValue("cityId", +selectedAddresses?.data?.city.id)
+      if (+row?.data?.city?.id) {
+        form.setValue("cityId", +row?.data?.city?.id)
       }
-      if (selectedAddresses?.data?.postalCode) {
-        form.setValue(
-          "postalCode",
-          digitsEnToFa(selectedAddresses?.data?.postalCode)
-        )
+      if (row?.data?.postalCode) {
+        form.setValue("postalCode", digitsEnToFa(row?.data?.postalCode))
       }
-      if (selectedAddresses?.data?.address) {
-        form.setValue("address", selectedAddresses?.data?.address)
+      if (row?.data?.address) {
+        form.setValue("address", row?.data?.address)
       }
-      if (selectedAddresses?.data?.delivery_name) {
-        form.setValue("delivery_name", selectedAddresses?.data?.delivery_name)
+      if (row?.data?.delivery_name) {
+        form.setValue("delivery_name", row?.data?.delivery_name)
       }
-      if (selectedAddresses?.data?.delivery_contact) {
-        form.setValue(
-          "delivery_contact",
-          selectedAddresses?.data?.delivery_contact
-        )
+      if (row?.data?.delivery_contact) {
+        form.setValue("delivery_contact", row?.data?.delivery_contact)
       }
     }
     return () => form.reset()
-  }, [selectedAddresses, selectedAddresses?.data])
+  }, [row, row?.data])
 
   return (
-    <Dialog
-      open={
-        selectedAddresses?.type === SELECTED_ITEM_TYPE.ADD ||
-        selectedAddresses?.type === SELECTED_ITEM_TYPE.EDIT
-      }
-      onOpenChange={onCloseModal}
-    >
+    <Dialog open={open} onOpenChange={onCloseModal}>
       <DialogContent className="gap-7">
         <DialogHeader className="border-b pb">
           <DialogTitle>
@@ -253,7 +243,7 @@ export const AddressModal = ({
                             {field.value
                               ? provinces.data?.provinces.data?.find(
                                   (province) =>
-                                    province && province.id === field.value
+                                    province && province?.id === field.value
                                 )?.name
                               : t("common:choose_entity", {
                                   entity: t("common:province")
@@ -285,15 +275,15 @@ export const AddressModal = ({
                               (province) =>
                                 province && (
                                   <CommandItem
-                                    value={province.name}
-                                    key={province.id}
+                                    value={province?.name}
+                                    key={province?.id}
                                     onSelect={(value) => {
                                       form.setValue(
                                         "provinceId",
                                         provinces.data?.provinces.data?.find(
                                           (province) =>
                                             province &&
-                                            province.name.toLowerCase() ===
+                                            province?.name.toLowerCase() ===
                                               value
                                         )?.id || 0
                                       )
@@ -304,12 +294,12 @@ export const AddressModal = ({
                                     <LucideCheck
                                       className={mergeClasses(
                                         "mr-2 h-4 w-4",
-                                        province.id === field.value
+                                        province?.id === field.value
                                           ? "opacity-100"
                                           : "opacity-0"
                                       )}
                                     />
-                                    {province.name}
+                                    {province?.name}
                                   </CommandItem>
                                 )
                             )}
@@ -338,15 +328,15 @@ export const AddressModal = ({
                             disabled={
                               cities.isFetching ||
                               cities.isLoading ||
-                              !cities.data?.province.cities.length
+                              !cities.data?.province?.cities.length
                             }
                             noStyle
                             role="combobox"
                             className="input-field flex items-center text-start"
                           >
                             {field.value
-                              ? cities?.data?.province.cities.find(
-                                  (city) => city && city.id === field.value
+                              ? cities?.data?.province?.cities.find(
+                                  (city) => city && city?.id === field.value
                                 )?.name
                               : t("common:choose_entity", {
                                   entity: t("common:city")
@@ -373,15 +363,15 @@ export const AddressModal = ({
                             })}
                           </CommandEmpty>
                           <CommandGroup className="max-h-[150px] overflow-y-scroll">
-                            {cities.data?.province.cities.map(
+                            {cities.data?.province?.cities.map(
                               (city) =>
                                 city && (
                                   <CommandItem
-                                    value={city.name}
-                                    key={city.id}
+                                    value={city?.name}
+                                    key={city?.id}
                                     onSelect={(value) => {
                                       const selected =
-                                        cities.data?.province.cities.find(
+                                        cities.data?.province?.cities.find(
                                           (item) => item?.name === value
                                         )
                                       form.setValue("cityId", selected?.id || 0)
@@ -391,12 +381,12 @@ export const AddressModal = ({
                                     <LucideCheck
                                       className={mergeClasses(
                                         "mr-2 h-4 w-4",
-                                        city.id === field.value
+                                        city?.id === field.value
                                           ? "opacity-100"
                                           : "opacity-0"
                                       )}
                                     />
-                                    {city.name}
+                                    {city?.name}
                                   </CommandItem>
                                 )
                             )}

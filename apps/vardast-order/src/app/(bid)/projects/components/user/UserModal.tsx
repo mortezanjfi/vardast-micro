@@ -4,7 +4,8 @@ import { digitsEnToFa, digitsFaToEn } from "@persian-tools/persian-tools"
 import { useQueryClient } from "@tanstack/react-query"
 import {
   useAssignUserProjectMutation,
-  useUpdateProjectUserMutation
+  User,
+  UserProject
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
@@ -33,7 +34,7 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-import { ProjectUserCartProps, SELECTED_ITEM_TYPE } from "./ProjectUsersTab"
+import { IProjectPageSectionModalProps } from "@/app/(bid)/projects/[uuid]/components/ProjectPage"
 
 export const AddUserModalFormSchema = z.object({
   // name: z.string(),
@@ -43,10 +44,11 @@ export const AddUserModalFormSchema = z.object({
 export type AddUserModalFormType = TypeOf<typeof AddUserModalFormSchema>
 
 export const UserModal = ({
+  row,
+  open,
   onCloseModal,
-  selectedUsers,
   uuid
-}: ProjectUserCartProps) => {
+}: IProjectPageSectionModalProps<User>) => {
   const { t } = useTranslation()
   const [errors, setErrors] = useState<ClientError>()
   const queryClient = useQueryClient()
@@ -72,35 +74,7 @@ export const UserModal = ({
     }
   )
 
-  const updateProjectUserMutation = useUpdateProjectUserMutation(
-    graphqlRequestClientWithToken,
-    {
-      onError: (errors: ClientError) => {
-        setErrors(errors)
-      },
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: ["FindOneProject"]
-        })
-        onCloseModal()
-      }
-    }
-  )
-
   const onSubmit = (data: AddUserModalFormType) => {
-    if (
-      selectedUsers?.data &&
-      selectedUsers?.type === SELECTED_ITEM_TYPE.EDIT
-    ) {
-      return updateProjectUserMutation.mutate({
-        updateProjectUserInput: {
-          // ...data,
-          cellphone: digitsFaToEn(data.cellphone),
-          userId: selectedUsers?.data.id,
-          projectId: +uuid
-        }
-      })
-    }
     assignUserProjectMutation.mutate({
       createUserProjectInput: {
         // ...(data as CreateUserProjectInput),
@@ -111,16 +85,8 @@ export const UserModal = ({
   }
 
   useEffect(() => {
-    if (
-      selectedUsers?.data &&
-      selectedUsers?.type === SELECTED_ITEM_TYPE.EDIT
-    ) {
-      // if (selectedUsers?.data.fullName) {
-      //   form.setValue("name", selectedUsers?.data.fullName)
-      // }
-      if (selectedUsers?.data.cellphone) {
-        form.setValue("cellphone", digitsEnToFa(selectedUsers?.data.cellphone))
-      }
+    if (row?.data?.cellphone) {
+      form.setValue("cellphone", digitsEnToFa(row?.data?.cellphone))
     } else {
       form.reset()
     }
@@ -128,16 +94,10 @@ export const UserModal = ({
       form.reset()
       setErrors(undefined)
     }
-  }, [selectedUsers, selectedUsers?.data])
+  }, [row, row?.data as unknown as UserProject])
 
   return (
-    <Dialog
-      open={
-        selectedUsers?.type === SELECTED_ITEM_TYPE.ADD ||
-        selectedUsers?.type === SELECTED_ITEM_TYPE.EDIT
-      }
-      onOpenChange={onCloseModal}
-    >
+    <Dialog open={open} onOpenChange={onCloseModal}>
       <DialogContent className="gap-7">
         <DialogHeader className="border-b pb">
           <DialogTitle>

@@ -4,7 +4,7 @@ import { ReactNode } from "react"
 import { UseQueryResult } from "@tanstack/react-query"
 import { FindPreOrderByIdQuery } from "@vardast/graphql/generated"
 
-import OrderProductsList from "../../../../apps/vardast-order/src/app/(bid)/orders/[uuid]/components/OrderProductsList"
+import OrderProductsList from "../../../../apps/vardast-order/src/app/(bid)/orders/[uuid]/products/components/OrderProductsList"
 import OrderInfoCard from "../../../../apps/vardast-order/src/app/(bid)/orders/components/OrderInfoCard"
 
 export enum OrderOffersPageType {

@@ -3,7 +3,7 @@
 import { useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import CardContainer from "@vardast/component/desktop/CardContainer"
+import Card from "@vardast/component/Card"
 import { DetailsWithTitle } from "@vardast/component/desktop/DetailsWithTitle"
 import {
   PaymentMethodEnumFa,
@@ -118,9 +118,8 @@ const OrderInfoCard = ({ uuid }: OrderInfoCardProps) => {
   }, [orderInfo])
 
   return (
-    <CardContainer
+    <Card
       title={t("common:order-info")}
-      className="h-fit px-6"
       button={{
         onClick: () =>
           router.push(
@@ -129,29 +128,25 @@ const OrderInfoCard = ({ uuid }: OrderInfoCardProps) => {
         text: "ویرایش",
         type: "button"
       }}
-      titleClass="text-base pb-2 border-b-2 border-primary-600"
+      template="1/2-sm"
     >
-      <div className="flex flex-col gap-4 pt-5">
-        <div className="flex gap-5">
-          <Badge>
-            {t("common:entity_code", { entity: t("common:order") })}{" "}
-            {findPreOrderByIdQuery?.data?.findPreOrderById?.uuid &&
-              digitsEnToFa(findPreOrderByIdQuery?.data?.findPreOrderById?.uuid)}
-          </Badge>
-          <Badge variant={PreOrderStatesFa[orderInfo?.status]?.variant}>
-            {PreOrderStatesFa[orderInfo?.status]?.name_fa}
-          </Badge>
-        </div>
-        <div className={"flex grid-cols-2 flex-col md:grid 2xl:grid-cols-3"}>
-          {mappedObject.map((props) => (
-            <DetailsWithTitle
-              textCustomStyle="whitespace-nowrap line-clamp-1"
-              {...props}
-            />
-          ))}
-        </div>
+      <div className="col-span-2 flex gap-6 py">
+        <Badge>
+          {t("common:entity_code", { entity: t("common:order") })}{" "}
+          {findPreOrderByIdQuery?.data?.findPreOrderById?.uuid &&
+            digitsEnToFa(findPreOrderByIdQuery?.data?.findPreOrderById?.uuid)}
+        </Badge>
+        <Badge variant={PreOrderStatesFa[orderInfo?.status]?.variant}>
+          {PreOrderStatesFa[orderInfo?.status]?.name_fa}
+        </Badge>
       </div>
-    </CardContainer>
+      {mappedObject.map((props) => (
+        <DetailsWithTitle
+          textCustomStyle="whitespace-nowrap line-clamp-1"
+          {...props}
+        />
+      ))}
+    </Card>
   )
 }
 

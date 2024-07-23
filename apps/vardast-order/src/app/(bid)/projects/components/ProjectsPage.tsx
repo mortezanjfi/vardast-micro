@@ -48,7 +48,6 @@ const ProjectsPage = ({ isMobileView }: ProjectsPageProps) => {
         },
         paginable: true,
         fetch: {
-          accessToken: true,
           api: getAllProjectsQueryFn
         },
         filters: {

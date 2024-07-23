@@ -16,7 +16,7 @@ import {
   ProjectUser,
   SELECTED_ITEM,
   SELECTED_ITEM_TYPE
-} from "./ProjectUsersTab"
+} from "../../[uuid]/components/ProjectUsers"
 
 type ProjectUserCartProps = {
   user: ProjectUser

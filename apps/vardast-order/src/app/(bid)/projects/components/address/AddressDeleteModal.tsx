@@ -3,7 +3,10 @@
 
 import { useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
-import { useRemoveAddressProjectMutation } from "@vardast/graphql/generated"
+import {
+  ProjectAddress,
+  useRemoveAddressProjectMutation
+} from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import {
@@ -18,16 +21,14 @@ import { ClientError } from "graphql-request"
 import { LucideAlertOctagon } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
-import {
-  ProjectAddressCartProps,
-  SELECTED_ITEM_TYPE
-} from "../ProjectAddressesTab"
+import { IProjectPageSectionModalProps } from "@/app/(bid)/projects/[uuid]/components/ProjectPage"
 
 const AddressDeleteModal = ({
-  selectedAddresses,
+  open,
+  row,
   onCloseModal,
   uuid
-}: ProjectAddressCartProps) => {
+}: IProjectPageSectionModalProps<ProjectAddress>) => {
   const { t } = useTranslation()
   const [errors, setErrors] = useState<ClientError>()
   const queryClient = useQueryClient()
@@ -49,16 +50,13 @@ const AddressDeleteModal = ({
 
   const onDelete = () => {
     removeAddressProjectMutation.mutate({
-      addressId: +selectedAddresses?.data.id,
+      addressId: +row?.data?.id,
       projectId: +uuid
     })
   }
 
   return (
-    <AlertDialog
-      open={selectedAddresses?.type === SELECTED_ITEM_TYPE.DELETE}
-      onOpenChange={onCloseModal}
-    >
+    <AlertDialog open={open} onOpenChange={onCloseModal}>
       <AlertDialogContent>
         <div className="flex">
           <div className="me-6 flex-1 shrink-0">
@@ -89,7 +87,7 @@ const AddressDeleteModal = ({
                 "common:are_you_sure_you_want_to_delete_x_entity_this_action_cannot_be_undone_and_all_associated_data_will_be_permanently_removed",
                 {
                   entity: `${t(`common:address`)}`,
-                  name: selectedAddresses?.data?.title
+                  name: row?.data?.title
                 }
               )}
             </p>
