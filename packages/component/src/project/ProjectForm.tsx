@@ -72,7 +72,7 @@ const ProjectForm = ({
   }
 
   return (
-    <div className="flex h-full w-full flex-col gap-9 py-6 md:py-0">
+    <div className="flex h-full w-full flex-col gap-9 bg-alpha-white pb-6 md:py-0">
       {!isMobileView && (
         <PageTitle backButtonUrl="/profile/projects" title={title} />
       )}
@@ -81,7 +81,7 @@ const ProjectForm = ({
         onValueChange={(e) => setActiveTab(e as PROJECT_TAB)}
         className="flex h-full w-full flex-col"
       >
-        <TabsList className="grid w-full grid-cols-3 border-b md:flex">
+        <TabsList className="mb-5 grid w-full grid-cols-3 border-b sm:mb-0 md:flex">
           <TabsTrigger value={PROJECT_TAB.INFO}>اطلاعات پروژه</TabsTrigger>
           <TabsTrigger
             disabled={!findOneProjectQuery.data}

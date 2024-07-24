@@ -48,7 +48,7 @@ const ProjectAddressesTab = ({
   }
 
   return (
-    <>
+    <div className="flex min-h-full flex-col px-6 sm:px-0">
       <AddressDeleteModal
         uuid={uuid}
         onCloseModal={onCloseModal}
@@ -129,7 +129,7 @@ const ProjectAddressesTab = ({
       )}
 
       {isMobileView && (
-        <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] flex w-full justify-end md:relative md:bottom-0">
+        <div className="mt-auto flex w-full justify-end sm:mt-0 md:relative md:bottom-0">
           <Button
             className="w-full md:w-fit"
             disabled={
@@ -145,7 +145,7 @@ const ProjectAddressesTab = ({
           </Button>
         </div>
       )}
-    </>
+    </div>
   )
 }
 
