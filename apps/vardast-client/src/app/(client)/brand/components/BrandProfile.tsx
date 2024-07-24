@@ -115,11 +115,9 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
         <div className="flex  flex-col gap-y bg-alpha-white md:h-auto md:min-h-full ">
           <div className="flex h-full flex-col items-center justify-center gap-y bg-alpha-white">
             {isMobileView && (
-              <div className="relative flex aspect-square h-40 max-h-40 min-h-40 w-full flex-col items-center justify-center">
+              <div className="relative flex aspect-square h-[calc(56vw)] max-h-[calc(56vw)] min-h-[calc(56vw)] w-full flex-col items-center justify-center">
                 <Image
-                  src={
-                    brandQuery?.data?.brand?.bannerDesktop?.presignedUrl?.url
-                  }
+                  src={brandQuery?.data?.brand?.bannerMobile?.presignedUrl?.url}
                   alt="seller"
                   fill
                   className="h-full w-full md:rounded-full"

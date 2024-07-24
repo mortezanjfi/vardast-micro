@@ -100,7 +100,7 @@ const BrandCard = forwardRef(
             // width={300}
             // height={400}
             className={clsx(
-              "transform object-fill transition",
+              "transform rounded-2xl object-fill transition",
               selectedItemId === brand?.id ? "border-2 border-primary" : ""
             )}
           />

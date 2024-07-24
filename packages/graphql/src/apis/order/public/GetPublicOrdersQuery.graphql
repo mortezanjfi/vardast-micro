@@ -10,6 +10,7 @@ query GetPublicOrdersQuery($indexPublicOrderInput: IndexPublicOrderInput) {
       bid_start
       request_date
       destination
+      payment_method
       bid_end
       lines {
         id

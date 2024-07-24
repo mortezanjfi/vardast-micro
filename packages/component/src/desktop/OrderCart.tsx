@@ -263,7 +263,7 @@ const OrderCard = ({
               dot={false}
               icon="FolderIcon"
               title="روش پرداخت"
-              text={preOrder?.payment_methods}
+              text={preOrder?.payment_method}
             />
           </>
         )}
