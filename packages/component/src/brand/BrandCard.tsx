@@ -5,7 +5,7 @@ import "@heroicons/react/24/solid"
 import { forwardRef, Ref, useRef, useState } from "react"
 import Image from "next/image"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import brandSellerBlank from "@vardast/asset/brand-seller-blank.svg"
+import brandSellerBlank from "@vardast/asset/brand-seller-blank-mobile.svg"
 import frameLessImage from "@vardast/asset/images/frameLess.png"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import clsx from "clsx"
@@ -27,7 +27,7 @@ export const BrandCardSkeleton = () => {
     <div className="flex h-full w-full flex-col lg:px-4">
       <div className="grid flex-1 items-start sm:grid-rows-7 sm:py lg:flex lg:flex-col">
         <div
-          className={`relative row-span-4 h-[50vw] w-full transform transition-all sm:py  md:h-[127px] lg:h-[174px]  xl:h-[127px] 2xl:h-[138px] `}
+          className={`relative row-span-4 h-[50vw] w-full transform transition-all sm:py`}
         >
           <Image
             src={frameLessImage}
@@ -85,14 +85,14 @@ const BrandCard = forwardRef(
         <div
           ref={containerRef}
           className={clsx(
-            "relative h-[127px] lg:h-[174px]  xl:h-[127px]  2xl:h-[138px]",
+            "relative h-[200px] overflow-hidden rounded-2xl border border-alpha-50",
             isMobileView && "w-full"
           )}
         >
           <Image
             src={
-              brand?.bannerDesktop?.presignedUrl?.url
-                ? brand?.bannerDesktop?.presignedUrl?.url
+              brand?.bannerMobile?.presignedUrl?.url
+                ? brand?.bannerMobile?.presignedUrl?.url
                 : brandSellerBlank
             }
             alt="category"
@@ -100,7 +100,7 @@ const BrandCard = forwardRef(
             // width={300}
             // height={400}
             className={clsx(
-              "transform rounded-2xl object-fill transition",
+              "transform object-fill transition",
               selectedItemId === brand?.id ? "border-2 border-primary" : ""
             )}
           />

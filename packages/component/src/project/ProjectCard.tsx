@@ -70,20 +70,20 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           icon="UserIcon"
           title="مدیر پروژه"
           text={
-            project?.user.find((user) => user.type === UserTypeProject.Manager)
-              .name
+            project.user.find((user) => user?.type === UserTypeProject.Manager)
+              ?.user?.fullName || "--"
           }
         />
         <DetailsWithTitle
           dot={false}
           icon="MapPinIcon"
           title="آدرس"
-          text={project?.address[0]?.address?.city?.name}
+          text={project?.address[0]?.address?.address}
         />
       </div>
       {Number(project?.totalOrdersCount) !== 0 && (
         <div className="flex flex-col rounded-2xl bg-alpha-50 p-4">
-          <div className="flex w-full justify-between border-b-0.5 border-alpha-300 pb-3">
+          <div className="flex w-full justify-between pb-3">
             <span>سفارشات</span>
             <div className="flex gap-1 text-sm text-alpha-500">
               <span>{digitsEnToFa(project?.totalOrdersCount)}</span>
