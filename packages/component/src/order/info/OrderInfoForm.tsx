@@ -211,13 +211,16 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
     <>
       {isMobileView && (
         <PageTitle
-          className="pb"
+          className="border-b-0.5 bg-alpha-white pb"
           titleClass="text-sm"
           title={"ثبت اطلاعات سفارش"}
         />
       )}
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(submit)} className="pt-6">
+        <form
+          onSubmit={form.handleSubmit(submit)}
+          className="bg-alpha-white px-6 pt-6 sm:px-0"
+        >
           <div className="flex grid-cols-3 grid-rows-3 flex-col gap-x-7 gap-y-5 border-b pb-4 md:grid">
             <FormField
               control={form.control}
@@ -688,7 +691,7 @@ const OrderInfoForm = ({ isMobileView, uuid }: OrderInfoFormProps) => {
               )}
             />
           </div>
-          <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] grid w-full !grid-cols-2 gap pt-4 md:relative md:bottom-0 md:flex md:justify-end">
+          <div className="grid w-full !grid-cols-2 gap py-4 md:relative md:bottom-0 md:flex md:justify-end">
             <Link className="btn btn-md btn-secondary" href={"/profile/orders"}>
               بازگشت به سفارشات
             </Link>

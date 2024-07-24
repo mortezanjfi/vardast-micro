@@ -179,7 +179,7 @@ const OrderDetailPage = ({
   }, [])
 
   return (
-    <div className="flex h-full flex-col gap-9">
+    <div className="flex h-full flex-col gap-9 ">
       {isMobileView && (
         <PageTitle
           className="pb"
