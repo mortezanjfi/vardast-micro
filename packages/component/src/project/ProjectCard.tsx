@@ -113,7 +113,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                 <DetailsWithTitle
                   dotColor="bg-error-500"
                   title="بسته شده"
-                  text={project?.openOrdersCount}
+                  text={project?.closedOrdersCount}
                 />
               )}
             {project?.failedOrdersCount &&
