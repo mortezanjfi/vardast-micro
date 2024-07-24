@@ -88,7 +88,7 @@ const DesktopHomeIndex = ({
       {publicOrdersQuery && (
         <div className="border-t-2 bg-alpha-white">
           <div className="container mx-auto py-8">
-            <MobileHomeSection title="جدیدترین سفارشات">
+            <MobileHomeSection title="جدیدترین سفارشات" viewAllHref="/orders">
               <PublicPreOrdersSection query={publicOrdersQuery} />
             </MobileHomeSection>
           </div>

@@ -1,5 +1,6 @@
 "use client"
 
+import MobileHomeSection from "@vardast/component/home/MobileHomeSection"
 import MobileHomeTopBlogs from "@vardast/component/home/MobileHomeTopBlogs"
 import { Brand } from "@vardast/graphql/generated"
 
@@ -9,6 +10,7 @@ import MobileHomeNewestProducts from "@/app/(client)/(home)/components/MobileHom
 import MobileHomeSlider from "@/app/(client)/(home)/components/MobileHomeSlider"
 import MobileHomeTopEntities from "@/app/(client)/(home)/components/MobileHomeTopEntities"
 import NewPriceSlider from "@/app/(client)/(home)/components/NewPriceSlider"
+import PublicPreOrdersSection from "@/app/(client)/(home)/components/PublicPreOrdersSection"
 
 const MobileHomeIndex = ({
   allBrandsCount,
@@ -17,6 +19,7 @@ const MobileHomeIndex = ({
   getVocabularyQueryFcQuery,
   homeSlidersQuery,
   getAllBlogsQuery,
+  publicOrdersQuery,
   isMobileView
 }: IHomeProps) => {
   return (
@@ -31,6 +34,16 @@ const MobileHomeIndex = ({
       <MobileHomeCategory
         getVocabularyQueryFcQuery={getVocabularyQueryFcQuery}
       />
+      {publicOrdersQuery && (
+        <MobileHomeSection
+          block
+          bgWhite
+          title="جدیدترین سفارشات"
+          viewAllHref="/orders"
+        >
+          <PublicPreOrdersSection query={publicOrdersQuery} isMobileView />
+        </MobileHomeSection>
+      )}
       <MobileHomeTopEntities
         isMobileView
         __typename="Brand"

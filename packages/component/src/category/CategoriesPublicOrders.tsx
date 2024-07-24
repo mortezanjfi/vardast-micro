@@ -1,18 +1,18 @@
 import { UseQueryResult } from "@tanstack/react-query"
-
 import {
   GetPublicOrdersQuery,
+  PreOrder,
   PreOrderDto
-} from "../../../graphql/src/generated"
+} from "@vardast/graphql/generated"
+
 import ListHeader from "../desktop/ListHeader"
-import OrderPreviewCard, {
-  OrderPreviewCardSkeleton
-} from "../order/OrderPreviewCard"
+import OrderCard from "../desktop/OrderCart"
+import { OrderPreviewCardSkeleton } from "../order/OrderPreviewCard"
 
 type Props = {
   publicPreOrders: UseQueryResult<GetPublicOrdersQuery, unknown>
   isMobileView: boolean
-  categoryId: string | number
+  categoryId?: string | number
 }
 
 function CategoriesPublicOrders({
@@ -28,7 +28,7 @@ function CategoriesPublicOrders({
           listName={"orders"}
         />
       )}
-      <div className="flex grid-cols-2 flex-col divide-y px-6 sm:grid sm:!px-0">
+      <div className="flex flex-col gap-4 divide-y divide-alpha-300 px-6 sm:grid sm:!px-0 md:grid-cols-2 md:gap-6 md:divide-y-0 lg:grid-cols-3 2xl:grid-cols-4">
         {publicPreOrders.isFetching || publicPreOrders.isLoading ? (
           <>
             {[...Array(10)].map((_, index) => (
@@ -38,10 +38,11 @@ function CategoriesPublicOrders({
         ) : publicPreOrders.data.publicOrders.length ? (
           publicPreOrders.data.publicOrders.map((data, index) =>
             data.orders.map((order, orderIndex) => (
-              <OrderPreviewCard
-                singleCard
+              <OrderCard
+                forHomeCard
+                verticalDetails
                 key={orderIndex}
-                order={order as PreOrderDto}
+                preOrder={order as unknown as PreOrder & PreOrderDto}
               />
             ))
           )

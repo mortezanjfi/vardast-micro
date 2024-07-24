@@ -8,6 +8,7 @@ import {
   OrderOfferStatuses,
   PaymentMethodEnum,
   PreOrder,
+  PreOrderDto,
   PreOrderStates,
   useCreatePreOrderMutation,
   useGetAllPreOrdersQuery
@@ -399,11 +400,11 @@ const OrdersPage = ({
         </div>
       ) : preOrdersQuery.data?.preOrders?.data.length > 0 ? (
         <>
-          <div className="mb-24 flex h-full flex-col divide-y-0.5 divide-alpha-300 px-6">
+          <div className="mb-24 flex h-full flex-col gap-y-4 divide-y-0.5 divide-alpha-300 px-6 md:gap-y-0">
             {preOrdersQuery?.data?.preOrders?.data.map((preOrder, index) => (
               <OrderCard
                 key={index}
-                preOrder={preOrder as PreOrder}
+                preOrder={preOrder as unknown as PreOrder & PreOrderDto}
                 setOrderToDelete={setOrderToDelete}
                 setDeleteModalOpen={setDeleteModalOpen}
               />

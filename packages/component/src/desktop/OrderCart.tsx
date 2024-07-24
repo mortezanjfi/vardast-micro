@@ -6,6 +6,7 @@ import { digitsEnToFa } from "@persian-tools/persian-tools"
 import {
   PaymentMethodEnum,
   PreOrder,
+  PreOrderDto,
   PreOrderStates
 } from "@vardast/graphql/generated"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
@@ -29,7 +30,9 @@ import { DetailsWithTitle } from "./DetailsWithTitle"
 type OrderCardProps = {
   goToOffers?: boolean
   isSellerPanel?: boolean
-  preOrder: PreOrder
+  verticalDetails?: boolean
+  forHomeCard?: boolean
+  preOrder: PreOrder & PreOrderDto
   setOrderToDelete?: Dispatch<SetStateAction<PreOrder>>
   setDeleteModalOpen?: Dispatch<SetStateAction<boolean>>
 }
@@ -91,8 +94,10 @@ export const PaymentMethodEnumFa = {
 const OrderCard = ({
   goToOffers,
   isSellerPanel,
+  forHomeCard,
   preOrder,
   setOrderToDelete,
+  verticalDetails = false,
   setDeleteModalOpen
 }: OrderCardProps) => {
   const { t } = useTranslation()
@@ -109,16 +114,16 @@ const OrderCard = ({
               : `/orders/${preOrder?.id}`
           )
       }}
-      className="flex w-full flex-col gap-4  border-alpha-200 py-6 md:py-11"
+      className="flex w-full flex-col gap-4  border-alpha-200 pt"
     >
       <div className="flex w-full items-center justify-between">
         {/* <span className="text-base font-semibold">{preOrder?.name}</span> */}
-        <div className="flex gap-3 md:gap-9">
+        <div className="flex w-full gap-3">
           {isSellerPanel && (
             <div className="tag tag-gray">
               {/* <Dot /> */}
               <span>کدسفارش</span>
-              <span>{preOrder?.id}</span>
+              <span>{digitsEnToFa(preOrder?.uuid || "-")}</span>
             </div>
           )}
           <DynamicHeroIcon
@@ -128,12 +133,14 @@ const OrderCard = ({
             )}
             solid={false}
           />
-          <div className="flex items-center gap-2 py-1">
+          <div className="flex items-center gap-1 py-1">
             <div className="flex items-center gap-2">
               <span className="whitespace-nowrap text-alpha-500">کد سفارش</span>
             </div>
             <div className="flex gap-1">
-              <span className="whitespace-pre-wrap">{preOrder?.id}</span>
+              <span className="whitespace-pre-wrap">
+                {digitsEnToFa(preOrder?.uuid || "-")}
+              </span>
             </div>
           </div>
           <div
@@ -145,7 +152,7 @@ const OrderCard = ({
             <span>{PreOrderStatesFa[preOrder?.status]?.name_fa}</span>
           </div>
         </div>
-        {!isSellerPanel && (
+        {!isSellerPanel && !forHomeCard && (
           <DropdownMenu
             modal={false}
             open={dropDownMenuOpen}
@@ -158,7 +165,7 @@ const OrderCard = ({
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <>
-                {preOrder.status !== PreOrderStates.Closed && (
+                {preOrder?.status !== PreOrderStates.Closed && (
                   <>
                     <Link href={`/profile/orders/${preOrder?.id}/info`}>
                       <DropdownMenuItem>
@@ -195,16 +202,16 @@ const OrderCard = ({
             )}
           />
           <span className="text-error-500">
-            {digitsEnToFa(preOrder.offersNum)}
+            {digitsEnToFa(preOrder?.offersNum)}
           </span>
           <span className="text-error-500">پیشنهاد قیمت جدید</span>
         </div>
       )}
       <div className="flex flex-col rounded-2xl bg-alpha-50 p-4">
-        <div className="flex w-full justify-between border-b-0.5 border-alpha-300 pb-3">
+        <div className="flex w-full justify-between">
           <span>کالاها</span>
           <div className="flex gap-1 text-sm text-alpha-500">
-            <span>{digitsEnToFa(preOrder?.lines?.length)}</span>
+            <span>{digitsEnToFa(preOrder?.lines?.length || "-")}</span>
             <span>کالا</span>
           </div>
         </div>
@@ -219,22 +226,54 @@ const OrderCard = ({
         </div>
       </div>
 
-      <div className="flex flex-col items-start gap-1 md:flex-row md:gap-9">
-        {isSellerPanel && (
-          <DetailsWithTitle title={"خریدار"} text={preOrder.user.fullName} />
+      <div
+        className={clsx(
+          "flex flex-col items-start gap-1",
+          !verticalDetails && "md:flex-row  md:gap-9"
         )}
-
-        <DetailsWithTitle
-          dot={false}
-          icon="FolderIcon"
-          title="پروژه"
-          text={preOrder?.project?.name}
-        />
+      >
+        {isSellerPanel && (
+          <DetailsWithTitle title={"خریدار"} text={preOrder?.user.fullName} />
+        )}
+        {!forHomeCard && (
+          <>
+            <DetailsWithTitle
+              dot={false}
+              icon="FolderIcon"
+              title="دسته‌بندی"
+              text={preOrder?.category?.title}
+            />
+            <DetailsWithTitle
+              dot={false}
+              icon="FolderIcon"
+              title="پروژه"
+              text={preOrder?.project?.name}
+            />
+          </>
+        )}
+        {forHomeCard && (
+          <>
+            <DetailsWithTitle
+              dot={false}
+              icon="FolderIcon"
+              title="تخلیه"
+              text={preOrder?.destination}
+            />
+            <DetailsWithTitle
+              dot={false}
+              icon="FolderIcon"
+              title="روش پرداخت"
+              text={preOrder?.payment_methods}
+            />
+          </>
+        )}
         <DetailsWithTitle
           dot={false}
           icon="CalendarDaysIcon"
           title="تاریخ نیاز"
-          text={preOrder.need_date ? newTimeConvertor(preOrder.need_date) : ""}
+          text={
+            preOrder?.need_date ? newTimeConvertor(preOrder?.need_date) : ""
+          }
         />
       </div>
     </div>

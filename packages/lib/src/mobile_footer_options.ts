@@ -35,12 +35,12 @@ const _default: ILayoutOption[] = [
   // },
   {
     id: 2,
-    icon: "BookmarkIcon",
+    icon: "ClipboardDocumentListIcon",
     button: {
       type: "link",
-      value: "/profile/favorites"
+      value: "/orders"
     },
-    title: "علاقه‌مندی"
+    title: "سفارشات"
   },
   // {
   //   id: 2,

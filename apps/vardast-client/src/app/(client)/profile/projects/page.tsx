@@ -8,7 +8,7 @@ import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 // set dynamic metadata
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "پروژه ها"
+    title: "پروژه‌ها"
   }
 }
 

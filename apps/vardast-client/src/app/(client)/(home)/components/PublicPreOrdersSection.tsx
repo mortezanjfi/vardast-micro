@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { UseQueryResult } from "@tanstack/react-query/build/lib/types"
 import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
 import { OrderPreviewCardSkeleton } from "@vardast/component/order/OrderPreviewCard"
@@ -8,10 +8,7 @@ import SwiperNavigationButton, {
   SwiperButtonAction,
   SwiperButtonsDirection
 } from "@vardast/component/SwiperNavigationButton"
-import {
-  GetPublicOrdersQuery,
-  PublicPreOrderDto
-} from "@vardast/graphql/src/generated"
+import { GetPublicOrdersQuery } from "@vardast/graphql/generated"
 import clsx from "clsx"
 import { useInView } from "react-intersection-observer"
 import { Swiper, SwiperSlide } from "swiper/react"
@@ -24,12 +21,30 @@ type Props = {
   isMobileView?: boolean
 }
 
+const flag = false
+
 const PublicPreOrdersSection = ({ query, isMobileView }: Props) => {
   const [swiperRef, setSwiperRef] = useState<SwiperClass>()
   const [selectedItemId, setSelectedItemId] =
     useState<ICategoryListLoader>(null)
   const { ref: refNext, inView: inViewNext } = useInView({ threshold: 0.1 })
   const { ref: refPrev, inView: inViewPrev } = useInView({ threshold: 0.1 })
+
+  const mappedData = useMemo(() => {
+    let temp = []
+    if (flag) {
+      return query?.data?.publicOrders
+    }
+    query?.data?.publicOrders?.forEach((item) => {
+      item.orders.map((bib) => {
+        let temp2 = { ...item, ...bib }
+        delete temp2.orders
+        temp.push(temp2)
+      })
+    })
+
+    return temp.sort(() => 0.5 - Math.random())
+  }, [query?.data])
 
   return (
     query && (
@@ -52,7 +67,7 @@ const PublicPreOrdersSection = ({ query, isMobileView }: Props) => {
           // centeredSlides={centeredSlides ?? true}
           slidesPerView={"auto"}
           // className="h-full pb-12 sm:px-5 sm:py-8 md:px-0"
-          className="rounded-xl border px-4 pb-12 sm:mt-8 sm:pb-0 md:px-0"
+          className="px-4 pb-8 sm:!pb-4 sm:pt-8 md:px-0"
         >
           {query.isLoading || query.isFetching ? (
             <>
@@ -68,29 +83,27 @@ const PublicPreOrdersSection = ({ query, isMobileView }: Props) => {
                 </SwiperSlide>
               ))}
             </>
-          ) : query.data.publicOrders.length ? (
-            query?.data?.publicOrders?.map(
+          ) : mappedData?.length ? (
+            mappedData?.map(
               (data, index) =>
                 data && (
                   <SwiperSlide
                     key={index}
                     className={clsx(
-                      "!ml-0 overflow-hidden  bg-alpha-white",
-                      isMobileView ? "w-[calc(100vw-45px)]" : "w-[402px]",
-                      index !== query?.data?.publicOrders?.length - 1 &&
-                        "border-l"
+                      "ml-5 overflow-hidden bg-alpha-white md:!ml-0",
+                      isMobileView ? "w-[calc(100vw-45px)]" : "w-[402px]"
                     )}
                   >
                     <div
                       ref={
-                        index === query?.data?.publicOrders?.length - 1
+                        index === mappedData?.length - 1
                           ? refNext
                           : index === 0
                             ? refPrev
                             : undefined
                       }
                     >
-                      <PublicPreOrderCard data={data as PublicPreOrderDto} />
+                      <PublicPreOrderCard data={data} />
                     </div>
                   </SwiperSlide>
                 )

@@ -15,6 +15,7 @@ import NotFoundMessage from "@vardast/component/NotFound"
 import Pagination from "@vardast/component/Pagination"
 import {
   PreOrder,
+  PreOrderDto,
   PreOrdersQuery,
   PreOrderStates
 } from "@vardast/graphql/generated"
@@ -88,7 +89,7 @@ function SellerOrdersPage({
               goToOffers={goToOffers}
               isSellerPanel={true}
               key={index}
-              preOrder={preOrder as PreOrder}
+              preOrder={preOrder as PreOrder & PreOrderDto}
             />
           ))}
         </>

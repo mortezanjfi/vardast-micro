@@ -262,6 +262,40 @@ const _brand: ILayoutProps = {
   }
 }
 
+const _orders: ILayoutProps = {
+  desktop: {
+    header: {
+      button: {
+        type: "link",
+        value: process.env.NEXT_PUBLIC_SELLER_VARDAST as string
+      },
+      search: true
+    },
+    sidebar: {},
+    main: {
+      container: true,
+      breadcrumb: true
+    },
+    footer: {}
+  },
+  mobile: {
+    header: {
+      title: {
+        type: "text",
+        value: "سفارشات وردست"
+      }
+    },
+    main: {
+      background: { type: "color", value: "bg-alpha-white" }
+    },
+    footer: {
+      search: true,
+      options: { name: "_default" },
+      back: true
+    }
+  }
+}
+
 const _seller: ILayoutProps = {
   desktop: {
     header: {
@@ -446,6 +480,7 @@ const _seller_panel: ILayoutProps = {
 
 const options = {
   _default,
+  _orders,
   _profile,
   _home,
   _seller,
