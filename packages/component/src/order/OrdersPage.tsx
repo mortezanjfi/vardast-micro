@@ -152,12 +152,7 @@ const OrdersPage = ({
   )
 
   return (
-    <div
-      className={clsx(
-        "flex flex-col gap-7 bg-alpha-white ",
-        isMobileView && "h-full"
-      )}
-    >
+    <div className={clsx("flex flex-col gap-7 bg-alpha-white ")}>
       {isAdmin && (
         <OrdersFilter setOrdersQueryParams={setOrdersQueryParams} form={form} />
       )}
