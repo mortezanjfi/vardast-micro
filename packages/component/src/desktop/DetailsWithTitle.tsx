@@ -14,9 +14,11 @@ type DetailsWithTitleProps = {
   textCustomStyle?: string
   title?: string
   text: string | number
+  dotColor?: string
 }
 
 export const DetailsWithTitle = ({
+  dotColor = "bg-alpha-500",
   dot = true,
   icon,
   className,
@@ -35,7 +37,7 @@ export const DetailsWithTitle = ({
           solid={false}
         />
       )}
-      {dot && <div className="h-1 w-1 rounded-full bg-alpha-500" />}
+      {dot && <div className={clsx("h-1 w-1 rounded-full", dotColor)} />}
       {title && (
         <div className="flex items-center gap-2">
           <span className="whitespace-nowrap text-alpha-500">{title}:</span>
