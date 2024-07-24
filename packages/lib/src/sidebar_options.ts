@@ -7,14 +7,14 @@ const _profile: NavigationType[] = [
         title: "پروژه ها",
         icon: "FolderOpenIcon",
         path: "/profile/projects",
-        background_color: "bg-orange-500",
+        background_color: "bg-blue-500",
         color: "text-white"
       },
       {
         title: "سفارشات من",
         icon: "ClipboardDocumentListIcon",
         path: "/profile/orders",
-        background_color: "bg-blue-500",
+        background_color: "bg-orange-500",
         color: "text-white"
       },
       {

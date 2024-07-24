@@ -152,7 +152,7 @@ const OrdersPage = ({
   )
 
   return (
-    <div className="flex flex-col gap-7">
+    <div className="flex flex-col gap-7 bg-alpha-white ">
       {isAdmin && (
         <OrdersFilter setOrdersQueryParams={setOrdersQueryParams} form={form} />
       )}
@@ -399,14 +399,16 @@ const OrdersPage = ({
         </div>
       ) : preOrdersQuery.data?.preOrders?.data.length > 0 ? (
         <>
-          {preOrdersQuery?.data?.preOrders?.data.map((preOrder, index) => (
-            <OrderCard
-              key={index}
-              preOrder={preOrder as PreOrder}
-              setOrderToDelete={setOrderToDelete}
-              setDeleteModalOpen={setDeleteModalOpen}
-            />
-          ))}
+          <div className="flex flex-col divide-y-0.5 divide-alpha-300 px-6">
+            {preOrdersQuery?.data?.preOrders?.data.map((preOrder, index) => (
+              <OrderCard
+                key={index}
+                preOrder={preOrder as PreOrder}
+                setOrderToDelete={setOrderToDelete}
+                setDeleteModalOpen={setDeleteModalOpen}
+              />
+            ))}
+          </div>
           {preOrdersQuery?.data?.preOrders?.lastPage > 1 && (
             <Pagination
               total={preOrdersQuery?.data?.preOrders?.lastPage ?? 0}
@@ -441,7 +443,7 @@ const OrdersPage = ({
       ) : (
         <NotFoundMessage text="سفارشی" />
       )}
-      {isMobileView && (
+      {/* {isMobileView && (
         <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] flex w-full justify-end md:relative md:bottom-0">
           <Button
             onClick={(e) => {
@@ -456,7 +458,7 @@ const OrdersPage = ({
             افزودن سفارش
           </Button>
         </div>
-      )}
+      )} */}
     </div>
   )
 }
