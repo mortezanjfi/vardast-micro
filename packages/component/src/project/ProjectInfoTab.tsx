@@ -117,7 +117,10 @@ const ProjectInfoTab = ({
 
   return (
     <Form {...form}>
-      <form className="md:py-5" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className="flex min-h-full flex-col px-6 sm:min-h-fit sm:px-0 md:py-5"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <div className="grid grid-cols-1 gap-x-7 gap-y-5 md:grid-cols-3 2xl:grid-cols-4">
           <FormField
             control={form.control}
@@ -142,7 +145,7 @@ const ProjectInfoTab = ({
             )}
           />
         </div>
-        <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] flex w-full justify-end md:relative md:bottom-0">
+        <div className="mt-auto flex w-full justify-end md:relative md:bottom-0">
           <Button
             className="w-full md:w-fit"
             disabled={

@@ -8,6 +8,7 @@ import {
   PreOrder,
   PreOrderStates
 } from "@vardast/graphql/generated"
+import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
 import {
   DropdownMenu,
@@ -16,11 +17,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@vardast/ui/dropdown-menu"
-import convertToPersianDate from "@vardast/util/convertToPersianDate"
-import { clsx } from "clsx"
+import clsx from "clsx"
 import { LucideEdit, LucideMoreVertical, LucideTrash } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
+import { newTimeConvertor } from "../../../util/src/convertToPersianDate"
+import DynamicHeroIcon from "../DynamicHeroIcon"
 import Link from "../Link"
 import { DetailsWithTitle } from "./DetailsWithTitle"
 
@@ -34,27 +36,27 @@ type OrderCardProps = {
 
 export const PreOrderStatesFa = {
   [PreOrderStates.PendingAdmin]: {
-    className: "tag-warning",
+    className: "tag-info",
     name_fa_admin: "در انتظار تایید ادمین",
     name_fa: "جاری"
   },
   [PreOrderStates.PendingInfo]: {
-    className: "tag-warning",
+    className: "tag-info",
     name_fa_admin: "در انتظار دریافت اطلاعات",
     name_fa: "جاری"
   },
   [PreOrderStates.PendingOffer]: {
-    className: "tag-warning",
+    className: "tag-info",
     name_fa_admin: "در انتظار پیشنهاد قیمت",
     name_fa: "جاری"
   },
   [PreOrderStates.PendingProduct]: {
-    className: "tag-warning",
+    className: "tag-info",
     name_fa_admin: "در انتظار افزودن کالا",
     name_fa: "جاری"
   },
   [PreOrderStates.VerifyFile]: {
-    className: "tag-warning",
+    className: "tag-info",
     name_fa_admin: "در انتظار تایید فایل",
     name_fa: "جاری"
   },
@@ -107,7 +109,7 @@ const OrderCard = ({
               : `/orders/${preOrder?.id}`
           )
       }}
-      className="flex w-full flex-col gap-4 border-b border-alpha-200 py-4 md:py-11"
+      className="flex w-full flex-col gap-4  border-alpha-200 py-6 md:py-11"
     >
       <div className="flex w-full items-center justify-between">
         {/* <span className="text-base font-semibold">{preOrder?.name}</span> */}
@@ -119,26 +121,29 @@ const OrderCard = ({
               <span>{preOrder?.id}</span>
             </div>
           )}
+          <DynamicHeroIcon
+            icon="ClipboardDocumentListIcon"
+            className={mergeClasses(
+              "icon h-7 w-7 flex-shrink-0 transform rounded-md bg-orange-500 p-1 text-alpha-white transition-all"
+            )}
+            solid={false}
+          />
+          <div className="flex items-center gap-2 py-1">
+            <div className="flex items-center gap-2">
+              <span className="whitespace-nowrap text-alpha-500">کد سفارش</span>
+            </div>
+            <div className="flex gap-1">
+              <span className="whitespace-pre-wrap">{preOrder?.id}</span>
+            </div>
+          </div>
           <div
             className={clsx(
               "tag",
               PreOrderStatesFa[preOrder?.status]?.className
             )}
           >
-            {/* <Dot /> */}
             <span>{PreOrderStatesFa[preOrder?.status]?.name_fa}</span>
           </div>
-
-          {!isSellerPanel && (
-            <Link href={`/profile/orders/${preOrder?.id}/offers`}>
-              <Button variant="secondary" className="tag">
-                <span>{t("common:price-offer")}</span>
-                <span className="flex h-[19px] w-[19px] flex-col items-center justify-center rounded-full  bg-error-500 text-alpha-white">
-                  {digitsEnToFa(preOrder?.offersNum)}
-                </span>
-              </Button>
-            </Link>
-          )}
         </div>
         {!isSellerPanel && (
           <DropdownMenu
@@ -179,39 +184,57 @@ const OrderCard = ({
           </DropdownMenu>
         )}
       </div>
+
+      {preOrder?.offersNum > 0 && (
+        <div className="flex gap-3 md:gap-9">
+          <DynamicHeroIcon
+            icon="CheckBadgeIcon"
+            solid
+            className={mergeClasses(
+              "icon h-7 w-7 flex-shrink-0 transform overflow-hidden rounded-md bg-alpha-white  text-error-500 transition-all"
+            )}
+          />
+          <span className="text-error-500">
+            {digitsEnToFa(preOrder.offersNum)}
+          </span>
+          <span className="text-error-500">پیشنهاد قیمت جدید</span>
+        </div>
+      )}
+      <div className="flex flex-col rounded-2xl bg-alpha-50 p-4">
+        <div className="flex w-full justify-between border-b-0.5 border-alpha-300 pb-3">
+          <span>کالاها</span>
+          <div className="flex gap-1 text-sm text-alpha-500">
+            <span>{digitsEnToFa(preOrder?.lines?.length)}</span>
+            <span>کالا</span>
+          </div>
+        </div>
+        <div className="flex flex-col pt-3">
+          <DetailsWithTitle text={preOrder?.lines[0]?.item_name} />
+          {preOrder?.lines?.length > 1 && (
+            <div className="flex items-center gap-1">
+              <DetailsWithTitle text={preOrder?.lines[1]?.item_name} />
+              {preOrder?.lines?.length > 2 && <span>...</span>}
+            </div>
+          )}
+        </div>
+      </div>
+
       <div className="flex flex-col items-start gap-1 md:flex-row md:gap-9">
-        {isSellerPanel ? (
+        {isSellerPanel && (
           <DetailsWithTitle title={"خریدار"} text={preOrder.user.fullName} />
-        ) : (
-          <DetailsWithTitle title={"کد سفارش"} text={preOrder?.id} />
         )}
 
-        <DetailsWithTitle title={"پروژه"} text={preOrder?.project?.name} />
         <DetailsWithTitle
-          title={t("common:submission-time")}
-          text={
-            preOrder.request_date
-              ? convertToPersianDate({
-                  dateString: preOrder.request_date,
-                  withHour: true,
-                  withMinutes: true
-                })
-              : ""
-          }
+          dot={false}
+          icon="FolderIcon"
+          title="پروژه"
+          text={preOrder?.project?.name}
         />
         <DetailsWithTitle
-          title={t("common:order-expire-time")}
-          text={
-            preOrder?.expire_time
-              ? digitsEnToFa(
-                  new Date(preOrder?.expire_time).toLocaleDateString("fa-IR", {
-                    year: "numeric",
-                    month: "2-digit",
-                    day: "2-digit"
-                  })
-                )
-              : ""
-          }
+          dot={false}
+          icon="CalendarDaysIcon"
+          title="تاریخ نیاز"
+          text={preOrder.need_date ? newTimeConvertor(preOrder.need_date) : ""}
         />
       </div>
     </div>

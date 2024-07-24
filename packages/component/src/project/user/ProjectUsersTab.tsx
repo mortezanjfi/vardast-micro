@@ -50,7 +50,7 @@ const ProjectUsersTab = ({
   }
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex h-full min-h-full w-full flex-col px-6 sm:min-h-fit sm:px-0">
       <UserDeleteModal
         uuid={uuid}
         onCloseModal={onCloseModal}
@@ -126,7 +126,7 @@ const ProjectUsersTab = ({
       )}
 
       {isMobileView && (
-        <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] flex w-full justify-end md:relative md:bottom-0">
+        <div className="mt-auto flex w-full justify-end sm:mt-0 md:relative md:bottom-0">
           <Button
             className="w-full md:w-fit"
             disabled={

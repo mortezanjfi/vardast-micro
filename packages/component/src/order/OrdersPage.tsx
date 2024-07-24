@@ -14,7 +14,6 @@ import {
 } from "@vardast/graphql/generated"
 import axiosApis, { IServePdf } from "@vardast/query/queryClients/axiosApis"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
-import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
@@ -23,6 +22,7 @@ import { DateObject } from "react-multi-date-picker"
 import { TypeOf, z } from "zod"
 
 import { ApiCallStatusEnum } from "../../../type/src/Enums"
+import { Button } from "../../../ui/src/button"
 import { checkBooleanByString } from "../../../util/src/checkBooleanByString"
 import { getContentByApiStatus } from "../../../util/src/GetContentByApiStatus"
 import CardContainer from "../desktop/CardContainer"
@@ -152,7 +152,7 @@ const OrdersPage = ({
   )
 
   return (
-    <div className="flex flex-col gap-7">
+    <div className={clsx("flex flex-col gap-7 bg-alpha-white ")}>
       {isAdmin && (
         <OrdersFilter setOrdersQueryParams={setOrdersQueryParams} form={form} />
       )}
@@ -399,15 +399,17 @@ const OrdersPage = ({
         </div>
       ) : preOrdersQuery.data?.preOrders?.data.length > 0 ? (
         <>
-          {preOrdersQuery?.data?.preOrders?.data.map((preOrder, index) => (
-            <OrderCard
-              key={index}
-              preOrder={preOrder as PreOrder}
-              setOrderToDelete={setOrderToDelete}
-              setDeleteModalOpen={setDeleteModalOpen}
-            />
-          ))}
-          {preOrdersQuery?.data?.preOrders?.lastPage > 1 && (
+          <div className="mb-24 flex h-full flex-col divide-y-0.5 divide-alpha-300 px-6">
+            {preOrdersQuery?.data?.preOrders?.data.map((preOrder, index) => (
+              <OrderCard
+                key={index}
+                preOrder={preOrder as PreOrder}
+                setOrderToDelete={setOrderToDelete}
+                setDeleteModalOpen={setDeleteModalOpen}
+              />
+            ))}
+          </div>
+          {preOrdersQuery?.data?.preOrders?.lastPage > 1 && !isMobileView && (
             <Pagination
               total={preOrdersQuery?.data?.preOrders?.lastPage ?? 0}
               page={currentPage}
@@ -441,7 +443,7 @@ const OrdersPage = ({
       ) : (
         <NotFoundMessage text="سفارشی" />
       )}
-      {isMobileView && (
+      {/* {isMobileView && (
         <div className="absolute bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] flex w-full justify-end md:relative md:bottom-0">
           <Button
             onClick={(e) => {
@@ -456,7 +458,7 @@ const OrdersPage = ({
             افزودن سفارش
           </Button>
         </div>
-      )}
+      )} */}
     </div>
   )
 }

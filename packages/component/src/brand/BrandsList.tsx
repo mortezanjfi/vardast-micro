@@ -55,7 +55,7 @@ const BrandsList = ({
   const setFiltersVisibility = useSetAtom(filtersVisibilityAtom)
 
   const [sort, setSort] = useState<SortBrandEnum>(
-    args.sortType || SortBrandEnum.Sum
+    args.sortType || SortBrandEnum.Rating
   )
   const pathname = usePathname()
   const { push } = useRouter()

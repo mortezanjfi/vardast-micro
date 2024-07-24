@@ -225,9 +225,12 @@ function SellersList({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(submitButton)}
-          className="flex flex-col gap-7"
+          className="flex min-h-full flex-col gap-7"
         >
-          <CardContainer title="لیست پیشنهادات">
+          <CardContainer
+            className="flex-1 !rounded-none"
+            title="لیست پیشنهادات"
+          >
             <div className="flex flex-col">
               {findPreOrderByIdQuery?.data?.findPreOrderById?.status !==
                 PreOrderStates.Closed && (

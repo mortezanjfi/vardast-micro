@@ -124,7 +124,7 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
   )
 
   return (
-    <div className="flex flex-col gap-7">
+    <div className={clsx("flex flex-col gap-7 bg-alpha-white")}>
       {isAdmin && (
         <ProjectsFilter
           setOrdersQueryParams={setOrdersQueryParas}
@@ -166,7 +166,7 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
             </Button>
           </PageHeader>
         )} */}
-        <div className={clsx("w-full", isMobileView && " h-full px-6")}>
+        <div className={clsx("w-full")}>
           {!isMobileView ? (
             <CardContainer
               button={{
@@ -252,12 +252,37 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
             </div>
           ) : myProjectsQuery.data?.projects?.data?.length > 0 ? (
             <div className={clsx("flex h-full flex-col")}>
-              <div className="flex flex-col">
+              <div className="mb-24 flex h-full flex-col divide-y-0.5 divide-alpha-300 px-6 ">
                 {myProjectsQuery.data?.projects?.data?.map((project) => (
                   <ProjectCard key={project.id} project={project as Project} />
                 ))}
               </div>
               {isMobileView && (
+                <div className="absolute bottom-0 w-full border-y border-alpha-200 bg-alpha-white px-6 py-5">
+                  <Button
+                    disabled={
+                      myProjectsQuery.isLoading || myProjectsQuery.isLoading
+                    }
+                    loading={
+                      myProjectsQuery.isLoading || myProjectsQuery.isLoading
+                    }
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      e.nativeEvent.preventDefault()
+                      e.nativeEvent.stopImmediatePropagation()
+                      addNewProject()
+                    }}
+                    variant="primary"
+                    size="medium"
+                    className=" mt-auto w-full py-3"
+                  >
+                    {t("common:add_new_entity", {
+                      entity: t("common:project")
+                    })}{" "}
+                  </Button>
+                </div>
+              )}
+              {/* {isMobileView && (
                 <Button
                   variant="primary"
                   size="medium"
@@ -268,7 +293,7 @@ const ProjectsPage = ({ isAdmin, isMobileView, title }: ProjectsPageProps) => {
                     entity: t("common:project")
                   })}
                 </Button>
-              )}
+              )} */}
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center gap-5 py-7">
