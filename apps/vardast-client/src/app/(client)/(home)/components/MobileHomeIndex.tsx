@@ -22,10 +22,12 @@ const MobileHomeIndex = ({
   publicOrdersQuery,
   isMobileView
 }: IHomeProps) => {
+  console.log("ddddddddddd")
+
   return (
     <>
       {recentPriceProductsQuery?.data?.products?.data.length > 0 && (
-        <div className="flex items-center gap-3 bg-alpha-white">
+        <div className="flex h-12 max-h-12 min-h-12 items-center gap-3 bg-alpha-white">
           <NewPriceSlider query={recentPriceProductsQuery} />
         </div>
       )}

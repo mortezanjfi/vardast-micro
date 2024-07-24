@@ -10,9 +10,9 @@ import { Brand, Category } from "@vardast/graphql/generated"
 import clsx from "clsx"
 
 import { IHomeProps } from "@/app/(client)/(home)/components/HomeIndex"
-import MegaMenu, {
-  MegaMenuLoader
-} from "@/app/(client)/(home)/components/MegaMenu"
+// import MegaMenu, {
+//   MegaMenuLoader
+// } from "@/app/(client)/(home)/components/MegaMenu"
 import MobileHomeNewestProducts from "@/app/(client)/(home)/components/MobileHomeNewestProducts"
 import MobileHomeSlider from "@/app/(client)/(home)/components/MobileHomeSlider"
 import MobileHomeTopEntities from "@/app/(client)/(home)/components/MobileHomeTopEntities"
@@ -38,13 +38,13 @@ const DesktopHomeIndex = ({
 
   return (
     <>
-      <div className="container relative mx-auto">
+      {/* <div className="container relative mx-auto">
         {megaMenuData.isLoading || megaMenuData.isFetching ? (
           <MegaMenuLoader />
         ) : (
           <MegaMenu megaMenuData={megaMenuData} />
         )}
-      </div>
+      </div> */}
       {recentPriceProductsQuery?.data?.products?.data?.length > 0 && (
         <div className="border-t-2 bg-alpha-white">
           <NewPriceSlider query={recentPriceProductsQuery} />
