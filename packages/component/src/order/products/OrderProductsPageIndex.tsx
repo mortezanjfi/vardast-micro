@@ -123,11 +123,13 @@ function OrderProductsPageIndex({
       uuid={uuid}
     >
       <OrderProductsTabs uuid={uuid} />
-      <OrderProductsList
-        actionButtonType={ACTION_BUTTON_TYPE.ADD_PRODUCT_OFFER}
-        isMobileView={isMobileView}
-        findPreOrderByIdQuery={findPreOrderByIdQuery}
-      />
+      {!isMobileView && (
+        <OrderProductsList
+          actionButtonType={ACTION_BUTTON_TYPE.ADD_PRODUCT_OFFER}
+          isMobileView={isMobileView}
+          findPreOrderByIdQuery={findPreOrderByIdQuery}
+        />
+      )}
       <div className="mt-auto grid w-full !grid-cols-2 gap py-4 md:relative md:bottom-0 md:mt-0 md:flex md:justify-end">
         <Link className="btn btn-md btn-secondary" href="/profile/orders">
           بازگشت به سفارشات
