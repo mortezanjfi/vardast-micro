@@ -3,14 +3,20 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useDebouncedState } from "@mantine/hooks"
 import Card from "@vardast/component/Card"
+import {
+  useGetAllCategoriesQuery,
+  useGetProvinceQuery
+} from "@vardast/graphql/generated"
 import { statusesOfAvailability } from "@vardast/lib/AvailabilityStatus"
 import { brandSorts } from "@vardast/lib/BrandSort"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
 import {
   Command,
   CommandEmpty,
   CommandGroup,
+  CommandInput,
   CommandItem
 } from "@vardast/ui/command"
 import {
@@ -44,8 +50,23 @@ export const BrandFilter = ({
   const [logoDialog, setLogoDialog] = useState<boolean>(false)
   const [catalogDialog, setCatalogDialog] = useState<boolean>(false)
   const [priceListDialog, setPriceListDialog] = useState<boolean>(false)
+  const [cityDialog, setCityDialog] = useState(false)
+  const [categoryDialog, setCategoryDialog] = useState(false)
+  const [categoryQueryTemp, setCategoryQueryTemp] = useState("")
 
   const { t } = useTranslation()
+
+  const cities = useGetProvinceQuery(graphqlRequestClientWithToken)
+
+  const rootCategories = useGetAllCategoriesQuery(
+    graphqlRequestClientWithToken,
+    {
+      indexCategoryInput: {
+        onlyRoots: true
+      }
+    }
+  )
+
   useEffect(() => {
     form.setValue("brand", query)
   }, [form, query])
@@ -56,7 +77,9 @@ export const BrandFilter = ({
       catalogStatus: form.getValues("catalogStatus"),
       priceListStatus: form.getValues("priceListStatus"),
       bannerStatus: form.getValues("bannerStatus"),
-      sort: form.getValues("sort")
+      sort: form.getValues("sort"),
+      cityId: form.getValues("cityId"),
+      categoryId: form.getValues("categoryId")
     })
   }
   const handleReset = () => {
@@ -71,7 +94,7 @@ export const BrandFilter = ({
       <form noValidate onSubmit={form.handleSubmit(handleSubmit)}>
         <Card>
           <div className="flex flex-col justify-between gap-6">
-            <div className="grid grid-cols-4 gap-6">
+            <div className="grid grid-cols-4 grid-rows-3 gap-6">
               <FormField
                 control={form.control}
                 name="brand"
@@ -163,7 +186,6 @@ export const BrandFilter = ({
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
                 name="catalogStatus"
@@ -406,7 +428,180 @@ export const BrandFilter = ({
                   </FormItem>
                 )}
               />
-              <div className="col-start-4 flex justify-end gap-3">
+              <FormField
+                control={form.control}
+                name="cityId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("common:city")}</FormLabel>
+                    <Popover open={cityDialog} onOpenChange={setCityDialog}>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            disabled={
+                              cities.isFetching ||
+                              cities.isLoading ||
+                              !cities.data?.province.cities.length
+                            }
+                            noStyle
+                            role="combobox"
+                            className="input-field flex items-center text-start"
+                          >
+                            {field.value
+                              ? cities?.data?.province.cities.find(
+                                  (city) => city && city.id === field.value
+                                )?.name
+                              : t("common:choose_entity", {
+                                  entity: t("common:city")
+                                })}
+                            <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <Command>
+                          <CommandInput
+                            placeholder={t("common:search_entity", {
+                              entity: t("common:city")
+                            })}
+                          />
+                          <CommandEmpty>
+                            {t("common:no_entity_found", {
+                              entity: t("common:city")
+                            })}
+                          </CommandEmpty>
+                          <CommandGroup>
+                            {cities.data?.province.cities.map(
+                              (city) =>
+                                city && (
+                                  <CommandItem
+                                    value={city.name}
+                                    key={city.id}
+                                    onSelect={(value) => {
+                                      const selected =
+                                        cities.data?.province.cities.find(
+                                          (item) => item?.name === value
+                                        )
+                                      form.setValue("cityId", selected?.id || 0)
+                                      setCityDialog(false)
+                                    }}
+                                  >
+                                    <LucideCheck
+                                      className={mergeClasses(
+                                        "mr-2 h-4 w-4",
+                                        city.id === field.value
+                                          ? "opacity-100"
+                                          : "opacity-0"
+                                      )}
+                                    />
+                                    {city.name}
+                                  </CommandItem>
+                                )
+                            )}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="categoryId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("common:category")}</FormLabel>
+                    <Popover
+                      open={categoryDialog}
+                      onOpenChange={setCategoryDialog}
+                    >
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            disabled={
+                              rootCategories?.data?.categories?.data?.length ===
+                              0
+                            }
+                            noStyle
+                            role="combobox"
+                            className="input-field flex items-center"
+                          >
+                            <span className="inline-block max-w-full truncate">
+                              {field.value
+                                ? rootCategories?.data?.categories?.data?.find(
+                                    (category) =>
+                                      category && category.id === +field.value
+                                  )?.title
+                                : t("common:choose_entity", {
+                                    entity: t("common:category")
+                                  })}
+                            </span>
+                            <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="!z-[9999]" asChild>
+                        <Command>
+                          <CommandInput
+                            loading={
+                              rootCategories?.data?.categories?.data?.length ===
+                              0
+                            }
+                            value={categoryQueryTemp}
+                            onValueChange={(newQuery) => {
+                              // setProvinceQuery(newQuery)
+                              setCategoryQueryTemp(newQuery)
+                            }}
+                            placeholder={t("common:search_entity", {
+                              entity: t("common:category")
+                            })}
+                          />
+                          <CommandEmpty>
+                            {t("common:no_entity_found", {
+                              entity: t("common:category")
+                            })}
+                          </CommandEmpty>
+                          <CommandGroup>
+                            {rootCategories?.data?.categories?.data?.map(
+                              (category) =>
+                                category && (
+                                  <CommandItem
+                                    value={`${category?.id}`}
+                                    key={category?.id}
+                                    onSelect={(value) => {
+                                      form.setValue(
+                                        "categoryId",
+                                        rootCategories?.data?.categories?.data?.find(
+                                          (category) =>
+                                            category?.id &&
+                                            category?.id === +value
+                                        )?.id || 0
+                                      )
+                                      setCategoryDialog(false)
+                                    }}
+                                  >
+                                    <LucideCheck
+                                      className={mergeClasses(
+                                        "mr-2 h-4 w-4",
+                                        category.id === +field.value
+                                          ? "opacity-100"
+                                          : "opacity-0"
+                                      )}
+                                    />
+                                    {category?.title}
+                                  </CommandItem>
+                                )
+                            )}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="col-start-4 row-start-3 flex justify-end gap-3">
                 <Button
                   className="h-fit w-full"
                   variant="secondary"
