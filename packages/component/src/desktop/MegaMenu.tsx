@@ -128,7 +128,7 @@ export const MegaMenuModal = ({
             className="absolute  top-full z-50 grid max-h-[calc(100vh-300px)] w-[calc(100%-400px)] grid-cols-3 overflow-hidden rounded-b-2xl bg-white text-gray-900 shadow-lg 2xl:grid-cols-5"
           >
             {/* Category Sidebar */}
-            <div className="col-span-1 max-h-[calc(100vh-300px)] overflow-y-auto bg-alpha-100 py-5">
+            <div className="col-span-1 max-h-[calc(100vh-300px)] max-w-xs overflow-y-auto bg-alpha-100 py-5">
               {megaMenuData?.data?.mega_menu?.map((category) => (
                 <Link
                   onClick={() => setOpen(false)}
@@ -169,7 +169,9 @@ export const MegaMenuModal = ({
                           href={`/category/${subcategory?.id}`}
                           className="flex items-center gap-4 border-r-1 border-primary py-2 pr-3"
                         >
-                          <span className="">{subcategory.title}</span>
+                          <span className="hover:text-primary">
+                            {subcategory.title}
+                          </span>
                           <ChevronLeft width={16} height={16} />
                         </Link>
                         <ul className="pr-3">
@@ -180,7 +182,7 @@ export const MegaMenuModal = ({
                             >
                               <li
                                 key={subSubcategory.id}
-                                className="py-2 text-alpha-500"
+                                className="py-2 text-alpha-500 hover:text-primary"
                               >
                                 {subSubcategory.title}
                               </li>
