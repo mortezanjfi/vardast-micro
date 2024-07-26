@@ -135,6 +135,11 @@ const CategoryCard = ({
                   {digitsEnToFa(category.productsCount)} کالا
                 </span>
               )}
+              {category.views && category.views > 0 && (
+                <span className="text-sm text-alpha-500 dark:text-alpha-600">
+                  {digitsEnToFa(category.views)} بازدید
+                </span>
+              )}
             </div>
           </div>
         </div>
