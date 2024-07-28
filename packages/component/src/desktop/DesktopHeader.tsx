@@ -25,6 +25,7 @@ import {
   NavigationMenuTrigger
 } from "../navigation-menu"
 import Search, { SearchActionModal } from "../Search"
+import MegaMenu from "./MegaMenu"
 
 export const StatusUserAlternatives = {
   [UserStatusesEnum.NotActivated]: {
@@ -62,7 +63,8 @@ const DesktopHeader = ({ search, button }: ILayoutDesktopHeader) => {
   return (
     <>
       <SearchActionModal />
-      <div className="container grid grid-cols-12 grid-rows-2 items-center gap-y py-7 md:grid-rows-1 md:gap-x-12">
+      {/* <MegaMenuModal /> */}
+      <div className="container grid grid-cols-12 grid-rows-2 items-center py-3 md:grid-rows-1 md:gap-x-12">
         <Link
           href="/"
           className="relative col-span-4 row-start-1 flex h-full items-center md:col-span-3 lg:col-span-3"
@@ -207,6 +209,9 @@ const DesktopHeader = ({ search, button }: ILayoutDesktopHeader) => {
               )}
             </div>
           )}
+        </div>
+        <div className="col-span-2 row-start-2 hidden w-fit xl:block">
+          <MegaMenu />
         </div>
       </div>
     </>

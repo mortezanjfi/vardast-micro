@@ -149,6 +149,10 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
             <TabsTrigger className="py-4" value={CATEGORY_PAGE_TABS.PRODUCTS}>
               {t(`common:${CATEGORY_PAGE_TABS.PRODUCTS}`)}
             </TabsTrigger>
+            {/* for full border under tabs-----------? */}
+            {!isMobileView && (
+              <div className="w-full border-b-0.5 border-alpha-200"></div>
+            )}
           </TabsList>
         )}
         {categoryQuery?.data?.category?.childrenCount > 0 && (

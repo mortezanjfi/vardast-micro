@@ -45,7 +45,9 @@ const filterSchema = z.object({
   catalogStatus: z.string(),
   priceListStatus: z.string(),
   bannerStatus: z.string(),
-  sort: z.string().optional()
+  sort: z.string().optional(),
+  categoryId: z.number().optional(),
+  cityId: z.number().optional()
 })
 export type FilterFields = TypeOf<typeof filterSchema>
 

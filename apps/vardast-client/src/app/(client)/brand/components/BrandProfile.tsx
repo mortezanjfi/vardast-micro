@@ -217,6 +217,10 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
           <TabsTrigger className="py-4" value={BrandProfileTabEnum.PRICE_LIST}>
             {t("common:price_list")}
           </TabsTrigger>
+          {/* for full border under tabs-----------? */}
+          {!isMobileView && (
+            <div className="w-full border-b-0.5 border-alpha-200"></div>
+          )}
         </TabsList>
         <TabsContent value={BrandProfileTabEnum.PRODUCT}>
           <ProductsTab
