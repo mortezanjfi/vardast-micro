@@ -57,7 +57,9 @@ const Brands = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const [brandToDelete, setBrandToDelete] = useState<Brand>()
-  const [brandsQueryParams, setBrandsQueryParams] = useState<FilterFields>({})
+  const [brandsQueryParams, setBrandsQueryParams] = useState<FilterFields>({
+    sort: SortBrandEnum.Sum
+  })
   const form = useForm<FilterFields>({
     resolver: zodResolver(filterSchema),
     defaultValues: {
@@ -65,7 +67,8 @@ const Brands = () => {
       logoStatus: "",
       catalogStatus: "",
       priceListStatus: "",
-      bannerStatus: ""
+      bannerStatus: "",
+      sort: SortBrandEnum.Sum
     }
   })
 
@@ -79,10 +82,7 @@ const Brands = () => {
         hasCatalogeFile: checkBooleanByString(brandsQueryParams.catalogStatus),
         hasLogoFile: checkBooleanByString(brandsQueryParams.logoStatus),
         hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus),
-        sortType: SortBrandEnum.Sum,
-        categoryId:
-          brandsQueryParams.categoryId && brandsQueryParams.categoryId,
-        cityId: brandsQueryParams.cityId && brandsQueryParams.cityId
+        sortType: brandsQueryParams.sort as SortBrandEnum
       }
     },
     {
@@ -96,10 +96,7 @@ const Brands = () => {
           ),
           hasLogoFile: checkBooleanByString(brandsQueryParams.logoStatus),
           hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus),
-          sortType: SortBrandEnum.Sum,
-          categoryId:
-            brandsQueryParams.categoryId && brandsQueryParams.categoryId,
-          cityId: brandsQueryParams.cityId && brandsQueryParams.cityId
+          sortType: brandsQueryParams.sort as SortBrandEnum
         }
       ]
     }

@@ -146,6 +146,7 @@ const OrdersBaseOnItem = ({
                     <th className="border">{t("common:expert_name")}</th>
                     <th className="border">{t("common:order-needed-time")}</th>
                     <th className="border">{t("common:items")}</th>
+                    <th className="border">{t("common:amount")}</th>
                     <th className="border">{t("common:unit")}</th>
                     <th className="border">{t("common:type")}</th>
                   </tr>
@@ -167,7 +168,8 @@ const OrdersBaseOnItem = ({
                             <span>{digitsEnToFa(index + 1)}</span>
                           </td>
                           <td className="border">
-                            {digitsEnToFa(line.pre_order_uuid)}
+                            {line?.pre_order_uuid &&
+                              digitsEnToFa(line.pre_order_uuid)}
                           </td>
                           <td className="border">{line.project_name}</td>
 
@@ -179,7 +181,8 @@ const OrdersBaseOnItem = ({
                               : "-"}
                           </td>
                           <td>{line?.item_name}</td>
-                          <td>{digitsEnToFa(line?.uom)}</td>
+                          <td>{line?.qty && digitsEnToFa(line?.qty)}</td>
+                          <td>{line?.uom && digitsEnToFa(line?.uom)}</td>
                           <td className="border">
                             {line?.type === MultiTypeOrder.Product
                               ? "کالا"
