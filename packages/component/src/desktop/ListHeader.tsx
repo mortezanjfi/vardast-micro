@@ -19,15 +19,15 @@ const ListHeader = ({
   return (
     <div
       className={clsx(
-        "flex items-center justify-between  px py-4  md:px-0 md:pb-5 md:pt-0",
+        "flex items-center justify-between  px py-4  sm:px-0 sm:pb-5 sm:pt-0",
         borderBottom && "border-b"
       )}
     >
-      <span className="text-sm font-medium text-alpha-500 md:text-lg md:text-alpha-800">
+      <span className="text-sm font-medium text-alpha-500 sm:text-lg sm:text-alpha-800">
         {t("common:entity_list", { entity: t(`common:${listName}`) })}
       </span>
       {total && (
-        <div className="flex gap-1 bg-alpha-white text-sm text-alpha-500 md:w-auto md:text-base">
+        <div className="flex gap-1 bg-alpha-white text-sm text-alpha-500 sm:w-auto sm:text-base">
           <span>{digitsEnToFa(addCommas(total))}</span>
           <span>{t(`common:${secondTitle}`)} </span>
         </div>
