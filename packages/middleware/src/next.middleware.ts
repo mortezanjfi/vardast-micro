@@ -75,11 +75,11 @@ export async function middleware(request: NextRequest) {
     )
     if (data && data.status === 200) {
       const res = await data.json()
-      if (!title || title !== encodeURI(res.brand.name.trim())) {
+      if (!title || title !== encodeURI(res.brand.name_fa.trim())) {
         request.nextUrl.searchParams.delete("lang")
         return NextResponse.redirect(
           new URL(
-            `/brand/${res.brand.id}/${res.brand.name.trim()}?${request.nextUrl.searchParams}`,
+            `/brand/${res.brand.id}/${res.brand.name_fa.trim()}?${request.nextUrl.searchParams}`,
             request.url
           ),
           301
