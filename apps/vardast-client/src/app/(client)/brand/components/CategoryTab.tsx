@@ -280,6 +280,7 @@ const CategoriesTab = ({
       ) : (
         <>
           <ListHeader
+            secondTitle="category"
             total={allCategoriesQuery.data?.pages[0].categories.total}
             listName={"categories"}
           />

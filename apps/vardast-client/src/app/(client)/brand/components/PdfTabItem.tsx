@@ -15,6 +15,7 @@ type PdfTabItemProps = {
 
 const PdfTabItem = ({ file, access_token, title }: PdfTabItemProps) => {
   const pathname = usePathname()
+
   const DesktopSidebar = (
     <FiltersSidebarContainer>
       <div className="flex flex-col gap-9">

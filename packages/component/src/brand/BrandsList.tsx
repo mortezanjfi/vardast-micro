@@ -245,6 +245,7 @@ const BrandsList = ({
       DesktopHeader={
         hasTitle && (
           <ListHeader
+            secondTitle="brand"
             borderBottom
             total={allBrandsQuery?.data?.pages[0].brands?.total}
             listName={"brands"}
