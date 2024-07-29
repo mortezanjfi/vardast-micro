@@ -19,7 +19,7 @@ const _default: ILayoutOption[] = [
       type: "link",
       value: "/category"
     },
-    title: "دسته‌بندی"
+    title: "دسته‌بندی‌ها"
   },
   // {
   //   id: 2,
