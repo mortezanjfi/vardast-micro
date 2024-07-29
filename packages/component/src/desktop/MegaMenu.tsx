@@ -21,7 +21,7 @@ export const MegaMenuLoader = () => {
   return (
     <div className="flex items-center gap-4 py-3">
       <DynamicHeroIcon
-        className="animated-card h-4 w-4"
+        className="animated-card h-6 w-6"
         icon="Squares2X2Icon"
       />
       <div className="flex gap-1">
@@ -74,7 +74,7 @@ const MegaMenu = () => {
           <div
             className={clsx("flex items-center gap-3  py-4", open && "z-50")}
           >
-            <DynamicHeroIcon className="h-4 w-4" icon="Squares2X2Icon" />
+            <DynamicHeroIcon className="h-6 w-6" icon="Squares2X2Icon" />
             <span className="font-medium">دسته‌بندی کالاها</span>
           </div>
         </div>
@@ -132,7 +132,7 @@ export const MegaMenuModal = ({
               {megaMenuData?.data?.mega_menu?.map((category) => (
                 <Link
                   onClick={() => setOpen(false)}
-                  href={`/category/${category?.id}`}
+                  href={`/category/${category?.id}/${category.title}`}
                   key={category.id}
                   onMouseEnter={() => setActiveCategory(category)}
                   className={clsx(
@@ -142,8 +142,8 @@ export const MegaMenuModal = ({
                 >
                   <Image
                     src={category?.image_url}
-                    width={20}
-                    height={20}
+                    width={24}
+                    height={24}
                     alt="main-categories"
                   />
                   {category.title}
@@ -155,18 +155,21 @@ export const MegaMenuModal = ({
             <div className="col-span-2 max-h-[calc(100vh-300px)] 2xl:col-span-4">
               {activeCategory ? (
                 <div className="flex max-h-[calc(100vh-300px)] flex-col divide-y-0.5 overflow-hidden">
-                  <div className="flex items-center gap-4 px-7 py-5 text-blue-600">
+                  <Link
+                    href={`/category/${activeCategory?.id}/${activeCategory.title}`}
+                    className="flex items-center gap-4 px-7 py-5 text-blue-600"
+                  >
                     <h3 className="text-base font-medium">
                       {activeCategory.title}
                     </h3>
                     <ChevronLeft width={16} height={16} />
-                  </div>
+                  </Link>
                   <div className="grid max-h-[calc(100vh-300px)] grid-cols-3 gap-7 overflow-y-auto px-7 py-5 2xl:grid-cols-4">
                     {activeCategory.children.map((subcategory) => (
                       <div className="flex flex-col gap-3" key={subcategory.id}>
                         <Link
                           onClick={() => setOpen(false)}
-                          href={`/category/${subcategory?.id}`}
+                          href={`/category/${subcategory?.id}/${subcategory.title}`}
                           className="flex items-center gap-4 border-r-1 border-primary py-2 pr-3"
                         >
                           <span className="hover:text-primary">
@@ -178,7 +181,7 @@ export const MegaMenuModal = ({
                           {subcategory.children.map((subSubcategory) => (
                             <Link
                               onClick={() => setOpen(false)}
-                              href={`/category/${subSubcategory?.id}`}
+                              href={`/category/${subSubcategory?.id}/${subSubcategory.title}`}
                             >
                               <li
                                 key={subSubcategory.id}
