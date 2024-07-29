@@ -38,13 +38,13 @@ export const BulletSwiper = ({
   return (
     <div
       className={clsx(
-        "flex w-full justify-center py-6 sm:absolute sm:bottom-4 sm:z-20 sm:py-0",
+        "absolute bottom-6 z-20 flex w-full justify-center py-0 sm:bottom-4",
         className
       )}
     >
       <div
         className={clsx(
-          "flex items-center justify-center gap-x-1.5 sm:rounded-lg sm:border sm:border-alpha-100 sm:bg-alpha-50 sm:bg-opacity-40 sm:px-1 sm:py-0.5 sm:shadow-sm"
+          "flex items-center justify-center gap-x-1.5 rounded-lg border border-alpha-200 bg-alpha-100 px-1 py-0.5 shadow-sm sm:border-alpha-100 sm:bg-alpha-50 sm:bg-opacity-40"
         )}
       >
         {[...Array(contentSize)]?.map((_, index) => (
@@ -90,7 +90,7 @@ const MobileHomeSlider = ({
     "h-[50vw] w-[calc(100vw-60px)] sm:h-[250px] sm:w-full sm:bg-alpha-100 md:h-[350px] 2xl:h-[500px] mx-auto"
 
   return (
-    <div className="bg-alpha-white pt-6 sm:relative sm:pt-0">
+    <div className="relative bg-alpha-white py-6 sm:py-0">
       <div className="overflow-hidden">
         {query.isLoading || query.isFetching || !width ? (
           <div className={clsx("animated-card", sliderClass)}></div>
@@ -153,7 +153,7 @@ const MobileHomeSlider = ({
       {query.isLoading || query.isFetching ? (
         <div
           className={clsx(
-            "flex w-full items-center justify-center gap-x-1.5 py-6 sm:absolute sm:bottom-4 sm:z-20 sm:py-0"
+            "absolute bottom-4 z-20 flex w-full items-center justify-center gap-x-1.5 py-0 "
           )}
         >
           <div className="animated-card mx-auto h-3 w-14"></div>
