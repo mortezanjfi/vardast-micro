@@ -7,14 +7,12 @@ import Image from "next/image"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import brandSellerBlank from "@vardast/asset/brand-seller-blank-mobile.svg"
 import frameLessImage from "@vardast/asset/images/frameLess.png"
-import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
 
 import { Brand } from "../../../graphql/src/generated"
 import CardAvatar from "../CardAvatar"
 import { ICategoryListLoader } from "../category/CategoryListLoader"
-import DynamicHeroIcon from "../DynamicHeroIcon"
 import Link from "../Link"
 
 export type BrandCardProps = {
@@ -120,46 +118,50 @@ const BrandCard = forwardRef(
                   {digitsEnToFa(brand?.sum)} کالا
                 </div>
               )}
-              <div className="flex items-center gap-1 px-2 text-sm font-medium text-alpha-500">
-                {t("common:catalog")}
-                {brand?.catalog?.id ? (
-                  <DynamicHeroIcon
-                    icon="CheckIcon"
-                    className={mergeClasses(
-                      "icon h-4 w-4 flex-shrink-0 transform rounded-full bg-blue-500 p-0.5 text-2xl text-alpha-white transition-all"
-                    )}
-                    solid={true}
-                  />
-                ) : (
-                  <DynamicHeroIcon
-                    icon="MinusIcon"
-                    className={mergeClasses(
-                      "icon h-4 w-4 flex-shrink-0 transform rounded-full bg-blue-500 p-0.5 text-2xl text-alpha-white transition-all"
-                    )}
-                    solid={true}
-                  />
-                )}
-              </div>
-              <div className="flex items-center gap-1 px-2 text-sm font-medium text-alpha-500">
-                {t("common:price_list")}
-                {brand?.priceList?.id ? (
-                  <DynamicHeroIcon
-                    icon="CheckIcon"
-                    className={mergeClasses(
-                      "icon h-4 w-4 flex-shrink-0 transform rounded-full bg-blue-500 p-0.5 text-2xl text-alpha-white transition-all"
-                    )}
-                    solid={true}
-                  />
-                ) : (
-                  <DynamicHeroIcon
-                    icon="MinusIcon"
-                    className={mergeClasses(
-                      "icon h-4 w-4 flex-shrink-0 transform rounded-full bg-blue-500 p-0.5 text-2xl text-alpha-white transition-all"
-                    )}
-                    solid={true}
-                  />
-                )}
-              </div>
+              {brand?.catalog?.id && (
+                <div className="flex items-center gap-1 px-2 text-sm font-medium text-alpha-500">
+                  {t("common:catalog")}
+                  {/* {brand?.catalog?.id ? (
+                    <DynamicHeroIcon
+                      icon="CheckIcon"
+                      className={mergeClasses(
+                        "icon h-4 w-4 flex-shrink-0 transform rounded-full bg-blue-500 p-0.5 text-2xl text-alpha-white transition-all"
+                      )}
+                      solid={true}
+                    />
+                  ) : (
+                    <DynamicHeroIcon
+                      icon="MinusIcon"
+                      className={mergeClasses(
+                        "icon h-4 w-4 flex-shrink-0 transform rounded-full bg-blue-500 p-0.5 text-2xl text-alpha-white transition-all"
+                      )}
+                      solid={true}
+                    />
+                  )} */}
+                </div>
+              )}
+              {brand?.priceList?.id && (
+                <div className="flex items-center gap-1 px-2 text-sm font-medium text-alpha-500">
+                  {t("common:price_list")}
+                  {/* {brand?.priceList?.id ? (
+                    <DynamicHeroIcon
+                      icon="CheckIcon"
+                      className={mergeClasses(
+                        "icon h-4 w-4 flex-shrink-0 transform rounded-full bg-blue-500 p-0.5 text-2xl text-alpha-white transition-all"
+                      )}
+                      solid={true}
+                    />
+                  ) : (
+                    <DynamicHeroIcon
+                      icon="MinusIcon"
+                      className={mergeClasses(
+                        "icon h-4 w-4 flex-shrink-0 transform rounded-full bg-blue-500 p-0.5 text-2xl text-alpha-white transition-all"
+                      )}
+                      solid={true}
+                    />
+                  )} */}
+                </div>
+              )}
             </div>
           </div>
         </div>
