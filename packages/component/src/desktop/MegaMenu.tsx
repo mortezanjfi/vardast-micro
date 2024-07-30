@@ -72,7 +72,10 @@ const MegaMenu = () => {
           )}
         >
           <div
-            className={clsx("flex items-center gap-3  py-4", open && "z-50")}
+            className={clsx(
+              "flex items-center gap-3 whitespace-nowrap pb-1 pt-4",
+              open && "z-50"
+            )}
           >
             <DynamicHeroIcon className="h-6 w-6" icon="Squares2X2Icon" />
             <span className="font-medium">دسته‌بندی کالاها</span>
@@ -125,7 +128,7 @@ export const MegaMenuModal = ({
           <div
             onMouseEnter={handleMouseEnterList}
             onMouseLeave={handleMouseLeaveContainer}
-            className="absolute  top-full z-50 grid max-h-[calc(100vh-300px)] w-[calc(100%-400px)] grid-cols-3 overflow-hidden rounded-b-2xl bg-white text-gray-900 shadow-lg 2xl:grid-cols-5"
+            className="absolute  top-full z-50 grid max-h-[calc(100vh-300px)] w-[calc(100%-400px)] grid-cols-3 overflow-hidden rounded-2xl bg-white text-gray-900 shadow-lg 2xl:grid-cols-5"
           >
             {/* Category Sidebar */}
             <div className="col-span-1 max-h-[calc(100vh-300px)] max-w-xs overflow-y-auto bg-alpha-100 py-5">
