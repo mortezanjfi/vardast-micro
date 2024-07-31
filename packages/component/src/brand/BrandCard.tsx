@@ -22,10 +22,10 @@ export type BrandCardProps = {
 
 export const BrandCardSkeleton = () => {
   return (
-    <div className="flex h-full w-full flex-col lg:px-4">
-      <div className="grid flex-1 items-start sm:grid-rows-7 sm:py lg:flex lg:flex-col">
+    <div className="flex h-fit w-full flex-col lg:px-4">
+      <div className=" flex flex-1  flex-col items-start sm:py">
         <div
-          className={`relative row-span-4 h-[50vw] w-full transform transition-all sm:py`}
+          className={`relative row-span-4 h-[200px] w-full transform transition-all sm:py`}
         >
           <Image
             src={frameLessImage}
