@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import { useQueryClient } from "@tanstack/react-query"
-import { Modal, ModalProps } from "@vardast/component/modal"
 import {
   MultiTypeOrder,
   OfferLine,
@@ -21,6 +20,7 @@ import {
   FormMessage
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
+import { Modal, ModalProps } from "@vardast/ui/modal"
 import { Switch } from "@vardast/ui/switch"
 import { ClientError } from "graphql-request"
 import useTranslation from "next-translate/useTranslation"

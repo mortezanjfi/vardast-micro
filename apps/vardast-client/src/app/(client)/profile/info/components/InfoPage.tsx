@@ -1,6 +1,6 @@
 "use client"
 
-import PageTitle from "@vardast/component/project/PageTitle"
+import PageTitle from "@vardast/component/page-title"
 import { useRefreshUserMutation, UserType } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ToggleGroup, ToggleGroupItem } from "@vardast/ui/toggle-group"

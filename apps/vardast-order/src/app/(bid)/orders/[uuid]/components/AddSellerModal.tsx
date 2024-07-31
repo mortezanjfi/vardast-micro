@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa, digitsFaToEn } from "@persian-tools/persian-tools"
 import { useQueryClient } from "@tanstack/react-query"
-import { Modal, ModalProps } from "@vardast/component/modal"
 import {
   AddSellerOrderOffer,
   AddSellerOrderOfferSchema,
@@ -19,6 +18,7 @@ import {
   FormMessage
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
+import { Modal, ModalProps } from "@vardast/ui/modal"
 import { Textarea } from "@vardast/ui/textarea"
 import zodI18nMap from "@vardast/util/zodErrorMap"
 import {

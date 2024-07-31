@@ -1,18 +1,15 @@
 "use client"
 
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import Table from "@vardast/component/table/Table"
-import { ITableProps } from "@vardast/component/table/type"
-import useTable from "@vardast/component/table/useTable"
+import { ITableProps, Table, useTable } from "@vardast/component/table"
 import { LineDto, MultiTypeOrder } from "@vardast/graphql/generated"
 import { getOrderLinesQueryFn } from "@vardast/query/queryFns/orders/getOrderLinesQueryFn"
 import { newTimeConvertor } from "@vardast/util/convertToPersianDate"
 import useTranslation from "next-translate/useTranslation"
 
-import { OrderModalEnum } from "@/types/type"
-import { IOrdersTabProps } from "@/app/(bid)/orders/components/OrdersPage"
+import { IOrdersTabProps, OrderModalEnum } from "@/types/type"
 
-const OrderLines = ({ onChangeModals }: IOrdersTabProps) => {
+const Lines = ({ onChangeModals }: IOrdersTabProps) => {
   const { t } = useTranslation()
 
   const onCreateOrder = () => {
@@ -23,7 +20,7 @@ const OrderLines = ({ onChangeModals }: IOrdersTabProps) => {
 
   const tableProps: ITableProps<LineDto> = useTable({
     model: {
-      name: "orders-line",
+      name: "lines",
       container: {
         button: {
           onClick: onCreateOrder,
@@ -88,4 +85,4 @@ const OrderLines = ({ onChangeModals }: IOrdersTabProps) => {
   return <Table {...tableProps} />
 }
 
-export default OrderLines
+export default Lines

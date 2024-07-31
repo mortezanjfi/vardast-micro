@@ -11,7 +11,7 @@ import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
 import PageHeader from "@vardast/component/PageHeader"
-import Pagination from "@vardast/component/table/Pagination"
+import Pagination from "@vardast/component/Pagination"
 import {
   SellerType,
   ThreeStateSupervisionStatuses,

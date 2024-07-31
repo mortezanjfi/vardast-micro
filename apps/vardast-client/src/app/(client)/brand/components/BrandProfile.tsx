@@ -9,8 +9,7 @@ import BrandOrSellerCard, {
   BrandOrSellerCardSkeleton
 } from "@vardast/component/BrandOrSellerCard"
 import BrandOrSellerProfile, {
-  BrandOrSellerProfileTab,
-  TabTitleWithExtraData
+  BrandOrSellerProfileTab
 } from "@vardast/component/BrandOrSellerProfile"
 import BrandsOrSellersContainer, {
   BrandContainerType
@@ -51,7 +50,8 @@ import {
   SegmentItemLoader,
   Segments,
   SegmentsList,
-  SegmentsListItem
+  SegmentsListItem,
+  SegmentTabTitle
 } from "@vardast/ui/segment"
 import clsx from "clsx"
 import { Session } from "next-auth"
@@ -812,7 +812,7 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
       {
         value: BrandProfileTabEnum.PRODUCT,
         title: (
-          <TabTitleWithExtraData
+          <SegmentTabTitle
             title="کالاها"
             total={brandQuery.data?.brand.sum as number}
           />
@@ -833,7 +833,7 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
       {
         value: BrandProfileTabEnum.CATEGORY,
         title: (
-          <TabTitleWithExtraData
+          <SegmentTabTitle
             title="دسته‌بندی‌ها"
             total={brandQuery.data?.brand.categoriesCount as number}
           />
@@ -855,7 +855,7 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
         value: BrandProfileTabEnum.SELLERS,
         className: "!bg-alpha-100 h-full",
         title: (
-          <TabTitleWithExtraData
+          <SegmentTabTitle
             title="فروشندگان"
             total={brandQuery.data?.brand.sellersCount as number}
           />
@@ -875,7 +875,7 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
       {
         value: BrandProfileTabEnum.PRICE_LIST,
         title: (
-          <TabTitleWithExtraData
+          <SegmentTabTitle
             title="لیست قیمت"
             createdDate={brandQuery.data?.brand.priceList?.createdAt}
           />
@@ -891,7 +891,7 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
       {
         value: BrandProfileTabEnum.CATALOG,
         title: (
-          <TabTitleWithExtraData
+          <SegmentTabTitle
             title="کاتالوگ"
             createdDate={brandQuery.data?.brand.catalog?.createdAt}
           />

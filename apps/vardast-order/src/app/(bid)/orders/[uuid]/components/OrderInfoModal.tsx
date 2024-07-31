@@ -5,8 +5,6 @@ import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
-import DatePickerMulti from "@vardast/component/date-picker/DatePicker"
-import { Modal, ModalProps } from "@vardast/component/modal"
 import {
   PaymentMethodEnum,
   UpdatePreOrderInputSchema,
@@ -16,6 +14,7 @@ import {
   useUpdatePreOrderMutation
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
+import DatePicker from "@vardast/ui/date-picker"
 import {
   FormControl,
   FormField,
@@ -24,6 +23,7 @@ import {
   FormMessage
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
+import { Modal, ModalProps } from "@vardast/ui/modal"
 import { SelectPopover, SelectPopoverTrigger } from "@vardast/ui/select-popover"
 import { Textarea } from "@vardast/ui/textarea"
 import { ToggleGroup, ToggleGroupItem } from "@vardast/ui/toggle-group"
@@ -44,7 +44,7 @@ const UpdateOrderInfoSchema = UpdatePreOrderInputSchema()
   })
   .omit({ id: true })
 
-export type UpdatePreOrderType = TypeOf<typeof UpdateOrderInfoSchema>
+type UpdatePreOrderType = TypeOf<typeof UpdateOrderInfoSchema>
 
 const OrderInfoModal = ({
   modals,
@@ -282,7 +282,7 @@ const OrderInfoModal = ({
           <FormItem>
             <FormLabel>{t("common:submission-time")}</FormLabel>
             <FormControl>
-              <DatePickerMulti
+              <DatePicker
                 value={value ? new DateObject(new Date(value)) : ""}
                 onChange={(dateObject: DateObject) => {
                   onChange(
@@ -310,7 +310,7 @@ const OrderInfoModal = ({
           <FormItem>
             <FormLabel>{t("common:bid-start-time")}</FormLabel>
             <FormControl>
-              <DatePickerMulti
+              <DatePicker
                 value={value ? new DateObject(new Date(value)) : ""}
                 onChange={(dateObject: DateObject) => {
                   onChange(
@@ -338,7 +338,7 @@ const OrderInfoModal = ({
           <FormItem>
             <FormLabel>{t("common:bid-end-time")}</FormLabel>
             <FormControl>
-              <DatePickerMulti
+              <DatePicker
                 value={value ? new DateObject(new Date(value)) : ""}
                 onChange={(dateObject: DateObject) => {
                   onChange(

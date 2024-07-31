@@ -3,12 +3,12 @@
 import { useState } from "react"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import Link from "@vardast/component/Link"
-import Table from "@vardast/component/table/Table"
 import {
   FilterComponentTypeEnum,
-  ITableProps
-} from "@vardast/component/table/type"
-import useTable from "@vardast/component/table/useTable"
+  ITableProps,
+  Table,
+  useTable
+} from "@vardast/component/table"
 import { Project, UserTypeProject } from "@vardast/graphql/generated"
 import { getAllProjectsQueryFn } from "@vardast/query/queryFns/orders/getAllProjectsQueryFn"
 import useTranslation from "next-translate/useTranslation"

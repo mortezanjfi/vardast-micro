@@ -1,17 +1,15 @@
 "use client"
 
 import { useState } from "react"
+import { PreOrderStatesFa } from "@/constants"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import { PreOrderStatesFa } from "@vardast/component/desktop/OrderCart"
-import Table from "@vardast/component/table/Table"
 import {
   FilterComponentTypeEnum,
-  ITableProps
-} from "@vardast/component/table/type"
-import useTable from "@vardast/component/table/useTable"
+  ITableProps,
+  Table,
+  useTable
+} from "@vardast/component/table"
 import {
-  OrderOfferStatuses,
-  PaymentMethodEnum,
   PreOrder,
   PreOrderStates,
   useGetAllProjectsQuery
@@ -24,29 +22,13 @@ import useTranslation from "next-translate/useTranslation"
 import { DateObject } from "react-multi-date-picker"
 import { z } from "zod"
 
-import { OrderModalEnum } from "@/types/type"
-import { IOrdersTabProps } from "@/app/(bid)/orders/components/OrdersPage"
+import { IOrdersTabProps, OrderModalEnum } from "@/types/type"
 
 const OrdersFilterSchema = z.object({
   status: z.string().optional(),
   customerName: z.string().optional(),
   projectId: z.string().optional()
 })
-
-export const OrderOfferStatusesFa = {
-  [OrderOfferStatuses.Closed]: { className: "tag-success", name_fa: "بسته شده" }
-}
-
-export const PaymentMethodEnumFa = {
-  [PaymentMethodEnum.Cash]: {
-    className: "",
-    name_fa: "نقدی"
-  },
-  [PaymentMethodEnum.Credit]: {
-    className: "",
-    name_fa: "غیر نقدی"
-  }
-}
 
 const orderStatus = [...getEnumValues(PreOrderStates)]
 
@@ -65,9 +47,11 @@ const Orders = ({ onChangeModals }: IOrdersTabProps) => {
   )
 
   const onCreateOrder = () => {
-    onChangeModals({
-      type: OrderModalEnum.ADD_ORDER
-    })
+    if (onChangeModals) {
+      onChangeModals({
+        type: OrderModalEnum.ADD_ORDER
+      })
+    }
   }
 
   const tableProps: ITableProps<PreOrder, typeof OrdersFilterSchema> = useTable(
@@ -75,7 +59,7 @@ const Orders = ({ onChangeModals }: IOrdersTabProps) => {
       model: {
         name: "orders",
         container: {
-          button: {
+          button: onChangeModals && {
             onClick: onCreateOrder,
             text: "افزودن سفارش",
             variant: "primary"

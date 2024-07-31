@@ -3,8 +3,6 @@
 import { useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
-import { TabTitleWithExtraData } from "@vardast/component/BrandOrSellerProfile"
-import { Modal, ModalProps } from "@vardast/component/modal"
 import {
   MultiTypeOrder,
   useCreateLineMutation
@@ -15,7 +13,8 @@ import {
   CreateOrderLineSchema,
   CreateOrderLineType
 } from "@vardast/type/OrderProductTabs"
-import { SegmentTab } from "@vardast/ui/segment"
+import { Modal, ModalProps } from "@vardast/ui/modal"
+import { SegmentTab, SegmentTabTitle } from "@vardast/ui/segment"
 import zodI18nMap from "@vardast/util/zodErrorMap"
 import { ClientError } from "graphql-request"
 import useTranslation from "next-translate/useTranslation"
@@ -24,10 +23,9 @@ import { z } from "zod"
 
 import { IOrderPageSectionProps } from "@/types/type"
 
-import { OrderExtraPriceTabContent } from "./tabs/OrderExtraPriceTabContent"
-import OrderManualTabContent from "./tabs/OrderManualTabContent"
-import { OrderProductTabContent } from "./tabs/OrderProductTabContent"
-import UploadTabContent from "./tabs/UploadTabContent"
+import { OrderExtraPriceTabContent } from "./OrderExtraPriceTabContent"
+import OrderManualTabContent from "./OrderManualTabContent"
+import UploadTabContent from "./UploadTabContent"
 
 export enum OrderProductsTabsModalEnum {
   ORDER_PRODUCT_TAB = "ORDER_PRODUCT_TAB",
@@ -92,25 +90,15 @@ const OrderProductsTabsModal = ({
   z.setErrorMap(zodI18nMap)
 
   const tabs = useMemo(() => {
-    const initialTabs = basket
-      ? [
-          {
-            value: OrderProductsTabsModalEnum.ORDER_PRODUCT_TAB,
-            title: <TabTitleWithExtraData title="انتخاب از سبد کالا" />,
-            Content: () => <OrderProductTabContent onCloseModals={onSubmit} />
-          }
-        ]
-      : []
-
     const existingTabs = [
       {
         value: OrderProductsTabsModalEnum.ORDER_MANUAL_TAB,
-        title: <TabTitleWithExtraData title="افزودن دستی کالا" />,
+        title: <SegmentTabTitle title="افزودن دستی کالا" />,
         Content: () => <OrderManualTabContent form={form} />
       },
       {
         value: OrderProductsTabsModalEnum.UPLOAD_TAB_CONTENT,
-        title: <TabTitleWithExtraData title="سفارش از طریق آپلود فایل" />,
+        title: <SegmentTabTitle title="سفارش از طریق آپلود فایل" />,
         Content: () => (
           <UploadTabContent
             uuid={uuid}
@@ -125,7 +113,7 @@ const OrderProductsTabsModal = ({
       },
       {
         value: OrderProductsTabsModalEnum.EXTRA_PRICE,
-        title: <TabTitleWithExtraData title="هزینه های جانبی" />,
+        title: <SegmentTabTitle title="هزینه های جانبی" />,
         Content: () => (
           <OrderExtraPriceTabContent
             loading={createLineMutation.isLoading}
@@ -136,7 +124,7 @@ const OrderProductsTabsModal = ({
       }
     ]
 
-    return initialTabs.concat(existingTabs)
+    return existingTabs
   }, [basket, expenses])
 
   const onSubmitExtraPrice = (e) => {

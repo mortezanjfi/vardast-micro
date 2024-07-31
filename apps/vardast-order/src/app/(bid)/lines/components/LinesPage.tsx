@@ -3,10 +3,10 @@
 import { useModals } from "@vardast/ui/modal"
 
 import { OrderModalEnum } from "@/types/type"
+import Lines from "@/app/(bid)/lines/components/Lines"
 import OrderInfoModal from "@/app/(bid)/orders/[uuid]/components/OrderInfoModal"
-import Orders from "@/app/(bid)/orders/components/Orders"
 
-const OrdersPage = () => {
+const LinesPage = () => {
   const [modals, onChangeModals, onCloseModals] = useModals<OrderModalEnum>()
 
   return (
@@ -16,9 +16,9 @@ const OrdersPage = () => {
         open={modals?.type === OrderModalEnum.ADD_ORDER}
         onCloseModals={onCloseModals}
       />
-      <Orders onChangeModals={onChangeModals} />
+      <Lines onChangeModals={onChangeModals} />
     </>
   )
 }
 
-export default OrdersPage
+export default LinesPage

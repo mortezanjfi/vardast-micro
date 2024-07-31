@@ -1,17 +1,25 @@
+import React from "react"
 import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
-import DatePicker from "react-multi-date-picker"
+import DatePickerPackage, {
+  CalendarProps,
+  DatePickerProps
+} from "react-multi-date-picker"
 import TimePicker from "react-multi-date-picker/plugins/time_picker"
 
-const DatePickerMulti: any = ({ ...props }) => {
+const DatePicker = <
+  Multiple extends boolean = false,
+  Range extends boolean = false
+>(
+  props: Omit<CalendarProps<Multiple, Range>, "onChange"> &
+    DatePickerProps<Multiple, Range>
+): React.ReactElement => {
   return (
-    <DatePicker
+    <DatePickerPackage
       className="vardast-calender"
       containerClassName="w-full"
       arrow={false}
       offsetY={4}
-      //   inputClass="w-full"
-      //   inputClass="w-full border rounded-base h-40 px-base text-alpha-700 focus-visible:outline-none focus-visible:border-2 focus-visible:border-primary-500"
       calendar={persian}
       locale={persian_fa}
       format={"YYYY/MM/DD HH:mm"}
@@ -21,4 +29,4 @@ const DatePickerMulti: any = ({ ...props }) => {
   )
 }
 
-export default DatePickerMulti
+export default DatePicker

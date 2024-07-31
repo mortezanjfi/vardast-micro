@@ -32,8 +32,8 @@ import Card from "../Card"
 import Link from "../Link"
 import Loading from "../Loading"
 import NotFoundIcon from "../not-found-icon"
-import Filter from "./Filter"
-import TablePagination from "./TablePagination"
+import { Filter } from "./filter"
+import { TablePagination } from "./table-pagination"
 import { ITableProps } from "./type"
 
 const filtersParser = createParser({
@@ -456,4 +456,6 @@ const Table = <
   )
 }
 
-export default Table
+Table.displayName = "Table"
+
+export { Table }

@@ -202,4 +202,6 @@ const TablePagination = <T,>({ table, total }: Props<T>) => {
   )
 }
 
-export default TablePagination
+TablePagination.displayName = "TablePagination"
+
+export { TablePagination }

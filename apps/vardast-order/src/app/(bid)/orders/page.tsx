@@ -2,9 +2,8 @@ import { Metadata } from "next"
 import { dehydrate } from "@tanstack/react-query"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
-import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
-import OrdersListPage from "@/app/(bid)/orders/orders-list/components/OrdersListPage"
+import OrdersPage from "@/app/(bid)/orders/components/OrdersPage"
 
 // set dynamic metadata
 export async function generateMetadata(): Promise<Metadata> {
@@ -16,11 +15,10 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async () => {
   const queryClient = getQueryClient()
   const dehydratedState = dehydrate(queryClient)
-  const isMobileView = await CheckIsMobileView()
 
   return (
     <ReactQueryHydrate state={dehydratedState}>
-      <OrdersListPage isMobileView={isMobileView} />
+      <OrdersPage />
     </ReactQueryHydrate>
   )
 }

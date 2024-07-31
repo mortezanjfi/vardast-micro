@@ -3,12 +3,12 @@
 
 import { useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
-import { Modal, ModalProps } from "@vardast/component/modal"
 import {
   ProjectAddress,
   useRemoveAddressProjectMutation
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
+import { Modal, ModalProps } from "@vardast/ui/modal"
 import { ClientError } from "graphql-request"
 import useTranslation from "next-translate/useTranslation"
 

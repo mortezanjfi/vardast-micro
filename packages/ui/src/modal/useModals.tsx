@@ -7,20 +7,23 @@ export type UseModalsType<TEnum extends {} = undefined, TData = undefined> = {
   type?: TEnum
 }
 
-export type OnChangeModalsType<TEnum> = <T>(
-  modals?: UseModalsType<TEnum, T>
+export type OnChangeModalsType<TEnum, TData = undefined> = <T>(
+  modals?: UseModalsType<TEnum, TData extends undefined ? T : TData>
 ) => void
 
 export type UseModalsReturn<TEnum extends {} = undefined, TData = undefined> = [
   modals: UseModalsType<TEnum, TData> | undefined,
-  onChangeModals: OnChangeModalsType<TEnum>,
+  onChangeModals: OnChangeModalsType<TEnum, TData>,
   onCloseModals: () => void
 ]
 
-const useModals = <TEnum extends {} = undefined>(): UseModalsReturn<TEnum> => {
+const useModals = <
+  TEnum extends {} = undefined,
+  TData = undefined
+>(): UseModalsReturn<TEnum, TData> => {
   const [modals, setModals] = useState<UseModalsType<TEnum, any>>()
 
-  const onChangeModals: OnChangeModalsType<TEnum> = (modals) => {
+  const onChangeModals: OnChangeModalsType<TEnum, TData> = (modals) => {
     setModals(modals || undefined)
   }
 

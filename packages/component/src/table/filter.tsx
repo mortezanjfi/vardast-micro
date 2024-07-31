@@ -108,4 +108,6 @@ const Filter = <T extends ZodType<any, any, any>>({
   )
 }
 
-export default Filter
+Filter.displayNam = "Filter"
+
+export { Filter }

@@ -56,7 +56,7 @@ type Props = {
   setOpen: Dispatch<SetStateAction<boolean>>
 }
 
-export type CreateLegalUserInfoType = TypeOf<typeof CreateLegalUserSchema>
+type CreateLegalUserInfoType = TypeOf<typeof CreateLegalUserSchema>
 
 const CreateLegalUserSchema = z.object({
   type: z.string().optional(),
@@ -95,24 +95,10 @@ const AddLegalUserModal = ({ isMobileView, isAdmin, open, setOpen }: Props) => {
     graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
-        toast({
-          description: (
-            errors.response.errors?.at(0)?.extensions.displayErrors as string[]
-          )
-            .map((error) => error)
-            .join(" "),
-          duration: 2000,
-          variant: "danger"
-        })
+        setErrors(errors)
       },
       onSuccess: (data) => {
         if (data?.createProject?.id) {
-          toast({
-            description: "پروژه با موفقیت اضافه شد",
-            duration: 2000,
-            variant: "success"
-          })
-
           router.push(
             `${process.env.NEXT_PUBLIC_BIDDING_PATH}projects/${data.createProject.id}/?mode=new`
           )

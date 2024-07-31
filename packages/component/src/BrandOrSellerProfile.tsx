@@ -5,7 +5,6 @@ import Image from "next/image"
 import { notFound } from "next/navigation"
 import { MapPinIcon } from "@heroicons/react/24/outline"
 import { CheckBadgeIcon } from "@heroicons/react/24/solid"
-import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
 import brandSellerBlank from "@vardast/asset/brand-seller-blank.svg"
 import sellerUserImage from "@vardast/asset/images/seller-user.png"
@@ -25,7 +24,6 @@ import {
   SegmentsList,
   SegmentsListItem
 } from "@vardast/ui/segment"
-import convertToPersianDate from "@vardast/util/convertToPersianDate"
 import clsx from "clsx"
 import { setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
@@ -51,29 +49,6 @@ interface IBrandOrSellerProfile {
   isFavoriteQuery: UseQueryResult<GetIsFavoriteQuery, unknown>
   tabs: BrandOrSellerProfileTab[]
   isMobileView: boolean
-}
-
-export const TabTitleWithExtraData = ({
-  total,
-  title = "",
-  createdDate
-}: {
-  total?: number
-  createdDate?: string
-  title: string
-}) => {
-  return (
-    <div className="flex items-center justify-center gap-x-2">
-      <span className="font-semibold">{title}</span>
-      {total ? (
-        <span className="text-xs">({digitsEnToFa(total)})</span>
-      ) : createdDate ? (
-        <span className="text-xs">
-          ({digitsEnToFa(convertToPersianDate({ dateString: createdDate }))})
-        </span>
-      ) : null}
-    </div>
-  )
 }
 
 const BrandOrSellerProfile = ({

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa, digitsFaToEn } from "@persian-tools/persian-tools"
 import { useQueryClient } from "@tanstack/react-query"
-import { Modal, ModalProps } from "@vardast/component/modal"
 import {
   useAssignUserProjectMutation,
   User,
@@ -17,6 +16,7 @@ import {
   FormMessage
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
+import { Modal, ModalProps } from "@vardast/ui/modal"
 import zodI18nMap from "@vardast/util/zodErrorMap"
 import { cellphoneNumberSchema } from "@vardast/util/zodValidationSchemas"
 import { ClientError } from "graphql-request"
@@ -30,7 +30,7 @@ export const AddUserModalFormSchema = z.object({
   cellphone: cellphoneNumberSchema
 })
 
-export type AddUserModalFormType = TypeOf<typeof AddUserModalFormSchema>
+type AddUserModalFormType = TypeOf<typeof AddUserModalFormSchema>
 
 export const UserModal = ({
   modals,

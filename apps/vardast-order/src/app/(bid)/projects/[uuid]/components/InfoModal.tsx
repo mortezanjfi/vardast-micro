@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { useQueryClient } from "@tanstack/react-query"
-import { Modal, ModalProps } from "@vardast/component/modal"
 import { useUpdateProjectMutation } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import {
@@ -13,6 +12,7 @@ import {
   FormMessage
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
+import { Modal, ModalProps } from "@vardast/ui/modal"
 import zodI18nMap from "@vardast/util/zodErrorMap"
 import { ClientError } from "graphql-request"
 import useTranslation from "next-translate/useTranslation"
@@ -24,7 +24,7 @@ import { IOrderPageSectionProps } from "@/types/type"
 const ProjectSchema = z.object({
   name: z.string()
 })
-export type InfoNameType = TypeOf<typeof ProjectSchema>
+type InfoNameType = TypeOf<typeof ProjectSchema>
 
 const InfoModal = ({
   modals,

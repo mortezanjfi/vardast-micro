@@ -2,10 +2,7 @@
 
 import { useMemo } from "react"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import { useModals } from "@vardast/component/modal"
-import Table from "@vardast/component/table/Table"
-import { ITableProps } from "@vardast/component/table/type"
-import useTable from "@vardast/component/table/useTable"
+import { ITableProps, Table, useTable } from "@vardast/component/table"
 import {
   ProjectAddress,
   useFindOneProjectQuery,
@@ -13,13 +10,13 @@ import {
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
+import { useModals } from "@vardast/ui/modal"
 import useTranslation from "next-translate/useTranslation"
 
 import { IOrderPageProps, OrderModalEnum } from "@/types/type"
 import DetailsCard from "@/app/(bid)/orders/components/DetailsCard"
 import AddressDeleteModal from "@/app/(bid)/projects/[uuid]/components/address/AddressDeleteModal"
 import { AddressModal } from "@/app/(bid)/projects/[uuid]/components/address/AddressModal"
-import { InfoNameType } from "@/app/(bid)/projects/[uuid]/components/InfoModal"
 import UserDeleteModal from "@/app/(bid)/projects/[uuid]/components/user/UserDeleteModal"
 import { UserModal } from "@/app/(bid)/projects/[uuid]/components/user/UserModal"
 
@@ -220,7 +217,7 @@ const ProjectPage = ({ uuid }: IOrderPageProps) => {
           title: t("common:project-info"),
           button: {
             onClick: () =>
-              onChangeModals<InfoNameType>({
+              onChangeModals({
                 type: OrderModalEnum.INFO,
                 data: { name: findOneProjectQuery.data?.findOneProject?.name }
               }),

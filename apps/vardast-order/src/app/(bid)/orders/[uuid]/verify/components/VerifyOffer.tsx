@@ -2,21 +2,16 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import Card from "@vardast/component/Card"
-import OrderProductsList from "@vardast/component/desktop/OrderProductsList"
-import {
-  useFindPreOrderByIdQuery,
-  usePaymentMutation
-} from "@vardast/graphql/generated"
+import { usePaymentMutation } from "@vardast/graphql/generated"
 import { toast } from "@vardast/hook/use-toast"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
-import { Button } from "@vardast/ui/button"
 import { Checkbox } from "@vardast/ui/checkbox"
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
+  FormLayout,
   FormMessage
 } from "@vardast/ui/form"
 import zodI18nMap from "@vardast/util/zodErrorMap"
@@ -25,20 +20,15 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
+import Orders from "@/app/(bid)/orders/components/Orders"
+
 type VerifyOfferProps = {
-  isMobileView: boolean
   uuid: string
   offerId: string
 }
 
-function VerifyOffer({ isMobileView, uuid, offerId }: VerifyOfferProps) {
+function VerifyOffer({ offerId }: VerifyOfferProps) {
   const { t } = useTranslation()
-  const findPreOrderByIdQuery = useFindPreOrderByIdQuery(
-    graphqlRequestClientWithToken,
-    {
-      id: +uuid
-    }
-  )
 
   z.setErrorMap(zodI18nMap)
   const VerifyOfferFormSchema = z.object({
@@ -73,46 +63,40 @@ function VerifyOffer({ isMobileView, uuid, offerId }: VerifyOfferProps) {
   }
 
   return (
-    <div className="flex flex-col gap-9">
-      <OrderProductsList
-        isMobileView={isMobileView}
-        offerId={offerId}
-        findPreOrderByIdQuery={findPreOrderByIdQuery}
-      />
-      <Card>
-        <Form {...form}>
-          <form
-            className="flex justify-between"
-            onSubmit={form.handleSubmit(onSubmit)}
-            noValidate
-          >
-            <FormField
-              control={form.control}
-              name="verify"
-              render={({ field }) => (
-                <FormItem className="checkbox-field">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <FormLabel>{t("common:payment_has_been_done")}</FormLabel>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button
-              type="submit"
-              loading={form.formState.isSubmitting}
-              disabled={form.formState.isSubmitting || !form.watch("verify")}
-            >
-              تایید قیمت
-            </Button>
-          </form>
-        </Form>
-      </Card>
-    </div>
+    <>
+      <Orders />
+      <FormLayout
+        {...form}
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex justify-between"
+      >
+        <Card
+          actionButton={{
+            type: "submit",
+            text: t("common:verify", { entity: t("common:price") }),
+            loading: form.formState.isSubmitting,
+            disabled: form.formState.isSubmitting || !form.watch("verify")
+          }}
+        >
+          <FormField
+            control={form.control}
+            name="verify"
+            render={({ field }) => (
+              <FormItem className="checkbox-field">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormLabel>{t("common:payment_has_been_done")}</FormLabel>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </Card>
+      </FormLayout>
+    </>
   )
 }
 

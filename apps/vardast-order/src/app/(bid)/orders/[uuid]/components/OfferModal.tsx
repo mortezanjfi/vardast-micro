@@ -1,10 +1,7 @@
 "use client"
 
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
-import { Modal, ModalProps, useModals } from "@vardast/component/modal"
-import Table from "@vardast/component/table/Table"
-import { ITableProps } from "@vardast/component/table/type"
-import useTable from "@vardast/component/table/useTable"
+import { ITableProps, Table, useTable } from "@vardast/component/table"
 import {
   AddSellerOrderOffer,
   OfferLine,
@@ -12,6 +9,7 @@ import {
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
+import { Modal, ModalProps, useModals } from "@vardast/ui/modal"
 import useTranslation from "next-translate/useTranslation"
 
 import { IOrderPageSectionProps, OrderModalEnum } from "@/types/type"

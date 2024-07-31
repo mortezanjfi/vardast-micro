@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { GetBrandQuery, GetSellerQuery } from "@vardast/graphql/generated"
 import {
   Segments,
@@ -9,7 +8,6 @@ import {
   SegmentsList,
   SegmentsListItem
 } from "@vardast/ui/segment"
-import convertToPersianDate from "@vardast/util/convertToPersianDate"
 import clsx from "clsx"
 import { setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
@@ -27,29 +25,6 @@ export type BrandQuery = GetBrandQuery["brand"]
 interface IFavoritesProfile {
   tabs: FavoritesProfileTab[]
   isMobileView: boolean
-}
-
-export const TabTitleWithExtraData = ({
-  total,
-  title = "",
-  createdDate
-}: {
-  total?: number
-  createdDate?: string
-  title: string
-}) => {
-  return (
-    <div className="flex items-center justify-center gap-x-2">
-      <span className="font-semibold">{title}</span>
-      {total ? (
-        <span className="text-xs">({digitsEnToFa(total)})</span>
-      ) : createdDate ? (
-        <span className="text-xs">
-          ({digitsEnToFa(convertToPersianDate({ dateString: createdDate }))})
-        </span>
-      ) : null}
-    </div>
-  )
 }
 
 const FavoritesProfile = ({ tabs, isMobileView }: IFavoritesProfile) => {

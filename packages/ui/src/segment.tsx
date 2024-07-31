@@ -6,6 +6,8 @@ import React, {
   Ref,
   useState
 } from "react"
+import { digitsEnToFa } from "@persian-tools/persian-tools"
+import convertToPersianDate from "@vardast/util/convertToPersianDate"
 import clsx from "clsx"
 
 interface SegmentsProps<T extends string> {
@@ -258,11 +260,35 @@ const SegmentTab = <T extends string>({
   )
 }
 
+const SegmentTabTitle = ({
+  total,
+  title = "",
+  createdDate
+}: {
+  total?: number
+  createdDate?: string
+  title: string
+}) => {
+  return (
+    <div className="flex items-center justify-center gap-x-2">
+      <span className="font-semibold">{title}</span>
+      {total ? (
+        <span className="text-xs">({digitsEnToFa(total)})</span>
+      ) : createdDate ? (
+        <span className="text-xs">
+          ({digitsEnToFa(convertToPersianDate({ dateString: createdDate }))})
+        </span>
+      ) : null}
+    </div>
+  )
+}
+
 export {
   SegmentItemLoader,
   Segments,
   SegmentsContent,
   SegmentsList,
   SegmentsListItem,
-  SegmentTab
+  SegmentTab,
+  SegmentTabTitle
 }

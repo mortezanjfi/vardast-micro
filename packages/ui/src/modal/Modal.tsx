@@ -1,8 +1,13 @@
 "use client"
 
 import { PropsWithChildren } from "react"
-import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
-import { Button, ButtonProps } from "@vardast/ui/button"
+import { ClientError } from "graphql-request"
+import { LucideAlertOctagon } from "lucide-react"
+import useTranslation from "next-translate/useTranslation"
+import { FieldValues } from "react-hook-form"
+
+import { Alert, AlertDescription, AlertTitle } from "../alert"
+import { Button, ButtonProps } from "../button"
 import {
   Dialog,
   DialogContent,
@@ -10,12 +15,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogVariantProps
-} from "@vardast/ui/dialog"
-import { FormLayout, FormLayoutProps } from "@vardast/ui/form"
-import { ClientError } from "graphql-request"
-import { LucideAlertOctagon } from "lucide-react"
-import useTranslation from "next-translate/useTranslation"
-import { FieldValues } from "react-hook-form"
+} from "../dialog"
+import { FormLayout, FormLayoutProps } from "../form"
 
 export interface ModalProps<TFieldValues extends FieldValues = FieldValues>
   extends PropsWithChildren,

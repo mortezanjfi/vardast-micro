@@ -1,5 +1,4 @@
 import { Metadata } from "next"
-import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
 import VerifyOffer from "../components/VerifyOffer"
 
@@ -13,9 +12,5 @@ export default async ({
 }: {
   params: { uuid: string; offerId: string }
 }) => {
-  const isMobileView = await CheckIsMobileView()
-
-  return (
-    <VerifyOffer isMobileView={isMobileView} uuid={uuid} offerId={offerId} />
-  )
+  return <VerifyOffer uuid={uuid} offerId={offerId} />
 }

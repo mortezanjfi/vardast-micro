@@ -7,12 +7,12 @@ import {
   ContactInfo,
   useGetOneLegalQuery
 } from "@vardast/graphql/generated"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@vardast/ui/tabs"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 
-import graphqlRequestClientWithToken from "../../../query/src/queryClients/graphqlRequestClientWithToken"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../ui/src/tabs"
-import PageTitle from "../project/PageTitle"
+import PageTitle from "../page-title"
 import AddressesTab from "./address-Info/AddressesTab"
 import ContactInfosTab from "./ContactInfosTab"
 

@@ -18,11 +18,11 @@ const _bidding: NavigationType[] = [
         items: [
           {
             title: "بر اساس سفارش",
-            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders/orders-list`
+            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders`
           },
           {
             title: "بر اساس اقلام",
-            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders/orders-line`
+            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}lines`
           }
         ]
       }

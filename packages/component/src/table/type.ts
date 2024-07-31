@@ -1,3 +1,4 @@
+import { DependencyList } from "react"
 import {
   ColumnDef, // Importing Column from react-table
   Row,
@@ -52,6 +53,16 @@ type FetchConfig<T, TArgs, TSchema> =
 
 type InternalArgsType<T, TArgs> = T extends { directData: any } ? never : TArgs
 
+export type UseTableType = <
+  T,
+  TSchema extends ZodType<any, any, any> = undefined,
+  TState extends Object = any,
+  TResponse = undefined
+>(args: {
+  model: ITableProps<T, TSchema, TState, TResponse>
+  dependencies?: DependencyList
+}) => ITableProps<T, TSchema, TState, TResponse>
+
 export type Column<T> = Array<ColumnDef<T>>
 export interface ITableProps<
   T,
@@ -81,7 +92,7 @@ export type FilterOptions<TSchema extends ZodType<any, any, any>> = {
   schema: TSchema
 }
 
-export type Filter<TSchema extends ZodType<any, any, any>> = IFilter<
+type Filter<TSchema extends ZodType<any, any, any>> = IFilter<
   FilterComponentTypeEnum.INPUT | FilterComponentTypeEnum.SELECT,
   keyof TypeOf<TSchema>
 >

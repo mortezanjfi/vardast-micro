@@ -1,15 +1,9 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import { PaymentMethodEnumFa, PreOrderStatesFa } from "@/constants"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
-import {
-  PaymentMethodEnumFa,
-  PreOrderStatesFa
-} from "@vardast/component/desktop/OrderCart"
-import { useModals } from "@vardast/component/modal"
-import Table from "@vardast/component/table/Table"
-import { ITableProps } from "@vardast/component/table/type"
-import useTable from "@vardast/component/table/useTable"
+import { ITableProps, Table, useTable } from "@vardast/component/table"
 import {
   Line,
   OfferOrder,
@@ -21,6 +15,7 @@ import {
 import { axiosDownLoad } from "@vardast/query/queryClients/axiosApis"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
+import { useModals } from "@vardast/ui/modal"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 import { DateObject } from "react-multi-date-picker"
@@ -28,10 +23,8 @@ import { DateObject } from "react-multi-date-picker"
 import { IOrderPageProps, OrderModalEnum } from "@/types/type"
 import AddSellerModal from "@/app/(bid)/orders/[uuid]/components/AddSellerModal"
 import OfferModal from "@/app/(bid)/orders/[uuid]/components/OfferModal"
-import OrderInfoModal, {
-  UpdatePreOrderType
-} from "@/app/(bid)/orders/[uuid]/components/OrderInfoModal"
-import OrderProductsTabsModal from "@/app/(bid)/orders/[uuid]/components/OrderProductsTabsModal"
+import OrderInfoModal from "@/app/(bid)/orders/[uuid]/components/OrderInfoModal"
+import OrderProductsTabsModal from "@/app/(bid)/orders/[uuid]/components/tabs/OrderProductsTabsModal"
 import DetailsCard from "@/app/(bid)/orders/components/DetailsCard"
 
 const OrderPage = ({ uuid }: IOrderPageProps) => {
@@ -90,18 +83,6 @@ const OrderPage = ({ uuid }: IOrderPageProps) => {
         variant: PreOrderStatesFa[orderInfo?.status]?.variant
       }
     ],
-    [orderInfo]
-  )
-
-  const defaultValue: UpdatePreOrderType = useMemo(
-    () => ({
-      ...findPreOrderByIdQuery?.data?.findPreOrderById,
-      addressId: findPreOrderByIdQuery?.data?.findPreOrderById?.address?.id,
-      projectId: String(
-        findPreOrderByIdQuery?.data?.findPreOrderById?.project?.id
-      ),
-      categoryId: findPreOrderByIdQuery?.data?.findPreOrderById?.category?.id
-    }),
     [orderInfo]
   )
 
@@ -478,9 +459,18 @@ const OrderPage = ({ uuid }: IOrderPageProps) => {
           title: t("common:order-info"),
           button: {
             onClick: () =>
-              onChangeModals<UpdatePreOrderType>({
+              onChangeModals({
                 type: OrderModalEnum.INFO,
-                data: defaultValue
+                data: {
+                  ...findPreOrderByIdQuery?.data?.findPreOrderById,
+                  addressId:
+                    findPreOrderByIdQuery?.data?.findPreOrderById?.address?.id,
+                  projectId: String(
+                    findPreOrderByIdQuery?.data?.findPreOrderById?.project?.id
+                  ),
+                  categoryId:
+                    findPreOrderByIdQuery?.data?.findPreOrderById?.category?.id
+                }
               }),
             text: t("common:edit"),
             type: "button"
