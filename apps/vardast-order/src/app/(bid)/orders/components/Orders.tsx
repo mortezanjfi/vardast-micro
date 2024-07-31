@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { PreOrderStatesFa } from "@vardast/component/desktop/OrderCart"
 import Table from "@vardast/component/table/Table"
@@ -15,19 +14,18 @@ import {
   PaymentMethodEnum,
   PreOrder,
   PreOrderStates,
-  useCreatePreOrderMutation,
   useGetAllProjectsQuery
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { getAllPreOrdersQueryFn } from "@vardast/query/queryFns/orders/getAllPreOrdersQueryFn"
+import { Badge } from "@vardast/ui/badge"
 import { getEnumValues } from "@vardast/util/getEnumValues"
 import useTranslation from "next-translate/useTranslation"
 import { DateObject } from "react-multi-date-picker"
 import { z } from "zod"
 
-type OrdersProps = {
-  isMobileView?: boolean
-}
+import { OrderModalEnum } from "@/types/type"
+import { IOrdersTabProps } from "@/app/(bid)/orders/components/OrdersPage"
 
 const OrdersFilterSchema = z.object({
   status: z.string().optional(),
@@ -52,9 +50,9 @@ export const PaymentMethodEnumFa = {
 
 const orderStatus = [...getEnumValues(PreOrderStates)]
 
-const Orders = (_: OrdersProps) => {
+const Orders = ({ onChangeModals }: IOrdersTabProps) => {
   const [nameOrUuid, setNameOrUuid] = useState("")
-  const router = useRouter()
+
   const { t } = useTranslation()
 
   const getAllProjectsQuery = useGetAllProjectsQuery(
@@ -66,20 +64,9 @@ const Orders = (_: OrdersProps) => {
     }
   )
 
-  const createPreOrderMutation = useCreatePreOrderMutation(
-    graphqlRequestClientWithToken,
-    {
-      onSuccess: (data) => {
-        if (data.createPreOrder.id) {
-          router.push(`/profile/orders/${data.createPreOrder.id}/info`)
-        }
-      }
-    }
-  )
-
   const onCreateOrder = () => {
-    createPreOrderMutation.mutate({
-      createPreOrderInput: {}
+    onChangeModals({
+      type: OrderModalEnum.ADD_ORDER
     })
   }
 
@@ -89,8 +76,6 @@ const Orders = (_: OrdersProps) => {
         name: "orders",
         container: {
           button: {
-            disabled: createPreOrderMutation.isLoading,
-            loading: createPreOrderMutation.isLoading,
             onClick: onCreateOrder,
             text: "افزودن سفارش",
             variant: "primary"
@@ -199,7 +184,14 @@ const Orders = (_: OrdersProps) => {
           {
             id: "status",
             header: t("common:status"),
-            accessorFn: (item) => PreOrderStatesFa[item?.status]?.name_fa_admin
+            cell: ({ row }) => {
+              const renderedValue = PreOrderStatesFa[row?.original?.status]
+              return (
+                <Badge variant={renderedValue?.variant}>
+                  {renderedValue?.name_fa_admin}
+                </Badge>
+              )
+            }
           }
         ]
       },

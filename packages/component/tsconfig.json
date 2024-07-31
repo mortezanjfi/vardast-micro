@@ -41,9 +41,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "**/*.svg",
-    "../../apps/vardast-order/src/app/(bid)/orders/[uuid]/products/components/OrderProductsList.tsx",
-    "../../apps/vardast-order/src/app/(bid)/orders/[uuid]/components/SellersList.tsx",
-    "../../apps/vardast-order/src/app/(bid)/orders/components/OrderInfoCard.tsx"
+    "../../apps/vardast-order/src/app/(bid)/orders/[uuid]/components/AddPriceModal.tsx"
   ],
   "exclude": [
     "node_modules",

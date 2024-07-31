@@ -15,6 +15,13 @@
       "@@vardast/tailwind-config": ["node_modules/@vardast/tailwind-config/*"]
     }
   },
-  "include": ["../asset/declaration.d.ts", "*.ts", "src", "src"],
+  "include": [
+    "../asset/declaration.d.ts",
+    "*.ts",
+    "src",
+    "src",
+    "../hook/src/use-segment-tab.tsx",
+    "../component/src/modal.tsx"
+  ],
   "exclude": ["node_modules"]
 }

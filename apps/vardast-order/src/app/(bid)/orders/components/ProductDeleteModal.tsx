@@ -2,15 +2,15 @@
 "use client"
 
 import { Dispatch, SetStateAction, useState } from "react"
-import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/src/alert"
+import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import {
   AlertDialog,
   AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle
-} from "@vardast/ui/src/alert-dialog"
-import { Button } from "@vardast/ui/src/button"
+} from "@vardast/ui/alert-dialog"
+import { Button } from "@vardast/ui/button"
 import { ClientError } from "graphql-request"
 import { LucideAlertOctagon } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"

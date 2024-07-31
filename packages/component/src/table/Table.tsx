@@ -17,6 +17,7 @@ import {
 import { ApiArgsType, TableResponseType } from "@vardast/query/type"
 import { Checkbox } from "@vardast/ui/checkbox"
 import { Form } from "@vardast/ui/form"
+import { setMultiFormValues } from "@vardast/util/setMultiFormValues"
 import { clsx } from "clsx"
 import useTranslation from "next-translate/useTranslation"
 import {
@@ -39,17 +40,6 @@ const filtersParser = createParser({
   parse: (value) => (value ? JSON.parse(value) : {}),
   serialize: (value) => JSON.stringify(value)
 })
-
-const serializedDefaultForm = (data, setValue) => {
-  if (!data) {
-    return
-  }
-  Object.entries(data).forEach(([key, value]) => {
-    if (value) {
-      setValue(key, `${value}`)
-    }
-  })
-}
 
 const convertArgsToNumber = (data: any) => {
   const args = { ...data }
@@ -246,30 +236,38 @@ const Table = <
     [indexable, selectable, columnsProp]
   )
 
-  const table = useReactTable({
+  const useTableProps = {
     data: serializedData?.data,
     columns,
     pageCount: serializedData?.lastPage ?? 0,
     state: {
-      ...(paginable ? { pagination: memoizePagination } : {}),
       rowSelection
     },
     enableRowSelection: !!selectable, //enable row selection for all rows
     onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    onPaginationChange: (updater) => {
-      setFetchArgs((prev) => {
-        const newState =
-          typeof updater === "function"
-            ? updater(prev as PaginationState)
-            : updater
-        return { ...prev, ...newState }
-      })
-    },
-    manualPagination: paginable
-  })
+    getSortedRowModel: getSortedRowModel()
+  }
+
+  const table = useReactTable(
+    paginable
+      ? {
+          ...useTableProps,
+          state: { ...useTableProps.state, pagination: memoizePagination },
+          getPaginationRowModel: getPaginationRowModel(),
+          onPaginationChange: (updater) => {
+            setFetchArgs((prev) => {
+              const newState =
+                typeof updater === "function"
+                  ? updater(prev as PaginationState)
+                  : updater
+              return { ...prev, ...newState }
+            })
+          },
+          manualPagination: true
+        }
+      : useTableProps
+  )
 
   type FilterFieldsType = TypeOf<TSchema>
 
@@ -300,7 +298,7 @@ const Table = <
   )
 
   useEffect(() => {
-    serializedDefaultForm(fetchArgs.args, form.setValue)
+    setMultiFormValues(fetchArgs.args, form.setValue)
   }, [fetchArgs.args, form])
 
   useEffect(() => {
@@ -329,21 +327,24 @@ const Table = <
           </form>
         </Form>
       )}
-      <div className="relative flex flex-col gap-y">
+      <div className="relative flex flex-col gap-y overflow-hidden">
         <Card
+          className={clsx(!container?.title && "!p-0")}
           {...container}
-          button={{
-            ...container.button,
-            disabled:
-              container.button.disabled ||
-              isLoading ||
-              fetch?.directData?.directLoading ||
-              isFetching
-          }}
+          button={
+            container && {
+              ...container?.button,
+              disabled:
+                container?.button?.disabled ||
+                isLoading ||
+                fetch?.directData?.directLoading ||
+                isFetching
+            }
+          }
         >
           {data ? (
             <>
-              <div className="min-h-250 overflow-x-auto pt">
+              <div className="min-h-250 overflow-x-auto">
                 <table className="table-bordered table">
                   <thead>
                     {table?.getHeaderGroups()?.map((headerGroup) => (

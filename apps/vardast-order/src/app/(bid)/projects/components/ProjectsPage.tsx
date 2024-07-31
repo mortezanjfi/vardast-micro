@@ -83,29 +83,46 @@ const ProjectsPage = ({ isMobileView }: ProjectsPageProps) => {
                 ?.fullName || "--"
           },
           {
-            id: "openOrdersCount",
-            header: t("common:open_orders"),
-            accessorFn: ({ openOrdersCount }) => digitsEnToFa(openOrdersCount)
-          },
-          {
-            id: "closedOrdersCount",
-            header: t("common:closed_orders"),
-            accessorFn: ({ closedOrdersCount }) =>
-              digitsEnToFa(closedOrdersCount)
-          },
-          {
-            id: "totalOrdersCount",
-            header: t("common:total_orders"),
-            accessorFn: ({ totalOrdersCount }) => digitsEnToFa(totalOrdersCount)
+            id: "orders",
+            header: () => (
+              <div className="text-center">{t("common:orders")}</div>
+            ),
+            columns: [
+              {
+                id: "openOrdersCount",
+                header: t("common:open"),
+                accessorFn: ({ openOrdersCount }) =>
+                  digitsEnToFa(openOrdersCount)
+              },
+              {
+                id: "failedOrdersCount",
+                header: t("common:failed"),
+                accessorFn: ({ failedOrdersCount }) =>
+                  digitsEnToFa(failedOrdersCount)
+              },
+              {
+                id: "closedOrdersCount",
+                header: t("common:closed"),
+                accessorFn: ({ closedOrdersCount }) =>
+                  digitsEnToFa(closedOrdersCount)
+              },
+              {
+                id: "totalOrdersCount",
+                header: t("common:total"),
+                accessorFn: ({ totalOrdersCount }) =>
+                  digitsEnToFa(totalOrdersCount)
+              }
+            ]
           },
           {
             id: "action",
-            header: t("common:total_orders"),
+            header: t("common:operation"),
             cell: ({ row }) => (
               <Link
+                className="btn btn-small btn-link"
                 href={`${process.env.NEXT_PUBLIC_BIDDING_PATH}orders/?args={"projectId":"${row.original.id}"}`}
               >
-                سفارشات
+                {t("common:orders")}
               </Link>
             )
           }

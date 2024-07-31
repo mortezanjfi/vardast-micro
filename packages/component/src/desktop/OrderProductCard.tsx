@@ -20,7 +20,7 @@ import { setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
 import useTranslation from "next-translate/useTranslation"
 
-import AddPriceModal from "./AddPriceModal"
+import AddPriceModal from "../../../../apps/vardast-order/src/app/(bid)/orders/[uuid]/components/AddPriceModal"
 import { DetailsWithTitle } from "./DetailsWithTitle"
 
 interface OrderProductCardProps {

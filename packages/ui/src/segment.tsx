@@ -8,12 +8,12 @@ import React, {
 } from "react"
 import clsx from "clsx"
 
-interface SegmentsProps {
+interface SegmentsProps<T extends string> {
   children: ReactNode
-  defaultValue?: string
-  value?: string
+  defaultValue?: T
+  value?: T
   className?: string
-  onValueChange?: (_: string) => void
+  onValueChange?: (_: T) => void
   style?: CSSProperties | undefined
 }
 
@@ -34,12 +34,15 @@ interface SegmentsContentProps {
   children: ReactNode
 }
 
-const Segments: React.FC<SegmentsProps> = ({ children, ...props }) => {
+const Segments = <T extends string>({
+  children,
+  ...props
+}: SegmentsProps<T>) => {
   const [selectedValue, setSelectedValue] = useState<string>(
     props.defaultValue || ""
   )
 
-  const handleSegmentChange = (value: string) => {
+  const handleSegmentChange = (value: T) => {
     if (props.onValueChange) {
       return props.onValueChange(value)
     }
@@ -47,10 +50,7 @@ const Segments: React.FC<SegmentsProps> = ({ children, ...props }) => {
   }
 
   return (
-    <div
-      className={clsx("overflow-hidden", props.className)}
-      style={props.style}
-    >
+    <div className={clsx(props.className)} style={props.style}>
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
           if (child.type === SegmentsList) {
@@ -79,24 +79,27 @@ const SegmentsList: React.FC<
   }
 > = ({ children, selectedValue, onSegmentChange, style, className, wrap }) => {
   return (
-    <div
-      className={clsx(
-        "hide-scrollbar relative flex w-full items-start whitespace-nowrap",
-        wrap ? "flex flex-wrap justify-center gap-y" : "overflow-x-scroll",
-        className
-      )}
-      style={style}
-    >
-      {React.Children.map(children, (child) => {
-        if (React.isValidElement(child)) {
-          return React.cloneElement(child as ReactElement<any>, {
-            isSelected: child.props.value === selectedValue,
-            onClick: () => onSegmentChange && onSegmentChange(child.props.value)
-          })
-        }
+    <div className="overflow-x-auto">
+      <div
+        className={clsx(
+          "hide-scrollbar relative flex w-full items-start whitespace-nowrap",
+          wrap ? "flex flex-wrap justify-center gap-y" : "overflow-x-scroll",
+          className
+        )}
+        style={style}
+      >
+        {React.Children.map(children, (child) => {
+          if (React.isValidElement(child)) {
+            return React.cloneElement(child as ReactElement<any>, {
+              isSelected: child.props.value === selectedValue,
+              onClick: () =>
+                onSegmentChange && onSegmentChange(child.props.value)
+            })
+          }
 
-        return children
-      })}
+          return children
+        })}
+      </div>
     </div>
   )
 }
@@ -187,10 +190,79 @@ const SegmentItemLoader = () => {
   )
 }
 
+type SegmentTabType = {
+  value: string
+  title: JSX.Element
+  className?: string
+  Content: () => JSX.Element
+}
+
+interface ISegmentTab<T extends string> {
+  tabs: SegmentTabType[]
+  isMobileView?: boolean
+  activeTab: T
+  onValueChange: (_: T) => void
+}
+
+const SegmentTab = <T extends string>({
+  tabs,
+  isMobileView,
+  onValueChange,
+  activeTab
+}: ISegmentTab<T>) => {
+  return (
+    <Segments
+      value={activeTab}
+      onValueChange={onValueChange}
+      className="col-span-full flex w-full flex-col bg-alpha-white"
+    >
+      <SegmentsList wrap={false} className="!justify-start border-b pb md:py-6">
+        {tabs.map(({ title, value }) => (
+          <SegmentsListItem
+            key={value}
+            noStyle
+            className={clsx("no-select")}
+            value={value}
+            style={{
+              width:
+                !isMobileView || tabs.length > 3
+                  ? "auto"
+                  : `${100 / tabs.length}%`
+            }}
+          >
+            <>
+              <div
+                className={clsx(
+                  "mx-1 cursor-pointer rounded-full border bg-alpha-white px-4 py-2.5 text-sm",
+                  value === activeTab
+                    ? "border-primary bg-primary text-alpha-white"
+                    : "border-alpha-300"
+                )}
+              >
+                {title}
+              </div>
+            </>
+          </SegmentsListItem>
+        ))}
+      </SegmentsList>
+      {tabs.map(({ Content, className, ...props }) => (
+        <SegmentsContent
+          className={clsx("grid flex-1 grid-cols-2 gap py-6", className)}
+          key={props.value}
+          value={props.value}
+        >
+          <Content />
+        </SegmentsContent>
+      ))}
+    </Segments>
+  )
+}
+
 export {
   SegmentItemLoader,
   Segments,
   SegmentsContent,
   SegmentsList,
-  SegmentsListItem
+  SegmentsListItem,
+  SegmentTab
 }

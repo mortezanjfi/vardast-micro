@@ -2,8 +2,8 @@ import { InformationCircleIcon } from "@heroicons/react/24/solid"
 import Link from "@vardast/component/Link"
 import { clsx } from "clsx"
 
+import { OrderProductsTabsEnum } from "@/app/(bid)/orders/[uuid]/components/OrderProductsTabsModal"
 import { OrderProductsOrganizerTab } from "@/app/(bid)/orders/[uuid]/products/components/OrderProductsOrganizer"
-import { OrderProductsTabsEnum } from "@/app/(bid)/orders/[uuid]/products/components/OrderProductsTabs"
 
 type MoreInfoProps = {
   tabs: OrderProductsOrganizerTab[]

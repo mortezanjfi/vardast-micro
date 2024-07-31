@@ -1,12 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo } from "react"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
+import { useModals } from "@vardast/component/modal"
 import Table from "@vardast/component/table/Table"
 import { ITableProps } from "@vardast/component/table/type"
 import useTable from "@vardast/component/table/useTable"
 import {
-  Project,
   ProjectAddress,
   useFindOneProjectQuery,
   User
@@ -15,63 +15,19 @@ import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRe
 import { Button } from "@vardast/ui/button"
 import useTranslation from "next-translate/useTranslation"
 
-import AddressDeleteModal from "@/app/(bid)/projects/components/address/AddressDeleteModal"
-import { AddressModal } from "@/app/(bid)/projects/components/address/AddressModal"
-import UserDeleteModal from "@/app/(bid)/projects/components/user/UserDeleteModal"
-import { UserModal } from "@/app/(bid)/projects/components/user/UserModal"
+import { IOrderPageProps, OrderModalEnum } from "@/types/type"
+import DetailsCard from "@/app/(bid)/orders/components/DetailsCard"
+import AddressDeleteModal from "@/app/(bid)/projects/[uuid]/components/address/AddressDeleteModal"
+import { AddressModal } from "@/app/(bid)/projects/[uuid]/components/address/AddressModal"
+import { InfoNameType } from "@/app/(bid)/projects/[uuid]/components/InfoModal"
+import UserDeleteModal from "@/app/(bid)/projects/[uuid]/components/user/UserDeleteModal"
+import { UserModal } from "@/app/(bid)/projects/[uuid]/components/user/UserModal"
 
-import ProjectInfo from "./ProjectInfo"
+import InfoModal from "./InfoModal"
 
-enum SelectedItemEnum {
-  DELETE_ADDRESS,
-  ADDRESS,
-  DELETE_USER,
-  USER
-}
-
-type SelectedItem<T = undefined> = {
-  type: SelectedItemEnum
-  data?: T extends ProjectAddress ? ProjectAddress : User
-}
-export type ProjectAddressCartProps<T> = {
-  isMobileView?: boolean
-  row: SelectedItem<T>
-  onCloseModal: (_?: any) => void
-  uuid: string
-}
-
-export enum PROJECT_TAB {
-  INFO = "info",
-  ADDRESSES = "addresses",
-  PROJECT_USERS = "project-colleagues"
-}
-
-interface IProjectPageProps {
-  uuid?: string
-}
-
-export interface IProjectPageSectionProps<T = undefined>
-  extends IProjectPageProps {
-  onCloseModal: () => void
-  row: SelectedItem<T>
-}
-
-export interface IProjectPageSectionModalProps<T>
-  extends IProjectPageSectionProps<T> {
-  open: boolean
-}
-
-const ProjectPage = ({ uuid }: IProjectPageProps) => {
+const ProjectPage = ({ uuid }: IOrderPageProps) => {
   const { t } = useTranslation()
-  const [row, setRow] = useState<SelectedItem>()
-
-  const onCloseModal = () => {
-    setRow(undefined)
-  }
-
-  const onOpenModal = <T,>(row: SelectedItem<T>) => {
-    setRow(row)
-  }
+  const [modals, onChangeModals, onCloseModals] = useModals<OrderModalEnum>()
 
   const findOneProjectQuery = useFindOneProjectQuery(
     graphqlRequestClientWithToken,
@@ -80,22 +36,15 @@ const ProjectPage = ({ uuid }: IProjectPageProps) => {
     }
   )
 
-  const addressTableProps: ITableProps<
-    ProjectAddress,
-    undefined,
-    undefined,
-    Project
-  > = useTable({
+  const addressTableProps: ITableProps<ProjectAddress> = useTable({
     model: {
       name: "project-address",
       container: {
         button: {
-          onClick: () => {
-            onOpenModal({
-              type: SelectedItemEnum.ADDRESS,
-              data: undefined
-            })
-          },
+          onClick: () =>
+            onChangeModals({
+              type: OrderModalEnum.ADDRESS
+            }),
           text: t("common:add_new_entity", {
             entity: t("common:address")
           })
@@ -104,8 +53,8 @@ const ProjectPage = ({ uuid }: IProjectPageProps) => {
       },
       onRow: {
         onClick: (row) =>
-          onOpenModal<ProjectAddress>({
-            type: SelectedItemEnum.ADDRESS,
+          onChangeModals({
+            type: OrderModalEnum.ADDRESS,
             data: row.original
           })
       },
@@ -149,11 +98,11 @@ const ProjectPage = ({ uuid }: IProjectPageProps) => {
           cell: ({ row }) => {
             return (
               <Button
-                variant="danger"
+                variant="link"
                 size="small"
                 onClick={() => {
-                  onOpenModal<ProjectAddress>({
-                    type: SelectedItemEnum.DELETE_ADDRESS,
+                  onChangeModals<ProjectAddress>({
+                    type: OrderModalEnum.DELETE_ADDRESS,
                     data: row.original
                   })
                 }}
@@ -167,88 +116,118 @@ const ProjectPage = ({ uuid }: IProjectPageProps) => {
     }
   })
 
-  const usersTableProps: ITableProps<User, undefined, undefined, Project> =
-    useTable({
-      model: {
-        name: "project-users",
-        container: {
-          button: {
-            onClick: () => {
-              onOpenModal<User>({
-                type: SelectedItemEnum.USER,
-                data: undefined
-              })
-            },
-            text: t("common:add_new_entity", {
-              entity: t("common:colleague")
-            })
-          },
-          title: t(`common:colleagues`)
+  const usersTableProps: ITableProps<User> = useTable({
+    model: {
+      name: "project-users",
+      container: {
+        button: {
+          onClick: () =>
+            onChangeModals({
+              type: OrderModalEnum.USER
+            }),
+          text: t("common:add_new_entity", {
+            entity: t("common:colleague")
+          })
         },
-        fetch: {
-          directData: {
-            data: findOneProjectQuery.data?.findOneProject?.user.map(
-              (item) => ({ ...item.user })
-            ),
-            directLoading:
-              findOneProjectQuery.isLoading || findOneProjectQuery.isFetching
-          }
+        title: t(`common:colleagues`)
+      },
+      fetch: {
+        directData: {
+          data: findOneProjectQuery.data?.findOneProject?.user.map((item) => ({
+            ...item.user
+          })),
+          directLoading:
+            findOneProjectQuery.isLoading || findOneProjectQuery.isFetching
+        }
+      },
+      columns: [
+        {
+          id: "fullName",
+          header: t("common:name"),
+          accessorFn: ({ fullName }) => digitsEnToFa(fullName || "-")
         },
-        columns: [
-          {
-            id: "fullName",
-            header: t("common:name"),
-            accessorFn: ({ fullName }) => digitsEnToFa(fullName || "-")
-          },
-          {
-            id: "delivery_name",
-            header: t("common:cellphone"),
-            accessorFn: ({ cellphone }) => digitsEnToFa(cellphone || "-")
-          },
-          {
-            id: "action",
-            header: t("common:operation"),
-            cell: ({ row }) => {
-              return (
-                <Button
-                  variant="danger"
-                  size="small"
-                  onClick={() => {
-                    onOpenModal<User>({
-                      type: SelectedItemEnum.DELETE_USER,
-                      data: row.original
-                    })
-                  }}
-                >
-                  {t("common:delete")}
-                </Button>
-              )
-            }
+        {
+          id: "delivery_name",
+          header: t("common:cellphone"),
+          accessorFn: ({ cellphone }) => digitsEnToFa(cellphone || "-")
+        },
+        {
+          id: "action",
+          header: t("common:operation"),
+          cell: ({ row }) => {
+            return (
+              <Button
+                variant="link"
+                size="small"
+                onClick={() => {
+                  onChangeModals<User>({
+                    type: OrderModalEnum.DELETE_USER,
+                    data: row.original
+                  })
+                }}
+              >
+                {t("common:delete")}
+              </Button>
+            )
           }
-        ]
-      }
-    })
+        }
+      ]
+    }
+  })
 
-  const sectionProps: IProjectPageSectionProps = { uuid, onCloseModal, row }
+  const items = useMemo(() => {
+    return [
+      {
+        item: {
+          key: t("common:entity_name", { entity: t("common:project") }),
+          value: findOneProjectQuery.data?.findOneProject?.name
+        }
+      }
+    ]
+  }, [findOneProjectQuery.data])
+
+  const sectionProps = {
+    uuid,
+    onCloseModals,
+    modals
+  }
 
   return (
     <>
       <AddressDeleteModal
-        open={row?.type === SelectedItemEnum.DELETE_ADDRESS}
+        open={modals?.type === OrderModalEnum.DELETE_ADDRESS}
         {...sectionProps}
       />
       <AddressModal
-        open={row?.type === SelectedItemEnum.ADDRESS}
+        open={modals?.type === OrderModalEnum.ADDRESS}
         {...sectionProps}
       />
       <UserDeleteModal
-        open={row?.type === SelectedItemEnum.DELETE_USER}
+        open={modals?.type === OrderModalEnum.DELETE_USER}
         {...sectionProps}
       />
-      <UserModal open={row?.type === SelectedItemEnum.USER} {...sectionProps} />
-      <ProjectInfo
-        name={findOneProjectQuery.data?.findOneProject?.name}
+      <UserModal
+        open={modals?.type === OrderModalEnum.USER}
         {...sectionProps}
+      />
+      <InfoModal
+        open={modals?.type === OrderModalEnum.INFO}
+        {...sectionProps}
+      />
+      <DetailsCard
+        items={items}
+        card={{
+          title: t("common:project-info"),
+          button: {
+            onClick: () =>
+              onChangeModals<InfoNameType>({
+                type: OrderModalEnum.INFO,
+                data: { name: findOneProjectQuery.data?.findOneProject?.name }
+              }),
+            text: t("common:edit"),
+            type: "button"
+          }
+        }}
       />
       <Table {...addressTableProps} />
       <Table {...usersTableProps} />

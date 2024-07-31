@@ -8,6 +8,8 @@ const DatePickerMulti: any = ({ ...props }) => {
     <DatePicker
       className="vardast-calender"
       containerClassName="w-full"
+      arrow={false}
+      offsetY={4}
       //   inputClass="w-full"
       //   inputClass="w-full border rounded-base h-40 px-base text-alpha-700 focus-visible:outline-none focus-visible:border-2 focus-visible:border-primary-500"
       calendar={persian}

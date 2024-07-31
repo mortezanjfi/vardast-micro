@@ -19,6 +19,7 @@ const badgeVariants = cva(
           "text-success-foreground border-transparent bg-success-100 hover:bg-success-100/80",
         danger:
           "text-error-foreground border-transparent bg-error-100 hover:bg-error-100/80",
+        info: "text-info-foreground border-transparent bg-info-100 hover:bg-info-100/80",
         outline: "text-foreground"
       },
       size: {

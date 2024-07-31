@@ -67,7 +67,7 @@ const Card = ({
       {...props}
     >
       {(title || button || description) && (
-        <div className="col-span-full flex">
+        <div className="col-span-full flex pb">
           <div className="flex w-full justify-between">
             {title && (
               <h2 className={clsx("font-medium text-alpha-800 ", titleClass)}>

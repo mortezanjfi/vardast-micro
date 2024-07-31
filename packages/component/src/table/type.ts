@@ -30,12 +30,13 @@ type IFilter<T extends FilterComponentTypeEnum, TName> = IFilterMap<T> & {
 export type CheckedTypeByArgs<T, K> = T extends undefined ? K : T
 
 export type OnRowFunctionType<T> = (row: Row<T>) => void
+export type TableDirectDataType<T> = {
+  directLoading?: boolean
+  data: Array<Partial<T>>
+}
 
 type FetchWithData<T> = {
-  directData: {
-    directLoading?: boolean
-    data: Array<Partial<T>>
-  }
+  directData: TableDirectDataType<T>
   accessToken?: never
   api?: never
 }
@@ -50,6 +51,8 @@ type FetchConfig<T, TArgs, TSchema> =
   | FetchWithApi<T, TArgs, TSchema>
 
 type InternalArgsType<T, TArgs> = T extends { directData: any } ? never : TArgs
+
+export type Column<T> = Array<ColumnDef<T>>
 export interface ITableProps<
   T,
   TSchema extends ZodType<any, any, any> = undefined,
@@ -57,7 +60,7 @@ export interface ITableProps<
   TResponse = undefined
 > {
   name: string
-  columns: Array<ColumnDef<T>>
+  columns: Column<T>
   selectable?: boolean
   indexable?: boolean
   internalArgs?: InternalArgsType<FetchConfig<T, TArgs, TSchema>, TArgs>

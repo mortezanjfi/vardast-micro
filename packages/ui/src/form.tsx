@@ -19,7 +19,8 @@ import {
   FieldPath,
   FieldValues,
   FormProvider,
-  useFormContext
+  useFormContext,
+  UseFormReturn
 } from "react-hook-form"
 
 import { Label } from "./label"
@@ -51,7 +52,57 @@ const formControlVariants = cva("form-control", {
   }
 })
 
+export const formLayoutVariants = cva("flex flex-col items-center gap", {
+  variants: {
+    template: {
+      full: "grid",
+      "1/2": "grid md:grid-cols-2 2xl:grid-cols-3",
+      "1/3": "grid md:grid-cols-3 2xl:grid-cols-4"
+    }
+  },
+  defaultVariants: {
+    template: "1/3"
+  }
+})
+
 const Form = FormProvider
+
+interface FormLayoutBaseProps<TFieldValues extends FieldValues = FieldValues>
+  extends VariantProps<typeof formLayoutVariants> {
+  formProps?: UseFormReturn<TFieldValues | any>
+}
+
+export type FormLayoutProps<TFieldValues extends FieldValues = FieldValues> =
+  ComponentPropsWithoutRef<"form"> & FormLayoutBaseProps<TFieldValues>
+
+const FormLayout = forwardRef(
+  <TFieldValues extends FieldValues = unknown>(
+    {
+      className,
+      onSubmit,
+      formProps,
+      template,
+      ...props
+    }: FormLayoutProps<TFieldValues>,
+    ref: React.Ref<HTMLFormElement>
+  ) => {
+    return (
+      <FormProvider {...formProps}>
+        <form
+          ref={ref}
+          onSubmit={(e) => {
+            e.preventDefault()
+            onSubmit(e)
+          }}
+          className={mergeClasses(formLayoutVariants({ template }), className)}
+          {...props}
+        >
+          {props.children}
+        </form>
+      </FormProvider>
+    )
+  }
+)
 
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
@@ -265,6 +316,7 @@ export {
   FormField,
   FormItem,
   FormLabel,
+  FormLayout,
   FormMessage,
   useFormField
 }

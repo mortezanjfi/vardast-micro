@@ -12,10 +12,19 @@ const _bidding: NavigationType[] = [
       },
       {
         title: "سفارشات",
-        path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders`,
         background_color: "bg-gray-400",
         color: "text-white",
-        icon: "ClipboardDocumentIcon"
+        icon: "ClipboardDocumentIcon",
+        items: [
+          {
+            title: "بر اساس سفارش",
+            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders/orders-list`
+          },
+          {
+            title: "بر اساس اقلام",
+            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders/orders-line`
+          }
+        ]
       }
     ]
   }

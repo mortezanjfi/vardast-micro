@@ -37,27 +37,27 @@ export const PreOrderStatesFa: Record<
   { variant: BadgeVariantsType; name_fa_admin: string; name_fa: string }
 > = {
   [PreOrderStates.PendingAdmin]: {
-    variant: "warning",
+    variant: "info",
     name_fa_admin: "در انتظار تایید ادمین",
     name_fa: "جاری"
   },
   [PreOrderStates.PendingInfo]: {
-    variant: "warning",
+    variant: "info",
     name_fa_admin: "در انتظار دریافت اطلاعات",
     name_fa: "جاری"
   },
   [PreOrderStates.PendingOffer]: {
-    variant: "warning",
+    variant: "info",
     name_fa_admin: "در انتظار پیشنهاد قیمت",
     name_fa: "جاری"
   },
   [PreOrderStates.PendingProduct]: {
-    variant: "warning",
+    variant: "info",
     name_fa_admin: "در انتظار افزودن کالا",
     name_fa: "جاری"
   },
   [PreOrderStates.VerifyFile]: {
-    variant: "warning",
+    variant: "info",
     name_fa_admin: "در انتظار تایید فایل",
     name_fa: "جاری"
   },
@@ -67,12 +67,12 @@ export const PreOrderStatesFa: Record<
     name_fa: "خریداری شده"
   },
   [PreOrderStates.Completed]: {
-    variant: "danger",
+    variant: "default",
     name_fa_admin: "خریداری نشده",
     name_fa: "خریداری نشده"
   },
   [PreOrderStates.PendingPayment]: {
-    variant: "success",
+    variant: "warning",
     name_fa: "در انتظار پرداخت",
     name_fa_admin: "در انتظار پرداخت"
   },

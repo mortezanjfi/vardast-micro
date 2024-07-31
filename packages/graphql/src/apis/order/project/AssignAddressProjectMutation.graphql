@@ -1,11 +1,7 @@
 mutation AssignAddressProject(
   $createAddressProjectInput: CreateAddressProjectInput!
-  $projectId: Float!
 ) {
-  assignAddressProject(
-    createAddressProjectInput: $createAddressProjectInput
-    projectId: $projectId
-  ) {
+  assignAddressProject(createAddressProjectInput: $createAddressProjectInput) {
     id
   }
 }

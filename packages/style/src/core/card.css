@@ -4,9 +4,9 @@
   dark:bg-opacity-20;
 
   &-shadow {
-    --border-opacity: 0.1;
-    --border-color: rgba(theme(colors.alpha.700), var(--border-opacity));
-    @apply shadow-[0_0_0_1px_var(--border-color),0_1px_0_0_rgba(0,0,0,0.08),0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_-1px_rgba(0,0,0,0.1)];
+    /* --border-opacity: 0.1; */
+    /* --border-color: rgba(theme(colors.alpha.700), var(--border-opacity)); */
+    @apply shadow-[inset_0_0_0_1px_var(--border-color)] border;
   }
 }
 
