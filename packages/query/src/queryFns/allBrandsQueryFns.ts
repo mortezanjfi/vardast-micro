@@ -11,7 +11,8 @@ export const getAllBrandsQueryFn = async ({
   name,
   page,
   sortType,
-  categoryId
+  categoryId,
+  categoryIds
 }: getAllBrandsFnArgs = {}): Promise<GetAllBrandsQuery> => {
   return await request(
     process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT as string,
@@ -21,7 +22,8 @@ export const getAllBrandsQueryFn = async ({
         name,
         page,
         sortType,
-        categoryId
+        categoryId,
+        categoryIds
       }
     }
   )

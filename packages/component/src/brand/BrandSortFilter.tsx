@@ -2,10 +2,13 @@
 
 import * as Checkbox from "@radix-ui/react-checkbox"
 import * as Label from "@radix-ui/react-label"
-import { IndexCategoryInput, SortBrandEnum } from "@vardast/graphql/generated"
 import { LucideCheck } from "lucide-react"
 
-import FilterBlock from "../filter-block"
+import {
+  IndexCategoryInput,
+  SortBrandEnum
+} from "../../../graphql/src/generated"
+import DynamicHeroIcon from "../DynamicHeroIcon"
 
 type BrandCategoryFilterProps = {
   onSortChanged: (_: SortBrandEnum) => void
@@ -37,10 +40,18 @@ const BrandOrSellerCategoryFilter = ({
 }: BrandCategoryFilterProps) => {
   const args: IndexCategoryInput = {}
   return (
-    <FilterBlock title="مرتب سازی" openDefault={true}>
-      <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
+      <div className="flex items-center gap-2 py-3">
+        <DynamicHeroIcon icon="BarsArrowDownIcon" className="h-7 w-7" solid />
+        <span className="text-lg font-medium text-alpha-800">مرتب سازی</span>
+      </div>
+
+      <div className="flex flex-col">
         {Object.entries(sortBrand).map(([key, value]) => (
-          <Label.Root key={key} className="flex items-center gap-2">
+          <Label.Root
+            key={key}
+            className="flex items-center gap-2 border-b border-x-alpha-200 py-4"
+          >
             <Checkbox.Root
               className="flex
                     h-5
@@ -68,7 +79,7 @@ const BrandOrSellerCategoryFilter = ({
           </Label.Root>
         ))}
       </div>
-    </FilterBlock>
+    </div>
   )
 }
 

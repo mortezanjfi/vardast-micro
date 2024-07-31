@@ -1,10 +1,12 @@
 "use client"
 
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { useDebouncedState } from "@mantine/hooks"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useSetAtom } from "jotai"
 import { LucideSlidersHorizontal, LucideSortDesc } from "lucide-react"
+import { TypeOf, z } from "zod"
 
 import MobileBrandSortFilter from "../../../../apps/vardast-client/src/app/(client)/brands/components/MobilBrandSortFilter"
 import {
@@ -18,18 +20,21 @@ import { PublicContext } from "../../../provider/src/PublicProvider"
 import { getAllBrandsQueryFn } from "../../../query/src/queryFns/allBrandsQueryFns"
 import QUERY_FUNCTIONS_KEY from "../../../query/src/queryFns/queryFunctionsKey"
 import { Button } from "../../../ui/src/button"
+import { Input } from "../../../ui/src/input"
 import BrandCard, { BrandCardSkeleton } from "../brand/BrandCard"
 import BrandsOrSellersContainer, {
   BrandContainerType
 } from "../BrandsOrSellersContainer"
 import ListHeader from "../desktop/ListHeader"
 import DesktopMobileViewOrganizer from "../DesktopMobileViewOrganizer"
+import DynamicHeroIcon from "../DynamicHeroIcon"
 import FiltersSidebarContainer from "../filters-sidebar-container"
 import InfiniteScrollPagination from "../InfiniteScrollPagination"
 import NoResult from "../NoResult"
 import NotFoundMessage from "../NotFound"
 import { checkLimitPageByCondition } from "../product-list"
 import BrandSortFilter from "./BrandSortFilter"
+import CategoryFilterSection from "./CategoryFilterSection"
 
 type BrandsListProps = {
   hasTitle?: boolean
@@ -42,6 +47,11 @@ type BrandsListProps = {
   isSellerPanel?: boolean
 }
 
+const filterSchema = z.object({
+  categoryId: z.number().optional()
+})
+
+export type BrandsFilterFields = TypeOf<typeof filterSchema>
 const BrandsList = ({
   hasTitle = true,
   limitPage,
@@ -62,7 +72,15 @@ const BrandsList = ({
   const searchParams = useSearchParams()
 
   const [filterAttributes, setFilterAttributes] = useState<[]>([])
+  const [brandsQuery, setBrandsQuery] = useDebouncedState("", 500)
+  const [brandsQueryTemp, setBrandsQueryTemp] = useState("")
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<
+    number[] | null
+  >([])
 
+  useEffect(() => {
+    args["categoryIds"] = selectedCategoryIds
+  }, [selectedCategoryIds])
   const allBrandsQuery = useInfiniteQuery<GetAllBrandsQuery>(
     [
       QUERY_FUNCTIONS_KEY.GET_ALL_BRANDS_QUERY_KEY,
@@ -70,15 +88,19 @@ const BrandsList = ({
         ...args,
         page: args.page,
         sortType: sort,
-        categoryId: args.categoryId
+        categoryId: args.categoryId,
+        name: brandsQuery,
+        categoryIds: selectedCategoryIds
       }
     ],
     ({ pageParam = 1 }) =>
       getAllBrandsQueryFn({
         ...args,
+        name: brandsQuery,
         page: pageParam,
         sortType: sort,
-        categoryId: args.categoryId
+        categoryId: args.categoryId,
+        categoryIds: selectedCategoryIds
       }),
     {
       keepPreviousData: true,
@@ -171,20 +193,7 @@ const BrandsList = ({
 
   const DesktopSidebar = (
     <FiltersSidebarContainer>
-      <div className="flex flex-col gap-9">
-        <div className=" flex items-center border-b-2 border-b-alpha-200 py-4">
-          <strong>فیلترها</strong>
-          {filterAttributes.length > 0 && (
-            <Button
-              size="small"
-              noStyle
-              className="ms-auto text-sm text-red-500"
-              onClick={() => setFilterAttributes([])}
-            >
-              حذف همه فیلترها
-            </Button>
-          )}
-        </div>
+      <div className="flex flex-col gap-5">
         <BrandSortFilter
           sort={sort}
           onSortChanged={(sort) => {
@@ -194,6 +203,51 @@ const BrandsList = ({
             push(pathname + "?" + params.toString())
           }}
         />
+        <div className="flex flex-col">
+          {" "}
+          <div className=" flex items-center border-b-2 border-b-alpha-200 py-4">
+            <div className="flex items-center gap-2">
+              <DynamicHeroIcon
+                icon="AdjustmentsHorizontalIcon"
+                className="h-7 w-7"
+                solid
+              />
+              <strong>فیلترها</strong>
+            </div>{" "}
+            {filterAttributes.length > 0 && (
+              <Button
+                size="small"
+                noStyle
+                className="ms-auto text-sm text-red-500"
+                onClick={() => setFilterAttributes([])}
+              >
+                حذف همه فیلترها
+              </Button>
+            )}
+          </div>{" "}
+          <Input
+            autoFocus
+            value={brandsQueryTemp}
+            onChange={(e) => {
+              setBrandsQueryTemp(e.target.value)
+              setBrandsQuery(e.target.value)
+            }}
+            type="text"
+            placeholder="نام برند"
+            className="my-4 flex h-full w-full
+                          items-center
+                          gap-2
+                          rounded-lg
+                          bg-alpha-100
+                          px-4
+                          py-3.5
+                           focus:!ring-0 disabled:bg-alpha-100"
+          />
+          <CategoryFilterSection
+            setSelectedCategoryIds={setSelectedCategoryIds}
+            selectedCategoryIds={selectedCategoryIds}
+          />
+        </div>
       </div>
     </FiltersSidebarContainer>
   )
