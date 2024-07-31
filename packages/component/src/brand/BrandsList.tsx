@@ -35,6 +35,7 @@ import NotFoundMessage from "../NotFound"
 import { checkLimitPageByCondition } from "../product-list"
 import BrandSortFilter from "./BrandSortFilter"
 import CategoryFilterSection from "./CategoryFilterSection"
+import CityFilterSection from "./CityFilterSection"
 
 type BrandsListProps = {
   hasTitle?: boolean
@@ -77,7 +78,7 @@ const BrandsList = ({
   const [selectedCategoryIds, setSelectedCategoryIds] = useState<
     number[] | null
   >([])
-
+  const [selectedCityId, setSelectedCityId] = useState<number | null>()
   useEffect(() => {
     args["categoryIds"] = selectedCategoryIds
   }, [selectedCategoryIds])
@@ -90,7 +91,8 @@ const BrandsList = ({
         sortType: sort,
         categoryId: args.categoryId,
         name: brandsQuery,
-        categoryIds: selectedCategoryIds
+        categoryIds: selectedCategoryIds,
+        cityId: selectedCityId
       }
     ],
     ({ pageParam = 1 }) =>
@@ -100,7 +102,8 @@ const BrandsList = ({
         page: pageParam,
         sortType: sort,
         categoryId: args.categoryId,
-        categoryIds: selectedCategoryIds
+        categoryIds: selectedCategoryIds,
+        cityId: selectedCityId
       }),
     {
       keepPreviousData: true,
@@ -246,6 +249,10 @@ const BrandsList = ({
           <CategoryFilterSection
             setSelectedCategoryIds={setSelectedCategoryIds}
             selectedCategoryIds={selectedCategoryIds}
+          />
+          <CityFilterSection
+            selectedCityId={selectedCityId}
+            setSelectedCityId={setSelectedCityId}
           />
         </div>
       </div>
