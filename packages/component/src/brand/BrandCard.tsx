@@ -7,14 +7,12 @@ import Image from "next/image"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import brandSellerBlank from "@vardast/asset/brand-seller-blank-mobile.svg"
 import frameLessImage from "@vardast/asset/images/frameLess.png"
-import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import clsx from "clsx"
 import useTranslation from "next-translate/useTranslation"
 
 import { Brand } from "../../../graphql/src/generated"
 import CardAvatar from "../CardAvatar"
 import { ICategoryListLoader } from "../category/CategoryListLoader"
-import DynamicHeroIcon from "../DynamicHeroIcon"
 import Link from "../Link"
 
 export type BrandCardProps = {
@@ -24,10 +22,10 @@ export type BrandCardProps = {
 
 export const BrandCardSkeleton = () => {
   return (
-    <div className="flex h-full w-full flex-col lg:px-4">
-      <div className="grid flex-1 items-start sm:grid-rows-7 sm:py lg:flex lg:flex-col">
+    <div className="flex h-fit w-full flex-col lg:px-4">
+      <div className=" flex flex-1  flex-col items-start sm:py">
         <div
-          className={`relative row-span-4 h-[50vw] w-full transform transition-all sm:py`}
+          className={`relative row-span-4 h-[200px] w-full transform transition-all sm:py`}
         >
           <Image
             src={frameLessImage}
@@ -120,46 +118,50 @@ const BrandCard = forwardRef(
                   {digitsEnToFa(brand?.sum)} کالا
                 </div>
               )}
-              <div className="flex items-center gap-1 px-2 text-sm font-medium text-alpha-500">
-                {t("common:catalog")}
-                {brand?.catalog?.id ? (
-                  <DynamicHeroIcon
-                    icon="CheckIcon"
-                    className={mergeClasses(
-                      "icon h-4 w-4 flex-shrink-0 transform rounded-full bg-blue-500 p-0.5 text-2xl text-alpha-white transition-all"
-                    )}
-                    solid={true}
-                  />
-                ) : (
-                  <DynamicHeroIcon
-                    icon="MinusIcon"
-                    className={mergeClasses(
-                      "icon h-4 w-4 flex-shrink-0 transform rounded-full bg-blue-500 p-0.5 text-2xl text-alpha-white transition-all"
-                    )}
-                    solid={true}
-                  />
-                )}
-              </div>
-              <div className="flex items-center gap-1 px-2 text-sm font-medium text-alpha-500">
-                {t("common:price_list")}
-                {brand?.priceList?.id ? (
-                  <DynamicHeroIcon
-                    icon="CheckIcon"
-                    className={mergeClasses(
-                      "icon h-4 w-4 flex-shrink-0 transform rounded-full bg-blue-500 p-0.5 text-2xl text-alpha-white transition-all"
-                    )}
-                    solid={true}
-                  />
-                ) : (
-                  <DynamicHeroIcon
-                    icon="MinusIcon"
-                    className={mergeClasses(
-                      "icon h-4 w-4 flex-shrink-0 transform rounded-full bg-blue-500 p-0.5 text-2xl text-alpha-white transition-all"
-                    )}
-                    solid={true}
-                  />
-                )}
-              </div>
+              {brand?.catalog?.id && (
+                <div className="flex items-center gap-1 px-2 text-sm font-medium text-alpha-500">
+                  {t("common:catalog")}
+                  {/* {brand?.catalog?.id ? (
+                    <DynamicHeroIcon
+                      icon="CheckIcon"
+                      className={mergeClasses(
+                        "icon h-4 w-4 flex-shrink-0 transform rounded-full bg-blue-500 p-0.5 text-2xl text-alpha-white transition-all"
+                      )}
+                      solid={true}
+                    />
+                  ) : (
+                    <DynamicHeroIcon
+                      icon="MinusIcon"
+                      className={mergeClasses(
+                        "icon h-4 w-4 flex-shrink-0 transform rounded-full bg-blue-500 p-0.5 text-2xl text-alpha-white transition-all"
+                      )}
+                      solid={true}
+                    />
+                  )} */}
+                </div>
+              )}
+              {brand?.priceList?.id && (
+                <div className="flex items-center gap-1 px-2 text-sm font-medium text-alpha-500">
+                  {t("common:price_list")}
+                  {/* {brand?.priceList?.id ? (
+                    <DynamicHeroIcon
+                      icon="CheckIcon"
+                      className={mergeClasses(
+                        "icon h-4 w-4 flex-shrink-0 transform rounded-full bg-blue-500 p-0.5 text-2xl text-alpha-white transition-all"
+                      )}
+                      solid={true}
+                    />
+                  ) : (
+                    <DynamicHeroIcon
+                      icon="MinusIcon"
+                      className={mergeClasses(
+                        "icon h-4 w-4 flex-shrink-0 transform rounded-full bg-blue-500 p-0.5 text-2xl text-alpha-white transition-all"
+                      )}
+                      solid={true}
+                    />
+                  )} */}
+                </div>
+              )}
             </div>
           </div>
         </div>

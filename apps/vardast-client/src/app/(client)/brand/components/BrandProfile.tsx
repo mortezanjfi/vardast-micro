@@ -113,19 +113,19 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
     <div className="w-full md:flex md:gap-6">
       <div className="relative flex flex-col justify-start overflow-hidden md:w-80 md:min-w-80 md:flex-shrink-0 md:justify-center md:rounded-2xl md:border">
         <div className="flex  flex-col gap-y bg-alpha-white md:h-auto md:min-h-full ">
-          <div className="flex h-full flex-col items-center justify-center gap-y bg-alpha-white">
+          <div className="flex h-full flex-col items-center justify-center  bg-alpha-white">
             {isMobileView && (
-              <div className="relative flex aspect-square h-[calc(56vw)] max-h-[calc(56vw)] min-h-[calc(56vw)] w-full flex-col items-center justify-center">
+              <div className="relative flex aspect-square h-[calc(56vw)] max-h-[calc(56vw)] min-h-[calc(56vw)] w-full flex-col items-center justify-center ">
                 <Image
                   src={brandQuery?.data?.brand?.bannerMobile?.presignedUrl?.url}
                   alt="seller"
                   fill
-                  className="h-full w-full md:rounded-full"
+                  className="h-full w-full px-6 py-5 md:rounded-full"
                 />
               </div>
             )}
 
-            <div className="flex w-full grid-cols-2 justify-between px-6 pb-6 pt-2 md:grid md:!p-0">
+            <div className="flex w-full grid-cols-2 justify-between px-6 pb-5 md:grid md:!p-0">
               <div className=" flex items-center justify-center gap-2 md:col-span-2 md:flex-col md:gap-7 md:py-9">
                 <CardAvatar
                   size={isMobileView ? "small" : "medium"}
@@ -152,7 +152,7 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
                 </h1>
               </div>
 
-              <div className="col-span-2 flex grid-cols-2 gap-5 md:grid md:gap-0 md:divide-x md:divide-x-reverse md:border-t md:py-3">
+              <div className="col-span-2 flex grid-cols-2 md:grid md:gap-0 md:divide-x md:divide-x-reverse md:border-t md:py-3">
                 <FavoriteIcon
                   type={EntityTypeEnum.Brand}
                   entityId={+slug[0]}
@@ -202,19 +202,31 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
         onValueChange={(e) => setActiveTab(e as BrandProfileTabEnum)}
       >
         <TabsList className="sticky top-0 z-50 grid w-full grid-cols-4 bg-alpha-white font-medium sm:z-0 md:mb-6  md:flex">
-          <TabsTrigger className="py-4" value={BrandProfileTabEnum.PRODUCT}>
+          <TabsTrigger
+            className="py-41 whitespace-nowrap"
+            value={BrandProfileTabEnum.PRODUCT}
+          >
             {t("common:products")}
           </TabsTrigger>
-          <TabsTrigger className="py-4" value={BrandProfileTabEnum.CATEGORY}>
+          <TabsTrigger
+            className="py-41 whitespace-nowrap"
+            value={BrandProfileTabEnum.CATEGORY}
+          >
             {t("common:category")}
           </TabsTrigger>
-          {/* <TabsTrigger className="py-4" value={BrandProfileTabEnum.SELLERS}>
+          {/* <TabsTrigger className="py-4 whitespace-nowrap1" value={BrandProfileTabEnum.SELLERS}>
       {t("common:sellers")}
     </TabsTrigger> */}
-          <TabsTrigger className="py-4" value={BrandProfileTabEnum.CATALOG}>
+          <TabsTrigger
+            className="py-41 whitespace-nowrap"
+            value={BrandProfileTabEnum.CATALOG}
+          >
             {t("common:catalog")}
           </TabsTrigger>
-          <TabsTrigger className="py-4" value={BrandProfileTabEnum.PRICE_LIST}>
+          <TabsTrigger
+            className="py-41 whitespace-nowrap"
+            value={BrandProfileTabEnum.PRICE_LIST}
+          >
             {t("common:price_list")}
           </TabsTrigger>
           {/* for full border under tabs-----------? */}

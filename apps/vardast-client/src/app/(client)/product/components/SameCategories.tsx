@@ -14,6 +14,7 @@ const SameCategories = ({
     <ProductSectionContainer
       spaceless
       title="کالاهای مشابه"
+      TitleTag="h3"
       // subtitle={{
       //   text: "مشاهده همه",
       //   onClick() {}

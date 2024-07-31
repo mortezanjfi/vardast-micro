@@ -446,26 +446,27 @@ const ProductList = ({
   )
 
   const MobileHeader = (
-    <div className="sticky top-0 z-30 border-b border-b-alpha-300 bg-alpha-white p-4">
-      <div>
-        {hasSearch && (
-          <div className="relative flex transform items-center rounded-lg border-alpha-200 bg-alpha-100 pr-2 transition-all">
-            {queryTemp !== query ? (
-              <Loader2 className="h-6 w-6 animate-spin text-alpha-400" />
-            ) : (
-              <LucideSearch className="h-6 w-6 text-primary" />
-            )}
-            <Input
-              autoFocus
-              value={queryTemp}
-              defaultValue={query}
-              onChange={(e) => {
-                setQueryTemp(e.target.value)
-                setQuery(e.target.value)
-              }}
-              type="text"
-              placeholder="نام کالا | برند | فروشنده | دسته بندی | SKU"
-              className="flex h-full
+    <>
+      <div className="sticky top-0 z-30 border-b border-b-alpha-300 bg-alpha-white p-4">
+        <div>
+          {hasSearch && (
+            <div className="relative flex transform items-center rounded-lg border-alpha-200 bg-alpha-100 pr-2 transition-all">
+              {queryTemp !== query ? (
+                <Loader2 className="h-6 w-6 animate-spin text-alpha-400" />
+              ) : (
+                <LucideSearch className="h-6 w-6 text-primary" />
+              )}
+              <Input
+                autoFocus
+                value={queryTemp}
+                defaultValue={query}
+                onChange={(e) => {
+                  setQueryTemp(e.target.value)
+                  setQuery(e.target.value)
+                }}
+                type="text"
+                placeholder="نام کالا | برند | فروشنده | دسته بندی | SKU"
+                className="flex h-full
                 w-full
                 items-center
                 gap-2
@@ -474,56 +475,56 @@ const ProductList = ({
                 px-4
                 py-3
                 focus:!ring-0 disabled:bg-alpha-100"
-            />
-            <Button
-              variant="ghost"
-              size="small"
-              iconOnly
-              className="rounded-full"
-              onClick={() => {
-                setQuery("")
-                setQueryTemp("")
+              />
+              <Button
+                variant="ghost"
+                size="small"
+                iconOnly
+                className="rounded-full"
+                onClick={() => {
+                  setQuery("")
+                  setQueryTemp("")
+                }}
+              >
+                <LucideX className="icon" />
+              </Button>
+            </div>
+          )}
+          <div className="grid grid-cols-2">
+            <MobileCategoriesFilter
+              categoryId={selectedCategoryIds}
+              brandId={brandId}
+              sellerId={sellerId}
+              categoryIdsFilter={categoryIdsFilter}
+              onCategoryFilterChanged={({ status, value }) => {
+                onCategoryIdsFilterChanged({ status, value })
+                setCategoriesFilterVisibility(false)
               }}
-            >
-              <LucideX className="icon" />
-            </Button>
-          </div>
-        )}
-        <div className="grid grid-cols-2">
-          <MobileCategoriesFilter
-            categoryId={selectedCategoryIds}
-            brandId={brandId}
-            sellerId={sellerId}
-            categoryIdsFilter={categoryIdsFilter}
-            onCategoryFilterChanged={({ status, value }) => {
-              onCategoryIdsFilterChanged({ status, value })
-              setCategoriesFilterVisibility(false)
-            }}
-          />
-          <MobileSortFilter
-            sort={sort}
-            onSortChanged={(sort) => {
-              setSortFilterVisibility(false)
-              setSort(sort)
-              const params = new URLSearchParams(searchParams as any)
-              params.set("orderBy", `${sort}`)
-              push(pathname + "?" + params.toString())
-            }}
-          />
-          <MobileFilterableAttributes
-            filterAttributes={filterAttributes}
-            selectedCategoryId={selectedCategoryIds}
-            onFilterAttributesChanged={({ status, id, value }) => {
-              onFilterAttributesChanged({ status, id, value })
-              setFiltersVisibility(false)
-            }}
-            onRemoveAllFilters={() => {
-              removeAllFilters()
-              setFiltersVisibility(false)
-            }}
-          />
+            />
+            <MobileSortFilter
+              sort={sort}
+              onSortChanged={(sort) => {
+                setSortFilterVisibility(false)
+                setSort(sort)
+                const params = new URLSearchParams(searchParams as any)
+                params.set("orderBy", `${sort}`)
+                push(pathname + "?" + params.toString())
+              }}
+            />
+            <MobileFilterableAttributes
+              filterAttributes={filterAttributes}
+              selectedCategoryId={selectedCategoryIds}
+              onFilterAttributesChanged={({ status, id, value }) => {
+                onFilterAttributesChanged({ status, id, value })
+                setFiltersVisibility(false)
+              }}
+              onRemoveAllFilters={() => {
+                removeAllFilters()
+                setFiltersVisibility(false)
+              }}
+            />
 
-          {/* 
+            {/* 
         dont use this part of code
         <Button
           onClick={() => setCategoriesFilterVisibility(true)}
@@ -534,39 +535,45 @@ const ProductList = ({
           <LucideLayoutGrid className="icon text-alpha" />
           دسته‌بندی‌ها
         </Button> */}
-          <Button
-            onClick={() => setSortFilterVisibility(true)}
-            size="small"
-            variant="ghost"
-            className=" h-full w-full rounded-none !border-l border-alpha-300  py-0 !text-alpha-black"
-          >
-            <LucideSortDesc className="icon text-alpha" />
-            مرتب‌سازی
-          </Button>
-          <Button
-            disabled={
-              !selectedCategoryIds ||
-              !(selectedCategoryIds.length > 0) ||
-              !getFilterableAttributesQuery.data ||
-              !(
-                getFilterableAttributesQuery.data.filterableAttributes.filters
-                  .length > 0
-              )
-            }
-            onClick={() => setFiltersVisibility(true)}
-            size="small"
-            variant="ghost"
-            className=" h-full w-full rounded-none  py-0 !text-alpha-black"
-          >
-            {filterAttributes.length > 0 && (
-              <span className="absolute right-1 top-1 block h-2.5 w-2.5 rounded-full bg-primary-500"></span>
-            )}
-            <LucideSlidersHorizontal className="icon text-alpha" />
-            فیلترها
-          </Button>
+            <Button
+              onClick={() => setSortFilterVisibility(true)}
+              size="small"
+              variant="ghost"
+              className=" h-full w-full rounded-none !border-l border-alpha-300  py-0 !text-alpha-black"
+            >
+              <LucideSortDesc className="icon text-alpha" />
+              مرتب‌سازی
+            </Button>
+            <Button
+              disabled={
+                !selectedCategoryIds ||
+                !(selectedCategoryIds.length > 0) ||
+                !getFilterableAttributesQuery.data ||
+                !(
+                  getFilterableAttributesQuery.data.filterableAttributes.filters
+                    .length > 0
+                )
+              }
+              onClick={() => setFiltersVisibility(true)}
+              size="small"
+              variant="ghost"
+              className=" h-full w-full rounded-none  py-0 !text-alpha-black"
+            >
+              {filterAttributes.length > 0 && (
+                <span className="absolute right-1 top-1 block h-2.5 w-2.5 rounded-full bg-primary-500"></span>
+              )}
+              <LucideSlidersHorizontal className="icon text-alpha" />
+              فیلترها
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
+      <ListHeader
+        secondTitle="product"
+        total={allProductsQuery?.data?.pages[0]?.products?.total}
+        listName={"products"}
+      />
+    </>
   )
 
   const Content =
@@ -627,6 +634,7 @@ const ProductList = ({
       DesktopHeader={
         hasTitle && (
           <ListHeader
+            secondTitle="product"
             total={allProductsQuery?.data?.pages[0]?.products?.total}
             listName={"products"}
           />

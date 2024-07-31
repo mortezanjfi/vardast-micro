@@ -30,6 +30,8 @@ const BrandsIndex = async ({ searchParams }: BrandsIndexProps) => {
     args["name"] = searchParams.query as string
   args["name"] = ""
   args["orderBy"] = searchParams.sortType as SortBrandEnum
+  args["categoryId"] = +searchParams.categoryId
+  args["categoryIds"] = [+searchParams.categoryIds]
 
   await queryClient.prefetchInfiniteQuery(
     [QUERY_FUNCTIONS_KEY.GET_ALL_BRANDS_QUERY_KEY, args],

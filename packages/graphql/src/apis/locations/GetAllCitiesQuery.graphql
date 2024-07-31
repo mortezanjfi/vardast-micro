@@ -1,0 +1,30 @@
+query GetAllCitiesQuery($indexCityInput: IndexCityInput) {
+  cities(indexCityInput: $indexCityInput) {
+    total
+    perPage
+    currentPage
+    lastPage
+    from
+    to
+    data {
+      id
+      name
+      nameEn
+      slug
+      type
+      sort
+      isActive
+      areasCount
+      latitude
+      longitude
+      areas {
+        id
+        name
+        nameEn
+        slug
+        sort
+        isActive
+      }
+    }
+  }
+}
