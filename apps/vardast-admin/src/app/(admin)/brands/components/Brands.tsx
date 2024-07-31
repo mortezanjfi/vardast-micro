@@ -22,6 +22,7 @@ import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Button } from "@vardast/ui/button"
 import { checkBooleanByString } from "@vardast/util/checkBooleanByString"
 import { getContentByApiStatus } from "@vardast/util/GetContentByApiStatus"
+import clsx from "clsx"
 import { LucidePlus, LucideWarehouse } from "lucide-react"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
@@ -221,16 +222,27 @@ const Brands = () => {
                             </span>
                           )}
                         </td>
-                        <td>
-                          {brand?.bannerDesktop?.id ? (
-                            <span className="tag  tag-sm tag-success">
-                              {t("common:has")}
-                            </span>
-                          ) : (
-                            <span className="tag tag-sm tag-danger">
-                              {t("common:has_not")}
-                            </span>
-                          )}
+                        <td className="flex gap-1">
+                          <span
+                            className={clsx(
+                              "tag  tag-sm ",
+                              brand?.bannerMobile?.id
+                                ? "tag-success"
+                                : "tag-danger"
+                            )}
+                          >
+                            {t("common:mobile")}
+                          </span>
+                          <span
+                            className={clsx(
+                              "tag  tag-sm",
+                              brand?.bannerDesktop?.id
+                                ? "tag-success"
+                                : "tag-danger"
+                            )}
+                          >
+                            {t("common:desktop")}
+                          </span>
                         </td>
                         <td>
                           {brand.status ===
