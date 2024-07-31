@@ -210,9 +210,11 @@ const DesktopHeader = ({ search, button }: ILayoutDesktopHeader) => {
             </div>
           )}
         </div>
-        <div className="col-span-2 row-start-2 hidden w-fit xl:block">
-          <MegaMenu />
-        </div>
+        {process.env.NEXT_PUBLIC_PROJECT_NAME_FOR !== "admin" && (
+          <div className="col-span-2 row-start-2 hidden w-fit xl:block">
+            <MegaMenu />
+          </div>
+        )}
       </div>
     </>
   )
