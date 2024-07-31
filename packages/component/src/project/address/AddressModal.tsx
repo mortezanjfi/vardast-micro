@@ -144,8 +144,10 @@ export const AddressModal = ({
       })
     }
     assignAddressProjectMutation.mutate({
-      createAddressProjectInput: data as CreateAddressProjectInput,
-      projectId: +uuid
+      createAddressProjectInput: {
+        ...data,
+        projectId: +uuid
+      } as CreateAddressProjectInput
     })
   }
 
