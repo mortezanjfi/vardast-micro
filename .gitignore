@@ -107,3 +107,4 @@ public/workbox-*
 
 # auth
 apps/vardast*/src/app/(authentication)
+apps/vardast*/src/app/**/(bid)

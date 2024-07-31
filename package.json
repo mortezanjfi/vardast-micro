@@ -12,6 +12,7 @@
     "build": "pnpm predev && turbo build",
     "prepare": "husky install",
     "create-auth": "node create-auth.js",
+    "create-bid": "node create-bid.js",
     "clean": "git clean -xdf node_modules && pnpm run clean:all",
     "clean:all": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
     "clean:workspaces": "turbo clean",
