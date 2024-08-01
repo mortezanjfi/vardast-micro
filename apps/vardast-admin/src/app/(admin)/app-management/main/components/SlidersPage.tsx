@@ -95,7 +95,7 @@ function SlidersPage({}: Props) {
                           entity: t("common:image")
                         })}
                       </th>
-                      {/* <th>{t("common:display_sort")}</th> */}
+                      <th>{t("common:display_sort")}</th>
                       <th>{t("common:status")}</th>
                       <th>{t("common:operation")}</th>
                     </tr>
@@ -149,6 +149,7 @@ function SlidersPage({}: Props) {
                                 XL
                               </span>
                             </td>
+                            <td>{digitsEnToFa(slider?.sort)}</td>
                             <td>{statusSliderFa[slider?.status]?.name_fa}</td>
                             <td>
                               <Link

@@ -1,6 +1,6 @@
 "use client"
 
-import { ChangeEvent, SetStateAction, useRef, useState } from "react"
+import { ChangeEvent, SetStateAction, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -49,7 +49,7 @@ const statuses = [
 const SliderSchema = z.object({
   name: z.string().optional(),
   link: z.string().optional(),
-  sort: z.string().optional(),
+  sort: z.coerce.number().optional(),
   status: z.string().optional(),
   smallUuid: z.string().optional(),
   mediumUuid: z.string().optional(),
@@ -146,7 +146,8 @@ function SliderForm({ slider }: Props) {
           large_uuid: form.getValues("largeUuid"),
           medium_uuid: form.getValues("mediumUuid"),
           small_uuid: form.getValues("smallUuid"),
-          xlarge_uuid: form.getValues("xlargeUuid")
+          xlarge_uuid: form.getValues("xlargeUuid"),
+          sort: +form.getValues("sort")
         }
       })
     } else {
@@ -157,11 +158,16 @@ function SliderForm({ slider }: Props) {
           large_uuid: form.getValues("largeUuid"),
           medium_uuid: form.getValues("mediumUuid"),
           small_uuid: form.getValues("smallUuid"),
-          xlarge_uuid: form.getValues("xlargeUuid")
+          xlarge_uuid: form.getValues("xlargeUuid"),
+          sort: +form.getValues("sort")
         }
       })
     }
   }
+
+  useEffect(() => {
+    console.log(typeof form.getValues("sort"))
+  }, [form.watch("sort")])
 
   const onSliderUpload = (
     event: ChangeEvent<HTMLInputElement>,
@@ -230,9 +236,8 @@ function SliderForm({ slider }: Props) {
                 </FormItem>
               )}
             />
-            {/* <FormField
+            <FormField
               control={form.control}
-              disabled
               name="sort"
               render={({ field }) => (
                 <FormItem>
@@ -243,7 +248,7 @@ function SliderForm({ slider }: Props) {
                   <FormMessage />
                 </FormItem>
               )}
-            /> */}
+            />
             {/* <FormField
               control={form.control}
               name="status"
