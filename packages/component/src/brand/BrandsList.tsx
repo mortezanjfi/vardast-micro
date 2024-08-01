@@ -65,9 +65,7 @@ const BrandsList = ({
   const setSortFilterVisibility = useSetAtom(sortFilterVisibilityAtom)
   const setFiltersVisibility = useSetAtom(filtersVisibilityAtom)
 
-  const [sort, setSort] = useState<SortBrandEnum>(
-    args.sortType || SortBrandEnum.Rating
-  )
+  const [sort, setSort] = useState<SortBrandEnum>(undefined)
   const pathname = usePathname()
   const { push } = useRouter()
   const searchParams = useSearchParams()
@@ -88,7 +86,7 @@ const BrandsList = ({
       {
         ...args,
         page: args.page,
-        sortType: sort,
+        sortType: sort && sort,
         categoryId: args.categoryId,
         name: brandsQuery,
         categoryIds: selectedCategoryIds,
@@ -100,7 +98,7 @@ const BrandsList = ({
         ...args,
         name: brandsQuery,
         page: pageParam,
-        sortType: sort,
+        sortType: sort && sort,
         categoryId: args.categoryId,
         categoryIds: selectedCategoryIds,
         cityId: selectedCityId
@@ -201,9 +199,9 @@ const BrandsList = ({
           sort={sort}
           onSortChanged={(sort) => {
             setSort(sort)
-            const params = new URLSearchParams(searchParams as any)
-            params.set("orderBy", `${sort}`)
-            push(pathname + "?" + params.toString())
+            // const params = new URLSearchParams(searchParams as any)
+            // params.set("orderBy", `${sort}`)
+            // push(pathname + "?" + params.toString())
           }}
         />
         <div className="flex flex-col">
