@@ -79,7 +79,7 @@ const CategoriesList = ({
                   onClick={() => {
                     setSelectedItemId(category.id)
                   }}
-                  href={`/category/${category.id}`}
+                  href={`/category/${category.id}/${category.title}`}
                   selectedItemId={selectedItemId}
                   key={category.id}
                   title={category.title}
