@@ -222,13 +222,13 @@ export const _seller_panel: NavigationType[] = [
       {
         title: "خانه",
         path: "/",
-        background_color: "bg-gray-400",
+        background_color: "bg-green-500",
         color: "text-white",
         icon: "HomeIcon"
       },
       {
         title: "سفارشات",
-        background_color: "bg-gray-400",
+        background_color: "bg-blue-500",
         color: "text-white",
         icon: "ClipboardDocumentIcon",
         path: "/orders"
@@ -243,7 +243,7 @@ export const _seller_panel: NavigationType[] = [
       {
         title: "کالاها",
         path: "/products",
-        background_color: "bg-gray-400",
+        background_color: "bg-orange-500",
         color: "text-white",
         icon: "CubeIcon",
         items: [
@@ -264,14 +264,14 @@ export const _seller_panel: NavigationType[] = [
       {
         title: "دسته بندی‌های من",
         path: "/categories",
-        background_color: "bg-gray-400",
+        background_color: "bg-blue-500",
         color: "text-white",
         icon: "Squares2X2Icon"
       },
       {
         title: "برندهای من",
         path: "/brands",
-        background_color: "bg-gray-400",
+        background_color: "bg-green-500",
         color: "text-white",
         icon: "HomeModernIcon"
       }
