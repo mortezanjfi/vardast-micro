@@ -38,7 +38,7 @@ const Lines = ({ onChangeModals }: IOrdersTabProps) => {
       },
       onRow: {
         url: (row) =>
-          `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders/${row.original.id}`
+          `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders/${row.original.pre_order_id}`
       },
       columns: [
         {

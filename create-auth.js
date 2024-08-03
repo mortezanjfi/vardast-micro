@@ -6,8 +6,9 @@ const readAllFile = () => {
 
   readDirectoryMain.forEach((dirNext) => {
     if (
-      fs.lstatSync(dirMain + "/" + dirNext).isDirectory() &&
-      dirNext.startsWith("vardast")
+      (fs.lstatSync(dirMain + "/" + dirNext).isDirectory() &&
+        dirNext.startsWith("vardast")) ||
+      dirNext.startsWith("bid")
     ) {
       fs.cpSync(
         "./apps/authentication/src/app/(authentication)",

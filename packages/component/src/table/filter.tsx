@@ -63,7 +63,7 @@ const Filter = <T extends ZodType<any, any, any>>({
 
   return (
     <Card className="flex flex-col justify-between gap-6 p-6">
-      <div className="grid grid-cols-4 gap-6">
+      <div className="grid gap sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {filters.options?.map((filter) => (
           <FormField
             key={filter.title}
@@ -79,7 +79,7 @@ const Filter = <T extends ZodType<any, any, any>>({
           />
         ))}
       </div>
-      <div className="col-start-4 flex justify-end gap-3">
+      <div className="col-span-full flex flex-col gap sm:flex-row sm:justify-end">
         <Button
           size="medium"
           variant="outline-primary"
