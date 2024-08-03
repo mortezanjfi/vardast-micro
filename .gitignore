@@ -109,3 +109,4 @@ public/workbox-*
 apps/vardast*/src/app/(authentication)
 apps/bid/src/app/(authentication)
 apps/vardast*/src/app/**/(bid)
+apps/**/locales
