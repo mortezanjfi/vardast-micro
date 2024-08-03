@@ -4,7 +4,7 @@ import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
-import ProjectsPage from "@/app/(bid)/projects/components/ProjectsPage"
+import ProjectsPage from "@/app/(layout)/(bid)/projects/components/ProjectsPage"
 
 // set dynamic metadata
 export async function generateMetadata(): Promise<Metadata> {

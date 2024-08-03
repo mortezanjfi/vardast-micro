@@ -3,7 +3,7 @@ import { dehydrate } from "@tanstack/react-query"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 
-import OrdersPage from "@/app/(bid)/orders/components/OrdersPage"
+import OrdersPage from "@/app/(layout)/(bid)/orders/components/OrdersPage"
 
 // set dynamic metadata
 export async function generateMetadata(): Promise<Metadata> {

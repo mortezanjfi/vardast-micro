@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 
-import ProjectPage from "@/app/(bid)/projects/[uuid]/components/ProjectPage"
+import ProjectPage from "@/app/(layout)/(bid)/projects/[uuid]/components/ProjectPage"
 
 interface ProductIndexProps {
   params: { uuid: string }

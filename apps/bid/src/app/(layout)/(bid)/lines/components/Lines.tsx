@@ -7,7 +7,10 @@ import { getOrderLinesQueryFn } from "@vardast/query/queryFns/orders/getOrderLin
 import { newTimeConvertor } from "@vardast/util/convertToPersianDate"
 import useTranslation from "next-translate/useTranslation"
 
-import { IOrdersTabProps, OrderModalEnum } from "@/app/(bid)/types/type"
+import {
+  IOrdersTabProps,
+  OrderModalEnum
+} from "@/app/(layout)/(bid)/types/type"
 
 const Lines = ({ onChangeModals }: IOrdersTabProps) => {
   const { t } = useTranslation()

@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 
-import OrderPage from "@/app/(bid)/orders/[uuid]/components/OrderPage"
+import OrderPage from "@/app/(layout)/(bid)/orders/[uuid]/components/OrderPage"
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

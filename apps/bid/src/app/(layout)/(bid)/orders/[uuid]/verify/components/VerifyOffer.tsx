@@ -20,7 +20,7 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-import Orders from "@/app/(bid)/orders/components/Orders"
+import Orders from "@/app/(layout)/(bid)/orders/components/Orders"
 
 type VerifyOfferProps = {
   uuid: string

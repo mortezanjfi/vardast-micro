@@ -12,8 +12,11 @@ import { Button } from "@vardast/ui/button"
 import { Modal, ModalProps, useModals } from "@vardast/ui/modal"
 import useTranslation from "next-translate/useTranslation"
 
-import AddPriceModal from "@/app/(bid)/orders/[uuid]/components/AddPriceModal"
-import { IOrderPageSectionProps, OrderModalEnum } from "@/app/(bid)/types/type"
+import AddPriceModal from "@/app/(layout)/(bid)/orders/[uuid]/components/AddPriceModal"
+import {
+  IOrderPageSectionProps,
+  OrderModalEnum
+} from "@/app/(layout)/(bid)/types/type"
 
 function OfferModal({
   modals,

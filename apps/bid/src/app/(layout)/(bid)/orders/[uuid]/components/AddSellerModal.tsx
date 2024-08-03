@@ -30,7 +30,10 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { IOrderPageSectionProps, OrderModalEnum } from "@/app/(bid)/types/type"
+import {
+  IOrderPageSectionProps,
+  OrderModalEnum
+} from "@/app/(layout)/(bid)/types/type"
 
 const CreateSellerSchema = AddSellerOrderOfferSchema()
   .extend({

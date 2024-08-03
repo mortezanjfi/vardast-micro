@@ -19,13 +19,19 @@ import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 import { DateObject } from "react-multi-date-picker"
 
-import { PaymentMethodEnumFa, PreOrderStatesFa } from "@/app/(bid)/constants"
-import AddSellerModal from "@/app/(bid)/orders/[uuid]/components/AddSellerModal"
-import OfferModal from "@/app/(bid)/orders/[uuid]/components/OfferModal"
-import OrderInfoModal from "@/app/(bid)/orders/[uuid]/components/OrderInfoModal"
-import OrderProductsTabsModal from "@/app/(bid)/orders/[uuid]/components/tabs/OrderProductsTabsModal"
-import DetailsCard from "@/app/(bid)/orders/components/DetailsCard"
-import { IOrderPageProps, OrderModalEnum } from "@/app/(bid)/types/type"
+import {
+  PaymentMethodEnumFa,
+  PreOrderStatesFa
+} from "@/app/(layout)/(bid)/constants"
+import AddSellerModal from "@/app/(layout)/(bid)/orders/[uuid]/components/AddSellerModal"
+import OfferModal from "@/app/(layout)/(bid)/orders/[uuid]/components/OfferModal"
+import OrderInfoModal from "@/app/(layout)/(bid)/orders/[uuid]/components/OrderInfoModal"
+import OrderProductsTabsModal from "@/app/(layout)/(bid)/orders/[uuid]/components/tabs/OrderProductsTabsModal"
+import DetailsCard from "@/app/(layout)/(bid)/orders/components/DetailsCard"
+import {
+  IOrderPageProps,
+  OrderModalEnum
+} from "@/app/(layout)/(bid)/types/type"
 
 const OrderPage = ({ uuid }: IOrderPageProps) => {
   const [loading, setLoading] = useState(null)

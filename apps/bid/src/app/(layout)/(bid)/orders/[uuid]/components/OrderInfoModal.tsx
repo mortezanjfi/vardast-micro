@@ -36,7 +36,7 @@ import { useForm } from "react-hook-form"
 import { DateObject } from "react-multi-date-picker"
 import { TypeOf, z } from "zod"
 
-import { IOrderPageSectionProps } from "@/app/(bid)/types/type"
+import { IOrderPageSectionProps } from "@/app/(layout)/(bid)/types/type"
 
 const UpdateOrderInfoSchema = UpdatePreOrderInputSchema()
   .extend({

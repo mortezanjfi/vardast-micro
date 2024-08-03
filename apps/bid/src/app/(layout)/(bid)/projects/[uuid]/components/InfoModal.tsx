@@ -19,7 +19,7 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-import { IOrderPageSectionProps } from "@/app/(bid)/types/type"
+import { IOrderPageSectionProps } from "@/app/(layout)/(bid)/types/type"
 
 const ProjectSchema = z.object({
   name: z.string()

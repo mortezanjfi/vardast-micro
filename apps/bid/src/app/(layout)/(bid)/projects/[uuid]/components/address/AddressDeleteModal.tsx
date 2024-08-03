@@ -12,7 +12,7 @@ import { Modal, ModalProps } from "@vardast/ui/modal"
 import { ClientError } from "graphql-request"
 import useTranslation from "next-translate/useTranslation"
 
-import { IOrderPageSectionProps } from "@/app/(bid)/types/type"
+import { IOrderPageSectionProps } from "@/app/(layout)/(bid)/types/type"
 
 const AddressDeleteModal = ({
   open,
