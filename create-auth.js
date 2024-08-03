@@ -17,6 +17,7 @@ const readAllFile = () => {
       );
     }
   });
+  console.log("create-auth");
 };
 
 readAllFile();

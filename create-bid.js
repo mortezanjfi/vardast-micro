@@ -23,13 +23,9 @@ const readAllFile = () => {
           { recursive: true }
         );
       }
-      console.log({
-        projects,
-        subDir,
-        bib: `${dirMain}/${dirNext}/src/app/${subDir}/(bid)`,
-      });
     }
   });
+  console.log("create-bid");
 };
 
 readAllFile();

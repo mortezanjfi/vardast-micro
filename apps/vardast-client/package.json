@@ -9,7 +9,6 @@
   },
   "scripts": {
     "check-env": "node -e 'console.log(process.env)' | grep npm",
-    "create-auth": "if [ -d \"src/app/(authentication)\" ]; then rm -rf \"src/app/(authentication)\"; fi && mkdir src/app/\\(authentication\\) && cp -r ../authentication/src/app/\\(authentication\\)/* src/app/\\(authentication\\)",
     "preinstall": "npx only-allow pnpm",
     "dev-limited": "cross-env NODE_OPTIONS='--max-http-header-size=81920' next dev",
     "dev": "cross-env next dev -p 3000",

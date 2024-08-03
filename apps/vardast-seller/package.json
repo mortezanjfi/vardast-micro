@@ -10,7 +10,6 @@
   "scripts": {
     "check-env": "node -e 'console.log(process.env)' | grep npm",
     "preinstall": "npx only-allow pnpm",
-    "create-auth": "if [ -d \"src/app/(authentication)\" ]; then rm -rf \"src/app/(authentication)\"; fi && mkdir src/app/\\(authentication\\) && cp -r ../authentication/src/app/\\(authentication\\)/* src/app/\\(authentication\\)",
     "dev-limited": "cross-env NODE_OPTIONS='--max-http-header-size=81920' next dev",
     "dev": "cross-env next dev -p 3002",
     "mac-dev": "pnpm run mac-generate-secret && cross-env next dev",

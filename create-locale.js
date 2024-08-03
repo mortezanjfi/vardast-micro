@@ -11,6 +11,7 @@ const readAllFile = () => {
       });
     }
   });
+  console.log("create-locales");
 };
 
 readAllFile();
