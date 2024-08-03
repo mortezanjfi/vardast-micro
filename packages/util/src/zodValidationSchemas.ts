@@ -26,6 +26,17 @@ export const cellphoneNumberSchema = z
     message: "شماره موبایل صحیح نیست"
   })
 
+export const phoneSchema = z
+  .string()
+  .min(11, {
+    message: "تلفن ثابت باید ۱۱ رقم باشد"
+  })
+  .min(11, {
+    message: "تلفن ثابت باید ۱۱ رقم باشد"
+  })
+  .refine((data) => stringHasOnlyNumberValidator(digitsFaToEn(`${data}`)), {
+    message: "تلفن ثابت صحیح نیست"
+  })
 export const postalCodeSchema = z
   .string()
   .min(10, {

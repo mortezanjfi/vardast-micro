@@ -2,8 +2,6 @@
 
 import { useMemo, useState } from "react"
 import { UseQueryResult } from "@tanstack/react-query/build/lib/types"
-import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
-import { OrderPreviewCardSkeleton } from "@vardast/component/order/OrderPreviewCard"
 import SwiperNavigationButton, {
   SwiperButtonAction,
   SwiperButtonsDirection
@@ -25,8 +23,7 @@ const flag = false
 
 const PublicPreOrdersSection = ({ query, isMobileView }: Props) => {
   const [swiperRef, setSwiperRef] = useState<SwiperClass>()
-  const [selectedItemId, setSelectedItemId] =
-    useState<ICategoryListLoader>(null)
+
   const { ref: refNext, inView: inViewNext } = useInView({ threshold: 0.1 })
   const { ref: refPrev, inView: inViewPrev } = useInView({ threshold: 0.1 })
 
@@ -79,7 +76,7 @@ const PublicPreOrdersSection = ({ query, isMobileView }: Props) => {
                     isMobileView ? "w-[calc(100vw-45px)]" : "w-[402px]"
                   )}
                 >
-                  <OrderPreviewCardSkeleton />
+                  <div></div>
                 </SwiperSlide>
               ))}
             </>

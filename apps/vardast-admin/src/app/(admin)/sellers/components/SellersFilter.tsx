@@ -1,12 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react"
-import { useDebouncedState } from "@mantine/hooks"
 import Card from "@vardast/component/Card"
-import {
-  SellerType,
-  useGetAllBrandsWithoutPaginationQuery
-} from "@vardast/graphql/generated"
+import { SellerType } from "@vardast/graphql/generated"
 import { statusesOfAvailability } from "@vardast/lib/AvailabilityStatus"
-import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
 import {
@@ -41,22 +36,10 @@ export const SellersFilter = ({
   setSellersQueryParams
 }: SellersFilterProps) => {
   const { t } = useTranslation()
-  const [brandsQuery, setBrandsQuery] = useDebouncedState<string>("", 500)
-  const [brandDialog, setBrandDialog] = useState<boolean>(false)
   const [logoDialog, setLogoDialog] = useState<boolean>(false)
   const [typeDialog, setTypeDialog] = useState<boolean>(false)
-  const brands = useGetAllBrandsWithoutPaginationQuery(
-    graphqlRequestClientWithToken,
-    {
-      indexBrandInput: {
-        name: brandsQuery
-      }
-    }
-  )
 
-  const handleSubmit = (data: any) => {
-    console.log(data)
-
+  const handleSubmit = () => {
     setSellersQueryParams({
       name: form.getValues("name"),
       hasLogo: form.getValues("hasLogo"),

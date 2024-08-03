@@ -2,7 +2,6 @@ import { Metadata } from "next"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import Card from "@vardast/component/Card"
 import Link from "@vardast/component/Link"
-import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 import { LucideCheckSquare } from "lucide-react"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -13,12 +12,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 // Make sure the function name is "default" (if you intend to have a default export)
 const AddProductPage = async ({
-  params: { type, uuid }
+  params: { uuid }
 }: {
   params: { type: string; uuid: string }
 }) => {
-  const isMobileView = await CheckIsMobileView()
-
   return (
     <Card className="flex flex-col items-center justify-center gap-6 md:py-12">
       <span>

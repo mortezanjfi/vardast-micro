@@ -43,7 +43,6 @@ import DesktopMobileViewOrganizer from "./DesktopMobileViewOrganizer"
 import FiltersContainer from "./filters-container"
 import FiltersSidebarContainer from "./filters-sidebar-container"
 import InfiniteScrollPagination from "./InfiniteScrollPagination"
-import ItemsCount from "./ItemsCount"
 import LoadingFailed from "./LoadingFailed"
 import MobileCategoriesFilter from "./mobile-categories-filter"
 import MobileFilterableAttributes from "./mobile-filterable-attributes"
@@ -59,7 +58,6 @@ import VocabularyFilter from "./vocabulary-filter"
 
 interface ProductListProps {
   hasTitle?: boolean
-  desktopSideBarClass?: string
   isMobileView: boolean
   args: IndexProductInput
   selectedCategoryIds: InputMaybe<number[]> | undefined
@@ -78,7 +76,6 @@ export const checkLimitPageByCondition = (condition: boolean, result: any[]) =>
 
 const ProductList = ({
   hasTitle = true,
-  desktopSideBarClass,
   isMobileView,
   args,
   selectedCategoryIds,
@@ -434,17 +431,6 @@ const ProductList = ({
     </FiltersSidebarContainer>
   )
 
-  const DesktopHeader = (
-    <div className="flex items-center justify-between md:pb-8">
-      {allProductsQuery.data?.pages[0].products.total && (
-        <ItemsCount
-          countItemTitle={"product"}
-          itemCount={allProductsQuery.data?.pages[0].products.total as number}
-        />
-      )}
-    </div>
-  )
-
   const MobileHeader = (
     <>
       <div className="sticky top-0 z-30 border-b border-b-alpha-300 bg-alpha-white p-4">
@@ -630,7 +616,6 @@ const ProductList = ({
   return (
     <DesktopMobileViewOrganizer
       isMobileView={isMobileView}
-      DesktopSidebar={<></>}
       DesktopHeader={
         hasTitle && (
           <ListHeader

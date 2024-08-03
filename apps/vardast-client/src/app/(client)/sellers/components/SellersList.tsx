@@ -170,7 +170,6 @@ const SellersList = ({ limitPage, args, isMobileView }: SellersListProps) => {
       isMobileView={isMobileView}
       Content={Content}
       DesktopHeader={DesktopHeader}
-      DesktopSidebar={<></>}
     />
   )
 }

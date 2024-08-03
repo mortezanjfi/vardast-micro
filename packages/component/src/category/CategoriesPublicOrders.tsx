@@ -6,8 +6,7 @@ import {
 } from "@vardast/graphql/generated"
 
 import ListHeader from "../desktop/ListHeader"
-import OrderCard from "../desktop/OrderCart"
-import { OrderPreviewCardSkeleton } from "../order/OrderPreviewCard"
+import OrderCard from "./OrderCard"
 
 type Props = {
   publicPreOrders: UseQueryResult<GetPublicOrdersQuery, unknown>
@@ -15,11 +14,7 @@ type Props = {
   categoryId?: string | number
 }
 
-function CategoriesPublicOrders({
-  publicPreOrders,
-  isMobileView,
-  categoryId
-}: Props) {
+function CategoriesPublicOrders({ publicPreOrders, isMobileView }: Props) {
   return (
     <>
       {!isMobileView && (
@@ -32,11 +27,11 @@ function CategoriesPublicOrders({
         {publicPreOrders.isFetching || publicPreOrders.isLoading ? (
           <>
             {[...Array(10)].map((_, index) => (
-              <OrderPreviewCardSkeleton categoryName={false} key={index} />
+              <div key={index}></div>
             ))}
           </>
         ) : publicPreOrders.data.publicOrders.length ? (
-          publicPreOrders.data.publicOrders.map((data, index) =>
+          publicPreOrders.data.publicOrders.map((data) =>
             data.orders.map((order, orderIndex) => (
               <OrderCard
                 forHomeCard

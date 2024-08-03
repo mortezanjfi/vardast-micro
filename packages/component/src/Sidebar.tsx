@@ -154,7 +154,11 @@ export const SidebarProfile = () => {
   )
 }
 
-const Sidebar = ({ menus_name, profile }: ILayoutDesktopSidebar) => {
+const Sidebar = ({
+  menus_name,
+  profile,
+  withHeader
+}: ILayoutDesktopSidebar & { withHeader?: boolean }) => {
   const [mount, setMount] = useState(false)
   const { sidebarAtom, sidebarHamburgerAtom } = useContext(LayoutContext)
   const innerComponentSidebar: ReactNode = useAtomValue(sidebarAtom)
@@ -181,7 +185,14 @@ const Sidebar = ({ menus_name, profile }: ILayoutDesktopSidebar) => {
       {open && (
         <div className="pointer-events-none fixed inset-0 z-50 h-full w-full bg-alpha-800 bg-opacity-80"></div>
       )}
-      <aside ref={ref} className={clsx("app-sidebar", open && "open")}>
+      <aside
+        ref={ref}
+        className={clsx(
+          "app-sidebar",
+          open && "open",
+          withHeader && "app-sidebar-has-header"
+        )}
+      >
         {/* {open && (
           <div className="fixed left-0 top-0 z-50 flex w-full items-center justify-end">
             <Button

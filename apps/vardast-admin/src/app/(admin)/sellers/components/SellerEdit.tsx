@@ -6,7 +6,7 @@ import AddressesTab from "@vardast/component/legal/address-Info/AddressesTab"
 import ContactInfosTab from "@vardast/component/legal/ContactInfosTab"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
-import PageTitle from "@vardast/component/project/PageTitle"
+import PageTitle from "@vardast/component/page-title"
 import {
   Address,
   ContactInfo,

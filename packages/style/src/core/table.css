@@ -16,6 +16,12 @@
 
   @apply w-full align-top;
 
+  & > tbody {
+    & > tr {
+      @apply even:bg-alpha-100 odd:bg-alpha-50 hover:bg-alpha-200 whitespace-nowrap;
+    }
+  }
+
   & > :not(caption) > * > * {
     @apply border-b
         border-[var(--table-border-color)]
@@ -46,7 +52,7 @@
   }
 
   & th {
-    @apply border;
+    @apply whitespace-nowrap;
     text-align: inherit;
     text-align: -webkit-match-parent;
   }

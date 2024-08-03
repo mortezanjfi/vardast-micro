@@ -32,11 +32,7 @@ export const sortBrand = {
     name_fa: "بیشترین کالا"
   }
 }
-const CategoriesSort = ({
-  sort,
-  onSortChanged,
-  bgColor = "bg-primary"
-}: CategoriesSortProps) => {
+const CategoriesSort = ({ sort, onSortChanged }: CategoriesSortProps) => {
   return (
     <FilterBlock title="مرتب سازی" openDefault={true}>
       <div className="flex flex-col gap-3">

@@ -4,10 +4,7 @@ import { useEffect, useMemo, useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
-import {
-  BrandOrSellerProfileTab,
-  TabTitleWithExtraData
-} from "@vardast/component/BrandOrSellerProfile"
+import { BrandOrSellerProfileTab } from "@vardast/component/BrandOrSellerProfile"
 import Loading from "@vardast/component/Loading"
 import NotFoundIcon from "@vardast/component/not-found-icon"
 import {
@@ -21,6 +18,7 @@ import { allUserFavoriteBrandsQueryFns } from "@vardast/query/queryFns/allUserFa
 import { allUserFavoriteProductsQueryFns } from "@vardast/query/queryFns/allUserFavoriteProductsQueryFns"
 import { allUserFavoriteSellersQueryFns } from "@vardast/query/queryFns/allUserFavoriteSellersQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
+import { SegmentTabTitle } from "@vardast/ui/segment"
 import { useSession } from "next-auth/react"
 
 import BrandsTabContent from "@/app/(client)/profile/favorites/components/BrandsTabContent"
@@ -129,24 +127,20 @@ const FavoritesPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
     () => [
       {
         value: EntityTypeEnum.Product,
-        title: <TabTitleWithExtraData title="کالاها" />,
+        title: <SegmentTabTitle title="کالاها" />,
         Content: () => (
           <ProductsTabContent session={session} productQuery={productQuery} />
         )
       },
       {
         value: EntityTypeEnum.Brand,
-        title: <TabTitleWithExtraData title="برندها" />,
-        Content: () => (
-          <BrandsTabContent session={session} brandQuery={brandQuery} />
-        )
+        title: <SegmentTabTitle title="برندها" />,
+        Content: () => <BrandsTabContent brandQuery={brandQuery} />
       },
       {
         value: EntityTypeEnum.Seller,
-        title: <TabTitleWithExtraData title="فروشندگان" />,
-        Content: () => (
-          <SellersTabContent sellerQuery={sellerQuery} session={session} />
-        )
+        title: <SegmentTabTitle title="فروشندگان" />,
+        Content: () => <SellersTabContent sellerQuery={sellerQuery} />
       }
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps

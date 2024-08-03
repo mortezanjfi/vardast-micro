@@ -8,7 +8,6 @@ import { useQueryClient } from "@tanstack/react-query"
 import CardContainer from "@vardast/component/desktop/CardContainer"
 import {
   Banner,
-  ThreeBannerStatuses,
   useCreateBannerMutation,
   useUpdateBannerMutation
 } from "@vardast/graphql/generated"
@@ -34,18 +33,6 @@ import { TypeOf, z } from "zod"
 
 type Props = { slider?: Banner }
 
-const statuses = [
-  {
-    status: "تایید شده",
-    value: ThreeBannerStatuses.Confirmed
-  },
-  { status: "در انتظار تایید", value: ThreeBannerStatuses.Pending },
-  {
-    status: "رد شده",
-    value: ThreeBannerStatuses.Rejected
-  }
-]
-
 const SliderSchema = z.object({
   name: z.string().optional(),
   link: z.string().optional(),
@@ -60,13 +47,12 @@ type CreateSliderType = TypeOf<typeof SliderSchema>
 
 function SliderForm({ slider }: Props) {
   const { t } = useTranslation()
-  const [errors, setErrors] = useState<ClientError>()
+  const [_, setErrors] = useState<ClientError>()
   const queryClient = useQueryClient()
   const { data: session } = useSession()
   const router = useRouter()
   const { toast } = useToast()
   const token = session?.accessToken || null
-  const [statusDialog, setStatusDialog] = useState<boolean>(false)
   //small--------------->
   const smallFileRef = useRef<HTMLInputElement>(null)
   const [smallFile, setSmallFile] = useState<File | null>(null)

@@ -9,6 +9,8 @@ type ILayoutTitleMap<T extends ILayoutTitleType> = T extends "image"
   ? { type: "image"; value?: string }
   : { type: "text"; value?: string }
 
+export type ILayoutTitle<T extends ILayoutTitleType> = ILayoutTitleMap<T>
+
 export interface ILayoutDesktopBreadcrumb {
   component_name: string
 }
@@ -17,8 +19,6 @@ export interface ILayoutDesktopSidebar {
   profile?: boolean
   background?: ILayoutBackground
 }
-
-export type ILayoutTitle<T extends ILayoutTitleType> = ILayoutTitleMap<T>
 
 interface ILayoutButton {
   type: "click" | "link"

@@ -1,23 +1,15 @@
-import { ReactNode } from "react"
 import clsx from "clsx"
 
-import Card, { cardButton } from "../Card"
+import Card, { CardProps } from "../Card"
 
-type Props = {
-  titleClass?: string
-  button?: cardButton
-  className?: string
-  children: ReactNode
-  title?: string
-}
+export interface CardContainerProps extends CardProps {}
 
 function CardContainer({
   titleClass,
-  button,
   className,
   children,
-  title
-}: Props) {
+  ...props
+}: CardContainerProps) {
   return (
     <Card
       titleClass={clsx(
@@ -25,8 +17,7 @@ function CardContainer({
         titleClass
       )}
       className={clsx("flex flex-col gap-5 !px-6", className)}
-      button={button}
-      title={title}
+      {...props}
     >
       {children}
     </Card>

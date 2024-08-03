@@ -26,7 +26,8 @@
       "@vardast/ui/*": ["node_modules/@vardast/ui/src/*"],
       "@vardast/util/*": ["node_modules/@vardast/util/src/*"],
       "@vardast/style/*": ["node_modules/@vardast/style/src/*"],
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@/app/(layout)/(bid)/*": ["src/app/(admin)/(bid)/*"]
     },
     "plugins": [
       {

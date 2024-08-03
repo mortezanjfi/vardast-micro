@@ -52,7 +52,7 @@ const MobilBrandSortFilter = ({
               </div>
             </div>
             <div className="flex flex-col p-4">
-              {Object.entries(sortBrand).map(([key, value]) => (
+              {Object.entries(sortBrand).map(([_, value]) => (
                 <div className="flex h-16 gap-1">
                   <Checkbox
                     className="flex
@@ -69,7 +69,7 @@ const MobilBrandSortFilter = ({
                     data-[state='checked']:border-primary-500
                     data-[state='checked']:bg-primary-500"
                     checked={sort === value.value}
-                    onCheckedChange={(checked) => {
+                    onCheckedChange={() => {
                       onSortChanged(value.value)
                     }}
                   ></Checkbox>

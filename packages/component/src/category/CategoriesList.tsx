@@ -12,7 +12,6 @@ import CategorySkeleton from "./CategorySkeleton"
 interface CategoriesListProps {
   blog?: boolean
   getAllBlogsQuery?: UseQueryResult<GetAllBlogsQuery>
-  categoryId?: string
   isMobileView?: boolean
   isLoading: boolean
   isSubcategory?: boolean
@@ -23,7 +22,6 @@ interface CategoriesListProps {
 
 const CategoriesList = ({
   blog,
-  categoryId,
   getAllBlogsQuery,
   isMobileView,
   isLoading,

@@ -10,6 +10,6 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default (props: Props) => {
+export default (_: Props) => {
   return <SliderForm />
 }

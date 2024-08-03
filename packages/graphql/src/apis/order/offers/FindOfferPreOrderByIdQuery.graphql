@@ -39,6 +39,9 @@ query FindOfferPreOrderById($id: Float!) {
       tax_price
       total_price
       type
+      offerOrder {
+        id
+      }
       line {
         id
         userId

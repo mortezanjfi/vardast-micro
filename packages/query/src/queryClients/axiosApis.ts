@@ -45,4 +45,23 @@ const axiosApis = {
   getPreInvoice
 }
 
+type AxiosApisType = keyof typeof axiosApis
+
+export const axiosDownLoad = async ({
+  uuid,
+  access_token,
+  apiName
+}: IServePdf & { apiName: AxiosApisType }) => {
+  const response = await axiosApis[apiName]({
+    uuid: uuid,
+    access_token
+  })
+  const html = response.data
+  const blob = new Blob([html], { type: "text/html" })
+  const url = window.URL.createObjectURL(blob)
+
+  const newTab = window.open(url, "_blank")
+  newTab.focus()
+}
+
 export default axiosApis

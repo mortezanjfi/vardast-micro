@@ -393,7 +393,7 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
                         onDelete={(idx) => {
                           setValues((prevValues) => {
                             const newValues = prevValues.filter(
-                              (item, index) => index !== idx
+                              (_, index) => index !== idx
                             )
                             return newValues
                           })
@@ -466,7 +466,7 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
                         onDelete={(idx) => {
                           setValues((prevValues) => {
                             const newValues = prevValues.filter(
-                              (item, index) => index !== idx
+                              (_, index) => index !== idx
                             )
                             return newValues
                           })
@@ -542,7 +542,7 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
                         onDelete={(idx) => {
                           setValues((prevValues) => {
                             const newValues = prevValues.filter(
-                              (item, index) => index !== idx
+                              (_, index) => index !== idx
                             )
                             return newValues
                           })

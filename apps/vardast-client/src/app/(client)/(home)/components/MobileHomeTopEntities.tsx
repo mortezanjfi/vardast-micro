@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import BrandCard from "@vardast/component/brand/BrandCard"
-import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
 import MobileHomeSection from "@vardast/component/home/MobileHomeSection"
 import SwiperNavigationButton, {
   SwiperButtonAction,
@@ -28,8 +27,6 @@ const MobileHomeTopEntities = ({
   __typename
 }: Props) => {
   const [swiperRef, setSwiperRef] = useState<SwiperClass>()
-  const [selectedItemId, setSelectedItemId] =
-    useState<ICategoryListLoader>(null)
   const { ref: refNext, inView: inViewNext } = useInView({ threshold: 0.1 })
   const { ref: refPrev, inView: inViewPrev } = useInView({ threshold: 0.1 })
 

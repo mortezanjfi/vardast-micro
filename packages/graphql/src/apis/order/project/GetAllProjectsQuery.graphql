@@ -16,6 +16,7 @@ query GetAllProjectsQuery($indexProjectInput: IndexProjectInput) {
       failedOrdersCount
       closedOrdersCount
       openOrdersCount
+      failedOrdersCount
       totalOrdersCount
       address {
         id

@@ -4,10 +4,7 @@ import * as Checkbox from "@radix-ui/react-checkbox"
 import * as Label from "@radix-ui/react-label"
 import { LucideCheck } from "lucide-react"
 
-import {
-  IndexCategoryInput,
-  SortBrandEnum
-} from "../../../graphql/src/generated"
+import { SortBrandEnum } from "../../../graphql/src/generated"
 import DynamicHeroIcon from "../DynamicHeroIcon"
 
 type BrandCategoryFilterProps = {
@@ -38,7 +35,6 @@ const BrandOrSellerCategoryFilter = ({
   onSortChanged,
   sort
 }: BrandCategoryFilterProps) => {
-  const args: IndexCategoryInput = {}
   return (
     <div className="flex flex-col">
       <div className="flex items-center gap-2 py-3">

@@ -63,7 +63,7 @@ const CategoryFilterSection = ({
         />
         <div className="hide-scrollbar flex max-h-72 flex-col overflow-y-auto">
           {categories?.data?.allCategoriesV2?.map(
-            (category, index) =>
+            (category) =>
               category && (
                 <Label.Root
                   key={category.id}
@@ -87,9 +87,7 @@ const CategoryFilterSection = ({
                       category.id ===
                       selectedCategoryIds.find((id) => id === category.id)
                     }
-                    onCheckedChange={(checked) =>
-                      handleCheckboxChange(category.id)
-                    }
+                    onCheckedChange={() => handleCheckboxChange(category.id)}
                   >
                     <Checkbox.Indicator className="text-white">
                       <LucideCheck className="h-3 w-3" strokeWidth={3} />

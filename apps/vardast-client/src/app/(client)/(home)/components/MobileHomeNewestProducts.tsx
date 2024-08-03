@@ -50,8 +50,8 @@ const MobileHomeNewestProducts = ({
                   .slice(0, 12)
                   .map((product) => (
                     <ProductCard
-                      selectedItemId={selectedProduct}
-                      setSelectedItemId={setSelectedProduct}
+                      selectedItemId={selectedItemId}
+                      setSelectedItemId={setSelectedItemId}
                       key={product?.id}
                       product={product as Product}
                     />

@@ -1,10 +1,7 @@
 import { NextResponse } from "next/server"
 import { getSellerQueryFn } from "@vardast/query/queryFns/sellerQueryFns"
 
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
+export async function GET(_: Request, { params }: { params: { id: string } }) {
   const { id } = params
   if (id) {
     try {

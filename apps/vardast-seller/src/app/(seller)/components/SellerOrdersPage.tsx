@@ -4,10 +4,8 @@ import { Dispatch, SetStateAction, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
+import OrderCard from "@vardast/component/category/OrderCard"
 import CardContainer from "@vardast/component/desktop/CardContainer"
-import OrderCard, {
-  PreOrderStatesFa
-} from "@vardast/component/desktop/OrderCart"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
@@ -19,8 +17,9 @@ import {
   PreOrdersQuery,
   PreOrderStates
 } from "@vardast/graphql/generated"
+import { PreOrderStatesFa } from "@vardast/lib/constants"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
-import { clsx } from "clsx"
+import { Badge } from "@vardast/ui/src/badge"
 import useTranslation from "next-translate/useTranslation"
 
 type Props = {
@@ -220,15 +219,11 @@ function SellerOrdersPage({
                   </td>
 
                   <td>
-                    <div
-                      className={clsx(
-                        "tag",
-                        PreOrderStatesFa[preOrder?.status]?.className
-                      )}
+                    <Badge
+                      variant={PreOrderStatesFa[preOrder?.status]?.variant}
                     >
-                      {/* <Dot /> */}
-                      <span>{PreOrderStatesFa[preOrder?.status]?.name_fa}</span>
-                    </div>
+                      {PreOrderStatesFa[preOrder?.status]?.name_fa}
+                    </Badge>
                   </td>
                 </tr>
               ))}

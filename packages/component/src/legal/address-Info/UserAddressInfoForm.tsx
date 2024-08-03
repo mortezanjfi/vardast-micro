@@ -72,7 +72,7 @@ export default ({ readOnlyMode, uuid }: Props) => {
 
   const submit = (data: CreateLegalUserInfoType) => {
     console.log(data)
-    const { address, cityId, phone, postalCode, provinceId } = data
+    // const { address, cityId, phone, postalCode, provinceId } = data
 
     router.push(`/users/legal/${uuid}/info`)
   }

@@ -76,7 +76,6 @@ export const checkLimitPageByCondition = (condition: boolean, result: any[]) =>
   condition ? result.length + 1 : undefined
 
 const ProductList = ({
-  desktopSideBarClass,
   isMobileView,
   args,
   selectedCategoryIds,
@@ -645,9 +644,7 @@ const ProductList = ({
   return (
     <DesktopMobileViewOrganizer
       isMobileView={isMobileView}
-      DesktopSidebar={<></>}
       DesktopHeader={DesktopHeader}
-      // DesktopHeader={<></>}
       MobileHeader={hasFilter ? MobileHeader : <></>}
       Content={Content}
     />

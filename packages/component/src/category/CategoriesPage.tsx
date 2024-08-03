@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { notFound, useSearchParams } from "next/navigation"
+import { notFound } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
 import {
   GetAllBlogsQuery,
@@ -36,9 +36,6 @@ interface CategoriesPageProps {
 
 const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
   const { t } = useTranslation()
-  const [showBrand, setShowBrand] = useState<boolean>(true)
-  const [more] = useState(false)
-  const searchParams = useSearchParams()
   const [activeTab, setActiveTab] = useState<CATEGORY_PAGE_TABS>(
     CATEGORY_PAGE_TABS.SUBCATEGORIES
   )
@@ -166,7 +163,6 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
                   ? false
                   : true
               }
-              categoryId={categoryId}
               getAllBlogsQuery={getAllBlogsQuery}
               description={categoryQuery?.data?.category?.description}
               data={categoryQuery?.data?.category.children}

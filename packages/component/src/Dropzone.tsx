@@ -69,7 +69,7 @@ const Dropzone = ({
 }: DropzoneProps) => {
   const { data: session } = useSession()
   const { t } = useTranslation()
-  const [errors, setErrors] = useState<ClientError>()
+  const [_, setErrors] = useState<ClientError>()
   const queryClient = useQueryClient()
 
   const internalFileState = useState<FilesWithPreview[]>([])
@@ -194,30 +194,28 @@ const Dropzone = ({
 
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     accept: {
-      csv: ["text/csv"],
-      ".tgz": ["application/x-gzip", "application/x-compressed-tar"],
-      ".tar": ["application/x-tar"],
-      ".zip": ["application/zip", "application/x-zip-compressed"],
-      ".rar": ["application/vnd.rar"],
-      ".xlsx": [
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      "text/csv": [".csv"],
+      "application/x-gzip": [".tgz"],
+      "application/x-compressed-tar": [".tgz"],
+      "application/x-tar": [".tar"],
+      "application/vnd.rar": [".rar"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx"
       ],
-      ".xls": ["application/vnd.ms-excel"],
-      ".odt": ["application/vnd.oasis.opendocument.text"],
-      ".png": ["image/png"],
-      ".gif": ["image/gif"],
-      ".tiff": ["image/tiff"],
-      ".jpg": ["image/jpeg"],
-      ".jpeg": ["image/jpeg"],
-      ".bmp": ["image/bmp"],
-      ".svg": ["image/svg+xml"],
-      ".txt": ["text/plain"],
-      ".doc": ["application/msword"],
-      ".docx": [
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-      ],
-      ".rtf": ["application/rtf"],
-      ".pdf": ["application/pdf"]
+      "application/vnd.ms-excel": [".xls"],
+      "application/vnd.oasis.opendocument.text": [".odt"],
+      "image/png": [".png"],
+      "image/gif": [".gif"],
+      "image/tiff": [".tiff"],
+      "image/jpeg": [".jpg", ".jpeg"],
+      "image/bmp": [".bmp"],
+      "image/svg+xml": [".svg"],
+      "text/plain": [".txt"],
+      "application/msword": [".doc"],
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+        [".docx"],
+      "application/rtf": [".rtf"],
+      "application/pdf": [".pdf"]
     },
     noClick: !!files.length,
     onDrop,

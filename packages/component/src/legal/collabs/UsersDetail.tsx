@@ -1,47 +1,22 @@
 "use client"
 
-import { useState } from "react"
 import useTranslation from "next-translate/useTranslation"
 
 import CardContainer from "../../desktop/CardContainer"
 import Link from "../../Link"
-import {
-  SELECTED_ITEM,
-  SELECTED_ITEM_TYPE
-} from "../../project/user/ProjectUsersTab"
-import { UserModal } from "../../project/user/UserModal"
 
 type Props = { readOnlyMode?: boolean; uuid: string; isMobileView?: boolean }
 
-function UsersDetail({ readOnlyMode, isMobileView, uuid }: Props) {
+function UsersDetail({ readOnlyMode, uuid }: Props) {
   const { t } = useTranslation()
-  const [selectedUsers, setSelectedUsers] = useState<SELECTED_ITEM>()
-  const onOpenModal = (selectedUsers: SELECTED_ITEM) => {
-    setSelectedUsers(selectedUsers)
-  }
-  const onCloseModal = () => {
-    setSelectedUsers(undefined)
-  }
+
   return (
     <>
-      {!readOnlyMode && (
-        <UserModal
-          isMobileView={isMobileView}
-          uuid={uuid}
-          onCloseModal={onCloseModal}
-          selectedUsers={selectedUsers}
-        />
-      )}
       <CardContainer
         button={
           !readOnlyMode && {
             text: "افزودن همکار",
-            variant: "primary",
-            onClick: () =>
-              onOpenModal({
-                type: SELECTED_ITEM_TYPE.ADD,
-                data: undefined
-              })
+            variant: "primary"
           }
         }
         title={readOnlyMode ? "همکاران" : "اطلاعات خواسته شده را وارد نمایید"}

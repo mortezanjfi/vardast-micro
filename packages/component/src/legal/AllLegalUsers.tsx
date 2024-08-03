@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import { Legal, useGetAllLegalUsersQuery } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
@@ -21,7 +20,6 @@ export default ({ title }: Props) => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [deletModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const [legalToDelete, setLegalToDelete] = useState<Legal>()
-  const router = useRouter()
   const onCreateUser = () => {
     setOpen(true)
   }

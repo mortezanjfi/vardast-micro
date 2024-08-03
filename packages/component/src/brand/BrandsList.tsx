@@ -148,7 +148,7 @@ const BrandsList = ({
       <NoResult entity="brand" />
     ) : allBrandsQuery.data.pages.length ? (
       <BrandsOrSellersContainer type={BrandContainerType.BRANDS_PAGE_LIST}>
-        {({ selectedItemId, setSelectedItemId }) => (
+        {(_) => (
           <InfiniteScrollPagination
             CardLoader={() => <BrandCardSkeleton />}
             infiniteQuery={allBrandsQuery}
@@ -311,7 +311,6 @@ const BrandsList = ({
           />
         )
       }
-      DesktopSidebar={<></>}
     />
   )
 }

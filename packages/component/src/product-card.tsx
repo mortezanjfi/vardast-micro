@@ -151,13 +151,8 @@ const ProductCard = forwardRef(
       <Link
         ref={ref}
         href={checkSellerRedirectUrl(`/product/${product.id}/${product.name}`)}
-        onClick={(e) => {
-          // if (isSellerPanel) {
-          // e.preventDefault()
-          // }
+        onClick={() => {
           setSelectedItemId(product.id)
-          console.log(product?.id)
-          console.log(selectedItemId)
         }}
         className={clsx(
           homeSlider

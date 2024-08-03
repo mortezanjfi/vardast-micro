@@ -3,15 +3,12 @@
 import { useEffect, useState } from "react"
 import { useDebouncedState } from "@mantine/hooks"
 import { useQuery } from "@tanstack/react-query"
-import CategoryFilter from "@vardast/component/category-filter"
 import DesktopMobileViewOrganizer from "@vardast/component/DesktopMobileViewOrganizer"
-import FiltersSidebarContainer from "@vardast/component/filters-sidebar-container"
 import NotFoundMessage from "@vardast/component/NotFound"
 import { ProductCardSkeleton } from "@vardast/component/product-card"
 import ProductListContainer, {
   ProductContainerType
 } from "@vardast/component/ProductListContainer"
-import VocabularyFilter from "@vardast/component/vocabulary-filter"
 import {
   GetMyProfileSellerQuery,
   InputMaybe,
@@ -46,9 +43,6 @@ export const checkLimitPageByCondition = (condition: boolean, result: any[]) =>
 const ProductList = ({
   isMobileView,
   args,
-  selectedCategoryIds,
-  brandId,
-  sellerId,
   setCategoriesCount,
   hasFilter = true,
   session,
@@ -75,21 +69,6 @@ const ProductList = ({
         setCategoriesCount(allProductsQuery.data?.myProfileSeller.sum)
     }
   }, [allProductsQuery.data?.myProfileSeller.sum, setCategoriesCount])
-
-  const DesktopSidebar = (
-    <FiltersSidebarContainer>
-      <div className="rounded-md px-4">
-        {selectedCategoryIds &&
-          selectedCategoryIds.length === 1 &&
-          !brandId &&
-          !sellerId && (
-            <CategoryFilter selectedCategoryId={selectedCategoryIds[0]} />
-          )}
-
-        {!selectedCategoryIds && !brandId && !sellerId && <VocabularyFilter />}
-      </div>
-    </FiltersSidebarContainer>
-  )
 
   const DesktopHeader = (
     <div className="relative flex transform items-center rounded-lg border-alpha-200 bg-alpha-100 pr-2 transition-all">
@@ -225,7 +204,6 @@ const ProductList = ({
   return (
     <DesktopMobileViewOrganizer
       isMobileView={isMobileView}
-      DesktopSidebar={DesktopSidebar}
       DesktopHeader={DesktopHeader}
       MobileHeader={hasFilter ? MobileHeader : <></>}
       Content={Content}

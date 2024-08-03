@@ -30,7 +30,7 @@ const CreateLegalUserSchema = z.object({
   cellphone: z.coerce.number()
 })
 
-export default ({ readOnlyMode, uuid }: Props) => {
+export default ({ readOnlyMode }: Props) => {
   const { t } = useTranslation()
   const router = useRouter()
 

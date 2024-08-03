@@ -17,6 +17,7 @@
   "dependencies": {
     "@tanstack/react-query": "*",
     "@tanstack/react-query-devtools": "*",
+    "@tanstack/react-table": "^8.19.2",
     "@vardast/asset": "workspace:*",
     "@vardast/graphql": "workspace:*",
     "@vardast/hook": "workspace:*",

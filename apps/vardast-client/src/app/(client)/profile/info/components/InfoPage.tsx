@@ -1,6 +1,6 @@
 "use client"
 
-import PageTitle from "@vardast/component/project/PageTitle"
+import PageTitle from "@vardast/component/page-title"
 import { UserType } from "@vardast/graphql/generated"
 import { useSession } from "next-auth/react"
 

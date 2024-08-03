@@ -1,13 +1,9 @@
 "use client"
 
-import { useState } from "react"
 import { UseQueryResult } from "@tanstack/react-query"
 import { Category, GetCategoryQuery } from "@vardast/graphql/generated"
-import { useInView } from "react-intersection-observer"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { Swiper as SwiperClass } from "swiper/types"
 
-import { ICategoryListLoader } from "../category/CategoryListLoader"
 import CategoryCircleItem, {
   CategoryCircleItemLoader
 } from "./CategoryCircleItem"
@@ -18,12 +14,6 @@ type Props = {
 }
 
 const MobileCategoriesCardSection = ({ slug, getCategoryQuery }: Props) => {
-  const [swiperRef, setSwiperRef] = useState<SwiperClass>()
-  const [selectedItemId, setSelectedItemId] =
-    useState<ICategoryListLoader>(null)
-  const { ref: refNext, inView: inViewNext } = useInView({ threshold: 0.1 })
-  const { ref: refPrev, inView: inViewPrev } = useInView({ threshold: 0.1 })
-
   return getCategoryQuery && getCategoryQuery.data.category.children.length ? (
     <div className="relative overflow-hidden border-b px-6 pt-6">
       <Swiper
@@ -32,7 +22,6 @@ const MobileCategoriesCardSection = ({ slug, getCategoryQuery }: Props) => {
         //   clickable: true
         // }}
         // modules={[FreeMode]}
-        onSwiper={setSwiperRef}
         // centeredSlides={centeredSlides ?? true}
         slidesPerView={"auto"}
         spaceBetween={15}
@@ -54,16 +43,7 @@ const MobileCategoriesCardSection = ({ slug, getCategoryQuery }: Props) => {
             (category, index) =>
               category && (
                 <SwiperSlide key={index} className="w-20 overflow-hidden ">
-                  <div
-                    ref={
-                      index ===
-                      getCategoryQuery?.data.category.children?.length - 1
-                        ? refNext
-                        : index === 0
-                          ? refPrev
-                          : undefined
-                    }
-                  >
+                  <div>
                     <CategoryCircleItem
                       slug={slug}
                       isMobileView

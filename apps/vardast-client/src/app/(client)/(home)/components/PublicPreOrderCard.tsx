@@ -1,21 +1,18 @@
 import Image from "next/image"
-import OrderCard from "@vardast/component/desktop/OrderCart"
+import OrderCard from "@vardast/component/category/OrderCard"
 import {
   PreOrder,
   PreOrderDto,
   PublicPreOrderDto
 } from "@vardast/graphql/generated"
-import useTranslation from "next-translate/useTranslation"
 
 type Props = { data: PublicPreOrderDto }
 
 function PublicPreOrderCard({ data }: Props) {
-  const { t } = useTranslation()
   return (
     data && (
       <div className="flex flex-col md:px-5 md:pt-1">
         <div className="flex items-center gap-2 border-b pb-1">
-          {/* <div className="relative h-14 w-14 overflow-hidden  p-1"> */}
           <Image
             src={
               data?.categoryImage
@@ -28,12 +25,10 @@ function PublicPreOrderCard({ data }: Props) {
             sizes="100"
             className="rounded-xl object-cover"
           />
-          {/* </div> */}
           <span className="h-full  text-base font-semibold">
             {data.categoryName}
           </span>
         </div>
-        {/* <OrderPreviewCard key={order.id} order={order as PreOrderDto} /> */}
         <OrderCard
           forHomeCard
           preOrder={data as unknown as PreOrder & PreOrderDto}

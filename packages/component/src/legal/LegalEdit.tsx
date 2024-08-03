@@ -1,18 +1,17 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import {
   Address,
   ContactInfo,
   useGetOneLegalQuery
 } from "@vardast/graphql/generated"
-import { useSession } from "next-auth/react"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@vardast/ui/tabs"
 import useTranslation from "next-translate/useTranslation"
 
-import graphqlRequestClientWithToken from "../../../query/src/queryClients/graphqlRequestClientWithToken"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../ui/src/tabs"
-import PageTitle from "../project/PageTitle"
+import PageTitle from "../page-title"
 import AddressesTab from "./address-Info/AddressesTab"
 import ContactInfosTab from "./ContactInfosTab"
 
@@ -25,8 +24,6 @@ export enum LEGAL_TAB {
 
 function LegalEdit({ title, uuid }: Props) {
   const { t } = useTranslation()
-  const { data: session } = useSession()
-  const router = useRouter()
   const searchParams = useSearchParams()
   const [activeTab, setActiveTab] = useState<LEGAL_TAB>(
     (searchParams.get("tab") as LEGAL_TAB) || LEGAL_TAB.ADDRESS

@@ -31,8 +31,6 @@ import clsx from "clsx"
 
 import { IBrandOrSellerProfile } from "./BrandProfile"
 
-type Props = {}
-
 const CategoriesTab = ({
   sellerName,
   isBrand = true,
@@ -271,7 +269,6 @@ const CategoriesTab = ({
             title="کالاهای این دسته بندی"
           /> */}
           <ProductList
-            desktopSideBarClass={!productsProps.isMobileView ? "!top-0" : ""}
             isMobileView={productsProps.isMobileView}
             args={productsProps.args}
             selectedCategoryIds={[]}

@@ -18,8 +18,8 @@ export type CreateOrderLineType = TypeOf<typeof CreateOrderLineSchema> & {
 }
 
 export interface OrderProductTabContentProps {
-  addProductLine: (productLine: CreateOrderLineType) => void
-  form: UseFormReturn<CreateOrderLineType>
+  onSubmit?: (productLine?: CreateOrderLineType) => void
+  form?: UseFormReturn<CreateOrderLineType>
   uuid?: string
 }
 

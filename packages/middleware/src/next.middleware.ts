@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { pathToRegexp } from "path-to-regexp"
 
-import i18n from "./i18n.mjs"
+import i18n from "./i18n"
 
 export async function middleware(request: NextRequest) {
   const locale = request.nextUrl.locale || i18n.defaultLocale

@@ -1,6 +1,5 @@
 interface IDesktopMobileViewOrganizer {
   isMobileView: boolean
-  DesktopSidebar?: JSX.Element
   MobileHeader?: JSX.Element
   DesktopHeader?: JSX.Element
   Content: JSX.Element
@@ -8,7 +7,6 @@ interface IDesktopMobileViewOrganizer {
 
 const DesktopMobileViewOrganizer: React.FC<IDesktopMobileViewOrganizer> = ({
   isMobileView,
-  DesktopSidebar,
   MobileHeader,
   DesktopHeader,
   Content

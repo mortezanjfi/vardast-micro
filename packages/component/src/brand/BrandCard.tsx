@@ -51,7 +51,7 @@ export const BrandCardSkeleton = () => {
   )
 }
 const BrandCard = forwardRef(
-  <T extends Brand>(
+  (
     {
       isMobileView,
       brand

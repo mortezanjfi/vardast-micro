@@ -5,7 +5,6 @@ import { useDebouncedState } from "@mantine/hooks"
 import * as Checkbox from "@radix-ui/react-checkbox"
 import * as Label from "@radix-ui/react-label"
 import { LucideCheck } from "lucide-react"
-import useTranslation from "next-translate/useTranslation"
 
 import { useGetAllCitiesQuery } from "../../../graphql/src/generated"
 import graphqlRequestClientWithToken from "../../../query/src/queryClients/graphqlRequestClientWithToken"
@@ -21,7 +20,6 @@ const CityFilterSection = ({
   setSelectedCityId,
   selectedCityId
 }: CityFilterSectionProps) => {
-  const { t } = useTranslation()
   const [cityQuery, setCityQuery] = useDebouncedState("", 500)
   const [cityQueryTemp, setCityQueryTemp] = useState("")
 
@@ -63,7 +61,7 @@ const CityFilterSection = ({
         />
         <div className="hide-scrollbar flex max-h-72 flex-col overflow-y-auto">
           {cities?.data?.cities?.data?.map(
-            (city, index) =>
+            (city) =>
               city && (
                 <Label.Root
                   key={city.id}

@@ -1,16 +1,12 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
 import { UseQueryResult } from "@tanstack/react-query"
-import { ICategoryListLoader } from "@vardast/component/category/CategoryListLoader"
 import ProductCard from "@vardast/component/product-card"
 import { GetAllProductsQuery, Product } from "@vardast/graphql/generated"
 import useWindowSize from "@vardast/hook/use-window-size"
 import clsx from "clsx"
-import { useInView } from "react-intersection-observer"
 import { Autoplay } from "swiper/modules"
-import { Swiper, SwiperRef, SwiperSlide } from "swiper/react"
-import { Swiper as SwiperClass } from "swiper/types"
+import { Swiper, SwiperSlide } from "swiper/react"
 
 const NewPriceSlider = ({
   query
@@ -18,22 +14,6 @@ const NewPriceSlider = ({
   query: UseQueryResult<GetAllProductsQuery, unknown>
 }) => {
   const { width } = useWindowSize()
-  const [selectedItemId, setSelectedItemId] =
-    useState<ICategoryListLoader>(null)
-  const [activeSlide, setActiveSlide] = useState(0)
-  const sliderRef = useRef<SwiperRef>(null)
-
-  const [swiperRef, setSwiperRef] = useState<SwiperClass>()
-
-  const { ref: refNext, inView: inViewNext } = useInView({ threshold: 0.1 })
-  const { ref: refPrev, inView: inViewPrev } = useInView({ threshold: 0.1 })
-
-  useEffect(() => {
-    if (sliderRef.current) {
-      setActiveSlide(sliderRef.current?.swiper.realIndex)
-    }
-  }, [])
-
   const sliderClass = " w-[calc(100vw-60px)] !ml-0 sm:w-full"
 
   return (
@@ -47,9 +27,6 @@ const NewPriceSlider = ({
             key="new-price-slider"
             centeredSlides
             slidesPerView={"auto"}
-            onAutoplay={(swiper) => {
-              setActiveSlide(swiper.realIndex)
-            }}
             modules={[Autoplay]}
             autoplay={{
               delay: 0,
@@ -59,25 +36,15 @@ const NewPriceSlider = ({
             className="h-full w-full sm:px-0"
             // spaceBetween={15}
           >
-            {query?.data?.products?.data.map((product, index) => {
+            {query?.data?.products?.data.map((product) => {
               return (
                 <SwiperSlide
                   key={product.id}
                   className="w-fit"
                   // className={clsx("!w-[421px] min-w-[421px]")}
                 >
-                  <div
-                    ref={
-                      index === query?.data?.products?.data?.length - 1
-                        ? refNext
-                        : index === 0
-                          ? refPrev
-                          : undefined
-                    }
-                  >
+                  <div>
                     <ProductCard
-                      setSelectedItemId={setSelectedItemId}
-                      selectedItemId={selectedItemId}
                       homeSlider={true}
                       key={product.id}
                       product={product as Product}

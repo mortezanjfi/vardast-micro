@@ -2,18 +2,34 @@
 
 import * as React from "react"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
+import { PortalProps } from "@radix-ui/react-portal"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
+import { cva, VariantProps } from "class-variance-authority"
 import { LucideX } from "lucide-react"
 
 const Dialog = DialogPrimitive.Root
 
 const DialogTrigger = DialogPrimitive.Trigger
 
-const DialogPortal = ({
-  className,
-  ...props
-}: DialogPrimitive.DialogPortalProps) => (
-  <DialogPrimitive.Portal className={mergeClasses(className)} {...props} />
+const dialogVariants = cva("dialog-content", {
+  variants: {
+    size: {
+      sm: "xl:max-lg max-w-sm md:max-w-sm",
+      md: "xl:max-xl max-w-md md:max-w-[70%]",
+      lg: "xl:max-2xl max-w-lg md:max-w-[80%]"
+    }
+  },
+  defaultVariants: {
+    size: "md"
+  }
+})
+
+export type DialogVariantProps = VariantProps<typeof dialogVariants> & {
+  container?: PortalProps["container"]
+}
+
+const DialogPortal = ({ ...props }: DialogPrimitive.DialogPortalProps) => (
+  <DialogPrimitive.Portal {...props} />
 )
 DialogPortal.displayName = DialogPrimitive.Portal.displayName
 
@@ -31,13 +47,14 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <DialogPortal>
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> &
+    DialogVariantProps
+>(({ className, size, container, children, ...props }, ref) => (
+  <DialogPortal container={container}>
     <DialogOverlay />
     <DialogPrimitive.Content
       ref={ref}
-      className={mergeClasses("dialog-content", className)}
+      className={mergeClasses(dialogVariants({ size }), className)}
       {...props}
     >
       {children}

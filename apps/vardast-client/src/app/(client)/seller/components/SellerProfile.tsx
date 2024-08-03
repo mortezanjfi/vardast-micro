@@ -3,8 +3,7 @@
 import { useContext, useEffect, useMemo } from "react"
 import { useQuery } from "@tanstack/react-query"
 import BrandOrSellerProfile, {
-  BrandOrSellerProfileTab,
-  TabTitleWithExtraData
+  BrandOrSellerProfileTab
 } from "@vardast/component/BrandOrSellerProfile"
 import {
   EntityTypeEnum,
@@ -16,6 +15,7 @@ import { PublicContext } from "@vardast/provider/PublicProvider"
 import { getIsFavoriteQueryFns } from "@vardast/query/queryFns/getIsFavoriteQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { getSellerQueryFn } from "@vardast/query/queryFns/sellerQueryFns"
+import { SegmentTabTitle } from "@vardast/ui/segment"
 import { useSetAtom } from "jotai"
 
 import BrandOrSellersTab from "../../brand/components/BrandOrSellersTab"
@@ -70,7 +70,7 @@ const SellerProfile = ({
       {
         value: SellerProfileTabEnum.PRODUCT,
         title: (
-          <TabTitleWithExtraData
+          <SegmentTabTitle
             title="کالاها"
             total={query.data?.seller.sum as number}
           />
@@ -92,7 +92,7 @@ const SellerProfile = ({
       {
         value: SellerProfileTabEnum.CATEGORY,
         title: (
-          <TabTitleWithExtraData
+          <SegmentTabTitle
             title="دسته‌بندی‌ها"
             total={query.data?.seller.categoriesCount as number}
           />
@@ -114,7 +114,7 @@ const SellerProfile = ({
         value: SellerProfileTabEnum.BRAND,
         className: "!bg-alpha-100 h-full",
         title: (
-          <TabTitleWithExtraData
+          <SegmentTabTitle
             title="برندها"
             total={query.data?.seller.brandsCount as number}
           />

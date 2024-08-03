@@ -35,8 +35,6 @@ import {
   TotalItemsReport
 } from "./BrandProfile"
 
-type Props = {}
-
 const BrandOrSellersTab = ({
   slug,
   isBrand = true,

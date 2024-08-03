@@ -1,5 +1,35 @@
 import { NavigationType } from "@vardast/type/Navigation"
 
+const _bidding: NavigationType[] = [
+  {
+    items: [
+      {
+        title: "پروژه ها",
+        path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}projects`,
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "FolderOpenIcon"
+      },
+      {
+        title: "سفارشات",
+        background_color: "bg-gray-400",
+        color: "text-white",
+        icon: "ClipboardDocumentIcon",
+        items: [
+          {
+            title: "بر اساس سفارش",
+            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders`
+          },
+          {
+            title: "بر اساس اقلام",
+            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}lines`
+          }
+        ]
+      }
+    ]
+  }
+]
+
 const _profile: NavigationType[] = [
   {
     items: [
@@ -151,7 +181,17 @@ const _admin: NavigationType[] = [
         path: "/profile/orders",
         background_color: "bg-blue-500",
         color: "text-white",
-        icon: "ClipboardDocumentIcon"
+        icon: "ClipboardDocumentIcon",
+        items: [
+          {
+            title: "بر اساس سفارش",
+            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders`
+          },
+          {
+            title: "بر اساس اقلام",
+            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}lines`
+          }
+        ]
       },
       {
         title: "مالی",
@@ -231,14 +271,14 @@ export const _seller_panel: NavigationType[] = [
         background_color: "bg-blue-500",
         color: "text-white",
         icon: "ClipboardDocumentIcon",
-        path: "/orders"
+        path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders`
       },
       {
         title: "سفارشات من",
         background_color: "bg-gray-400",
         color: "text-white",
         icon: "ClipboardIcon",
-        path: "/my-orders"
+        path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}my-orders"`
       },
       {
         title: "کالاها",
@@ -280,6 +320,7 @@ export const _seller_panel: NavigationType[] = [
 ]
 
 export default {
+  _bidding,
   _profile,
   _admin,
   _profile_about,

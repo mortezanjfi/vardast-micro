@@ -4,8 +4,6 @@ import AllLegalUsers from "@vardast/component/legal/AllLegalUsers"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 
-type Props = {}
-
 export async function generateMetadata(): Promise<Metadata> {
   // parent: ResolvingMetadata
   return {
