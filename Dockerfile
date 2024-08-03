@@ -33,7 +33,11 @@ WORKDIR /app
 # First install the dependencies (as they change less often)
 COPY --from=builder /app/out/full/ .
 COPY --from=builder /app/create-auth.js .
+COPY --from=builder /app/create-bid.js .
+COPY --from=builder /app/create-locale.js .
 RUN pnpm create-auth
+RUN pnpm create-bid
+RUN pnpm create-locale
 RUN rm -rf apps/authentication
 
 # COPY --from=builder /app/out/pnpm-lock ./pnpm-lock

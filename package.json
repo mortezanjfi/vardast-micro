@@ -21,7 +21,7 @@
     "db:studio": "pnpm -F db studio",
     "dev": "turbo dev --parallel",
     "start": "turbo start",
-    "predev": "cd packages/graphql && pnpm run predev",
+    "predev": "cd packages/graphql && pnpm run predev && pnpm run create-auth && pnpm run create-bid && pnpm run create-locale",
     "format": "turbo format --continue -- --cache --cache-location node_modules/.cache/.prettiercache",
     "format:fix": "turbo format --continue -- --write --cache --cache-location node_modules/.cache/.prettiercache",
     "lint": "turbo lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
