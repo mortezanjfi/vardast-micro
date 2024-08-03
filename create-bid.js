@@ -7,13 +7,27 @@ const readAllFile = () => {
   readDirectoryMain.forEach((dirNext) => {
     if (
       fs.lstatSync(dirMain + "/" + dirNext).isDirectory() &&
-      dirNext.startsWith("vardast-admin")
+      dirNext.startsWith("vardast-")
     ) {
-      fs.cpSync(
-        "./apps/bid/src/app/(layout)/(bid)",
-        dirMain + "/" + dirNext + "/src/app/(admin)/(bid)",
-        { recursive: true }
-      );
+      const projects = dirNext.replace("vardast-", "");
+      const alters = {
+        admin: "(admin)",
+        client: "(client)/profile/(layout)",
+        seller: "(seller)",
+      };
+      const subDir = alters[projects];
+      if (subDir) {
+        fs.cpSync(
+          "./apps/bid/src/app/(layout)/(bid)",
+          `${dirMain}/${dirNext}/src/app/${subDir}/(bid)`,
+          { recursive: true }
+        );
+      }
+      console.log({
+        projects,
+        subDir,
+        bib: `${dirMain}/${dirNext}/src/app/${subDir}/(bid)`,
+      });
     }
   });
 };
