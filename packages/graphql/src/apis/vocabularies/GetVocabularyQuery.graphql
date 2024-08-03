@@ -17,6 +17,7 @@ query GetVocabulary($id: Int, $slug: String) {
       description
       childrenCount
       productsCount
+      views
       imageCategory {
         file {
           id

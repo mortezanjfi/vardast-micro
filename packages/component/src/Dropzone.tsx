@@ -69,7 +69,7 @@ const Dropzone = ({
 }: DropzoneProps) => {
   const { data: session } = useSession()
   const { t } = useTranslation()
-  const [errors, setErrors] = useState<ClientError>()
+  const [_, setErrors] = useState<ClientError>()
   const queryClient = useQueryClient()
 
   const internalFileState = useState<FilesWithPreview[]>([])

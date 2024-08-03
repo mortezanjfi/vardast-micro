@@ -13,6 +13,7 @@ query GetAllProjectsQuery($indexProjectInput: IndexProjectInput) {
       name
       createTime
       status
+      failedOrdersCount
       closedOrdersCount
       openOrdersCount
       failedOrdersCount

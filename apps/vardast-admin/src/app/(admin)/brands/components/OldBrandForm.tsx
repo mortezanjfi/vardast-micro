@@ -1,6 +1,6 @@
 "use client"
 
-import { ChangeEvent, useEffect, useRef, useState } from "react"
+import { ChangeEvent, useRef, useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -62,6 +62,11 @@ const BrandForm = ({ brand }: BrandFormProps) => {
   const [bannerFile, setBannerFile] = useState<File | null>(null)
   const [bannerPreview, setBannerPreview] = useState<string>("")
 
+  //mobile banner
+  const mobileBannerFileRef = useRef<HTMLInputElement>(null)
+  const [mobileBannerFile, setMobileBannerFile] = useState<File | null>(null)
+  const [mobileBannerPreview, setMobileBannerPreview] = useState<string>("")
+
   const queryClient = useQueryClient()
   const token = session?.accessToken || null
 
@@ -118,7 +123,8 @@ const BrandForm = ({ brand }: BrandFormProps) => {
     social: z.string().optional(),
     catalogFileUuid: z.string().optional(),
     priceListUuid: z.string().optional(),
-    bannerUuid: z.string().optional()
+    bannerUuid: z.string().optional(),
+    mobileBannerUuid: z.string().optional()
   })
   type CreateBrandType = TypeOf<typeof CreateBrandSchema>
 
@@ -132,10 +138,6 @@ const BrandForm = ({ brand }: BrandFormProps) => {
   })
 
   const name_fa = form.watch("name_fa")
-
-  useEffect(() => {
-    console.log(brand)
-  }, [bannerFile, bannerPreview, bannerFileRef])
 
   const onLogoFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -232,12 +234,16 @@ const BrandForm = ({ brand }: BrandFormProps) => {
     }
   }
 
-  const onBannerfileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const onBannerfileChange = (
+    type: "mobile" | "desktop",
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
     if (event.target.files) {
       const fileToUpload = event.target.files[0]
       const formData = new FormData()
       formData.append("directoryPath", uploadPaths.brandBanner)
       formData.append("file", fileToUpload)
+      formData.append("type", type)
       fetch(
         `${process.env.NEXT_PUBLIC_API_ENDPOINT}/base/storage/file/brand/banner/${brand?.id}`,
         {
@@ -251,7 +257,10 @@ const BrandForm = ({ brand }: BrandFormProps) => {
         if (!response.ok) {
           toast({
             description: t("common:entity_added_successfully", {
-              entity: t("common:banner")
+              entity:
+                type === "desktop"
+                  ? t("common:banner")
+                  : t("common:mobile-banner")
             }),
             duration: 2000,
             variant: "success"
@@ -259,11 +268,16 @@ const BrandForm = ({ brand }: BrandFormProps) => {
         }
 
         const uploadResult = await response.json()
-        form.setValue("bannerUuid", uploadResult.uuid)
-        console.log(uploadResult.uuid)
 
-        setBannerFile(fileToUpload)
-        setBannerPreview(URL.createObjectURL(fileToUpload))
+        if (type === "desktop") {
+          form.setValue("bannerUuid", uploadResult.uuid)
+          setBannerFile(fileToUpload)
+          setBannerPreview(URL.createObjectURL(fileToUpload))
+        } else {
+          form.setValue("mobileBannerUuid", uploadResult.uuid)
+          setMobileBannerFile(fileToUpload)
+          setMobileBannerPreview(URL.createObjectURL(fileToUpload))
+        }
       })
     }
   }
@@ -290,8 +304,6 @@ const BrandForm = ({ brand }: BrandFormProps) => {
       })
     }
   }
-
-  console.log(brand)
 
   return (
     <Form {...form}>
@@ -416,7 +428,7 @@ const BrandForm = ({ brand }: BrandFormProps) => {
                 </div>
               </Card>
             )}
-            {/* catalog */}
+            {/* catalog ----------------------> */}
             {brand && (
               <Card template="1/2" title={t("common:catalog")}>
                 <div className="flex items-end gap-6">
@@ -476,7 +488,7 @@ const BrandForm = ({ brand }: BrandFormProps) => {
                 </div>
               </Card>
             )}
-            {/* priceList */}
+            {/* priceList ----------------------> */}
             {brand && (
               <Card template="1/2" title={t("common:price_list")}>
                 <div className="flex items-end gap-6">
@@ -536,13 +548,13 @@ const BrandForm = ({ brand }: BrandFormProps) => {
                 </div>
               </Card>
             )}
-            {/* banner */}
+            {/* banner ----------------------> */}
             {brand && (
               <Card template="1/2" title={t("common:banner")}>
                 <div className="flex items-end gap-6">
                   <Input
                     type="file"
-                    onChange={(e) => onBannerfileChange(e)}
+                    onChange={(e) => onBannerfileChange("desktop", e)}
                     className="hidden"
                     accept="image/*"
                     ref={bannerFileRef}
@@ -587,6 +599,66 @@ const BrandForm = ({ brand }: BrandFormProps) => {
                           form.setValue("bannerUuid", "")
                           setBannerFile(null)
                           setBannerPreview("")
+                        }}
+                      >
+                        <LucideTrash className="icon" />
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </Card>
+            )}
+            {/* Mobile Banner ----------------------> */}
+            {brand && (
+              <Card template="1/2" title={t("common:mobile-banner")}>
+                <div className="flex items-end gap-6">
+                  <Input
+                    type="file"
+                    onChange={(e) => onBannerfileChange("mobile", e)}
+                    className="hidden"
+                    accept="image/*"
+                    ref={mobileBannerFileRef}
+                  />
+                  <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
+                    {mobileBannerPreview || brand?.bannerMobile ? (
+                      <Image
+                        src={
+                          mobileBannerPreview ||
+                          (brand?.bannerMobile?.presignedUrl.url as string)
+                        }
+                        fill
+                        alt="..."
+                        className="object-contain p-3"
+                      />
+                    ) : (
+                      <LucideWarehouse
+                        className="h-8 w-8 text-alpha-400"
+                        strokeWidth={1.5}
+                      />
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="secondary"
+                      type="button"
+                      onClick={() => {
+                        mobileBannerFileRef.current?.click()
+                      }}
+                    >
+                      {mobileBannerFile
+                        ? mobileBannerFile.name
+                        : t("common:choose_entity_file", {
+                            entity: t("common:mobile-banner")
+                          })}
+                    </Button>
+                    {mobileBannerPreview && (
+                      <Button
+                        variant="danger"
+                        iconOnly
+                        onClick={() => {
+                          form.setValue("mobileBannerUuid", "")
+                          setMobileBannerFile(null)
+                          setMobileBannerPreview("")
                         }}
                       >
                         <LucideTrash className="icon" />

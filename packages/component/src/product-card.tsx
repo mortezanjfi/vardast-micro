@@ -22,6 +22,7 @@ import { ProductContainerType } from "./ProductListContainer"
 
 interface ProductCardProps {
   product: Product
+  homeSlider?: boolean
   isSellerPanel?: boolean
   containerType?: ProductContainerType
   selectedItemId?: ICategoryListLoader
@@ -89,6 +90,7 @@ export const ProductCardSkeleton = ({
 const ProductCard = forwardRef(
   (
     {
+      homeSlider,
       product,
       containerType = ProductContainerType.LARGE_LIST,
       selectedItemId,
@@ -150,14 +152,14 @@ const ProductCard = forwardRef(
         ref={ref}
         href={checkSellerRedirectUrl(`/product/${product.id}/${product.name}`)}
         onClick={() => {
-          // if (isSellerPanel) {
-          //   e.preventDefault()
-          // }
-          setSelectedItemId && setSelectedItemId(product.id)
+          setSelectedItemId(product.id)
         }}
         className={clsx(
-          "sm:h-none relative grid h-[calc((100vw-1.5rem)/2)] max-h-[calc((100vw-1.5rem)/2)] min-h-[calc((100vw-1.5rem)/2)] w-full flex-1 gap-2 bg-alpha-white transition hover:z-10 sm:flex sm:h-full sm:max-h-full sm:min-h-full sm:flex-col sm:px-4 sm:py sm:ring-2 sm:!ring-alpha-200 sm:hover:shadow-lg",
+          homeSlider
+            ? "relative flex items-center gap-2 border-x bg-transparent px-3 transition hover:z-10"
+            : "sm:h-none relative grid h-[calc((100vw-1.5rem)/2)] max-h-[calc((100vw-1.5rem)/2)] min-h-[calc((100vw-1.5rem)/2)] w-full flex-1 gap-2 bg-alpha-white transition hover:z-10 sm:flex sm:h-full sm:max-h-full sm:min-h-full sm:flex-col sm:px-4 sm:py sm:ring-2 sm:!ring-alpha-200 sm:hover:shadow-lg",
           ref && "!border-b !border-alpha-200 sm:!border-none",
+
           containerType === ProductContainerType.LARGE_LIST
             ? "grid-cols-3"
             : "overflow-hidden"
@@ -171,7 +173,10 @@ const ProductCard = forwardRef(
         )}
         <div
           ref={productContainerRef}
-          className={`relative flex flex-shrink-0 transform flex-col items-center justify-center bg-center bg-no-repeat align-middle opacity-0 transition-all duration-1000 ease-out`}
+          className={clsx(
+            `relative flex flex-shrink-0 transform flex-col items-center justify-center bg-center bg-no-repeat align-middle opacity-0 transition-all duration-1000 ease-out`,
+            homeSlider && "!h-12 !w-12"
+          )}
         >
           <div
             style={{
@@ -199,9 +204,19 @@ const ProductCard = forwardRef(
           </div>
         </div>
         {containerType !== ProductContainerType.PHOTO && (
-          <div className="sm:col-span1 col-span-2 grid h-full grid-rows-8">
-            <div></div>
-            <div className="row-span-2">
+          <div
+            className={clsx(
+              "sm:col-span1 col-span-2 grid h-full grid-rows-8",
+              homeSlider && "!flex gap-4"
+            )}
+          >
+            {!homeSlider && <div></div>}
+            <div
+              className={clsx(
+                "row-span-2",
+                homeSlider && "flex !flex-shrink-0"
+              )}
+            >
               <h5
                 title={product.name}
                 className="my-auto line-clamp-2 max-h-10 overflow-hidden whitespace-pre-wrap font-semibold"
@@ -209,32 +224,47 @@ const ProductCard = forwardRef(
                 {product.name}
               </h5>
             </div>
-            <div className="flex w-full">
+
+            <div
+              className={clsx(
+                "flex w-full",
+                homeSlider && "max-w-fit flex-shrink-0"
+              )}
+            >
               {/* {product.rating && product.rating > 0 ? (
                 <Rating rating={product.rating} />
               ) : (
                 ""
               )} */}
               {product?.lowestPrice?.createdAt && (
-                <div className="flex flex-wrap items-start justify-between text-xs text-alpha-500">
-                  آخرین بروزرسانی قیمت{" "}
-                  <span className="pr-1 font-medium text-error">
+                <div
+                  className={clsx(
+                    "flex flex-wrap items-start justify-between text-xs text-alpha-500",
+                    homeSlider && "!flex-nowrap !items-center"
+                  )}
+                >
+                  آخرین بروزرسانی قیمت
+                  <div className="flex gap-0.5 pr-1 font-medium text-error">
                     {product.lowestPrice.createdAt &&
                       digitsEnToFa(
                         formatDistanceToNow(
-                          new Date(product.lowestPrice.createdAt).getTime(),
-                          {
-                            addSuffix: true
-                          }
+                          new Date(product.lowestPrice.createdAt).getTime()
                         )
                       )}
-                  </span>
+                    <span>قبل</span>
+                  </div>
                 </div>
               )}
             </div>
+
             {product.lowestPrice ? (
               <>
-                <div className="flex w-full items-center justify-end gap-x">
+                <div
+                  className={clsx(
+                    "flex w-full items-center justify-end gap-x",
+                    homeSlider && "!hidden"
+                  )}
+                >
                   {/* {discount && (
                     <span className="rounded-full bg-error p-1 px-1.5 text-center text-sm font-semibold leading-none text-white">
                       {digitsEnToFa(15)}%
@@ -269,7 +299,8 @@ const ProductCard = forwardRef(
                 <div
                   className={clsx(
                     "flex w-full items-center",
-                    isSellerPanel ? "justify-between" : "justify-end"
+                    isSellerPanel ? "justify-between" : "justify-end",
+                    homeSlider && "!w-fit"
                   )}
                 >
                   {isSellerPanel && (
@@ -310,7 +341,7 @@ const ProductCard = forwardRef(
                 <div className="flex items-center justify-end text-xs text-alpha-500">
                   {product?.uom?.name && `هر ${product.uom.name}`}
                 </div>
-                <div></div>
+                {!homeSlider && <div></div>}
               </>
             ) : (
               isSellerPanel && (

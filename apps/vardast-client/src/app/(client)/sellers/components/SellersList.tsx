@@ -93,7 +93,7 @@ const SellersList = ({ limitPage, args, isMobileView }: SellersListProps) => {
 
   const Content =
     allSellersQuery.isFetching && allSellersQuery.isLoading ? (
-      <BrandsOrSellersContainer type={BrandContainerType.Brands_Page_List}>
+      <BrandsOrSellersContainer type={BrandContainerType.SELLERS_PAGE_LIST}>
         {() => (
           <>
             {[...Array(20)].map((_, index) => (
@@ -107,7 +107,7 @@ const SellersList = ({ limitPage, args, isMobileView }: SellersListProps) => {
     ) : !allSellersQuery.data ? (
       <NoResult entity="seller" />
     ) : allSellersQuery.data.pages.length ? (
-      <BrandsOrSellersContainer type={BrandContainerType.Brands_Page_List}>
+      <BrandsOrSellersContainer type={BrandContainerType.SELLERS_PAGE_LIST}>
         {({ selectedItemId, setSelectedItemId }) => (
           <InfiniteScrollPagination
             CardLoader={() => <BrandOrSellerCardSkeleton />}
@@ -170,7 +170,6 @@ const SellersList = ({ limitPage, args, isMobileView }: SellersListProps) => {
       isMobileView={isMobileView}
       Content={Content}
       DesktopHeader={DesktopHeader}
-      DesktopSidebar={<></>}
     />
   )
 }

@@ -13,6 +13,7 @@ import {
   PreOrderStates,
   useGetAllProjectsQuery
 } from "@vardast/graphql/generated"
+import { PreOrderStatesFa } from "@vardast/lib/constants"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { getAllPreOrdersQueryFn } from "@vardast/query/queryFns/orders/getAllPreOrdersQueryFn"
 import { Badge } from "@vardast/ui/badge"
@@ -21,7 +22,6 @@ import useTranslation from "next-translate/useTranslation"
 import { DateObject } from "react-multi-date-picker"
 import { z } from "zod"
 
-import { PreOrderStatesFa } from "@/app/(layout)/(bid)/constants"
 import {
   IOrdersTabProps,
   OrderModalEnum

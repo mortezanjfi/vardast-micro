@@ -40,13 +40,17 @@ const CategoryListItem = forwardRef(
         ref={ref}
         href={checkSellerRedirectUrl(href)}
         className={clsx(
+          "border !border-alpha-400",
           isSubCategory
             ? "h-[calc(42vw)] md:h-auto"
             : "h-[calc(60vw)] md:h-auto md:hover:shadow-lg",
           isSubCategory ? "grid-rows-7 pb-2" : "grid-rows-4",
-          "relative grid transform gap-2 overflow-hidden rounded-2xl bg-alpha-white transition hover:z-10 md:grid-rows-none md:rounded-none md:py md:hover:shadow-lg",
-          selectedItemId === id ? "outline outline-2 outline-primary" : "",
+          "relative grid transform gap-2 overflow-hidden rounded-2xl bg-alpha-white transition hover:z-10 md:grid-rows-none  md:py md:hover:shadow-lg",
+          selectedItemId === id
+            ? "!border-0 outline outline-2 outline-primary"
+            : "",
           className
+
           // "sm:max-w-full sm:max-h-full",
         )}
         onClick={onClick}

@@ -162,6 +162,9 @@ const Products = () => {
                   <th>
                     {t("common:entity_count", { entity: t("common:sellers") })}
                   </th>
+                  <th>
+                    {t("common:entity_count", { entity: t("common:views") })}
+                  </th>
                   <th>{t("common:price")}</th>
                   <th>{t("common:stock")}</th>
                   <th>{t("common:updated")}</th>
@@ -174,7 +177,7 @@ const Products = () => {
                   (product) =>
                     product && (
                       <tr key={product.id}>
-                        <td className="w-12">
+                        <td>
                           <div className="relative aspect-square h-12 w-12 overflow-hidden rounded">
                             <Image
                               src={
@@ -187,7 +190,7 @@ const Products = () => {
                             />
                           </div>
                         </td>
-                        <td className="w-12">
+                        <td>
                           <div className="flex flex-col gap-1.5">
                             <span className="font-medium text-alpha-800">
                               {product.name}
@@ -199,14 +202,15 @@ const Products = () => {
                             )}
                           </div>
                         </td>
-                        <td className="w-12 border-r-0.5">
+                        <td>
                           <span>{product.category.title}</span>
                         </td>
-                        <td className="w-[159px] border-r-0.5">
+                        <td>
                           <span>-</span>
                         </td>
-                        <td className="w-[129px] border-r-0.5">-</td>
-                        <td className="w-[159px] border-r-0.5">
+                        <td>-</td>
+                        <td>{digitsEnToFa(product.views)}</td>
+                        <td>
                           <div className="flex flex-col">
                             <div className="text-success-600">
                               {product.highestPrice ? (
@@ -242,13 +246,13 @@ const Products = () => {
                             </div>
                           </div>
                         </td>
-                        <td className="w-[159px] border-r-0.5">
+                        <td>
                           <span>--</span>
                         </td>
-                        <td className="w-[159px] border-r-0.5">
+                        <td>
                           <span>-</span>
                         </td>
-                        <td className="w-[159px] border-r-0.5">
+                        <td>
                           {product.isActive ? (
                             <span className="tag tag-dot tag-sm tag-success">
                               {t("common:active")}
@@ -259,7 +263,7 @@ const Products = () => {
                             </span>
                           )}
                         </td>
-                        <td className="w-[159px] border-r-0.5">
+                        <td>
                           <div className="flex gap-2">
                             <Link
                               target="_blank"
@@ -271,11 +275,9 @@ const Products = () => {
                             </Link>
                             <span
                               className="tag cursor-pointer text-error"
-                              // onClick={(e) => {
-                              //   e.stopPropagation()
-                              //   setDeleteModalOpen(true)
-                              //   setBrandToDelete(brand as Brand)
-                              // }}
+                              onClick={(e) => {
+                                e.stopPropagation()
+                              }}
                             >
                               {t("common:delete")}
                             </span>

@@ -55,6 +55,9 @@ const AddLegalUserModal = ({ open, setOpen }: Props) => {
   const createLegalMutation = useCreateLegalMutation(
     graphqlRequestClientWithToken,
     {
+      onError: (errors: ClientError) => {
+        setErrors(errors)
+      },
       onSuccess: (data) => {
         if (data?.createLegal.id) {
           queryClient.invalidateQueries({ queryKey: ["GetAllLegalUsersQuery"] })

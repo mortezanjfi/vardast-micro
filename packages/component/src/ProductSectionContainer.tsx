@@ -5,6 +5,7 @@ import clsx from "clsx"
 
 const ProductSectionContainer: React.FC<
   PropsWithChildren<{
+    TitleTag?: keyof JSX.IntrinsicElements
     titleCostumClass?: string
     titlePadding?: boolean
     title?: string
@@ -16,6 +17,7 @@ const ProductSectionContainer: React.FC<
     }
   }>
 > = ({
+  TitleTag = "h2",
   titleCostumClass,
   title = "",
   spaceless,
@@ -36,7 +38,9 @@ const ProductSectionContainer: React.FC<
           titleCostumClass
         )}
       >
-        {title && <h4 className="font-medium md:text-xl">{title}</h4>}
+        {title && (
+          <TitleTag className="font-medium md:text-xl">{title}</TitleTag>
+        )}
         {subtitle && (
           <Button
             onClick={subtitle.onClick}

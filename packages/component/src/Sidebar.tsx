@@ -4,25 +4,36 @@ import { ReactNode, useContext, useEffect, useState } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
 import { useClickOutside } from "@mantine/hooks"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
-import { UserType } from "@vardast/graphql/generated"
+import { useRefreshUserMutation, UserType } from "@vardast/graphql/generated"
 import { _authentication_profile_wallet } from "@vardast/lib/constants"
 import sidebar_options from "@vardast/lib/sidebar_options"
 import { LayoutContext } from "@vardast/provider/LayoutProvider"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ILayoutDesktopSidebar } from "@vardast/type/layout"
 import { Button } from "@vardast/ui/button"
+import { ToggleGroup, ToggleGroupItem } from "@vardast/ui/toggle-group"
 import clsx from "clsx"
 import { useAtom, useAtomValue } from "jotai"
 import { LucideChevronLeft } from "lucide-react"
-import { Session } from "next-auth"
-import useTranslation from "next-translate/useTranslation"
+import { useSession } from "next-auth/react"
 
 import DynamicHeroIcon from "./DynamicHeroIcon"
 import Link from "./Link"
 import Navigation from "./Navigation"
 import Progress from "./Progress"
 
-export const SidebarProfile = ({ session }: { session: Session }) => {
-  const { t } = useTranslation()
+export const SidebarProfile = () => {
+  const { data: session, update, status } = useSession()
+
+  const refreshUserMutation = useRefreshUserMutation(
+    graphqlRequestClientWithToken,
+    {
+      onSuccess: async (data) => {
+        await update({ ...session, ...data.refresh })
+      }
+    }
+  )
+
   const wallet =
     session?.type === UserType.Legal
       ? session?.profile?.legal?.wallet
@@ -32,20 +43,81 @@ export const SidebarProfile = ({ session }: { session: Session }) => {
       <section className="app-navigation-section">
         <ol className="app-navigation-section-list">
           <li className="app-navigation-item flex items-center justify-between">
+            <div className="w-full p-4">
+              <ToggleGroup
+                className="grid grid-cols-2 rounded-md bg-alpha-50 p-1"
+                type="single"
+                value={session?.type}
+                onValueChange={(value: UserType) => {
+                  value &&
+                    value !== session?.type &&
+                    refreshUserMutation.mutate({
+                      refreshInput: {
+                        accessToken: session?.accessToken,
+                        refreshToken: session?.refreshToken,
+                        type: value
+                      }
+                    })
+                }}
+                defaultValue={UserType.Real}
+              >
+                <ToggleGroupItem
+                  disabled={
+                    status === "loading" || refreshUserMutation.isLoading
+                  }
+                  className={clsx(
+                    "bg-inherit py-2 text-base text-alpha-500",
+                    session?.type === UserType.Real &&
+                      "sha !bg-alpha-white !text-alpha-800  shadow-lg"
+                  )}
+                  value={UserType.Real}
+                >
+                  حقیقی
+                </ToggleGroupItem>
+                <ToggleGroupItem
+                  disabled={
+                    status === "loading" || refreshUserMutation.isLoading
+                  }
+                  className={clsx(
+                    "bg-inherit py-2 text-base text-alpha-500",
+                    session?.type === UserType.Legal &&
+                      "sha !bg-alpha-white !text-alpha-800 shadow-lg"
+                  )}
+                  value={UserType.Legal}
+                >
+                  حقوقی
+                </ToggleGroupItem>
+              </ToggleGroup>
+            </div>
+          </li>
+          <li className="app-navigation-item flex items-center justify-between">
             <span className="not-hover">
               <Link className="app-navigation-item-link" href={"/profile/info"}>
                 <span className="flex">
                   <div className="flex flex-1 flex-col gap-y-1">
-                    {session?.profile?.fullName &&
+                    {session?.type === UserType.Real ? (
+                      <h4>
+                        {" "}
+                        {session?.profile?.fullName
+                          ? session?.profile?.fullName
+                          : "کاربر وردست"}
+                      </h4>
+                    ) : (
+                      <h4>{session?.profile?.legal?.name_company}</h4>
+                    )}
+                    {/* {session?.profile?.fullName &&
                     session?.profile?.fullName !== "null null" ? (
                       <h4 className="font-semibold">{`${session?.profile?.fullName} (${session?.type === UserType.Legal ? session?.profile?.legal?.name_company ?? " - " : t("common:real")})`}</h4>
                     ) : (
                       "کاربر وردست"
-                    )}
+                    )} */}
                     <p className="text-sm font-semibold text-alpha-400">
-                      {session?.profile?.cellphone
+                      {session?.type === UserType.Real
                         ? digitsEnToFa(session?.profile?.cellphone)
-                        : digitsEnToFa("09123456789")}
+                        : session?.profile?.legal?.position}
+                      {/* {session?.profile?.cellphone
+                        ? digitsEnToFa(session?.profile?.cellphone)
+                        : digitsEnToFa("09123456789")} */}
                     </p>
                   </div>
                   <Button className="app-navigation-item-arrow my-auto" noStyle>

@@ -15,7 +15,7 @@ import FavoritesPageIndex from "@/app/(client)/profile/favorites/components/Favo
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "علاقه مندی ها"
+    title: "علاقه‌مندی"
   }
 }
 

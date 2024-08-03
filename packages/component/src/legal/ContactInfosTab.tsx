@@ -147,7 +147,7 @@ const ContactInfosTab = ({
                             </span>
                           )}
                         </td>
-                        <td className="border">
+                        <td>
                           <Link
                             href={`/contact-infos/${contactInfo.id}?fallback=${pathname}`}
                           >

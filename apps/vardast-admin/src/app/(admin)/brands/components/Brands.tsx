@@ -13,6 +13,7 @@ import PageHeader from "@vardast/component/PageHeader"
 import Pagination from "@vardast/component/Pagination"
 import {
   Brand,
+  SortBrandEnum,
   ThreeStateSupervisionStatuses,
   useGetAllBrandsQuery
 } from "@vardast/graphql/generated"
@@ -21,6 +22,7 @@ import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Button } from "@vardast/ui/button"
 import { checkBooleanByString } from "@vardast/util/checkBooleanByString"
 import { getContentByApiStatus } from "@vardast/util/GetContentByApiStatus"
+import clsx from "clsx"
 import { LucidePlus, LucideWarehouse } from "lucide-react"
 import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
@@ -43,7 +45,10 @@ const filterSchema = z.object({
   logoStatus: z.string(),
   catalogStatus: z.string(),
   priceListStatus: z.string(),
-  bannerStatus: z.string()
+  bannerStatus: z.string(),
+  sort: z.string().optional(),
+  categoryId: z.number().optional(),
+  cityId: z.number().optional()
 })
 export type FilterFields = TypeOf<typeof filterSchema>
 
@@ -53,7 +58,9 @@ const Brands = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const [brandToDelete, setBrandToDelete] = useState<Brand>()
-  const [brandsQueryParams, setBrandsQueryParams] = useState<FilterFields>({})
+  const [brandsQueryParams, setBrandsQueryParams] = useState<FilterFields>({
+    sort: SortBrandEnum.Sum
+  })
   const form = useForm<FilterFields>({
     resolver: zodResolver(filterSchema),
     defaultValues: {
@@ -61,7 +68,8 @@ const Brands = () => {
       logoStatus: "",
       catalogStatus: "",
       priceListStatus: "",
-      bannerStatus: ""
+      bannerStatus: "",
+      sort: SortBrandEnum.Sum
     }
   })
 
@@ -74,12 +82,14 @@ const Brands = () => {
         hasPriceList: checkBooleanByString(brandsQueryParams.priceListStatus),
         hasCatalogeFile: checkBooleanByString(brandsQueryParams.catalogStatus),
         hasLogoFile: checkBooleanByString(brandsQueryParams.logoStatus),
-        hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus)
+        hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus),
+        sortType: brandsQueryParams.sort as SortBrandEnum
       }
     },
     {
       queryKey: [
         {
+          page: currentPage,
           name: brandsQueryParams.brand,
           hasPriceList: checkBooleanByString(brandsQueryParams.priceListStatus),
           hasCatalogeFile: checkBooleanByString(
@@ -87,7 +97,7 @@ const Brands = () => {
           ),
           hasLogoFile: checkBooleanByString(brandsQueryParams.logoStatus),
           hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus),
-          page: currentPage
+          sortType: brandsQueryParams.sort as SortBrandEnum
         }
       ]
     }
@@ -97,7 +107,6 @@ const Brands = () => {
     () => brands.data?.brands.data.length,
     [brands.data?.brands.data.length]
   )
-  // console.log(brands.data?.brands.);
 
   return (
     <>
@@ -136,6 +145,9 @@ const Brands = () => {
                   <th>{t("common:brand")}</th>
                   <th>
                     {t("common:entity_count", { entity: t("common:product") })}
+                  </th>
+                  <th>
+                    {t("common:entity_count", { entity: t("common:views") })}
                   </th>
                   {/* <th>{t("common:category")}</th> */}
                   {/* <th>{t("common:city")}</th> */}
@@ -179,16 +191,15 @@ const Brands = () => {
                             {brand.name}
                           </span>
                         </td>
-                        <td className=" border-r-0.5">
-                          {digitsEnToFa(addCommas(brand.sum))}
-                        </td>
-                        {/* <td className=" border-r-0.5"></td> */}
-                        {/* <td className=" border-r-0.5">
+                        <td>{digitsEnToFa(addCommas(brand.sum))}</td>
+                        <td>{digitsEnToFa(addCommas(brand.views))}</td>
+                        {/* <td ></td> */}
+                        {/* <td >
                           {brand.addresses.map(
                             (address) => address.city.name
                           ) && "-"}
                         </td> */}
-                        <td className=" border-r-0.5">
+                        <td>
                           {" "}
                           {brand.priceList?.id ? (
                             <span className="tag  tag-sm tag-success">
@@ -200,7 +211,7 @@ const Brands = () => {
                             </span>
                           )}
                         </td>
-                        <td className=" border-r-0.5 border-alpha-200">
+                        <td>
                           {brand.catalog?.id ? (
                             <span className="tag  tag-sm tag-success">
                               {t("common:has")}
@@ -211,18 +222,29 @@ const Brands = () => {
                             </span>
                           )}
                         </td>
-                        <td className=" border-r-0.5 border-alpha-200">
-                          {brand?.bannerDesktop?.id ? (
-                            <span className="tag  tag-sm tag-success">
-                              {t("common:has")}
-                            </span>
-                          ) : (
-                            <span className="tag tag-sm tag-danger">
-                              {t("common:has_not")}
-                            </span>
-                          )}
+                        <td className="flex gap-1">
+                          <span
+                            className={clsx(
+                              "tag  tag-sm ",
+                              brand?.bannerMobile?.id
+                                ? "tag-success"
+                                : "tag-danger"
+                            )}
+                          >
+                            {t("common:mobile")}
+                          </span>
+                          <span
+                            className={clsx(
+                              "tag  tag-sm",
+                              brand?.bannerDesktop?.id
+                                ? "tag-success"
+                                : "tag-danger"
+                            )}
+                          >
+                            {t("common:desktop")}
+                          </span>
                         </td>
-                        <td className=" border-r-0.5">
+                        <td>
                           {brand.status ===
                             ThreeStateSupervisionStatuses.Confirmed && (
                             <span className="">{t("common:confirmed")}</span>
@@ -237,7 +259,7 @@ const Brands = () => {
                           )}
                         </td>
 
-                        <td className=" border-r-0.5">
+                        <td>
                           <Link target="_blank" href={`/brands/${brand.id}`}>
                             <span className="tag cursor-pointer text-blue-500">
                               {" "}

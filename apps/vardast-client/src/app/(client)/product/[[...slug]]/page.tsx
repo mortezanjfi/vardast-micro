@@ -17,6 +17,7 @@ interface ProductIndexProps {
     slug: Array<string | number>
   }
 }
+const productPageTitle = process.env.NEXT_PUBLIC_PRODUCT_TITLE
 
 export async function generateMetadata(
   { params }: ProductIndexProps
@@ -29,7 +30,7 @@ export async function generateMetadata(
       const data = await getProductQueryFn(id)
 
       return {
-        title: data.product.name || data.product.title,
+        title: `${productPageTitle} ${data.product.name || data.product.title}`,
         description: data.product.metaDescription,
         alternates: {
           canonical: encodeURI(

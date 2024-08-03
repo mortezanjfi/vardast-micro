@@ -1,0 +1,33 @@
+query GetSlidersQuery($IndexBannerInput: IndexBannerInput!) {
+  getBanners(IndexBannerInput: $IndexBannerInput) {
+    id
+    name
+    status
+    sort
+    small {
+      id
+      presignedUrl {
+        url
+      }
+    }
+    medium {
+      id
+      presignedUrl {
+        url
+      }
+    }
+    large {
+      id
+      presignedUrl {
+        url
+      }
+    }
+    xlarge {
+      id
+      presignedUrl {
+        url
+      }
+    }
+    url
+  }
+}

@@ -45,7 +45,7 @@
     @apply z-40 h-14 w-full bg-primary px-2;
   }
   &.desktop {
-    @apply z-30 h-header border-b bg-alpha-white px-6 sm:px-0;
+    @apply z-30 h-header xl:h-fit xl:min-h-header border-b bg-alpha-white px-6 sm:px-0;
   }
 }
 .app-breadcrumb {
@@ -68,7 +68,7 @@
     @apply h-14 w-full bg-transparent;
   }
   &.desktop {
-    @apply h-header w-full bg-transparent;
+    @apply h-header xl:h-[102px] w-full bg-transparent;
   }
 }
 .app-sidebar {

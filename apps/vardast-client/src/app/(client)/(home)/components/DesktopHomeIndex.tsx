@@ -4,20 +4,25 @@ import { useState } from "react"
 import CategoryCircleItem, {
   CategoryCircleItemLoader
 } from "@vardast/component/category/CategoryCircleItem"
+import MobileHomeSection from "@vardast/component/home/MobileHomeSection"
+import MobileHomeTopBlogs from "@vardast/component/home/MobileHomeTopBlogs"
 import { Brand, Category } from "@vardast/graphql/generated"
 import clsx from "clsx"
 
 import { IHomeProps } from "@/app/(client)/(home)/components/HomeIndex"
-import HomeTopSellers from "@/app/(client)/(home)/components/HomeTopSellers"
+// import MegaMenu, {
+//   MegaMenuLoader
+// } from "@/app/(client)/(home)/components/MegaMenu"
 import MobileHomeNewestProducts from "@/app/(client)/(home)/components/MobileHomeNewestProducts"
-import MobileHomeSection from "@/app/(client)/(home)/components/MobileHomeSection"
 import MobileHomeSlider from "@/app/(client)/(home)/components/MobileHomeSlider"
-import MobileHomeTopBlogs from "@/app/(client)/(home)/components/MobileHomeTopBlogs"
 import MobileHomeTopEntities from "@/app/(client)/(home)/components/MobileHomeTopEntities"
+import NewPriceSlider from "@/app/(client)/(home)/components/NewPriceSlider"
+import PublicPreOrdersSection from "@/app/(client)/(home)/components/PublicPreOrdersSection"
 
 const DesktopHomeIndex = ({
+  publicOrdersQuery,
   getVocabularyQueryFcQuery,
-  allSellersCount,
+  recentPriceProductsQuery,
   allBrandsCount,
   allProductsQuery,
   getAllBlogsQuery,
@@ -32,6 +37,11 @@ const DesktopHomeIndex = ({
 
   return (
     <>
+      {recentPriceProductsQuery?.data?.products?.data?.length > 0 && (
+        <div className=" bg-alpha-white">
+          <NewPriceSlider query={recentPriceProductsQuery} />
+        </div>
+      )}
       <div className="bg-alpha-100 sm:bg-alpha-white">
         <div className="">
           <MobileHomeSlider
@@ -66,22 +76,21 @@ const DesktopHomeIndex = ({
             </div>
           </MobileHomeSection>
         </div>
-      </div>
-      <div className="border-t-2 bg-alpha-white py-8">
-        <div className="container mx-auto ">
-          <HomeTopSellers
-            isMobileView={false}
-            title="جدیدترین فروشنده‌ها"
-            allSellersCount={allSellersCount}
-          />
+      </div>{" "}
+      {publicOrdersQuery && (
+        <div className="border-t-2 bg-alpha-white">
+          <div className="container mx-auto py-8">
+            <MobileHomeSection title="جدیدترین سفارشات" viewAllHref="/orders">
+              <PublicPreOrdersSection query={publicOrdersQuery} />
+            </MobileHomeSection>
+          </div>
         </div>
-      </div>
+      )}
       {allBrandsCount.data && (
         <div className="border-t-2 bg-alpha-white py-8">
           <div className="container mx-auto ">
             <MobileHomeTopEntities
               __typename="Brand"
-              centeredSlides={false}
               title="جدیدترین برندها"
               query={allBrandsCount.data?.brands.data.slice(0, 8) as Brand[]}
             />
@@ -89,9 +98,13 @@ const DesktopHomeIndex = ({
         </div>
       )}
       {allProductsQuery.data && (
-        <div className="border-t-2 bg-alpha-white pb-12">
+        <div className="border-t-2 bg-alpha-white ">
           <div className="container mx-auto rounded-xl py-8">
-            <MobileHomeNewestProducts allProductsQuery={allProductsQuery} />
+            <MobileHomeNewestProducts
+              centeredSlides={false}
+              title="جدیدترین کالاها"
+              query={allProductsQuery}
+            />
           </div>
         </div>
       )}

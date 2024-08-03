@@ -6,19 +6,14 @@ import BrandOrSellerCard, {
 } from "@vardast/component/BrandOrSellerCard"
 import BrandsOrSellersContainer from "@vardast/component/BrandsOrSellersContainer"
 import { GetUserFavoriteSellersQuery, Seller } from "@vardast/graphql/generated"
-import { Session } from "next-auth"
 
 import { NotFoundItems } from "@/app/(client)/profile/favorites/components/FavoritesPageIndex"
 
 type SellersTabContentProps = {
   sellerQuery: UseQueryResult<GetUserFavoriteSellersQuery, unknown>
-  session: Session | null
 }
 
-export const SellersTabContent = ({
-  session,
-  sellerQuery
-}: SellersTabContentProps) => {
+export const SellersTabContent = ({ sellerQuery }: SellersTabContentProps) => {
   return (
     <>
       {sellerQuery.isFetching || sellerQuery.isLoading ? (

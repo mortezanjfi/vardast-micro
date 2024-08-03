@@ -75,10 +75,7 @@ const AddLegalUserModal = ({ isMobileView, isAdmin, open, setOpen }: Props) => {
   const router = useRouter()
 
   const form = useForm<CreateLegalUserInfoType>({
-    resolver: zodResolver(CreateLegalUserSchema),
-    defaultValues: {
-      type: "LEGAL"
-    }
+    resolver: zodResolver(CreateLegalUserSchema)
   })
 
   const getAllLegalUsers = useGetAllLegalUsersQuery(

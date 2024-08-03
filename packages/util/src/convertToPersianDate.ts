@@ -59,18 +59,25 @@ function convertToPersianDate({
 
 export const newTimeConvertor = (dateString: string) => {
   const tehranDate = new Date(dateString)
-  tehranDate.setHours(tehranDate.getHours() + 3)
-  tehranDate.setMinutes(tehranDate.getMinutes() + 30)
-  return tehranDate.toLocaleString("fa-IR", {
+  const options: Intl.DateTimeFormatOptions = {
     timeZone: "Asia/Tehran",
     calendar: "persian",
     year: "numeric",
-    month: "long",
+    month: "numeric",
     day: "numeric",
     hour: "numeric",
-    minute: "numeric",
-    second: "numeric"
-  })
+    minute: "numeric"
+  }
+  const dateTimeFormat = new Intl.DateTimeFormat("fa-IR", options)
+  const parts = dateTimeFormat.formatToParts(tehranDate)
+
+  const year = parts.find((part) => part.type === "year")?.value
+  const month = parts.find((part) => part.type === "month")?.value
+  const day = parts.find((part) => part.type === "day")?.value
+  const hour = parts.find((part) => part.type === "hour")?.value
+  const minute = parts.find((part) => part.type === "minute")?.value
+
+  return `${hour}:${minute} - ${year}/${month}/${day}`
 }
 
 export default convertToPersianDate

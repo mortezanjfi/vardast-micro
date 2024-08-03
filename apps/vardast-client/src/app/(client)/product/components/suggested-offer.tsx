@@ -14,7 +14,7 @@ type SuggestedOfferProps = {
 }
 
 // eslint-disable-next-line no-unused-vars
-const SuggestedOffer = ({ offer, uom }: SuggestedOfferProps) => {
+const SuggestedOffer = ({ offer }: SuggestedOfferProps) => {
   const { contactModalDataAtom } = useContext(PublicContext)
   const setContactModalData = useSetAtom(contactModalDataAtom)
 

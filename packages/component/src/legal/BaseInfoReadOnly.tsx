@@ -7,7 +7,7 @@ import { inputSectionClass } from "./submission/SubmitPage"
 
 type Props = { uuid: string }
 
-export default ({ uuid }: Props) => {
+export default (_: Props) => {
   const { t } = useTranslation()
 
   return (

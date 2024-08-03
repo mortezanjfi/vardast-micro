@@ -8,13 +8,16 @@ import {
   GetAllBlogsQuery,
   GetAllBrandsCountQuery,
   GetAllProductsQuery,
-  GetAllSellersCountQuery,
   GetBannerHomePageQuery,
-  GetVocabularyQuery
+  GetPublicOrdersQuery,
+  GetVocabularyQuery,
+  SortDirection,
+  SortFieldProduct,
+  useGetPublicOrdersQuery
 } from "@vardast/graphql/generated"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { getAllBrandsCountQueryFn } from "@vardast/query/queryFns/allBrandsCountQueryFns"
 import { getAllProductsQueryFn } from "@vardast/query/queryFns/allProductsQueryFns"
-import { getAllSellersCountQueryFn } from "@vardast/query/queryFns/allSellersCountQueryFns"
 import { bannerHomePageQueryFns } from "@vardast/query/queryFns/bannerHomePageQueryFns"
 import { getAllBlogsQueryFn } from "@vardast/query/queryFns/getAllBlogsQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
@@ -31,19 +34,18 @@ const PwaNotificationProvider = dynamic(
 )
 
 export type IHomeProps = {
+  publicOrdersQuery: UseQueryResult<GetPublicOrdersQuery, unknown>
+  recentPriceProductsQuery: UseQueryResult<GetAllProductsQuery, unknown>
   isMobileView: boolean
   allProductsQuery: UseQueryResult<GetAllProductsQuery, unknown>
   homeSlidersQuery: UseQueryResult<GetBannerHomePageQuery, unknown>
-  allSellersCount: UseQueryResult<GetAllSellersCountQuery>
   allBrandsCount: UseQueryResult<GetAllBrandsCountQuery>
   getVocabularyQueryFcQuery: UseQueryResult<GetVocabularyQuery>
   getAllBlogsQuery: UseQueryResult<GetAllBlogsQuery>
-  // session: Session | null
 }
 
 type HomeIndexProps = {
   isMobileView: boolean
-  // session: Session | null
 }
 
 const HomeIndex = ({ isMobileView }: HomeIndexProps) => {
@@ -83,15 +85,6 @@ const HomeIndex = ({ isMobileView }: HomeIndexProps) => {
     }
   )
 
-  const allSellersCount = useQuery<GetAllSellersCountQuery>(
-    [QUERY_FUNCTIONS_KEY.ALL_SELLERS_COUNT_QUERY_KEY],
-    getAllSellersCountQueryFn,
-    {
-      keepPreviousData: true,
-      staleTime: 999999999
-    }
-  )
-
   const homeSlidersQuery = useQuery<GetBannerHomePageQuery>(
     [QUERY_FUNCTIONS_KEY.BANNER_HOME_PAGE_KEY, FileModelTypeEnum.Slider],
     () => bannerHomePageQueryFns({ type: FileModelTypeEnum.Slider }),
@@ -109,24 +102,44 @@ const HomeIndex = ({ isMobileView }: HomeIndexProps) => {
       staleTime: 999999999
     }
   )
+  const recentPriceProductsQuery = useQuery<GetAllProductsQuery>(
+    [
+      QUERY_FUNCTIONS_KEY.ALL_PRODUCTS_QUERY_KEY,
+      {
+        page: 1,
+        sortField: SortFieldProduct.Price,
+        sortDirection: SortDirection.Desc
+      }
+    ],
+    () =>
+      getAllProductsQueryFn({
+        page: 1,
+        sortField: SortFieldProduct.Price,
+        sortDirection: SortDirection.Desc
+      })
+  )
+
+  const publicOrdersQuery = useGetPublicOrdersQuery(
+    graphqlRequestClientWithToken
+  )
 
   const homeProps: IHomeProps = useMemo(
     () => ({
-      // session,
+      publicOrdersQuery,
+      recentPriceProductsQuery,
       isMobileView,
       allProductsQuery,
       homeSlidersQuery,
-      allSellersCount,
       allBrandsCount,
       getVocabularyQueryFcQuery,
       getAllBlogsQuery
     }),
     [
-      // session
+      publicOrdersQuery,
+      recentPriceProductsQuery,
       isMobileView,
       allProductsQuery,
       homeSlidersQuery,
-      allSellersCount,
       allBrandsCount,
       getVocabularyQueryFcQuery,
       getAllBlogsQuery

@@ -8,7 +8,14 @@
     "baseUrl": "./",
     "paths": {
       "@/*": ["node_modules/@vardast/type/src/*"],
-      "@vardast/type/*": ["node_modules/@vardast/type/src/*"]
+      "@vardast/type/*": ["node_modules/@vardast/type/src/*"],
+      "@vardast/ui/*": ["node_modules/@vardast/ui/src/*"],
+      "@vardast/graphql/generated": [
+        "node_modules/@vardast/graphql/src/generated.ts"
+      ],
+      "@vardast/graphql/auth.type": [
+        "node_modules/@vardast/graphql/src/auth.type.ts"
+      ]
     },
     "plugins": [
       {

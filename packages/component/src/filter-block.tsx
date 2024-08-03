@@ -6,13 +6,18 @@ import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
 import { LucideChevronDown } from "lucide-react"
 
+import { THeroIconName } from "../../type/src/layout"
+import DynamicHeroIcon from "./DynamicHeroIcon"
+
 type FilterBlockProps = {
   title: string
   children: ReactNode
   openDefault?: boolean
+  icon?: THeroIconName
 }
 
 const FilterBlock = ({
+  icon,
   title,
   children,
   openDefault = false
@@ -21,8 +26,9 @@ const FilterBlock = ({
 
   return (
     <Collapsible.Root open={open} onOpenChange={setOpen}>
-      <div className="flex items-center py-3">
-        <span className="font-bold text-alpha-800">{title}</span>
+      <div className="flex items-center gap-2 py-3">
+        {icon && <DynamicHeroIcon icon={icon} className="h-7 w-7" solid />}{" "}
+        <span className=" font-medium text-alpha-800">{title}</span>
         <Collapsible.Trigger asChild>
           <Button variant="ghost" size="small" className="mr-auto" iconOnly>
             <LucideChevronDown
@@ -32,9 +38,7 @@ const FilterBlock = ({
         </Collapsible.Trigger>
       </div>
       <Collapsible.Content>
-        <div className="hide-scrollbar max-h-full overflow-y-auto pb-3 text-justify">
-          {children}
-        </div>
+        <div className="overflow-hidden pb-3 text-justify">{children}</div>
       </Collapsible.Content>
     </Collapsible.Root>
   )

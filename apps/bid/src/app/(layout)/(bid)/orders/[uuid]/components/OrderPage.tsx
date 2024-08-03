@@ -11,6 +11,7 @@ import {
   useFindPreOrderByIdQuery,
   useUpdateOrderOfferMutation
 } from "@vardast/graphql/generated"
+import { PaymentMethodEnumFa, PreOrderStatesFa } from "@vardast/lib/constants"
 import { axiosDownLoad } from "@vardast/query/queryClients/axiosApis"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Button } from "@vardast/ui/button"
@@ -19,10 +20,6 @@ import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 import { DateObject } from "react-multi-date-picker"
 
-import {
-  PaymentMethodEnumFa,
-  PreOrderStatesFa
-} from "@/app/(layout)/(bid)/constants"
 import AddSellerModal from "@/app/(layout)/(bid)/orders/[uuid]/components/AddSellerModal"
 import OfferModal from "@/app/(layout)/(bid)/orders/[uuid]/components/OfferModal"
 import OrderInfoModal from "@/app/(layout)/(bid)/orders/[uuid]/components/OrderInfoModal"

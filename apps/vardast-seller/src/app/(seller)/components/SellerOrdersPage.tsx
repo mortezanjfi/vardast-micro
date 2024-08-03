@@ -4,10 +4,8 @@ import { Dispatch, SetStateAction, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { UseQueryResult } from "@tanstack/react-query"
+import OrderCard from "@vardast/component/category/OrderCard"
 import CardContainer from "@vardast/component/desktop/CardContainer"
-import OrderCard, {
-  PreOrderStatesFa
-} from "@vardast/component/desktop/OrderCart"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
@@ -15,11 +13,13 @@ import NotFoundMessage from "@vardast/component/NotFound"
 import Pagination from "@vardast/component/Pagination"
 import {
   PreOrder,
+  PreOrderDto,
   PreOrdersQuery,
   PreOrderStates
 } from "@vardast/graphql/generated"
+import { PreOrderStatesFa } from "@vardast/lib/constants"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
-import { clsx } from "clsx"
+import { Badge } from "@vardast/ui/src/badge"
 import useTranslation from "next-translate/useTranslation"
 
 type Props = {
@@ -88,7 +88,7 @@ function SellerOrdersPage({
               goToOffers={goToOffers}
               isSellerPanel={true}
               key={index}
-              preOrder={preOrder as PreOrder}
+              preOrder={preOrder as PreOrder & PreOrderDto}
             />
           ))}
         </>
@@ -158,16 +158,16 @@ function SellerOrdersPage({
           <table className="table-hover table">
             <thead>
               <tr>
-                <th className="border">{t("common:row")}</th>
-                <th className="border">
+                <th>{t("common:row")}</th>
+                <th>
                   {t("common:entity_code", { entity: t("common:order") })}
                 </th>
-                <th className="border">{t("common:purchaser")}</th>
-                <th className="border">
+                <th>{t("common:purchaser")}</th>
+                <th>
                   {t("common:entity_name", { entity: t("common:project") })}
                 </th>
-                <th className="border">{t("common:submission-time")}</th>
-                <th className="border">{t("common:order-expire-time")}</th>
+                <th>{t("common:submission-time")}</th>
+                <th>{t("common:order-expire-time")}</th>
 
                 <th>{t("common:status")}</th>
               </tr>
@@ -184,18 +184,16 @@ function SellerOrdersPage({
                       : router.push(`/orders/${preOrder?.id}`)
                   }}
                 >
-                  <td className="w-4 border">
+                  <td className="w-4">
                     <span>{digitsEnToFa(index + 1)}</span>
                   </td>
-                  <td className="border">
-                    {preOrder?.id && digitsEnToFa(preOrder?.id)}
-                  </td>
-                  <td className="border">
+                  <td>{preOrder?.id && digitsEnToFa(preOrder?.id)}</td>
+                  <td>
                     {preOrder?.user?.fullName &&
                       digitsEnToFa(preOrder?.user?.fullName)}
                   </td>
-                  <td className="border">{preOrder?.project?.name}</td>
-                  <td className="border">
+                  <td>{preOrder?.project?.name}</td>
+                  <td>
                     {digitsEnToFa(
                       new Date(preOrder?.request_date).toLocaleDateString(
                         "fa-IR",
@@ -207,7 +205,7 @@ function SellerOrdersPage({
                       )
                     )}
                   </td>
-                  <td className="border">
+                  <td>
                     {digitsEnToFa(
                       new Date(preOrder?.expire_time).toLocaleDateString(
                         "fa-IR",
@@ -220,16 +218,12 @@ function SellerOrdersPage({
                     )}
                   </td>
 
-                  <td className="border">
-                    <div
-                      className={clsx(
-                        "tag",
-                        PreOrderStatesFa[preOrder?.status]?.className
-                      )}
+                  <td>
+                    <Badge
+                      variant={PreOrderStatesFa[preOrder?.status]?.variant}
                     >
-                      {/* <Dot /> */}
-                      <span>{PreOrderStatesFa[preOrder?.status]?.name_fa}</span>
-                    </div>
+                      {PreOrderStatesFa[preOrder?.status]?.name_fa}
+                    </Badge>
                   </td>
                 </tr>
               ))}

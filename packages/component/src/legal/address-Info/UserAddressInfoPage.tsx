@@ -1,22 +1,11 @@
 // import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 "use client"
 
-import { useGetOneLegalQuery } from "@vardast/graphql/generated"
-import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
-
 export type UserBaseInfoPageProps = {
   uuid?: string
 }
 
-export default ({ uuid }: UserBaseInfoPageProps) => {
-  const getOnLegal = useGetOneLegalQuery(
-    graphqlRequestClientWithToken,
-    {
-      id: +uuid
-    },
-    { refetchOnMount: "always" }
-  )
-
+export default (_: UserBaseInfoPageProps) => {
   return (
     <div></div>
     // <AddressesTab

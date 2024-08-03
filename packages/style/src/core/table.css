@@ -56,7 +56,9 @@
     text-align: inherit;
     text-align: -webkit-match-parent;
   }
-
+  & td {
+    @apply border;
+  }
   & td,
   td > span,
   td > a > span {

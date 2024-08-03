@@ -33,7 +33,6 @@ import {
 import { Input } from "@vardast/ui/input"
 import { ClientError } from "graphql-request"
 import { LucideAlertOctagon } from "lucide-react"
-import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
@@ -62,7 +61,6 @@ const CreatePriceModal = ({
   const [tempAmount, setTempAmount] = useState<string>(
     (product?.myPrice?.amount?.toString() as string) || ""
   )
-  const { data: session } = useSession()
 
   const queryClient = useQueryClient()
 

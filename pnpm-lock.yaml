@@ -1098,9 +1098,15 @@ importers:
       '@heroicons/react':
         specifier: '*'
         version: 2.1.3(react@18.2.0)
+      '@vardast/graphql':
+        specifier: workspace:*
+        version: link:../graphql
       '@vardast/type':
         specifier: workspace:*
         version: link:../type
+      '@vardast/ui':
+        specifier: workspace:*
+        version: link:../ui
     devDependencies:
       '@vardast/eslint-config':
         specifier: workspace:*

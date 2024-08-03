@@ -9,10 +9,8 @@ type ItemsCountProps = {
 const ItemsCount = ({ countItemTitle, itemCount }: ItemsCountProps) => {
   const { t } = useTranslation()
   return (
-    <div className="flex w-full gap-1 bg-alpha-white md:w-auto">
-      <span>
-        {t("common:entity_count", { entity: t(`common:${countItemTitle}`) })} :{" "}
-      </span>
+    <div className="flex gap-1 bg-alpha-white text-alpha-500 md:w-auto">
+      <span>{t(`common:${countItemTitle}`)} : </span>
       <span className="text-primary-600">
         {digitsEnToFa(addCommas(itemCount))}
       </span>

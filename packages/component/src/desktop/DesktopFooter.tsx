@@ -1,8 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import Image from "next/image"
-import { usePathname } from "next/navigation"
 import aparatColorful from "@vardast/asset/aparatColorful.svg"
 import bazar from "@vardast/asset/bazar.svg"
 import instagramColorful from "@vardast/asset/instagramColorful.svg"
@@ -15,16 +13,6 @@ import { ILayoutDesktopFooter } from "@vardast/type/layout"
 import Link from "../Link"
 
 export default function DesktopFooter(_: ILayoutDesktopFooter) {
-  const [showFooter, setShowFooter] = useState(false)
-  const pathname = usePathname()
-
-  useEffect(() => {
-    if (pathname.startsWith("/profile")) {
-      setShowFooter(false)
-    } else {
-      setShowFooter(true)
-    }
-  }, [pathname])
   return (
     <div className="container mx-auto flex flex-col items-center justify-center gap-y-7 px-6 py-9">
       <div className="w-[150px]">

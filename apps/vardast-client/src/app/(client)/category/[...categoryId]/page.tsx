@@ -12,6 +12,8 @@ interface CategoryIdPageIndexProps {
     categoryId: string
   }
 }
+const titlePrefix = process.env.NEXT_PUBLIC_CATEGORY_TITLE_PREFIX
+const titleSuffix = process.env.NEXT_PUBLIC_CATEGORY_TITLE_SUFFIX
 
 export async function generateMetadata(
   { params }: CategoryIdPageIndexProps
@@ -20,9 +22,8 @@ export async function generateMetadata(
   if (params?.categoryId && params.categoryId[0]) {
     try {
       const data = await getCategoryQueryFn(+params.categoryId[0])
-
       return {
-        title: data.category.title,
+        title: `${titlePrefix} ${data.category.title} ${titleSuffix}`,
         description: data.category.description,
         alternates: {
           canonical: encodeURI(

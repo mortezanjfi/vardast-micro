@@ -19,6 +19,7 @@ export type VersionType = {
 }
 
 interface PublicContextType {
+  globalMegaMenuAtom: PrimitiveAtom<boolean>
   categoriesFilterVisibilityAtom: PrimitiveAtom<boolean>
   globalSearchModalAtom: PrimitiveAtom<boolean>
   sortFilterVisibilityAtom: PrimitiveAtom<boolean>
@@ -33,6 +34,7 @@ interface PublicContextType {
   appVersion: PrimitiveAtom<VersionType>
 }
 
+const globalMegaMenuAtom = atom<boolean>(false)
 const categoriesFilterVisibilityAtom = atom<boolean>(false)
 const globalSearchModalAtom = atom<boolean>(false)
 const sortFilterVisibilityAtom = atom<boolean>(false)
@@ -54,6 +56,7 @@ const appVersion = atom<VersionType>({
 })
 
 export const PublicContext = createContext<PublicContextType>({
+  globalMegaMenuAtom,
   categoriesFilterVisibilityAtom,
   globalSearchModalAtom,
   sortFilterVisibilityAtom,
@@ -120,6 +123,7 @@ const PublicProvider = ({ isMobileView, children }: PublicProviderProps) => {
   return (
     <PublicContext.Provider
       value={{
+        globalMegaMenuAtom,
         categoriesFilterVisibilityAtom,
         globalSearchModalAtom,
         sortFilterVisibilityAtom,

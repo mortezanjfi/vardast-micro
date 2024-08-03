@@ -4,16 +4,14 @@ import BrandOrSellerCard, {
 } from "@vardast/component/BrandOrSellerCard"
 import BrandsOrSellersContainer from "@vardast/component/BrandsOrSellersContainer"
 import { Brand, GetUserFavoriteBrandsQuery } from "@vardast/graphql/generated"
-import { Session } from "next-auth"
 
 import { NotFoundItems } from "@/app/(client)/profile/favorites/components/FavoritesPageIndex"
 
 type BrandsTabContentProps = {
-  session: Session | null
   brandQuery: UseQueryResult<GetUserFavoriteBrandsQuery, unknown>
 }
 
-const BrandsTabContent = ({ session, brandQuery }: BrandsTabContentProps) => {
+const BrandsTabContent = ({ brandQuery }: BrandsTabContentProps) => {
   return (
     <>
       {brandQuery.isFetching || brandQuery.isLoading ? (

@@ -5,7 +5,7 @@ export default WithLayoutMaker({
   options: layout_options.createOptionByMobileTitle(
     {
       type: "text",
-      value: "دسته‌بندی ها"
+      value: "دسته‌بندی‌ها"
     },
     "_category"
   )

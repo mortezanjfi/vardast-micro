@@ -36,15 +36,15 @@ const _profile: NavigationType[] = [
       {
         title: "پروژه ها",
         icon: "FolderOpenIcon",
-        path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}projects`,
-        background_color: "bg-orange-500",
+        path: "/profile/projects",
+        background_color: "bg-blue-500",
         color: "text-white"
       },
       {
         title: "سفارشات من",
         icon: "ClipboardDocumentListIcon",
-        path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders`,
-        background_color: "bg-blue-500",
+        path: "/profile/orders",
+        background_color: "bg-orange-500",
         color: "text-white"
       },
       {
@@ -106,13 +106,13 @@ const _admin: NavigationType[] = [
       {
         title: "خانه",
         path: "/",
-        background_color: "bg-gray-400",
+        background_color: "bg-green-500",
         color: "text-white",
         icon: "HomeIcon"
       },
       {
         title: "کالا",
-        background_color: "bg-gray-400",
+        background_color: "bg-orange-500",
         color: "text-white",
         icon: "CubeIcon",
         items: [
@@ -129,20 +129,20 @@ const _admin: NavigationType[] = [
       {
         title: "دسته‌بندی‌ها",
         path: "/vocabularies",
-        background_color: "bg-gray-400",
+        background_color: "bg-blue-500",
         color: "text-white",
         icon: "Squares2X2Icon"
       },
       {
         title: "برندها",
         path: "/brands",
-        background_color: "bg-gray-400",
+        background_color: "bg-green-500",
         color: "text-white",
         icon: "HomeModernIcon"
       },
       {
         title: "کاربران",
-        background_color: "bg-gray-400",
+        background_color: "bg-violet-500",
         color: "text-white",
         icon: "UsersIcon",
         items: [
@@ -171,14 +171,15 @@ const _admin: NavigationType[] = [
       },
       {
         title: "پروژه ها",
-        path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}projects`,
-        background_color: "bg-gray-400",
+        path: "/profile/projects",
+        background_color: "bg-orange-500",
         color: "text-white",
         icon: "FolderOpenIcon"
       },
       {
         title: "سفارشات",
-        background_color: "bg-gray-400",
+        path: "/profile/orders",
+        background_color: "bg-blue-500",
         color: "text-white",
         icon: "ClipboardDocumentIcon",
         items: [
@@ -194,7 +195,7 @@ const _admin: NavigationType[] = [
       },
       {
         title: "مالی",
-        background_color: "bg-gray-400",
+        background_color: "bg-pink-500",
         color: "text-white",
         icon: "WalletIcon",
         items: [
@@ -210,7 +211,7 @@ const _admin: NavigationType[] = [
       },
       {
         title: "گزارشات",
-        background_color: "bg-gray-400",
+        background_color: "bg-amber-500",
         color: "text-white",
         icon: "ChartPieIcon",
         path: "/test"
@@ -238,6 +239,18 @@ const _admin: NavigationType[] = [
             path: "/test"
           }
         ]
+      },
+      {
+        title: "مدیریت اپلیکیشن",
+        background_color: "bg-blue-500",
+        color: "text-white",
+        icon: "DevicePhoneMobileIcon",
+        items: [
+          {
+            title: "صفحه اصلی",
+            path: "/app-management/main"
+          }
+        ]
       }
     ]
   }
@@ -249,13 +262,13 @@ export const _seller_panel: NavigationType[] = [
       {
         title: "خانه",
         path: "/",
-        background_color: "bg-gray-400",
+        background_color: "bg-green-500",
         color: "text-white",
         icon: "HomeIcon"
       },
       {
         title: "سفارشات",
-        background_color: "bg-gray-400",
+        background_color: "bg-blue-500",
         color: "text-white",
         icon: "ClipboardDocumentIcon",
         path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders`
@@ -270,7 +283,7 @@ export const _seller_panel: NavigationType[] = [
       {
         title: "کالاها",
         path: "/products",
-        background_color: "bg-gray-400",
+        background_color: "bg-orange-500",
         color: "text-white",
         icon: "CubeIcon",
         items: [
@@ -291,14 +304,14 @@ export const _seller_panel: NavigationType[] = [
       {
         title: "دسته بندی‌های من",
         path: "/categories",
-        background_color: "bg-gray-400",
+        background_color: "bg-blue-500",
         color: "text-white",
         icon: "Squares2X2Icon"
       },
       {
         title: "برندهای من",
         path: "/brands",
-        background_color: "bg-gray-400",
+        background_color: "bg-green-500",
         color: "text-white",
         icon: "HomeModernIcon"
       }

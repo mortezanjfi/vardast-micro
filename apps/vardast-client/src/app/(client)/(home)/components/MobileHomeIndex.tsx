@@ -1,49 +1,63 @@
 "use client"
 
+import MobileHomeSection from "@vardast/component/home/MobileHomeSection"
+import MobileHomeTopBlogs from "@vardast/component/home/MobileHomeTopBlogs"
 import { Brand } from "@vardast/graphql/generated"
 
 import { IHomeProps } from "@/app/(client)/(home)/components/HomeIndex"
-import HomeTopSellers from "@/app/(client)/(home)/components/HomeTopSellers"
 import MobileHomeCategory from "@/app/(client)/(home)/components/MobileHomeCategory"
 import MobileHomeNewestProducts from "@/app/(client)/(home)/components/MobileHomeNewestProducts"
 import MobileHomeSlider from "@/app/(client)/(home)/components/MobileHomeSlider"
-import MobileHomeTopBlogs from "@/app/(client)/(home)/components/MobileHomeTopBlogs"
 import MobileHomeTopEntities from "@/app/(client)/(home)/components/MobileHomeTopEntities"
+import NewPriceSlider from "@/app/(client)/(home)/components/NewPriceSlider"
+import PublicPreOrdersSection from "@/app/(client)/(home)/components/PublicPreOrdersSection"
 
 const MobileHomeIndex = ({
   allBrandsCount,
+  recentPriceProductsQuery,
   allProductsQuery,
-  allSellersCount,
   getVocabularyQueryFcQuery,
   homeSlidersQuery,
   getAllBlogsQuery,
+  publicOrdersQuery,
   isMobileView
 }: IHomeProps) => {
+  console.log("ddddddddddd")
+
   return (
     <>
+      {recentPriceProductsQuery?.data?.products?.data.length > 0 && (
+        <div className="flex h-12 max-h-12 min-h-12 items-center gap-3 bg-alpha-white">
+          <NewPriceSlider query={recentPriceProductsQuery} />
+        </div>
+      )}
       <MobileHomeSlider query={homeSlidersQuery} isMobileView={isMobileView} />
+
       <MobileHomeCategory
         getVocabularyQueryFcQuery={getVocabularyQueryFcQuery}
       />
-      {/* <MobileHomeTopEntities
-      width={width * 0.9}
-      __typename="Seller"
-        title="جدیدترین فروشنده‌ها"
-        query={allSellersCount.data?.sellers.data.slice(0, 8) as Seller[]}
-      /> */}
-      <HomeTopSellers
-        title="جدیدترین فروشنده‌ها"
-        allSellersCount={allSellersCount}
-      />
+      {publicOrdersQuery && (
+        <MobileHomeSection
+          block
+          bgWhite
+          title="جدیدترین سفارشات"
+          viewAllHref="/orders"
+        >
+          <PublicPreOrdersSection query={publicOrdersQuery} isMobileView />
+        </MobileHomeSection>
+      )}
       <MobileHomeTopEntities
-        centeredSlides
         isMobileView
         __typename="Brand"
         title="جدیدترین برندها"
         query={allBrandsCount.data?.brands.data.slice(0, 8) as Brand[]}
       />
       {allProductsQuery.data && (
-        <MobileHomeNewestProducts allProductsQuery={allProductsQuery} />
+        <MobileHomeNewestProducts
+          isMobileView
+          title="جدیدترین کالاها"
+          query={allProductsQuery}
+        />
       )}
       {getAllBlogsQuery.data && (
         <MobileHomeTopBlogs getAllBlogsQuery={getAllBlogsQuery} isMobileView />

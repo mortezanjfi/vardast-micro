@@ -134,12 +134,12 @@ const Sellers = () => {
                   <th>{t("common:operation")}</th>
                 </tr>
               </thead>
-              <tbody className="border-0.5 border-t-0">
+              <tbody className="border-collapse border">
                 {data?.data?.sellers.data.map(
                   (seller) =>
                     seller && (
                       <tr key={seller.id}>
-                        <td className="flex gap-3 border-r-0.5">
+                        <td className="flex gap-3">
                           <div className="relative flex aspect-square h-12 w-12 items-center justify-center overflow-hidden rounded bg-alpha-50">
                             {seller.logoFile ? (
                               <Image
@@ -159,7 +159,7 @@ const Sellers = () => {
                             {seller.name}
                           </span>
                         </td>
-                        <td className="w-96 border-r-0.5">
+                        <td className="w-96">
                           {seller.brands && seller.brands.length > 0 ? (
                             seller.brands.length > 2 ? (
                               <>
@@ -188,7 +188,7 @@ const Sellers = () => {
                           )}
                         </td>
 
-                        <td className=" w-96 border-r-0.5">
+                        <td className=" w-96">
                           {seller.status ===
                             ThreeStateSupervisionStatuses.Pending && (
                             <span className="tag tag-light tag-sm tag-warning">
@@ -208,7 +208,7 @@ const Sellers = () => {
                             </span>
                           )}
                         </td>
-                        <td className="w-[159px] border-r-0.5">
+                        <td className="w-[159px]">
                           <div className="flex gap-2">
                             {" "}
                             <Link href={`/sellers/${seller.id}`}>

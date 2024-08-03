@@ -1,0 +1,6 @@
+mutation updateBannerMutation($updateBannerInput: UpdateBannerInput!) {
+  updateBanner(updateBannerInput: $updateBannerInput) {
+    id
+    name
+  }
+}

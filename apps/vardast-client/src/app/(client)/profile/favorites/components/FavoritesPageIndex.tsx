@@ -18,7 +18,7 @@ import { allUserFavoriteBrandsQueryFns } from "@vardast/query/queryFns/allUserFa
 import { allUserFavoriteProductsQueryFns } from "@vardast/query/queryFns/allUserFavoriteProductsQueryFns"
 import { allUserFavoriteSellersQueryFns } from "@vardast/query/queryFns/allUserFavoriteSellersQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
-import { SegmentTabTitle } from "@vardast/ui/src/segment"
+import { SegmentTabTitle } from "@vardast/ui/segment"
 import { useSession } from "next-auth/react"
 
 import BrandsTabContent from "@/app/(client)/profile/favorites/components/BrandsTabContent"
@@ -109,7 +109,7 @@ const FavoritesPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.replace(`${paths.signin}?ru=/favorites`)
+      router.replace(`${paths.signin}?ru=/profile/favorites`)
     } else if (!cacheFlag) {
       brandQuery.refetch()
       sellerQuery.refetch()
@@ -135,16 +135,12 @@ const FavoritesPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
       {
         value: EntityTypeEnum.Brand,
         title: <SegmentTabTitle title="برندها" />,
-        Content: () => (
-          <BrandsTabContent session={session} brandQuery={brandQuery} />
-        )
+        Content: () => <BrandsTabContent brandQuery={brandQuery} />
       },
       {
         value: EntityTypeEnum.Seller,
         title: <SegmentTabTitle title="فروشندگان" />,
-        Content: () => (
-          <SellersTabContent sellerQuery={sellerQuery} session={session} />
-        )
+        Content: () => <SellersTabContent sellerQuery={sellerQuery} />
       }
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps

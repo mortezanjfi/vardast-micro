@@ -45,7 +45,7 @@ const Navigation = (props: Props) => {
 
   return (
     <>
-      {profileMenu && <SidebarProfile session={session} />}
+      {profileMenu && <SidebarProfile />}
 
       {menus?.map((menuSection, sectionId) => {
         return (

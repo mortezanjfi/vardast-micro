@@ -18,12 +18,10 @@ import { getSellerQueryFn } from "@vardast/query/queryFns/sellerQueryFns"
 import { SegmentTabTitle } from "@vardast/ui/segment"
 import { useSetAtom } from "jotai"
 
-import {
-  BrandOrSellersTab,
-  CategoriesTab,
-  IBrandOrSellerProfile,
-  ProductsTab
-} from "@/app/(client)/brand/components/BrandProfile"
+import BrandOrSellersTab from "../../brand/components/BrandOrSellersTab"
+import { IBrandOrSellerProfile } from "../../brand/components/BrandProfile"
+import CategoriesTab from "../../brand/components/CategoryTab"
+import ProductsTab from "../../brand/components/ProductsTab"
 
 export enum SellerProfileTabEnum {
   // eslint-disable-next-line no-unused-vars

@@ -17,23 +17,23 @@ interface LayoutContextType {
 
 const breadcrumbAtom: WritableAtomType<CrumbItemProps[]> = atom(
   [],
-  (get, set, update) => set(breadcrumbAtom, update)
+  (_, set, update) => set(breadcrumbAtom, update)
 )
 const loadingVisibilityAtom: WritableAtomType<boolean> = atom(
   false,
-  (get, set, update) => set(loadingVisibilityAtom, update)
+  (_, set, update) => set(loadingVisibilityAtom, update)
 )
 const sidebarAtom: WritableAtomType<JSX.Element | null> = atom(
   null,
-  (get, set, update) => set(sidebarAtom, update)
+  (_, set, update) => set(sidebarAtom, update)
 )
 const sidebarHamburgerAtom: WritableAtomType<boolean> = atom(
   false,
-  (get, set, update) => set(sidebarHamburgerAtom, update)
+  (_, set, update) => set(sidebarHamburgerAtom, update)
 )
 const pageHeaderAtom: WritableAtomType<JSX.Element | null> = atom(
   null,
-  (get, set, update) => set(pageHeaderAtom, update)
+  (_, set, update) => set(pageHeaderAtom, update)
 )
 
 export const LayoutContext = createContext<LayoutContextType>({
