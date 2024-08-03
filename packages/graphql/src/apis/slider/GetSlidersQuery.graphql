@@ -3,6 +3,7 @@ query GetSlidersQuery($IndexBannerInput: IndexBannerInput!) {
     id
     name
     status
+    sort
     small {
       id
       presignedUrl {

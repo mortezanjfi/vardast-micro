@@ -120,7 +120,7 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
                   src={brandQuery?.data?.brand?.bannerMobile?.presignedUrl?.url}
                   alt="seller"
                   fill
-                  className="h-full w-full px-6 py-5 md:rounded-full"
+                  className="h-full w-full rounded-2xl px-6 py-5 md:rounded-full"
                 />
               </div>
             )}

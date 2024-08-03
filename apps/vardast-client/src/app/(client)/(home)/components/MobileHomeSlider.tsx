@@ -38,7 +38,7 @@ export const BulletSwiper = ({
   return (
     <div
       className={clsx(
-        "absolute bottom-6 z-20 flex w-full justify-center py-0 sm:bottom-4",
+        "absolute bottom-9 z-20 flex w-full justify-center py-0 sm:bottom-4",
         className
       )}
     >
