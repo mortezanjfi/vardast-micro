@@ -15,7 +15,7 @@
 
 import { NextMiddleware, NextRequest, NextResponse } from "next/server"
 
-import i18n from "./i18n.mjs"
+import i18n from "./i18n"
 import { MiddlewareFactory } from "./types"
 
 export const withTranslation: MiddlewareFactory = (_: NextMiddleware) => {
