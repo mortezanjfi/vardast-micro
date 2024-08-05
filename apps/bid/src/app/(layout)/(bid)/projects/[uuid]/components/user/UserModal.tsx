@@ -86,7 +86,6 @@ export const UserModal = ({
 
   const modalProps: ModalProps = {
     open: open,
-    modalType: "delete",
     onOpenChange: onCloseModals,
     errors,
     title: t("common:add_new_entity", { entity: t("common:colleague") }),

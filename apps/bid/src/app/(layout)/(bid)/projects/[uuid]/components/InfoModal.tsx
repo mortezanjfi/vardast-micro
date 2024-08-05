@@ -76,7 +76,6 @@ const InfoModal = ({
 
   const modalProps: ModalProps = {
     open: open,
-    modalType: "delete",
     onOpenChange: onCloseModals,
     errors,
     title: t("common:edit_entity", { entity: t("common:project-info") }),

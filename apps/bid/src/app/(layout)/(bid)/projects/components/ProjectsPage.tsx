@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import Link from "@vardast/component/Link"
 import {
@@ -11,14 +10,15 @@ import {
 } from "@vardast/component/table"
 import { Project, UserTypeProject } from "@vardast/graphql/generated"
 import { getAllProjectsQueryFn } from "@vardast/query/queryFns/orders/getAllProjectsQueryFn"
+import { useModals } from "@vardast/ui/modal"
 import useTranslation from "next-translate/useTranslation"
 import { z } from "zod"
 
+import { OrderModalEnum } from "@/app/(layout)/(bid)/types/type"
+
 import AddProjectModal from "./AddProjectModal"
 
-type ProjectsPageProps = {
-  isMobileView: boolean
-}
+type ProjectsPageProps = {}
 
 const ProjectsFilterSchema = z.object({
   nameEmployer: z.string().nullish(),
@@ -26,8 +26,8 @@ const ProjectsFilterSchema = z.object({
   nameOrUuid: z.string().nullish()
 })
 
-const ProjectsPage = ({ isMobileView }: ProjectsPageProps) => {
-  const [addProjectOpen, setAddProjectOpen] = useState<boolean>(false)
+const ProjectsPage = (_: ProjectsPageProps) => {
+  const [modals, onChangeModals, onCloseModals] = useModals<OrderModalEnum>()
   const { t } = useTranslation()
 
   const tableProps: ITableProps<Project, typeof ProjectsFilterSchema> =
@@ -40,11 +40,14 @@ const ProjectsPage = ({ isMobileView }: ProjectsPageProps) => {
         },
         container: {
           button: {
-            text: "افزودن پروژه",
+            text: t("common:add_entity", { entity: t("common:project") }),
             variant: "primary",
-            onClick: () => setAddProjectOpen(true)
+            onClick: () =>
+              onChangeModals({
+                type: OrderModalEnum.ADD_PROJECT
+              })
           },
-          title: "لیست‌ پروژه ها"
+          title: t("common:entity_list", { entity: t("common:projects") })
         },
         paginable: true,
         fetch: {
@@ -133,9 +136,10 @@ const ProjectsPage = ({ isMobileView }: ProjectsPageProps) => {
   return (
     <>
       <AddProjectModal
-        isMobileView={isMobileView}
-        open={addProjectOpen}
-        setOpen={setAddProjectOpen}
+        open={modals?.type === OrderModalEnum.ADD_PROJECT}
+        modals={modals}
+        onChangeModals={onChangeModals}
+        onCloseModals={onCloseModals}
       />
       <Table {...tableProps} />
     </>

@@ -11,7 +11,8 @@ export enum OrderModalEnum {
   OFFER,
   ADD_OFFER,
   ADD_ORDER,
-  ADD_PRICE
+  ADD_PRICE,
+  ADD_PROJECT
 }
 
 export interface IOrderPageProps {
