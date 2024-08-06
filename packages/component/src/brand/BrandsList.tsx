@@ -158,17 +158,15 @@ const BrandsList = ({
                 {page.brands.data.map(
                   (brand, index) =>
                     brand && (
-                      <div className="px-3 py-6 ring-alpha-200">
-                        <BrandCard
-                          isMobileView={isMobileView}
-                          ref={
-                            page.brands.data.length - 1 === index
-                              ? ref
-                              : undefined
-                          }
-                          brand={brand as Brand}
-                        />
-                      </div>
+                      <BrandCard
+                        isMobileView={isMobileView}
+                        ref={
+                          page.brands.data.length - 1 === index
+                            ? ref
+                            : undefined
+                        }
+                        brand={brand as Brand}
+                      />
 
                       // <BrandOrSellerCard
                       //   selectedItemId={selectedItemId}

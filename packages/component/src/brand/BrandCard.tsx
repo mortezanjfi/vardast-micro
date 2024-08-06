@@ -73,7 +73,7 @@ const BrandCard = forwardRef(
           setSelectedItemId(brand?.id)
         }}
         className={clsx(
-          "flex h-full flex-col overflow-hidden rounded-2xl bg-alpha-white"
+          "flex h-full flex-col overflow-hidden bg-alpha-white py-6 sm:py-0"
           // selectedItemId === brand?.id
           //   ? "border-2 border-primary"
           //   : "border-alpha-50"

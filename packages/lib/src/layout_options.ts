@@ -52,7 +52,7 @@ const _category: ILayoutProps = {
     main: {
       background: {
         type: "color",
-        value: "bg-alpha-100"
+        value: "bg-alpha-50"
       }
     },
     footer: {
