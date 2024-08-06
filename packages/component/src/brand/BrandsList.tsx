@@ -118,6 +118,16 @@ const BrandsList = ({
       }
     }
   )
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams as any)
+    const paramsKeys = params.keys()
+    for (const key of paramsKeys) {
+      if (key.includes("orderBy")) {
+        params.delete(key)
+      }
+    }
+    push(pathname + "?" + params.toString())
+  }, [])
 
   // const DesktopHeader = (
   //   <div className="flex items-center justify-between md:pb-8">
@@ -197,9 +207,9 @@ const BrandsList = ({
           sort={sort}
           onSortChanged={(sort) => {
             setSort(sort)
-            // const params = new URLSearchParams(searchParams as any)
-            // params.set("orderBy", `${sort}`)
-            // push(pathname + "?" + params.toString())
+            const params = new URLSearchParams(searchParams as any)
+            params.set("orderBy", `${sort}`)
+            push(pathname + "?" + params.toString())
           }}
         />
         <div className="flex flex-col">

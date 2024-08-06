@@ -78,7 +78,7 @@ const BrandCard = forwardRef(
           //   ? "border-2 border-primary"
           //   : "border-alpha-50"
         )}
-        href={`/brand/${brand?.id}?orderBy=NEWEST`}
+        href={`/brand/${brand?.id}/${brand?.name}`}
       >
         <div
           ref={containerRef}

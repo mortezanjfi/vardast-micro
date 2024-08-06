@@ -48,9 +48,7 @@ const CategoriesTab = ({
   const [activeTab, setActiveTab] = useState<string>("")
   const sliderRef = useRef<HTMLDivElement>(null)
   const [slideWidth, setSlideWidth] = useState(0)
-  const [sort, setSort] = useState<CategoriesSortStatic>(
-    CategoriesSortStatic.Sum
-  )
+  const [sort, setSort] = useState<CategoriesSortStatic>(undefined)
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams as any)
