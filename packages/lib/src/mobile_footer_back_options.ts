@@ -15,6 +15,11 @@ const _profile: WithNavigationRouteItem[] = [
     forceEqual: true,
     dynamicRouteAllow: true,
     path: "profile/info"
+  },
+  {
+    forceEqual: true,
+    dynamicRouteAllow: true,
+    path: "basket"
   }
 ]
 
