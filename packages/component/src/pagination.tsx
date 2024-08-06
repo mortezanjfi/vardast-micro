@@ -5,13 +5,13 @@ import { Button } from "@vardast/ui/button"
 import { Input } from "@vardast/ui/input"
 import clsx from "clsx"
 
-type PaginationProps = {
+type Props = {
   total: number
   page: number
   onChange: (_: number) => void
 }
 
-const Pagination = ({ total, page, onChange }: PaginationProps) => {
+const Pagination = ({ total, page, onChange }: Props) => {
   const pagination = usePagination({
     total,
     page,
@@ -97,6 +97,4 @@ const Pagination = ({ total, page, onChange }: PaginationProps) => {
   )
 }
 
-Pagination.displayName = "Pagination"
-
-export { Pagination }
+export default Pagination
