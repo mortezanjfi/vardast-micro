@@ -207,28 +207,28 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
       >
         <TabsList className="sticky top-0 z-50 grid w-full grid-cols-4 bg-alpha-white font-medium sm:z-0 md:mb-6  md:flex">
           <TabsTrigger
-            className="py-41 whitespace-nowrap"
+            className=" whitespace-nowrap sm:!px-6"
             value={BrandProfileTabEnum.PRODUCT}
           >
             {t("common:products")}
           </TabsTrigger>
           <TabsTrigger
-            className="py-41 whitespace-nowrap"
+            className=" whitespace-nowrap sm:!px-6"
             value={BrandProfileTabEnum.CATEGORY}
           >
             {t("common:category")}
           </TabsTrigger>
-          {/* <TabsTrigger className="py-4 whitespace-nowrap1" value={BrandProfileTabEnum.SELLERS}>
+          {/* <TabsTrigger className="py-4 whitespace-nowrap sm:!px-61" value={BrandProfileTabEnum.SELLERS}>
       {t("common:sellers")}
     </TabsTrigger> */}
           <TabsTrigger
-            className="py-41 whitespace-nowrap"
+            className=" whitespace-nowrap sm:!px-6"
             value={BrandProfileTabEnum.CATALOG}
           >
             {t("common:catalog")}
           </TabsTrigger>
           <TabsTrigger
-            className="py-41 whitespace-nowrap"
+            className=" whitespace-nowrap sm:!px-6"
             value={BrandProfileTabEnum.PRICE_LIST}
           >
             {t("common:price_list")}

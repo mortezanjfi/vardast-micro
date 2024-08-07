@@ -315,7 +315,7 @@ const CategoriesTab = ({
                               : undefined
                           }
                           productsCount={category.productsCount}
-                          className="sm:max-h-60 sm:!min-h-full sm:min-w-full sm:!rounded-none sm:ring-2 sm:ring-alpha-200"
+                          // className="sm:max-h-60 sm:!min-h-full sm:min-w-full sm:!rounded-none sm:ring-2 sm:ring-alpha-200"
                           title={category?.title}
                           id={category.id}
                           selectedItemId={selectedItemId}
