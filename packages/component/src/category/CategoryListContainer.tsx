@@ -73,7 +73,7 @@ const CategoryListContainer: React.FC<ICategoryListContainer> = ({
               className={`${more ? "" : "line-clamp-2"}`}
             >
               {description.split("\n\n").map((paragraph, index) => (
-                <p key={index} className="text-justify text-sm leading-6">
+                <p key={index} className="text-justify text-base leading-6">
                   {paragraph}
                 </p>
               ))}
