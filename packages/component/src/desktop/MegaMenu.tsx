@@ -108,13 +108,13 @@ export const MegaMenuModal = ({
 
   const divideIntoColumns = (array: CategoryDto[], numColumns: number) => {
     const columns = Array.from({ length: numColumns }, () => [])
-    array.forEach((item, index) => {
+    array?.forEach((item, index) => {
       columns[index % numColumns].push(item)
     })
     return columns
   }
 
-  const columns = divideIntoColumns(activeCategory.children, 3)
+  const columns = divideIntoColumns(activeCategory?.children, 3)
 
   return (
     <AnimatePresence>
