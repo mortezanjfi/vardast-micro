@@ -204,13 +204,10 @@ const BrandsList = ({
     <FiltersSidebarContainer>
       <div className="flex flex-col gap-5">
         <BrandSortFilter
+          searchParams={searchParams}
+          pathname={pathname}
+          setSort={setSort}
           sort={sort}
-          onSortChanged={(sort) => {
-            setSort(sort)
-            const params = new URLSearchParams(searchParams as any)
-            params.set("orderBy", `${sort}`)
-            push(pathname + "?" + params.toString())
-          }}
         />
         <div className="flex flex-col">
           {" "}
