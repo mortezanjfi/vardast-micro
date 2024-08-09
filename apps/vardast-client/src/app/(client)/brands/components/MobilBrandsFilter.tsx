@@ -103,6 +103,7 @@ const MobilBrandsFilter = ({
                           py-3.5
                            focus:!ring-0 disabled:bg-alpha-100"
             />
+            {/* args.categoryId means user is in the brand tab of a category */}
             {!args.categoryId && (
               <CategoryFilterSection
                 openDefault
