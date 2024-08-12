@@ -1,5 +1,7 @@
 "use client"
 
+import { Dispatch, SetStateAction } from "react"
+import { ReadonlyURLSearchParams, useRouter } from "next/navigation"
 import * as Checkbox from "@radix-ui/react-checkbox"
 import * as Label from "@radix-ui/react-label"
 import { LucideCheck } from "lucide-react"
@@ -8,8 +10,10 @@ import { SortBrandEnum } from "../../../graphql/src/generated"
 import DynamicHeroIcon from "../DynamicHeroIcon"
 
 type BrandCategoryFilterProps = {
-  onSortChanged: (_: SortBrandEnum) => void
+  setSort: Dispatch<SetStateAction<SortBrandEnum>>
   sort: SortBrandEnum
+  searchParams: ReadonlyURLSearchParams
+  pathname: string
 }
 
 export const sortBrand = {
@@ -32,9 +36,26 @@ export const sortBrand = {
 }
 
 const BrandOrSellerCategoryFilter = ({
-  onSortChanged,
-  sort
+  setSort,
+  sort,
+  pathname,
+  searchParams
 }: BrandCategoryFilterProps) => {
+  const { push } = useRouter()
+
+  const onSortChanged = (sort: SortBrandEnum) => {
+    setSort((prev) => {
+      const isSortSelected = prev === sort
+      const params = new URLSearchParams(searchParams as any)
+      if (isSortSelected) {
+        params.delete("orderBy")
+      } else {
+        params.set("orderBy", `${sort}`)
+      }
+      push(pathname + "?" + params.toString())
+      return isSortSelected ? undefined : sort
+    })
+  }
   return (
     <div className="flex flex-col">
       <div className="flex items-center gap-2 py-3">

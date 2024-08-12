@@ -8,11 +8,9 @@ import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
 import ProductDescription from "@vardast/component/product-description"
 import {
-  Brand,
   EventTrackerTypes,
   GetProductQuery,
   Offer,
-  Price,
   Product,
   Image as ProductImage,
   Seller,
@@ -23,7 +21,6 @@ import { PublicContext } from "@vardast/provider/PublicProvider"
 import { getProductQueryFn } from "@vardast/query/queryFns/productQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { CrumbItemProps } from "@vardast/type/breadcrumb"
-import clsx from "clsx"
 import { addDays, format, setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
 import { ClientError } from "graphql-request"
@@ -38,13 +35,10 @@ import {
   WithContext
 } from "schema-dts"
 
-import BrandName from "@/app/(client)/product/components/BrandName"
 import ProductAttributes from "@/app/(client)/product/components/product-attributes"
 import ProductImages from "@/app/(client)/product/components/product-images"
 import ProductOffers from "@/app/(client)/product/components/product-offers"
-import ProductInfo from "@/app/(client)/product/components/ProductInfo"
 import ProductIntroduce from "@/app/(client)/product/components/ProductIntroduce"
-import ProductLowestPriceInfo from "@/app/(client)/product/components/ProductLowestPriceInfo"
 import SameCategories from "@/app/(client)/product/components/SameCategories"
 
 export type GroupedAttributes = {
@@ -230,12 +224,7 @@ const ProductPage = ({ id, isMobileView }: ProductPageProps) => {
       {/* <SellerCardDesktop
         offers={queryProduct?.data?.product?.publicOffers[0] as Offer}
       /> */}
-      <div
-        className={clsx(
-          "flex h-full w-full flex-col gap-1 sm:gap-0",
-          !isMobileView && "pb-6"
-        )}
-      >
+      <div className="flex h-full w-full flex-col gap-1  pb-6 sm:gap-0 sm:pb-0">
         <div className="flex flex-col xl:flex-row xl:gap-x-9">
           {queryProduct.data?.product.images &&
             queryProduct.data?.product.images.length > 0 && (
@@ -246,27 +235,40 @@ const ProductPage = ({ id, isMobileView }: ProductPageProps) => {
                 product={queryProduct.data?.product as Product}
               />
             )}
+
           <div className=" flex w-full flex-col sm:flex-1">
-            <div className="flex w-full flex-col gap-1 md:gap-0 md:bg-alpha-white">
-              {!isMobileView ? (
-                <>
-                  <BrandName brand={queryProduct.data.product.brand as Brand} />
-                  <ProductInfo product={queryProduct.data.product as Product} />
-                  {queryProduct.data.product.lowestPrice && (
-                    <ProductLowestPriceInfo
-                      uom={queryProduct.data.product.uom.name}
-                      session={session}
-                      lowestPrice={
-                        queryProduct.data.product.lowestPrice as Price
-                      }
-                    />
-                  )}
-                </>
-              ) : (
-                <ProductIntroduce
-                  product={queryProduct.data?.product as Product}
+            <div className="flex w-full flex-col  divide-y-4 divide-alpha-50 md:gap-0 md:bg-alpha-white">
+              <ProductIntroduce
+                isMobileView={isMobileView}
+                session={session}
+                product={queryProduct.data?.product as Product}
+              />
+              {groupedAttributes.filter((item) => !!item.isRequired).length >
+                0 && (
+                <ProductAttributes
+                  title="مشخصات اصلی"
+                  attributes={
+                    groupedAttributes.filter(
+                      (item) => !!item.isRequired
+                    ) as GroupedAttributes[]
+                  }
                 />
               )}
+              {queryProduct.data?.product.attributeValues &&
+                queryProduct.data?.product.attributeValues.length > 0 && (
+                  // <ProductDetails
+                  //   attributes={groupedAttributes as GroupedAttributes[]}
+                  // />
+
+                  <ProductAttributes
+                    title="مشخصات فرعی"
+                    attributes={
+                      groupedAttributes.filter(
+                        (item) => !item.isRequired
+                      ) as GroupedAttributes[]
+                    }
+                  />
+                )}
               {queryProduct.data?.product.publicOffers &&
                 queryProduct.data?.product.publicOffers.length > 0 && (
                   <ProductOffers
@@ -275,73 +277,30 @@ const ProductPage = ({ id, isMobileView }: ProductPageProps) => {
                     offers={queryProduct.data?.product.publicOffers as Offer[]}
                   />
                 )}
-              {groupedAttributes.filter((item) => !!item.isRequired).length >
-                0 && (
-                <div>
-                  <ProductAttributes
-                    attributes={
-                      groupedAttributes.filter(
-                        (item) => !!item.isRequired
-                      ) as GroupedAttributes[]
-                    }
-                  />
-                </div>
-              )}
-              {queryProduct.data?.product.attributeValues &&
-                queryProduct.data?.product.attributeValues.length > 0 && (
-                  // <ProductDetails
-                  //   attributes={groupedAttributes as GroupedAttributes[]}
-                  // />
-                  <div>
-                    <ProductAttributes
-                      title="مشخصات"
-                      attributes={
-                        groupedAttributes.filter(
-                          (item) => !item.isRequired
-                        ) as GroupedAttributes[]
-                      }
-                    />
-                  </div>
-                )}
+
               {queryProduct.data?.product.description && (
-                <div>
-                  <ProductDescription
-                    description={queryProduct.data?.product.description}
-                  />
-                </div>
+                <ProductDescription
+                  description={queryProduct.data?.product.description}
+                />
               )}
             </div>
-            {/* <div className="p bg-purple-500 h-10 w-full"></div> */}
           </div>
         </div>
         <div className="w-full">
           {queryProduct.data?.product.sameCategory &&
             queryProduct.data?.product.sameCategory.length > 0 && (
-              <div>
-                <SameCategories
-                  isMobileView={isMobileView}
-                  hasExtraItem={{
-                    title: "کالاهای مشابه",
-                    subtitle: "نمایش همه"
-                  }}
-                  products={
-                    queryProduct.data?.product.sameCategory as Product[]
-                  }
-                />
-              </div>
+              <SameCategories
+                isMobileView={isMobileView}
+                hasExtraItem={{
+                  title: "کالاهای مشابه",
+                  subtitle: "نمایش همه"
+                }}
+                products={queryProduct.data?.product.sameCategory as Product[]}
+              />
             )}
         </div>
       </div>
-      {/* {session?.abilities?.includes(
-        "gql.products.product.index"
-      ) && (
-        <Link
-          className="btn btn-secondary btn-lg m block"
-          href={`/admin/products/${queryProduct.data?.product.id}`}
-        >
-          ویرایش
-        </Link>
-      )} */}
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}

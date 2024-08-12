@@ -15,7 +15,7 @@ import { Swiper, SwiperRef, SwiperSlide } from "swiper/react"
 const chooseBannerImageSize = (banner: Banner, width: number) => {
   if (width >= breakpoints["2xl"]) {
     return banner.xlarge
-  } else if (width >= breakpoints.md) {
+  } else if (width >= breakpoints.lg) {
     return banner.large
   } else if (width >= breakpoints.sm) {
     return banner.medium

@@ -8,7 +8,8 @@ import { useSetAtom } from "jotai"
 import { LucideSlidersHorizontal, LucideSortDesc } from "lucide-react"
 import { TypeOf, z } from "zod"
 
-import MobileBrandSortFilter from "../../../../apps/vardast-client/src/app/(client)/brands/components/MobilBrandSortFilter"
+import { default as MobilBrandsFilter } from "../../../../apps/vardast-client/src/app/(client)/brands/components/MobilBrandsFilter"
+import { default as MobileBrandSortFilter } from "../../../../apps/vardast-client/src/app/(client)/brands/components/MobilBrandSortFilter"
 import {
   Brand,
   GetAllBrandsQuery,
@@ -73,9 +74,7 @@ const BrandsList = ({
   const [filterAttributes, setFilterAttributes] = useState<[]>([])
   const [brandsQuery, setBrandsQuery] = useDebouncedState("", 500)
   const [brandsQueryTemp, setBrandsQueryTemp] = useState("")
-  const [selectedCategoryIds, setSelectedCategoryIds] = useState<
-    number[] | null
-  >([])
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>([])
   const [selectedCityId, setSelectedCityId] = useState<number | null>()
   useEffect(() => {
     args["categoryIds"] = selectedCategoryIds
@@ -118,6 +117,16 @@ const BrandsList = ({
       }
     }
   )
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams as any)
+    const paramsKeys = params.keys()
+    for (const key of paramsKeys) {
+      if (key.includes("orderBy")) {
+        params.delete(key)
+      }
+    }
+    push(pathname + "?" + params.toString())
+  }, [])
 
   // const DesktopHeader = (
   //   <div className="flex items-center justify-between md:pb-8">
@@ -158,17 +167,15 @@ const BrandsList = ({
                 {page.brands.data.map(
                   (brand, index) =>
                     brand && (
-                      <div className="px-3 py-6 ring-alpha-200">
-                        <BrandCard
-                          isMobileView={isMobileView}
-                          ref={
-                            page.brands.data.length - 1 === index
-                              ? ref
-                              : undefined
-                          }
-                          brand={brand as Brand}
-                        />
-                      </div>
+                      <BrandCard
+                        isMobileView={isMobileView}
+                        ref={
+                          page.brands.data.length - 1 === index
+                            ? ref
+                            : undefined
+                        }
+                        brand={brand as Brand}
+                      />
 
                       // <BrandOrSellerCard
                       //   selectedItemId={selectedItemId}
@@ -196,13 +203,10 @@ const BrandsList = ({
     <FiltersSidebarContainer>
       <div className="flex flex-col gap-5">
         <BrandSortFilter
+          searchParams={searchParams}
+          pathname={pathname}
+          setSort={setSort}
           sort={sort}
-          onSortChanged={(sort) => {
-            setSort(sort)
-            // const params = new URLSearchParams(searchParams as any)
-            // params.set("orderBy", `${sort}`)
-            // push(pathname + "?" + params.toString())
-          }}
         />
         <div className="flex flex-col">
           {" "}
@@ -235,7 +239,7 @@ const BrandsList = ({
             }}
             type="text"
             placeholder="نام برند"
-            className="my-4 flex h-full w-full
+            className="my-4 flex w-full
                           items-center
                           gap-2
                           rounded-lg
@@ -244,10 +248,13 @@ const BrandsList = ({
                           py-3.5
                            focus:!ring-0 disabled:bg-alpha-100"
           />
-          <CategoryFilterSection
-            setSelectedCategoryIds={setSelectedCategoryIds}
-            selectedCategoryIds={selectedCategoryIds}
-          />
+          {/* args.categoryId means user is in the brand tab of a category */}
+          {!args.categoryId && (
+            <CategoryFilterSection
+              setSelectedCategoryIds={setSelectedCategoryIds}
+              selectedCategoryIds={selectedCategoryIds}
+            />
+          )}
           <CityFilterSection
             selectedCityId={selectedCityId}
             setSelectedCityId={setSelectedCityId}
@@ -262,15 +269,20 @@ const BrandsList = ({
     <div className="sticky top-0 z-30 border-b border-b-alpha-300 bg-alpha-white p-4">
       <div className="grid grid-cols-2">
         <MobileBrandSortFilter
+          searchParams={searchParams}
+          pathname={pathname}
+          setSort={setSort}
           sort={sort}
-          onSortChanged={(sort) => {
-            console.log(sort)
-            setSort(sort)
-            const params = new URLSearchParams(searchParams as any)
-            params.set("orderBy", `${sort}`)
-            push(pathname + "?" + params.toString())
-            setSortFilterVisibility(false)
-          }}
+        />
+        <MobilBrandsFilter
+          args={args}
+          brandsQueryTemp={brandsQueryTemp}
+          setBrandsQuery={setBrandsQuery}
+          setBrandsQueryTemp={setBrandsQueryTemp}
+          selectedCategoryIds={selectedCategoryIds}
+          selectedCityId={selectedCityId}
+          setSelectedCategoryIds={setSelectedCategoryIds}
+          setSelectedCityId={setSelectedCityId}
         />
         <Button
           onClick={() => setSortFilterVisibility(true)}
@@ -282,7 +294,6 @@ const BrandsList = ({
           مرتب‌سازی
         </Button>
         <Button
-          disabled
           onClick={() => setFiltersVisibility(true)}
           size="small"
           variant="ghost"

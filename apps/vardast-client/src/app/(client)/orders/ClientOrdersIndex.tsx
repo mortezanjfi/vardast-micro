@@ -4,11 +4,9 @@ import CategoriesPublicOrders from "@vardast/component/category/CategoriesPublic
 import { useGetPublicOrdersQuery } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 
-interface ClientOrdersIndexProps {
-  isMobileView: boolean
-}
+interface ClientOrdersIndexProps {}
 
-const ClientOrdersIndex = ({ isMobileView }: ClientOrdersIndexProps) => {
+const ClientOrdersIndex = ({}: ClientOrdersIndexProps) => {
   const publicPreOrders = useGetPublicOrdersQuery(
     graphqlRequestClientWithToken,
     {
@@ -16,12 +14,7 @@ const ClientOrdersIndex = ({ isMobileView }: ClientOrdersIndexProps) => {
     }
   )
 
-  return (
-    <CategoriesPublicOrders
-      publicPreOrders={publicPreOrders}
-      isMobileView={isMobileView}
-    />
-  )
+  return <CategoriesPublicOrders publicPreOrders={publicPreOrders} title />
 }
 
 export default ClientOrdersIndex

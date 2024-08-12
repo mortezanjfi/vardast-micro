@@ -27,16 +27,16 @@ const CityFilterSection = ({
     indexCityInput: { name: cityQuery }
   })
 
-  // const handleCheckboxChange = (categoryId: number) => {
-  //   setSelectedCityId((prev) => {
-  //     const isCategorySelected = prev.includes(categoryId)
-  //     if (isCategorySelected) {
-  //       return prev.filter((id) => id !== categoryId)
-  //     } else {
-  //       return [...prev, categoryId]
-  //     }
-  //   })
-  // }
+  const handleCheckboxChange = (cityId: number) => {
+    setSelectedCityId((prev) => {
+      const isCategorySelected = prev === cityId
+      if (isCategorySelected) {
+        return null
+      } else {
+        return cityId
+      }
+    })
+  }
 
   return (
     <FilterBlock title="شهر" openDefault={true}>
@@ -49,7 +49,7 @@ const CityFilterSection = ({
             setCityQuery(e.target.value)
           }}
           type="text"
-          placeholder="دسته بندی"
+          placeholder="شهر"
           className=" flex w-full
                       items-center
                           gap-2
@@ -85,9 +85,9 @@ const CityFilterSection = ({
                       city.id === selectedCityId
                       // selectedCityId.find((id) => id === category.id)
                     }
-                    onCheckedChange={() =>
-                      // handleCheckboxChange(category.id)
-                      setSelectedCityId(city.id)
+                    onCheckedChange={
+                      () => handleCheckboxChange(city.id)
+                      // setSelectedCityId(city.id)
                     }
                   >
                     <Checkbox.Indicator className="text-white">

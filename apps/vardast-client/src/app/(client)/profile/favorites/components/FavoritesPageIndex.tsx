@@ -1,10 +1,9 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
-import { BrandOrSellerProfileTab } from "@vardast/component/BrandOrSellerProfile"
 import Loading from "@vardast/component/Loading"
 import NotFoundIcon from "@vardast/component/not-found-icon"
 import {
@@ -18,11 +17,11 @@ import { allUserFavoriteBrandsQueryFns } from "@vardast/query/queryFns/allUserFa
 import { allUserFavoriteProductsQueryFns } from "@vardast/query/queryFns/allUserFavoriteProductsQueryFns"
 import { allUserFavoriteSellersQueryFns } from "@vardast/query/queryFns/allUserFavoriteSellersQueryFns"
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
-import { SegmentTabTitle } from "@vardast/ui/segment"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@vardast/ui/tabs"
 import { useSession } from "next-auth/react"
+import useTranslation from "next-translate/useTranslation"
 
 import BrandsTabContent from "@/app/(client)/profile/favorites/components/BrandsTabContent"
-import FavoritesProfile from "@/app/(client)/profile/favorites/components/FavoritesProfile"
 import { ProductsTabContent } from "@/app/(client)/profile/favorites/components/ProductsTabContent"
 import { SellersTabContent } from "@/app/(client)/profile/favorites/components/SellersTabContent"
 
@@ -70,11 +69,19 @@ const NotFoundItemsHelp = ({ text = "کالا" }) => {
     </div>
   )
 }
-
+export enum FAVORITE_PAGE_TABS {
+  PRODUCTS = "products",
+  BRANDS = "brands",
+  SELLERS = "sellers"
+}
 const FavoritesPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
   const { data: session, status } = useSession()
   const router = useRouter()
+  const { t } = useTranslation()
   const [cacheFlag, setCacheFlag] = useState(false)
+  const [activeTab, setActiveTab] = useState<FAVORITE_PAGE_TABS>(
+    FAVORITE_PAGE_TABS.PRODUCTS
+  )
   const productQuery = useQuery<GetUserFavoriteProductsQuery>({
     queryKey: [
       QUERY_FUNCTIONS_KEY.GET_ALL_USER_FAVORITE_PRODUCT,
@@ -123,32 +130,50 @@ const FavoritesPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const tabs: BrandOrSellerProfileTab[] = useMemo(
-    () => [
-      {
-        value: EntityTypeEnum.Product,
-        title: <SegmentTabTitle title="کالاها" />,
-        Content: () => (
-          <ProductsTabContent session={session} productQuery={productQuery} />
-        )
-      },
-      {
-        value: EntityTypeEnum.Brand,
-        title: <SegmentTabTitle title="برندها" />,
-        Content: () => <BrandsTabContent brandQuery={brandQuery} />
-      },
-      {
-        value: EntityTypeEnum.Seller,
-        title: <SegmentTabTitle title="فروشندگان" />,
-        Content: () => <SellersTabContent sellerQuery={sellerQuery} />
-      }
-    ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [session]
-  )
-
   if (status === "authenticated") {
-    return <FavoritesProfile tabs={tabs} isMobileView={isMobileView} />
+    return (
+      <Tabs
+        value={activeTab}
+        onValueChange={(e) => setActiveTab(e as FAVORITE_PAGE_TABS)}
+        className="flex h-full w-full flex-col bg-alpha-white"
+      >
+        <TabsList className="sticky top-0 z-50 grid w-full auto-cols-auto grid-flow-col bg-alpha-white font-medium sm:z-0  md:flex">
+          <TabsTrigger
+            className="whitespace-nowrap py-4"
+            value={FAVORITE_PAGE_TABS.PRODUCTS}
+          >
+            {t(`common:${FAVORITE_PAGE_TABS.PRODUCTS}`)}
+          </TabsTrigger>
+
+          <TabsTrigger
+            className="whitespace-nowrap py-4"
+            value={FAVORITE_PAGE_TABS.BRANDS}
+          >
+            {t(`common:${FAVORITE_PAGE_TABS.BRANDS}`)}
+          </TabsTrigger>
+          <TabsTrigger
+            className="whitespace-nowrap py-4"
+            value={FAVORITE_PAGE_TABS.SELLERS}
+          >
+            {t(`common:${FAVORITE_PAGE_TABS.SELLERS}`)}
+          </TabsTrigger>
+          {/* for full border under tabs-----------? */}
+          {!isMobileView && (
+            <div className="w-full border-b-0.5 border-alpha-200"></div>
+          )}
+        </TabsList>
+
+        <TabsContent value={FAVORITE_PAGE_TABS.PRODUCTS}>
+          <ProductsTabContent session={session} productQuery={productQuery} />
+        </TabsContent>
+        <TabsContent value={FAVORITE_PAGE_TABS.BRANDS}>
+          <BrandsTabContent brandQuery={brandQuery} />
+        </TabsContent>
+        <TabsContent value={FAVORITE_PAGE_TABS.SELLERS}>
+          <SellersTabContent sellerQuery={sellerQuery} />
+        </TabsContent>
+      </Tabs>
+    )
   }
 
   return (

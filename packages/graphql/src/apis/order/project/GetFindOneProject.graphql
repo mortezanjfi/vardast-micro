@@ -16,6 +16,7 @@ query FindOneProject($id: Float!) {
     }
     name
     addresses {
+    address {
       id
       address {
         title

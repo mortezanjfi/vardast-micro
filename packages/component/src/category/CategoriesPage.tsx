@@ -124,11 +124,11 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
         publicPreOrders.isFetching ? (
           tabListLoader
         ) : (
-          <TabsList className="sticky top-0 z-50 grid w-full auto-cols-auto grid-flow-col bg-alpha-white font-medium sm:z-0 md:mb-5  md:flex">
+          <TabsList className="sticky top-0 z-50 grid w-full auto-cols-auto grid-flow-col bg-alpha-white font-medium sm:z-0  md:flex">
             {categoryQuery?.data?.category?.childrenCount > 0 && (
               <TabsTrigger
                 onClick={(value) => console.log(value)}
-                className="py-4"
+                className="whitespace-nowrap py-4"
                 value={CATEGORY_PAGE_TABS.SUBCATEGORIES}
               >
                 {t(`common:${CATEGORY_PAGE_TABS.SUBCATEGORIES}`)}
@@ -136,14 +136,23 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
             )}
 
             {publicPreOrders?.data?.publicOrders?.length > 0 && (
-              <TabsTrigger className="py-4" value={CATEGORY_PAGE_TABS.ORDERS}>
+              <TabsTrigger
+                className="whitespace-nowrap py-4"
+                value={CATEGORY_PAGE_TABS.ORDERS}
+              >
                 {t(`common:${CATEGORY_PAGE_TABS.ORDERS}`)}
               </TabsTrigger>
             )}
-            <TabsTrigger className="py-4" value={CATEGORY_PAGE_TABS.BRANDS}>
+            <TabsTrigger
+              className="whitespace-nowrap py-4"
+              value={CATEGORY_PAGE_TABS.BRANDS}
+            >
               {t(`common:${CATEGORY_PAGE_TABS.BRANDS}`)}
             </TabsTrigger>
-            <TabsTrigger className="py-4" value={CATEGORY_PAGE_TABS.PRODUCTS}>
+            <TabsTrigger
+              className="whitespace-nowrap py-4"
+              value={CATEGORY_PAGE_TABS.PRODUCTS}
+            >
               {t(`common:${CATEGORY_PAGE_TABS.PRODUCTS}`)}
             </TabsTrigger>
             {/* for full border under tabs-----------? */}
@@ -153,10 +162,7 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
           </TabsList>
         )}
         {categoryQuery?.data?.category?.childrenCount > 0 && (
-          <TabsContent
-            className="bg-alpha-white py-5 md:!py-0"
-            value={CATEGORY_PAGE_TABS.SUBCATEGORIES}
-          >
+          <TabsContent value={CATEGORY_PAGE_TABS.SUBCATEGORIES}>
             <CategoriesList
               blog={
                 categoryQuery?.data?.category?.parentsChain.length > 0
@@ -175,7 +181,7 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
         <TabsContent value={CATEGORY_PAGE_TABS.ORDERS}>
           <CategoriesPublicOrders
             publicPreOrders={publicPreOrders}
-            isMobileView={isMobileView}
+            title={false}
             categoryId={categoryId}
           />
         </TabsContent>

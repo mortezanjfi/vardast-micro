@@ -29,30 +29,33 @@ const ProductSectionContainer: React.FC<
     <div
       className={`${spaceless ? "" : "p px-6"} ${
         bgTransparent ? "" : "bg-alpha-white"
-      } flex flex-col py-9 md:border-t-2 md:px-0
+      } flex flex-col py-4  md:px-0
       `}
     >
-      <div
-        className={clsx(
-          "flex items-center justify-between px-6 pb-9 sm:px-0",
-          titleCostumClass
-        )}
-      >
-        {title && (
-          <TitleTag className="font-medium md:text-xl">{title}</TitleTag>
-        )}
-        {subtitle && (
-          <Button
-            onClick={subtitle.onClick}
-            variant="link"
-            // className="!text-primary"
-            className="text-sm font-semibold !text-primary"
-          >
-            {subtitle.text}
-            <ChevronLeftIcon className="h-4 w-4 text-primary" />
-          </Button>
-        )}
-      </div>
+      {title && (
+        <div
+          className={clsx(
+            "flex items-center justify-between px-6 py-3 sm:px-0",
+            titleCostumClass
+          )}
+        >
+          <TitleTag className="text-base font-medium sm:text-xl">
+            {title}
+          </TitleTag>
+
+          {subtitle && (
+            <Button
+              onClick={subtitle.onClick}
+              variant="link"
+              // className="!text-primary"
+              className="text-sm font-semibold !text-primary"
+            >
+              {subtitle.text}
+              <ChevronLeftIcon className="h-4 w-4 text-primary" />
+            </Button>
+          )}
+        </div>
+      )}
       {children}
     </div>
   )

@@ -192,9 +192,15 @@ const Products = () => {
                         </td>
                         <td>
                           <div className="flex flex-col gap-1.5">
-                            <span className="font-medium text-alpha-800">
+                            <Link
+                              target="_blank"
+                              href={`
+                               https://vardast.com/product/${product.id}/${product.name}
+                            `}
+                              className="font-medium text-alpha-800"
+                            >
                               {product.name}
-                            </span>
+                            </Link>
                             {product.techNum && (
                               <span className="text-xs text-alpha-600">
                                 کد کالا: {product.techNum}
@@ -203,10 +209,24 @@ const Products = () => {
                           </div>
                         </td>
                         <td>
-                          <span>{product.category.title}</span>
+                          <Link
+                            target="_blank"
+                            href={`
+                             https://vardast.com/category/${product.category.id}/${product.category.title}
+                          `}
+                          >
+                            {product.category.title}
+                          </Link>
                         </td>
                         <td>
-                          <span>-</span>
+                          <Link
+                            target="_blank"
+                            href={`
+                            https://vardast.com/brand/${product.brand.id}/${product.brand.name}
+                          `}
+                          >
+                            {product.brand.name}
+                          </Link>
                         </td>
                         <td>-</td>
                         <td>{digitsEnToFa(product.views)}</td>

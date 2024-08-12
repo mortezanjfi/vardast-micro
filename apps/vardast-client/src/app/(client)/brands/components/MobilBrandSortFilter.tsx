@@ -1,6 +1,7 @@
 "use client"
 
-import { useContext } from "react"
+import { Dispatch, SetStateAction, useContext } from "react"
+import { ReadonlyURLSearchParams, useRouter } from "next/navigation"
 import { useMediaQuery } from "@mantine/hooks"
 import { sortBrand } from "@vardast/component/brand/BrandSortFilter"
 import { SortBrandEnum } from "@vardast/graphql/generated"
@@ -12,14 +13,19 @@ import { useAtom } from "jotai"
 import { LucideArrowRight } from "lucide-react"
 
 type MobilBrandSortFilterProps = {
-  onSortChanged: (_: SortBrandEnum) => void
+  setSort: Dispatch<SetStateAction<SortBrandEnum>>
   sort: SortBrandEnum
+  searchParams: ReadonlyURLSearchParams
+  pathname: string
 }
 
 const MobilBrandSortFilter = ({
+  setSort,
   sort,
-  onSortChanged
+  pathname,
+  searchParams
 }: MobilBrandSortFilterProps) => {
+  const { push } = useRouter()
   const { sortFilterVisibilityAtom } = useContext(PublicContext)
   const [sortFilterVisibility, setSortFilterVisibility] = useAtom(
     sortFilterVisibilityAtom
@@ -28,6 +34,19 @@ const MobilBrandSortFilter = ({
   const isTabletOrMobile = useMediaQuery("(max-width: 640px)", true, {
     getInitialValueInEffect: false
   })
+  const onSortChanged = (sort: SortBrandEnum) => {
+    setSort((prev) => {
+      const isSortSelected = prev === sort
+      const params = new URLSearchParams(searchParams as any)
+      if (isSortSelected) {
+        params.delete("orderBy")
+      } else {
+        params.set("orderBy", `${sort}`)
+      }
+      push(pathname + "?" + params.toString())
+      return isSortSelected ? undefined : sort
+    })
+  }
 
   return (
     isTabletOrMobile && (

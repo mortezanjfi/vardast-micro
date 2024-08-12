@@ -69,7 +69,7 @@ const MobileHomeTopBlogs = ({
               )}
             >
               <div
-                className="rounded-2xl"
+                className="rounded-2xl "
                 ref={
                   index === getAllBlogsQuery?.data?.getAllBlogs?.data.length - 1
                     ? refNext
@@ -97,10 +97,10 @@ const MobileHomeTopBlogs = ({
                       fill
                       // width={400}
                       // height={300}
-                      className="h-full w-full rounded-2xl object-fill"
+                      className="h-full w-full rounded-2xl border border-alpha-50 object-fill"
                     />
                   </div>
-                  <div className="relative z-20 flex flex-col items-start justify-between gap-y-2 bg-alpha-white bg-opacity-60 px py-4 text-center">
+                  <div className="relative z-20 flex flex-col items-start justify-between gap-y-2 bg-alpha-white bg-opacity-60 py-4 text-center">
                     <h4 className="w-full truncate text-justify font-semibold">
                       {blog?.title}
                     </h4>
