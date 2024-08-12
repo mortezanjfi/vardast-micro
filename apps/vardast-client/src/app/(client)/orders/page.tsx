@@ -20,7 +20,7 @@ const CategoryIdPage = async () => {
 
   return (
     <ReactQueryHydrate state={dehydratedState}>
-      <ClientOrdersIndex isMobileView={isMobileView} />
+      <ClientOrdersIndex />
     </ReactQueryHydrate>
   )
 }
