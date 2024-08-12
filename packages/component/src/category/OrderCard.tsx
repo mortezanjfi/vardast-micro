@@ -38,8 +38,6 @@ const OrderCard = ({
   const [dropDownMenuOpen, setDropDownMenuOpen] = useState(false)
   const { colorClass, timeDisplay } = getBidTimeLeft(preOrder?.bid_end)
 
-  console.log(colorClass, timeDisplay)
-
   return (
     <Card className="overflow-hidden !p-0">
       <div

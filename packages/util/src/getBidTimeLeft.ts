@@ -3,11 +3,9 @@ const getBidTimeLeft = (endTime) => {
   const end = new Date(endTime).getTime()
   const timeDiff = end - now
 
-  // Calculate days, hours, and minutes left
   const daysLeft = Math.floor(timeDiff / (1000 * 60 * 60 * 24))
   const hoursLeft = Math.floor((timeDiff / (1000 * 60 * 60)) % 24)
-  console.log(daysLeft)
-  // Determine the color and time display based on the days/hours left
+
   let timeDisplay: string
   let colorClass: string
 
