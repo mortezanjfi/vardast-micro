@@ -1,8 +1,7 @@
 "use client"
 
-import { useCallback, useEffect, useMemo } from "react"
+import { useCallback, useMemo } from "react"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import { useQueryClient } from "@tanstack/react-query"
 import AddressDeleteModal from "@vardast/component/admin/address/AddressDeleteModal"
 import AddressModal from "@vardast/component/admin/address/AddressModal"
 import ContactInfoDeleteModal from "@vardast/component/admin/contact/ContactInfoDeleteModal"
@@ -41,7 +40,6 @@ type Props = { uuid: string }
 
 function LegalPage({ uuid }: Props) {
   const [modals, onChangeModals, onCloseModals] = useModals<LegalModalEnum>()
-  const queryClient = useQueryClient()
   const { t } = useTranslation()
   const getOneLegalQuery = useGetOneLegalQuery(graphqlRequestClientWithToken, {
     id: +uuid
@@ -458,14 +456,6 @@ function LegalPage({ uuid }: Props) {
     }),
     [getOneLegalQuery.data]
   )
-
-  useEffect(() => {
-    return () => {
-      queryClient.invalidateQueries({
-        queryKey: ["legals", "table", { page: 1, perPage: 10 }, undefined]
-      })
-    }
-  }, [])
 
   return (
     <>
