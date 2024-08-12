@@ -1,19 +1,12 @@
 "use client"
 
-import Card, { CardProps } from "@vardast/component/Card"
-import {
-  DetailsWithTitle,
-  DetailsWithTitleProps
-} from "@vardast/component/desktop/DetailsWithTitle"
-import { Badge, BadgeProps } from "@vardast/ui/badge"
+import { Badge } from "@vardast/ui/badge"
 
-type DetailsCardProps = {
-  badges?: BadgeProps[]
-  items: DetailsWithTitleProps[]
-  card?: Omit<CardProps, "children">
-}
+import Card from "../Card"
+import { DetailsCardPropsType } from "../types/type"
+import { DetailsWithTitle } from "./DetailsWithTitle"
 
-const DetailsCard = ({ badges, items, card }: DetailsCardProps) => {
+const DetailsCard = ({ badges, items, card }: DetailsCardPropsType) => {
   return (
     <Card {...card} template="1/2-sm">
       {badges && badges?.length && (

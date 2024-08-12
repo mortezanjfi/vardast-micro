@@ -64,8 +64,6 @@ const OrderInfoModal = ({
     }
   })
 
-  // console.log({ errrr: form.formState.errors })
-
   z.setErrorMap(zodI18nMap)
 
   const rootCategories = useGetAllCategoriesQuery(

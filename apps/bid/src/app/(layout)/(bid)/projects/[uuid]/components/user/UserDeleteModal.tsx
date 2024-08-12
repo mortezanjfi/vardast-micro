@@ -48,7 +48,7 @@ const UserDeleteModal = ({
     modalType: "delete",
     size: "sm",
     onOpenChange: onCloseModals,
-    errors: errors,
+    errors,
     title: t("common:delete_entity", { entity: t("common:user") }),
     description: t(
       "common:are_you_sure_you_want_to_delete_x_entity_this_action_cannot_be_undone_and_all_associated_data_will_be_permanently_removed",

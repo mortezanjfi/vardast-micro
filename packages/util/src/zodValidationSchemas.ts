@@ -26,6 +26,42 @@ export const cellphoneNumberSchema = z
     message: "شماره موبایل صحیح نیست"
   })
 
+export const shebaSchema = z
+  .string()
+  .min(24, {
+    message: "شماره شبا صحیح نیست"
+  })
+  .min(24, {
+    message: "شماره شبا صحیح نیست"
+  })
+  .refine((data) => stringHasOnlyNumberValidator(digitsFaToEn(`${data}`)), {
+    message: "شماره شبا صحیح نیست"
+  })
+
+export const accountNumberSchema = z
+  .string()
+  .min(11, {
+    message: "شماره حساب صحیح نیست"
+  })
+  .min(18, {
+    message: "شماره حساب صحیح نیست"
+  })
+  .refine((data) => stringHasOnlyNumberValidator(digitsFaToEn(`${data}`)), {
+    message: "شماره حساب صحیح نیست"
+  })
+
+export const nationalIdNumberSchema = z
+  .string()
+  .min(11, {
+    message: "شناسه ملی صحیح نیست"
+  })
+  .min(11, {
+    message: "شناسه ملی صحیح نیست"
+  })
+  .refine((data) => stringHasOnlyNumberValidator(digitsFaToEn(`${data}`)), {
+    message: "شناسه ملی صحیح نیست"
+  })
+
 export const phoneSchema = z
   .string()
   .min(11, {

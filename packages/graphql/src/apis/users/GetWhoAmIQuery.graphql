@@ -33,12 +33,6 @@ query GetWhoAmI {
       wallet
     }
     fullName
-    country {
-      id
-      name
-      nameEn
-      slug
-    }
     roles {
       id
       name
@@ -98,21 +92,6 @@ query GetWhoAmI {
         url
         expiresAt
       }
-    }
-    country {
-      id
-      name
-      nameEn
-      slug
-      alphaTwo
-      iso
-      phonePrefix
-      sort
-      isActive
-      latitude
-      longitude
-      flagEmoji
-      provincesCount
     }
   }
 }

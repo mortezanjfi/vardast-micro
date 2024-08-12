@@ -1,4 +1,5 @@
 import { DependencyList } from "react"
+import { UseQueryOptions } from "@tanstack/react-query"
 import {
   ColumnDef, // Importing Column from react-table
   Row,
@@ -36,15 +37,16 @@ export type TableDirectDataType<T> = {
   data: Array<Partial<T>>
 }
 
-type FetchWithData<T> = {
-  directData: TableDirectDataType<T>
-  accessToken?: never
+type FetchWithData<TData> = {
+  directData: TableDirectDataType<TData>
   api?: never
+  options?: UseQueryOptions<any>
 }
 
-type FetchWithApi<_T, TArgs, TSchema> = {
+type FetchWithApi<TData, TArgs, TSchema> = {
   directData?: never
   api: (args: CheckedTypeByArgs<TArgs, ApiArgsType<TSchema>>) => Promise<any>
+  options?: UseQueryOptions<TData>
 }
 
 type FetchConfig<T, TArgs, TSchema> =

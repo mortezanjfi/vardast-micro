@@ -1,4 +1,4 @@
-import { OnChangeModalsType, UseModalsType } from "@vardast/ui/modal"
+import { IUseModal, OnChangeModalsType } from "@vardast/ui/modal"
 
 export enum OrderModalEnum {
   DELETE_ADDRESS,
@@ -19,11 +19,10 @@ export interface IOrderPageProps {
   uuid?: string
 }
 
-export interface IOrderPageSectionProps<T> extends IOrderPageProps {
+export interface IOrderPageSectionProps<T>
+  extends IOrderPageProps,
+    IUseModal<OrderModalEnum, T> {
   open?: boolean
-  onCloseModals?: (_?: T) => void
-  onChangeModals?: OnChangeModalsType<OrderModalEnum>
-  modals?: UseModalsType<OrderModalEnum, T>
 }
 
 export interface IOrdersTabProps {

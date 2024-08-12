@@ -57,7 +57,7 @@ const Footer = ({
         type="button"
         className="w-full md:w-auto"
         variant="secondary"
-        onClick={onOpenChange}
+        onClick={() => onOpenChange()}
       >
         {t("common:cancel")}
       </Button>
@@ -109,8 +109,8 @@ const Modal = <TFieldValues extends FieldValues>({
             <AlertTitle>خطا</AlertTitle>
             <AlertDescription>
               {(
-                errors.response.errors?.at(0)?.extensions
-                  .displayErrors as string[]
+                errors?.response?.errors?.at(0)?.extensions
+                  ?.displayErrors as string[]
               ).map((error) => (
                 <p key={error}>{error}</p>
               ))}

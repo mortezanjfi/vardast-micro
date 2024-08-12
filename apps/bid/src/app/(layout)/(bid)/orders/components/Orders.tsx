@@ -90,7 +90,7 @@ const Orders = ({ onChangeModals }: IOrdersTabProps) => {
               name: "status",
               title: t("common:status"),
               options: orderStatus.map((item) => ({
-                key: PreOrderStatesFa[item as PreOrderStates]?.name_fa_admin,
+                key: PreOrderStatesFa[item as PreOrderStates]?.name_fa,
                 value: item.toUpperCase()
               }))
             },
@@ -175,7 +175,7 @@ const Orders = ({ onChangeModals }: IOrdersTabProps) => {
               const renderedValue = PreOrderStatesFa[row?.original?.status]
               return (
                 <Badge variant={renderedValue?.variant}>
-                  {renderedValue?.name_fa_admin}
+                  {renderedValue?.name_fa}
                 </Badge>
               )
             }

@@ -2,14 +2,10 @@
 
 import { useState } from "react"
 import { notFound, usePathname, useSearchParams } from "next/navigation"
-import AddressesTab from "@vardast/component/legal/address-Info/AddressesTab"
-import ContactInfosTab from "@vardast/component/legal/ContactInfosTab"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import PageTitle from "@vardast/component/page-title"
 import {
-  Address,
-  ContactInfo,
   Seller,
   SellerRepresentative,
   useGetSellerQuery
@@ -104,7 +100,7 @@ const SellerEdit = ({ title, uuid }: Props) => {
         <TabsContent value={SELLER_EDIT_TAB.INFO}>
           <SellerForm seller={data?.data?.seller as Seller} />
         </TabsContent>
-        {data?.data?.seller &&
+        {/* {data?.data?.seller &&
           session?.abilities?.includes("gql.users.address.index") && (
             <TabsContent value={SELLER_EDIT_TAB.ADDRESS}>
               <AddressesTab
@@ -125,7 +121,7 @@ const SellerEdit = ({ title, uuid }: Props) => {
                 contactInfos={data?.data?.seller.contacts as ContactInfo[]}
               />
             </TabsContent>
-          )}
+          )} */}
         {data?.data?.seller &&
           session?.abilities?.includes(
             "gql.products.seller_representative.index"

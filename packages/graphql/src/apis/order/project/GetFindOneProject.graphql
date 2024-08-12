@@ -2,28 +2,33 @@ query FindOneProject($id: Float!) {
   findOneProject(id: $id) {
     id
     name
-    type
-    address {
+    addresses {
       id
       address {
-        id
-        userId
         title
-        delivery_contact
-        delivery_name
-        address
         city {
           id
         }
         province {
           id
         }
+        id
+        relatedType
+        relatedId
+        title
+        address
         postalCode
+        latitude
+        longitude
+        sort
+        isPublic
         status
+        rejectionReason
         createdAt
+        updatedAt
       }
     }
-    user {
+    users {
       id
       type
       user {

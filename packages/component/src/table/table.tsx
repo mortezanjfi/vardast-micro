@@ -137,6 +137,10 @@ const Table = <
     [filters?.schema]
   )
 
+  console.log({
+    kkkkkkkkkkkkkkkK: [name, "table", memoizeFetchArgs, fetch?.directData?.data]
+  })
+
   const { data, isLoading, isFetching, isError } = useQuery(
     [name, "table", memoizeFetchArgs, fetch?.directData?.data],
     async () => {
@@ -174,6 +178,7 @@ const Table = <
       return response
     },
     {
+      ...(fetch?.options ? fetch?.options : {}),
       keepPreviousData: true
     }
   )

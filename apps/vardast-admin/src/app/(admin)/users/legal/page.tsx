@@ -1,8 +1,9 @@
 import { Metadata } from "next"
 import { dehydrate } from "@tanstack/react-query"
-import AllLegalUsers from "@vardast/component/legal/AllLegalUsers"
 import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
+
+import LegalsPage from "@/app/(admin)/users/legal/components/LegalsPage"
 
 export async function generateMetadata(): Promise<Metadata> {
   // parent: ResolvingMetadata
@@ -16,7 +17,7 @@ export default async () => {
   const dehydratedState = dehydrate(queryClient)
   return (
     <ReactQueryHydrate state={dehydratedState}>
-      <AllLegalUsers
+      <LegalsPage
         title={(await generateMetadata()).title?.toString() as string}
       />
     </ReactQueryHydrate>

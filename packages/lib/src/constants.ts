@@ -6,9 +6,13 @@ import {
   PlusCircleIcon
 } from "@heroicons/react/24/solid"
 import {
+  ContactInfoTypes,
+  LegalStatusEnum,
+  MemberRoles,
   OrderOfferStatuses,
   PaymentMethodEnum,
-  PreOrderStates
+  PreOrderStates,
+  ThreeStateSupervisionStatuses
 } from "@vardast/graphql/generated"
 import { NavigationItemType } from "@vardast/type/Navigation"
 import {
@@ -27,58 +31,104 @@ import {
 
 import paths from "./paths"
 
+type StatusFaType<T extends string> = Record<
+  T,
+  { variant: BadgeVariantsType; name_fa: string }
+>
+
 export const OrderOfferStatusesFa = {
   [OrderOfferStatuses.Closed]: { className: "tag-success", name_fa: "بسته شده" }
 }
 
-export const PreOrderStatesFa: Record<
-  PreOrderStates,
-  { variant: BadgeVariantsType; name_fa_admin: string; name_fa: string }
-> = {
+export const PreOrderStatesFa: StatusFaType<PreOrderStates> = {
   [PreOrderStates.PendingAdmin]: {
     variant: "info",
-    name_fa_admin: "در انتظار تایید ادمین",
-    name_fa: "جاری"
+    name_fa: "در انتظار تایید ادمین"
   },
   [PreOrderStates.PendingInfo]: {
     variant: "info",
-    name_fa_admin: "در انتظار دریافت اطلاعات",
-    name_fa: "جاری"
+    name_fa: "در انتظار دریافت اطلاعات"
   },
   [PreOrderStates.PendingOffer]: {
     variant: "info",
-    name_fa_admin: "در انتظار پیشنهاد قیمت",
-    name_fa: "جاری"
+    name_fa: "در انتظار پیشنهاد قیمت"
   },
   [PreOrderStates.PendingProduct]: {
     variant: "info",
-    name_fa_admin: "در انتظار افزودن کالا",
-    name_fa: "جاری"
+    name_fa: "در انتظار افزودن کالا"
   },
   [PreOrderStates.VerifyFile]: {
     variant: "info",
-    name_fa_admin: "در انتظار تایید فایل",
-    name_fa: "جاری"
+    name_fa: "در انتظار تایید فایل"
   },
   [PreOrderStates.Closed]: {
     variant: "success",
-    name_fa_admin: "خریداری شده",
     name_fa: "خریداری شده"
   },
   [PreOrderStates.Completed]: {
     variant: "default",
-    name_fa_admin: "خریداری نشده",
     name_fa: "خریداری نشده"
   },
   [PreOrderStates.PendingPayment]: {
     variant: "warning",
-    name_fa: "در انتظار پرداخت",
-    name_fa_admin: "در انتظار پرداخت"
+    name_fa: "در انتظار پرداخت"
   },
   [PreOrderStates.Rejected]: {
     variant: "danger",
-    name_fa: "رد شده",
-    name_fa_admin: "رد شده"
+    name_fa: "رد شده"
+  }
+}
+
+export const ThreeStateSupervisionStatusesFa: StatusFaType<ThreeStateSupervisionStatuses> =
+  {
+    [ThreeStateSupervisionStatuses.Confirmed]: {
+      variant: "success",
+      name_fa: "تایید شده"
+    },
+    [ThreeStateSupervisionStatuses.Rejected]: {
+      variant: "danger",
+      name_fa: "رد شده"
+    },
+    [ThreeStateSupervisionStatuses.Pending]: {
+      variant: "warning",
+      name_fa: "در انتظار بررسی"
+    }
+  }
+
+export const LegalStatusEnumFa: StatusFaType<LegalStatusEnum> = {
+  [LegalStatusEnum.Active]: {
+    variant: "success",
+    name_fa: "فعال"
+  },
+  [LegalStatusEnum.Deactive]: {
+    variant: "danger",
+    name_fa: "غیرفعال"
+  }
+}
+
+export const ContactInfoTypesFa: StatusFaType<ContactInfoTypes> = {
+  [ContactInfoTypes.Fax]: {
+    variant: "default",
+    name_fa: "فکس"
+  },
+  [ContactInfoTypes.Mobile]: {
+    variant: "default",
+    name_fa: "موبایل"
+  },
+  [ContactInfoTypes.Tel]: {
+    variant: "default",
+    name_fa: "تلفن ثابت"
+  }
+}
+
+export const MemberRolesFa: StatusFaType<MemberRoles> = {
+  [MemberRoles.Admin]: {
+    variant: "secondary",
+    name_fa: "ادمین"
+  },
+  [MemberRoles.Zerolevel]: {
+    variant: "default",
+    name_fa: "کاربر معمولی"
   }
 }
 

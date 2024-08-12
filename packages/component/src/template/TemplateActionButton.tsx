@@ -15,13 +15,19 @@ const TemplateActionButton = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter()
   return (
     <div className="flex h-full flex-col gap-6">
-      <PageHeader title={isMounted ? document.title : ""} />
-      {children}
-      <div className="flex justify-end">
-        <Button variant="secondary" size="medium" onClick={() => router.back()}>
-          بازگشت
-        </Button>
+      <div className="flex items-center justify-between">
+        <PageHeader title={isMounted ? document.title : ""} />
+        <div>
+          <Button
+            variant="secondary"
+            size="medium"
+            onClick={() => router.back()}
+          >
+            بازگشت
+          </Button>
+        </div>
       </div>
+      {children}
     </div>
   )
 }

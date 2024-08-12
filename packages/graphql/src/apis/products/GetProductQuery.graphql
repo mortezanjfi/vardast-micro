@@ -9,7 +9,6 @@ query GetProduct($id: Int!) {
     description
     title
     metaDescription
-
     rating
     tag
     status
@@ -141,22 +140,6 @@ query GetProduct($id: Int!) {
           isPublic
           status
           rejectionReason
-
-          country {
-            id
-            name
-            nameEn
-            slug
-            alphaTwo
-            iso
-            phonePrefix
-            sort
-            isActive
-            latitude
-            longitude
-            flagEmoji
-            provincesCount
-          }
         }
         addresses {
           id
@@ -234,22 +217,6 @@ query GetProduct($id: Int!) {
           isPublic
           status
           rejectionReason
-
-          country {
-            id
-            name
-            nameEn
-            slug
-            alphaTwo
-            iso
-            phonePrefix
-            sort
-            isActive
-            latitude
-            longitude
-            flagEmoji
-            provincesCount
-          }
         }
         addresses {
           id
@@ -337,22 +304,6 @@ query GetProduct($id: Int!) {
           isPublic
           status
           rejectionReason
-
-          country {
-            id
-            name
-            nameEn
-            slug
-            alphaTwo
-            iso
-            phonePrefix
-            sort
-            isActive
-            latitude
-            longitude
-            flagEmoji
-            provincesCount
-          }
         }
         addresses {
           id

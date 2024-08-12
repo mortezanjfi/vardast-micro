@@ -28,20 +28,5 @@ query GetContactInfo($id: Int!) {
       flagEmoji
       provincesCount
     }
-    country {
-      id
-      name
-      nameEn
-      slug
-      alphaTwo
-      iso
-      phonePrefix
-      sort
-      isActive
-      latitude
-      longitude
-      flagEmoji
-      provincesCount
-    }
   }
 }

@@ -1,0 +1,3 @@
+mutation CreateMemberMutation($createMemberInput: CreateMemberInput!) {
+  createMember(createMemberInput: $createMemberInput)
+}

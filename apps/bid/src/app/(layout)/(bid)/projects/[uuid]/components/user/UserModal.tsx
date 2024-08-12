@@ -85,7 +85,7 @@ export const UserModal = ({
   }, [modals, modals?.data as unknown as UserProject])
 
   const modalProps: ModalProps = {
-    open: open,
+    open,
     onOpenChange: onCloseModals,
     errors,
     title: t("common:add_new_entity", { entity: t("common:colleague") }),

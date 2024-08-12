@@ -9,6 +9,7 @@
   "offers_index_title": "پیشنهادات",
   "firstName": "نام",
   "lastName": "نام خانوادگی",
+  "fullName": "نام و نام خانوادگی",
   "reset_password": "تغییر کلمه عبور",
   "parent_category": "دسته‌بندی والد",
   "notice": "توجه",
@@ -165,6 +166,8 @@
   "no_entity_found": "{{ entity }} یافت نشد",
   "not_active": "غیر فعال",
   "number": "شماره",
+  "shaba": "شبا",
+  "entity_number": "شماره {{ entity }}",
   "optional": "اختیاری",
   "otp": "رمز یکبار مصرف",
   "page_description": "توضیحات صفحه",
@@ -360,6 +363,7 @@
   "purchasers": "خریداران",
   "main-number": "تلفن ثابت",
   "account-number": "شماره حساب",
+  "account": "حساب",
   "IBAN-number": "شماره شبا",
   "colleague-role": "نقش همکار",
   "entity_type": "نوع {{entity}}",
@@ -404,6 +408,9 @@
   "lines": "اقلام",
   "description_entity": "توضیحات {{entity}}",
   "project-info": "اطلاعات پروژه",
+  "entity_info": "اطلاعات {{entity}}",
   "cash": "نقدی",
-  "credit": "اعتباری"
+  "credit": "اعتباری",
+  "postition": "سمت",
+  "call": "تماس"
 }

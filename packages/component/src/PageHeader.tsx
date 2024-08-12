@@ -26,9 +26,7 @@ function PageHeader({
       </button> */}
       <div className={`flex items-center ${containerClass}`}>
         <div className={`${titleContainerClasses}`}>
-          <h2 className={` font-black text-alpha-800 ${titleClasses} leading`}>
-            {title}
-          </h2>
+          <p className={`font-semibold ${titleClasses} leading`}>{title}</p>
         </div>
 
         <div className="mr-auto">{children}</div>

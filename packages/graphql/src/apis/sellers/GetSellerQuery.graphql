@@ -44,22 +44,6 @@ query GetSeller($id: Int!) {
       isPublic
       status
       rejectionReason
-
-      country {
-        id
-        name
-        nameEn
-        slug
-        alphaTwo
-        iso
-        phonePrefix
-        sort
-        isActive
-        latitude
-        longitude
-        flagEmoji
-        provincesCount
-      }
     }
     addresses {
       id

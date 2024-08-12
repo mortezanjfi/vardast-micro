@@ -1,7 +1,7 @@
 import { FieldPath, PathValue, UseFormSetValue } from "react-hook-form"
 
 export const setMultiFormValues = <TFieldValues>(
-  data: TFieldValues,
+  data: Partial<TFieldValues>,
   setValue: UseFormSetValue<TFieldValues>
 ) => {
   if (!data) {

@@ -7,15 +7,30 @@ query FindPreOrderById($id: Float!) {
     project {
       name
       id
-      address {
+      addresses {
+        id
         address {
-          id
-          userId
           title
-          delivery_contact
-          delivery_name
+          city {
+            id
+          }
+          province {
+            id
+          }
+          id
+          relatedType
+          relatedId
+          title
           address
           postalCode
+          latitude
+          longitude
+          sort
+          isPublic
+          status
+          rejectionReason
+          createdAt
+          updatedAt
         }
       }
     }

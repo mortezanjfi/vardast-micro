@@ -17,6 +17,13 @@ export type UseModalsReturn<TEnum extends {} = undefined, TData = undefined> = [
   onCloseModals: () => void
 ]
 
+export interface IUseModal<TEnum extends {} = undefined, TData = undefined> {
+  onCloseModals?: <T>(_?: T) => void
+  onChangeModals?: OnChangeModalsType<TEnum>
+  modals?: UseModalsType<TEnum, TData>
+  open?: boolean
+}
+
 const useModals = <
   TEnum extends {} = undefined,
   TData = undefined

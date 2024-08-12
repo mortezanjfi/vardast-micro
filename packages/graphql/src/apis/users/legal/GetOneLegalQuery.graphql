@@ -3,6 +3,14 @@ query GetOneLegalQuery($id: Float!) {
     id
     name_company
     national_id
+    shabaNumber
+    status
+    accountNumber
+    owner {
+      cellphone
+      firstName
+      lastName
+    }
     wallet
     create_at
     contacts {
@@ -18,12 +26,49 @@ query GetOneLegalQuery($id: Float!) {
       isPublic
       status
       rejectionReason
-      country {
+    }
+    members {
+      id
+      relatedId
+      role
+      type
+      isActive
+      position
+      createdAt
+      updatedAt
+      user {
         id
-        phonePrefix
+        uuid
+        firstName
+        lastName
+        email
+        cellphone
+        telegramChatId
+        isCellphoneVerified
+        isEmailVerified
+        isTelegramVerified
+        username
+        password
+        mustChangePassword
+        lastPasswordChangeAt
+        language
+        timezone
+        wallet
+        status
+        suspensionReason
+        customDisplayRole
+        adminComments
+        lastLoginAt
+        lastLoginIP
+        lastFailedLoginAt
+        failedLoginAttempts
+        isLockedOut
+        lockedOutAt
+        createdAt
+        updatedAt
+        fullName
       }
     }
-
     addresses {
       id
       relatedType

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
+import DetailsCard from "@vardast/component/desktop/DetailsCard"
 import { ITableProps, Table, useTable } from "@vardast/component/table"
 import {
   Line,
@@ -24,7 +25,6 @@ import AddSellerModal from "@/app/(layout)/(bid)/orders/[uuid]/components/AddSel
 import OfferModal from "@/app/(layout)/(bid)/orders/[uuid]/components/OfferModal"
 import OrderInfoModal from "@/app/(layout)/(bid)/orders/[uuid]/components/OrderInfoModal"
 import OrderProductsTabsModal from "@/app/(layout)/(bid)/orders/[uuid]/components/tabs/OrderProductsTabsModal"
-import DetailsCard from "@/app/(layout)/(bid)/orders/components/DetailsCard"
 import {
   IOrderPageProps,
   OrderModalEnum

@@ -1,0 +1,5 @@
+mutation UpdateLegalMutation($updateLegalInput: UpdateLegalInput!) {
+  updateLegal(updateLegalInput: $updateLegalInput) {
+    id
+  }
+}

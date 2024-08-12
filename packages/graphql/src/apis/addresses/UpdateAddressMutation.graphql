@@ -12,22 +12,6 @@ mutation UpdateAddressMutation($updateAddressInput: UpdateAddressInput!) {
     isPublic
     status
     rejectionReason
-
-    country {
-      id
-      name
-      nameEn
-      slug
-      alphaTwo
-      iso
-      phonePrefix
-      sort
-      isActive
-      latitude
-      longitude
-      flagEmoji
-      provincesCount
-    }
     city {
       id
       name

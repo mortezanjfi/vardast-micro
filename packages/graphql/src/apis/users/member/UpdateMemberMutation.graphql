@@ -1,0 +1,5 @@
+mutation UpdateMemberMutation($updateMemberInput: UpdateMemberInput!) {
+  updateMember(updateMemberInput: $updateMemberInput) {
+    id
+  }
+}

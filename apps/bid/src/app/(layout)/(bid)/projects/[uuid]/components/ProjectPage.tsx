@@ -2,6 +2,7 @@
 
 import { useMemo } from "react"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
+import DetailsCard from "@vardast/component/desktop/DetailsCard"
 import { ITableProps, Table, useTable } from "@vardast/component/table"
 import {
   ProjectAddress,
@@ -13,7 +14,6 @@ import { Button } from "@vardast/ui/button"
 import { useModals } from "@vardast/ui/modal"
 import useTranslation from "next-translate/useTranslation"
 
-import DetailsCard from "@/app/(layout)/(bid)/orders/components/DetailsCard"
 import AddressDeleteModal from "@/app/(layout)/(bid)/projects/[uuid]/components/address/AddressDeleteModal"
 import { AddressModal } from "@/app/(layout)/(bid)/projects/[uuid]/components/address/AddressModal"
 import UserDeleteModal from "@/app/(layout)/(bid)/projects/[uuid]/components/user/UserDeleteModal"
@@ -160,7 +160,7 @@ const ProjectPage = ({ uuid }: IOrderPageProps) => {
                 variant="link"
                 size="small"
                 onClick={() => {
-                  onChangeModals<User>({
+                  onChangeModals({
                     type: OrderModalEnum.DELETE_USER,
                     data: row.original
                   })

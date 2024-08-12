@@ -1,47 +1,5 @@
 mutation RemoveContactInfoMutation($id: Int!) {
   removeContactInfo(id: $id) {
     id
-    relatedType
-    relatedId
-    title
-    code
-    number
-    ext
-    type
-    sort
-    isPublic
-    status
-    rejectionReason
-
-    country {
-      id
-      name
-      nameEn
-      slug
-      alphaTwo
-      iso
-      phonePrefix
-      sort
-      isActive
-      latitude
-      longitude
-      flagEmoji
-      provincesCount
-    }
-    city {
-      id
-      name
-      nameEn
-      slug
-      alphaTwo
-      iso
-      phonePrefix
-      sort
-      isActive
-      latitude
-      longitude
-      flagEmoji
-      provincesCount
-    }
   }
 }
