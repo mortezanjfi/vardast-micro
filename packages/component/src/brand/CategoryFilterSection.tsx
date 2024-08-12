@@ -14,11 +14,13 @@ import FilterBlock from "../filter-block"
 type CategoryFilterSectionProps = {
   setSelectedCategoryIds: Dispatch<SetStateAction<number[]>>
   selectedCategoryIds: number[]
+  openDefault?: boolean
 }
 
 const CategoryFilterSection = ({
   setSelectedCategoryIds,
-  selectedCategoryIds
+  selectedCategoryIds,
+  openDefault = false
 }: CategoryFilterSectionProps) => {
   const [categoryQuery, setCategoryQuery] = useDebouncedState("", 500)
   const [categoryQueryTemp, setCategoryQueryTemp] = useState("")
@@ -31,9 +33,9 @@ const CategoryFilterSection = ({
 
   const handleCheckboxChange = (categoryId: number) => {
     setSelectedCategoryIds((prev) => {
-      const isCategorySelected = prev.includes(categoryId)
+      const isCategorySelected = prev?.includes(categoryId)
       if (isCategorySelected) {
-        return prev.filter((id) => id !== categoryId)
+        return prev?.filter((id) => id !== categoryId)
       } else {
         return [...prev, categoryId]
       }
@@ -41,7 +43,7 @@ const CategoryFilterSection = ({
   }
 
   return (
-    <FilterBlock title="دسته‌بندی" openDefault={false}>
+    <FilterBlock title="دسته‌بندی" openDefault={openDefault}>
       <div className=" flex w-full flex-col gap-4">
         <Input
           autoFocus
@@ -85,7 +87,7 @@ const CategoryFilterSection = ({
                          data-[state='checked']:bg-primary-500"
                     checked={
                       category.id ===
-                      selectedCategoryIds.find((id) => id === category.id)
+                      selectedCategoryIds?.find((id) => id === category.id)
                     }
                     onCheckedChange={() => handleCheckboxChange(category.id)}
                   >

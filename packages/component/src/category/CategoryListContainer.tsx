@@ -48,8 +48,8 @@ const CategoryListContainer: React.FC<ICategoryListContainer> = ({
     <>
       <ul
         className={clsx(
-          !isSubcategory && "mt-6",
-          "grid grid-cols-2 grid-rows-none gap-4 divide-alpha-200 p-6 pt-0 sm:!px-0 md:grid-cols-5 md:grid-rows-1"
+          !isSubcategory && !isMobileView && " !bg-alpha-white",
+          " grid grid-cols-2 grid-rows-none gap-4 divide-alpha-200 bg-alpha-50 p-6 py-5 sm:!px-0 md:grid-cols-5 md:grid-rows-1"
         )}
       >
         {children({ selectedItemId, setSelectedItemId })}
@@ -66,14 +66,14 @@ const CategoryListContainer: React.FC<ICategoryListContainer> = ({
       )}
       {description && (
         <>
-          <div className="flex flex-col gap-y border-t-2 px-6 py-8">
+          <div className="flex flex-col gap-y border-t-2 bg-alpha-white px-6 py-8">
             <h4 className="text-alpha-500">معرفی</h4>
             <div
               ref={descriptionRef}
               className={`${more ? "" : "line-clamp-2"}`}
             >
               {description.split("\n\n").map((paragraph, index) => (
-                <p key={index} className="text-justify text-sm leading-6">
+                <p key={index} className="text-justify text-base leading-6">
                   {paragraph}
                 </p>
               ))}

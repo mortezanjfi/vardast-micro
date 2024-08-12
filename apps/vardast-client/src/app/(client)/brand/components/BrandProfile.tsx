@@ -115,13 +115,17 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
         <div className="flex  flex-col gap-y bg-alpha-white md:h-auto md:min-h-full ">
           <div className="flex h-full flex-col items-center justify-center  bg-alpha-white">
             {isMobileView && (
-              <div className="relative flex aspect-square h-[calc(56vw)] max-h-[calc(56vw)] min-h-[calc(56vw)] w-full flex-col items-center justify-center ">
-                <Image
-                  src={brandQuery?.data?.brand?.bannerMobile?.presignedUrl?.url}
-                  alt="seller"
-                  fill
-                  className="h-full w-full rounded-2xl px-6 py-5 md:rounded-full"
-                />
+              <div className="relative flex aspect-square h-[calc(56vw)] max-h-[calc(56vw)] min-h-[calc(56vw)] w-full items-center justify-center overflow-hidden px-6 py-5">
+                <div className="relative h-full w-full overflow-hidden rounded-2xl">
+                  <Image
+                    src={
+                      brandQuery?.data?.brand?.bannerMobile?.presignedUrl?.url
+                    }
+                    alt="seller"
+                    layout="fill"
+                    className="rounded-2xl object-cover"
+                  />
+                </div>
               </div>
             )}
 
@@ -153,12 +157,12 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
               </div>
 
               <div className="col-span-2 flex grid-cols-2 md:grid md:gap-0 md:divide-x md:divide-x-reverse md:border-t md:py-3">
+                <ShareIcon name={brandQuery?.data?.brand.name} />
                 <FavoriteIcon
                   type={EntityTypeEnum.Brand}
                   entityId={+slug[0]}
                   isFavoriteQuery={isFavoriteQuery}
                 />
-                <ShareIcon name={brandQuery?.data?.brand.name} />
               </div>
             </div>
           </div>
@@ -203,28 +207,28 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
       >
         <TabsList className="sticky top-0 z-50 grid w-full grid-cols-4 bg-alpha-white font-medium sm:z-0 md:mb-6  md:flex">
           <TabsTrigger
-            className="py-41 whitespace-nowrap"
+            className=" whitespace-nowrap sm:!px-6"
             value={BrandProfileTabEnum.PRODUCT}
           >
             {t("common:products")}
           </TabsTrigger>
           <TabsTrigger
-            className="py-41 whitespace-nowrap"
+            className=" whitespace-nowrap sm:!px-6"
             value={BrandProfileTabEnum.CATEGORY}
           >
             {t("common:category")}
           </TabsTrigger>
-          {/* <TabsTrigger className="py-4 whitespace-nowrap1" value={BrandProfileTabEnum.SELLERS}>
+          {/* <TabsTrigger className="py-4 whitespace-nowrap sm:!px-61" value={BrandProfileTabEnum.SELLERS}>
       {t("common:sellers")}
     </TabsTrigger> */}
           <TabsTrigger
-            className="py-41 whitespace-nowrap"
+            className=" whitespace-nowrap sm:!px-6"
             value={BrandProfileTabEnum.CATALOG}
           >
             {t("common:catalog")}
           </TabsTrigger>
           <TabsTrigger
-            className="py-41 whitespace-nowrap"
+            className=" whitespace-nowrap sm:!px-6"
             value={BrandProfileTabEnum.PRICE_LIST}
           >
             {t("common:price_list")}

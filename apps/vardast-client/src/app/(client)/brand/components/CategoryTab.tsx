@@ -48,9 +48,7 @@ const CategoriesTab = ({
   const [activeTab, setActiveTab] = useState<string>("")
   const sliderRef = useRef<HTMLDivElement>(null)
   const [slideWidth, setSlideWidth] = useState(0)
-  const [sort, setSort] = useState<CategoriesSortStatic>(
-    CategoriesSortStatic.Sum
-  )
+  const [sort, setSort] = useState<CategoriesSortStatic>(undefined)
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams as any)
@@ -317,7 +315,7 @@ const CategoriesTab = ({
                               : undefined
                           }
                           productsCount={category.productsCount}
-                          className="sm:max-h-60 sm:!min-h-full sm:min-w-full sm:!rounded-none sm:ring-2 sm:ring-alpha-200"
+                          // className="sm:max-h-60 sm:!min-h-full sm:min-w-full sm:!rounded-none sm:ring-2 sm:ring-alpha-200"
                           title={category?.title}
                           id={category.id}
                           selectedItemId={selectedItemId}

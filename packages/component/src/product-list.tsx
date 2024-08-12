@@ -94,9 +94,7 @@ const ProductList = ({
   const [query, setQuery] = useDebouncedState<string>("", 500)
   const [queryTemp, setQueryTemp] = useState<string>("")
 
-  const [sort, setSort] = useState<ProductSortablesEnum>(
-    ProductSortablesEnum.Newest
-  )
+  const [sort, setSort] = useState<ProductSortablesEnum>(undefined)
   const [filterAttributes, setFilterAttributes] = useState<FilterAttribute[]>(
     args["attributes"] || []
   )

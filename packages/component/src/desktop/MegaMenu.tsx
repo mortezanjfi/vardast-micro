@@ -4,6 +4,7 @@ import { useContext, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { UseQueryResult } from "@tanstack/react-query"
 import {
+  CategoryDto,
   GetMegaMenuQuery,
   useGetMegaMenuQuery
 } from "@vardast/graphql/generated"
@@ -105,6 +106,16 @@ export const MegaMenuModal = ({
     setActiveCategory(megaMenuData?.data?.mega_menu[0])
   }, [megaMenuData])
 
+  const divideIntoColumns = (array: CategoryDto[], numColumns: number) => {
+    const columns = Array.from({ length: numColumns }, () => [])
+    array?.forEach((item, index) => {
+      columns[index % numColumns].push(item)
+    })
+    return columns
+  }
+
+  const columns = divideIntoColumns(activeCategory?.children, 3)
+
   return (
     <AnimatePresence>
       {open && (
@@ -128,10 +139,10 @@ export const MegaMenuModal = ({
           <div
             onMouseEnter={handleMouseEnterList}
             onMouseLeave={handleMouseLeaveContainer}
-            className="absolute  top-full z-50 grid max-h-[calc(100vh-300px)] w-[calc(100%-400px)] grid-cols-3 overflow-hidden rounded-2xl bg-white text-gray-900 shadow-lg 2xl:grid-cols-5"
+            className="absolute  top-full z-50 flex  max-h-[calc(100vh-300px)] w-[calc(100%-400px)]  overflow-hidden rounded-2xl bg-white text-gray-900 shadow-lg 2xl:grid-cols-5"
           >
             {/* Category Sidebar */}
-            <div className="col-span-1 max-h-[calc(100vh-300px)] max-w-xs overflow-y-auto bg-alpha-100 py-5">
+            <div className="col-span-1 max-h-[calc(100vh-300px)] min-w-max max-w-xs overflow-y-auto bg-alpha-100 py-5">
               {megaMenuData?.data?.mega_menu?.map((category) => (
                 <Link
                   onClick={() => setOpen(false)}
@@ -155,9 +166,9 @@ export const MegaMenuModal = ({
             </div>
 
             {/* Subcategory Content */}
-            <div className="col-span-2 max-h-[calc(100vh-300px)] 2xl:col-span-4">
-              {activeCategory ? (
-                <div className="flex max-h-[calc(100vh-300px)] flex-col divide-y-0.5 overflow-hidden">
+            <div className=" max-h-[calc(100vh-300px)] flex-1">
+              {activeCategory && (
+                <div className="flex max-h-[calc(100vh-300px)] flex-col overflow-hidden">
                   <Link
                     href={`/category/${activeCategory?.id}/${activeCategory.title}`}
                     className="flex items-center gap-4 px-7 py-5 text-blue-600"
@@ -167,41 +178,45 @@ export const MegaMenuModal = ({
                     </h3>
                     <ChevronLeft width={16} height={16} />
                   </Link>
-                  <div className="grid max-h-[calc(100vh-300px)] grid-cols-3 gap-7 overflow-y-auto px-7 py-5 2xl:grid-cols-4">
-                    {activeCategory.children.map((subcategory) => (
-                      <div className="flex flex-col gap-3" key={subcategory.id}>
-                        <Link
-                          onClick={() => setOpen(false)}
-                          href={`/category/${subcategory?.id}/${subcategory.title}`}
-                          className="flex items-center gap-4 border-r-1 border-primary py-2 pr-3"
-                        >
-                          <span className="hover:text-primary">
-                            {subcategory.title}
-                          </span>
-                          <ChevronLeft width={16} height={16} />
-                        </Link>
-                        <ul className="pr-3">
-                          {subcategory.children.map((subSubcategory) => (
+                  <div className="flex max-h-[calc(100vh-300px)] max-w-full overflow-y-auto px-7 py-5">
+                    {columns.map((column, columnIndex) => (
+                      <div
+                        className="flex flex-1 flex-col gap-3 "
+                        key={columnIndex}
+                      >
+                        {column.map((subcategory) => (
+                          <div
+                            className="flex flex-col gap-3"
+                            key={subcategory.id}
+                          >
                             <Link
                               onClick={() => setOpen(false)}
-                              href={`/category/${subSubcategory?.id}/${subSubcategory.title}`}
+                              href={`/category/${subcategory?.id}/${subcategory.title}`}
+                              className="flex items-center gap-4 border-r-1 border-primary py-2 pr-3"
                             >
-                              <li
-                                key={subSubcategory.id}
-                                className="py-2 text-alpha-500 hover:text-primary"
-                              >
-                                {subSubcategory.title}
-                              </li>
+                              <span className="hover:text-primary">
+                                {subcategory.title}
+                              </span>
+                              <ChevronLeft width={16} height={16} />
                             </Link>
-                          ))}
-                        </ul>
+                            <ul className="pr-3">
+                              {subcategory.children.map((subSubcategory) => (
+                                <Link
+                                  onClick={() => setOpen(false)}
+                                  href={`/category/${subSubcategory?.id}/${subSubcategory.title}`}
+                                  key={subSubcategory.id}
+                                >
+                                  <li className="py-2 text-alpha-500 hover:text-primary">
+                                    {subSubcategory.title}
+                                  </li>
+                                </Link>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
                       </div>
                     ))}
                   </div>
-                </div>
-              ) : (
-                <div className="text-gray-500">
-                  Hover over a category to see subcategories
                 </div>
               )}
             </div>

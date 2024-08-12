@@ -16,6 +16,10 @@ query GetAllProducts($indexProductInput: IndexProductInput) {
       isActive
       status
       techNum
+      brand {
+        id
+        name
+      }
       highestPrice {
         amount
       }
