@@ -120,7 +120,7 @@ const OrderInfoModal = ({
       form.watch("projectId") && myProjectsQuery.data
         ? myProjectsQuery.data?.projects.data.find(
             (project) => project.id === +form.watch("projectId")
-          )?.address
+          )?.addresses
         : [],
     [
       form.watch("projectId"),

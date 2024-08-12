@@ -102,7 +102,7 @@ const OrderPage = ({ uuid }: IOrderPageProps) => {
         item: {
           // آدرس پروژه
           key: t("common:project-address"),
-          value: orderInfo?.project?.address[0]?.address?.address
+          value: orderInfo?.address?.address
         }
       },
       {
@@ -197,27 +197,27 @@ const OrderPage = ({ uuid }: IOrderPageProps) => {
         }
       },
 
-      {
-        item: {
-          // تحویل گیرنده
-          key: t("common:transferee"),
-          value: orderInfo?.project?.address[0]?.address?.delivery_name
-        }
-      },
-      {
-        item: {
-          // شماره تماس تحویل گیرنده
-          key: t("common:transferee-number"),
-          value: orderInfo?.project?.address[0]?.address?.delivery_contact
-        }
-      },
-      {
-        item: {
-          //  آد رس
-          key: t("common:shipping-address"),
-          value: orderInfo?.project?.address[0]?.address?.address
-        }
-      },
+      // {
+      //   item: {
+      //     // تحویل گیرنده
+      //     key: t("common:transferee"),
+      //     value: orderInfo?.project?.address[0]?.address?.delivery_name
+      //   }
+      // },
+      // {
+      //   item: {
+      //     // شماره تماس تحویل گیرنده
+      //     key: t("common:transferee-number"),
+      //     value: orderInfo?.project?.address[0]?.address?.delivery_contact
+      //   }
+      // },
+      // {
+      //   item: {
+      //     //  آد رس
+      //     key: t("common:shipping-address"),
+      //     value: orderInfo?.project?.address[0]?.address?.address
+      //   }
+      // },
       {
         item: {
           // روش پرداخت

@@ -15,7 +15,7 @@ import { useModals } from "@vardast/ui/modal"
 import useTranslation from "next-translate/useTranslation"
 import { z } from "zod"
 
-import ProjectInfoModal from "@/app/(layout)/(bid)/projects/components/ProjectInfoModal"
+import ProjectInfoModal from "@/app/(layout)/(bid)/projects/[uuid]/components/ProjectInfoModal"
 import { OrderModalEnum } from "@/app/(layout)/(bid)/types/type"
 
 type ProjectsPageProps = {}

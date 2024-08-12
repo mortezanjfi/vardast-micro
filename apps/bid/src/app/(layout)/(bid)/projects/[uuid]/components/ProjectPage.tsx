@@ -18,9 +18,9 @@ import useTranslation from "next-translate/useTranslation"
 
 import ProjectAddressDeleteModal from "@/app/(layout)/(bid)/projects/[uuid]/components/address/ProjectAddressDeleteModal"
 import ProjectAddressModal from "@/app/(layout)/(bid)/projects/[uuid]/components/address/ProjectAddressModal"
+import ProjectInfoModal from "@/app/(layout)/(bid)/projects/[uuid]/components/ProjectInfoModal"
 import ProjectUserDeleteModal from "@/app/(layout)/(bid)/projects/[uuid]/components/user/ProjectMemberDeleteModal"
 import ProjectMemberModal from "@/app/(layout)/(bid)/projects/[uuid]/components/user/ProjectMemberModal"
-import ProjectInfoModal from "@/app/(layout)/(bid)/projects/components/ProjectInfoModal"
 import {
   IOrderPageProps,
   OrderModalEnum
