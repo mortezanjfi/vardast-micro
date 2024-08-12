@@ -9,6 +9,7 @@ import {
   ContactInfoTypes,
   LegalStatusEnum,
   MemberRoles,
+  MultiStatuses,
   OrderOfferStatuses,
   PaymentMethodEnum,
   PreOrderStates,
@@ -103,6 +104,21 @@ export const LegalStatusEnumFa: StatusFaType<LegalStatusEnum> = {
   [LegalStatusEnum.Deactive]: {
     variant: "danger",
     name_fa: "غیرفعال"
+  }
+}
+
+export const MultiStatusesFa: StatusFaType<MultiStatuses> = {
+  [MultiStatuses.Confirmed]: {
+    variant: "success",
+    name_fa: "تایید شده"
+  },
+  [MultiStatuses.Pending]: {
+    variant: "default",
+    name_fa: "در انتظار بررسی"
+  },
+  [MultiStatuses.Rejected]: {
+    variant: "danger",
+    name_fa: "رد شده"
   }
 }
 

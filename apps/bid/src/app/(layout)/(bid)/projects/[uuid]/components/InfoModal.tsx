@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import { useQueryClient } from "@tanstack/react-query"
 import { useUpdateProjectMutation } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import {
@@ -34,7 +33,6 @@ const InfoModal = ({
 }: IOrderPageSectionProps<InfoNameType>) => {
   const { t } = useTranslation()
   const [errors, setErrors] = useState<ClientError>()
-  const queryClient = useQueryClient()
 
   const form = useForm<InfoNameType>({
     resolver: zodResolver(ProjectSchema)
@@ -45,10 +43,10 @@ const InfoModal = ({
   const updateProjectMutation = useUpdateProjectMutation(
     graphqlRequestClientWithToken,
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: ["FindOneProject"]
-        })
+      onSuccess: (data) => {
+        if (data) {
+          onCloseModals(data)
+        }
       }
     }
   )

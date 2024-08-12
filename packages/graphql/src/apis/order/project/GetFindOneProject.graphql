@@ -1,15 +1,30 @@
 query FindOneProject($id: Float!) {
   findOneProject(id: $id) {
     id
+    wallet
+    description
+    uuid
+    closedOrdersCount
+    openOrdersCount
+    failedOrdersCount
+    totalOrdersCount
+    createTime
+    status
+    legal {
+      id
+      name_company
+    }
     name
     addresses {
       id
       address {
         title
         city {
+          name
           id
         }
         province {
+          name
           id
         }
         id

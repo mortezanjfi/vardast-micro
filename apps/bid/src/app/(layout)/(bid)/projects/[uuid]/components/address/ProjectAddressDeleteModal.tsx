@@ -2,27 +2,24 @@
 "use client"
 
 import { useState } from "react"
-import { useQueryClient } from "@tanstack/react-query"
 import {
-  ProjectAddress,
+  Address,
   useRemoveAddressProjectMutation
 } from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
-import { Modal, ModalProps } from "@vardast/ui/modal"
+import { IUseModal, Modal, ModalProps } from "@vardast/ui/modal"
 import { ClientError } from "graphql-request"
 import useTranslation from "next-translate/useTranslation"
 
-import { IOrderPageSectionProps } from "@/app/(layout)/(bid)/types/type"
+import { OrderModalEnum } from "@/app/(layout)/(bid)/types/type"
 
-const AddressDeleteModal = ({
+const ProjectAddressDeleteModal = ({
   open,
   modals,
-  onCloseModals,
-  uuid
-}: IOrderPageSectionProps<ProjectAddress>) => {
+  onCloseModals
+}: IUseModal<OrderModalEnum, Address & { projectId: number }>) => {
   const { t } = useTranslation()
   const [errors, setErrors] = useState<ClientError>()
-  const queryClient = useQueryClient()
 
   const removeAddressProjectMutation = useRemoveAddressProjectMutation(
     graphqlRequestClientWithToken,
@@ -30,19 +27,18 @@ const AddressDeleteModal = ({
       onError: (errors: ClientError) => {
         setErrors(errors)
       },
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: ["FindOneProject"]
-        })
-        onCloseModals()
+      onSuccess: (data) => {
+        if (data) {
+          onCloseModals(data)
+        }
       }
     }
   )
 
   const onDelete = () => {
     removeAddressProjectMutation.mutate({
-      addressId: +modals?.data?.id,
-      projectId: +uuid
+      addressId: modals?.data?.id,
+      projectId: modals?.data?.projectId
     })
   }
 
@@ -60,10 +56,15 @@ const AddressDeleteModal = ({
         name: modals?.data?.title
       }
     ),
-    action: { onClick: () => onDelete(), title: t("common:delete") }
+    action: {
+      onClick: () => onDelete(),
+      title: t("common:delete"),
+      disabled: removeAddressProjectMutation.isLoading,
+      loading: removeAddressProjectMutation.isLoading
+    }
   }
 
   return <Modal {...modalProps} />
 }
 
-export default AddressDeleteModal
+export default ProjectAddressDeleteModal

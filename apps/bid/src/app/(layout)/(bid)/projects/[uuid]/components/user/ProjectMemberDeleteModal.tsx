@@ -2,24 +2,24 @@
 "use client"
 
 import { useState } from "react"
-import { useQueryClient } from "@tanstack/react-query"
-import { User, useRemoveUserProjectMutation } from "@vardast/graphql/generated"
+import {
+  Member,
+  useRemoveUserProjectMutation
+} from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
-import { Modal, ModalProps } from "@vardast/ui/modal"
+import { IUseModal, Modal, ModalProps } from "@vardast/ui/modal"
 import { ClientError } from "graphql-request"
 import useTranslation from "next-translate/useTranslation"
 
-import { IOrderPageSectionProps } from "@/app/(layout)/(bid)/types/type"
+import { OrderModalEnum } from "@/app/(layout)/(bid)/types/type"
 
-const UserDeleteModal = ({
+const ProjectMemberDeleteModal = ({
   modals,
   open,
-  onCloseModals,
-  uuid
-}: IOrderPageSectionProps<User>) => {
+  onCloseModals
+}: IUseModal<OrderModalEnum, Member & { projectId: number }>) => {
   const { t } = useTranslation()
   const [errors, setErrors] = useState<ClientError>()
-  const queryClient = useQueryClient()
 
   const removeUserProjectMutation = useRemoveUserProjectMutation(
     graphqlRequestClientWithToken,
@@ -27,19 +27,18 @@ const UserDeleteModal = ({
       onError: (errors: ClientError) => {
         setErrors(errors)
       },
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: ["FindOneProject"]
-        })
-        onCloseModals()
+      onSuccess: (data) => {
+        if (data) {
+          onCloseModals(data)
+        }
       }
     }
   )
 
   const onDelete = () => {
     removeUserProjectMutation.mutate({
-      userId: +modals?.data.id,
-      projectId: +uuid
+      userId: modals?.data.id,
+      projectId: modals?.data?.projectId
     })
   }
 
@@ -54,13 +53,18 @@ const UserDeleteModal = ({
       "common:are_you_sure_you_want_to_delete_x_entity_this_action_cannot_be_undone_and_all_associated_data_will_be_permanently_removed",
       {
         entity: `${t(`common:user`)}`,
-        name: modals?.data?.fullName
+        name: modals?.data?.user?.fullName
       }
     ),
-    action: { onClick: () => onDelete(), title: t("common:delete") }
+    action: {
+      onClick: () => onDelete(),
+      title: t("common:delete"),
+      disabled: removeUserProjectMutation.isLoading,
+      loading: removeUserProjectMutation.isLoading
+    }
   }
 
   return <Modal {...modalProps} />
 }
 
-export default UserDeleteModal
+export default ProjectMemberDeleteModal

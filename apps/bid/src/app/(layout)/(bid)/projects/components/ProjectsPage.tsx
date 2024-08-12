@@ -1,5 +1,6 @@
 "use client"
 
+import { useCallback } from "react"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import Link from "@vardast/component/Link"
 import {
@@ -14,9 +15,8 @@ import { useModals } from "@vardast/ui/modal"
 import useTranslation from "next-translate/useTranslation"
 import { z } from "zod"
 
+import ProjectInfoModal from "@/app/(layout)/(bid)/projects/components/ProjectInfoModal"
 import { OrderModalEnum } from "@/app/(layout)/(bid)/types/type"
-
-import AddProjectModal from "./AddProjectModal"
 
 type ProjectsPageProps = {}
 
@@ -81,9 +81,9 @@ const ProjectsPage = (_: ProjectsPageProps) => {
           {
             id: "user",
             header: t("common:project-manager"),
-            accessorFn: ({ user }) =>
-              user?.find((item) => item?.type === UserTypeProject.Manager)?.user
-                ?.fullName || "--"
+            accessorFn: ({ users }) =>
+              users?.find((item) => item?.type === UserTypeProject.Manager)
+                ?.user?.fullName || "--"
           },
           {
             id: "orders",
@@ -133,14 +133,19 @@ const ProjectsPage = (_: ProjectsPageProps) => {
       }
     })
 
+  const modalProps = useCallback(
+    (type: OrderModalEnum) => ({
+      onCloseModals,
+      onChangeModals,
+      modals,
+      open: modals?.type === type
+    }),
+    [modals]
+  )
+
   return (
     <>
-      <AddProjectModal
-        open={modals?.type === OrderModalEnum.ADD_PROJECT}
-        modals={modals}
-        onChangeModals={onChangeModals}
-        onCloseModals={onCloseModals}
-      />
+      <ProjectInfoModal {...modalProps(OrderModalEnum.ADD_PROJECT)} />
       <Table {...tableProps} />
     </>
   )

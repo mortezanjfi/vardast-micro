@@ -69,7 +69,6 @@ const LegalModal = ({
         if (data?.createLegal?.id) {
           // queryClient.invalidateQueries({ queryKey: ["GetAllLegalUsersQuery"] })
           router.push(`/users/legal/${data.createLegal.id}`)
-          form.reset()
         }
       }
     }
@@ -84,7 +83,6 @@ const LegalModal = ({
       onSuccess: (data) => {
         if (data?.updateLegal?.id) {
           onCloseModals(data)
-          form.reset()
         }
       }
     }
@@ -149,8 +147,6 @@ const LegalModal = ({
         },
         form.setValue
       )
-    } else {
-      form.reset()
     }
     return () => {
       form.reset()

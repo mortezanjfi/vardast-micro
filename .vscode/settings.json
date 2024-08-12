@@ -36,7 +36,7 @@
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "typescript.tsdk": "node_modules/typescript/lib",
-  "cSpell.words": ["clsx", "paginable", "tsbuildinfo", "vardast"],
+  "cSpell.words": ["clsx", "paginable", "toman", "tsbuildinfo", "vardast"],
   "tailwindCSS.experimental.classRegex": [
     ["tv\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
