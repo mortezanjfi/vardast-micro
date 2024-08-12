@@ -424,7 +424,7 @@ const ProductList = ({
               onFilterAttributesChanged={onFilterAttributesChanged}
             />
           )}
-        {!selectedCategoryIds && !brandId && !sellerId && <VocabularyFilter />}
+        {/* {!selectedCategoryIds && !brandId && !sellerId && <VocabularyFilter />} */}
       </div>
     </FiltersSidebarContainer>
   )
