@@ -39,7 +39,11 @@ const CityFilterSection = ({
   }
 
   return (
-    <FilterBlock title="شهر" openDefault={true}>
+    <FilterBlock
+      badgeNumber={selectedCityId ? 1 : null}
+      title="شهر"
+      openDefault={true}
+    >
       <div className=" flex w-full flex-col gap-4">
         <Input
           autoFocus
@@ -56,10 +60,10 @@ const CityFilterSection = ({
                           rounded-lg
                           bg-alpha-100
                           px-4
-                          py-3.5
+                         
                            focus:!ring-0 disabled:bg-alpha-100"
         />
-        <div className="hide-scrollbar flex max-h-72 flex-col overflow-y-auto">
+        <div className=" flex max-h-44 flex-col overflow-y-auto">
           {cities?.data?.cities?.data?.map(
             (city) =>
               city && (

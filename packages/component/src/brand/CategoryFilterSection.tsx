@@ -14,13 +14,11 @@ import FilterBlock from "../filter-block"
 type CategoryFilterSectionProps = {
   setSelectedCategoryIds: Dispatch<SetStateAction<number[]>>
   selectedCategoryIds: number[]
-  openDefault?: boolean
 }
 
 const CategoryFilterSection = ({
   setSelectedCategoryIds,
-  selectedCategoryIds,
-  openDefault = false
+  selectedCategoryIds
 }: CategoryFilterSectionProps) => {
   const [categoryQuery, setCategoryQuery] = useDebouncedState("", 500)
   const [categoryQueryTemp, setCategoryQueryTemp] = useState("")
@@ -43,7 +41,13 @@ const CategoryFilterSection = ({
   }
 
   return (
-    <FilterBlock title="دسته‌بندی" openDefault={openDefault}>
+    <FilterBlock
+      badgeNumber={
+        selectedCategoryIds?.length > 0 ? selectedCategoryIds?.length : null
+      }
+      title="دسته‌بندی"
+      openDefault={true}
+    >
       <div className=" flex w-full flex-col gap-4">
         <Input
           autoFocus
@@ -63,7 +67,7 @@ const CategoryFilterSection = ({
                           py-3.5
                            focus:!ring-0 disabled:bg-alpha-100"
         />
-        <div className="hide-scrollbar flex max-h-72 flex-col overflow-y-auto">
+        <div className=" flex max-h-44 flex-col overflow-y-auto">
           {categories?.data?.allCategoriesV2?.map(
             (category) =>
               category && (

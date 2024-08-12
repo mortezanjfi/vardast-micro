@@ -35,9 +35,9 @@ export const sortBrand = {
 const CategoriesSort = ({ sort, onSortChanged }: CategoriesSortProps) => {
   return (
     <FilterBlock title="مرتب سازی" openDefault={true}>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col divide-y divide-alpha-300">
         {Object.entries(sortBrand).map(([key, value]) => (
-          <Label.Root key={key} className="flex items-center gap-2">
+          <Label.Root key={key} className="flex items-center gap-2  py-4">
             <Checkbox.Root
               className="flex
                     h-5

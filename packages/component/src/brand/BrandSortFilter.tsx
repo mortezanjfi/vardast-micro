@@ -7,7 +7,6 @@ import * as Label from "@radix-ui/react-label"
 import { LucideCheck } from "lucide-react"
 
 import { SortBrandEnum } from "../../../graphql/src/generated"
-import DynamicHeroIcon from "../DynamicHeroIcon"
 
 type BrandCategoryFilterProps = {
   setSort: Dispatch<SetStateAction<SortBrandEnum>>
@@ -58,17 +57,9 @@ const BrandOrSellerCategoryFilter = ({
   }
   return (
     <div className="flex flex-col">
-      <div className="flex items-center gap-2 py-3">
-        <DynamicHeroIcon icon="BarsArrowDownIcon" className="h-7 w-7" solid />
-        <span className="text-lg font-medium text-alpha-800">مرتب سازی</span>
-      </div>
-
-      <div className="flex flex-col">
+      <div className="flex flex-col divide-y divide-alpha-300">
         {Object.entries(sortBrand).map(([key, value]) => (
-          <Label.Root
-            key={key}
-            className="flex items-center gap-2 border-b border-x-alpha-200 py-4"
-          >
+          <Label.Root key={key} className="flex items-center gap-2  py-4">
             <Checkbox.Root
               className="flex
                     h-5

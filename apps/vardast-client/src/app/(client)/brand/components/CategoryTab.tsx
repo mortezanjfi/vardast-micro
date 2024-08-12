@@ -154,11 +154,8 @@ const CategoriesTab = ({
   }
 
   const DesktopSidebar = (
-    <FiltersSidebarContainer>
-      <div className="flex flex-col gap-9">
-        <div className=" flex items-center border-b-2 border-b-alpha-200 py-4">
-          <strong>فیلترها</strong>
-        </div>
+    <FiltersSidebarContainer
+      sort={
         <CategoriesSort
           sort={sort}
           onSortChanged={(sort) => {
@@ -168,8 +165,8 @@ const CategoriesTab = ({
             push(pathname + "?" + params.toString())
           }}
         />
-      </div>
-    </FiltersSidebarContainer>
+      }
+    />
   )
   setSidebar(DesktopSidebar)
   return (

@@ -7,7 +7,6 @@ import {
   useRouter,
   useSearchParams
 } from "next/navigation"
-import { XMarkIcon } from "@heroicons/react/24/solid"
 import { useDebouncedState } from "@mantine/hooks"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import {
@@ -26,7 +25,6 @@ import { getAllProductsQueryFn } from "@vardast/query/queryFns/allProductsQueryF
 import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { Button } from "@vardast/ui/button"
 import { Input } from "@vardast/ui/input"
-import clsx from "clsx"
 import { ClientError } from "graphql-request"
 import { useSetAtom } from "jotai"
 import {
@@ -54,7 +52,6 @@ import ProductSort from "./product-sort"
 import ProductListContainer, {
   ProductContainerType
 } from "./ProductListContainer"
-import VocabularyFilter from "./vocabulary-filter"
 
 interface ProductListProps {
   hasTitle?: boolean
@@ -310,8 +307,46 @@ const ProductList = ({
   // if (!allProductsQuery.data) notFound()
 
   const DesktopSidebar = (
-    <FiltersSidebarContainer>
-      {hasSearch && (
+    <FiltersSidebarContainer
+      sort={
+        <ProductSort
+          sort={sort}
+          onSortChanged={(sort) => {
+            setSort(sort)
+            const params = new URLSearchParams(searchParams as any)
+            params.set("orderBy", `${sort}`)
+            push(pathname + "?" + params.toString())
+          }}
+        />
+      }
+      filters={
+        <>
+          {brandId && isMobileView && (
+            <BrandOrSellerCategoryFilter
+              categoryIdsFilter={categoryIdsFilter}
+              onCategoryIdsFilterChanged={onCategoryIdsFilterChanged}
+              brandId={brandId}
+            />
+          )}
+          {sellerId && isMobileView && (
+            <BrandOrSellerCategoryFilter
+              categoryIdsFilter={categoryIdsFilter}
+              onCategoryIdsFilterChanged={onCategoryIdsFilterChanged}
+              sellerId={sellerId}
+            />
+          )}
+          {selectedCategoryIds &&
+            selectedCategoryIds.length === 1 &&
+            selectedCategoryIds[0] !== 0 && (
+              <FiltersContainer
+                selectedCategoryId={selectedCategoryIds[0]}
+                filterAttributes={filterAttributes}
+                onFilterAttributesChanged={onFilterAttributesChanged}
+              />
+            )}
+        </>
+      }
+      /* {hasSearch && (
         <div className="relative flex transform items-center rounded-lg border-alpha-200 bg-alpha-100 pr-2 transition-all">
           {queryTemp !== query ? (
             <Loader2 className="h-6 w-6 animate-spin text-alpha-400" />
@@ -351,28 +386,16 @@ const ProductList = ({
             <LucideX className="icon" />
           </Button>
         </div>
-      )}
-      <div className="flex w-full flex-col">
-        <div className=" flex items-center border-b-2 border-b-alpha-200 py-6">
-          <strong className="font-semibold">فیلترها</strong>
-          {filterAttributes.length > 0 && (
-            <Button
-              size="small"
-              noStyle
-              className="ms-auto text-sm text-red-500"
-              onClick={() => removeAllFilters()}
-            >
-              حذف همه فیلترها
-            </Button>
-          )}
-        </div>
-        {/* {selectedCategoryIds &&
+      )} */
+
+      /* {selectedCategoryIds &&
           selectedCategoryIds.length === 1 &&
           !brandId &&
           !sellerId && (
             <CategoryFilter selectedCategoryId={selectedCategoryIds[0]} />
-          )} */}
-        {(brandName || sellerName) && (
+          )} */
+
+      /* {(brandName || sellerName) && (
           <div className="flex w-full items-center justify-between border-b-2 border-b-alpha-200 py-6">
             <span className="font-semibold">
               {brandName ? "برند" : "فروشنده"}
@@ -390,43 +413,10 @@ const ProductList = ({
               <XMarkIcon width={16} height={16} />
             </Button>
           </div>
-        )}
-        <ProductSort
-          sort={sort}
-          onSortChanged={(sort) => {
-            setSort(sort)
-            const params = new URLSearchParams(searchParams as any)
-            params.set("orderBy", `${sort}`)
-            push(pathname + "?" + params.toString())
-          }}
-        />
-        {brandId && isMobileView && (
-          <BrandOrSellerCategoryFilter
-            categoryIdsFilter={categoryIdsFilter}
-            onCategoryIdsFilterChanged={onCategoryIdsFilterChanged}
-            brandId={brandId}
-          />
-        )}
+        )} */
 
-        {sellerId && isMobileView && (
-          <BrandOrSellerCategoryFilter
-            categoryIdsFilter={categoryIdsFilter}
-            onCategoryIdsFilterChanged={onCategoryIdsFilterChanged}
-            sellerId={sellerId}
-          />
-        )}
-        {selectedCategoryIds &&
-          selectedCategoryIds.length === 1 &&
-          selectedCategoryIds[0] !== 0 && (
-            <FiltersContainer
-              selectedCategoryId={selectedCategoryIds[0]}
-              filterAttributes={filterAttributes}
-              onFilterAttributesChanged={onFilterAttributesChanged}
-            />
-          )}
-        {/* {!selectedCategoryIds && !brandId && !sellerId && <VocabularyFilter />} */}
-      </div>
-    </FiltersSidebarContainer>
+      /* {!selectedCategoryIds && !brandId && !sellerId && <VocabularyFilter />} */
+    />
   )
 
   const MobileHeader = (
