@@ -28,23 +28,23 @@ export const sortProducts = {
 const ProductSort = ({ sort, onSortChanged }: ProductSortProps) => {
   return (
     <FilterBlock title="مرتب سازی" openDefault={true}>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col divide-y divide-alpha-300">
         {Object.entries(sortProducts).map(([key, value]) => (
-          <Label.Root key={key} className="flex items-center gap-2">
+          <Label.Root key={key} className="flex items-center gap-2  py-4">
             <Checkbox.Root
               className="flex
-                    h-5
-                    w-5
-                    appearance-none
-                    items-center
-                    justify-center
-                    rounded-md
-                    border-2
-                    border-alpha-200
-                    bg-alpha-white
-                    outline-none
-                    data-[state='checked']:border-primary-500
-                    data-[state='checked']:bg-primary-500"
+               h-5
+               w-5
+               appearance-none
+               items-center
+               justify-center
+               rounded-md
+               border-2
+               border-alpha-200
+               bg-alpha-white
+               outline-none
+               data-[state='checked']:border-primary-500
+               data-[state='checked']:bg-primary-500"
               checked={sort === value.value}
               onCheckedChange={() => {
                 onSortChanged(value.value)

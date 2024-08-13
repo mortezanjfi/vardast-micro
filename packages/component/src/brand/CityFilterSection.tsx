@@ -39,7 +39,11 @@ const CityFilterSection = ({
   }
 
   return (
-    <FilterBlock title="شهر" openDefault={true}>
+    <FilterBlock
+      badgeNumber={selectedCityId ? 1 : null}
+      title="شهر"
+      openDefault={true}
+    >
       <div className=" flex w-full flex-col gap-4">
         <Input
           autoFocus
@@ -56,10 +60,10 @@ const CityFilterSection = ({
                           rounded-lg
                           bg-alpha-100
                           px-4
-                          py-3.5
+                         
                            focus:!ring-0 disabled:bg-alpha-100"
         />
-        <div className="hide-scrollbar flex max-h-72 flex-col overflow-y-auto">
+        <div className=" flex max-h-44 flex-col overflow-y-auto">
           {cities?.data?.cities?.data?.map(
             (city) =>
               city && (
@@ -100,33 +104,6 @@ const CityFilterSection = ({
           )}
         </div>
       </div>
-
-      {/* <div className="flex flex-col gap-3">
-        {Object.entries(sortBrand).map(([key, value]) => (
-          <Label.Root key={key} className="flex items-center gap-2">
-            <Checkbox.Root
-              className="flex
-                    h-5
-                    w-5
-                    appearance-none
-                    items-center
-                    justify-center
-                    rounded-md
-                    border-2
-                    border-alpha-200
-                    bg-alpha-white
-                    outline-none
-                    data-[state='checked']:border-primary-500
-                    data-[state='checked']:bg-primary-500"
-            >
-              <Checkbox.Indicator className="text-white">
-                <LucideCheck className="h-3 w-3" strokeWidth={3} />
-              </Checkbox.Indicator>
-            </Checkbox.Root>
-            <span className="inline-block leading-none">{value.name_fa}</span>
-          </Label.Root>
-        ))}
-      </div> */}
     </FilterBlock>
   )
 }

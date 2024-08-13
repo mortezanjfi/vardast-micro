@@ -4,75 +4,71 @@ import { Dispatch, SetStateAction, useState } from "react"
 import { useDebouncedState } from "@mantine/hooks"
 import * as Checkbox from "@radix-ui/react-checkbox"
 import * as Label from "@radix-ui/react-label"
+import { useGetAllBrandsQuery } from "@vardast/graphql/generated"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
+import { Input } from "@vardast/ui/input"
 import { LucideCheck } from "lucide-react"
 
-import { useGetAllCategoriesV2Query } from "../../../graphql/src/generated"
-import graphqlRequestClientWithToken from "../../../query/src/queryClients/graphqlRequestClientWithToken"
-import { Input } from "../../../ui/src/input"
 import FilterBlock from "../filter-block"
 
-type CategoryFilterSectionProps = {
-  setSelectedCategoryIds: Dispatch<SetStateAction<number[]>>
-  selectedCategoryIds: number[]
+type BrandsFilterSectionProps = {
+  setSelectedBrand: Dispatch<SetStateAction<number>>
+  selectedBrand: number
 }
 
-const CategoryFilterSection = ({
-  setSelectedCategoryIds,
-  selectedCategoryIds
-}: CategoryFilterSectionProps) => {
-  const [categoryQuery, setCategoryQuery] = useDebouncedState("", 500)
-  const [categoryQueryTemp, setCategoryQueryTemp] = useState("")
+const BrandsFilterSection = ({
+  setSelectedBrand,
+  selectedBrand
+}: BrandsFilterSectionProps) => {
+  const [brandQuery, setBrandQuery] = useDebouncedState("", 500)
+  const [brandQueryTemp, setBrandQueryTemp] = useState("")
 
-  const categories = useGetAllCategoriesV2Query(graphqlRequestClientWithToken, {
-    indexCategoryInput: {
-      name: categoryQuery
-    }
+  const brands = useGetAllBrandsQuery(graphqlRequestClientWithToken, {
+    indexBrandInput: { name: brandQuery }
   })
 
-  const handleCheckboxChange = (categoryId: number) => {
-    setSelectedCategoryIds((prev) => {
-      const isCategorySelected = prev?.includes(categoryId)
+  const handleCheckboxChange = (brandId: number) => {
+    setSelectedBrand((prev) => {
+      const isCategorySelected = prev === brandId
       if (isCategorySelected) {
-        return prev?.filter((id) => id !== categoryId)
+        return null
       } else {
-        return [...prev, categoryId]
+        return brandId
       }
     })
   }
 
   return (
     <FilterBlock
-      badgeNumber={
-        selectedCategoryIds?.length > 0 ? selectedCategoryIds?.length : null
-      }
-      title="دسته‌بندی"
+      badgeNumber={selectedBrand ? 1 : null}
+      title="برند"
       openDefault={true}
     >
       <div className=" flex w-full flex-col gap-4">
         <Input
           autoFocus
-          value={categoryQueryTemp}
+          value={brandQueryTemp}
           onChange={(e) => {
-            setCategoryQueryTemp(e.target.value)
-            setCategoryQuery(e.target.value)
+            setBrandQueryTemp(e.target.value)
+            setBrandQuery(e.target.value)
           }}
           type="text"
-          placeholder="دسته بندی"
+          placeholder="برند"
           className=" flex w-full
                       items-center
                           gap-2
                           rounded-lg
                           bg-alpha-100
                           px-4
-                          py-3.5
+                         
                            focus:!ring-0 disabled:bg-alpha-100"
         />
         <div className=" flex max-h-44 flex-col overflow-y-auto">
-          {categories?.data?.allCategoriesV2?.map(
-            (category) =>
-              category && (
+          {brands?.data?.brands?.data?.map(
+            (brand) =>
+              brand && (
                 <Label.Root
-                  key={category.id}
+                  key={brand.id}
                   className="flex items-center gap-2 border-b border-x-alpha-200 py-4"
                 >
                   <Checkbox.Root
@@ -90,17 +86,20 @@ const CategoryFilterSection = ({
                     data-[state='checked']:border-primary-500
                          data-[state='checked']:bg-primary-500"
                     checked={
-                      category.id ===
-                      selectedCategoryIds?.find((id) => id === category.id)
+                      brand.id === selectedBrand
+                      // selectedBrand.find((id) => id === category.id)
                     }
-                    onCheckedChange={() => handleCheckboxChange(category.id)}
+                    onCheckedChange={
+                      () => handleCheckboxChange(brand.id)
+                      // setselectedBrand(brand.id)
+                    }
                   >
                     <Checkbox.Indicator className="text-white">
                       <LucideCheck className="h-3 w-3" strokeWidth={3} />
                     </Checkbox.Indicator>
                   </Checkbox.Root>
                   <span className="inline-block leading-none">
-                    {category.title}
+                    {brand.name}
                   </span>
                 </Label.Root>
               )
@@ -111,4 +110,4 @@ const CategoryFilterSection = ({
   )
 }
 
-export default CategoryFilterSection
+export default BrandsFilterSection

@@ -17,6 +17,7 @@ import ProductList from "../product-list"
 import ProductsHeader from "../search-header"
 
 interface ProductsPageProps {
+  needCategoryFilterSection?: boolean
   isMobileView: boolean
   slug: Array<string | number>
   args: IndexProductInput
@@ -25,6 +26,7 @@ interface ProductsPageProps {
 }
 
 const ProductsPage = ({
+  needCategoryFilterSection = false,
   isMobileView,
   slug,
   args,
@@ -70,11 +72,11 @@ const ProductsPage = ({
         )}
 
         <ProductList
+          needCategoryFilterSection={needCategoryFilterSection}
           hasSearch={hasSearch}
           isSellerPanel={isSellerPanel}
           isMobileView={isMobileView}
           args={args}
-          selectedCategoryIds={selectedCategoryId ? [selectedCategoryId] : null}
           limitPage={selectedCategoryId ? undefined : 5}
         />
         {getCategoryQuery.data?.category.description && (

@@ -107,21 +107,7 @@ const BrandOrSellersTab = ({
   )
 
   const DesktopSidebar = productsProps.isMobileView ? null : (
-    <FiltersSidebarContainer>
-      <div className="flex items-center justify-between md:pb-8">
-        <strong>فیلترها</strong>
-        {/* {filterAttributes.length > 0 && (
-                    <Button
-                      size="small"
-                      noStyle
-                      className="ms-auto text-sm text-red-500"
-                      onClick={() => setFilterAttributes([])}
-                      >
-                      حذف همه فیلترها
-                      </Button>
-                      )} */}
-      </div>
-    </FiltersSidebarContainer>
+    <FiltersSidebarContainer />
   )
 
   setSidebar(DesktopSidebar)

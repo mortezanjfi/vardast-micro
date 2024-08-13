@@ -51,7 +51,6 @@ const SellerPage = ({ isMobileView, args, slug }: SellerPageProps) => {
       <ProductList
         args={args}
         isMobileView={isMobileView}
-        selectedCategoryIds={args["categoryIds"] || undefined}
         sellerId={+slug[0]}
       />
     </>

@@ -52,8 +52,7 @@ import ProductSort from "./product-sort"
 import ProductListContainer, {
   ProductContainerType
 } from "./ProductListContainer"
-
-// import BrandsFilterSection from "./products/BrandsFilterSection"
+import BrandsFilterSection from "./products/BrandsFilterSection"
 
 interface ProductListProps {
   needCategoryFilterSection?: boolean
@@ -332,12 +331,12 @@ const ProductList = ({
             />
           )}
 
-          {/* {!args.brandId && (
+          {!args.brandId && (
             <BrandsFilterSection
               setSelectedBrand={setSelectedBrand}
               selectedBrand={selectedBrand}
             />
-          )} */}
+          )}
 
           {/* {sellerId && isMobileView && (
             <BrandOrSellerCategoryFilter
