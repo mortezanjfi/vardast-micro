@@ -102,7 +102,7 @@ const AddressModal = <TEnum,>({
   const cities = useGetProvinceQuery(
     graphqlRequestClientWithToken,
     {
-      id: form.watch("provinceId")
+      // id: form.watch("provinceId")
     },
     {
       enabled: !!form.watch("provinceId") && !!provinces.data && open

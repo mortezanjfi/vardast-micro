@@ -8,8 +8,6 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ["lucide-react"],
-  /** Enables hot reloading for local packages without a build step */
   transpilePackages: [
     "@vardast/auth",
     "@vardast/ui",
@@ -28,7 +26,8 @@ const nextConfig = {
     "@vardast/ui",
     "@vardast/util",
     "@vardast/style",
-    "@vardast/tailwind-config"
+    "@vardast/tailwind-config",
+    "lucide-react"
   ],
   webpack: (config) => {
     config.resolve.alias.canvas = false
