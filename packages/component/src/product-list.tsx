@@ -36,6 +36,7 @@ import {
 } from "lucide-react"
 
 import BrandOrSellerCategoryFilter from "./brand-or-seller-category-filter"
+import CityFilterSection from "./brand/CityFilterSection"
 import ListHeader from "./desktop/ListHeader"
 import DesktopMobileViewOrganizer from "./DesktopMobileViewOrganizer"
 import FiltersContainer from "./filters-container"
@@ -110,6 +111,7 @@ const ProductList = ({
   const setSortFilterVisibility = useSetAtom(sortFilterVisibilityAtom)
   const setFiltersVisibility = useSetAtom(filtersVisibilityAtom)
   const [selectedBrand, setSelectedBrand] = useState<number | null>(null)
+  const [selectedCityId, setSelectedCityId] = useState<number | null>()
   const brandName = searchParams.get("brandName")
   const sellerName = searchParams.get("sellerName")
   const getFilterableAttributesQuery = useGetAllFilterableAttributesBasicsQuery(
@@ -136,7 +138,8 @@ const ProductList = ({
         query,
         page: args.page || 1,
         attributes: filterAttributes,
-        orderBy: sort
+        orderBy: sort,
+        cityId: selectedCityId
       }
     ],
     ({ pageParam = 1 }) => {
@@ -146,7 +149,8 @@ const ProductList = ({
         query,
         page: pageParam,
         attributes: filterAttributes,
-        orderBy: sort
+        orderBy: sort,
+        cityId: selectedCityId
       })
     },
     {
@@ -321,6 +325,10 @@ const ProductList = ({
       }
       filters={
         <>
+          <CityFilterSection
+            selectedCityId={selectedCityId}
+            setSelectedCityId={setSelectedCityId}
+          />
           {!args.brandId && (
             <BrandsFilterSection
               setSelectedBrand={setSelectedBrand}
