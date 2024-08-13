@@ -52,13 +52,13 @@ import ProductSort from "./product-sort"
 import ProductListContainer, {
   ProductContainerType
 } from "./ProductListContainer"
+import BrandsFilterSection from "./products/BrandsFilterSection"
 
 interface ProductListProps {
   hasTitle?: boolean
   isMobileView: boolean
   args: IndexProductInput
   selectedCategoryIds: InputMaybe<number[]> | undefined
-  brandId?: number
   sellerId?: number
   hasFilter?: boolean
   isSellerPanel?: boolean
@@ -76,7 +76,6 @@ const ProductList = ({
   isMobileView,
   args,
   selectedCategoryIds,
-  brandId,
   sellerId,
   setCategoriesCount,
   limitPage,
@@ -110,7 +109,7 @@ const ProductList = ({
   )
   const setSortFilterVisibility = useSetAtom(sortFilterVisibilityAtom)
   const setFiltersVisibility = useSetAtom(filtersVisibilityAtom)
-
+  const [selectedBrand, setSelectedBrand] = useState<number | null>(null)
   const brandName = searchParams.get("brandName")
   const sellerName = searchParams.get("sellerName")
   const getFilterableAttributesQuery = useGetAllFilterableAttributesBasicsQuery(
@@ -133,6 +132,7 @@ const ProductList = ({
       QUERY_FUNCTIONS_KEY.ALL_PRODUCTS_QUERY_KEY,
       {
         ...args,
+        brandId: args.brandId ? args.brandId : selectedBrand,
         query,
         page: args.page || 1,
         attributes: filterAttributes,
@@ -142,7 +142,7 @@ const ProductList = ({
     ({ pageParam = 1 }) => {
       return getAllProductsQueryFn({
         ...args,
-        brandId: args.brandId,
+        brandId: args.brandId ? args.brandId : selectedBrand,
         query,
         page: pageParam,
         attributes: filterAttributes,
@@ -321,20 +321,26 @@ const ProductList = ({
       }
       filters={
         <>
-          {brandId && isMobileView && (
+          {!args.brandId && (
+            <BrandsFilterSection
+              setSelectedBrand={setSelectedBrand}
+              selectedBrand={selectedBrand}
+            />
+          )}
+          {args.brandId && isMobileView && (
             <BrandOrSellerCategoryFilter
               categoryIdsFilter={categoryIdsFilter}
               onCategoryIdsFilterChanged={onCategoryIdsFilterChanged}
-              brandId={brandId}
+              brandId={args.brandId}
             />
           )}
-          {sellerId && isMobileView && (
+          {/* {sellerId && isMobileView && (
             <BrandOrSellerCategoryFilter
               categoryIdsFilter={categoryIdsFilter}
               onCategoryIdsFilterChanged={onCategoryIdsFilterChanged}
               sellerId={sellerId}
             />
-          )}
+          )} */}
           {selectedCategoryIds &&
             selectedCategoryIds.length === 1 &&
             selectedCategoryIds[0] !== 0 && (
@@ -467,7 +473,7 @@ const ProductList = ({
           <div className="grid grid-cols-2">
             <MobileCategoriesFilter
               categoryId={selectedCategoryIds}
-              brandId={brandId}
+              brandId={args.brandId}
               sellerId={sellerId}
               categoryIdsFilter={categoryIdsFilter}
               onCategoryFilterChanged={({ status, value }) => {
@@ -519,15 +525,15 @@ const ProductList = ({
               مرتب‌سازی
             </Button>
             <Button
-              disabled={
-                !selectedCategoryIds ||
-                !(selectedCategoryIds.length > 0) ||
-                !getFilterableAttributesQuery.data ||
-                !(
-                  getFilterableAttributesQuery.data.filterableAttributes.filters
-                    .length > 0
-                )
-              }
+              // disabled={
+              //   !selectedCategoryIds ||
+              //   !(selectedCategoryIds.length > 0) ||
+              //   !getFilterableAttributesQuery.data ||
+              //   !(
+              //     getFilterableAttributesQuery.data.filterableAttributes.filters
+              //       .length > 0
+              //   )
+              // }
               onClick={() => setFiltersVisibility(true)}
               size="small"
               variant="ghost"
