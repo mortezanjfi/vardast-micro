@@ -46,7 +46,7 @@ const BrandPage = ({ isMobileView, args, slug }: BrandPageProps) => {
   if (brandQuery.isLoading) return <Loading />
   if (brandQuery.error) return <LoadingFailed />
   if (!brandQuery?.data) return <NoResult entity="brand" />
-
+  args.brandId = +slug[0]
   return (
     <>
       <>{/* <BrandHeader brand={brandQuery?.data.brand as Brand} /> */}</>
@@ -67,12 +67,7 @@ const BrandPage = ({ isMobileView, args, slug }: BrandPageProps) => {
           )}
         </div>
       </div>
-      <ProductList
-        args={args}
-        isMobileView={isMobileView}
-        selectedCategoryIds={args["categoryIds"] || undefined}
-        brandId={+slug[0]}
-      />
+      <ProductList args={args} isMobileView={isMobileView} />
     </>
   )
 }

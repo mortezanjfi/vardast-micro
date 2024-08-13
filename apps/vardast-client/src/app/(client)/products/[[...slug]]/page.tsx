@@ -123,6 +123,7 @@ const SearchIndex = async ({
     <ReactQueryHydrate state={dehydratedState}>
       <ProductsPage
         // hasSearch
+        needCategoryFilterSection
         slug={slug}
         args={args}
         isMobileView={isMobileView}

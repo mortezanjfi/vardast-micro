@@ -17,6 +17,7 @@ import ProductList from "../product-list"
 import ProductsHeader from "../search-header"
 
 interface ProductsPageProps {
+  needCategoryFilterSection?: boolean
   isMobileView: boolean
   slug: Array<string | number>
   args: IndexProductInput
@@ -25,20 +26,21 @@ interface ProductsPageProps {
 }
 
 const ProductsPage = ({
+  needCategoryFilterSection = false,
   isMobileView,
   slug,
   args,
   hasSearch,
   isSellerPanel
 }: ProductsPageProps) => {
-  const selectedCategoryId = slug && slug.length > 0 ? +slug[0] : 0
+  args.categoryIds = slug && slug.length > 0 ? [+slug[0]] : []
 
   const categoryArgs: GetCategoryQueryVariables = {}
-  categoryArgs["id"] = selectedCategoryId
+  categoryArgs["id"] = args.categoryIds[0]
 
   const getCategoryQuery = useQuery<GetCategoryQuery>({
     queryKey: [QUERY_FUNCTIONS_KEY.CATEGORY_QUERY_KEY, categoryArgs],
-    queryFn: () => getCategoryQueryFn(selectedCategoryId)
+    queryFn: () => getCategoryQueryFn(args.categoryIds[0])
   })
 
   // args["categoryIds"] = getCategoryQuery.data?.category?.children?.length
@@ -57,7 +59,7 @@ const ProductsPage = ({
       ) : null}
 
       <div className={clsx("flex flex-col gap-9", isMobileView && "!gap-0")}>
-        {isMobileView && selectedCategoryId ? (
+        {isMobileView && args.categoryIds.length ? (
           <MobileCategoriesCardSection
             slug={slug}
             getCategoryQuery={getCategoryQuery}
@@ -65,17 +67,17 @@ const ProductsPage = ({
         ) : (
           <DesktopCategoriesCardsSection
             getCategoryQuery={getCategoryQuery}
-            selectedCategoryId={selectedCategoryId}
+            selectedCategoryId={args.categoryIds[0]}
           />
         )}
 
         <ProductList
+          needCategoryFilterSection={needCategoryFilterSection}
           hasSearch={hasSearch}
           isSellerPanel={isSellerPanel}
           isMobileView={isMobileView}
           args={args}
-          selectedCategoryIds={selectedCategoryId ? [selectedCategoryId] : null}
-          limitPage={selectedCategoryId ? undefined : 5}
+          limitPage={args.categoryIds.length ? undefined : 5}
         />
         {getCategoryQuery.data?.category.description && (
           <div>

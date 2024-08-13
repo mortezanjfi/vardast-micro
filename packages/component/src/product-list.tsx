@@ -35,8 +35,7 @@ import {
   LucideX
 } from "lucide-react"
 
-import BrandOrSellerCategoryFilter from "./brand-or-seller-category-filter"
-import CityFilterSection from "./brand/CityFilterSection"
+import CategoryFilterSection from "./brand/CategoryFilterSection"
 import ListHeader from "./desktop/ListHeader"
 import DesktopMobileViewOrganizer from "./DesktopMobileViewOrganizer"
 import FiltersContainer from "./filters-container"
@@ -56,10 +55,10 @@ import ProductListContainer, {
 import BrandsFilterSection from "./products/BrandsFilterSection"
 
 interface ProductListProps {
+  needCategoryFilterSection?: boolean
   hasTitle?: boolean
   isMobileView: boolean
   args: IndexProductInput
-  selectedCategoryIds: InputMaybe<number[]> | undefined
   sellerId?: number
   hasFilter?: boolean
   isSellerPanel?: boolean
@@ -73,10 +72,10 @@ export const checkLimitPageByCondition = (condition: boolean, result: any[]) =>
   condition ? result.length + 1 : undefined
 
 const ProductList = ({
+  needCategoryFilterSection = false,
   hasTitle = true,
   isMobileView,
   args,
-  selectedCategoryIds,
   sellerId,
   setCategoriesCount,
   limitPage,
@@ -111,21 +110,20 @@ const ProductList = ({
   const setSortFilterVisibility = useSetAtom(sortFilterVisibilityAtom)
   const setFiltersVisibility = useSetAtom(filtersVisibilityAtom)
   const [selectedBrand, setSelectedBrand] = useState<number | null>(null)
-  const [selectedCityId, setSelectedCityId] = useState<number | null>()
-  const brandName = searchParams.get("brandName")
-  const sellerName = searchParams.get("sellerName")
+  // const brandName = searchParams.get("brandName")
+  // const sellerName = searchParams.get("sellerName")
   const getFilterableAttributesQuery = useGetAllFilterableAttributesBasicsQuery(
     graphqlRequestClientWithoutToken,
     {
       filterableAttributesInput: {
         categoryId:
-          !!selectedCategoryIds && selectedCategoryIds.length === 1
-            ? selectedCategoryIds[0]
+          !!args.categoryIds && args.categoryIds.length === 1
+            ? args.categoryIds[0]
             : 0
       }
     },
     {
-      enabled: !!selectedCategoryIds && selectedCategoryIds.length === 1
+      enabled: !!args.categoryIds && args.categoryIds.length === 1
     }
   )
 
@@ -134,23 +132,24 @@ const ProductList = ({
       QUERY_FUNCTIONS_KEY.ALL_PRODUCTS_QUERY_KEY,
       {
         ...args,
+        categoryIds: categoryIdsFilter,
         brandId: args.brandId ? args.brandId : selectedBrand,
         query,
         page: args.page || 1,
         attributes: filterAttributes,
-        orderBy: sort,
-        cityId: selectedCityId
+        orderBy: sort
       }
     ],
     ({ pageParam = 1 }) => {
       return getAllProductsQueryFn({
         ...args,
+        categoryIds: categoryIdsFilter,
+
         brandId: args.brandId ? args.brandId : selectedBrand,
         query,
         page: pageParam,
         attributes: filterAttributes,
-        orderBy: sort,
-        cityId: selectedCityId
+        orderBy: sort
       })
     },
     {
@@ -325,23 +324,20 @@ const ProductList = ({
       }
       filters={
         <>
-          <CityFilterSection
-            selectedCityId={selectedCityId}
-            setSelectedCityId={setSelectedCityId}
-          />
+          {needCategoryFilterSection && (
+            <CategoryFilterSection
+              setSelectedCategoryIds={setCategoryIdsFilter}
+              selectedCategoryIds={categoryIdsFilter}
+            />
+          )}
+
           {!args.brandId && (
             <BrandsFilterSection
               setSelectedBrand={setSelectedBrand}
               selectedBrand={selectedBrand}
             />
           )}
-          {args.brandId && isMobileView && (
-            <BrandOrSellerCategoryFilter
-              categoryIdsFilter={categoryIdsFilter}
-              onCategoryIdsFilterChanged={onCategoryIdsFilterChanged}
-              brandId={args.brandId}
-            />
-          )}
+
           {/* {sellerId && isMobileView && (
             <BrandOrSellerCategoryFilter
               categoryIdsFilter={categoryIdsFilter}
@@ -349,11 +345,13 @@ const ProductList = ({
               sellerId={sellerId}
             />
           )} */}
-          {selectedCategoryIds &&
-            selectedCategoryIds.length === 1 &&
-            selectedCategoryIds[0] !== 0 && (
+          {args.categoryIds &&
+            args.categoryIds.length === 1 &&
+            args.categoryIds[0] !== 0 &&
+            getFilterableAttributesQuery?.data?.filterableAttributes?.filters
+              .length > 0 && (
               <FiltersContainer
-                selectedCategoryId={selectedCategoryIds[0]}
+                selectedCategoryId={args.categoryIds[0]}
                 filterAttributes={filterAttributes}
                 onFilterAttributesChanged={onFilterAttributesChanged}
               />
@@ -480,7 +478,7 @@ const ProductList = ({
           )}
           <div className="grid grid-cols-2">
             <MobileCategoriesFilter
-              categoryId={selectedCategoryIds}
+              categoryId={args.categoryIds}
               brandId={args.brandId}
               sellerId={sellerId}
               categoryIdsFilter={categoryIdsFilter}
@@ -501,7 +499,7 @@ const ProductList = ({
             />
             <MobileFilterableAttributes
               filterAttributes={filterAttributes}
-              selectedCategoryId={selectedCategoryIds}
+              selectedCategoryId={args.categoryIds}
               onFilterAttributesChanged={({ status, id, value }) => {
                 onFilterAttributesChanged({ status, id, value })
                 setFiltersVisibility(false)

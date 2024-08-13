@@ -266,7 +266,6 @@ const CategoriesTab = ({
           <ProductList
             isMobileView={productsProps.isMobileView}
             args={productsProps.args}
-            selectedCategoryIds={[]}
           />
         </>
       ) : (

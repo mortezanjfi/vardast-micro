@@ -30,13 +30,13 @@ const ProductsPage = ({
   hasSearch,
   isSellerPanel
 }: ProductsPageProps) => {
-  const selectedCategoryId = slug && slug.length > 0 ? +slug[0] : 0
+  args.categoryIds = slug && slug.length > 0 ? [+slug[0]] : []
 
   const caategoryArgs: GetCategoryQueryVariables = {}
-  caategoryArgs["id"] = selectedCategoryId
+  caategoryArgs["id"] = args.categoryIds[0]
   const getCategoryQuery = useQuery<GetCategoryQuery>({
     queryKey: [QUERY_FUNCTIONS_KEY.CATEGORY_QUERY_KEY, caategoryArgs],
-    queryFn: () => getCategoryQueryFn(selectedCategoryId)
+    queryFn: () => getCategoryQueryFn(args.categoryIds[0])
   })
   const { t } = useTranslation()
   // args["categoryIds"] = getCategoryQuery.data?.category?.children?.length
@@ -44,15 +44,6 @@ const ProductsPage = ({
   //       return children?.id as number
   //     })
   //   : [selectedCategoryId]
-
-  args["categoryIds"] =
-    selectedCategoryId === 0
-      ? []
-      : getCategoryQuery.data?.category?.children?.length
-        ? getCategoryQuery.data.category.children.map((children) => {
-            return children?.id as number
-          })
-        : [selectedCategoryId]
 
   setBreadCrumb([
     {
@@ -75,7 +66,7 @@ const ProductsPage = ({
         {!isMobileView && (
           <DesktopCategoriesCardsSection
             getCategoryQuery={getCategoryQuery}
-            selectedCategoryId={selectedCategoryId}
+            selectedCategoryId={args.categoryIds[0]}
           />
         )}
         <ProductList
@@ -83,8 +74,7 @@ const ProductsPage = ({
           isSellerPanel={isSellerPanel}
           isMobileView={isMobileView}
           args={args}
-          selectedCategoryIds={selectedCategoryId ? [selectedCategoryId] : null}
-          limitPage={selectedCategoryId ? undefined : 5}
+          limitPage={args.categoryIds.length ? undefined : 5}
         />
         {getCategoryQuery.data?.category.description && (
           <div>
