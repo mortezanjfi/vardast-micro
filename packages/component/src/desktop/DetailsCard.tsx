@@ -10,7 +10,7 @@ const DetailsCard = ({ badges, items, card }: DetailsCardPropsType) => {
   return (
     <Card {...card} template="1/2-sm">
       {badges && badges?.length && (
-        <div className="col-span-2 flex gap-6 pb">
+        <div className="col-span-full flex gap-6 pb">
           {badges?.map((props) => <Badge {...props} />)}
         </div>
       )}

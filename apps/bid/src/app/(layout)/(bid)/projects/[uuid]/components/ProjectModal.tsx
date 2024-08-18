@@ -34,7 +34,7 @@ import { useForm } from "react-hook-form"
 
 import { IOrderPageSectionProps } from "@/app/(layout)/(bid)/types/type"
 
-const ProjectInfoModal = ({
+const ProjectModal = ({
   open,
   onCloseModals,
   modals
@@ -56,7 +56,7 @@ const ProjectInfoModal = ({
       indexLegalInput: { nameOrUuid }
     },
     {
-      enabled: open && !!form.watch("legalId")
+      enabled: open
     }
   )
 
@@ -278,4 +278,4 @@ const ProjectInfoModal = ({
     </Modal>
   )
 }
-export default ProjectInfoModal
+export default ProjectModal

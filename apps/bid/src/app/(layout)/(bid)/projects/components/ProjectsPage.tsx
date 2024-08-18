@@ -15,7 +15,7 @@ import { useModals } from "@vardast/ui/modal"
 import useTranslation from "next-translate/useTranslation"
 import { z } from "zod"
 
-import ProjectInfoModal from "@/app/(layout)/(bid)/projects/[uuid]/components/ProjectInfoModal"
+import ProjectModal from "@/app/(layout)/(bid)/projects/[uuid]/components/ProjectModal"
 import { OrderModalEnum } from "@/app/(layout)/(bid)/types/type"
 
 type ProjectsPageProps = {}
@@ -145,7 +145,7 @@ const ProjectsPage = (_: ProjectsPageProps) => {
 
   return (
     <>
-      <ProjectInfoModal {...modalProps(OrderModalEnum.ADD_PROJECT)} />
+      <ProjectModal {...modalProps(OrderModalEnum.ADD_PROJECT)} />
       <Table {...tableProps} />
     </>
   )

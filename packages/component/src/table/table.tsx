@@ -34,7 +34,7 @@ import Loading from "../Loading"
 import NotFoundIcon from "../not-found-icon"
 import { Filter } from "./filter"
 import { TablePagination } from "./table-pagination"
-import { ITableProps } from "./type"
+import { FilterComponentTypeEnum, ITableProps } from "./type"
 
 const filtersParser = createParser({
   parse: (value) => (value ? JSON.parse(value) : {}),
@@ -45,7 +45,8 @@ const convertArgsToNumber = (data: any) => {
   const args = { ...data }
   Object.entries(args).forEach(([key, value]) => {
     if (value) {
-      if (Number(value)) {
+      if (typeof value === "number") {
+        // if (Number(value)) {
         args[key] = Number(value)
       }
     } else {
@@ -291,7 +292,24 @@ const Table = <
       if (!fetch?.directData) {
         e.preventDefault()
         setFetchArgs({})
-        form.reset()
+        let resetValues:
+          | TypeOf<TSchema>
+          | DefaultValues<TypeOf<TSchema>>
+          | ((formValues: TypeOf<TSchema>) => TypeOf<TSchema>)
+
+        filters.options.forEach((item) => {
+          if (item.type === FilterComponentTypeEnum.SELECT) {
+            resetValues = { ...resetValues, [item.name]: undefined }
+          }
+          if (item.type === FilterComponentTypeEnum.INPUT) {
+            if (item.inputType === "number") {
+              resetValues = { ...resetValues, [item.name]: null }
+            } else {
+              resetValues = { ...resetValues, [item.name]: "" }
+            }
+          }
+        })
+        form.reset(resetValues)
         router.push(pathname)
       }
     },
@@ -333,7 +351,7 @@ const Table = <
           className={clsx(!container?.title && "!p-0")}
           {...container}
           button={
-            container && {
+            container?.button && {
               ...container?.button,
               disabled:
                 container?.button?.disabled ||

@@ -107,8 +107,8 @@ const UserPermissionsForm = ({
     updateUserMutation.mutate({
       updateUserInput: {
         id: userId,
-        roleIds: roles,
-        permissionIds: permissions
+        roleIds: roles
+        // permissionIds: permissions
       }
     })
   }

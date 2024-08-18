@@ -1,20 +1,29 @@
-import { redirect } from "next/navigation"
-import { authOptions } from "@vardast/auth/authOptions"
-import { getServerSession } from "next-auth"
+import { Metadata } from "next"
+import { dehydrate } from "@tanstack/react-query"
+import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
+import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 
-import UserEdit from "../components/UserEdit"
+import UserPage from "@/app/(admin)/users/real/[uuid]/components/UserPage"
 
-const UserEditPage = async ({
+export async function generateMetadata(): Promise<Metadata> {
+  // parent: ResolvingMetadata
+  return {
+    title: "ویرایش کاربر حقیقی"
+  }
+}
+const BrandEditPage = async ({
   params: { uuid }
 }: {
   params: { uuid: string }
 }) => {
-  const session = await getServerSession(authOptions)
+  const queryClient = getQueryClient()
 
-  if (!session?.abilities?.includes("gql.users.user.index")) {
-    redirect("/")
-  }
-  return uuid && <UserEdit uuid={uuid} />
+  const dehydratedState = dehydrate(queryClient)
+  return (
+    <ReactQueryHydrate state={dehydratedState}>
+      <UserPage uuid={uuid} />
+    </ReactQueryHydrate>
+  )
 }
 
-export default UserEditPage
+export default BrandEditPage

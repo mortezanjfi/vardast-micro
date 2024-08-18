@@ -62,6 +62,18 @@ export const nationalIdNumberSchema = z
     message: "شناسه ملی صحیح نیست"
   })
 
+export const nationalCodeNumberSchema = z
+  .string()
+  .min(10, {
+    message: "کد ملی صحیح نیست"
+  })
+  .min(10, {
+    message: "کد ملی صحیح نیست"
+  })
+  .refine((data) => stringHasOnlyNumberValidator(digitsFaToEn(`${data}`)), {
+    message: "کد ملی صحیح نیست"
+  })
+
 export const phoneSchema = z
   .string()
   .min(11, {

@@ -66,7 +66,7 @@ const LegalsPage = ({ title }: Props) => {
         },
         {
           id: "wallet",
-          header: t("common:wallet"),
+          header: `${t("common:wallet")} (${t("common:toman")})`,
           accessorFn: (row) => digitsEnToFa(addCommas(row?.wallet))
         },
         {

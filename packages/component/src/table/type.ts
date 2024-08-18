@@ -22,7 +22,7 @@ type IFilterMap<T extends FilterComponentTypeEnum> =
     ? {
         type: FilterComponentTypeEnum.SELECT
       } & Omit<SelectPopoverPropsType, "value" | "onSelect">
-    : { type: FilterComponentTypeEnum.INPUT }
+    : { type: FilterComponentTypeEnum.INPUT; inputType?: "number" | "text" }
 
 type IFilter<T extends FilterComponentTypeEnum, TName> = IFilterMap<T> & {
   name: TName

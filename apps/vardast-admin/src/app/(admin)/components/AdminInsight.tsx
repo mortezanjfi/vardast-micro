@@ -20,7 +20,7 @@ const AdminInsight = () => {
           ) : (
             <div className="text-xl font-bold text-alpha-800">
               {digitsEnToFa(
-                addCommas(`${allInsightInfo.data.totalInfo.countOfProducts}`)
+                addCommas(`${allInsightInfo.data?.totalInfo?.countOfProducts}`)
               )}
             </div>
           )}
@@ -36,7 +36,7 @@ const AdminInsight = () => {
           ) : (
             <div className="text-xl font-bold text-alpha-800">
               {digitsEnToFa(
-                addCommas(`${allInsightInfo.data.totalInfo.countOfBrands}`)
+                addCommas(`${allInsightInfo.data?.totalInfo?.countOfBrands}`)
               )}
             </div>
           )}
@@ -52,7 +52,7 @@ const AdminInsight = () => {
           ) : (
             <div className="text-xl font-bold text-alpha-800">
               {digitsEnToFa(
-                addCommas(`${allInsightInfo.data.totalInfo.countOfUsers}`)
+                addCommas(`${allInsightInfo.data?.totalInfo?.countOfUsers}`)
               )}
             </div>
           )}
@@ -68,7 +68,7 @@ const AdminInsight = () => {
           ) : (
             <div className="text-xl font-bold text-alpha-800">
               {digitsEnToFa(
-                addCommas(`${allInsightInfo.data.totalInfo.countOfSellers}`)
+                addCommas(`${allInsightInfo.data?.totalInfo?.countOfSellers}`)
               )}
             </div>
           )}
@@ -84,7 +84,9 @@ const AdminInsight = () => {
           ) : (
             <div className="text-xl font-bold text-alpha-800">
               {digitsEnToFa(
-                addCommas(`${allInsightInfo.data.totalInfo.countOfCategories}`)
+                addCommas(
+                  `${allInsightInfo.data?.totalInfo?.countOfCategories}`
+                )
               )}
             </div>
           )}
@@ -99,7 +101,9 @@ const AdminInsight = () => {
         ) : (
           <div className="text-xl font-bold text-alpha-800">
             {digitsEnToFa(
-              addCommas(`${allInsightInfo.data.totalInfo.countOfSellersOnline}`)
+              addCommas(
+                `${allInsightInfo.data?.totalInfo?.countOfSellersOnline}`
+              )
             )}
           </div>
         )}
@@ -114,7 +118,7 @@ const AdminInsight = () => {
           <div className="text-xl font-bold text-alpha-800">
             {digitsEnToFa(
               addCommas(
-                `${allInsightInfo.data.totalInfo.countOfSellersOffline}`
+                `${allInsightInfo.data?.totalInfo?.countOfSellersOffline}`
               )
             )}
           </div>
@@ -129,7 +133,9 @@ const AdminInsight = () => {
         ) : (
           <div className="text-xl font-bold text-alpha-800">
             {digitsEnToFa(
-              addCommas(`${allInsightInfo.data.totalInfo.countOfSellersNormal}`)
+              addCommas(
+                `${allInsightInfo.data?.totalInfo?.countOfSellersNormal}`
+              )
             )}
           </div>
         )}
@@ -144,7 +150,7 @@ const AdminInsight = () => {
           <div className="text-xl font-bold text-alpha-800">
             {digitsEnToFa(
               addCommas(
-                `${allInsightInfo.data.totalInfo.countOfSellersExtended}`
+                `${allInsightInfo.data?.totalInfo?.countOfSellersExtended}`
               )
             )}
           </div>

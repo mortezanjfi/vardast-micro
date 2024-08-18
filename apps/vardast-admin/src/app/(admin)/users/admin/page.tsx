@@ -2,7 +2,7 @@ import { redirect } from "next/navigation"
 import { authOptions } from "@vardast/auth/authOptions"
 import { getServerSession } from "next-auth"
 
-import Users from "@/app/(admin)/users/real/components/Users"
+import Users from "@/app/(admin)/users/real/components/RealsPage"
 
 const UsersIndex = async () => {
   const session = await getServerSession(authOptions)

@@ -13,7 +13,9 @@ import {
   OrderOfferStatuses,
   PaymentMethodEnum,
   PreOrderStates,
-  ThreeStateSupervisionStatuses
+  ThreeStateSupervisionStatuses,
+  UserLanguagesEnum,
+  UserStatusesEnum
 } from "@vardast/graphql/generated"
 import { NavigationItemType } from "@vardast/type/Navigation"
 import {
@@ -104,6 +106,32 @@ export const LegalStatusEnumFa: StatusFaType<LegalStatusEnum> = {
   [LegalStatusEnum.Deactive]: {
     variant: "danger",
     name_fa: "غیرفعال"
+  }
+}
+
+export const UserStatusesEnumFa: StatusFaType<UserStatusesEnum> = {
+  [UserStatusesEnum.Active]: {
+    variant: "success",
+    name_fa: "فعال"
+  },
+  [UserStatusesEnum.NotActivated]: {
+    variant: "danger",
+    name_fa: "غیرفعال"
+  },
+  [UserStatusesEnum.Banned]: {
+    variant: "primary",
+    name_fa: "مسدود"
+  }
+}
+
+export const UserLanguagesEnumFa: StatusFaType<UserLanguagesEnum> = {
+  [UserLanguagesEnum.Farsi]: {
+    variant: "default",
+    name_fa: "فارسی"
+  },
+  [UserLanguagesEnum.English]: {
+    variant: "default",
+    name_fa: "انگلیسی"
   }
 }
 

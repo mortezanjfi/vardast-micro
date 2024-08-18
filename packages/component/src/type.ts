@@ -9,3 +9,7 @@ export enum LegalModalEnum {
   MEMBER,
   DELETE_MEMBER
 }
+
+export enum RealModalEnum {
+  INFO
+}

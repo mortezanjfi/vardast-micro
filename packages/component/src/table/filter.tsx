@@ -26,7 +26,7 @@ const Filter = <T extends ZodType<any, any, any>>({
       if (filter.type === FilterComponentTypeEnum.INPUT) {
         return (
           <Input
-            type="text"
+            type={filter.inputType || "text"}
             placeholder={t("common:entity_enter_placeholder", {
               entity: filter.title
             })}
@@ -82,7 +82,7 @@ const Filter = <T extends ZodType<any, any, any>>({
       <div className="col-span-full flex flex-col gap sm:flex-row sm:justify-end">
         <Button
           size="medium"
-          variant="outline-primary"
+          variant="secondary"
           type="reset"
           className="py-2"
           disabled={
