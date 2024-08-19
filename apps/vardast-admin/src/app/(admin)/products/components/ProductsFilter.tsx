@@ -2,10 +2,16 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useDebouncedState } from "@mantine/hooks"
 import Card from "@vardast/component/Card"
 import {
+  ProductImageStatusEnum,
+  ProductPriceStatusEnum,
   useGetAllBrandsWithoutPaginationQuery,
   useGetAllCategoriesV2Query
 } from "@vardast/graphql/generated"
-import { statusesOfAvailability } from "@vardast/lib/AvailabilityStatus"
+import {
+  imageExistence,
+  productPriceOptions,
+  statusesOfAvailability
+} from "@vardast/lib/AvailabilityStatus"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
 import { Button } from "@vardast/ui/button"
@@ -56,6 +62,7 @@ export const ProductsFilter = ({
   const [brandDialog, setBrandDialog] = useState(false)
   const [descriptionDialog, setDescriptionDialog] = useState(false)
   const [priceStatusDialog, setPriceStatusDialog] = useState(false)
+  const [imageStatusDialog, setImageStatusDialog] = useState(false)
 
   const { t } = useTranslation()
 
@@ -87,7 +94,9 @@ export const ProductsFilter = ({
       categoryIds: form.getValues("categoryIds"),
       isActive: form.getValues("isActive") as string,
       brandId: form.getValues("brandId") as number,
-      sku: form.getValues("sku") as string
+      sku: form.getValues("sku") as string,
+      hasPrice: form.getValues("hasPrice"),
+      hasImage: form.getValues("hasImage")
     })
   }
   const handleReset = () => {
@@ -97,7 +106,9 @@ export const ProductsFilter = ({
       categoryIds: form.getValues("categoryIds"),
       isActive: form.getValues("isActive") as string,
       brandId: form.getValues("brandId") as number,
-      sku: form.getValues("sku") as string
+      sku: form.getValues("sku") as string,
+      hasPrice: form.getValues("hasPrice"),
+      hasImage: form.getValues("hasImage")
     })
   }
   const statusesOfActivation = [
@@ -386,11 +397,9 @@ export const ProductsFilter = ({
                             role="combobox"
                             className="input-field flex items-center text-start"
                           >
-                            {
-                              statusesOfAvailability.find(
-                                (st) => st.value === field.value
-                              )?.status
-                            }
+                            {statusesOfAvailability.find(
+                              (st) => st.value === field.value
+                            )?.status || t("common:select_placeholder")}
                             <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
                           </Button>
                         </FormControl>
@@ -448,11 +457,9 @@ export const ProductsFilter = ({
                             role="combobox"
                             className="input-field flex items-center text-start"
                           >
-                            {
-                              statusesOfAvailability.find(
-                                (st) => st.value === field.value
-                              )?.status
-                            }
+                            {productPriceOptions.find(
+                              (st) => st.value === field.value
+                            )?.status || t("common:select_placeholder")}
                             <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
                           </Button>
                         </FormControl>
@@ -465,12 +472,12 @@ export const ProductsFilter = ({
                             })}
                           </CommandEmpty>
                           <CommandGroup>
-                            {statusesOfAvailability.map((st) => (
+                            {productPriceOptions.map((st) => (
                               <CommandItem
-                                value={st.value}
+                                value={st.value as ProductPriceStatusEnum}
                                 key={st.status}
                                 onSelect={(value) => {
-                                  form.setValue("hasPrice", value)
+                                  form.setValue("hasPrice", value.toUpperCase())
                                   setPriceStatusDialog(false)
                                 }}
                               >
@@ -553,6 +560,66 @@ export const ProductsFilter = ({
                         </Command>
                       </PopoverContent>
                     </Popover>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="hasImage"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>تصویر محصول</FormLabel>
+                    <Popover
+                      open={imageStatusDialog}
+                      onOpenChange={setImageStatusDialog}
+                    >
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            noStyle
+                            role="combobox"
+                            className="input-field flex items-center text-start"
+                          >
+                            {imageExistence.find(
+                              (st) => st.value === field.value
+                            )?.status || t("common:select_placeholder")}
+                            <LucideChevronsUpDown className="ms-auto h-4 w-4 shrink-0" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <Command>
+                          <CommandEmpty>
+                            {t("common:no_entity_found", {
+                              entity: t("common:producer")
+                            })}
+                          </CommandEmpty>
+                          <CommandGroup>
+                            {imageExistence.map((st) => (
+                              <CommandItem
+                                value={st.value as ProductImageStatusEnum}
+                                key={st.status}
+                                onSelect={(value) => {
+                                  form.setValue("hasImage", value.toUpperCase())
+                                  setImageStatusDialog(false)
+                                }}
+                              >
+                                <LucideCheck
+                                  className={mergeClasses(
+                                    "mr-2 h-4 w-4",
+                                    st.value === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {st.status}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
                   </FormItem>
                 )}
               />

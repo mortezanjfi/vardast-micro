@@ -12,7 +12,11 @@ import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
 import PageHeader from "@vardast/component/PageHeader"
 import Pagination from "@vardast/component/Pagination"
-import { useGetAllProductsQuery } from "@vardast/graphql/generated"
+import {
+  ProductImageStatusEnum,
+  ProductPriceStatusEnum,
+  useGetAllProductsQuery
+} from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { Button } from "@vardast/ui/button"
@@ -55,7 +59,8 @@ const FilterSchema = z.object({
   isActive: z.string().nullable().optional(),
   sku: z.string().nullable().optional(),
   hasPrice: z.string().nullable().optional(),
-  hasDescription: z.string().nullable().optional()
+  hasDescription: z.string().nullable().optional(),
+  hasImage: z.string().nullable().optional()
 })
 export type FilterFields = TypeOf<typeof FilterSchema>
 
@@ -65,7 +70,8 @@ export interface ProductQueryParams {
   brandId: number | null
   isActive: string | undefined // Assuming isActive is always a string
   sku: string | null // Assuming sku can be a string or null
-  // hasPrice: string | undefined
+  hasPrice: string | null
+  hasImage: string | null
 }
 
 const Products = () => {
@@ -78,17 +84,18 @@ const Products = () => {
       categoryIds: [],
       brandId: null,
       isActive: "",
-      sku: null
-      // hasPrice: ""
+      sku: null,
+      hasPrice: null,
+      hasImage: null
     })
   const form = useForm<FilterFields>({
-    resolver: zodResolver(FilterSchema),
-    defaultValues: {
-      categoryIds: [],
-      isActive: "",
-      hasPrice: "",
-      hasDescription: ""
-    }
+    resolver: zodResolver(FilterSchema)
+    // defaultValues: {
+    //   categoryIds: [],
+    //   isActive: "",
+    //   hasPrice: "",
+    //   hasDescription: ""
+    // }
   })
 
   const data = useGetAllProductsQuery(
@@ -100,7 +107,9 @@ const Products = () => {
         query: productQueryParams.query,
         categoryIds: productQueryParams.categoryIds,
         isActive: checkBooleanByString(productQueryParams.isActive as string),
-        sku: productQueryParams.sku
+        sku: productQueryParams.sku,
+        hasPrice: productQueryParams.hasPrice as ProductPriceStatusEnum,
+        hasImage: productQueryParams.hasImage as ProductImageStatusEnum
       }
     },
     {
@@ -111,7 +120,9 @@ const Products = () => {
           query: productQueryParams.query,
           categoryIds: productQueryParams.categoryIds,
           isActive: checkBooleanByString(productQueryParams.isActive as string),
-          sku: productQueryParams.sku
+          sku: productQueryParams.sku,
+          hasPrice: productQueryParams.hasPrice as ProductPriceStatusEnum,
+          hasImage: productQueryParams.hasImage as ProductImageStatusEnum
         }
       ]
     }
