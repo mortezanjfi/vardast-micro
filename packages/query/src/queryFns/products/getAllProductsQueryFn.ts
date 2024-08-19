@@ -12,8 +12,6 @@ import { TableFetchApiFunctionType } from "../../type"
 export const getAllProductsQueryFn: TableFetchApiFunctionType = async (
   args: IndexProductInput
 ) => {
-  console.log("h")
-  console.log(args.categoryIds)
   const session =
     typeof window === "undefined"
       ? await getServerSession(authOptions)

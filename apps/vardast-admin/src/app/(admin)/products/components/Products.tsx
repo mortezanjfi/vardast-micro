@@ -3,9 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
-import { useQueryClient } from "@tanstack/react-query"
 import Link from "@vardast/component/Link"
 import {
   FilterComponentTypeEnum,
@@ -30,9 +28,7 @@ import { checkBooleanByString } from "@vardast/util/checkBooleanByString"
 import convertToPersianDate from "@vardast/util/convertToPersianDate"
 import { setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
-import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
-import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
 import ProductDeleteModal from "@/app/(admin)/products/components/ProductDeleteModal"
@@ -60,37 +56,11 @@ export interface ProductQueryParams {
 }
 
 const Products = () => {
-  const queryClient = useQueryClient()
   const router = useRouter()
-
   const { t } = useTranslation()
-  const { data: session } = useSession()
-  const [currentPage, setCurrentPage] = useState<number>(1)
-  const [open, setOpen] = useState<boolean>(false)
-  const [productToDelete, setProductToDelete] = useState<Product>()
   const [categoryQuery, setCategoryQuery] = useState("")
   const [brandsQuery, setBrandsQuery] = useState("")
   const [modals, onChangeModals, onCloseModals] = useModals<ProductModalEnum>()
-
-  const [productQueryParams, setProductQueryParams] =
-    useState<ProductQueryParams>({
-      query: "",
-      categoryIds: [],
-      brandId: null,
-      isActive: "",
-      sku: null,
-      hasPrice: null,
-      hasImage: null
-    })
-  const form = useForm<FilterFields>({
-    resolver: zodResolver(ProductsFilterSchema)
-    // defaultValues: {
-    //   categoryIds: [],
-    //   isActive: "",
-    //   hasPrice: "",
-    //   hasDescription: ""
-    // }
-  })
 
   setDefaultOptions({
     locale: faIR,
