@@ -42,7 +42,7 @@ const AdminInsight = () => {
           )}
         </div>
       </Link>
-      <Link href="/users">
+      <Link href="/users/admin">
         <div className="card flex flex-col gap-2 rounded p-4">
           <div className="font-bold text-alpha-400">کاربران</div>
           {allInsightInfo.isLoading ? (
