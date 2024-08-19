@@ -11,7 +11,11 @@ import DynamicHeroIcon from "../DynamicHeroIcon"
 export type DetailsWithTitleProps = {
   className?: string
   textCustomStyle?: string
-  item?: { key?: string; value?: string | number; icon?: THeroIconName }
+  item?: {
+    key?: string
+    value?: string | number | React.ReactNode
+    icon?: THeroIconName
+  }
 }
 
 export const DetailsWithTitle = ({
@@ -38,7 +42,11 @@ export const DetailsWithTitle = ({
       </div>
       <div className="flex gap-1">
         <span className={clsx("whitespace-pre-wrap", textCustomStyle)}>
-          {item?.value ? digitsEnToFa(item?.value) : "-"}
+          {item?.value
+            ? typeof item?.value === "string" || typeof item?.value === "number"
+              ? digitsEnToFa(item?.value)
+              : item?.value
+            : "-"}
         </span>
       </div>
     </div>

@@ -6,7 +6,9 @@ import { getSession } from "next-auth/react"
 
 import { TableFetchApiFunctionType } from "../../type"
 
-export const getAllUsersQueryFn: TableFetchApiFunctionType = async (args) => {
+export const getAllUsersQueryFn: (
+  roleIds?: number[]
+) => TableFetchApiFunctionType = (roleIds) => async (args) => {
   const session =
     typeof window === "undefined"
       ? await getServerSession(authOptions)
@@ -15,7 +17,7 @@ export const getAllUsersQueryFn: TableFetchApiFunctionType = async (args) => {
     process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT as string,
     GetAllUsersDocument,
     {
-      indexUserInput: args
+      indexUserInput: { ...args, roleIds }
     },
     {
       authorization: `Bearer ${session?.accessToken ?? ""}`

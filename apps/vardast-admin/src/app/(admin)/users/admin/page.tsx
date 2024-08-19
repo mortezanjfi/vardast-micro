@@ -1,17 +1,20 @@
-import { redirect } from "next/navigation"
-import { authOptions } from "@vardast/auth/authOptions"
-import { getServerSession } from "next-auth"
+import { Metadata } from "next"
 
-import Users from "@/app/(admin)/users/real/components/RealsPage"
+import UsersPage from "@/app/(admin)/users/real/components/UsersPage"
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "کاربران ادمین"
+  }
+}
 
 const UsersIndex = async () => {
-  const session = await getServerSession(authOptions)
-
-  if (!session?.abilities?.includes("gql.users.user.index")) {
-    redirect("/")
-  }
-
-  return <Users roleIds={[2]} />
+  return (
+    <UsersPage
+      title={(await generateMetadata()).title?.toString() as string}
+      roleIds={[2]}
+    />
+  )
 }
 
 export default UsersIndex

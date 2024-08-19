@@ -33,15 +33,16 @@ const UserInputSchema = IndexUserInputSchema()
 
 type Props = {
   title?: string
+  roleIds?: number[]
 }
 
-const UsersPage = ({ title }: Props) => {
+const UsersPage = ({ title, roleIds }: Props) => {
   const { t } = useTranslation()
   const [modals, onChangeModals, onCloseModals] = useModals<RealModalEnum>()
 
   const tableProps: ITableProps<User, typeof UserInputSchema> = useTable({
     model: {
-      name: "users",
+      name: `users-${roleIds}`,
       paginable: true,
       container: {
         button: {
@@ -88,7 +89,7 @@ const UsersPage = ({ title }: Props) => {
         url: (row) => `/users/real/${row?.original?.uuid}`
       },
       fetch: {
-        api: getAllUsersQueryFn,
+        api: getAllUsersQueryFn(roleIds),
         options: {
           refetchOnMount: true
         }

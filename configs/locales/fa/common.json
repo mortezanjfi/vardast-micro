@@ -413,5 +413,9 @@
   "credit": "اعتباری",
   "postition": "سمت",
   "call": "تماس",
-  "agent": "دستگاه"
+  "agent": "دستگاه",
+  "birth": "تولد",
+  "date": "تاریخ",
+  "date_entity": "تاریخ {{entity}}",
+  "default_entity": "{{entity}} پیشفرض"
 }

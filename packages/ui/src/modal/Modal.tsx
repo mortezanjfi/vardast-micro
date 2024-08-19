@@ -111,9 +111,7 @@ const Modal = <TFieldValues extends FieldValues>({
               {(
                 errors?.response?.errors?.at(0)?.extensions
                   ?.displayErrors as string[]
-              ).map((error) => (
-                <p key={error}>{error}</p>
-              ))}
+              )?.map((error) => <p key={error}>{error}</p>)}
             </AlertDescription>
           </Alert>
         )}

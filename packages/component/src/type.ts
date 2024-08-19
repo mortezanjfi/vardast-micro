@@ -11,5 +11,7 @@ export enum LegalModalEnum {
 }
 
 export enum RealModalEnum {
-  INFO
+  INFO,
+  ADDRESS,
+  DELETE_ADDRESS
 }

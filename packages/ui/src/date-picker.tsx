@@ -10,10 +10,13 @@ import TimePicker from "react-multi-date-picker/plugins/time_picker"
 const DatePicker = <
   Multiple extends boolean = false,
   Range extends boolean = false
->(
-  props: Omit<CalendarProps<Multiple, Range>, "onChange"> &
-    DatePickerProps<Multiple, Range>
-): React.ReactElement => {
+>({
+  clock = true,
+  ...props
+}: Omit<CalendarProps<Multiple, Range>, "onChange"> &
+  DatePickerProps<Multiple, Range> & {
+    clock?: boolean
+  }): React.ReactElement => {
   return (
     <DatePickerPackage
       className="vardast-calender"
@@ -22,8 +25,8 @@ const DatePicker = <
       offsetY={4}
       calendar={persian}
       locale={persian_fa}
-      format={"YYYY/MM/DD HH:mm"}
-      plugins={[<TimePicker hideSeconds />]}
+      format={clock ? "YYYY/MM/DD HH:mm" : "YYYY/MM/DD"}
+      plugins={clock ? [<TimePicker hideSeconds />] : []}
       {...props}
     />
   )
