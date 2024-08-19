@@ -1,8 +1,8 @@
 export const checkBooleanByString = (str: string) => {
-  if (str === "false") {
+  if (str.toLowerCase() === "false") {
     return false
   }
-  if (str === "true") {
+  if (str.toLowerCase() === "true") {
     return true
   }
 }
