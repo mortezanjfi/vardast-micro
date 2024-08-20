@@ -7,6 +7,7 @@ query GetAllSellers($indexSellerInput: IndexSellerInput) {
     from
     to
     data {
+      sellerType
       sum
       rating
       id

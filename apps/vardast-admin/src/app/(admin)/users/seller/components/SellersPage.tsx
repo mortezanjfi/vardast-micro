@@ -143,31 +143,29 @@ const SellersPage = ({ title }: Props) => {
           )
         },
         {
-          header: t("common:producer"),
-          id: "producer",
+          header: t("common:entity_type", { entity: t("common:seller") }),
+          id: "sellerType",
           cell: ({ row }) => (
-            <>
-              {row?.original?.brands && row?.original?.brands.length > 0 ? (
-                row?.original?.brands.length > 2 ? (
-                  <>
-                    {row?.original?.brands.slice(0, 2).map((brand) => (
-                      <span className="tag tag-gray m-1" key={brand?.id}>
-                        {brand?.name}
-                      </span>
-                    ))}
-                    <span>...</span>
-                  </>
-                ) : (
-                  row?.original?.brands.map((brand) => (
-                    <span className="tag tag-gray m-1" key={brand?.id}>
-                      {brand?.name}
-                    </span>
-                  ))
-                )
-              ) : (
-                <span>-</span>
-              )}
-            </>
+            <Badge variant={SellerTypeFa[row?.original?.sellerType]?.variant}>
+              {SellerTypeFa[row?.original?.sellerType]?.name_fa}
+            </Badge>
+          )
+        },
+        {
+          header: t("common:entity_status", { entity: t("common:visibility") }),
+          id: "isPublic",
+          cell: ({ row }) => (
+            <Badge
+              variant={
+                VisibilityFa[`${row?.original?.isPublic}`?.toUpperCase()]
+                  ?.variant
+              }
+            >
+              {
+                VisibilityFa[`${row?.original?.isPublic}`?.toUpperCase()]
+                  ?.name_fa
+              }
+            </Badge>
           )
         },
         {

@@ -144,8 +144,6 @@ const UserModal = ({
     }
   }
 
-  console.log({ wada: form.watch(), displayRoles })
-
   useEffect(() => {
     if (isEdit) {
       setMultiFormValues(

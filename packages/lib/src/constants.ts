@@ -121,7 +121,7 @@ export const SellerTypeFa: StatusFaType<SellerType> = {
     name_fa: "معمولی"
   },
   [SellerType.Online]: {
-    variant: "success",
+    variant: "warning",
     name_fa: "آنلاین"
   },
   [SellerType.Offline]: {

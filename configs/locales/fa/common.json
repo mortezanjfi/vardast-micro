@@ -418,5 +418,6 @@
   "birth": "تولد",
   "date": "تاریخ",
   "date_entity": "تاریخ {{entity}}",
-  "default_entity": "{{entity}} پیشفرض"
+  "default_entity": "{{entity}} پیشفرض",
+  "position": "سمت"
 }

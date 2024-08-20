@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useMemo } from "react"
-import { digitsEnToFa } from "@persian-tools/persian-tools"
+import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import AddressDeleteModal from "@vardast/component/admin/address/AddressDeleteModal"
 import AddressModal from "@vardast/component/admin/address/AddressModal"
 import ContactInfoDeleteModal from "@vardast/component/admin/contact/ContactInfoDeleteModal"
@@ -413,7 +413,7 @@ function LegalPage({ uuid }: Props) {
           item: {
             key: t("common:wallet"),
             value: getOneLegalQuery.data?.findOneLegal?.wallet
-              ? `${getOneLegalQuery.data?.findOneLegal?.wallet} (${t("common:toman")})`
+              ? `${addCommas(getOneLegalQuery.data?.findOneLegal?.wallet)} (${t("common:toman")})`
               : undefined
           }
         }
