@@ -108,13 +108,9 @@ const Products = () => {
         fetch: {
           api(args) {
             return getAllProductsQueryFn({
-              query: args.query,
-              brandId: args.brandId,
-              sku: args.sku,
+              ...args,
               categoryIds: args.categoryIds && [+args.categoryIds],
-              hasPrice: args.hasPrice,
-              isActive: args.isActive && checkBooleanByString(args.isActive),
-              hasImage: args.hasImage
+              isActive: args.isActive && checkBooleanByString(args.isActive)
             })
           }
         },
