@@ -35,11 +35,12 @@ import {
   WithContext
 } from "schema-dts"
 
-import ProductAttributes from "@/app/(client)/product/components/product-attributes"
-import ProductImages from "@/app/(client)/product/components/product-images"
-import ProductOffers from "@/app/(client)/product/components/product-offers"
-import ProductIntroduce from "@/app/(client)/product/components/ProductIntroduce"
-import SameCategories from "@/app/(client)/product/components/SameCategories"
+import PriceChart from "./PriceChart"
+import ProductAttributes from "./product-attributes"
+import ProductImages from "./product-images"
+import ProductOffers from "./product-offers"
+import ProductIntroduce from "./ProductIntroduce"
+import SameCategories from "./SameCategories"
 
 export type GroupedAttributes = {
   name: string
@@ -278,6 +279,9 @@ const ProductPage = ({ id, isMobileView }: ProductPageProps) => {
                   />
                 )}
 
+              {queryProduct.data?.product?.id && (
+                <PriceChart productId={queryProduct.data?.product?.id} />
+              )}
               {queryProduct.data?.product.description && (
                 <ProductDescription
                   description={queryProduct.data?.product.description}
