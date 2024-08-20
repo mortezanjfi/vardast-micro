@@ -63,7 +63,7 @@ const Brands = () => {
   const [modals, onChangeModals, onCloseModals] = useModals<BrandModalEnum>()
 
   const cities = useGetAllCitiesQuery(graphqlRequestClientWithToken, {
-    indexCityInput: { name: cityQuery }
+    indexCityInput: { name: cityQuery, perPage: 5 }
   })
 
   const categories = useGetAllCategoriesV2Query(graphqlRequestClientWithToken, {
