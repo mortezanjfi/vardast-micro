@@ -272,6 +272,7 @@
   "value": "مقدار",
   "visibility": "نمایش",
   "visible": "قابل رویت",
+  "invisible": "غیر قابل رویت",
   "vocabularies": "دسته‌بندی‌ها",
   "vocabularies_index_title": "دسته‌بندی‌ها",
   "vocabularies_menu_title": "دسته‌بندی‌ها",

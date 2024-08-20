@@ -14,7 +14,8 @@ import { CardProps } from "../Card"
 
 export enum FilterComponentTypeEnum {
   INPUT = "INPUT",
-  SELECT = "SELECT"
+  SELECT = "SELECT",
+  TOGGLE = "TOGGLE"
 }
 
 type IFilterMap<T extends FilterComponentTypeEnum> =
@@ -22,7 +23,13 @@ type IFilterMap<T extends FilterComponentTypeEnum> =
     ? {
         type: FilterComponentTypeEnum.SELECT
       } & Omit<SelectPopoverPropsType, "value" | "onSelect">
-    : { type: FilterComponentTypeEnum.INPUT; inputType?: "number" | "text" }
+    : T extends FilterComponentTypeEnum.TOGGLE
+      ? {
+          type: FilterComponentTypeEnum.TOGGLE
+          loading?: boolean
+          optionsTitle?: { true?: string; false?: string }
+        }
+      : { type: FilterComponentTypeEnum.INPUT; inputType?: "number" | "text" }
 
 type IFilter<T extends FilterComponentTypeEnum, TName> = IFilterMap<T> & {
   name: TName
@@ -95,7 +102,7 @@ export type FilterOptions<TSchema extends ZodType<any, any, any>> = {
 }
 
 type Filter<TSchema extends ZodType<any, any, any>> = IFilter<
-  FilterComponentTypeEnum.INPUT | FilterComponentTypeEnum.SELECT,
+  FilterComponentTypeEnum,
   keyof TypeOf<TSchema>
 >
 

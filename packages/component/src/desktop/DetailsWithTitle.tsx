@@ -34,12 +34,16 @@ export const DetailsWithTitle = ({
           solid={false}
         />
       )}
-      <div className="flex items-center gap-2">
-        <ListBulletIcon className="text-alpha-500" width={6} height={6} />
-        {item?.key && (
-          <span className="whitespace-nowrap text-alpha-500">{item?.key}:</span>
-        )}
-      </div>
+      {item?.key && (
+        <div className="flex items-center gap-2">
+          <ListBulletIcon className="text-alpha-500" width={6} height={6} />
+          {item?.key && (
+            <span className="whitespace-nowrap text-alpha-500">
+              {item?.key}:
+            </span>
+          )}
+        </div>
+      )}
       <div className="flex gap-1">
         <span className={clsx("whitespace-pre-wrap", textCustomStyle)}>
           {item?.value

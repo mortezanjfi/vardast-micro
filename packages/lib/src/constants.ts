@@ -13,6 +13,7 @@ import {
   OrderOfferStatuses,
   PaymentMethodEnum,
   PreOrderStates,
+  SellerType,
   ThreeStateSupervisionStatuses,
   UserLanguagesEnum,
   UserStatusesEnum
@@ -38,6 +39,11 @@ type StatusFaType<T extends string> = Record<
   T,
   { variant: BadgeVariantsType; name_fa: string }
 >
+
+export enum HasEntityEnum {
+  TRUE = "TRUE",
+  FALSE = "FALSE"
+}
 
 export const OrderOfferStatusesFa = {
   [OrderOfferStatuses.Closed]: { className: "tag-success", name_fa: "بسته شده" }
@@ -106,6 +112,36 @@ export const LegalStatusEnumFa: StatusFaType<LegalStatusEnum> = {
   [LegalStatusEnum.Deactive]: {
     variant: "danger",
     name_fa: "غیرفعال"
+  }
+}
+
+export const SellerTypeFa: StatusFaType<SellerType> = {
+  [SellerType.Normal]: {
+    variant: "default",
+    name_fa: "معمولی"
+  },
+  [SellerType.Online]: {
+    variant: "success",
+    name_fa: "آنلاین"
+  },
+  [SellerType.Offline]: {
+    variant: "secondary",
+    name_fa: "آفلاین"
+  },
+  [SellerType.Extended]: {
+    variant: "info",
+    name_fa: "افزوده شده"
+  }
+}
+
+export const VisibilityFa: StatusFaType<HasEntityEnum> = {
+  [HasEntityEnum.TRUE]: {
+    variant: "success",
+    name_fa: "قابل رویت"
+  },
+  [HasEntityEnum.FALSE]: {
+    variant: "danger",
+    name_fa: "غیر قابل رویت"
   }
 }
 

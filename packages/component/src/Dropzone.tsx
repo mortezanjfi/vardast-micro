@@ -341,7 +341,7 @@ const Dropzone = ({
                       )}
                   </li>
                 ))}
-                {!isCsv && (
+                {!isCsv && files.length < maxFiles && (
                   <button
                     onClick={open}
                     type="button"

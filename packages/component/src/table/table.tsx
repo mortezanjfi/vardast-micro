@@ -49,7 +49,7 @@ const convertArgsToNumber = (data: any) => {
         // if (Number(value)) {
         args[key] = Number(value)
       }
-    } else {
+    } else if (value !== false) {
       delete args[key]
     }
   })
@@ -59,7 +59,7 @@ const convertArgsToNumber = (data: any) => {
 const clearData = <T,>(filter: T) => {
   const args = { ...filter }
   Object.entries(filter).forEach(([key, value]) => {
-    if (!value) {
+    if (!value && value !== false) {
       delete args[key]
     }
   })

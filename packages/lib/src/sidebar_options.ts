@@ -161,7 +161,7 @@ const _admin: NavigationType[] = [
           },
           {
             title: "فروشندگان",
-            path: "/sellers"
+            path: "/users/seller"
           },
           {
             title: "خریداران",

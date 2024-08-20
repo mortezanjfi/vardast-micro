@@ -3,14 +3,14 @@
   --table-text-color: theme(colors.alpha.700);
   --table-accent-bg: theme(colors.transparent);
   --table-striped-bg: theme(colors.alpha.50);
-  --table-border-color: theme(colors.alpha.200);
+  --table-border-color: theme(colors.alpha.100);
   --table-border-width: 1px;
 
   .dark & {
     --table-bg: rgba(theme(colors.alpha.800), 0.1);
     --table-accent-bg: rgba(theme(colors.alpha.800), 0.4);
     --table-striped-bg: theme(colors.alpha.600);
-    --table-border-color: rgba(theme(colors.alpha.800), 0.8);
+    --table-border-color: rgba(theme(colors.alpha.900), 0.8);
     --table-text-color: theme(colors.alpha.400);
   }
 
@@ -18,7 +18,7 @@
 
   & > tbody {
     & > tr {
-      @apply even:bg-alpha-100 odd:bg-alpha-50 hover:bg-alpha-200 whitespace-nowrap;
+      @apply bg-alpha-white hover:bg-alpha-100 whitespace-nowrap;
     }
   }
 

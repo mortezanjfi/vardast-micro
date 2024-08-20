@@ -9,6 +9,8 @@ import {
 } from "@vardast/ui/form"
 import { Input } from "@vardast/ui/input"
 import { SelectPopover } from "@vardast/ui/select-popover"
+import { ToggleGroup, ToggleGroupItem } from "@vardast/ui/toggle-group"
+import { clsx } from "clsx"
 import useTranslation from "next-translate/useTranslation"
 import { ZodType } from "zod"
 
@@ -50,6 +52,47 @@ const Filter = <T extends ZodType<any, any, any>>({
             options={filter.options}
             value={value}
           />
+        )
+      }
+      if (filter.type === FilterComponentTypeEnum.TOGGLE) {
+        return (
+          <ToggleGroup
+            className="grid grid-cols-2 rounded-md bg-alpha-50 p-1"
+            type="single"
+            value={value}
+            onValueChange={(value) => {
+              form.setValue(
+                filter.name as any,
+                (value === undefined ? value : value === "true") as any,
+                {
+                  shouldDirty: true
+                }
+              )
+            }}
+          >
+            <ToggleGroupItem
+              disabled={filter.loading}
+              className={clsx(
+                "bg-inherit py-2 text-base text-alpha-500",
+                (value as unknown as boolean) === true &&
+                  "!bg-alpha-white !text-alpha-800  shadow-lg"
+              )}
+              value={"true"}
+            >
+              {filter?.optionsTitle?.true || "دارد"}
+            </ToggleGroupItem>
+            <ToggleGroupItem
+              disabled={filter.loading}
+              className={clsx(
+                "bg-inherit py-2 text-base text-alpha-500",
+                (value as unknown as boolean) === false &&
+                  "!bg-alpha-white !text-alpha-800 shadow-lg"
+              )}
+              value={"false"}
+            >
+              {filter?.optionsTitle?.false || "ندارد"}
+            </ToggleGroupItem>
+          </ToggleGroup>
         )
       }
     },

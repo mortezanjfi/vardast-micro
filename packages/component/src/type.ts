@@ -15,3 +15,9 @@ export enum RealModalEnum {
   ADDRESS,
   DELETE_ADDRESS
 }
+
+export enum SellerModalEnum {
+  INFO,
+  ADDRESS,
+  DELETE_ADDRESS
+}
