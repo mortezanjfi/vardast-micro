@@ -12,3 +12,7 @@ export enum LegalModalEnum {
 export enum ProductModalEnum {
   DELETE
 }
+
+export enum BrandModalEnum {
+  DELETE
+}

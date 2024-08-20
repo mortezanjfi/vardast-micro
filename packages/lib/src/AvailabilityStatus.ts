@@ -22,10 +22,6 @@ export const statusesOfAvailability: StatusOption[] = [
   {
     status: "ندارد",
     value: AvailabilityStatus.NotAvailable
-  },
-  {
-    status: "همه",
-    value: AvailabilityStatus.All
   }
 ]
 
