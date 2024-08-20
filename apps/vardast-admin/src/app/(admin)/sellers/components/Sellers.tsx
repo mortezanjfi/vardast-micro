@@ -77,7 +77,9 @@ const Sellers = () => {
       indexSellerInput: {
         page: currentPage,
         name: sellersQueryParams.name,
-        hasLogoFile: checkBooleanByString(sellersQueryParams.hasLogo),
+        hasLogoFile:
+          sellersQueryParams.hasLogo &&
+          checkBooleanByString(sellersQueryParams.hasLogo),
         type: sellersQueryParams.type as SellerType
       }
     },
