@@ -35,11 +35,11 @@ export const productPriceOptions = [
     value: ProductPriceStatusEnum.NoPrice
   },
   {
-    status: "لیست قیمت‌های کمتر از ۴ ماه",
+    status: "لیست قیمت‌ها‌ی ۴ ماه گذشته",
     value: ProductPriceStatusEnum.PriceLessThan_4Months
   },
   {
-    status: "لیست قیمت‌های کمتر از ۶ ماه",
+    status: "لیست قیمت‌های ۶ ماه گذشته",
     value: ProductPriceStatusEnum.PriceLessThan_6Months
   }
 ]
