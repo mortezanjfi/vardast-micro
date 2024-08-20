@@ -322,7 +322,14 @@ const Brands = () => {
           }
         }
       ]
-    }
+    },
+    dependencies: [
+      cities,
+      categories,
+      cities.data,
+      categories.data,
+      getAllBrandsQueryFn
+    ]
   })
 
   return (
