@@ -21,6 +21,7 @@ import {
   imageExistence,
   productPriceOptions
 } from "@vardast/lib/AvailabilityStatus"
+import { productsSort } from "@vardast/lib/productSort"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { getAllProductsQueryFn } from "@vardast/query/queryFns/products/getAllProductsQueryFn"
 import { useModals } from "@vardast/ui/modal"
@@ -41,7 +42,8 @@ const ProductsFilterSchema = z.object({
   sku: z.string().nullable().optional(),
   hasPrice: z.string().nullable().optional(),
   // hasDescription: z.string().nullable().optional(),
-  hasImage: z.string().nullable().optional()
+  hasImage: z.string().nullable().optional(),
+  orderBy: z.string().optional()
 })
 export type FilterFields = TypeOf<typeof ProductsFilterSchema>
 
@@ -189,6 +191,15 @@ const Products = () => {
               options: imageExistence.map((item) => ({
                 key: item.status,
                 value: `${item.value}`
+              }))
+            },
+            {
+              type: FilterComponentTypeEnum.SELECT,
+              name: "orderBy",
+              title: t("common:sorting"),
+              options: productsSort.map((item) => ({
+                key: item.status,
+                value: `${item.value.toUpperCase()}`
               }))
             }
           ]
