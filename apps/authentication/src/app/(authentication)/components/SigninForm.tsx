@@ -31,7 +31,7 @@ import {
 } from "@vardast/util/zodValidationSchemas"
 import clsx from "clsx"
 import { ClientError } from "graphql-request"
-import { LucideAlertOctagon, LucideX } from "lucide-react"
+import { Eye, EyeOff, LucideAlertOctagon, LucideX } from "lucide-react"
 import { signIn, useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
@@ -64,6 +64,7 @@ const SigninFormContent = ({
   const [pageLoading, setPageLoading] = useState(false)
   const { secondsLeft, startCountdown } = useCountdown()
   const searchParams = useSearchParams()
+  const [showPassword, setShowPassword] = useState(false)
 
   const returnedUrl = searchParams.get("ru") || "/"
   const decodedExternalUrl = returnedUrl.startsWith("https://")
@@ -334,11 +335,24 @@ const SigninFormContent = ({
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input
-                        placeholder={t("common:password")}
-                        type="password"
-                        {...field}
-                      />
+                      <div className="flex w-full gap-5">
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute inset-y-0 left-0 flex items-center px-2 text-sm leading-5"
+                        >
+                          {showPassword ? (
+                            <EyeOff hanging={20} width={20} />
+                          ) : (
+                            <Eye hanging={20} width={20} />
+                          )}
+                        </button>
+                        <Input
+                          placeholder={t("common:password")}
+                          type={showPassword ? "text" : "password"}
+                          {...field}
+                        />
+                      </div>
                     </FormControl>
                     {hasPassword && (
                       <Link
@@ -351,7 +365,7 @@ const SigninFormContent = ({
                     <FormMessage />
                   </FormItem>
                 )}
-              ></FormField>
+              />
             </form>
           </Form>
         )}
