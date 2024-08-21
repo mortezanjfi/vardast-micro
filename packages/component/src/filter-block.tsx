@@ -2,11 +2,11 @@
 
 import { ReactNode, useState } from "react"
 import * as Collapsible from "@radix-ui/react-collapsible"
+import { THeroIconName } from "@vardast/type/layout"
 import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
 import { LucideChevronDown } from "lucide-react"
 
-import { THeroIconName } from "../../type/src/layout"
 import DynamicHeroIcon from "./DynamicHeroIcon"
 
 type FilterBlockProps = {

@@ -1,9 +1,8 @@
 import { ReactNode } from "react"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
+import { Button } from "@vardast/ui/button"
 import { cva, VariantProps } from "class-variance-authority"
 import clsx from "clsx"
-
-import { Button } from "../../ui/src/button"
 
 const cardVariants = cva("card rounded p-4", {
   variants: {
