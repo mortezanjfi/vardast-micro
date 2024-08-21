@@ -4,20 +4,16 @@ import { useCallback, useMemo } from "react"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import AddressDeleteModal from "@vardast/component/admin/address/AddressDeleteModal"
 import AddressModal from "@vardast/component/admin/address/AddressModal"
-import DetailsCard from "@vardast/component/desktop/DetailsCard"
+import UserInfo from "@vardast/component/admin/user/UserInfo"
 import { ITableProps, Table, useTable } from "@vardast/component/table"
 import { RealModalEnum } from "@vardast/component/type"
-import { DetailsCardPropsType } from "@vardast/component/types/type"
 import {
   Address,
   AddressRelatedTypes,
-  useGetUserQuery
+  useGetUserQuery,
+  User
 } from "@vardast/graphql/generated"
-import {
-  ThreeStateSupervisionStatusesFa,
-  UserLanguagesEnumFa,
-  UserStatusesEnumFa
-} from "@vardast/lib/constants"
+import { ThreeStateSupervisionStatusesFa } from "@vardast/lib/constants"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { Badge } from "@vardast/ui/badge"
 import { Button } from "@vardast/ui/button"
@@ -26,8 +22,6 @@ import { setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
 import { LucideCheck, LucideX } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
-
-import UserModal from "@/app/(admin)/users/real/[uuid]/components/UserModal"
 
 type Props = {
   uuid: string
@@ -46,7 +40,7 @@ const UserPage = ({ uuid }: Props) => {
     weekStartsOn: 6
   })
 
-  const user = useMemo(() => getUserQuery.data?.user, [getUserQuery])
+  const user = useMemo(() => getUserQuery.data?.user as User, [getUserQuery])
 
   // const tableProps: ITableProps<Session> = useTable({
   //   model: {
@@ -201,122 +195,6 @@ const UserPage = ({ uuid }: Props) => {
     }
   })
 
-  const detailsCardProps: DetailsCardPropsType = useMemo(
-    () => ({
-      badges: [
-        {
-          children: UserStatusesEnumFa[user?.status]?.name_fa,
-          variant: UserStatusesEnumFa[user?.status]?.variant
-        },
-        {
-          variant: "primary",
-          children: user?.displayRole?.displayName
-        }
-      ],
-      items: [
-        {
-          item: {
-            key: t("common:cellphone"),
-            value: digitsEnToFa(user?.cellphone || "-")
-          }
-        },
-        {
-          item: {
-            key: t("common:date_entity", { entity: t("common:birth") }),
-            value: user?.birth
-              ? digitsEnToFa(
-                  new Date(user?.birth).toLocaleDateString("fa-IR", {
-                    year: "numeric",
-                    month: "2-digit",
-                    day: "2-digit",
-                    hour: "numeric",
-                    minute: "numeric"
-                  })
-                )
-              : "-"
-          }
-        },
-        {
-          item: {
-            key: t("common:email"),
-            value: user?.email
-          }
-        },
-        {
-          item: {
-            key: t("common:firstName"),
-            value: user?.firstName
-          }
-        },
-        {
-          item: {
-            key: t("common:lastName"),
-            value: user?.lastName
-          }
-        },
-        {
-          item: {
-            key: t("common:language"),
-            value: UserLanguagesEnumFa[user?.language]?.name_fa
-          }
-        },
-        {
-          item: {
-            key: t("common:roles"),
-            value: user?.roles.map((role) => (
-              <Badge variant="secondary" className="mx-2">
-                {role.displayName}
-              </Badge>
-            ))
-          },
-          className: "col-span-full"
-        }
-      ],
-      card: {
-        title: t("common:entity_info", { entity: t("common:company") }),
-        button: {
-          onClick: () => {
-            const {
-              cellphone,
-              email,
-              displayRole,
-              firstName,
-              language,
-              lastName,
-              mustChangePassword,
-              nationalCode,
-              status,
-              id,
-              roles
-            } = user
-            onChangeModals({
-              type: RealModalEnum.INFO,
-              data: {
-                cellphone,
-                displayRoleId: `${displayRole?.id}`,
-                email,
-                firstName,
-                language,
-                lastName,
-                mustChangePassword,
-                nationalCode,
-                status,
-                id,
-                roleIds: roles.map((role) => role.id)
-              }
-            })
-          },
-          disabled: getUserQuery.isLoading || getUserQuery.isFetching,
-          text: t("common:edit_entity", {
-            entity: t("common:entity_info", { entity: t("common:user") })
-          }),
-          type: "button"
-        }
-      }
-    }),
-    [getUserQuery.data]
-  )
-
   const modalProps = useCallback(
     (type: RealModalEnum) => ({
       onCloseModals: <T,>(data: T) => {
@@ -334,10 +212,13 @@ const UserPage = ({ uuid }: Props) => {
 
   return (
     <>
-      <UserModal {...modalProps(RealModalEnum.INFO)} />
+      <UserInfo
+        modal={[modals, onChangeModals, onCloseModals]}
+        user={user}
+        loading={getUserQuery.isLoading}
+      />
       <AddressModal {...modalProps(RealModalEnum.ADDRESS)} />
       <AddressDeleteModal {...modalProps(RealModalEnum.DELETE_ADDRESS)} />
-      <DetailsCard {...detailsCardProps} />
       <Table {...addressTableProps} />
       {/* <Table {...roleTableProps} /> */}
       {/* <Table {...tableProps} /> */}

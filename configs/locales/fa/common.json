@@ -39,6 +39,8 @@
   "all_entities": "تمام {{ entity }}",
   "alpha_two_name": "نام مختصر دو حرفی",
   "already_have_an_account_login": "حساب کاربری دارید؟ ورود کنید",
+  "would_you_like_to_create_company": "آیا تمایل به ساخت شرکت دارید؟",
+  "the_company_is_not_registered_in_our_system": "شرکتی به اسم شما ثبت نشده است",
   "are_you_sure_you_want_to_delete_this_entity": "آیا مطمئن هستید که می‌خواهید این {{ entity }} را حذف کنید؟",
   "are_you_sure_you_want_to_delete_this_entity_this_action_cannot_be_undone_and_all_associated_data_will_be_permanently_removed": "آیا مطمئن هستید که می‌خواهید این {{ entity }} را حذف کنید؟ این عمل قابل بازگشت نیست، و تمام اطلاعات مربوط بطور دائمی حذف خواهند شد.",
   "are_you_sure_you_want_to_delete_entity_this_action_cannot_be_undone_and_all_associated_data_will_be_permanently_removed": "آیا مطمئن هستید که می‌خواهید  {{ entity }} را حذف کنید؟ این عمل قابل بازگشت نیست، و تمام اطلاعات مربوط بطور دائمی حذف خواهند شد.",

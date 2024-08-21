@@ -4,8 +4,6 @@ import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa, digitsFaToEn } from "@persian-tools/persian-tools"
-import Card from "@vardast/component/Card"
-import { RealModalEnum } from "@vardast/component/type"
 import {
   CreateUserInput,
   CreateUserInputSchema,
@@ -42,10 +40,15 @@ import { useForm } from "react-hook-form"
 import { DateObject } from "react-multi-date-picker"
 import { z } from "zod"
 
+import Card from "../../Card"
+import { RealModalEnum } from "../../type"
+
 type UserModalType = Omit<CreateUserInput, "displayRoleId"> & {
   id?: number
   displayRoleId: string
 }
+
+const isAdmin = process.env.NEXT_PUBLIC_PROJECT_NAME_FOR === "admin"
 
 const UserModal = ({
   modals,
@@ -58,17 +61,29 @@ const UserModal = ({
 
   const isEdit = modals?.data?.id
 
-  const createUserSchema = CreateUserInputSchema().merge(
-    z.object({
-      cellphone: cellphoneNumberSchema,
-      nationalCode: nationalCodeNumberSchema.optional(),
-      displayRoleId: z.string()
-    })
-  )
+  const createUserSchema = CreateUserInputSchema()
+    .merge(
+      z.object({
+        cellphone: cellphoneNumberSchema,
+        nationalCode: nationalCodeNumberSchema.optional(),
+        displayRoleId: z.string()
+      })
+    )
+    .omit(
+      !isAdmin && {
+        mustChangePassword: true,
+        language: true,
+        status: true,
+        displayRoleId: true,
+        roleIds: true
+      }
+    )
   z.setErrorMap(zodI18nMap)
   const form = useForm<UserModalType>({
     resolver: zodResolver(createUserSchema)
   })
+
+  console.log({ errr: form.formState.errors })
 
   const getAllRolesQuery = useGetAllRolesQuery(
     graphqlRequestClientWithToken,
@@ -241,9 +256,7 @@ const UserModal = ({
         name="cellphone"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>
-              {t("common:cellphone")} ({t("common:manager")} )
-            </FormLabel>
+            <FormLabel>{t("common:cellphone")}</FormLabel>
             <FormControl>
               <Input
                 type="tel"
@@ -255,36 +268,6 @@ const UserModal = ({
                   e.target.value.length <= 11 &&
                     field.onChange(digitsEnToFa(e.target.value))
                 }}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="status"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>{t("common:status")}</FormLabel>
-            <FormControl>
-              <SelectPopover
-                onSelect={(value) => {
-                  form.setValue(
-                    "status",
-                    value.toUpperCase() as UserStatusesEnum,
-                    {
-                      shouldDirty: true
-                    }
-                  )
-                }}
-                options={Object.entries(
-                  enumToKeyValueObject(UserStatusesEnum)
-                )?.map(([value, key]) => ({
-                  key: UserStatusesEnumFa[key as UserStatusesEnum]?.name_fa,
-                  value: value.toUpperCase()
-                }))}
-                value={`${field.value}`}
               />
             </FormControl>
             <FormMessage />
@@ -324,36 +307,6 @@ const UserModal = ({
       />
       <FormField
         control={form.control}
-        name="language"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>{t("common:language")}</FormLabel>
-            <FormControl>
-              <SelectPopover
-                onSelect={(value) => {
-                  form.setValue(
-                    "language",
-                    value.toUpperCase() as UserLanguagesEnum,
-                    {
-                      shouldDirty: true
-                    }
-                  )
-                }}
-                options={Object.entries(
-                  enumToKeyValueObject(UserLanguagesEnum)
-                )?.map(([value, key]) => ({
-                  key: UserLanguagesEnumFa[key as UserLanguagesEnum]?.name_fa,
-                  value: value.toUpperCase()
-                }))}
-                value={`${field.value}`}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
         name="email"
         render={({ field }) => (
           <FormItem>
@@ -365,82 +318,147 @@ const UserModal = ({
           </FormItem>
         )}
       />
-      {isEdit && (
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("common:password")}</FormLabel>
-              <FormControl>
-                <Input {...field} type="password" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+      {isAdmin && (
+        <>
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("common:status")}</FormLabel>
+                <FormControl>
+                  <SelectPopover
+                    onSelect={(value) => {
+                      form.setValue(
+                        "status",
+                        value.toUpperCase() as UserStatusesEnum,
+                        {
+                          shouldDirty: true
+                        }
+                      )
+                    }}
+                    options={Object.entries(
+                      enumToKeyValueObject(UserStatusesEnum)
+                    )?.map(([value, key]) => ({
+                      key: UserStatusesEnumFa[key as UserStatusesEnum]?.name_fa,
+                      value: value.toUpperCase()
+                    }))}
+                    value={`${field.value}`}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="language"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("common:language")}</FormLabel>
+                <FormControl>
+                  <SelectPopover
+                    onSelect={(value) => {
+                      form.setValue(
+                        "language",
+                        value.toUpperCase() as UserLanguagesEnum,
+                        {
+                          shouldDirty: true
+                        }
+                      )
+                    }}
+                    options={Object.entries(
+                      enumToKeyValueObject(UserLanguagesEnum)
+                    )?.map(([value, key]) => ({
+                      key: UserLanguagesEnumFa[key as UserLanguagesEnum]
+                        ?.name_fa,
+                      value: value.toUpperCase()
+                    }))}
+                    value={`${field.value}`}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {isEdit && (
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("common:password")}</FormLabel>
+                  <FormControl>
+                    <Input {...field} type="password" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           )}
-        />
+          <FormField
+            control={form.control}
+            name="displayRoleId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  {t("common:default_entity", { entity: t("common:role") })}
+                </FormLabel>
+                <FormControl>
+                  <SelectPopover
+                    onSelect={(value) => {
+                      form.setValue("displayRoleId", value, {
+                        shouldDirty: true
+                      })
+                    }}
+                    options={displayRoles?.map((role) => ({
+                      key: role.displayName,
+                      value: `${role.id}`
+                    }))}
+                    value={`${field.value}`}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="roleIds"
+            render={({ field }) => (
+              <FormItem className="col-span-full">
+                <Card title={t("common:roles")}>
+                  {getAllRolesQuery.data?.roles?.data
+                    ?.filter((role) => role && role.isActive)
+                    ?.map((role) => (
+                      <FormItem key={role?.id} className="checkbox-field">
+                        <FormControl>
+                          <Checkbox
+                            checked={field?.value?.includes(role?.id)}
+                            onCheckedChange={(checked) => {
+                              return checked
+                                ? field?.onChange([...field?.value, role?.id])
+                                : field?.onChange(
+                                    field?.value?.filter(
+                                      (value) => value !== role?.id
+                                    )
+                                  )
+                            }}
+                          />
+                        </FormControl>
+                        <FormLabel className="flex flex-col">
+                          <p>{role?.displayName}</p>
+                          <p className="text-xs">{role?.description}</p>
+                        </FormLabel>
+                      </FormItem>
+                    ))}
+                  <FormMessage />
+                </Card>
+              </FormItem>
+            )}
+          />
+        </>
       )}
-      <FormField
-        control={form.control}
-        name="displayRoleId"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>
-              {t("common:default_entity", { entity: t("common:role") })}
-            </FormLabel>
-            <FormControl>
-              <SelectPopover
-                onSelect={(value) => {
-                  form.setValue("displayRoleId", value, {
-                    shouldDirty: true
-                  })
-                }}
-                options={displayRoles?.map((role) => ({
-                  key: role.displayName,
-                  value: `${role.id}`
-                }))}
-                value={`${field.value}`}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="roleIds"
-        render={({ field }) => (
-          <FormItem className="col-span-full">
-            <Card title={t("common:roles")}>
-              {getAllRolesQuery.data?.roles?.data
-                ?.filter((role) => role && role.isActive)
-                ?.map((role) => (
-                  <FormItem key={role?.id} className="checkbox-field">
-                    <FormControl>
-                      <Checkbox
-                        checked={field?.value?.includes(role?.id)}
-                        onCheckedChange={(checked) => {
-                          return checked
-                            ? field?.onChange([...field?.value, role?.id])
-                            : field?.onChange(
-                                field?.value?.filter(
-                                  (value) => value !== role?.id
-                                )
-                              )
-                        }}
-                      />
-                    </FormControl>
-                    <FormLabel className="flex flex-col">
-                      <p>{role?.displayName}</p>
-                      <p className="text-xs">{role?.description}</p>
-                    </FormLabel>
-                  </FormItem>
-                ))}
-              <FormMessage />
-            </Card>
-          </FormItem>
-        )}
-      />
     </Modal>
   )
 }

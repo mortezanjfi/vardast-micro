@@ -1,6 +1,7 @@
 "use client"
 
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
+import UserModal from "@vardast/component/admin/user/UserModal"
 import {
   FilterComponentTypeEnum,
   ITableProps,
@@ -20,8 +21,6 @@ import { useModals } from "@vardast/ui/modal"
 import { newTimeConvertor } from "@vardast/util/convertToPersianDate"
 import { getEnumValues } from "@vardast/util/getEnumValues"
 import useTranslation from "next-translate/useTranslation"
-
-import UserModal from "@/app/(admin)/users/real/[uuid]/components/UserModal"
 
 const UserInputSchema = IndexUserInputSchema()
   .omit({

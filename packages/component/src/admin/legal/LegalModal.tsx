@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa, digitsFaToEn } from "@persian-tools/persian-tools"
-import { LegalModalEnum } from "@vardast/component/type"
 import {
   CreateLegalInput,
   CreateLegalInputSchema,
@@ -35,14 +34,9 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-const createLegalUserSchema = CreateLegalInputSchema().merge(
-  z.object({
-    cellphone: cellphoneNumberSchema,
-    shabaNumber: shebaSchema,
-    accountNumber: accountNumberSchema,
-    national_id: nationalIdNumberSchema
-  })
-)
+import { LegalModalEnum } from "../../type"
+
+const isAdmin = process.env.NEXT_PUBLIC_PROJECT_NAME_FOR === "admin"
 
 const LegalModal = ({
   modals,
@@ -53,7 +47,23 @@ const LegalModal = ({
   const router = useRouter()
   const [errors, setErrors] = useState<ClientError>()
 
-  const isEdit = modals?.data
+  const isEdit = modals?.data?.id
+
+  const createLegalUserSchema = CreateLegalInputSchema()
+    .merge(
+      z.object({
+        cellphone: cellphoneNumberSchema,
+        shabaNumber: shebaSchema,
+        accountNumber: accountNumberSchema,
+        national_id: nationalIdNumberSchema
+      })
+    )
+    .omit(
+      !isAdmin && {
+        status: true,
+        wallet: true
+      }
+    )
 
   const form = useForm<CreateLegalInput>({
     resolver: zodResolver(createLegalUserSchema)
@@ -67,7 +77,7 @@ const LegalModal = ({
       },
       onSuccess: (data) => {
         if (data?.createLegal?.id) {
-          // queryClient.invalidateQueries({ queryKey: ["GetAllLegalUsersQuery"] })
+          onCloseModals(data)
           router.push(`/users/legal/${data.createLegal.id}`)
         }
       }
@@ -102,6 +112,12 @@ const LegalModal = ({
       shabaNumber: data?.shabaNumber
         ? digitsFaToEn(data?.shabaNumber)
         : undefined
+    }
+
+    if (!isAdmin) {
+      delete body.status
+      delete body.wallet
+      body.cellphone = data?.cellphone
     }
 
     for (const key in body) {
@@ -147,6 +163,13 @@ const LegalModal = ({
         },
         form.setValue
       )
+    } else if (!isAdmin) {
+      setMultiFormValues(
+        {
+          cellphone: modals?.data?.cellphone
+        },
+        form.setValue
+      )
     }
     return () => {
       form.reset()
@@ -158,11 +181,9 @@ const LegalModal = ({
     open,
     onOpenChange: onCloseModals,
     errors,
-    title: isEdit
-      ? t("common:edit_entity", { entity: t("common:user") })
-      : t("common:new_entity", { entity: t("common:user") }),
+    title: isEdit ? t("common:edit") : t("common:new"),
     action: {
-      title: t("common:save_entity", { entity: t("common:colleague") }),
+      title: t("common:save"),
       loading: createLegalMutation.isLoading || updateLegalMutation.isLoading,
       disabled: createLegalMutation.isLoading || updateLegalMutation.isLoading
     },
@@ -274,83 +295,87 @@ const LegalModal = ({
           </FormItem>
         )}
       />
-      <FormField
-        control={form.control}
-        name="cellphone"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>
-              {t("common:cellphone")} ({t("common:manager")} )
-            </FormLabel>
-            <FormControl>
-              <Input
-                type="tel"
-                inputMode="numeric"
-                className="placeholder:text-left"
-                placeholder={digitsEnToFa("09*********")}
-                {...field}
-                onChange={(e) => {
-                  e.target.value.length <= 11 &&
-                    field.onChange(digitsEnToFa(e.target.value))
-                }}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="wallet"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>{`${t("common:wallet")} (${t("common:toman")})`}</FormLabel>
-            <FormControl>
-              <Input
-                type="tel"
-                inputMode="numeric"
-                className="placeholder:text-right"
-                placeholder={t("common:enter")}
-                {...field}
-                onChange={(e) => {
-                  field.onChange(digitsEnToFa(e.target.value))
-                }}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="status"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>{t("common:status")}</FormLabel>
-            <FormControl>
-              <SelectPopover
-                onSelect={(value) => {
-                  form.setValue(
-                    "status",
-                    value.toUpperCase() as LegalStatusEnum,
-                    {
-                      shouldDirty: true
-                    }
-                  )
-                }}
-                options={Object.entries(
-                  enumToKeyValueObject(LegalStatusEnum)
-                )?.map(([value, key]) => ({
-                  key: LegalStatusEnumFa[key as LegalStatusEnum]?.name_fa,
-                  value: value.toUpperCase()
-                }))}
-                value={`${field.value}`}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+      {isAdmin && (
+        <>
+          <FormField
+            control={form.control}
+            name="cellphone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  {t("common:cellphone")} ({t("common:manager")} )
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type="tel"
+                    inputMode="numeric"
+                    className="placeholder:text-left"
+                    placeholder={digitsEnToFa("09*********")}
+                    {...field}
+                    onChange={(e) => {
+                      e.target.value.length <= 11 &&
+                        field.onChange(digitsEnToFa(e.target.value))
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="wallet"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{`${t("common:wallet")} (${t("common:toman")})`}</FormLabel>
+                <FormControl>
+                  <Input
+                    type="tel"
+                    inputMode="numeric"
+                    className="placeholder:text-right"
+                    placeholder={t("common:enter")}
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(digitsEnToFa(e.target.value))
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("common:status")}</FormLabel>
+                <FormControl>
+                  <SelectPopover
+                    onSelect={(value) => {
+                      form.setValue(
+                        "status",
+                        value.toUpperCase() as LegalStatusEnum,
+                        {
+                          shouldDirty: true
+                        }
+                      )
+                    }}
+                    options={Object.entries(
+                      enumToKeyValueObject(LegalStatusEnum)
+                    )?.map(([value, key]) => ({
+                      key: LegalStatusEnumFa[key as LegalStatusEnum]?.name_fa,
+                      value: value.toUpperCase()
+                    }))}
+                    value={`${field.value}`}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </>
+      )}
     </Modal>
   )
 }

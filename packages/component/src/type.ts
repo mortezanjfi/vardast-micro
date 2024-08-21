@@ -1,4 +1,5 @@
 export enum LegalModalEnum {
+  MESSAGE,
   INFO,
   ADD,
   DELETE,
@@ -18,6 +19,7 @@ export enum RealModalEnum {
 
 export enum SellerModalEnum {
   INFO,
+
   ADDRESS,
   DELETE_ADDRESS
 }

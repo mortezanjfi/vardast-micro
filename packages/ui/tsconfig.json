@@ -17,6 +17,7 @@
   },
   "include": [
     "../asset/declaration.d.ts",
+    "../../type.d.ts",
     "*.ts",
     "src",
     "src",

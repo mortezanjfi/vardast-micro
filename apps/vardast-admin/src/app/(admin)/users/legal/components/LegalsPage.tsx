@@ -1,6 +1,7 @@
 "use client"
 
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
+import LegalModal from "@vardast/component/src/admin/legal/LegalModal"
 import { ITableProps, Table, useTable } from "@vardast/component/table"
 import { LegalModalEnum } from "@vardast/component/type"
 import { Legal } from "@vardast/graphql/generated"
@@ -12,7 +13,6 @@ import { useModals } from "@vardast/ui/modal"
 import useTranslation from "next-translate/useTranslation"
 
 import LegalDeleteModal from "@/app/(admin)/users/legal/[uuid]/components/LegalDeleteModal"
-import LegalModal from "@/app/(admin)/users/legal/[uuid]/components/LegalModal"
 
 type Props = { title: string }
 
