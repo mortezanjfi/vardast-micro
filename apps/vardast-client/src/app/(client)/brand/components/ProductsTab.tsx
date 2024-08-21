@@ -15,9 +15,7 @@ const ProductsTab = ({
     <ProductList
       isMobileView={productsProps.isMobileView}
       args={productsProps.args}
-      selectedCategoryIds={[]}
       sellerId={productsProps.args.sellerId as number}
-      brandId={productsProps.args.brandId as number}
     />
   )
 }

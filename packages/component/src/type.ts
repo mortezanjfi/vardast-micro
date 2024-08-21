@@ -23,3 +23,11 @@ export enum SellerModalEnum {
   ADDRESS,
   DELETE_ADDRESS
 }
+
+export enum ProductModalEnum {
+  DELETE
+}
+
+export enum BrandModalEnum {
+  DELETE
+}

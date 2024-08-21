@@ -1,63 +1,63 @@
-"use client"
-
 import { useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
-import { BrandModalEnum } from "@vardast/component/type"
-import { Product, useRemoveBrandMutation } from "@vardast/graphql/generated"
+import { ProductModalEnum } from "@vardast/component/type"
+import { Product, useRemoveProductMutation } from "@vardast/graphql/generated"
 import { useToast } from "@vardast/hook/use-toast"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { IUseModal, Modal, ModalProps } from "@vardast/ui/modal"
 import { ClientError } from "graphql-request"
 import useTranslation from "next-translate/useTranslation"
 
-const BrandDeleteModal = ({
+const ProductDeleteModal = ({
   modals,
   onChangeModals,
   onCloseModals
-}: IUseModal<BrandModalEnum, Product>) => {
+}: IUseModal<ProductModalEnum, Product>) => {
   const { t } = useTranslation()
-  const [errors, setErrors] = useState<ClientError | null>(null)
-  const queryClient = useQueryClient()
   const { toast } = useToast()
-  const removeBrandMutation = useRemoveBrandMutation(
+  const [errors, setErrors] = useState<ClientError>()
+  const queryClient = useQueryClient()
+
+  const removeProductMutation = useRemoveProductMutation(
     graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
-        setErrors(errors)
+        toast({
+          description: (
+            errors?.response?.errors?.at(0)?.extensions
+              ?.displayErrors as string[]
+          )?.map((error) => error),
+          duration: 2000,
+          variant: "danger"
+        })
       },
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: ["GetAllBrands"]
+          queryKey: ["GetAllProducts"]
         })
         onChangeModals()
         toast({
-          description: t("common:entity_removed_successfully", {
-            entity: `${t(`common:brand`)}`
-          }),
+          description: "کالا با موفقیت حذف شد",
           duration: 2000,
           variant: "success"
         })
       }
     }
   )
-
   const onDelete = () => {
-    removeBrandMutation.mutate({
-      id: modals.data.id
-    })
+    removeProductMutation.mutate({ id: modals.data.id })
   }
-
   const modalProps: ModalProps = {
-    open: modals?.type === BrandModalEnum.DELETE,
+    open: modals?.type === ProductModalEnum.DELETE,
     modalType: "delete",
     size: "sm",
     onOpenChange: onCloseModals,
     errors,
-    title: t("common:delete_entity", { entity: t("common:brand") }),
+    title: t("common:delete_entity", { entity: t("common:product") }),
     description: t(
       "common:are_you_sure_you_want_to_delete_x_entity_this_action_cannot_be_undone_and_all_associated_data_will_be_permanently_removed",
       {
-        entity: `${t(`common:brand`)}`,
+        entity: `${t(`common:product`)}`,
         name: modals?.data?.name
       }
     ),
@@ -67,4 +67,4 @@ const BrandDeleteModal = ({
   return <Modal {...modalProps} />
 }
 
-export default BrandDeleteModal
+export default ProductDeleteModal

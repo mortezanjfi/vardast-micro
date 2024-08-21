@@ -1,10 +1,17 @@
 "use client"
 
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { MapIcon, PhoneIcon } from "@heroicons/react/24/outline"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
-import Dropzone, { FilesWithPreview } from "@vardast/component/Dropzone"
+import Dropzone from "@vardast/component/Dropzone"
 import Link from "@vardast/component/Link"
+import { useCreateContactUsMutation } from "@vardast/graphql/generated"
+import { useToast } from "@vardast/hook/use-toast"
+import { uploadPaths } from "@vardast/lib/uploadPaths"
+import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
+import { Alert, AlertDescription, AlertTitle } from "@vardast/ui/alert"
 import { Button } from "@vardast/ui/button"
 import {
   Form,
@@ -24,7 +31,12 @@ import {
 } from "@vardast/ui/select"
 import { Textarea } from "@vardast/ui/textarea"
 import { enumToKeyValueObject } from "@vardast/util/enumToKeyValueObject"
-import { persianInputSchema } from "@vardast/util/zodValidationSchemas"
+import {
+  cellphoneNumberSchema,
+  persianInputSchema
+} from "@vardast/util/zodValidationSchemas"
+import { ClientError } from "graphql-request"
+import { LucideAlertOctagon } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
@@ -38,12 +50,13 @@ enum TopicEnum {
 }
 
 const formSchema = z.object({
-  topic: persianInputSchema,
+  topic: z.string(),
   username: persianInputSchema,
   // email: persianInputSchema,
-  cellphone: persianInputSchema,
+  cellphone: cellphoneNumberSchema,
   // orderId: persianInputSchema,
-  message: persianInputSchema
+  message: persianInputSchema,
+  fileUuid: z.string().optional()
 })
 
 const topicEnum = enumToKeyValueObject(TopicEnum)
@@ -52,17 +65,60 @@ type FormType = TypeOf<typeof formSchema>
 
 const ContactForm = ({ isMobileView }: { isMobileView: boolean }) => {
   const { t } = useTranslation()
-
+  const [errors, setErrors] = useState<ClientError>()
+  const router = useRouter()
+  const { toast } = useToast()
+  const [fileUuid, setFileUuid] = useState<string>()
   const form = useForm<FormType>({
     resolver: zodResolver(formSchema)
   })
-
-  function onSubmitStepOne(_: FormType) {
+  const createContactUsMutation = useCreateContactUsMutation(
+    graphqlRequestClientWithToken,
+    {
+      onError: (errors: ClientError) => {
+        setErrors(errors)
+      },
+      onSuccess: () => {
+        toast({
+          description: t("common:entity_added_successfully", {
+            entity: t("common:ticket")
+          }),
+          duration: 2000,
+          variant: "success"
+        })
+        router.push("/")
+      }
+    }
+  )
+  function onSubmitStepOne(data: FormType) {
     // console.log("submit", data)
+    createContactUsMutation.mutate({
+      createContactInput: {
+        cellphone: form.getValues("cellphone"),
+        fullname: form.getValues("username"),
+        text: form.getValues("message"),
+        title: form.getValues("topic"),
+        fileuuid: fileUuid
+      }
+    })
   }
 
   return (
     <Form {...form}>
+      {errors && (
+        <Alert variant="danger">
+          <LucideAlertOctagon />
+          <AlertTitle>خطا</AlertTitle>
+          <AlertDescription>
+            {(
+              errors.response.errors?.at(0)?.extensions
+                .displayErrors as string[]
+            ).map((error) => (
+              <p key={error}>{error}</p>
+            ))}
+          </AlertDescription>
+        </Alert>
+      )}
       <form
         onSubmit={form.handleSubmit(onSubmitStepOne)}
         noValidate
@@ -206,13 +262,12 @@ const ContactForm = ({ isMobileView }: { isMobileView: boolean }) => {
           <Dropzone
             withHeight={false}
             existingImages={undefined}
-            uploadPath={""}
-            onAddition={function (_: FilesWithPreview): void {
-              throw new Error("Function not implemented.")
+            uploadPath={uploadPaths.brandCatalog}
+            onAddition={(file) => {
+              console.log(file)
+              setFileUuid(file.uuid)
             }}
-            onDelete={function (_: FilesWithPreview): void {
-              throw new Error("Function not implemented.")
-            }}
+            onDelete={() => setFileUuid("")}
             // existingImages={product && product.images}
             // uploadPath={uploadPaths.productImages}
             // onAddition={(file) => {

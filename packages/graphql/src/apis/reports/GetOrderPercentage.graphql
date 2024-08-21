@@ -1,0 +1,13 @@
+query GetOrderPercentage($orderPercentageInput: OrderPercentageInput!) {
+  orderPercentage(orderPercentageInput: $orderPercentageInput) {
+    orderCount {
+      data
+      labels
+    }
+    orderPercent {
+      completed_percentage
+      closed_percentage
+      inprogress_percentage
+    }
+  }
+}

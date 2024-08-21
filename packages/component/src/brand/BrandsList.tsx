@@ -28,7 +28,6 @@ import BrandsOrSellersContainer, {
 } from "../BrandsOrSellersContainer"
 import ListHeader from "../desktop/ListHeader"
 import DesktopMobileViewOrganizer from "../DesktopMobileViewOrganizer"
-import DynamicHeroIcon from "../DynamicHeroIcon"
 import FiltersSidebarContainer from "../filters-sidebar-container"
 import InfiniteScrollPagination from "../InfiniteScrollPagination"
 import NoResult from "../NoResult"
@@ -200,36 +199,18 @@ const BrandsList = ({
     )
 
   const DesktopSidebar = (
-    <FiltersSidebarContainer>
-      <div className="flex flex-col gap-5">
+    <FiltersSidebarContainer
+      sort={
         <BrandSortFilter
           searchParams={searchParams}
           pathname={pathname}
           setSort={setSort}
           sort={sort}
         />
-        <div className="flex flex-col">
+      }
+      filters={
+        <>
           {" "}
-          <div className=" flex items-center border-b-2 border-b-alpha-200 py-4">
-            <div className="flex items-center gap-2">
-              <DynamicHeroIcon
-                icon="AdjustmentsHorizontalIcon"
-                className="h-7 w-7"
-                solid
-              />
-              <strong>فیلترها</strong>
-            </div>{" "}
-            {filterAttributes.length > 0 && (
-              <Button
-                size="small"
-                noStyle
-                className="ms-auto text-sm text-red-500"
-                onClick={() => setFilterAttributes([])}
-              >
-                حذف همه فیلترها
-              </Button>
-            )}
-          </div>{" "}
           <Input
             autoFocus
             value={brandsQueryTemp}
@@ -239,14 +220,7 @@ const BrandsList = ({
             }}
             type="text"
             placeholder="نام برند"
-            className="my-4 flex w-full
-                          items-center
-                          gap-2
-                          rounded-lg
-                          bg-alpha-100
-                          px-4
-                          py-3.5
-                           focus:!ring-0 disabled:bg-alpha-100"
+            className=" flex w-full items-center gap-2 rounded-lg bg-alpha-100 px-4 focus:!ring-0 disabled:bg-alpha-100"
           />
           {/* args.categoryId means user is in the brand tab of a category */}
           {!args.categoryId && (
@@ -259,9 +233,9 @@ const BrandsList = ({
             selectedCityId={selectedCityId}
             setSelectedCityId={setSelectedCityId}
           />
-        </div>
-      </div>
-    </FiltersSidebarContainer>
+        </>
+      }
+    />
   )
 
   //mobile--------------------->

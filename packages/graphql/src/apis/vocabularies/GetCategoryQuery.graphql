@@ -8,10 +8,12 @@ query GetCategory($id: Int, $slug: String) {
     isActive
     childrenCount
     id
+    views
     productsCount
     description
     url
     children {
+      views
       id
       title
       titleEn
@@ -24,6 +26,7 @@ query GetCategory($id: Int, $slug: String) {
       childrenCount
       productsCount
       parentCategory {
+        views
         id
         title
         titleEn
@@ -45,18 +48,8 @@ query GetCategory($id: Int, $slug: String) {
         }
       }
     }
-    parentCategory {
-      id
-      title
-      titleEn
-      slug
-      icon
-      sort
-      isActive
-      url
-      childrenCount
-    }
     parentsChain {
+      views
       id
       title
       titleEn

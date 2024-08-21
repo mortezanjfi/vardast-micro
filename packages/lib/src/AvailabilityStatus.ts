@@ -1,3 +1,8 @@
+import {
+  ProductImageStatusEnum,
+  ProductPriceStatusEnum
+} from "@vardast/graphql/generated"
+
 export enum AvailabilityStatus {
   Available = "true",
   NotAvailable = "false",
@@ -17,9 +22,29 @@ export const statusesOfAvailability: StatusOption[] = [
   {
     status: "ندارد",
     value: AvailabilityStatus.NotAvailable
+  }
+]
+
+export const productPriceOptions = [
+  {
+    status: "دارد",
+    value: ProductPriceStatusEnum.HasPrice
   },
   {
-    status: "همه",
-    value: AvailabilityStatus.All
+    status: "ندارد",
+    value: ProductPriceStatusEnum.NoPrice
+  },
+  {
+    status: "لیست قیمت‌ها‌ی ۴ ماه گذشته",
+    value: ProductPriceStatusEnum.PriceLessThan_4Months
+  },
+  {
+    status: "لیست قیمت‌های ۶ ماه گذشته",
+    value: ProductPriceStatusEnum.PriceLessThan_6Months
   }
+]
+
+export const imageExistence = [
+  { status: "دارد", value: ProductImageStatusEnum.HasImage },
+  { status: "ندارد", value: ProductImageStatusEnum.NoImage }
 ]

@@ -3,6 +3,7 @@
 import { ReactNode, useState } from "react"
 import * as Collapsible from "@radix-ui/react-collapsible"
 import { THeroIconName } from "@vardast/type/layout"
+import { Badge } from "@vardast/ui/badge"
 import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
 import { LucideChevronDown } from "lucide-react"
@@ -14,13 +15,15 @@ type FilterBlockProps = {
   children: ReactNode
   openDefault?: boolean
   icon?: THeroIconName
+  badgeNumber?: number
 }
 
 const FilterBlock = ({
   icon,
   title,
   children,
-  openDefault = false
+  openDefault = false,
+  badgeNumber
 }: FilterBlockProps) => {
   const [open, setOpen] = useState(openDefault)
 
@@ -29,6 +32,11 @@ const FilterBlock = ({
       <div className="flex items-center gap-2 py-3">
         {icon && <DynamicHeroIcon icon={icon} className="h-7 w-7" solid />}{" "}
         <span className=" font-medium text-alpha-800">{title}</span>
+        {badgeNumber && (
+          <Badge variant="danger" size="xs">
+            {badgeNumber}
+          </Badge>
+        )}
         <Collapsible.Trigger asChild>
           <Button variant="ghost" size="small" className="mr-auto" iconOnly>
             <LucideChevronDown
@@ -37,6 +45,7 @@ const FilterBlock = ({
           </Button>
         </Collapsible.Trigger>
       </div>
+
       <Collapsible.Content>
         <div className="overflow-hidden pb-3 text-justify">{children}</div>
       </Collapsible.Content>

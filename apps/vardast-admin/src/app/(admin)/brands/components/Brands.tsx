@@ -1,37 +1,40 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import Image from "next/image"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "next/navigation"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
-import Card from "@vardast/component/Card"
 import Link from "@vardast/component/Link"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
-import PageHeader from "@vardast/component/PageHeader"
-import Pagination from "@vardast/component/Pagination"
+import {
+  FilterComponentTypeEnum,
+  ITableProps,
+  Table,
+  useTable
+} from "@vardast/component/table"
+import { BrandModalEnum } from "@vardast/component/type"
 import {
   Brand,
-  SortBrandEnum,
   ThreeStateSupervisionStatuses,
-  useGetAllBrandsQuery
+  useGetAllCategoriesV2Query,
+  useGetAllCitiesQuery
 } from "@vardast/graphql/generated"
+import { statusesOfAvailability } from "@vardast/lib/AvailabilityStatus"
+import { brandSorts } from "@vardast/lib/BrandSort"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
+import { getAllBrandsQueryFn } from "@vardast/query/queryFns/brands/getAllBrandsQueryFn"
 import { ApiCallStatusEnum } from "@vardast/type/Enums"
-import { Button } from "@vardast/ui/button"
+import { useModals } from "@vardast/ui/modal"
 import { checkBooleanByString } from "@vardast/util/checkBooleanByString"
-import { getContentByApiStatus } from "@vardast/util/GetContentByApiStatus"
 import clsx from "clsx"
-import { LucidePlus, LucideWarehouse } from "lucide-react"
-import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
-import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-// import { BrandFileUpload } from "@/app/admin/brands/components/BrandFileUpload"
 import BrandDeleteModal from "@/app/(admin)/brands/components/BrandDeleteModal"
-import { BrandFilter } from "@/app/(admin)/brands/components/BrandFilter"
+
+// import { BrandFileUpload } from "@/app/admin/brands/components/BrandFileUpload"
 
 const renderedListStatus = {
   [ApiCallStatusEnum.LOADING]: <Loading />,
@@ -40,259 +43,304 @@ const renderedListStatus = {
   [ApiCallStatusEnum.DEFAULT]: null
 }
 
-const filterSchema = z.object({
-  brand: z.string(),
-  logoStatus: z.string(),
-  catalogStatus: z.string(),
-  priceListStatus: z.string(),
-  bannerStatus: z.string(),
-  sort: z.string().optional(),
-  categoryId: z.number().optional(),
-  cityId: z.number().optional()
+const BrandFilterSchema = z.object({
+  name: z.string(),
+  hasLogoFile: z.string(),
+  hasCatalogeFile: z.string(),
+  hasPriceList: z.string(),
+  hasBannerFile: z.string(),
+  sortType: z.string().optional(),
+  categoryId: z.string().optional(),
+  cityId: z.string().optional()
 })
-export type FilterFields = TypeOf<typeof filterSchema>
+export type FilterFields = TypeOf<typeof BrandFilterSchema>
 
 const Brands = () => {
   const { t } = useTranslation()
-  const { data: session } = useSession()
-  const [currentPage, setCurrentPage] = useState<number>(1)
-  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
-  const [brandToDelete, setBrandToDelete] = useState<Brand>()
-  const [brandsQueryParams, setBrandsQueryParams] = useState<FilterFields>({
-    sort: SortBrandEnum.Sum
+  const router = useRouter()
+  const [cityQuery, setCityQuery] = useState<string>("")
+  const [categoryQuery, setCategoryQuery] = useState("")
+  const [modals, onChangeModals, onCloseModals] = useModals<BrandModalEnum>()
+
+  const cities = useGetAllCitiesQuery(graphqlRequestClientWithToken, {
+    indexCityInput: { name: cityQuery, perPage: 5 }
   })
-  const form = useForm<FilterFields>({
-    resolver: zodResolver(filterSchema),
-    defaultValues: {
-      brand: "",
-      logoStatus: "",
-      catalogStatus: "",
-      priceListStatus: "",
-      bannerStatus: "",
-      sort: SortBrandEnum.Sum
+
+  const categories = useGetAllCategoriesV2Query(graphqlRequestClientWithToken, {
+    indexCategoryInput: {
+      name: categoryQuery
     }
   })
 
-  const brands = useGetAllBrandsQuery(
-    graphqlRequestClientWithToken,
-    {
-      indexBrandInput: {
-        page: currentPage,
-        name: brandsQueryParams.brand,
-        hasPriceList: checkBooleanByString(brandsQueryParams.priceListStatus),
-        hasCatalogeFile: checkBooleanByString(brandsQueryParams.catalogStatus),
-        hasLogoFile: checkBooleanByString(brandsQueryParams.logoStatus),
-        hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus),
-        sortType: brandsQueryParams.sort as SortBrandEnum
-      }
-    },
-    {
-      queryKey: [
+  const onAddNewBrand = () => {
+    router.push("/brands/new")
+  }
+  const tableProps: ITableProps<Brand, typeof BrandFilterSchema> = useTable({
+    model: {
+      name: "brands",
+      container: {
+        button: {
+          onClick: onAddNewBrand,
+          text: t("common:add_entity", { entity: t("common:brand") }),
+          variant: "primary"
+        },
+        title: t("common:entity_list", { entity: t("common:brands") })
+      },
+      paginable: true,
+      fetch: {
+        api(args) {
+          return getAllBrandsQueryFn({
+            ...args,
+            hasBannerFile:
+              args.hasBannerFile && checkBooleanByString(args.hasBannerFile),
+            hasLogoFile:
+              args.hasLogoFile && checkBooleanByString(args.hasLogoFile),
+            hasCatalogeFile:
+              args.hasCatalogeFile &&
+              checkBooleanByString(args.hasCatalogeFile),
+            hasPriceList:
+              args.hasPriceList && checkBooleanByString(args.hasPriceList)
+          })
+        }
+      },
+      filters: {
+        schema: BrandFilterSchema,
+        options: [
+          {
+            type: FilterComponentTypeEnum.INPUT,
+            name: "name",
+            title: t("common:brand")
+          },
+          {
+            type: FilterComponentTypeEnum.SELECT,
+            name: "hasLogoFile",
+            title: t("common:logo"),
+            options: statusesOfAvailability.map((item) => ({
+              key: item.status,
+              value: `${item.value.toUpperCase()}`
+            }))
+          },
+          {
+            type: FilterComponentTypeEnum.SELECT,
+            name: "hasCatalogeFile",
+            title: t("common:catalog"),
+            options: statusesOfAvailability.map((item) => ({
+              key: item.status,
+              value: `${item.value.toUpperCase()}`
+            }))
+          },
+          {
+            type: FilterComponentTypeEnum.SELECT,
+            name: "hasPriceList",
+            title: t("common:price_list"),
+            options: statusesOfAvailability.map((item) => ({
+              key: item.status,
+              value: `${item.value.toUpperCase()}`
+            }))
+          },
+          {
+            type: FilterComponentTypeEnum.SELECT,
+            name: "hasBannerFile",
+            title: t("common:banner"),
+            options: statusesOfAvailability.map((item) => ({
+              key: item.status,
+              value: `${item.value.toUpperCase()}`
+            }))
+          },
+          {
+            type: FilterComponentTypeEnum.SELECT,
+            name: "sortType",
+            title: t("common:sorting"),
+            options: brandSorts.map((item) => ({
+              key: item.status,
+              value: `${item.value.toUpperCase()}`
+            }))
+          },
+          {
+            type: FilterComponentTypeEnum.SELECT,
+            name: "cityId",
+            title: t("common:city"),
+            options: cities?.data?.cities?.data?.map((item) => ({
+              key: item.name,
+              value: `${item.id}`
+            })),
+            loading: cities.isLoading,
+            setSearch: setCityQuery
+          },
+          {
+            type: FilterComponentTypeEnum.SELECT,
+            name: "categoryId",
+            title: t("common:category"),
+            options: categories?.data?.allCategoriesV2?.map((item) => ({
+              key: item.title,
+              value: `${item.id}`
+            })),
+            loading: categories.isLoading,
+            setSearch: setCategoryQuery
+          }
+        ]
+      },
+      columns: [
         {
-          page: currentPage,
-          name: brandsQueryParams.brand,
-          hasPriceList: checkBooleanByString(brandsQueryParams.priceListStatus),
-          hasCatalogeFile: checkBooleanByString(
-            brandsQueryParams.catalogStatus
-          ),
-          hasLogoFile: checkBooleanByString(brandsQueryParams.logoStatus),
-          hasBannerFile: checkBooleanByString(brandsQueryParams.bannerStatus),
-          sortType: brandsQueryParams.sort as SortBrandEnum
+          id: "image",
+          header: t("common:image"),
+          cell: ({ row }) => {
+            return (
+              <div className="relative aspect-square h-12 w-12 overflow-hidden rounded">
+                <Image
+                  src={
+                    (row?.original?.logoFile?.presignedUrl?.url as string) ??
+                    "/images/seller-blank.png"
+                  }
+                  alt={row?.original?.name}
+                  sizes="5vw"
+                  fill
+                />
+              </div>
+            )
+          }
+        },
+        {
+          id: "name",
+          header: t("common:product"),
+          accessorKey: "name"
+        },
+        {
+          id: "productsNum",
+          header: t("common:entity_count", { entity: t("common:product") }),
+          accessorFn: (item) => digitsEnToFa(addCommas(item?.sum))
+        },
+        {
+          id: "views",
+          header: t("common:entity_count", { entity: t("common:views") }),
+          accessorFn: (item) => digitsEnToFa(addCommas(item?.views))
+        },
+        {
+          id: "hasPriceList",
+          header: t("common:price_list"),
+          cell({ row }) {
+            return row?.original?.priceList?.id ? (
+              <span className="tag  tag-sm tag-success">{t("common:has")}</span>
+            ) : (
+              <span className="tag tag-sm tag-danger">
+                {t("common:has_not")}
+              </span>
+            )
+          }
+        },
+        {
+          id: "hasCatalogeFile",
+          header: t("common:catalog"),
+          cell: ({ row }) => {
+            return row?.original?.catalog?.id ? (
+              <span className="tag tag-sm tag-success">{t("common:has")}</span>
+            ) : (
+              <span className="tag tag-sm tag-danger">
+                {t("common:has_not")}
+              </span>
+            )
+          }
+        },
+        {
+          id: "priceList",
+          header: t("common:banner"),
+          cell: ({ row }) => {
+            return (
+              <div className="flex gap-1">
+                <span
+                  className={clsx(
+                    "tag  tag-sm ",
+                    row?.original?.bannerMobile?.id
+                      ? "tag-success"
+                      : "tag-danger"
+                  )}
+                >
+                  {t("common:mobile")}
+                </span>
+                <span
+                  className={clsx(
+                    "tag  tag-sm",
+                    row?.original?.bannerDesktop?.id
+                      ? "tag-success"
+                      : "tag-danger"
+                  )}
+                >
+                  {t("common:desktop")}
+                </span>
+              </div>
+            )
+          }
+        },
+        {
+          id: "brandStatus",
+          header: t("common:status"),
+          cell: ({ row }) => {
+            return (
+              <>
+                {row?.original?.status ===
+                  ThreeStateSupervisionStatuses.Confirmed && (
+                  <span className="">{t("common:confirmed")}</span>
+                )}
+
+                {row.original.status ===
+                  ThreeStateSupervisionStatuses.Pending && (
+                  <span className="">{t("common:pending")}</span>
+                )}
+
+                {row.original.status ===
+                  ThreeStateSupervisionStatuses.Rejected && (
+                  <span className="">{t("common:rejected")}</span>
+                )}
+              </>
+            )
+          }
+        },
+        {
+          id: "action",
+          header: t("common:operation"),
+          cell: ({ row }) => {
+            return (
+              <div className="flex gap-2">
+                <Link target="_blank" href={`/brands/${row?.original?.id}`}>
+                  <span className="tag cursor-pointer text-blue-500">
+                    {t("common:edit")}
+                  </span>
+                </Link>
+                <span
+                  className="tag cursor-pointer text-error"
+                  onClick={() => {
+                    onChangeModals({
+                      data: row.original,
+                      type: BrandModalEnum.DELETE
+                    })
+                  }}
+                >
+                  {t("common:delete")}
+                </span>
+              </div>
+            )
+          }
         }
       ]
-    }
-  )
-
-  const brandsLength = useMemo(
-    () => brands.data?.brands.data.length,
-    [brands.data?.brands.data.length]
-  )
+    },
+    dependencies: [
+      cities,
+      categories,
+      cities.data,
+      categories.data,
+      getAllBrandsQueryFn
+    ]
+  })
 
   return (
     <>
-      <BrandFilter form={form} setBrandsQueryParams={setBrandsQueryParams} />
-      <Card className=" table-responsive mt-8 rounded">
-        {/* <BrandFileUpload /> */}
-        {/* <hr className="my-7"></hr> */}
-        <PageHeader
-          title={t("common:entity_list", { entity: t("common:brands") })}
-          titleClasses="text-[14px] font-normal "
-          containerClass="items-center"
-          titleContainerClasses="border-b-2 border-primary-600 py-2"
-        >
-          {session?.abilities.includes("gql.products.brand.index") && (
-            <Link href="/brands/new">
-              <Button size="medium">
-                <LucidePlus size="14.4" />
-
-                {t("common:add_entity", { entity: t("common:brand") })}
-              </Button>
-            </Link>
-          )}
-        </PageHeader>
-        <BrandDeleteModal
-          open={deleteModalOpen}
-          brandToDelete={brandToDelete as Brand}
-          onOpenChange={setDeleteModalOpen}
-        />
-        {renderedListStatus[getContentByApiStatus(brands, !!brandsLength)] || (
-          <>
-            <table className="table-hover table">
-              <thead>
-                <tr>
-                  <th>{t("common:row")}</th>
-                  <th></th>
-                  <th>{t("common:brand")}</th>
-                  <th>
-                    {t("common:entity_count", { entity: t("common:product") })}
-                  </th>
-                  <th>
-                    {t("common:entity_count", { entity: t("common:views") })}
-                  </th>
-                  {/* <th>{t("common:category")}</th> */}
-                  {/* <th>{t("common:city")}</th> */}
-                  <th>{t("common:price_list")}</th>
-                  <th>{t("common:catalog")}</th>
-                  <th>{t("common:banner")}</th>
-                  <th>{t("common:status")}</th>
-                  <th>{t("common:operation")}</th>
-                </tr>
-              </thead>
-              <tbody className="border">
-                {brands.data?.brands.data.map(
-                  (brand, index) =>
-                    brand && (
-                      <tr key={brand.id}>
-                        <td className="w-4">
-                          <span>{digitsEnToFa(index + 1)}</span>
-                        </td>
-                        <td className="w-12 border-r-0.5">
-                          <div className="relative flex aspect-square h-12 w-12 items-center justify-center overflow-hidden rounded bg-alpha-50">
-                            {brand.logoFile ? (
-                              <Image
-                                src={
-                                  brand.logoFile.presignedUrl.url ??
-                                  "/images/seller-blank.png"
-                                }
-                                alt={brand.name}
-                                fill
-                                className="object-contain"
-                              />
-                            ) : (
-                              <LucideWarehouse
-                                className="h-5 w-5 text-alpha-400"
-                                strokeWidth={1.5}
-                              />
-                            )}
-                          </div>
-                        </td>
-                        <td>
-                          <span className="font-medium text-alpha-800">
-                            {brand.name}
-                          </span>
-                        </td>
-                        <td>{digitsEnToFa(addCommas(brand.sum))}</td>
-                        <td>{digitsEnToFa(addCommas(brand.views))}</td>
-                        {/* <td ></td> */}
-                        {/* <td >
-                          {brand.addresses.map(
-                            (address) => address.city.name
-                          ) && "-"}
-                        </td> */}
-                        <td>
-                          {" "}
-                          {brand.priceList?.id ? (
-                            <span className="tag  tag-sm tag-success">
-                              {t("common:has")}
-                            </span>
-                          ) : (
-                            <span className="tag tag-sm tag-danger">
-                              {t("common:has_not")}
-                            </span>
-                          )}
-                        </td>
-                        <td>
-                          {brand.catalog?.id ? (
-                            <span className="tag  tag-sm tag-success">
-                              {t("common:has")}
-                            </span>
-                          ) : (
-                            <span className="tag tag-sm tag-danger">
-                              {t("common:has_not")}
-                            </span>
-                          )}
-                        </td>
-                        <td className="flex gap-1">
-                          <span
-                            className={clsx(
-                              "tag  tag-sm ",
-                              brand?.bannerMobile?.id
-                                ? "tag-success"
-                                : "tag-danger"
-                            )}
-                          >
-                            {t("common:mobile")}
-                          </span>
-                          <span
-                            className={clsx(
-                              "tag  tag-sm",
-                              brand?.bannerDesktop?.id
-                                ? "tag-success"
-                                : "tag-danger"
-                            )}
-                          >
-                            {t("common:desktop")}
-                          </span>
-                        </td>
-                        <td>
-                          {brand.status ===
-                            ThreeStateSupervisionStatuses.Confirmed && (
-                            <span className="">{t("common:confirmed")}</span>
-                          )}
-                          {brand.status ===
-                            ThreeStateSupervisionStatuses.Pending && (
-                            <span className="">{t("common:pending")}</span>
-                          )}
-                          {brand.status ===
-                            ThreeStateSupervisionStatuses.Rejected && (
-                            <span className="">{t("common:rejected")}</span>
-                          )}
-                        </td>
-
-                        <td>
-                          <Link target="_blank" href={`/brands/${brand.id}`}>
-                            <span className="tag cursor-pointer text-blue-500">
-                              {" "}
-                              {t("common:edit")}
-                            </span>
-                          </Link>
-                          /
-                          <span
-                            className="tag cursor-pointer text-error"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              setDeleteModalOpen(true)
-                              setBrandToDelete(brand as Brand)
-                            }}
-                          >
-                            {t("common:delete")}
-                          </span>
-                        </td>
-                      </tr>
-                    )
-                )}
-              </tbody>
-            </table>
-            <Pagination
-              total={brands.data?.brands.lastPage ?? 0}
-              page={currentPage}
-              onChange={(page) => {
-                setCurrentPage(page)
-              }}
-            />
-          </>
-        )}
-      </Card>
+      <BrandDeleteModal
+        onChangeModals={onChangeModals}
+        onCloseModals={onCloseModals}
+        modals={modals}
+        open={modals?.type === BrandModalEnum.DELETE}
+      />
+      <Table {...tableProps} />
     </>
   )
 }

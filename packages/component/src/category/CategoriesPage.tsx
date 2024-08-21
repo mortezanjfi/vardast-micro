@@ -197,7 +197,6 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
             hasTitle={false}
             isMobileView={isMobileView}
             args={productArgs}
-            selectedCategoryIds={[+categoryId]}
           />
         </TabsContent>
       </Tabs>

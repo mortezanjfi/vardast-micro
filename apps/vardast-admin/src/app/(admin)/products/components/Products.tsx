@@ -1,63 +1,51 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import Image from "next/image"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "next/navigation"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
-import { UseQueryResult } from "@tanstack/react-query"
-import Card from "@vardast/component/Card"
 import Link from "@vardast/component/Link"
-import Loading from "@vardast/component/Loading"
-import LoadingFailed from "@vardast/component/LoadingFailed"
-import NoResult from "@vardast/component/NoResult"
-import PageHeader from "@vardast/component/PageHeader"
-import Pagination from "@vardast/component/Pagination"
-import { useGetAllProductsQuery } from "@vardast/graphql/generated"
+import {
+  FilterComponentTypeEnum,
+  ITableProps,
+  Table,
+  useTable
+} from "@vardast/component/table"
+import { ProductModalEnum } from "@vardast/component/type"
+import {
+  Product,
+  useGetAllBrandsWithoutPaginationQuery,
+  useGetAllCategoriesV2Query
+} from "@vardast/graphql/generated"
+import {
+  imageExistence,
+  productPriceOptions
+} from "@vardast/lib/AvailabilityStatus"
+import { productsSort } from "@vardast/lib/productSort"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
-import { ApiCallStatusEnum } from "@vardast/type/Enums"
-import { Button } from "@vardast/ui/button"
+import { getAllProductsQueryFn } from "@vardast/query/queryFns/products/getAllProductsQueryFn"
+import { useModals } from "@vardast/ui/modal"
 import { checkBooleanByString } from "@vardast/util/checkBooleanByString"
+import convertToPersianDate from "@vardast/util/convertToPersianDate"
 import { setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
-import { LucidePlus } from "lucide-react"
-import { useSession } from "next-auth/react"
 import useTranslation from "next-translate/useTranslation"
-import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-import { ProductsFilter } from "@/app/(admin)/products/components/ProductsFilter"
+import ProductDeleteModal from "@/app/(admin)/products/components/ProductDeleteModal"
 
-const renderedListStatus = {
-  [ApiCallStatusEnum.LOADING]: <Loading />,
-  [ApiCallStatusEnum.ERROR]: <LoadingFailed />,
-  [ApiCallStatusEnum.EMPTY]: <NoResult entity="product" />,
-  [ApiCallStatusEnum.DEFAULT]: null
-}
-const getContentByApiStatus = (
-  apiQuery: UseQueryResult<any, unknown>,
-  queryLength: boolean
-) => {
-  if (apiQuery.isLoading) {
-    return ApiCallStatusEnum.LOADING
-  }
-  if (apiQuery.isError) {
-    return ApiCallStatusEnum.ERROR
-  }
-  if (!queryLength || !apiQuery.data) {
-    return ApiCallStatusEnum.EMPTY
-  }
-  return ApiCallStatusEnum.DEFAULT
-}
-const FilterSchema = z.object({
+const ProductsFilterSchema = z.object({
   query: z.string().optional(),
-  categoryIds: z.array(z.number()).optional(),
-  brandId: z.number().optional(),
+  categoryIds: z.string().optional(),
+  brandId: z.string().optional(),
   isActive: z.string().nullable().optional(),
   sku: z.string().nullable().optional(),
   hasPrice: z.string().nullable().optional(),
-  hasDescription: z.string().nullable().optional()
+  // hasDescription: z.string().nullable().optional(),
+  hasImage: z.string().nullable().optional(),
+  orderBy: z.string().optional()
 })
-export type FilterFields = TypeOf<typeof FilterSchema>
+export type FilterFields = TypeOf<typeof ProductsFilterSchema>
 
 export interface ProductQueryParams {
   query: string | undefined
@@ -65,260 +53,309 @@ export interface ProductQueryParams {
   brandId: number | null
   isActive: string | undefined // Assuming isActive is always a string
   sku: string | null // Assuming sku can be a string or null
-  // hasPrice: string | undefined
+  hasPrice: string | null
+  hasImage: string | null
 }
 
 const Products = () => {
+  const router = useRouter()
   const { t } = useTranslation()
-  const { data: session } = useSession()
-  const [currentPage, setCurrentPage] = useState<number>(1)
-  const [productQueryParams, setProductQueryParams] =
-    useState<ProductQueryParams>({
-      query: "",
-      categoryIds: [],
-      brandId: null,
-      isActive: "",
-      sku: null
-      // hasPrice: ""
-    })
-  const form = useForm<FilterFields>({
-    resolver: zodResolver(FilterSchema),
-    defaultValues: {
-      categoryIds: [],
-      isActive: "",
-      hasPrice: "",
-      hasDescription: ""
-    }
-  })
-
-  const data = useGetAllProductsQuery(
-    graphqlRequestClientWithToken,
-    {
-      indexProductInput: {
-        page: currentPage,
-        brandId: productQueryParams.brandId,
-        query: productQueryParams.query,
-        categoryIds: productQueryParams.categoryIds,
-        isActive: checkBooleanByString(productQueryParams.isActive as string),
-        sku: productQueryParams.sku
-      }
-    },
-    {
-      queryKey: [
-        {
-          page: currentPage,
-          brandId: productQueryParams.brandId,
-          query: productQueryParams.query,
-          categoryIds: productQueryParams.categoryIds,
-          isActive: checkBooleanByString(productQueryParams.isActive as string),
-          sku: productQueryParams.sku
-        }
-      ]
-    }
-  )
+  const [categoryQuery, setCategoryQuery] = useState("")
+  const [brandsQuery, setBrandsQuery] = useState("")
+  const [modals, onChangeModals, onCloseModals] = useModals<ProductModalEnum>()
 
   setDefaultOptions({
     locale: faIR,
     weekStartsOn: 6
   })
-  const productsLength = useMemo(
-    () => data.data?.products.data.length,
-    [data.data?.products.data.length]
+
+  const statusesOfActivation = [
+    { status: "فعال", value: "true" },
+    {
+      status: "غیرفعال",
+      value: "false"
+    }
+  ]
+  const onAddProduct = () => {
+    router.push("/products/new")
+  }
+
+  const categories = useGetAllCategoriesV2Query(graphqlRequestClientWithToken, {
+    indexCategoryInput: {
+      name: categoryQuery
+    }
+  })
+
+  const brands = useGetAllBrandsWithoutPaginationQuery(
+    graphqlRequestClientWithToken,
+    {
+      indexBrandInput: {
+        name: brandsQuery
+      }
+    }
   )
-  // if (data) {
-  //   console.log(data.data?.products.data.map((item) => item?.))
-  // }
+  const tableProps: ITableProps<Product, typeof ProductsFilterSchema> =
+    useTable({
+      model: {
+        name: "products",
+        container: {
+          button: {
+            onClick: onAddProduct,
+            text: "افزودن کالای جدید",
+            variant: "primary"
+          },
+          title: t("common:entity_list", { entity: t("common:product") })
+        },
+        paginable: true,
+        fetch: {
+          api(args) {
+            return getAllProductsQueryFn({
+              ...args,
+              categoryIds: args.categoryIds && [+args.categoryIds],
+              isActive: args.isActive && checkBooleanByString(args.isActive)
+            })
+          }
+        },
+        onRow: {
+          url: (row) =>
+            `https://vardast.com/product/${row.original.id}/${row.original.name}`
+        },
+        filters: {
+          schema: ProductsFilterSchema,
+          options: [
+            {
+              type: FilterComponentTypeEnum.INPUT,
+              name: "query",
+              title: t("common:product_name")
+            },
+            {
+              type: FilterComponentTypeEnum.INPUT,
+              name: "sku",
+              title: t("common:product_sku")
+            },
+            {
+              type: FilterComponentTypeEnum.SELECT,
+              name: "categoryIds",
+              title: t("common:category"),
+              options: categories?.data?.allCategoriesV2?.map((item) => ({
+                key: item.title,
+                value: `${item.id}`
+              })),
+              loading: categories.isLoading,
+              setSearch: setCategoryQuery
+            },
+            {
+              type: FilterComponentTypeEnum.SELECT,
+              name: "brandId",
+              title: t("common:producer"),
+              options: brands?.data?.brandsWithoutPagination?.map((item) => ({
+                key: item.name,
+                value: `${item.id}`
+              })),
+              loading: brands.isLoading,
+              setSearch: setBrandsQuery
+            },
+            // {
+            //   type: FilterComponentTypeEnum.SELECT,
+            //   name: "hasDescription",
+            //   title: "معرفی برند",
+            //   options: statusesOfAvailability.map((item) => ({
+            //     key: item.status,
+            //     value: `${item.value.toUpperCase()}`
+            //   }))
+            // },
+            {
+              type: FilterComponentTypeEnum.SELECT,
+              name: "hasPrice",
+              title: t("common:price_list"),
+              options: productPriceOptions.map((item) => ({
+                key: item.status,
+                value: `${item.value.toUpperCase()}`
+              }))
+            },
+            {
+              type: FilterComponentTypeEnum.SELECT,
+              name: "isActive",
+              title: t("common:entity_status", {
+                entity: t("common:product")
+              }),
+              options: statusesOfActivation.map((item) => ({
+                key: item.status,
+                value: `${item.value.toUpperCase()}`
+              }))
+            },
+            {
+              type: FilterComponentTypeEnum.SELECT,
+              name: "hasImage",
+              title: "تصویر محصول",
+              options: imageExistence.map((item) => ({
+                key: item.status,
+                value: `${item.value}`
+              }))
+            },
+            {
+              type: FilterComponentTypeEnum.SELECT,
+              name: "orderBy",
+              title: t("common:sorting"),
+              options: productsSort.map((item) => ({
+                key: item.status,
+                value: `${item.value.toUpperCase()}`
+              }))
+            }
+          ]
+        },
+        columns: [
+          {
+            id: "image",
+            header: t("common:image"),
+            cell: ({ row }) => {
+              return (
+                <div className="relative aspect-square h-12 w-12 overflow-hidden rounded">
+                  <Image
+                    src={
+                      (row.original.images.at(0)?.file.presignedUrl
+                        .url as string) ?? "/images/seller-blank.png"
+                    }
+                    alt={row.original.name}
+                    sizes="5vw"
+                    fill
+                  />
+                </div>
+              )
+            }
+          },
+          {
+            id: "name",
+            header: t("common:product"),
+            accessorKey: "name"
+          },
+          {
+            id: "category",
+            header: t("common:category"),
+            accessorFn: (item) => item.category.title
+          },
+          {
+            id: "brand",
+            header: t("common:brand"),
+            accessorFn: (item) => item.brand.name
+          },
+          {
+            id: "seller-count",
+            header: t("common:entity_count", { entity: t("common:sellers") }),
+            accessorFn: (item) => digitsEnToFa(item.offersNum)
+          },
+          {
+            id: "views",
+            header: t("common:entity_count", { entity: t("common:views") }),
+            accessorFn: (item) => digitsEnToFa(item.views)
+          },
+          {
+            id: "price",
+            header: t("common:price"),
+            cell: ({ row }) => {
+              return (
+                <div className="flex flex-col">
+                  <div className="text-success-600">
+                    {row.original.highestPrice ? (
+                      <>
+                        <span className="font-medium ">
+                          {digitsEnToFa(
+                            addCommas(`${row.original.highestPrice?.amount}`)
+                          )}
+                        </span>
+                        <span className="text-xs"> تومان</span>
+                      </>
+                    ) : (
+                      "--"
+                    )}
+                  </div>
+                  <div className=" text-error-600">
+                    {row.original.lowestPrice ? (
+                      <>
+                        <span className="font-medium">
+                          {digitsEnToFa(
+                            addCommas(`${row.original.lowestPrice?.amount}`)
+                          )}
+                        </span>
+                        <span className="text-xs"> تومان</span>
+                      </>
+                    ) : (
+                      "--"
+                    )}
+                  </div>
+                </div>
+              )
+            }
+          },
+          { id: "stock", header: t("common:stock"), accessorKey: "--" },
+          {
+            id: "last-updated",
+            header: t("common:updated"),
+            accessorFn: (item) =>
+              item.updatedAt ? convertToPersianDate(item.updatedAt) : "--"
+          },
+          {
+            id: "status",
+            header: t("common:status"),
+            cell: ({ row }) => {
+              return (
+                <>
+                  {row.original.isActive ? (
+                    <span className="tag tag-dot tag-sm tag-success">
+                      {t("common:active")}
+                    </span>
+                  ) : (
+                    <span className="tag tag-dot tag-sm tag-danger">
+                      {t("common:inactive")}
+                    </span>
+                  )}
+                </>
+              )
+            }
+          },
+          {
+            id: "action",
+            header: t("common:operation"),
+            cell: ({ row }) => {
+              return (
+                <div className="flex gap-2">
+                  <Link
+                    target="_blank"
+                    href={`/products/${row.original.id}/${row.original.name}`}
+                  >
+                    <span className="tag cursor-pointer text-blue-500">
+                      {t("common:edit")}
+                    </span>
+                  </Link>
+                  <span
+                    className="tag cursor-pointer text-error"
+                    onClick={() => {
+                      onChangeModals({
+                        data: row.original,
+                        type: ProductModalEnum.DELETE
+                      })
+                    }}
+                  >
+                    {t("common:delete")}
+                  </span>
+                </div>
+              )
+            }
+          }
+        ]
+      },
+      dependencies: [categoryQuery, brandsQuery, categories.data, brands.data]
+    })
+
   return (
     <>
-      <ProductsFilter
-        form={form}
-        setProductQueryParams={setProductQueryParams}
+      <ProductDeleteModal
+        onChangeModals={onChangeModals}
+        onCloseModals={onCloseModals}
+        modals={modals}
+        open={modals?.type === ProductModalEnum.DELETE}
       />
-      <Card className="table-responsive mt-8 rounded">
-        <PageHeader
-          title={t("common:entity_list", { entity: t("common:product") })}
-          titleClasses="text-[14px] font-normal "
-          containerClass="items-center"
-          titleContainerClasses="border-b-2 border-primary-600 py-2"
-        >
-          {session?.abilities.includes("gql.products.product.index") && (
-            <Link href="/products/new">
-              <Button size="medium">
-                <LucidePlus size="14.4" />
-                افزودن کالای جدید
-              </Button>
-            </Link>
-          )}
-        </PageHeader>
-        {renderedListStatus[getContentByApiStatus(data, !!productsLength)] || (
-          <>
-            <table className="table-hover table border-t-0">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>{t("common:product")}</th>
-                  <th>{t("common:category")}</th>
-                  <th>{t("common:brand")}</th>
-                  <th>
-                    {t("common:entity_count", { entity: t("common:sellers") })}
-                  </th>
-                  <th>
-                    {t("common:entity_count", { entity: t("common:views") })}
-                  </th>
-                  <th>{t("common:price")}</th>
-                  <th>{t("common:stock")}</th>
-                  <th>{t("common:updated")}</th>
-                  <th>{t("common:status")}</th>
-                  <th>{t("common:operation")}</th>
-                </tr>
-              </thead>
-              <tbody className="overflow-x-auto border-0.5 ">
-                {data?.data?.products.data.map(
-                  (product) =>
-                    product && (
-                      <tr key={product.id}>
-                        <td>
-                          <div className="relative aspect-square h-12 w-12 overflow-hidden rounded">
-                            <Image
-                              src={
-                                (product.images.at(0)?.file.presignedUrl
-                                  .url as string) ?? "/images/seller-blank.png"
-                              }
-                              alt={product.name}
-                              sizes="5vw"
-                              fill
-                            />
-                          </div>
-                        </td>
-                        <td>
-                          <div className="flex flex-col gap-1.5">
-                            <Link
-                              target="_blank"
-                              href={`
-                               https://vardast.com/product/${product.id}/${product.name}
-                            `}
-                              className="font-medium text-alpha-800"
-                            >
-                              {product.name}
-                            </Link>
-                            {product.techNum && (
-                              <span className="text-xs text-alpha-600">
-                                کد کالا: {product.techNum}
-                              </span>
-                            )}
-                          </div>
-                        </td>
-                        <td>
-                          <Link
-                            target="_blank"
-                            href={`
-                             https://vardast.com/category/${product.category.id}/${product.category.title}
-                          `}
-                          >
-                            {product.category.title}
-                          </Link>
-                        </td>
-                        <td>
-                          <Link
-                            target="_blank"
-                            href={`
-                            https://vardast.com/brand/${product.brand.id}/${product.brand.name}
-                          `}
-                          >
-                            {product.brand.name}
-                          </Link>
-                        </td>
-                        <td>-</td>
-                        <td>{digitsEnToFa(product.views)}</td>
-                        <td>
-                          <div className="flex flex-col">
-                            <div className="text-success-600">
-                              {product.highestPrice ? (
-                                <>
-                                  <span className="font-medium ">
-                                    {digitsEnToFa(
-                                      addCommas(
-                                        `${product.highestPrice?.amount}`
-                                      )
-                                    )}
-                                  </span>
-                                  <span className="text-xs"> تومان</span>
-                                </>
-                              ) : (
-                                "--"
-                              )}
-                            </div>
-                            <div className=" text-error-600">
-                              {product.lowestPrice ? (
-                                <>
-                                  <span className="font-medium">
-                                    {digitsEnToFa(
-                                      addCommas(
-                                        `${product.lowestPrice?.amount}`
-                                      )
-                                    )}
-                                  </span>
-                                  <span className="text-xs"> تومان</span>
-                                </>
-                              ) : (
-                                "--"
-                              )}
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          <span>--</span>
-                        </td>
-                        <td>
-                          <span>-</span>
-                        </td>
-                        <td>
-                          {product.isActive ? (
-                            <span className="tag tag-dot tag-sm tag-success">
-                              {t("common:active")}
-                            </span>
-                          ) : (
-                            <span className="tag tag-dot tag-sm tag-danger">
-                              {t("common:inactive")}
-                            </span>
-                          )}
-                        </td>
-                        <td>
-                          <div className="flex gap-2">
-                            <Link
-                              target="_blank"
-                              href={`/products/${product.id}`}
-                            >
-                              <span className="tag cursor-pointer text-blue-500">
-                                {t("common:edit")}
-                              </span>
-                            </Link>
-                            <span
-                              className="tag cursor-pointer text-error"
-                              onClick={(e) => {
-                                e.stopPropagation()
-                              }}
-                            >
-                              {t("common:delete")}
-                            </span>
-                          </div>
-                        </td>
-                      </tr>
-                    )
-                )}
-              </tbody>
-            </table>
-
-            <Pagination
-              total={data?.data?.products.lastPage ?? 0}
-              page={currentPage}
-              onChange={(page) => {
-                setCurrentPage(page)
-              }}
-            />
-          </>
-        )}
-      </Card>
+      <Table {...tableProps} />
     </>
   )
 }

@@ -1,0 +1,9 @@
+mutation CreateContactUsMutation($createContactInput: CreateContactInput!) {
+  createContactUs(createContactInput: $createContactInput) {
+    id
+    fullname
+    title
+    cellphone
+    text
+  }
+}

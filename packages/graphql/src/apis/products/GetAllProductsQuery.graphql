@@ -11,6 +11,7 @@ query GetAllProducts($indexProductInput: IndexProductInput) {
       id
       slug
       name
+      offersNum
       views
       sku
       isActive
