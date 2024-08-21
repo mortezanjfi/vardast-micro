@@ -289,26 +289,6 @@ const ProductList = ({
     push(pathname + "?" + params.toString())
   }
 
-  const removeBrandOrSellerFilter = () => {
-    const params = new URLSearchParams(searchParams as any)
-    const paramsKeys = params.keys()
-    const paramsToDelete: string[] = []
-    for (const key of paramsKeys) {
-      if (
-        key.includes("brandId") ||
-        key.includes("brandName") ||
-        key.includes("sellerId") ||
-        key.includes("sellerName")
-      ) {
-        paramsToDelete.push(key)
-      }
-    }
-    paramsToDelete.forEach((key) => params.delete(key))
-    push(pathname + "?" + params.toString())
-  }
-
-  // if (!allProductsQuery.data) notFound()
-
   const DesktopSidebar = (
     <FiltersSidebarContainer
       sort={
