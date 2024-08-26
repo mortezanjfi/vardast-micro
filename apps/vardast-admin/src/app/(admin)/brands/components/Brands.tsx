@@ -5,9 +5,6 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import Link from "@vardast/component/Link"
-import Loading from "@vardast/component/Loading"
-import LoadingFailed from "@vardast/component/LoadingFailed"
-import NoResult from "@vardast/component/NoResult"
 import {
   FilterComponentTypeEnum,
   ITableProps,
@@ -25,7 +22,6 @@ import { statusesOfAvailability } from "@vardast/lib/AvailabilityStatus"
 import { brandSorts } from "@vardast/lib/BrandSort"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { getAllBrandsQueryFn } from "@vardast/query/queryFns/brands/getAllBrandsQueryFn"
-import { ApiCallStatusEnum } from "@vardast/type/Enums"
 import { useModals } from "@vardast/ui/modal"
 import { checkBooleanByString } from "@vardast/util/checkBooleanByString"
 import clsx from "clsx"
@@ -35,13 +31,6 @@ import { TypeOf, z } from "zod"
 import BrandDeleteModal from "@/app/(admin)/brands/components/BrandDeleteModal"
 
 // import { BrandFileUpload } from "@/app/admin/brands/components/BrandFileUpload"
-
-const renderedListStatus = {
-  [ApiCallStatusEnum.LOADING]: <Loading />,
-  [ApiCallStatusEnum.ERROR]: <LoadingFailed />,
-  [ApiCallStatusEnum.EMPTY]: <NoResult entity="brand" />,
-  [ApiCallStatusEnum.DEFAULT]: null
-}
 
 const BrandFilterSchema = z.object({
   name: z.string(),

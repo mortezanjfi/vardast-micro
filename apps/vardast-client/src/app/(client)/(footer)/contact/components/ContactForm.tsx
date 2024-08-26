@@ -90,7 +90,7 @@ const ContactForm = ({ isMobileView }: { isMobileView: boolean }) => {
       }
     }
   )
-  function onSubmitStepOne(data: FormType) {
+  function onSubmitStepOne(_: FormType) {
     // console.log("submit", data)
     createContactUsMutation.mutate({
       createContactInput: {
