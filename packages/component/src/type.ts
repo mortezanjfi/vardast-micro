@@ -25,6 +25,7 @@ export enum SellerModalEnum {
 }
 
 export enum ProductModalEnum {
+  INFO,
   DELETE
 }
 

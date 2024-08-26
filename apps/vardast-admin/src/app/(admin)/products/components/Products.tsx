@@ -2,9 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
-import Link from "@vardast/component/Link"
 import {
   FilterComponentTypeEnum,
   ITableProps,
@@ -13,6 +11,7 @@ import {
 } from "@vardast/component/table"
 import { ProductModalEnum } from "@vardast/component/type"
 import {
+  IndexProductInputSchema,
   Product,
   useGetAllBrandsWithoutPaginationQuery,
   useGetAllCategoriesV2Query
@@ -21,44 +20,32 @@ import {
   imageExistence,
   productPriceOptions
 } from "@vardast/lib/AvailabilityStatus"
+import { HasEntityEnum, VisibilityFa } from "@vardast/lib/constants"
 import { productsSort } from "@vardast/lib/productSort"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { getAllProductsQueryFn } from "@vardast/query/queryFns/products/getAllProductsQueryFn"
+import { Badge } from "@vardast/ui/badge"
+import { Button } from "@vardast/ui/button"
 import { useModals } from "@vardast/ui/modal"
-import { checkBooleanByString } from "@vardast/util/checkBooleanByString"
 import convertToPersianDate from "@vardast/util/convertToPersianDate"
 import { setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
 import useTranslation from "next-translate/useTranslation"
-import { TypeOf, z } from "zod"
 
 import ProductDeleteModal from "@/app/(admin)/products/components/ProductDeleteModal"
 
-const ProductsFilterSchema = z.object({
-  query: z.string().optional(),
-  categoryIds: z.string().optional(),
-  brandId: z.string().optional(),
-  isActive: z.string().nullable().optional(),
-  sku: z.string().nullable().optional(),
-  hasPrice: z.string().nullable().optional(),
-  // hasDescription: z.string().nullable().optional(),
-  hasImage: z.string().nullable().optional(),
-  orderBy: z.string().optional()
-})
-export type FilterFields = TypeOf<typeof ProductsFilterSchema>
+const ProductInputSchema = IndexProductInputSchema()
+  .omit({
+    page: true,
+    perPage: true
+  })
+  .optional()
 
-export interface ProductQueryParams {
-  query: string | undefined
-  categoryIds: number[] | undefined // Assuming categoryIds is an array of numbers
-  brandId: number | null
-  isActive: string | undefined // Assuming isActive is always a string
-  sku: string | null // Assuming sku can be a string or null
-  hasPrice: string | null
-  hasImage: string | null
+type Props = {
+  title?: string
 }
 
-const Products = () => {
-  const router = useRouter()
+const Products = ({ title }: Props) => {
   const { t } = useTranslation()
   const [categoryQuery, setCategoryQuery] = useState("")
   const [brandsQuery, setBrandsQuery] = useState("")
@@ -68,17 +55,6 @@ const Products = () => {
     locale: faIR,
     weekStartsOn: 6
   })
-
-  const statusesOfActivation = [
-    { status: "فعال", value: "true" },
-    {
-      status: "غیرفعال",
-      value: "false"
-    }
-  ]
-  const onAddProduct = () => {
-    router.push("/products/new")
-  }
 
   const categories = useGetAllCategoriesV2Query(graphqlRequestClientWithToken, {
     indexCategoryInput: {
@@ -94,258 +70,213 @@ const Products = () => {
       }
     }
   )
-  const tableProps: ITableProps<Product, typeof ProductsFilterSchema> =
-    useTable({
-      model: {
-        name: "products",
-        container: {
-          button: {
-            onClick: onAddProduct,
-            text: "افزودن کالای جدید",
-            variant: "primary"
-          },
-          title: t("common:entity_list", { entity: t("common:product") })
+  const tableProps: ITableProps<Product, typeof ProductInputSchema> = useTable({
+    model: {
+      name: "products",
+      container: {
+        button: {
+          onClick: () =>
+            onChangeModals({
+              type: ProductModalEnum.INFO
+            }),
+          text: t("common:add_entity", { entity: t("common:product") }),
+          variant: "primary"
         },
-        paginable: true,
-        fetch: {
-          api(args) {
-            return getAllProductsQueryFn({
-              ...args,
-              categoryIds: args.categoryIds && [+args.categoryIds],
-              isActive: args.isActive && checkBooleanByString(args.isActive)
-            })
-          }
-        },
-        onRow: {
-          url: (row) =>
-            `https://vardast.com/product/${row.original.id}/${row.original.name}`
-        },
-        filters: {
-          schema: ProductsFilterSchema,
-          options: [
-            {
-              type: FilterComponentTypeEnum.INPUT,
-              name: "query",
-              title: t("common:product_name")
-            },
-            {
-              type: FilterComponentTypeEnum.INPUT,
-              name: "sku",
-              title: t("common:product_sku")
-            },
-            {
-              type: FilterComponentTypeEnum.SELECT,
-              name: "categoryIds",
-              title: t("common:category"),
-              options: categories?.data?.allCategoriesV2?.map((item) => ({
-                key: item.title,
-                value: `${item.id}`
-              })),
-              loading: categories.isLoading,
-              setSearch: setCategoryQuery
-            },
-            {
-              type: FilterComponentTypeEnum.SELECT,
-              name: "brandId",
-              title: t("common:producer"),
-              options: brands?.data?.brandsWithoutPagination?.map((item) => ({
-                key: item.name,
-                value: `${item.id}`
-              })),
-              loading: brands.isLoading,
-              setSearch: setBrandsQuery
-            },
-            // {
-            //   type: FilterComponentTypeEnum.SELECT,
-            //   name: "hasDescription",
-            //   title: "معرفی برند",
-            //   options: statusesOfAvailability.map((item) => ({
-            //     key: item.status,
-            //     value: `${item.value.toUpperCase()}`
-            //   }))
-            // },
-            {
-              type: FilterComponentTypeEnum.SELECT,
-              name: "hasPrice",
-              title: t("common:price_list"),
-              options: productPriceOptions.map((item) => ({
-                key: item.status,
-                value: `${item.value.toUpperCase()}`
-              }))
-            },
-            {
-              type: FilterComponentTypeEnum.SELECT,
-              name: "isActive",
-              title: t("common:entity_status", {
-                entity: t("common:product")
-              }),
-              options: statusesOfActivation.map((item) => ({
-                key: item.status,
-                value: `${item.value.toUpperCase()}`
-              }))
-            },
-            {
-              type: FilterComponentTypeEnum.SELECT,
-              name: "hasImage",
-              title: "تصویر محصول",
-              options: imageExistence.map((item) => ({
-                key: item.status,
-                value: `${item.value}`
-              }))
-            },
-            {
-              type: FilterComponentTypeEnum.SELECT,
-              name: "orderBy",
-              title: t("common:sorting"),
-              options: productsSort.map((item) => ({
-                key: item.status,
-                value: `${item.value.toUpperCase()}`
-              }))
-            }
-          ]
-        },
-        columns: [
+        title
+      },
+      paginable: true,
+      fetch: {
+        api: getAllProductsQueryFn
+      },
+      onRow: {
+        url: (row) =>
+          `https://vardast.com/product/${row.original.id}/${row.original.name}`
+      },
+      filters: {
+        schema: ProductInputSchema,
+        options: [
           {
-            id: "image",
-            header: t("common:image"),
-            cell: ({ row }) => {
-              return (
-                <div className="relative aspect-square h-12 w-12 overflow-hidden rounded">
-                  <Image
-                    alt={row.original.name}
-                    fill
-                    sizes="5vw"
-                    src={
-                      (row.original.images.at(0)?.file.presignedUrl
-                        .url) ?? "/images/seller-blank.png"
-                    }
-                  />
-                </div>
-              )
+            type: FilterComponentTypeEnum.INPUT,
+            name: "query",
+            title: t("common:product_name")
+          },
+          {
+            type: FilterComponentTypeEnum.INPUT,
+            name: "sku",
+            title: t("common:product_sku")
+          },
+          {
+            type: FilterComponentTypeEnum.SELECT,
+            name: "categoryIds",
+            title: t("common:category"),
+            options: categories?.data?.allCategoriesV2?.map((item) => ({
+              key: item.title,
+              value: `${item.id}`
+            })),
+            loading: categories.isLoading,
+            setSearch: setCategoryQuery
+          },
+          {
+            type: FilterComponentTypeEnum.SELECT,
+            name: "brandId",
+            title: t("common:producer"),
+            options: brands?.data?.brandsWithoutPagination?.map((item) => ({
+              key: item.name,
+              value: `${item.id}`
+            })),
+            loading: brands.isLoading,
+            setSearch: setBrandsQuery
+          },
+          {
+            type: FilterComponentTypeEnum.SELECT,
+            name: "hasPrice",
+            title: t("common:price_list"),
+            options: productPriceOptions.map((item) => ({
+              key: item.status,
+              value: `${item.value.toUpperCase()}`
+            }))
+          },
+          {
+            type: FilterComponentTypeEnum.TOGGLE,
+            name: "isActive",
+            title: t("common:entity_status", {
+              entity: t("common:product")
+            }),
+            optionsTitle: {
+              true: VisibilityFa[HasEntityEnum.TRUE]?.name_fa,
+              false: VisibilityFa[HasEntityEnum.FALSE]?.name_fa
             }
           },
           {
-            id: "name",
-            header: t("common:product"),
-            accessorKey: "name"
+            type: FilterComponentTypeEnum.SELECT,
+            name: "hasImage",
+            title: "تصویر محصول",
+            options: imageExistence.map((item) => ({
+              key: item.status,
+              value: `${item.value}`
+            }))
           },
           {
-            id: "category",
-            header: t("common:category"),
-            accessorFn: (item) => item.category.title
-          },
-          {
-            id: "brand",
-            header: t("common:brand"),
-            accessorFn: (item) => item.brand.name
-          },
-          {
-            id: "seller-count",
-            header: t("common:entity_count", { entity: t("common:sellers") }),
-            accessorFn: (item) => digitsEnToFa(item.offersNum)
-          },
-          {
-            id: "views",
-            header: t("common:entity_count", { entity: t("common:views") }),
-            accessorFn: (item) => digitsEnToFa(item.views)
-          },
-          {
-            id: "price",
-            header: t("common:price"),
-            cell: ({ row }) => {
-              return (
-                <div className="flex flex-col">
-                  <div className="text-success-600">
-                    {row.original.highestPrice ? (
-                      <>
-                        <span className="font-medium ">
-                          {digitsEnToFa(
-                            addCommas(`${row.original.highestPrice?.amount}`)
-                          )}
-                        </span>
-                        <span className="text-xs"> تومان</span>
-                      </>
-                    ) : (
-                      "--"
-                    )}
-                  </div>
-                  <div className=" text-error-600">
-                    {row.original.lowestPrice ? (
-                      <>
-                        <span className="font-medium">
-                          {digitsEnToFa(
-                            addCommas(`${row.original.lowestPrice?.amount}`)
-                          )}
-                        </span>
-                        <span className="text-xs"> تومان</span>
-                      </>
-                    ) : (
-                      "--"
-                    )}
-                  </div>
-                </div>
-              )
-            }
-          },
-          { id: "stock", header: t("common:stock"), accessorKey: "--" },
-          {
-            id: "last-updated",
-            header: t("common:updated"),
-            accessorFn: (item) =>
-              item.updatedAt ? convertToPersianDate(item.updatedAt) : "--"
-          },
-          {
-            id: "status",
-            header: t("common:status"),
-            cell: ({ row }) => {
-              return (
-                <>
-                  {row.original.isActive ? (
-                    <span className="tag tag-dot tag-sm tag-success">
-                      {t("common:active")}
-                    </span>
-                  ) : (
-                    <span className="tag tag-dot tag-sm tag-danger">
-                      {t("common:inactive")}
-                    </span>
-                  )}
-                </>
-              )
-            }
-          },
-          {
-            id: "action",
-            header: t("common:operation"),
-            cell: ({ row }) => {
-              return (
-                <div className="flex gap-2">
-                  <Link
-                    href={`/products/${row.original.id}/${row.original.name}`}
-                    target="_blank"
-                  >
-                    <span className="tag cursor-pointer text-blue-500">
-                      {t("common:edit")}
-                    </span>
-                  </Link>
-                  <span
-                    className="tag cursor-pointer text-error"
-                    onClick={() => {
-                      onChangeModals({
-                        data: row.original,
-                        type: ProductModalEnum.DELETE
-                      })
-                    }}
-                  >
-                    {t("common:delete")}
-                  </span>
-                </div>
-              )
-            }
+            type: FilterComponentTypeEnum.SELECT,
+            name: "orderBy",
+            title: t("common:sorting"),
+            options: productsSort.map((item) => ({
+              key: item.status,
+              value: `${item.value.toUpperCase()}`
+            }))
           }
         ]
       },
-      dependencies: [categoryQuery, brandsQuery, categories.data, brands.data]
-    })
+      columns: [
+        {
+          id: "image",
+          header: t("common:image"),
+          cell: ({ row }) => {
+            return (
+              <div className="relative aspect-square h-12 w-12 overflow-hidden rounded">
+                <Image
+                  alt={row.original.name}
+                  fill
+                  sizes="5vw"
+                  src={
+                    row.original.images.at(0)?.file.presignedUrl.url ??
+                    "/images/seller-blank.png"
+                  }
+                />
+              </div>
+            )
+          }
+        },
+        {
+          id: "name",
+          header: t("common:product"),
+          accessorKey: "name"
+        },
+        {
+          id: "category",
+          header: t("common:category"),
+          accessorFn: (item) => item.category.title
+        },
+        {
+          id: "brand",
+          header: t("common:brand"),
+          accessorFn: (item) => item.brand.name
+        },
+        {
+          id: "seller-count",
+          header: t("common:entity_count", { entity: t("common:sellers") }),
+          accessorFn: (item) => digitsEnToFa(item.offersNum)
+        },
+        {
+          id: "views",
+          header: t("common:entity_count", { entity: t("common:views") }),
+          accessorFn: (item) => digitsEnToFa(item.views)
+        },
+        {
+          id: "price",
+          header: `${t("common:price")} (${t("common:toman")})`,
+          cell: ({ row }) => {
+            return (
+              <div className="flex flex-col items-end gap-1">
+                {row?.original?.highestPrice?.amount && (
+                  <Badge variant="success">
+                    {digitsEnToFa(
+                      addCommas(`${row.original?.highestPrice?.amount}`)
+                    )}
+                  </Badge>
+                )}
+                {row?.original?.lowestPrice?.amount && (
+                  <Badge variant="danger">
+                    {digitsEnToFa(
+                      addCommas(`${row.original.lowestPrice?.amount}`)
+                    )}
+                  </Badge>
+                )}
+              </div>
+            )
+          }
+        },
+        {
+          id: "last-updated",
+          header: t("common:updated"),
+          accessorFn: (item) =>
+            item.updatedAt ? convertToPersianDate(item.updatedAt) : "--"
+        },
+        {
+          id: "status",
+          header: t("common:status"),
+          cell: ({ row }) => (
+            <Badge variant={row?.original?.isActive ? "success" : "danger"}>
+              {row.original.isActive
+                ? t("common:active")
+                : t("common:inactive")}
+            </Badge>
+          )
+        },
+        {
+          id: "action",
+          header: t("common:operation"),
+          cell: ({ row }) => {
+            return (
+              <Button
+                size="small"
+                variant="link"
+                onClick={() => {
+                  onChangeModals({
+                    data: row.original,
+                    type: ProductModalEnum.DELETE
+                  })
+                }}
+              >
+                {t("common:delete")}
+              </Button>
+            )
+          }
+        }
+      ]
+    },
+    dependencies: [categoryQuery, brandsQuery, categories.data, brands.data]
+  })
 
   return (
     <>

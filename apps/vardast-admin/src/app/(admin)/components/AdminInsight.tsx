@@ -6,7 +6,7 @@ import InsightCardsSection from "./InsightCardsSection"
 
 const AdminInsight = () => {
   return (
-    <div className="grid grid-rows-5 gap-7">
+    <div className="row-span-1 grid grid-cols-1 gap-6 lg:grid-cols-3">
       <InsightCardsSection />
       <OrdersReportsCharts />
     </div>

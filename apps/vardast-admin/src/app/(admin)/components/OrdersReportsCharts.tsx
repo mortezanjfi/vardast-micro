@@ -108,8 +108,8 @@ function OrdersReportsCharts({}: Props) {
   }
 
   return (
-    <div className="row-span-2 grid grid-cols-3 gap-7">
-      <Card className="col-span-2 h-fit">
+    <div className="col-span-full row-span-2 grid gap-7 xl:grid-cols-3">
+      <Card className="h-fit xl:col-span-2">
         <div className="flex items-center justify-between pb">
           <h2 className="font-medium text-alpha-800 ">تعداد سفارشات</h2>
           <div className="flex items-center gap-3">
@@ -186,7 +186,7 @@ function OrdersReportsCharts({}: Props) {
           />
         </div>
       </Card>
-      <Card className="col-span-1 h-fit" title="درصد سفارشات">
+      <Card className="h-fit xl:col-span-1" title="درصد سفارشات">
         <div className="h-80">
           <Pie
             data={pieData}

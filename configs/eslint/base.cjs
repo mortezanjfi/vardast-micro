@@ -40,7 +40,7 @@ const config = {
     "no-empty-pattern": "off",
     indent: "off",
     "react/display-name": "off",
-    "no-unused-vars": "off",
+    "no-unused-vars": "warn",
     "@typescript-eslint/no-unsafe-argument": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
@@ -50,7 +50,7 @@ const config = {
     "@typescript-eslint/non-nullable-type-assertion-style": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
     "turbo/no-undeclared-env-vars": "off",
-    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
     "@typescript-eslint/no-misused-promises": [
       2,
       { checksVoidReturn: { attributes: false } }
@@ -65,8 +65,8 @@ const config = {
     "import/no-unresolved": "off",
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/prefer-nullish-coalescing": "off",
-    "@typescript-eslint/no-unused-vars": "off",
-    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "no-unused-vars": "warn",
     "@typescript-eslint/require-await": "off",
     "@typescript-eslint/prefer-optional-chain": "off",
     "@typescript-eslint/no-base-to-string": "off",

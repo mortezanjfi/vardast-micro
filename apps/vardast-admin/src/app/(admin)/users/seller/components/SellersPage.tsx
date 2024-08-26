@@ -116,31 +116,30 @@ const SellersPage = ({ title }: Props) => {
       },
       columns: [
         {
-          header: t("common:entity_name", { entity: t("common:sellers") }),
-          id: "name",
+          id: "image",
+          header: t("common:image"),
           cell: ({ row }) => (
-            <div className="flex items-center gap-3">
-              <div className="relative flex aspect-square h-12 w-12 items-center justify-center overflow-hidden rounded bg-alpha-50">
-                {row?.original?.logoFile ? (
-                  <Image
-                    alt={row?.original?.name}
-                    className="object-contain"
-                    fill
-                    src={row?.original?.logoFile.presignedUrl.url}
-                  />
-                ) : (
-                  <LucideWarehouse
-                    className="h-5 w-5 text-alpha-400"
-                    strokeWidth={1.5}
-                  />
-                )}
-              </div>
-
-              <span className="font-medium text-alpha-800">
-                {row?.original?.name}
-              </span>
+            <div className="relative aspect-square h-6 w-16 overflow-hidden rounded">
+              {row?.original?.logoFile ? (
+                <Image
+                  alt={row?.original?.name}
+                  fill
+                  sizes="5vw"
+                  src={row?.original?.logoFile.presignedUrl.url}
+                />
+              ) : (
+                <LucideWarehouse
+                  className="h-5 w-5 text-alpha-400"
+                  strokeWidth={1.5}
+                />
+              )}
             </div>
           )
+        },
+        {
+          id: "name",
+          header: t("common:entity_name", { entity: t("common:seller") }),
+          accessorKey: "name"
         },
         {
           header: t("common:entity_type", { entity: t("common:seller") }),

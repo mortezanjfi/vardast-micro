@@ -105,7 +105,7 @@ const Filter = <T extends ZodType<any, any, any>>({
   )
 
   return (
-    <Card className="flex flex-col justify-between gap-6 p-6">
+    <Card className="flex flex-col justify-between gap-4 p-4">
       <div className="grid gap sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {filters.options?.map((filter) => (
           <FormField

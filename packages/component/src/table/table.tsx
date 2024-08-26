@@ -199,7 +199,13 @@ const Table = <
       {
         id: "row",
         header: t("common:row"),
-        accessorFn: (_, index) => digitsEnToFa(index + 1)
+        accessorFn: (_, index) =>
+          digitsEnToFa(
+            index +
+              1 +
+              table?.getState().pagination.pageIndex *
+                table?.getState().pagination.pageSize
+          )
       }
     ],
     []
@@ -295,6 +301,7 @@ const Table = <
         let resetValues:
           | TypeOf<TSchema>
           | DefaultValues<TypeOf<TSchema>>
+          // eslint-disable-next-line no-unused-vars
           | ((formValues: TypeOf<TSchema>) => TypeOf<TSchema>)
 
         filters.options.forEach((item) => {
