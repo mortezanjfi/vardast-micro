@@ -28,10 +28,10 @@ const Filter = <T extends ZodType<any, any, any>>({
       if (filter.type === FilterComponentTypeEnum.INPUT) {
         return (
           <Input
-            type={filter.inputType || "text"}
             placeholder={t("common:entity_enter_placeholder", {
               entity: filter.title
             })}
+            type={filter.inputType || "text"}
             onChange={(e) => {
               form.setValue(filter.name as any, e.target.value as any)
             }}
@@ -42,15 +42,15 @@ const Filter = <T extends ZodType<any, any, any>>({
       if (filter.type === FilterComponentTypeEnum.SELECT) {
         return (
           <SelectPopover
+            loading={filter.loading}
+            options={filter.options}
+            setSearch={filter.setSearch}
+            value={value}
             onSelect={(value) => {
               form.setValue(filter.name as any, value.toUpperCase() as any, {
                 shouldDirty: true
               })
             }}
-            loading={filter.loading}
-            setSearch={filter.setSearch}
-            options={filter.options}
-            value={value}
           />
         )
       }
@@ -71,23 +71,23 @@ const Filter = <T extends ZodType<any, any, any>>({
             }}
           >
             <ToggleGroupItem
-              disabled={filter.loading}
               className={clsx(
                 "bg-inherit py-2 text-base text-alpha-500",
                 (value as unknown as boolean) === true &&
                   "!bg-alpha-white !text-alpha-800  shadow-lg"
               )}
+              disabled={filter.loading}
               value={"true"}
             >
               {filter?.optionsTitle?.true || "دارد"}
             </ToggleGroupItem>
             <ToggleGroupItem
-              disabled={filter.loading}
               className={clsx(
                 "bg-inherit py-2 text-base text-alpha-500",
                 (value as unknown as boolean) === false &&
                   "!bg-alpha-white !text-alpha-800 shadow-lg"
               )}
+              disabled={filter.loading}
               value={"false"}
             >
               {filter?.optionsTitle?.false || "ندارد"}
@@ -109,8 +109,8 @@ const Filter = <T extends ZodType<any, any, any>>({
       <div className="grid gap sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {filters.options?.map((filter) => (
           <FormField
-            key={filter.title}
             control={form.control}
+            key={filter.title}
             name={filter.name as any}
             render={({ field }) => (
               <FormItem>
@@ -124,9 +124,6 @@ const Filter = <T extends ZodType<any, any, any>>({
       </div>
       <div className="col-span-full flex flex-col gap sm:flex-row sm:justify-end">
         <Button
-          size="medium"
-          variant="secondary"
-          type="reset"
           className="py-2"
           disabled={
             form.formState.isSubmitting ||
@@ -134,14 +131,17 @@ const Filter = <T extends ZodType<any, any, any>>({
             !form.formState.isDirty
           }
           loading={form.formState.isSubmitting || form.formState.isLoading}
+          size="medium"
+          type="reset"
+          variant="secondary"
         >
           حذف فیلتر
         </Button>
         <Button
-          size="medium"
           className="py-2"
-          loading={form.formState.isSubmitting || form.formState.isLoading}
           disabled={form.formState.isSubmitting || form.formState.isLoading}
+          loading={form.formState.isSubmitting || form.formState.isLoading}
+          size="medium"
           type="submit"
         >
           اعمال فیلتر

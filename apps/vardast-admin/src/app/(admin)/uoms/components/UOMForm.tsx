@@ -139,16 +139,16 @@ const UOMForm = ({ uom }: UOMFormProps) => {
           </AlertDescription>
         </Alert>
       )}
-      <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+      <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
         <div className="mb-6 mt-8 flex items-end justify-between">
           <h2 className="text-xl font-black text-alpha-800 lg:text-3xl">
             {name ? name : t("common:new_entity", { entity: t("common:uom") })}
           </h2>
           <Button
             className="sticky top-0"
-            type="submit"
-            loading={form.formState.isSubmitting}
             disabled={form.formState.isSubmitting}
+            loading={form.formState.isSubmitting}
+            type="submit"
           >
             {t("common:save_entity", { entity: t("common:uom") })}
           </Button>

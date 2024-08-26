@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { redirect } from "next/navigation"
 import { authOptions } from "@vardast/auth/authOptions"
 import { getServerSession } from "next-auth"

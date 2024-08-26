@@ -7,9 +7,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
     return (
       <input
-        type={type}
         className={mergeClasses("input-field", className)}
         ref={ref}
+        type={type}
         {...props}
       />
     )

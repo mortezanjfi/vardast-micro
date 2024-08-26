@@ -106,9 +106,6 @@ export const BrandFilesModal = ({
           },
           body: formData
         }).then(async (response) => {
-          if (!response.ok) {
-          }
-
           const uploadResult = await response.json()
 
           form.setValue("fileUuid", uploadResult.uuid)
@@ -129,9 +126,6 @@ export const BrandFilesModal = ({
           },
           body: formData
         }).then(async (response) => {
-          if (!response.ok) {
-          }
-
           const uploadResult = await response.json()
 
           form.setValue("fileUuid", uploadResult.uuid)
@@ -150,8 +144,8 @@ export const BrandFilesModal = ({
     if (file) {
       const newFile: FileObject = {
         file: file,
-        isVisible: form.getValues("isVisible") as string,
-        name: form.getValues("name") as string,
+        isVisible: form.getValues("isVisible"),
+        name: form.getValues("name"),
         size: file.size,
         fileUuid: form.getValues("fileUuid")
       }
@@ -159,7 +153,7 @@ export const BrandFilesModal = ({
       //set the uploaded file to the main state according to price or catalog
       if (activeTab === "price") {
         setNewBrandData((prev) => ({
-          ...prev!,
+          ...prev,
           brandPriceUploadedInfo: [
             ...(prev?.brandPriceUploadedInfo ?? []),
             newFile
@@ -168,7 +162,7 @@ export const BrandFilesModal = ({
       }
       if (activeTab === "catalog") {
         setNewBrandData((prev) => ({
-          ...prev!,
+          ...prev,
           brandCatalogUploadedInfo: [
             ...(prev?.brandCatalogUploadedInfo ?? []),
             newFile
@@ -187,7 +181,6 @@ export const BrandFilesModal = ({
   useEffect(() => {
     form.reset()
     setFile(null)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -255,9 +248,9 @@ export const BrandFilesModal = ({
                         <PopoverTrigger asChild className="">
                           <FormControl>
                             <Button
+                              className="input-field flex items-center text-start"
                               noStyle
                               role="combobox"
-                              className="input-field flex items-center text-start"
                             >
                               {statuses.find((st) => st.value === field.value)
                                 ?.status || t("common:select_placeholder")}
@@ -271,8 +264,8 @@ export const BrandFilesModal = ({
                             <CommandGroup>
                               {statuses.map((st) => (
                                 <CommandItem
-                                  value={st.value}
                                   key={st.status}
+                                  value={st.value}
                                   onSelect={(value) => {
                                     form.setValue("isVisible", value)
                                     setParentCategoryOpen(false)
@@ -305,11 +298,11 @@ export const BrandFilesModal = ({
                   render={(_) => (
                     <div className="flex flex-col items-start gap-6">
                       <Input
+                        accept="application/pdf"
+                        className="hidden"
+                        ref={fileRef}
                         type="file"
                         onChange={(e) => onFileChange(e)}
-                        className="hidden"
-                        accept="application/pdf"
-                        ref={fileRef}
                       />
                       {/* <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
                     {filePreview ? (
@@ -331,10 +324,10 @@ export const BrandFilesModal = ({
                         <div>
                           {" "}
                           <Button
-                            size="large"
                             className="flex flex-col gap-4 border-dashed"
-                            variant="secondary"
+                            size="large"
                             type="button"
+                            variant="secondary"
                             onClick={() => {
                               fileRef.current?.click()
                             }}

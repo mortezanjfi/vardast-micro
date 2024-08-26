@@ -221,13 +221,13 @@ const CategoryFormModal = ({
     form.reset()
     if (actionType === "edit") {
       onOpenChange({
-        type: CategoryModalEnumType["EditCategory"],
+        type: CategoryModalEnumType.EditCategory,
         currentCategory: modalsOpen.category
       })
     }
     if (actionType === "create") {
       onOpenChange({
-        type: CategoryModalEnumType["CreateCategory"]
+        type: CategoryModalEnumType.CreateCategory
       })
     }
   }
@@ -276,19 +276,18 @@ const CategoryFormModal = ({
 
   useEffect(() => {
     allCategoriesQuery.refetch()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryQuery])
 
   return (
     <Dialog
       key={modalsOpen?.category?.id || "create-category"}
+      modal={false}
       open={
         actionType === "edit"
           ? modalsOpen[CategoryModalEnumType.EditCategory]
           : modalsOpen[CategoryModalEnumType.CreateCategory]
       }
       onOpenChange={onOpenClose}
-      modal={false}
     >
       <DialogContent>
         <DialogHeader>
@@ -303,7 +302,7 @@ const CategoryFormModal = ({
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+          <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-6 py-8">
               <FormField
                 control={form.control}
@@ -318,13 +317,13 @@ const CategoryFormModal = ({
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            className="input-field flex items-center text-start"
                             disabled={
                               allCategoriesQuery.isLoading ||
                               allCategoriesQuery.isError
                             }
                             noStyle
                             role="combobox"
-                            className="input-field flex items-center text-start"
                           >
                             {field.value
                               ? allCategoriesQuery.data?.allCategoriesV2.find(
@@ -341,16 +340,16 @@ const CategoryFormModal = ({
                       <PopoverContent className="z-[99999]">
                         <Command>
                           <CommandInput
-                            loading={allCategoriesQuery.isLoading}
-                            value={categoryQueryTemp}
                             defaultValue={categoryQuery}
+                            loading={allCategoriesQuery.isLoading}
+                            placeholder={t("common:search_entity", {
+                              entity: t("common:category")
+                            })}
+                            value={categoryQueryTemp}
                             onValueChange={(newQuery) => {
                               setCategoryQuery(newQuery)
                               setCategoryQueryTemp(newQuery)
                             }}
-                            placeholder={t("common:search_entity", {
-                              entity: t("common:category")
-                            })}
                           />
                           <CommandEmpty>
                             {t("common:no_entity_found", {
@@ -362,8 +361,8 @@ const CategoryFormModal = ({
                               (category) =>
                                 category && (
                                   <CommandItem
-                                    value={category.title}
                                     key={category.id}
+                                    value={category.title}
                                     onSelect={(value) => {
                                       form.setValue(
                                         "parentCategoryId",
@@ -498,8 +497,8 @@ const CategoryFormModal = ({
                   setImages((prevImages) => [
                     ...prevImages,
                     {
-                      uuid: file.uuid as string,
-                      expiresAt: file.expiresAt as string
+                      uuid: file.uuid,
+                      expiresAt: file.expiresAt
                     }
                   ])
                 }}
@@ -513,15 +512,15 @@ const CategoryFormModal = ({
             <DialogFooter>
               <div className="flex items-center justify-end gap-2">
                 <Button
-                  variant="ghost"
-                  type="button"
-                  onClick={() => onOpenClose()}
-                  loading={form.formState.isSubmitting}
                   disabled={form.formState.isSubmitting}
+                  loading={form.formState.isSubmitting}
+                  type="button"
+                  variant="ghost"
+                  onClick={() => onOpenClose()}
                 >
                   {t("common:cancel")}
                 </Button>
-                <Button type="submit" disabled={form.formState.isSubmitting}>
+                <Button disabled={form.formState.isSubmitting} type="submit">
                   {t(actionType === "edit" ? "common:submit" : "common:create")}
                 </Button>
               </div>

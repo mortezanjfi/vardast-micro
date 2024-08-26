@@ -14,7 +14,7 @@ const FiltersSidebarContainer: React.FC<
     <div className="flex flex-col divide-y divide-alpha-300 bg-alpha-white px-4 py-4">
       <div className="flex flex-col gap-6 pb-6">
         <div className="flex items-center gap-2">
-          <DynamicHeroIcon icon="BarsArrowDownIcon" className="h-7 w-7" solid />
+          <DynamicHeroIcon className="h-7 w-7" icon="BarsArrowDownIcon" solid />
           <span className="text-lg font-medium text-alpha-800">مرتب سازی</span>
         </div>
         {sort}
@@ -24,8 +24,8 @@ const FiltersSidebarContainer: React.FC<
         <div className=" flex items-center">
           <div className="flex items-center gap-2">
             <DynamicHeroIcon
-              icon="AdjustmentsHorizontalIcon"
               className="h-7 w-7"
+              icon="AdjustmentsHorizontalIcon"
               solid
             />
             <span className="text-lg font-medium text-alpha-800">فیلترها</span>

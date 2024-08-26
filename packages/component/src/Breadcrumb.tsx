@@ -49,10 +49,10 @@ const Breadcrumb = ({ items: itemsProps }: { items?: CrumbItemProps[] }) => {
   }, [pathname, items])
 
   return (
-    <ol className="app-breadcrumb" aria-label="breadcrumb">
+    <ol aria-label="breadcrumb" className="app-breadcrumb">
       <li className="flex items-end align-middle leading-none">
-        <Link href="/" aria-current={pathname === "/" ? "page" : "false"}>
-          <div title={process.env.NEXT_PUBLIC_TITLE} className="text-alpha-600">
+        <Link aria-current={pathname === "/" ? "page" : "false"} href="/">
+          <div className="text-alpha-600" title={process.env.NEXT_PUBLIC_TITLE}>
             وردست
           </div>
         </Link>
@@ -60,21 +60,21 @@ const Breadcrumb = ({ items: itemsProps }: { items?: CrumbItemProps[] }) => {
       {breadcrumbs ? (
         breadcrumbs.map((crumb, idx) => (
           <li
-            key={idx}
             className="flex h-4 items-end align-middle leading-none"
+            key={idx}
           >
             {idx < breadcrumbs.length && (
               <span className="mx-1 text-alpha-400">/</span>
             )}
             <Link href={crumb.path} passHref>
               <div
-                title={crumb.label}
                 aria-current={crumb.isCurrent ? "page" : "false"}
                 className={
                   idx < breadcrumbs.length - 1
                     ? "text-alpha-600"
                     : "text-primary"
                 }
+                title={crumb.label}
               >
                 {/* {t(`common:${crumb.label}`)} */}
                 {crumb.label}

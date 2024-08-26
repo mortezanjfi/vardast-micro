@@ -91,8 +91,8 @@ const UOMs = () => {
       </div>
 
       <Pagination
-        total={data.uoms.lastPage}
         page={currentPage}
+        total={data.uoms.lastPage}
         onChange={(page) => {
           setCurrentPage(page)
         }}

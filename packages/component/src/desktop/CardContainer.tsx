@@ -2,7 +2,7 @@ import clsx from "clsx"
 
 import Card, { CardProps } from "../Card"
 
-export interface CardContainerProps extends CardProps {}
+export type CardContainerProps = CardProps
 
 function CardContainer({
   titleClass,
@@ -12,11 +12,11 @@ function CardContainer({
 }: CardContainerProps) {
   return (
     <Card
+      className={clsx("flex flex-col gap-5 !px-6", className)}
       titleClass={clsx(
         "text-base pb-2 border-b-2 border-primary-600",
         titleClass
       )}
-      className={clsx("flex flex-col gap-5 !px-6", className)}
       {...props}
     >
       {children}

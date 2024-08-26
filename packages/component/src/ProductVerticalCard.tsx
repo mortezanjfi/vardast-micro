@@ -25,16 +25,16 @@ export const ProductVerticalCardSkeleton = () => {
         >
           <div className="w-full">
             <Image
-              src={frameLessImage}
               alt="skeleton"
-              width={400}
+              className="animated-card"
               height={400 / ratio}
               layout="fixed"
+              objectFit="contain"
+              src={frameLessImage}
+              width={400}
               onLoad={({ naturalWidth, naturalHeight }: any) => {
                 setRatio(naturalWidth / naturalHeight)
               }}
-              objectFit="contain"
-              className="animated-card"
             />
           </div>
         </div>
@@ -85,34 +85,34 @@ const ProductVerticalCard = forwardRef(
 
     return (
       <Link
-        ref={ref}
-        href={`/product/${product.id}/${slugify(product.name)}`}
         className={clsx("grid h-full px", "grid-rows-12")}
+        href={`/product/${product.id}/${slugify(product.name)}`}
+        ref={ref}
       >
         <div
-          ref={productContainerRef}
           className={`relative row-span-5 flex w-full flex-shrink-0 transform flex-col items-center justify-center bg-center bg-no-repeat align-middle opacity-0 transition-all duration-1000 ease-out`}
+          ref={productContainerRef}
         >
           <div
+            className="w-full"
             style={{
               height: imageContainerHeight
             }}
-            className="w-full"
           >
             {product?.images?.at(0)?.file.presignedUrl.url ? (
               <Image
-                src={product.images.at(0)?.file.presignedUrl.url as string}
                 alt={product.name}
-                fill
                 className="object-contain"
+                fill
+                src={product.images.at(0)?.file.presignedUrl.url}
                 onLoad={onLoaddImage}
               />
             ) : (
               <Image
-                src={blankImage}
                 alt={product.name}
-                fill
                 className="object-contain"
+                fill
+                src={blankImage}
                 onLoad={onLoaddImage}
               />
             )}
@@ -121,8 +121,8 @@ const ProductVerticalCard = forwardRef(
         {/* <div></div> */}
         <div className="row-span-2">
           <h6
-            title={product.name}
             className="my-auto line-clamp-2 max-h-10 overflow-hidden whitespace-pre-wrap font-semibold"
+            title={product.name}
           >
             {product.name}
           </h6>
@@ -155,8 +155,8 @@ const ProductVerticalCard = forwardRef(
           {discount &&
             discount.map((discountItem) => (
               <div
-                key={discountItem.id}
                 className="flex w-full items-center justify-end gap-x"
+                key={discountItem.id}
               >
                 <span className="text-sm text-alpha-500 line-through">
                   {discountItem.calculated_price &&

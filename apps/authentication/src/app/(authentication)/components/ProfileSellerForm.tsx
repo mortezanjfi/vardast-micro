@@ -92,9 +92,6 @@ const ProfileSellerForm = ({ isMobileView }: { isMobileView: boolean }) => {
         },
         body: formData
       }).then(async (response) => {
-        if (!response.ok) {
-        }
-
         const uploadResult = await response.json()
         form.setValue("logoFileUuid", uploadResult.uuid)
 
@@ -121,10 +118,10 @@ const ProfileSellerForm = ({ isMobileView }: { isMobileView: boolean }) => {
       {isMobileView ? (
         <Form {...form}>
           <form
-            id="seller-form"
-            onSubmit={form.handleSubmit(onSubmit)}
-            noValidate
             className="flex flex-1 flex-col gap-8"
+            id="seller-form"
+            noValidate
+            onSubmit={form.handleSubmit(onSubmit)}
           >
             {" "}
             <Alert variant="warning">
@@ -163,19 +160,19 @@ const ProfileSellerForm = ({ isMobileView }: { isMobileView: boolean }) => {
               )}
             />
             <Input
+              accept="image/*"
+              className="hidden"
+              ref={logoFileFieldRef}
               type="file"
               onChange={(e) => onLogoFileChange(e)}
-              className="hidden"
-              accept="image/*"
-              ref={logoFileFieldRef}
             />
             <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
               {logoPreview ? (
                 <Image
-                  src={logoPreview}
-                  fill
                   alt="..."
                   className="object-contain p-3"
+                  fill
+                  src={logoPreview}
                 />
               ) : (
                 <LucideWarehouse
@@ -186,8 +183,8 @@ const ProfileSellerForm = ({ isMobileView }: { isMobileView: boolean }) => {
             </div>
             <div className="flex items-center gap-2">
               <Button
-                variant="secondary"
                 type="button"
+                variant="secondary"
                 onClick={() => {
                   logoFileFieldRef.current?.click()
                 }}
@@ -196,8 +193,8 @@ const ProfileSellerForm = ({ isMobileView }: { isMobileView: boolean }) => {
               </Button>
               {logoPreview && (
                 <Button
-                  variant="danger"
                   iconOnly
+                  variant="danger"
                   onClick={() => {
                     form.setValue("logoFileUuid", "")
                     setLogoFile(null)
@@ -210,17 +207,17 @@ const ProfileSellerForm = ({ isMobileView }: { isMobileView: boolean }) => {
             </div>
           </form>
           <Link
-            type="button"
             className="btn btn-secondary btn-md"
             href={"/profile"}
+            type="button"
           >
             {t("common:back")}
           </Link>
           <Button
-            form="seller-form"
-            type="submit"
-            loading={form.formState.isSubmitting}
             disabled={form.formState.isSubmitting}
+            form="seller-form"
+            loading={form.formState.isSubmitting}
+            type="submit"
           >
             {t("common:submit")}
           </Button>
@@ -229,10 +226,10 @@ const ProfileSellerForm = ({ isMobileView }: { isMobileView: boolean }) => {
         <Form {...form}>
           <Card className="mx-auto w-5/12">
             <form
-              id="seller-form"
-              onSubmit={form.handleSubmit(onSubmit)}
-              noValidate
               className="flex flex-1 flex-col gap-8"
+              id="seller-form"
+              noValidate
+              onSubmit={form.handleSubmit(onSubmit)}
             >
               {" "}
               <Alert variant="warning">
@@ -271,10 +268,10 @@ const ProfileSellerForm = ({ isMobileView }: { isMobileView: boolean }) => {
                 )}
               />
               <Dropzone
-                maxFiles={1}
-                withHeight={false}
                 existingImages={undefined}
+                maxFiles={1}
                 uploadPath={uploadPaths.sellerLogo}
+                withHeight={false}
                 onAddition={(file) => {
                   form.setValue("logoFileUuid", file.uuid)
                 }}
@@ -347,17 +344,17 @@ const ProfileSellerForm = ({ isMobileView }: { isMobileView: boolean }) => {
             </form>
             <div className="mt-7 flex flex-col gap-2">
               <Link
-                type="button"
                 className="btn btn-secondary btn-md"
                 href={"/profile"}
+                type="button"
               >
                 {t("common:back")}
               </Link>
               <Button
-                form="seller-form"
-                type="submit"
-                loading={form.formState.isSubmitting}
                 disabled={form.formState.isSubmitting}
+                form="seller-form"
+                loading={form.formState.isSubmitting}
+                type="submit"
               >
                 {t("common:submit")}
               </Button>

@@ -171,16 +171,16 @@ const CategoriesTab = ({
   setSidebar(DesktopSidebar)
   return (
     <Segments
+      className="h-full flex-col sm:flex"
       value={activeTab}
       onValueChange={onValueChange}
-      className="h-full flex-col sm:flex"
     >
       {productsProps.isMobileView ? (
         <>
           <SegmentsList className="border-b p">
             <InfiniteScrollPagination
-              fetchingLoaderCount={6}
               CardLoader={() => <SegmentItemLoader />}
+              fetchingLoaderCount={6}
               infiniteQuery={allCategoriesQuery}
             >
               {(page, ref) => (
@@ -188,25 +188,25 @@ const CategoriesTab = ({
                   {page.categories?.data?.map(
                     ({ title, id, imageCategory }, index) => (
                       <SegmentsListItem
+                        className="h-full pl"
+                        key={id}
                         noStyle
                         ref={
                           page.categories.data.length - 1 === index
                             ? ref
                             : undefined
                         }
-                        className="h-full pl"
-                        key={id}
+                        value={String(id)}
                         onClick={() => {
                           onValueChange(String(id))
                         }}
-                        value={String(id)}
                       >
                         <>
                           <div
-                            ref={sliderRef}
                             className={clsx(
                               "h-full w-[20vw] flex-shrink-0 cursor-pointer md:w-[100px]"
                             )}
+                            ref={sliderRef}
                           >
                             <div
                               className={clsx(
@@ -214,27 +214,27 @@ const CategoriesTab = ({
                               )}
                             >
                               <div
-                                style={{
-                                  height: slideWidth
-                                }}
                                 className={clsx(
                                   "relative w-full overflow-hidden rounded-full border border-alpha-400 bg-alpha-50",
                                   id === +activeTab
                                     ? "border-2 border-primary"
                                     : ""
                                 )}
+                                style={{
+                                  height: slideWidth
+                                }}
                               >
                                 <Image
+                                  alt="category"
+                                  className="rounded-xl object-contain"
+                                  fill
                                   src={
                                     (imageCategory &&
                                       (imageCategory[0]?.file.presignedUrl
-                                        ?.url as string)) ??
+                                        ?.url)) ??
                                     "" ??
                                     `/images/categories/${id}.png`
                                   }
-                                  alt="category"
-                                  fill
-                                  className="rounded-xl object-contain"
                                 />
                               </div>
                               <h5
@@ -264,16 +264,16 @@ const CategoriesTab = ({
             title="کالاهای این دسته بندی"
           /> */}
           <ProductList
-            isMobileView={productsProps.isMobileView}
             args={productsProps.args}
+            isMobileView={productsProps.isMobileView}
           />
         </>
       ) : (
         <>
           <ListHeader
+            listName={"categories"}
             secondTitle="category"
             total={allCategoriesQuery.data?.pages[0].categories.total}
-            listName={"categories"}
           />
 
           {allCategoriesQuery.isLoading && allCategoriesQuery.isFetching ? (
@@ -282,8 +282,8 @@ const CategoriesTab = ({
                 <>
                   {[...Array(8)].map((_, index) => (
                     <div
-                      key={`desktop-home-category-${index}`}
                       className="animated-card h-60 w-full"
+                      key={`desktop-home-category-${index}`}
                     ></div>
                   ))}
                 </>
@@ -304,35 +304,35 @@ const CategoriesTab = ({
                     <>
                       {page.categories.data.map((category, index) => (
                         <CategoryListItem
+                          href={dynamicHref({
+                            sellerId: productsProps.args.sellerId,
+                            sellerName: sellerName,
+                            brandName: brandName,
+                            brandId: productsProps?.args.brandId,
+                            categoryId: category.id,
+                            categoryTitle: category.title
+                          })}
+                          id={category.id}
                           key={category.id}
                           ref={
                             page.categories.data.length - 1 === index
                               ? ref
                               : undefined
                           }
-                          productsCount={category.productsCount}
-                          // className="sm:max-h-60 sm:!min-h-full sm:min-w-full sm:!rounded-none sm:ring-2 sm:ring-alpha-200"
-                          title={category?.title}
-                          id={category.id}
                           selectedItemId={selectedItemId}
                           src={
                             (category &&
                               category?.imageCategory &&
                               (category?.imageCategory[0]?.file.presignedUrl
-                                ?.url as string)) ??
+                                ?.url)) ??
                             "" ??
                             `/images/category/${category.id}.png`
                           }
                           // productsCount={category.}
                           onClick={() => setSelectedItemId(category.id)}
-                          href={dynamicHref({
-                            sellerId: productsProps.args["sellerId"],
-                            sellerName: sellerName,
-                            brandName: brandName,
-                            brandId: productsProps?.args["brandId"],
-                            categoryId: category.id,
-                            categoryTitle: category.title
-                          })}
+                          productsCount={category.productsCount}
+                          // className="sm:max-h-60 sm:!min-h-full sm:min-w-full sm:!rounded-none sm:ring-2 sm:ring-alpha-200"
+                          title={category?.title}
                         />
                       ))}
                     </>

@@ -32,7 +32,7 @@ const TagItem = ({ title }: TagItemProps) => {
   return (
     <div className="tag-item">
       <span className="tag-item-title">{title}</span>
-      <button type="button" className="tag-item-delete-button">
+      <button className="tag-item-delete-button" type="button">
         <LucideX className="icon" />
       </button>
     </div>
@@ -127,7 +127,7 @@ const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
         {tags && tags.length > 0 && (
           <div className="tag-field-tags">
             {tags.map((tag, idx) => (
-              <TagItem title={tag} key={idx} />
+              <TagItem key={idx} title={tag} />
             ))}
           </div>
         )}
@@ -135,14 +135,14 @@ const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
           <span className="tag-input-placeholder">{placeholder}</span>
         )}
         <input
-          type="text"
           className="tag-field-input"
-          onChange={(event) => setQuery(event.target.value)}
-          onKeyDown={(event) => handleKeyDown(event)}
-          onPaste={(event) => handlePaste(event)}
           ref={(input) => {
             textInput = input
           }}
+          type="text"
+          onChange={(event) => setQuery(event.target.value)}
+          onKeyDown={(event) => handleKeyDown(event)}
+          onPaste={(event) => handlePaste(event)}
         />
       </div>
     )

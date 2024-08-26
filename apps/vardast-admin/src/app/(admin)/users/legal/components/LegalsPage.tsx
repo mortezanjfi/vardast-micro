@@ -84,8 +84,8 @@ const LegalsPage = ({ title }: Props) => {
           cell: ({ row }) => {
             return (
               <Button
-                variant="link"
                 size="small"
+                variant="link"
                 onClick={() => {
                   onChangeModals({
                     type: LegalModalEnum.DELETE,
@@ -105,16 +105,16 @@ const LegalsPage = ({ title }: Props) => {
   return (
     <>
       <LegalDeleteModal
-        onCloseModals={onCloseModals}
-        onChangeModals={onChangeModals}
         modals={modals}
         open={modals?.type === LegalModalEnum.DELETE}
+        onChangeModals={onChangeModals}
+        onCloseModals={onCloseModals}
       />
       <LegalModal
-        onCloseModals={onCloseModals}
-        onChangeModals={onChangeModals}
         modals={modals}
         open={modals?.type === LegalModalEnum.ADD}
+        onChangeModals={onChangeModals}
+        onCloseModals={onCloseModals}
       />
       <Table {...tableProps} />
     </>

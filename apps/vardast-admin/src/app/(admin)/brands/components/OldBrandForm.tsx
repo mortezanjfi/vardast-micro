@@ -152,9 +152,6 @@ const BrandForm = ({ brand }: BrandFormProps) => {
         },
         body: formData
       }).then(async (response) => {
-        if (!response.ok) {
-        }
-
         const uploadResult = await response.json()
         form.setValue("logoFileUuid", uploadResult.uuid)
 
@@ -321,7 +318,7 @@ const BrandForm = ({ brand }: BrandFormProps) => {
           </AlertDescription>
         </Alert>
       )}
-      <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+      <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
         <div className="mb-6 mt-8 flex items-end justify-between">
           <h2 className="text-xl font-black text-alpha-800 lg:text-3xl">
             {name_fa
@@ -330,9 +327,9 @@ const BrandForm = ({ brand }: BrandFormProps) => {
           </h2>
           <Button
             className="sticky top-0"
-            type="submit"
-            loading={form.formState.isSubmitting}
             disabled={form.formState.isSubmitting}
+            loading={form.formState.isSubmitting}
+            type="submit"
           >
             {t("common:save_entity", { entity: t("common:producer") })}
           </Button>
@@ -373,22 +370,19 @@ const BrandForm = ({ brand }: BrandFormProps) => {
               <Card template="1/2" title={t("common:logo")}>
                 <div className="flex items-end gap-6">
                   <Input
+                    accept="image/*"
+                    className="hidden"
+                    ref={logoFileFieldRef}
                     type="file"
                     onChange={(e) => onLogoFileChange(e)}
-                    className="hidden"
-                    accept="image/*"
-                    ref={logoFileFieldRef}
                   />
                   <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
                     {logoPreview || brand?.logoFile ? (
                       <Image
-                        src={
-                          logoPreview ||
-                          (brand?.logoFile?.presignedUrl.url as string)
-                        }
-                        fill
                         alt="..."
                         className="object-contain p-3"
+                        fill
+                        src={logoPreview || brand?.logoFile?.presignedUrl.url}
                       />
                     ) : (
                       <LucideWarehouse
@@ -399,8 +393,8 @@ const BrandForm = ({ brand }: BrandFormProps) => {
                   </div>
                   <div className="flex items-center gap-2">
                     <Button
-                      variant="secondary"
                       type="button"
+                      variant="secondary"
                       onClick={() => {
                         logoFileFieldRef.current?.click()
                       }}
@@ -413,8 +407,8 @@ const BrandForm = ({ brand }: BrandFormProps) => {
                     </Button>
                     {logoPreview && (
                       <Button
-                        variant="danger"
                         iconOnly
+                        variant="danger"
                         onClick={() => {
                           form.setValue("logoFileUuid", "")
                           setLogoFile(null)
@@ -433,22 +427,19 @@ const BrandForm = ({ brand }: BrandFormProps) => {
               <Card template="1/2" title={t("common:catalog")}>
                 <div className="flex items-end gap-6">
                   <Input
+                    accept="image/*"
+                    className="hidden"
+                    ref={CatalogFileRef}
                     type="file"
                     onChange={(e) => onCatalogFileChange(e)}
-                    className="hidden"
-                    accept="image/*"
-                    ref={CatalogFileRef}
                   />
                   <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
                     {catalogPreview || brand?.catalog ? (
                       <Image
-                        src={
-                          catalogPreview ||
-                          (brand?.catalog?.presignedUrl.url as string)
-                        }
-                        fill
                         alt="..."
                         className="object-contain p-3"
+                        fill
+                        src={catalogPreview || brand?.catalog?.presignedUrl.url}
                       />
                     ) : (
                       <LucideWarehouse
@@ -459,8 +450,8 @@ const BrandForm = ({ brand }: BrandFormProps) => {
                   </div>
                   <div className="flex items-center gap-2">
                     <Button
-                      variant="secondary"
                       type="button"
+                      variant="secondary"
                       onClick={() => {
                         CatalogFileRef.current?.click()
                       }}
@@ -473,8 +464,8 @@ const BrandForm = ({ brand }: BrandFormProps) => {
                     </Button>
                     {catalogPreview && (
                       <Button
-                        variant="danger"
                         iconOnly
+                        variant="danger"
                         onClick={() => {
                           form.setValue("catalogFileUuid", "")
                           setCatalogFile(null)
@@ -493,22 +484,21 @@ const BrandForm = ({ brand }: BrandFormProps) => {
               <Card template="1/2" title={t("common:price_list")}>
                 <div className="flex items-end gap-6">
                   <Input
+                    accept="image/*"
+                    className="hidden"
+                    ref={priceListFileRef}
                     type="file"
                     onChange={(e) => onPriceListfileChange(e)}
-                    className="hidden"
-                    accept="image/*"
-                    ref={priceListFileRef}
                   />
                   <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
                     {priceListPreview || brand?.priceList ? (
                       <Image
-                        src={
-                          priceListPreview ||
-                          (brand?.priceList?.presignedUrl.url as string)
-                        }
-                        fill
                         alt="..."
                         className="object-contain p-3"
+                        fill
+                        src={
+                          priceListPreview || brand?.priceList?.presignedUrl.url
+                        }
                       />
                     ) : (
                       <LucideWarehouse
@@ -519,8 +509,8 @@ const BrandForm = ({ brand }: BrandFormProps) => {
                   </div>
                   <div className="flex items-center gap-2">
                     <Button
-                      variant="secondary"
                       type="button"
+                      variant="secondary"
                       onClick={() => {
                         priceListFileRef.current?.click()
                       }}
@@ -533,8 +523,8 @@ const BrandForm = ({ brand }: BrandFormProps) => {
                     </Button>
                     {priceListPreview && (
                       <Button
-                        variant="danger"
                         iconOnly
+                        variant="danger"
                         onClick={() => {
                           form.setValue("priceListUuid", "")
                           setPriceListFile(null)
@@ -553,22 +543,22 @@ const BrandForm = ({ brand }: BrandFormProps) => {
               <Card template="1/2" title={t("common:banner")}>
                 <div className="flex items-end gap-6">
                   <Input
+                    accept="image/*"
+                    className="hidden"
+                    ref={bannerFileRef}
                     type="file"
                     onChange={(e) => onBannerfileChange("desktop", e)}
-                    className="hidden"
-                    accept="image/*"
-                    ref={bannerFileRef}
                   />
                   <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
                     {bannerPreview || brand?.bannerDesktop ? (
                       <Image
-                        src={
-                          bannerPreview ||
-                          (brand?.bannerDesktop?.presignedUrl.url as string)
-                        }
-                        fill
                         alt="..."
                         className="object-contain p-3"
+                        fill
+                        src={
+                          bannerPreview ||
+                          brand?.bannerDesktop?.presignedUrl.url
+                        }
                       />
                     ) : (
                       <LucideWarehouse
@@ -579,8 +569,8 @@ const BrandForm = ({ brand }: BrandFormProps) => {
                   </div>
                   <div className="flex items-center gap-2">
                     <Button
-                      variant="secondary"
                       type="button"
+                      variant="secondary"
                       onClick={() => {
                         bannerFileRef.current?.click()
                       }}
@@ -593,8 +583,8 @@ const BrandForm = ({ brand }: BrandFormProps) => {
                     </Button>
                     {bannerPreview && (
                       <Button
-                        variant="danger"
                         iconOnly
+                        variant="danger"
                         onClick={() => {
                           form.setValue("bannerUuid", "")
                           setBannerFile(null)
@@ -613,22 +603,22 @@ const BrandForm = ({ brand }: BrandFormProps) => {
               <Card template="1/2" title={t("common:mobile-banner")}>
                 <div className="flex items-end gap-6">
                   <Input
+                    accept="image/*"
+                    className="hidden"
+                    ref={mobileBannerFileRef}
                     type="file"
                     onChange={(e) => onBannerfileChange("mobile", e)}
-                    className="hidden"
-                    accept="image/*"
-                    ref={mobileBannerFileRef}
                   />
                   <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
                     {mobileBannerPreview || brand?.bannerMobile ? (
                       <Image
-                        src={
-                          mobileBannerPreview ||
-                          (brand?.bannerMobile?.presignedUrl.url as string)
-                        }
-                        fill
                         alt="..."
                         className="object-contain p-3"
+                        fill
+                        src={
+                          mobileBannerPreview ||
+                          brand?.bannerMobile?.presignedUrl.url
+                        }
                       />
                     ) : (
                       <LucideWarehouse
@@ -639,8 +629,8 @@ const BrandForm = ({ brand }: BrandFormProps) => {
                   </div>
                   <div className="flex items-center gap-2">
                     <Button
-                      variant="secondary"
                       type="button"
+                      variant="secondary"
                       onClick={() => {
                         mobileBannerFileRef.current?.click()
                       }}
@@ -653,8 +643,8 @@ const BrandForm = ({ brand }: BrandFormProps) => {
                     </Button>
                     {mobileBannerPreview && (
                       <Button
-                        variant="danger"
                         iconOnly
+                        variant="danger"
                         onClick={() => {
                           form.setValue("mobileBannerUuid", "")
                           setMobileBannerFile(null)

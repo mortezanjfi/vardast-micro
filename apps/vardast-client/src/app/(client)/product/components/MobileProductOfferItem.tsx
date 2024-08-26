@@ -106,7 +106,7 @@ const MobileProductOfferItem = ({ hasContactButton, offer, uom }: Props) => {
   )
 
   const showSellerContact = () => {
-    if (!!session?.data) {
+    if (session?.data) {
       createEventTrackerMutation.mutate({
         createEventTrackerInput: {
           type: EventTrackerTypes.ViewOffer,
@@ -126,8 +126,8 @@ const MobileProductOfferItem = ({ hasContactButton, offer, uom }: Props) => {
         <DialogContent>
           <DialogHeader className="border-b pb">
             <CardAvatar
-              url={offer.seller?.logoFile?.presignedUrl.url as string}
               name={offer.seller?.name || ""}
+              url={offer.seller?.logoFile?.presignedUrl.url}
             />
           </DialogHeader>
 
@@ -139,9 +139,9 @@ const MobileProductOfferItem = ({ hasContactButton, offer, uom }: Props) => {
               <div className="flex divide-x divide-alpha-200">
                 {mobile && mobile?.number ? (
                   <Link
-                    href={`tel:+98${mobile.number}`}
-                    dir="ltr"
                     className="font-semibold underline"
+                    dir="ltr"
+                    href={`tel:+98${mobile.number}`}
                   >
                     {digitsEnToFa(`${mobile.number}`)}
                   </Link>
@@ -157,9 +157,9 @@ const MobileProductOfferItem = ({ hasContactButton, offer, uom }: Props) => {
               <div className="flex divide-x divide-alpha-200">
                 {tel && tel.code && tel.number ? (
                   <Link
-                    href={`tel:+98${+tel.code}${tel.number}`}
-                    dir="ltr"
                     className="font-semibold underline"
+                    dir="ltr"
+                    href={`tel:+98${+tel.code}${tel.number}`}
                   >
                     {digitsEnToFa(`${tel.code}-${tel.number}`)}
                   </Link>
@@ -175,10 +175,10 @@ const MobileProductOfferItem = ({ hasContactButton, offer, uom }: Props) => {
               <div className="flex divide-x divide-alpha-200">
                 {offer && offer.url ? (
                   <Link
-                    target="_blank"
-                    href={offer.url}
-                    dir="ltr"
                     className="font-semibold underline"
+                    dir="ltr"
+                    href={offer.url}
+                    target="_blank"
                   >
                     {offer.url}
                   </Link>
@@ -192,12 +192,12 @@ const MobileProductOfferItem = ({ hasContactButton, offer, uom }: Props) => {
               offer.seller?.addresses.map(
                 ({ address, latitude, longitude, id }) => (
                   <AddressItem
-                    key={id}
                     address={{
                       address,
                       latitude,
                       longitude
                     }}
+                    key={id}
                   />
                 )
               )}
@@ -214,11 +214,11 @@ const MobileProductOfferItem = ({ hasContactButton, offer, uom }: Props) => {
           <div className="flex flex-1 items-center gap-3">
             <div className="relative h-24 w-24">
               <Image
-                src={offer?.seller.logoFile?.presignedUrl.url as string}
-                // src="/images/frame.png"
-                fill
                 alt={offer?.seller.name}
                 className="rounded-xl bg-white object-contain shadow-md"
+                src={offer?.seller.logoFile?.presignedUrl.url}
+                // src="/images/frame.png"
+                fill
               />
             </div>
             <div className="flex flex-1 flex-col gap-y-3">
@@ -243,7 +243,6 @@ const MobileProductOfferItem = ({ hasContactButton, offer, uom }: Props) => {
         {offer?.lastPublicConsumerPrice?.messagePrices?.length
           ? offer?.lastPublicConsumerPrice?.messagePrices.map((message) => (
               <div
-                key={message?.id}
                 className={clsx(
                   "border-100 flex items-center gap-x-1 rounded border p-2",
                   message?.type &&
@@ -251,6 +250,7 @@ const MobileProductOfferItem = ({ hasContactButton, offer, uom }: Props) => {
                       messageVariants[message?.type]
                     }-100`
                 )}
+                key={message?.id}
               >
                 <div className="h-5 w-5">
                   <InformationCircleIcon
@@ -295,8 +295,8 @@ const MobileProductOfferItem = ({ hasContactButton, offer, uom }: Props) => {
               {discount
                 ? discount.map((discountItem) => (
                     <div
-                      key={discountItem.id}
                       className="flex w-full items-center justify-end gap-x"
+                      key={discountItem.id}
                     >
                       <span className="text-sm text-alpha-500 line-through">
                         {discountItem.calculated_price &&
@@ -320,7 +320,7 @@ const MobileProductOfferItem = ({ hasContactButton, offer, uom }: Props) => {
             <div>
               {!hasContactButton && (
                 <Button
-                  onClick={showSellerContact}
+                  className="!py-2.5"
                   disabled={
                     (!offer.seller?.contacts.length &&
                       !offer.seller?.addresses.length) ||
@@ -328,8 +328,8 @@ const MobileProductOfferItem = ({ hasContactButton, offer, uom }: Props) => {
                   }
                   loading={createEventTrackerMutation.isLoading}
                   size="small"
-                  className="!py-2.5"
                   variant="outline-primary"
+                  onClick={showSellerContact}
                 >
                   اطلاعات تماس
                 </Button>
@@ -337,12 +337,12 @@ const MobileProductOfferItem = ({ hasContactButton, offer, uom }: Props) => {
             </div>
             {offer.lastPublicConsumerPrice?.amount && (
               <PriceTitle
-                size="xs"
                 price={
                   discount && discount.length && discount[0]?.calculated_price
                     ? +discount[0].calculated_price
                     : offer.lastPublicConsumerPrice?.amount
                 }
+                size="xs"
               />
             )}
           </div>

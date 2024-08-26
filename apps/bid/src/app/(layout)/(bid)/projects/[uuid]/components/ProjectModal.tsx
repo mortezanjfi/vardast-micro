@@ -88,7 +88,7 @@ const ProjectModal = ({
   )
 
   const onSubmit = (data: CreateProjectInput) => {
-    let body = {
+    const body = {
       ...data,
       wallet: data?.wallet ? digitsFaToEn(data?.wallet) : undefined
     }
@@ -185,10 +185,10 @@ const ProjectModal = ({
             <FormLabel>{`${t("common:wallet")} (${t("common:toman")})`}</FormLabel>
             <FormControl>
               <Input
-                type="tel"
-                inputMode="numeric"
                 className="placeholder:text-right"
+                inputMode="numeric"
                 placeholder={t("common:enter")}
+                type="tel"
                 {...field}
                 onChange={(e) => {
                   field.onChange(digitsEnToFa(e.target.value))
@@ -207,6 +207,13 @@ const ProjectModal = ({
             <FormLabel>{t("common:status")}</FormLabel>
             <FormControl>
               <SelectPopover
+                options={Object.entries(
+                  enumToKeyValueObject(MultiStatuses)
+                )?.map(([value, key]) => ({
+                  key: MultiStatusesFa[key as MultiStatuses]?.name_fa,
+                  value: value.toUpperCase()
+                }))}
+                value={`${field.value}`}
                 onSelect={(value) => {
                   form.setValue(
                     "status",
@@ -216,13 +223,6 @@ const ProjectModal = ({
                     }
                   )
                 }}
-                options={Object.entries(
-                  enumToKeyValueObject(MultiStatuses)
-                )?.map(([value, key]) => ({
-                  key: MultiStatusesFa[key as MultiStatuses]?.name_fa,
-                  value: value.toUpperCase()
-                }))}
-                value={`${field.value}`}
               />
             </FormControl>
             <FormMessage />
@@ -239,23 +239,23 @@ const ProjectModal = ({
             </FormLabel>
             <FormControl>
               <SelectPopover
-                onSelect={(value) => {
-                  form.setValue("legalId", +value, {
-                    shouldDirty: true
-                  })
-                }}
-                loading={getAllLegalUsers.isLoading}
                 disabled={
                   getAllLegalUsers?.data?.findAllLegals?.data.length === 0
                 }
-                setSearch={setNameOrUuid}
+                loading={getAllLegalUsers.isLoading}
                 options={getAllLegalUsers?.data?.findAllLegals?.data?.map(
                   (legal) => ({
                     key: `${legal?.name_company}`,
                     value: `${legal?.id}`
                   })
                 )}
+                setSearch={setNameOrUuid}
                 value={`${field.value}`}
+                onSelect={(value) => {
+                  form.setValue("legalId", +value, {
+                    shouldDirty: true
+                  })
+                }}
               />
             </FormControl>
             <FormMessage />

@@ -41,19 +41,12 @@ const CityFilterSection = ({
   return (
     <FilterBlock
       badgeNumber={selectedCityId ? 1 : null}
-      title="شهر"
       openDefault={true}
+      title="شهر"
     >
       <div className=" flex w-full flex-col gap-4">
         <Input
           autoFocus
-          value={cityQueryTemp}
-          onChange={(e) => {
-            setCityQueryTemp(e.target.value)
-            setCityQuery(e.target.value)
-          }}
-          type="text"
-          placeholder="شهر"
           className=" flex w-full
                       items-center
                           gap-2
@@ -62,16 +55,27 @@ const CityFilterSection = ({
                           px-4
                          
                            focus:!ring-0 disabled:bg-alpha-100"
+          placeholder="شهر"
+          type="text"
+          value={cityQueryTemp}
+          onChange={(e) => {
+            setCityQueryTemp(e.target.value)
+            setCityQuery(e.target.value)
+          }}
         />
         <div className=" flex max-h-44 flex-col overflow-y-auto">
           {cities?.data?.cities?.data?.map(
             (city) =>
               city && (
                 <Label.Root
-                  key={city.id}
                   className="flex items-center gap-2 border-b border-x-alpha-200 py-4"
+                  key={city.id}
                 >
                   <Checkbox.Root
+                    checked={
+                      city.id === selectedCityId
+                      // selectedCityId.find((id) => id === category.id)
+                    }
                     className="flex
                     h-5
                     w-5
@@ -85,10 +89,6 @@ const CityFilterSection = ({
                     outline-none
                     data-[state='checked']:border-primary-500
                          data-[state='checked']:bg-primary-500"
-                    checked={
-                      city.id === selectedCityId
-                      // selectedCityId.find((id) => id === category.id)
-                    }
                     onCheckedChange={
                       () => handleCheckboxChange(city.id)
                       // setSelectedCityId(city.id)

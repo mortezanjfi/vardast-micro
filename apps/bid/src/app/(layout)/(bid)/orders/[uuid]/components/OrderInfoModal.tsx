@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+ 
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
@@ -199,11 +199,7 @@ const OrderInfoModal = ({
             <FormLabel>{t("common:project")}</FormLabel>
             <FormControl>
               <SelectPopover
-                onSelect={(value) => {
-                  form.setValue("projectId", value, {
-                    shouldDirty: true
-                  })
-                }}
+                internalSearchable
                 loading={myProjectsQuery.data?.projects?.data?.length === 0}
                 options={myProjectsQuery.data?.projects?.data?.map(
                   (project) => ({
@@ -211,8 +207,12 @@ const OrderInfoModal = ({
                     value: `${project?.id}`
                   })
                 )}
-                internalSearchable
                 value={field.value}
+                onSelect={(value) => {
+                  form.setValue("projectId", value, {
+                    shouldDirty: true
+                  })
+                }}
               />
             </FormControl>
             <FormMessage />
@@ -227,18 +227,18 @@ const OrderInfoModal = ({
             <FormLabel>{t("common:address")}</FormLabel>
             <FormControl>
               <SelectPopover
-                onSelect={(value) => {
-                  form.setValue("addressId", +value, {
-                    shouldDirty: true
-                  })
-                }}
+                internalSearchable
                 loading={myProjectsQuery.data?.projects.data.length === 0}
                 options={addresses?.map((address) => ({
                   key: `${address.address.title} - ${address.address.address}`,
                   value: `${address?.address?.id}`
                 }))}
-                internalSearchable
                 value={`${field.value}`}
+                onSelect={(value) => {
+                  form.setValue("addressId", +value, {
+                    shouldDirty: true
+                  })
+                }}
               />
             </FormControl>
             <FormMessage />
@@ -253,11 +253,7 @@ const OrderInfoModal = ({
             <FormLabel>{t("common:category")}</FormLabel>
             <FormControl>
               <SelectPopover
-                onSelect={(value) => {
-                  form.setValue("categoryId", +value, {
-                    shouldDirty: true
-                  })
-                }}
+                internalSearchable
                 loading={myProjectsQuery.data?.projects.data.length === 0}
                 options={rootCategories?.data?.categories?.data?.map(
                   (rootCategory) => ({
@@ -265,8 +261,12 @@ const OrderInfoModal = ({
                     value: `${rootCategory?.id}`
                   })
                 )}
-                internalSearchable
                 value={`${field.value}`}
+                onSelect={(value) => {
+                  form.setValue("categoryId", +value, {
+                    shouldDirty: true
+                  })
+                }}
               />
             </FormControl>
             <FormMessage />
@@ -281,18 +281,18 @@ const OrderInfoModal = ({
             <FormLabel>{t("common:submission-time")}</FormLabel>
             <FormControl>
               <DatePicker
-                value={value ? new DateObject(new Date(value)) : ""}
-                onChange={(dateObject: DateObject) => {
-                  onChange(
-                    dateObject?.isValid ? dateObject?.toDate?.().toString() : ""
-                  )
-                }}
                 render={(value, openCalendar) => {
                   return (
                     <SelectPopoverTrigger
                       label={value}
                       onClick={openCalendar}
                     />
+                  )
+                }}
+                value={value ? new DateObject(new Date(value)) : ""}
+                onChange={(dateObject: DateObject) => {
+                  onChange(
+                    dateObject?.isValid ? dateObject?.toDate?.().toString() : ""
                   )
                 }}
               />
@@ -309,18 +309,18 @@ const OrderInfoModal = ({
             <FormLabel>{t("common:bid-start-time")}</FormLabel>
             <FormControl>
               <DatePicker
-                value={value ? new DateObject(new Date(value)) : ""}
-                onChange={(dateObject: DateObject) => {
-                  onChange(
-                    dateObject?.isValid ? dateObject?.toDate?.().toString() : ""
-                  )
-                }}
                 render={(value, openCalendar) => {
                   return (
                     <SelectPopoverTrigger
                       label={value}
                       onClick={openCalendar}
                     />
+                  )
+                }}
+                value={value ? new DateObject(new Date(value)) : ""}
+                onChange={(dateObject: DateObject) => {
+                  onChange(
+                    dateObject?.isValid ? dateObject?.toDate?.().toString() : ""
                   )
                 }}
               />
@@ -337,18 +337,18 @@ const OrderInfoModal = ({
             <FormLabel>{t("common:bid-end-time")}</FormLabel>
             <FormControl>
               <DatePicker
-                value={value ? new DateObject(new Date(value)) : ""}
-                onChange={(dateObject: DateObject) => {
-                  onChange(
-                    dateObject?.isValid ? dateObject?.toDate?.().toString() : ""
-                  )
-                }}
                 render={(value, openCalendar) => {
                   return (
                     <SelectPopoverTrigger
                       label={value}
                       onClick={openCalendar}
                     />
+                  )
+                }}
+                value={value ? new DateObject(new Date(value)) : ""}
+                onChange={(dateObject: DateObject) => {
+                  onChange(
+                    dateObject?.isValid ? dateObject?.toDate?.().toString() : ""
                   )
                 }}
               />
@@ -397,7 +397,7 @@ const OrderInfoModal = ({
         render={({ field }) => (
           <FormItem>
             <FormLabel>{t("common:pay-method")}</FormLabel>
-            <FormControl toggleInputGroup="h-full" className="h-14">
+            <FormControl className="h-14" toggleInputGroup="h-full">
               <ToggleGroup
                 className="input-field grid grid-cols-2 p-0.5"
                 type="single"

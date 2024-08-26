@@ -63,15 +63,15 @@ const AdminOrSellerDesktopHeader = (_: AdminOrSellerDesktopHeaderProps) => {
     <header className="fixed left-0 right-0 top-0 z-30 h-header border-b bg-alpha-white px-6 sm:px-0">
       <div className="container grid grid-cols-12 grid-rows-2 items-center gap-y py-7 md:grid-rows-1 md:gap-x-12">
         <Link
+          className="relative col-span-4 row-start-1 flex h-full items-center md:col-span-3 lg:col-span-3"
           href="/"
           prefetch={false}
-          className="relative col-span-4 row-start-1 flex h-full items-center md:col-span-3 lg:col-span-3"
         >
           <Image
-            src={logoHorizontal}
             alt={`وردست`}
             className="w-auto object-contain lg:h-12"
             priority
+            src={logoHorizontal}
           />
         </Link>
         <div className="col-span-12 row-start-2 h-full rounded ring-1 ring-alpha-200 md:col-span-4 md:row-start-1 lg:col-span-6">
@@ -99,24 +99,24 @@ const AdminOrSellerDesktopHeader = (_: AdminOrSellerDesktopHeaderProps) => {
                       </NavigationMenuItem>
                       <NavigationMenuItem>
                         <NavigationMenuTrigger
-                          onPointerMove={(event) => event.preventDefault()}
-                          onPointerLeave={(event) => event.preventDefault()}
                           className="!px-0"
+                          onPointerLeave={(event) => event.preventDefault()}
+                          onPointerMove={(event) => event.preventDefault()}
                         ></NavigationMenuTrigger>
                         <NavigationMenuContent
-                          onPointerMove={(event) => event.preventDefault()}
                           onPointerLeave={(event) => event.preventDefault()}
+                          onPointerMove={(event) => event.preventDefault()}
                         >
                           <div className="bg-alpha-white py-4">
                             <NavigationMenuLink>
                               <div className="flex items-center gap-2 px-4 py-2">
                                 <Avatar className="rounded-full border border-secondary">
                                   <AvatarImage
+                                    alt="seller"
                                     src={
                                       session?.profile?.avatarFile
-                                        ?.url as string
+                                        ?.url
                                     }
-                                    alt="seller"
                                   />
 
                                   <AvatarFallback>
@@ -145,9 +145,9 @@ const AdminOrSellerDesktopHeader = (_: AdminOrSellerDesktopHeaderProps) => {
                             </NavigationMenuLink>
                             <NavigationMenuLink className="flex w-full justify-start text-nowrap bg-alpha-white px-4 py-2 md:z-50">
                               <Link
-                                prefetch={false}
-                                href="/auth/signout"
                                 className="btn !text-error"
+                                href="/auth/signout"
+                                prefetch={false}
                               >
                                 خروج از حساب کاربری
                               </Link>
@@ -160,8 +160,8 @@ const AdminOrSellerDesktopHeader = (_: AdminOrSellerDesktopHeaderProps) => {
                 </div>
               ) : (
                 <Link
-                  href={`${paths.signin}?ru=${pathname}`}
                   className="btn btn-primary col-span-2 flex text-sm font-semibold"
+                  href={`${paths.signin}?ru=${pathname}`}
                 >
                   ورود
                 </Link>

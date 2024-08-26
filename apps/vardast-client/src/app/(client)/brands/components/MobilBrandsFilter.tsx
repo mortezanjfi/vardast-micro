@@ -60,10 +60,10 @@ const MobilBrandsFilter = ({
             <div className="sticky top-0 border-b border-alpha-200 bg-white py-4">
               <div className="flex items-center gap-2">
                 <Button
-                  onClick={() => setFiltersVisibility(false)}
-                  variant="ghost"
-                  size="small"
                   iconOnly
+                  size="small"
+                  variant="ghost"
+                  onClick={() => setFiltersVisibility(false)}
                 >
                   <LucideArrowRight className="h-5 w-5" />
                 </Button>
@@ -73,13 +73,13 @@ const MobilBrandsFilter = ({
 
             <div className="flex justify-end pt-4">
               <Button
-                onClick={() => {
-                  removeFilters()
-                }}
+                className=" !p-0 text-sm text-error-500"
                 disabled={!selectedCategoryIds?.length && !selectedCityId}
                 type="button"
                 variant="ghost"
-                className=" !p-0 text-sm text-error-500"
+                onClick={() => {
+                  removeFilters()
+                }}
               >
                 حذف تمام فیلتر‌ها
               </Button>
@@ -87,13 +87,6 @@ const MobilBrandsFilter = ({
 
             <Input
               autoFocus
-              value={brandsQueryTemp}
-              onChange={(e) => {
-                setBrandsQueryTemp(e.target.value)
-                setBrandsQuery(e.target.value)
-              }}
-              type="text"
-              placeholder="نام برند"
               className="my-4 flex  w-full
                           items-center
                           gap-2
@@ -102,6 +95,13 @@ const MobilBrandsFilter = ({
                           px-4
                           py-3.5
                            focus:!ring-0 disabled:bg-alpha-100"
+              placeholder="نام برند"
+              type="text"
+              value={brandsQueryTemp}
+              onChange={(e) => {
+                setBrandsQueryTemp(e.target.value)
+                setBrandsQuery(e.target.value)
+              }}
             />
             {/* args.categoryId means user is in the brand tab of a category */}
             {!args.categoryId && (

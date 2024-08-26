@@ -30,17 +30,17 @@ const FiltersBar = (_: Props) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem
+              asChild
               onSelect={(event) => {
                 event.preventDefault
               }}
-              asChild
             >
-              <Label noStyle className="flex items-center">
+              <Label className="flex items-center" noStyle>
                 <>
                   <Switch
-                    onCheckedChange={toggleActivesOnly}
                     checked={activesOnly}
                     size="small"
+                    onCheckedChange={toggleActivesOnly}
                   />
                   <span>{t("common:is_active")}</span>
                 </>

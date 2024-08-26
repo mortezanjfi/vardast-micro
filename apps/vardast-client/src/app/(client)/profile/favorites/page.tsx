@@ -24,7 +24,7 @@ const FavoritePage = async () => {
   const isMobileView = await CheckIsMobileView()
   const session = await getServerSession(authOptions)
 
-  if (!!session) {
+  if (session) {
     await queryClient.prefetchQuery(
       [
         QUERY_FUNCTIONS_KEY.GET_ALL_USER_FAVORITE_PRODUCT,

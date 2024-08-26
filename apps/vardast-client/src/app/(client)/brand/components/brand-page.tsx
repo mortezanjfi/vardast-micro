@@ -16,7 +16,7 @@ import useTranslation from "next-translate/useTranslation"
 
 interface BrandPageProps {
   isMobileView: boolean
-  slug: Array<string | number>
+  slug: (string | number)[]
   args: IndexProductInput
 }
 
@@ -54,10 +54,10 @@ const BrandPage = ({ isMobileView, args, slug }: BrandPageProps) => {
         <div className="relative flex h-16 w-full items-center justify-center rounded-md border border-alpha-200 bg-alpha-50 md:h-28 md:w-28">
           {brandQuery?.data.brand.logoFile ? (
             <Image
-              src={brandQuery?.data.brand.logoFile.presignedUrl.url}
-              fill
               alt={brandQuery?.data.brand.name}
               className="object-contain p-3"
+              fill
+              src={brandQuery?.data.brand.logoFile.presignedUrl.url}
             />
           ) : (
             <LucideWarehouse
@@ -69,9 +69,9 @@ const BrandPage = ({ isMobileView, args, slug }: BrandPageProps) => {
       </div>
       <ProductList
         args={args}
-        isMobileView={isMobileView}
-        selectedCategoryIds={args["categoryIds"] || undefined}
         brandId={+slug[0]}
+        isMobileView={isMobileView}
+        selectedCategoryIds={args.categoryIds || undefined}
       />
     </>
   )

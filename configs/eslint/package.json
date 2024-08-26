@@ -5,10 +5,15 @@
   "type": "module",
   "license": "MIT",
   "files": [
-    "./base.js",
-    "./nextjs.js",
-    "./react.js"
+    "./base.cjs",
+    "./nextjs.cjs",
+    "./react.cjs"
   ],
+  "exports": {
+    "./base": "./base.cjs",
+    "./nextjs": "./nextjs.cjs",
+    "./react": "./react.cjs"
+  },
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
@@ -34,7 +39,7 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "./base.js"
+      "./base"
     ]
   },
   "prettier": "@vardast/prettier-config"

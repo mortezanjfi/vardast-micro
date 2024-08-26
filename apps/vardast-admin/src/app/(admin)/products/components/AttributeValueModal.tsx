@@ -238,7 +238,7 @@ const AttributeValueModal = ({
           </Alert>
         )}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+          <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-6 py-8">
               <FormField
                 control={form.control}
@@ -253,12 +253,12 @@ const AttributeValueModal = ({
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            className="input-field flex items-center text-start"
                             disabled={
                               attributes.isLoading || attributes.isError
                             }
                             noStyle
                             role="combobox"
-                            className="input-field flex items-center text-start"
                           >
                             {field.value
                               ? attributes.data?.categoryAttribuite.attributes.find(
@@ -289,8 +289,8 @@ const AttributeValueModal = ({
                               (attribute) =>
                                 attribute && (
                                   <CommandItem
-                                    value={attribute.name}
                                     key={attribute.id}
+                                    value={attribute.name}
                                     onSelect={(value) => {
                                       setSelectAttribute(() => {
                                         const item =
@@ -348,10 +348,10 @@ const AttributeValueModal = ({
                     <FormItem>
                       <FormLabel>{t("common:value")}</FormLabel>
                       <Select
+                        defaultValue={field.value}
                         onValueChange={(value) => {
                           form.setValue("value", value)
                         }}
-                        defaultValue={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -363,7 +363,7 @@ const AttributeValueModal = ({
                         <SelectContent className="z-[9999]">
                           {selectAttribute.values?.options.map(
                             (option: string) => (
-                              <SelectItem value={option} key={option}>
+                              <SelectItem key={option} value={option}>
                                 {option}
                               </SelectItem>
                             )
@@ -414,17 +414,17 @@ const AttributeValueModal = ({
             <DialogFooter>
               <div className="flex items-center justify-end gap-2">
                 <Button
-                  variant="ghost"
-                  type="button"
                   disabled={form.formState.isSubmitting}
+                  type="button"
+                  variant="ghost"
                   onClick={() => onClose()}
                 >
                   {t("common:cancel")}
                 </Button>
                 <Button
-                  type="submit"
-                  loading={form.formState.isSubmitting}
                   disabled={form.formState.isSubmitting}
+                  loading={form.formState.isSubmitting}
+                  type="submit"
                 >
                   {t("common:submit")}
                 </Button>

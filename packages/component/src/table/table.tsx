@@ -220,8 +220,8 @@ const Table = <
         cell: ({ row }) => (
           <Checkbox
             checked={row.getIsSelected()}
-            onCheckedChange={(value) => row.toggleSelected(value as boolean)}
             disabled={!row.getCanSelect()}
+            onCheckedChange={(value) => row.toggleSelected(value as boolean)}
           />
         )
       }
@@ -334,15 +334,15 @@ const Table = <
       {filters && (
         <Form {...form}>
           <form
+            className="pb-6"
+            noValidate
+            onReset={onReset}
             onSubmit={(e) => {
               e.preventDefault()
               form.handleSubmit(onSubmit)(e)
             }}
-            className="pb-6"
-            onReset={onReset}
-            noValidate
           >
-            <Filter form={form} filters={filters} />
+            <Filter filters={filters} form={form} />
           </form>
         </Form>
       )}
@@ -372,8 +372,8 @@ const Table = <
                           return (
                             <th
                               className={clsx(header.id === "row" && "w-16")}
-                              key={header.id}
                               colSpan={header.colSpan}
+                              key={header.id}
                             >
                               {header.isPlaceholder ? null : (
                                 <div>
@@ -393,10 +393,10 @@ const Table = <
                     {table?.getRowModel()?.rows?.map((row) => {
                       return (
                         <tr
-                          key={row.id}
                           className={clsx(
                             row.getIsSelected() && "!bg-primary-50"
                           )}
+                          key={row.id}
                         >
                           {row.getVisibleCells()?.map((cell) => {
                             const clickable =
@@ -405,29 +405,29 @@ const Table = <
                               cell.column.id !== "action"
                             return (
                               <td
-                                onClick={() => {
-                                  if (clickable && onRow?.onClick) {
-                                    onRow.onClick(row)
-                                  }
-                                }}
                                 className={clsx(
                                   clickable && "relative cursor-pointer",
                                   cell.column.id === "row" &&
                                     "!px-2 text-center"
                                 )}
                                 key={cell.id}
+                                onClick={() => {
+                                  if (clickable && onRow?.onClick) {
+                                    onRow.onClick(row)
+                                  }
+                                }}
                               >
                                 {clickable && onRow?.url && (
                                   <Link
-                                    className={clsx(
-                                      "absolute inset-0 h-full w-full cursor-pointer"
-                                    )}
-                                    href={
+                                    aria-label={
                                       typeof onRow.url === "string"
                                         ? onRow.url
                                         : onRow.url(row)
                                     }
-                                    aria-label={
+                                    className={clsx(
+                                      "absolute inset-0 h-full w-full cursor-pointer"
+                                    )}
+                                    href={
                                       typeof onRow.url === "string"
                                         ? onRow.url
                                         : onRow.url(row)

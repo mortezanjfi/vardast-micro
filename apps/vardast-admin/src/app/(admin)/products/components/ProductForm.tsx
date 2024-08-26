@@ -201,7 +201,7 @@ const ProductForm = ({ product }: ProductFormProps) => {
       uomId: product?.uom.id,
       isActive: product?.isActive,
       status: product?.status,
-      attributes: product?.attributeValues as AttributeValue[]
+      attributes: product?.attributeValues
     }
   })
 
@@ -284,20 +284,20 @@ const ProductForm = ({ product }: ProductFormProps) => {
       {product && (
         <CreatePriceModal
           open={createPriceModalOpen}
-          onOpenChange={setCreatePriceModalOpen}
           productId={product.id}
+          onOpenChange={setCreatePriceModalOpen}
         />
       )}
       {product && (
         <AttributeValueModal
+          attribute={attributeToEdit}
+          categoryId={product.category.id}
           open={createAttributeModalOpen}
+          productId={product.id}
           onOpenChange={(state) => {
             setCreateAttributeModalOpen(state)
             setAttributeToEdit(undefined)
           }}
-          productId={product.id}
-          categoryId={product.category.id}
-          attribute={attributeToEdit}
         />
       )}
       <Form {...form}>
@@ -315,13 +315,13 @@ const ProductForm = ({ product }: ProductFormProps) => {
             </AlertDescription>
           </Alert>
         )}
-        <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+        <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <div className="create-product">
             <div className="mb-6 mt-8 flex items-end justify-between">
               <h2 className="text-3xl font-black text-alpha-800">
                 {name ? name : t("common:new_product")}
               </h2>
-              <Button type="submit" className="sticky top-0">
+              <Button className="sticky top-0" type="submit">
                 {t("common:save_entity", { entity: t("common:product") })}
               </Button>
             </div>
@@ -371,10 +371,10 @@ const ProductForm = ({ product }: ProductFormProps) => {
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
+                              className="input-field flex items-center text-start"
                               disabled={uoms.isLoading || uoms.isError}
                               noStyle
                               role="combobox"
-                              className="input-field flex items-center text-start"
                             >
                               {field.value
                                 ? uoms.data?.uomsWithoutPagination.find(
@@ -404,8 +404,8 @@ const ProductForm = ({ product }: ProductFormProps) => {
                                 (uom) =>
                                   uom && (
                                     <CommandItem
-                                      value={uom.name}
                                       key={uom.id}
+                                      value={uom.name}
                                       onSelect={(value) => {
                                         form.setValue(
                                           "uomId",
@@ -446,9 +446,9 @@ const ProductForm = ({ product }: ProductFormProps) => {
                       <FormLabel>{t("common:product_type")}</FormLabel>
                       <FormControl>
                         <RadioGroup
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
                           className="grid w-full grid-cols-1 lg:grid-cols-4 lg:gap-6"
+                          defaultValue={field.value}
+                          onValueChange={field.onChange}
                         >
                           <FormItem className="product-type-item relative">
                             <FormControl className="invisible absolute inset-0 h-full w-full">
@@ -457,8 +457,8 @@ const ProductForm = ({ product }: ProductFormProps) => {
                               />
                             </FormControl>
                             <FormLabel
-                              noStyle
                               className="product-type-item-wrapper"
+                              noStyle
                             >
                               <div className="product-type-item-label">
                                 <LucidePackage
@@ -482,8 +482,8 @@ const ProductForm = ({ product }: ProductFormProps) => {
                               />
                             </FormControl>
                             <FormLabel
-                              noStyle
                               className="product-type-item-wrapper"
+                              noStyle
                             >
                               <div className="product-type-item-label">
                                 <LucideGlobe
@@ -507,8 +507,8 @@ const ProductForm = ({ product }: ProductFormProps) => {
                               />
                             </FormControl>
                             <FormLabel
-                              noStyle
                               className="product-type-item-wrapper"
+                              noStyle
                             >
                               <div className="product-type-item-label">
                                 <LucideBoxes
@@ -532,8 +532,8 @@ const ProductForm = ({ product }: ProductFormProps) => {
                               />
                             </FormControl>
                             <FormLabel
-                              noStyle
                               className="product-type-item-wrapper"
+                              noStyle
                             >
                               <div className="product-type-item-label">
                                 <LucideGift
@@ -563,13 +563,13 @@ const ProductForm = ({ product }: ProductFormProps) => {
                     <FormItem>
                       <FormLabel>{t("common:status")}</FormLabel>
                       <Select
+                        defaultValue={field.value}
                         onValueChange={(value) => {
                           form.setValue(
                             "status",
                             value as ThreeStateSupervisionStatuses
                           )
                         }}
-                        defaultValue={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -580,7 +580,7 @@ const ProductForm = ({ product }: ProductFormProps) => {
                         </FormControl>
                         <SelectContent>
                           {Object.keys(statuses).map((type) => (
-                            <SelectItem value={statuses[type]} key={type}>
+                            <SelectItem key={type} value={statuses[type]}>
                               {type}
                             </SelectItem>
                           ))}
@@ -620,10 +620,10 @@ const ProductForm = ({ product }: ProductFormProps) => {
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
+                              className="input-field flex items-center text-start"
                               disabled={brands.isLoading || brands.isError}
                               noStyle
                               role="combobox"
-                              className="input-field flex items-center text-start"
                             >
                               {field.value
                                 ? brands.data?.brandsWithoutPagination.find(
@@ -639,16 +639,16 @@ const ProductForm = ({ product }: ProductFormProps) => {
                         <PopoverContent>
                           <Command>
                             <CommandInput
-                              loading={brands.isLoading}
-                              value={brandsQueryTemp}
                               defaultValue={brandsQuery}
+                              loading={brands.isLoading}
+                              placeholder={t("common:search_entity", {
+                                entity: t("common:producer")
+                              })}
+                              value={brandsQueryTemp}
                               onValueChange={(newQuery) => {
                                 setBrandsQuery(newQuery)
                                 setBrandsQueryTemp(newQuery)
                               }}
-                              placeholder={t("common:search_entity", {
-                                entity: t("common:producer")
-                              })}
                             />
                             <CommandEmpty>
                               {t("common:no_entity_found", {
@@ -660,8 +660,8 @@ const ProductForm = ({ product }: ProductFormProps) => {
                                 (brand) =>
                                   brand && (
                                     <CommandItem
-                                      value={brand.name}
                                       key={brand.id}
+                                      value={brand.name}
                                       onSelect={(value) => {
                                         form.setValue(
                                           "brandId",
@@ -707,12 +707,12 @@ const ProductForm = ({ product }: ProductFormProps) => {
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
+                              className="input-field flex items-center text-start"
                               disabled={
                                 categories.isLoading || categories.isError
                               }
                               noStyle
                               role="combobox"
-                              className="input-field flex items-center text-start"
                             >
                               {field.value
                                 ? categories.data?.allCategoriesV2.find(
@@ -729,16 +729,16 @@ const ProductForm = ({ product }: ProductFormProps) => {
                         <PopoverContent>
                           <Command>
                             <CommandInput
-                              loading={categories.isLoading}
-                              value={categoryQueryTemp}
                               defaultValue={categoryQuery}
+                              loading={categories.isLoading}
+                              placeholder={t("common:search_entity", {
+                                entity: t("common:category")
+                              })}
+                              value={categoryQueryTemp}
                               onValueChange={(newQuery) => {
                                 setCategoryQuery(newQuery)
                                 setCategoryQueryTemp(newQuery)
                               }}
-                              placeholder={t("common:search_entity", {
-                                entity: t("common:category")
-                              })}
                             />
                             <CommandEmpty>
                               {t("common:no_entity_found", {
@@ -750,8 +750,8 @@ const ProductForm = ({ product }: ProductFormProps) => {
                                 (category) =>
                                   category && (
                                     <CommandItem
-                                      value={category.title}
                                       key={category.id}
+                                      value={category.title}
                                       onSelect={(value) => {
                                         form.setValue(
                                           "categoryId",
@@ -949,8 +949,8 @@ const ProductForm = ({ product }: ProductFormProps) => {
                     setImages((prevImages) => [
                       ...prevImages,
                       {
-                        uuid: file.uuid as string,
-                        expiresAt: file.expiresAt as string
+                        uuid: file.uuid,
+                        expiresAt: file.expiresAt
                       }
                     ])
                   }}

@@ -35,26 +35,26 @@ export const ProductFormNew = ({ product }: ProductFormNewProps) => {
 
         <TabsContent value="information">
           <ProductInformationTab
-            product={product as Product}
-            setNewProductData={setNewProductData}
-            setActiveTab={setActiveTab}
             activeTab={activeTab}
+            product={product}
+            setActiveTab={setActiveTab}
+            setNewProductData={setNewProductData}
           />
         </TabsContent>
         <TabsContent value="catalog">
           <ProductFeaturesTab
-            product={product as Product}
-            setNewProductData={setNewProductData}
             activeTab={activeTab}
+            product={product}
             setActiveTab={setActiveTab}
+            setNewProductData={setNewProductData}
           />
         </TabsContent>
         <TabsContent value="price">
           <ProductsVariantsTab
-            product={product as Product}
-            setNewProductData={setNewProductData}
             activeTab={activeTab}
+            product={product}
             setActiveTab={setActiveTab}
+            setNewProductData={setNewProductData}
           />
         </TabsContent>
       </Tabs>{" "}

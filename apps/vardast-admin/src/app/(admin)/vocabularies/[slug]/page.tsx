@@ -11,7 +11,7 @@ const CategoriesPage = async ({ params }: { params: { slug: string } }) => {
     redirect("/")
   }
 
-  const slug = params.slug as string
+  const slug = params.slug
 
   return <Categories session={session} slug={slug} />
 }

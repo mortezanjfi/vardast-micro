@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+ 
 import { ReactElement, useState } from "react"
 import { ICategoryListLoader } from "@vardast/type/Loader"
 import clsx from "clsx"

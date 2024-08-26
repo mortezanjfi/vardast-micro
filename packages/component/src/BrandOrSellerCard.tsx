@@ -20,10 +20,10 @@ export const BrandOrSellerCardSkeleton = () => {
             className={`relative row-span-4 w-full transform transition-all sm:!h-32 sm:py md:!h-40 lg:!h-60 lg:w-full`}
           >
             <Image
-              src={frameLessImage}
               alt="skeleton"
-              fill
               className="animated-card object-contain"
+              fill
+              src={frameLessImage}
             />
           </div>
           <div className="row-span-3 grid grid-rows-1 gap-y-1 p-2 sm:w-full sm:px-0">
@@ -90,21 +90,21 @@ const BrandOrSellerCard = forwardRef(
 
     return (
       <Link
-        ref={ref}
+        className="relative overflow-hidden rounded bg-alpha-white transition hover:z-10 md:h-auto md:rounded-none md:ring-2 md:!ring-alpha-200 md:hover:shadow-lg"
         href={checkSellerRedirectUrl(
           `/${content.__typename?.toLowerCase()}/${content?.id}/${content.name}`
         )}
+        ref={ref}
         onClick={() => {
           setSelectedItemId && setSelectedItemId(content.id)
         }}
-        className="relative overflow-hidden rounded bg-alpha-white transition hover:z-10 md:h-auto md:rounded-none md:ring-2 md:!ring-alpha-200 md:hover:shadow-lg"
       >
         {content.id === selectedItemId && (
           <div className="absolute left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center bg-alpha-white bg-opacity-50">
             {/* <Loader2Icon className="h-10 w-10 animate-spin text-primary" /> */}
           </div>
         )}
-        <div ref={containerRef} className="flex h-full w-full flex-col lg:px-4">
+        <div className="flex h-full w-full flex-col lg:px-4" ref={containerRef}>
           <div className="grid flex-1 grid-rows-7 items-start lg:flex lg:flex-col">
             <div
               className={`relative row-span-4 w-full transform transition-all sm:!h-32 md:!h-40 lg:!h-60 lg:w-full`}
@@ -114,24 +114,24 @@ const BrandOrSellerCard = forwardRef(
             >
               {content?.logoFile?.presignedUrl.url ? (
                 <Image
-                  src={content.logoFile.presignedUrl.url as string}
                   alt={content.name}
-                  fill
                   className="object-contain"
+                  fill
+                  src={content.logoFile.presignedUrl.url}
                 />
               ) : (
                 <Image
-                  src={sellerBlankImage}
                   alt={content.name}
-                  fill
                   className="object-contain"
+                  fill
+                  src={sellerBlankImage}
                 />
               )}
             </div>
             <div className="row-span-3 grid grid-rows-1 gap-y-1 p-2">
               <h6
-                title={content.name}
                 className="line-clamp-2 h-8 font-semibold text-alpha-800"
+                title={content.name}
               >
                 {content.name}
               </h6>
@@ -147,10 +147,10 @@ const BrandOrSellerCard = forwardRef(
               <div className="flex items-center justify-between">
                 <p className="text-xs text-primary-500">
                   {(content as Brand).products && (content as Brand)?.sum
-                    ? `${digitsEnToFa((content as Brand).sum as number)} کالا`
+                    ? `${digitsEnToFa((content as Brand).sum)} کالا`
                     : ""}
                   {!(content as Brand).products && (content as Seller)?.sum
-                    ? `${digitsEnToFa((content as Seller).sum as number)} کالا`
+                    ? `${digitsEnToFa((content as Seller).sum)} کالا`
                     : ""}
                 </p>
                 {/* {content.rating && content.rating > 0 ? (

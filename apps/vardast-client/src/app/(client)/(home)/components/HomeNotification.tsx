@@ -29,7 +29,7 @@ const HomeNotification = (_: HomeNotificationProps) => {
   const downloadPdf = (e) => {
     e.preventDefault()
     setLocalStoragePdf(true)
-    if (!!session?.data) {
+    if (session?.data) {
       window.location.href = pdfBlogUrl
       return
     }
@@ -53,12 +53,16 @@ const HomeNotification = (_: HomeNotificationProps) => {
     <>
       {downloadPdfModal && pathname === "/" && (
         <div
-          onClick={downloadPdf}
           className={clsx(
             "fixed bottom-[calc(env(safe-area-inset-bottom)*0.5+8rem)] left-0 right-0 z-50 flex w-full max-w-[500px] transform cursor-pointer items-center justify-between gap-x bg-info px-6 py transition-all md:bottom-10 md:right-10 md:ml-auto md:rounded-lg md:px-12 md:py-4"
           )}
+          onClick={downloadPdf}
         >
           <Button
+            className="absolute -top-5 right-5 h-7 w-7 !bg-secondary-800"
+            iconOnly
+            size="small"
+            variant="ghost"
             onClick={(e) => {
               e.stopPropagation()
               e.nativeEvent.preventDefault()
@@ -66,10 +70,6 @@ const HomeNotification = (_: HomeNotificationProps) => {
               setLocalStoragePdf()
               setDownloadPdfModal(false)
             }}
-            size="small"
-            className="absolute -top-5 right-5 h-7 w-7 !bg-secondary-800"
-            iconOnly
-            variant="ghost"
           >
             <LucideX className="h-full w-full text-alpha-white" />
           </Button>
@@ -81,8 +81,8 @@ const HomeNotification = (_: HomeNotificationProps) => {
           <Button
             // loading={createEventTrackerDownloadPdfMutation.isLoading}
             // disabled={createEventTrackerDownloadPdfMutation.isLoading}
-            size="small"
             className="!bg-error !px-5 !py-3 font-bold"
+            size="small"
             variant="primary"
           >
             دانلود

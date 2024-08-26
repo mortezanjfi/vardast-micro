@@ -37,13 +37,13 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-// eslint-disable-next-line no-unused-vars
+ 
 enum LoginOptions {
-  // eslint-disable-next-line no-unused-vars
+   
   PASSWORD = "PASSWORD",
-  // eslint-disable-next-line no-unused-vars
+   
   OTP = "OTP",
-  // eslint-disable-next-line no-unused-vars
+   
   VERIFY_OTP = "VERIFY_OTP"
 }
 
@@ -92,9 +92,9 @@ const SigninFormContent = ({
           }
 
           if (nextState === "VALIDATE_OTP") {
-            setValidationKey(validationKey as string)
-            startCountdown(remainingSeconds as number)
-            setMessage(message as string)
+            setValidationKey(validationKey)
+            startCountdown(remainingSeconds)
+            setMessage(message)
             setFormState(LoginOptions.VERIFY_OTP)
             setMessage(null)
             setErrors(null)
@@ -132,7 +132,7 @@ const SigninFormContent = ({
           if (callback?.ok && !callback?.error) {
             setErrors(null)
             setLoginErrors(null)
-            setMessage(message as string)
+            setMessage(message)
             await updateSession(session)
             router.refresh()
             setTimeout(() => {
@@ -221,7 +221,7 @@ const SigninFormContent = ({
     if (callback?.ok && !callback?.error) {
       setErrors(null)
       setLoginErrors(null)
-      setMessage(message as string)
+      setMessage(message)
       await updateSession(session)
       router.refresh()
       setTimeout(() => {
@@ -302,10 +302,10 @@ const SigninFormContent = ({
         {formState === LoginOptions.PASSWORD && (
           <Form {...form}>
             <form
-              id="login-username"
-              onSubmit={form.handleSubmit(onSubmitStepZero)}
-              noValidate
               className="flex flex-col gap-8"
+              id="login-username"
+              noValidate
+              onSubmit={form.handleSubmit(onSubmitStepZero)}
             >
               <FormField
                 control={form.control}
@@ -314,10 +314,10 @@ const SigninFormContent = ({
                   <FormItem>
                     <FormControl>
                       <Input
-                        type="tel"
-                        inputMode="numeric"
                         className="placeholder:text-right"
+                        inputMode="numeric"
                         placeholder={t("common:cellphone")}
+                        type="tel"
                         {...field}
                         onChange={(e) =>
                           e.target.value.length <= 11 &&
@@ -337,9 +337,9 @@ const SigninFormContent = ({
                     <FormControl>
                       <div className="flex w-full gap-5">
                         <button
+                          className="absolute inset-y-0 left-0 flex items-center px-2 text-sm leading-5"
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute inset-y-0 left-0 flex items-center px-2 text-sm leading-5"
                         >
                           {showPassword ? (
                             <EyeOff hanging={20} width={20} />
@@ -356,8 +356,8 @@ const SigninFormContent = ({
                     </FormControl>
                     {hasPassword && (
                       <Link
-                        href="/auth/reset"
                         className="text-left text-sm underline"
+                        href="/auth/reset"
                       >
                         ایجاد / فراموشی رمز عبور
                       </Link>
@@ -373,10 +373,10 @@ const SigninFormContent = ({
         {formState === LoginOptions.OTP && (
           <Form {...formStepOne}>
             <form
-              id="login-cellphone"
-              onSubmit={formStepOne.handleSubmit(onSubmitStepOne)}
-              noValidate
               className="flex flex-1 flex-col gap-8"
+              id="login-cellphone"
+              noValidate
+              onSubmit={formStepOne.handleSubmit(onSubmitStepOne)}
             >
               <FormField
                 control={formStepOne.control}
@@ -385,9 +385,9 @@ const SigninFormContent = ({
                   <FormItem>
                     <FormControl>
                       <Input
-                        type="tel"
                         inputMode="numeric"
                         placeholder={digitsEnToFa("09*********")}
+                        type="tel"
                         {...field}
                         onChange={(e) =>
                           e.target.value.length <= 11 &&
@@ -406,10 +406,10 @@ const SigninFormContent = ({
         {formState === LoginOptions.VERIFY_OTP && (
           <Form {...formStepTwo}>
             <form
-              id="verify-otp-form"
-              onSubmit={formStepTwo.handleSubmit(onSubmitStepTwo)}
-              noValidate
               className="flex flex-1 flex-col gap-8"
+              id="verify-otp-form"
+              noValidate
+              onSubmit={formStepTwo.handleSubmit(onSubmitStepTwo)}
             >
               <FormField
                 control={formStepTwo.control}
@@ -418,10 +418,10 @@ const SigninFormContent = ({
                   <FormItem>
                     <FormControl>
                       <Input
-                        type="tel"
-                        inputMode="numeric"
                         className="placeholder:text-right"
+                        inputMode="numeric"
                         placeholder={t("common:otp")}
+                        type="tel"
                         {...field}
                         onChange={(e) =>
                           e.target.value.length <= 5 &&
@@ -432,6 +432,9 @@ const SigninFormContent = ({
                     <FormMessage />
                     <div className="flex items-center justify-between">
                       <Button
+                        size={"xsmall"}
+                        type="button"
+                        variant="ghost"
                         onClick={() => {
                           setFormState(LoginOptions.OTP)
                           setMessage(null)
@@ -439,9 +442,6 @@ const SigninFormContent = ({
                           setLoginErrors(null)
                           formStepTwo.reset()
                         }}
-                        size={"xsmall"}
-                        type="button"
-                        variant="ghost"
                       >
                         ویرایش شماره همراه
                       </Button>
@@ -466,13 +466,13 @@ const SigninFormContent = ({
               {formState !== LoginOptions.VERIFY_OTP && (
                 <div className="flex flex-col justify-center gap-y-7 py-7">
                   <div
+                    className="flex cursor-pointer items-center gap-x-2"
                     onClick={() => {
                       setFormState(LoginOptions.OTP)
                       setMessage(null)
                       setErrors(null)
                       setLoginErrors(null)
                     }}
-                    className="flex cursor-pointer items-center gap-x-2"
                   >
                     <Circle solid={formState === LoginOptions.OTP} />
                     <span className="text-sm text-info">
@@ -480,13 +480,13 @@ const SigninFormContent = ({
                     </span>
                   </div>
                   <div
+                    className="flex cursor-pointer items-center gap-x-2"
                     onClick={() => {
                       setFormState(LoginOptions.PASSWORD)
                       setMessage(null)
                       setErrors(null)
                       setLoginErrors(null)
                     }}
-                    className="flex cursor-pointer items-center gap-x-2"
                   >
                     <Circle solid={formState === LoginOptions.PASSWORD} />
                     <span className="text-sm text-info">ورود با رمز عبور</span>
@@ -495,11 +495,11 @@ const SigninFormContent = ({
               )}
               {formState === LoginOptions.PASSWORD && (
                 <Button
-                  type="submit"
                   block
-                  form="login-username"
                   disabled={pageLoading || form.formState.isSubmitting}
+                  form="login-username"
                   loading={pageLoading || form.formState.isSubmitting}
+                  type="submit"
                 >
                   {t("common:login")}
                 </Button>
@@ -508,17 +508,17 @@ const SigninFormContent = ({
           )}
           {formState === LoginOptions.OTP && (
             <Button
-              type="submit"
               block
-              form="login-cellphone"
               disabled={
                 validateCellphoneMutation.isLoading ||
                 formStepOne.formState.isSubmitting
               }
+              form="login-cellphone"
               loading={
                 validateCellphoneMutation.isLoading ||
                 formStepOne.formState.isSubmitting
               }
+              type="submit"
             >
               دریافت رمز یکبار مصرف
             </Button>
@@ -527,35 +527,35 @@ const SigninFormContent = ({
           {formState === LoginOptions.VERIFY_OTP && (
             <>
               <Button
+                block
+                disabled={secondsLeft > 0}
+                loading={validateCellphoneMutation.isLoading}
+                type="button"
+                variant="ghost"
                 onClick={() => {
                   onSubmitStepOne({
                     cellphone: formStepOne.watch("cellphone")
                   })
                 }}
-                loading={validateCellphoneMutation.isLoading}
-                disabled={secondsLeft > 0}
-                variant="ghost"
-                type="button"
-                block
               >
                 ارسال مجدد رمز یکبار مصرف
               </Button>
               <Button
-                type="submit"
-                id="verify-otp-track-button"
-                form="verify-otp-form"
                 block
                 disabled={
                   validateOtpMutation.isLoading ||
                   validateCellphoneMutation.isLoading ||
                   formStepTwo.formState.isSubmitting
                 }
+                form="verify-otp-form"
+                id="verify-otp-track-button"
                 loading={
                   pageLoading ||
                   validateOtpMutation.isLoading ||
                   validateCellphoneMutation.isLoading ||
                   formStepTwo.formState.isSubmitting
                 }
+                type="submit"
               >
                 ورود
               </Button>
@@ -565,13 +565,13 @@ const SigninFormContent = ({
             <div className="text-sm">
               ورود شما به معنای پذیرش
               <Link
-                target="_blank"
+                className="text-primary underline"
                 href={
                   hasPassword
                     ? `${process.env.NEXT_PUBLIC_VARDAST}/privacy`
                     : "#"
                 }
-                className="text-primary underline"
+                target="_blank"
               >
                 {" "}
                 شرایط و قوانین وردست{" "}
@@ -610,7 +610,7 @@ const SigninForm = ({
   hasPassword?: boolean
 }) => {
   if (isMobileView) {
-    return <SigninFormContent isMobileView={true} hasPassword={hasPassword} />
+    return <SigninFormContent hasPassword={hasPassword} isMobileView={true} />
   }
   return (
     <Card className="gap-6 md:py-12">

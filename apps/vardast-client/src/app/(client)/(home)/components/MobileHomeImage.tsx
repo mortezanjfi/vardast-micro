@@ -9,15 +9,15 @@ const MobileHomeImage = ({
   return (
     <>
       {images.map(({ url, Title, id }) => (
-        <div key={id} className="relative h-full w-full">
+        <div className="relative h-full w-full" key={id}>
           {Title && (
             <div className="absolute left-0 right-0 top-0 z-10">{Title}</div>
           )}
           <Image
-            src={url}
             alt="slider"
-            fill
             className="rounded-xl object-cover"
+            fill
+            src={url}
           />
         </div>
       ))}

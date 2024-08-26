@@ -34,7 +34,7 @@ const UserMenu = () => {
   return (
     <>
       {session && session?.user && (
-        <div ref={ref} className={clsx(["w-full px-6 py-5", open && "-mb-2"])}>
+        <div className={clsx(["w-full px-6 py-5", open && "-mb-2"])} ref={ref}>
           <div
             className={clsx([
               open ? "card -mx-2 flex flex-col gap-3 rounded p-2" : ""
@@ -59,9 +59,9 @@ const UserMenu = () => {
                   </>
                 </Button> */}
                 <Button
-                  onClick={() => clearCacheBySignOut(paths.signin)}
-                  variant="ghost"
                   className="justify-start text-start"
+                  variant="ghost"
+                  onClick={() => clearCacheBySignOut(paths.signin)}
                 >
                   <>
                     <LucideLogOut className="icon" />
@@ -71,15 +71,15 @@ const UserMenu = () => {
               </div>
             )}
             <Button
-              onClick={() => toggle()}
-              noStyle
               className="flex w-full items-center gap-2 text-start outline-none focus-visible:outline-none"
+              noStyle
+              onClick={() => toggle()}
             >
               <Avatar>
                 {session?.profile?.avatarFile && (
                   <AvatarImage
-                    src={session?.profile?.avatarFile.presignedUrl.url}
                     alt={session?.profile?.fullName || ""}
+                    src={session?.profile?.avatarFile.presignedUrl.url}
                   />
                 )}
                 <AvatarFallback>

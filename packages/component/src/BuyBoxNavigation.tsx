@@ -18,33 +18,33 @@ const BuyBoxNavigation = ({ title, actionButtonProps }: Props) => {
   return (
     <>
       <div
-        id="bottom-navigation-buy-box"
         className={`fixed bottom-0 left-0 z-50 w-full transform border-t border-alpha-200 bg-alpha-white pb-[calc(env(safe-area-inset-bottom)*0.5+10px)] transition-all duration-300 dark:border-alpha-600  dark:bg-alpha-700`}
+        id="bottom-navigation-buy-box"
       >
         <div className="flex gap-x px-8 pt-3">
           <AnimatePresence>
             <motion.div
-              key="modal"
-              initial={{ opacity: 0, x: 100, display: "none" }}
               animate={{ opacity: 1, x: 0, display: "block" }}
-              exit={{ opacity: 0, x: 100, display: "none" }}
               className="h-full"
+              exit={{ opacity: 0, x: 100, display: "none" }}
+              initial={{ opacity: 0, x: 100, display: "none" }}
+              key="modal"
             >
               <Button
+                iconOnly
                 onClick={() => {
                   router.back()
                 }}
-                iconOnly
               >
                 <ArrowRight className="" />
               </Button>
             </motion.div>
             <motion.div
-              key="modal"
-              initial={{ opacity: 0, x: -100, display: "none" }}
               animate={{ opacity: 1, x: 0, display: "block" }}
-              exit={{ opacity: 0, x: -100, display: "none" }}
               className="relative h-full flex-1"
+              exit={{ opacity: 0, x: -100, display: "none" }}
+              initial={{ opacity: 0, x: -100, display: "none" }}
+              key="modal"
             >
               <Button
                 //   noStyle

@@ -65,9 +65,9 @@ const SingupForm = (_: Props) => {
         }
 
         if (nextState === "VALIDATE_OTP") {
-          setValidationKey(validationKey as string)
-          startCountdown(remainingSeconds as number)
-          setMessage(message as string)
+          setValidationKey(validationKey)
+          startCountdown(remainingSeconds)
+          setMessage(message)
           setFormState(2)
         }
       }
@@ -82,7 +82,7 @@ const SingupForm = (_: Props) => {
       onSuccess: (data) => {
         const { nextState, message } = data.validateOtp
         setErrors(null)
-        setMessage(message as string)
+        setMessage(message)
 
         if (nextState === "VALIDATE_CELLPHONE") {
           setFormState(1)
@@ -118,7 +118,7 @@ const SingupForm = (_: Props) => {
         setFormState(4)
       }
 
-      setMessage(message as string)
+      setMessage(message)
     }
   })
 
@@ -195,9 +195,9 @@ const SingupForm = (_: Props) => {
     <div className="flex min-h-screen w-full items-center justify-center p-4">
       <div className="flex w-full max-w-xs flex-col justify-start gap-8 py-12">
         <Image
-          src={signLogo}
-          alt={process.env.NEXT_PUBLIC_TITLE as string}
+          alt={process.env.NEXT_PUBLIC_TITLE}
           className="ml-auto h-12"
+          src={signLogo}
         />
         <h2 className="text-xl font-bold text-alpha-800">
           {t("common:signup")}
@@ -227,9 +227,9 @@ const SingupForm = (_: Props) => {
         {formState === 1 && (
           <Form {...formStepOne}>
             <form
-              onSubmit={formStepOne.handleSubmit(onSubmitStepOne)}
-              noValidate
               className="flex flex-col gap-6"
+              noValidate
+              onSubmit={formStepOne.handleSubmit(onSubmitStepOne)}
             >
               <FormField
                 control={formStepOne.control}
@@ -250,7 +250,6 @@ const SingupForm = (_: Props) => {
               ></FormField>
 
               <Button
-                type="submit"
                 block
                 disabled={
                   validateCellphoneMutation.isLoading ||
@@ -260,6 +259,7 @@ const SingupForm = (_: Props) => {
                   validateCellphoneMutation.isLoading ||
                   formStepOne.formState.isSubmitting
                 }
+                type="submit"
               >
                 دریافت رمز یکبار مصرف
               </Button>
@@ -270,9 +270,9 @@ const SingupForm = (_: Props) => {
         {formState === 2 && (
           <Form {...formStepTwo}>
             <form
-              onSubmit={formStepTwo.handleSubmit(onSubmitStepTwo)}
-              noValidate
               className="flex flex-col gap-6"
+              noValidate
+              onSubmit={formStepTwo.handleSubmit(onSubmitStepTwo)}
             >
               <FormField
                 control={formStepTwo.control}
@@ -296,16 +296,15 @@ const SingupForm = (_: Props) => {
                 <span>ارسال مجدد رمز {secondsLeft}</span>
               ) : (
                 <Button
-                  onClick={() => setFormState(1)}
-                  variant="link"
                   className="justify-start"
+                  variant="link"
+                  onClick={() => setFormState(1)}
                 >
                   ارسال مجدد رمز یکبار مصرف
                 </Button>
               )}
 
               <Button
-                type="submit"
                 block
                 disabled={
                   validateOtpMutation.isLoading ||
@@ -315,6 +314,7 @@ const SingupForm = (_: Props) => {
                   validateOtpMutation.isLoading ||
                   formStepTwo.formState.isSubmitting
                 }
+                type="submit"
               >
                 تایید تلفن همراه
               </Button>
@@ -325,9 +325,9 @@ const SingupForm = (_: Props) => {
         {formState === 3 && (
           <Form {...formStepThree}>
             <form
-              onSubmit={formStepThree.handleSubmit(onSubmitStepThree)}
-              noValidate
               className="flex flex-col gap-6"
+              noValidate
+              onSubmit={formStepThree.handleSubmit(onSubmitStepThree)}
             >
               <FormField
                 control={formStepThree.control}
@@ -398,7 +398,6 @@ const SingupForm = (_: Props) => {
                 )}
               ></FormField>
               <Button
-                type="submit"
                 block
                 disabled={
                   signupMutation.isLoading ||
@@ -408,6 +407,7 @@ const SingupForm = (_: Props) => {
                   signupMutation.isLoading ||
                   formStepThree.formState.isSubmitting
                 }
+                type="submit"
               >
                 تکمیل ثبت‌نام
               </Button>
@@ -416,8 +416,8 @@ const SingupForm = (_: Props) => {
         )}
 
         <Link
-          href={paths.signin}
           className="text-center text-alpha-500 hover:text-alpha-700"
+          href={paths.signin}
         >
           {t("common:already_have_an_account_login")}
         </Link>

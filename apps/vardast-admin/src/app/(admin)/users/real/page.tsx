@@ -18,7 +18,7 @@ export default async () => {
   return (
     <ReactQueryHydrate state={dehydratedState}>
       <UsersPage
-        title={(await generateMetadata()).title?.toString() as string}
+        title={(await generateMetadata()).title?.toString()}
       />
     </ReactQueryHydrate>
   )

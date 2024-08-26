@@ -64,10 +64,10 @@ const SellerPage = ({ uuid }: Props) => {
               <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
                 {seller?.logoFile ? (
                   <Image
-                    src={seller?.logoFile?.presignedUrl.url as string}
-                    fill
                     alt="..."
                     className="object-contain p-3"
+                    fill
+                    src={seller?.logoFile?.presignedUrl.url}
                   />
                 ) : (
                   <LucideWarehouse

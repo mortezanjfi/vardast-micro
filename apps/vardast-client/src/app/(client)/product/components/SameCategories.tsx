@@ -27,8 +27,8 @@ const SameCategories = ({
       >
         <ProductSlider
           hasExtraItem={hasExtraItem}
-          products={products}
           isMobileView={isMobileView}
+          products={products}
         />
       </div>
     </ProductSectionContainer>

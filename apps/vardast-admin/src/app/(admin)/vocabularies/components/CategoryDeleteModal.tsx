@@ -70,7 +70,7 @@ const CategoryDeleteModal = ({
 
   const onOpenClose = () => {
     onOpenChange({
-      type: CategoryModalEnumType["RemoveCategory"],
+      type: CategoryModalEnumType.RemoveCategory,
       currentCategory: modalsOpen.category
     })
   }

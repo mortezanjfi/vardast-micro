@@ -138,7 +138,7 @@ const PublicProvider = ({ isMobileView, children }: PublicProviderProps) => {
       (orientation === "landscape-primary" ||
         orientation === "landscape-secondary") ? (
         <div className="flex h-full w-full flex-col items-center justify-center gap bg-primary text-white">
-          <Image src={rotationImage} alt="rotate" width={150} height={150} />
+          <Image alt="rotate" height={150} src={rotationImage} width={150} />
           <p>لطفاً گوشی خود را عمودی نگه دارید.</p>
         </div>
       ) : (

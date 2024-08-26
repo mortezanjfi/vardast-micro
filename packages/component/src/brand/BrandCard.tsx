@@ -28,10 +28,10 @@ export const BrandCardSkeleton = () => {
           className={`relative row-span-4 h-[200px] w-full transform transition-all sm:py`}
         >
           <Image
-            src={frameLessImage}
             alt="skeleton"
-            fill
             className="animated-card object-contain"
+            fill
+            src={frameLessImage}
           />
         </div>
         <div className="relative z-20 flex w-full items-center gap-4  pt-4">
@@ -68,10 +68,6 @@ const BrandCard = forwardRef(
     const containerRef = useRef<HTMLDivElement>(null)
     return (
       <Link
-        ref={ref}
-        onClick={() => {
-          setSelectedItemId(brand?.id)
-        }}
         className={clsx(
           "flex h-full flex-col overflow-hidden bg-alpha-white py-6 sm:py-0"
           // selectedItemId === brand?.id
@@ -79,24 +75,20 @@ const BrandCard = forwardRef(
           //   : "border-alpha-50"
         )}
         href={`/brand/${brand?.id}/${brand?.name}`}
+        ref={ref}
+        onClick={() => {
+          setSelectedItemId(brand?.id)
+        }}
       >
         <div
-          ref={containerRef}
           className={clsx(
             "relative h-[200px] overflow-hidden rounded-2xl border border-alpha-50",
             isMobileView && "w-full"
           )}
+          ref={containerRef}
         >
           <Image
-            src={
-              brand?.bannerMobile?.presignedUrl?.url
-                ? brand?.bannerMobile?.presignedUrl?.url
-                : brandSellerBlank
-            }
             alt="category"
-            fill
-            // width={300}
-            // height={400}
             className={clsx(
               "transform rounded-2xl transition",
               brand?.bannerMobile?.presignedUrl?.url
@@ -104,6 +96,14 @@ const BrandCard = forwardRef(
                 : "border object-cover",
               selectedItemId === brand?.id ? "border-2 border-primary" : ""
             )}
+            fill
+            // width={300}
+            // height={400}
+            src={
+              brand?.bannerMobile?.presignedUrl?.url
+                ? brand?.bannerMobile?.presignedUrl?.url
+                : brandSellerBlank
+            }
           />
         </div>
 

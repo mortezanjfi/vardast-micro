@@ -38,10 +38,10 @@ const FavoritesComponent = () => {
             <>
               {favoritesList.map((product) => (
                 <ProductCard
+                  key={product.id}
+                  product={product}
                   selectedItemId={selectedItemId}
                   setSelectedItemId={setSelectedItemId}
-                  key={product.id}
-                  product={product as Product}
                 />
               ))}
             </>

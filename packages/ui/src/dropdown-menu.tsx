@@ -29,12 +29,12 @@ const DropdownMenuSubTrigger = forwardRef<
   }
 >(({ className, inset, children, ...props }, ref) => (
   <DropdownMenuPrimitive.SubTrigger
-    ref={ref}
     className={mergeClasses(
       "focus:bg-accent data-[state=open]:bg-accent flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none",
       inset && "pl-8",
       className
     )}
+    ref={ref}
     {...props}
   >
     {children}
@@ -49,11 +49,11 @@ const DropdownMenuSubContent = forwardRef<
   ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>
 >(({ className, ...props }, ref) => (
   <DropdownMenuPrimitive.SubContent
-    ref={ref}
     className={mergeClasses(
       "bg-popover text-popover-foreground z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-md animate-in data-[side=bottom]:slide-in-from-top-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1 data-[side=top]:slide-in-from-bottom-1",
       className
     )}
+    ref={ref}
     {...props}
   />
 ))
@@ -66,9 +66,9 @@ const DropdownMenuContent = forwardRef<
 >(({ className, sideOffset = 4, ...props }, ref) => (
   <DropdownMenuPrimitive.Portal>
     <DropdownMenuPrimitive.Content
+      className={mergeClasses("dropdown-menu", className)}
       ref={ref}
       sideOffset={sideOffset}
-      className={mergeClasses("dropdown-menu", className)}
       {...props}
     />
   </DropdownMenuPrimitive.Portal>
@@ -82,8 +82,8 @@ const DropdownMenuItem = forwardRef<
   }
 >(({ className, inset, ...props }, ref) => (
   <DropdownMenuPrimitive.Item
-    ref={ref}
     className={mergeClasses("dropdown-menu-item", inset && "pl-8", className)}
+    ref={ref}
     {...props}
   />
 ))
@@ -94,12 +94,12 @@ const DropdownMenuCheckboxItem = forwardRef<
   ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>
 >(({ className, children, checked, ...props }, ref) => (
   <DropdownMenuPrimitive.CheckboxItem
-    ref={ref}
+    checked={checked}
     className={mergeClasses(
       "focus:bg-accent focus:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className
     )}
-    checked={checked}
+    ref={ref}
     {...props}
   >
     <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
@@ -118,11 +118,11 @@ const DropdownMenuRadioItem = forwardRef<
   ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>
 >(({ className, children, ...props }, ref) => (
   <DropdownMenuPrimitive.RadioItem
-    ref={ref}
     className={mergeClasses(
       "focus:bg-accent focus:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className
     )}
+    ref={ref}
     {...props}
   >
     <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
@@ -142,12 +142,12 @@ const DropdownMenuLabel = forwardRef<
   }
 >(({ className, inset, ...props }, ref) => (
   <DropdownMenuPrimitive.Label
-    ref={ref}
     className={mergeClasses(
       "px-2 py-1.5 text-sm font-semibold",
       inset && "pl-8",
       className
     )}
+    ref={ref}
     {...props}
   />
 ))
@@ -158,8 +158,8 @@ const DropdownMenuSeparator = forwardRef<
   ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>
 >(({ className, ...props }, ref) => (
   <DropdownMenuPrimitive.Separator
-    ref={ref}
     className={mergeClasses("dropdown-menu-separator", className)}
+    ref={ref}
     {...props}
   />
 ))

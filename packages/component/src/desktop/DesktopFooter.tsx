@@ -17,10 +17,10 @@ export default function DesktopFooter(_: ILayoutDesktopFooter) {
     <div className="container mx-auto flex flex-col items-center justify-center gap-y-7 px-6 py-9">
       <div className="w-[150px]">
         <Image
-          src={logoHorizontal}
           alt={`${process.env.NEXT_PUBLIC_TITLE} - ${process.env.NEXT_PUBLIC_SLOGAN}`}
           className="w-full object-contain"
           priority
+          src={logoHorizontal}
         />
       </div>
 
@@ -31,10 +31,10 @@ export default function DesktopFooter(_: ILayoutDesktopFooter) {
           target="_blank"
         >
           <Image
-            src={instagramColorful}
             alt="instagram"
             className="w-full object-contain"
             priority
+            src={instagramColorful}
           />
         </Link>
         <Link
@@ -43,10 +43,10 @@ export default function DesktopFooter(_: ILayoutDesktopFooter) {
           target="_blank"
         >
           <Image
-            src={telegramColorful}
             alt="telegram"
             className="w-full object-contain"
             priority
+            src={telegramColorful}
           />
         </Link>
         <Link
@@ -55,10 +55,10 @@ export default function DesktopFooter(_: ILayoutDesktopFooter) {
           target="_blank"
         >
           <Image
-            src={whatsAppColorful}
             alt="whatsapp"
             className="w-full object-contain"
             priority
+            src={whatsAppColorful}
           />
         </Link>
         <Link
@@ -67,10 +67,10 @@ export default function DesktopFooter(_: ILayoutDesktopFooter) {
           target="_blank"
         >
           <Image
-            src={aparatColorful}
             alt="instagram"
             className="w-full object-contain"
             priority
+            src={aparatColorful}
           />
         </Link>
       </div>
@@ -81,10 +81,10 @@ export default function DesktopFooter(_: ILayoutDesktopFooter) {
           target="_blank"
         >
           <Image
-            src={bazar}
             alt="bazar"
             className="w-full object-contain"
             priority
+            src={bazar}
           />
         </Link>
         <Link
@@ -93,10 +93,10 @@ export default function DesktopFooter(_: ILayoutDesktopFooter) {
           target="_blank"
         >
           <Image
-            src={myket}
             alt="myket"
             className="w-full object-contain"
             priority
+            src={myket}
           />
         </Link>
       </div>
@@ -109,7 +109,7 @@ export default function DesktopFooter(_: ILayoutDesktopFooter) {
         <Link href="/privacy">قوانین و مقررات</Link>
         <Link href="/faq">سوالات متداول</Link>
         <Link
-          href={process.env.NEXT_PUBLIC_SELLER_VARDAST as string}
+          href={process.env.NEXT_PUBLIC_SELLER_VARDAST}
           target="_blank"
         >
           فروشنده شوید!

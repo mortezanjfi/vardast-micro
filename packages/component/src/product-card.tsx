@@ -52,16 +52,16 @@ export const ProductCardSkeleton = ({
         >
           <div className="w-full">
             <Image
-              src={frameLessImage}
               alt="skeleton"
-              width={400}
+              className="animated-card"
               height={400 / ratio}
               layout="fixed"
+              objectFit="contain"
+              src={frameLessImage}
+              width={400}
               onLoad={({ naturalWidth, naturalHeight }: any) => {
                 setRatio(naturalWidth / naturalHeight)
               }}
-              objectFit="contain"
-              className="animated-card"
             />
           </div>
         </div>
@@ -149,11 +149,6 @@ const ProductCard = forwardRef(
 
     return (
       <Link
-        ref={ref}
-        href={checkSellerRedirectUrl(`/product/${product.id}/${product.name}`)}
-        onClick={() => {
-          setSelectedItemId(product.id)
-        }}
         className={clsx(
           homeSlider
             ? "relative flex items-center gap-2 border-x bg-transparent px-3 transition hover:z-10"
@@ -165,6 +160,11 @@ const ProductCard = forwardRef(
             : "overflow-hidden"
           // product.id === selectedItemId && "!border-y border-primary"
         )}
+        href={checkSellerRedirectUrl(`/product/${product.id}/${product.name}`)}
+        ref={ref}
+        onClick={() => {
+          setSelectedItemId(product.id)
+        }}
       >
         {product.id === selectedItemId && (
           <div className="absolute left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center bg-alpha-white bg-opacity-50">
@@ -172,32 +172,32 @@ const ProductCard = forwardRef(
           </div>
         )}
         <div
-          ref={productContainerRef}
           className={clsx(
             `relative flex flex-shrink-0 transform flex-col items-center justify-center bg-center bg-no-repeat align-middle opacity-0 transition-all duration-1000 ease-out`,
             homeSlider && "!h-12 !w-12"
           )}
+          ref={productContainerRef}
         >
           <div
+            className="w-full"
             style={{
               height: imageContainerHeight
             }}
-            className="w-full"
           >
             {product.images.at(0)?.file.presignedUrl.url ? (
               <Image
-                src={product.images.at(0)?.file.presignedUrl.url as string}
                 alt={product.name}
-                fill
                 className="object-contain"
+                fill
+                src={product.images.at(0)?.file.presignedUrl.url}
                 onLoad={onLoadImage}
               />
             ) : (
               <Image
-                src={blankImage}
                 alt={product.name}
-                fill
                 className="object-contain"
+                fill
+                src={blankImage}
                 onLoad={onLoadImage}
               />
             )}
@@ -218,8 +218,8 @@ const ProductCard = forwardRef(
               )}
             >
               <h5
-                title={product.name}
                 className="my-auto line-clamp-2 max-h-10 overflow-hidden whitespace-pre-wrap font-semibold"
+                title={product.name}
               >
                 {product.name}
               </h5>
@@ -278,8 +278,8 @@ const ProductCard = forwardRef(
                   {discount &&
                     discount.map((discountItem) => (
                       <div
-                        key={discountItem.id}
                         className="flex w-full items-center justify-end gap-x"
+                        key={discountItem.id}
                       >
                         <span className="text-sm text-alpha-500 line-through">
                           {discountItem.calculated_price &&
@@ -305,11 +305,11 @@ const ProductCard = forwardRef(
                 >
                   {isSellerPanel && (
                     <Button
-                      variant="secondary"
+                      disabled={createOfferMutation.isLoading}
+                      loading={createOfferMutation.isLoading}
                       size="xsmall"
                       type="button"
-                      loading={createOfferMutation.isLoading}
-                      disabled={createOfferMutation.isLoading}
+                      variant="secondary"
                       onClick={(e) => {
                         e.stopPropagation()
                         e.nativeEvent.preventDefault()
@@ -351,11 +351,11 @@ const ProductCard = forwardRef(
                     className={clsx("flex w-full items-center justify-between")}
                   >
                     <Button
-                      variant="secondary"
+                      disabled={createOfferMutation.isLoading}
+                      loading={createOfferMutation.isLoading}
                       size="xsmall"
                       type="button"
-                      loading={createOfferMutation.isLoading}
-                      disabled={createOfferMutation.isLoading}
+                      variant="secondary"
                       onClick={(e) => {
                         e.stopPropagation()
                         e.nativeEvent.preventDefault()

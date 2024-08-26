@@ -130,7 +130,7 @@ export const SellerDesktopMyProducts = ({
     <div className="flex flex-col gap">
       <RemoveProductModal
         sellerRemoveOfferMutation={sellerRemoveOfferMutation}
-        productToDelet={selectedProductForDelete as Product}
+        productToDelet={selectedProductForDelete}
         open={removeProductModalOpen}
         onOpenChange={setRemoveProductModalOpen}
       />
@@ -138,7 +138,7 @@ export const SellerDesktopMyProducts = ({
       <CreatePriceModal
         open={createPriceModalOpen}
         onOpenChange={setCreatePriceModalOpen}
-        product={selectedProductForEdit as Product}
+        product={selectedProductForEdit}
       />
 
       <ProductsFilter form={form} isMyProductsPage={true} />
@@ -170,7 +170,7 @@ export const SellerDesktopMyProducts = ({
                             <Image
                               src={
                                 (product.product.images.at(0)?.file.presignedUrl
-                                  .url as string) ?? "/images/seller-blank.png"
+                                  .url) ?? "/images/seller-blank.png"
                               }
                               alt={product.product.name}
                               sizes="5vw"

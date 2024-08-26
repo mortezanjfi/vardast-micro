@@ -19,13 +19,13 @@ const DatePicker = <
   }): React.ReactElement => {
   return (
     <DatePickerPackage
+      arrow={false}
+      calendar={persian}
       className="vardast-calender"
       containerClassName="w-full"
-      arrow={false}
-      offsetY={4}
-      calendar={persian}
-      locale={persian_fa}
       format={clock ? "YYYY/MM/DD HH:mm" : "YYYY/MM/DD"}
+      locale={persian_fa}
+      offsetY={4}
       plugins={clock ? [<TimePicker hideSeconds />] : []}
       {...props}
     />

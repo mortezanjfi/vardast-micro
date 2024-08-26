@@ -79,12 +79,12 @@ export default function FavoriteIcon({
 
   return (
     <Button
+      iconOnly
       id="header-back-button"
       variant={"ghost"}
       onClick={toggleFavorite}
       //   loading={createEventTrackerMutation.isLoading}
       disabled={createEventTrackerMutation.isLoading}
-      iconOnly
     >
       {type === EntityTypeEnum.Basket ? (
         isFavoriteQuery.data?.isFavorite ? (

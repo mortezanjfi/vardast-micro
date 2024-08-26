@@ -78,9 +78,9 @@ const Attributes = () => {
       <AttributesFilter form={form} />
       <Card className=" table-responsive mt-8 rounded">
         <PageHeader
+          containerClass="items-center"
           title={t("common:attributes_index_title")}
           titleClasses="text-[14px] font-normal "
-          containerClass="items-center"
           titleContainerClasses="border-b-2 border-primary-600 py-2"
         >
           {session?.abilities.includes("gql.products.attribute.index") && (
@@ -166,8 +166,8 @@ const Attributes = () => {
             </table>
 
             <Pagination
-              total={attributes.data?.attributes.lastPage ?? 0}
               page={currentPage}
+              total={attributes.data?.attributes.lastPage ?? 0}
               onChange={(page) => {
                 setCurrentPage(page)
               }}

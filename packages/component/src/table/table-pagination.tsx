@@ -80,27 +80,27 @@ const TablePagination = <T,>({ table, total }: Props<T>) => {
 
         <div className="flex items-center gap">
           <Button
+            disabled={!getCanPreviousPage()}
+            onClick={() => firstPage()}
             variant="secondary"
             // size="small"
             iconOnly
-            onClick={() => firstPage()}
-            disabled={!getCanPreviousPage()}
           >
             <DynamicHeroIcon
-              icon="ChevronDoubleRightIcon"
               className="icon h-7 w-7 transform transition-all"
+              icon="ChevronDoubleRightIcon"
             />
           </Button>
           <Button
+            disabled={!getCanPreviousPage()}
+            onClick={() => previousPage()}
             variant="secondary"
             // size="small"
             iconOnly
-            onClick={() => previousPage()}
-            disabled={!getCanPreviousPage()}
           >
             <DynamicHeroIcon
-              icon="ChevronRightIcon"
               className="icon h-7 w-7 transform transition-all"
+              icon="ChevronRightIcon"
             />
           </Button>
           <div className="flex items-center gap-2">
@@ -127,27 +127,27 @@ const TablePagination = <T,>({ table, total }: Props<T>) => {
             ))} */}
           </div>
           <Button
+            disabled={!getCanNextPage()}
+            onClick={() => nextPage()}
             variant="secondary"
             // size="small"
             iconOnly
-            onClick={() => nextPage()}
-            disabled={!getCanNextPage()}
           >
             <DynamicHeroIcon
-              icon="ChevronLeftIcon"
               className="icon h-7 w-7 transform transition-all"
+              icon="ChevronLeftIcon"
             />
           </Button>
           <Button
+            disabled={!getCanNextPage()}
+            onClick={() => lastPage()}
             variant="secondary"
             // size="small"
             iconOnly
-            onClick={() => lastPage()}
-            disabled={!getCanNextPage()}
           >
             <DynamicHeroIcon
-              icon="ChevronDoubleLeftIcon"
               className="icon h-7 w-7 transform transition-all"
+              icon="ChevronDoubleLeftIcon"
             />
           </Button>
         </div>
@@ -156,15 +156,15 @@ const TablePagination = <T,>({ table, total }: Props<T>) => {
             <div className="flex items-center gap">
               <span>تعداد:</span>
               <Button
+                className="input-field flex items-center gap-1"
                 noStyle
                 // size="small"
                 role="combobox"
-                className="input-field flex items-center gap-1"
               >
                 {digitsEnToFa(getState().pagination.pageSize || 0)}
                 <DynamicHeroIcon
-                  icon="ChevronDownIcon"
                   className="icon h-4 w-4"
+                  icon="ChevronDownIcon"
                 />
               </Button>
             </div>
@@ -176,8 +176,8 @@ const TablePagination = <T,>({ table, total }: Props<T>) => {
                   .filter((item, index) => +item.value <= total || index < 2)
                   .map((option) => (
                     <CommandItem
-                      value={option.value}
                       key={option.value}
+                      value={option.value}
                       onSelect={(value) => {
                         setTablePageSize(Number(value))
                         setPageSizeModalOpen(false)
@@ -185,7 +185,7 @@ const TablePagination = <T,>({ table, total }: Props<T>) => {
                     >
                       {digitsEnToFa(option.label || 0)}
                       {+option.value === getState().pagination.pageSize && (
-                        <DynamicHeroIcon icon="CheckIcon" className="h-4 w-4" />
+                        <DynamicHeroIcon className="h-4 w-4" icon="CheckIcon" />
                       )}
                     </CommandItem>
                   ))}

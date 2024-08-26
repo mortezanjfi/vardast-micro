@@ -80,8 +80,8 @@ const CountryCard = ({
           {getFlagEmoji(alphaTwo)}
         </span>
         <Link
-          href={`/locations/country/${slug}`}
           className="font-bold text-alpha-800 underline-offset-2 hover:text-alpha-900 hover:underline dark:text-alpha-400 dark:hover:text-alpha-300"
+          href={`/locations/country/${slug}`}
         >
           {name}
         </Link>
@@ -92,20 +92,20 @@ const CountryCard = ({
         )}
       </div>
       <div className="mr-auto flex items-center gap-2">
-        <Label noStyle className="flex items-center">
+        <Label className="flex items-center" noStyle>
           <>
             <Switch
-              onCheckedChange={toggleActive}
               checked={active}
-              size="small"
               disabled={updateCountryMutation.isLoading}
+              size="small"
+              onCheckedChange={toggleActive}
             />
             <span>{t("common:is_active")}</span>
           </>
         </Label>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" iconOnly>
+            <Button iconOnly variant="ghost">
               <LucideMoreVertical className="icon" />
             </Button>
           </DropdownMenuTrigger>
@@ -124,8 +124,8 @@ const CountryCard = ({
               <>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  onSelect={toggleRemoveItem}
                   className="danger"
+                  onSelect={toggleRemoveItem}
                 >
                   <LucideTrash className="dropdown-menu-item-icon" />
                   <span>{t("common:delete")}</span>

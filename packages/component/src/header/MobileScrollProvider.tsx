@@ -21,16 +21,16 @@ const MobileScrollProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <MotionSection
+      animate="enter" // Animated state to variants.enter
+      className={clsx("app-content mobile")}
+      exit="exit" // Exit state (used later) to variants.exit
+      initial="hidden" // Set the initial state to variants.hidden
+      ref={ref}
+      transition={{ type: "linear" }} // Set the transition to linear
       variants={{
         hidden: { opacity: 0, y: 10, x: 0 },
         enter: { opacity: 1, y: 0, x: 0 }
       }}
-      initial="hidden" // Set the initial state to variants.hidden
-      animate="enter" // Animated state to variants.enter
-      exit="exit" // Exit state (used later) to variants.exit
-      transition={{ type: "linear" }} // Set the transition to linear
-      ref={ref}
-      className={clsx("app-content mobile")}
     >
       {children}
     </MotionSection>

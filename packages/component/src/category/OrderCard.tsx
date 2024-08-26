@@ -53,6 +53,7 @@ const OrderCard = ({
 
   return (
     <div
+      className="flex w-full flex-col gap-4  border-alpha-200 pt"
       onClick={() => {
         isSellerPanel &&
           router.push(
@@ -61,7 +62,6 @@ const OrderCard = ({
               : `/orders/${preOrder?.id}`
           )
       }}
-      className="flex w-full flex-col gap-4  border-alpha-200 pt"
     >
       <div className="flex w-full items-center justify-between">
         {/* <span className="text-base font-semibold">{preOrder?.name}</span> */}
@@ -74,10 +74,10 @@ const OrderCard = ({
             </div>
           )}
           <DynamicHeroIcon
-            icon="ClipboardDocumentListIcon"
             className={mergeClasses(
               "icon h-7 w-7 flex-shrink-0 transform rounded-md bg-orange-500 p-1 text-alpha-white transition-all"
             )}
+            icon="ClipboardDocumentListIcon"
             solid={false}
           />
           <div className="flex items-center gap-1 py-1">
@@ -101,7 +101,7 @@ const OrderCard = ({
             onOpenChange={setDropDownMenuOpen}
           >
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" iconOnly>
+              <Button iconOnly variant="ghost">
                 <LucideMoreVertical className="icon text-black" />
               </Button>
             </DropdownMenuTrigger>
@@ -119,11 +119,11 @@ const OrderCard = ({
                   </>
                 )}
                 <DropdownMenuItem
+                  className="danger"
                   onSelect={() => {
                     setOrderToDelete(preOrder)
                     setDeleteModalOpen(true)
                   }}
-                  className="danger"
                 >
                   <LucideTrash className="dropdown-menu-item-icon" />
                   <span>{t("common:delete")}</span>
@@ -137,11 +137,11 @@ const OrderCard = ({
       {preOrder?.offersNum > 0 && (
         <div className="flex gap-3 md:gap-9">
           <DynamicHeroIcon
-            icon="CheckBadgeIcon"
-            solid
             className={mergeClasses(
               "icon h-7 w-7 flex-shrink-0 transform overflow-hidden rounded-md bg-alpha-white  text-error-500 transition-all"
             )}
+            icon="CheckBadgeIcon"
+            solid
           />
           <span className="text-error-500">
             {digitsEnToFa(preOrder?.offersNum)}

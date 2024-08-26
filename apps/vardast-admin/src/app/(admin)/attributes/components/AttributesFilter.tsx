@@ -43,12 +43,6 @@ export const AttributesFilter = ({ form }: AttributesFilterProps) => {
                         <LucideSearch className="h-6 w-6 text-primary" />
                         <Input
                           autoFocus
-                          defaultValue=""
-                          onChange={(e) => {
-                            form.setValue("name", e.target.value)
-                          }}
-                          type="text"
-                          placeholder={t("common:attribute")}
                           className="flex h-full w-full
                         items-center
                         gap-2
@@ -56,6 +50,12 @@ export const AttributesFilter = ({ form }: AttributesFilterProps) => {
                         bg-alpha-100
                         px-4
                          focus:!ring-0 disabled:bg-alpha-100"
+                          defaultValue=""
+                          placeholder={t("common:attribute")}
+                          type="text"
+                          onChange={(e) => {
+                            form.setValue("name", e.target.value)
+                          }}
                         />
                       </div>
                     </FormControl>
@@ -73,7 +73,7 @@ export const AttributesFilter = ({ form }: AttributesFilterProps) => {
                 >
                   {t("common:remove_filter")}
                 </Button>
-                <Button className="w-full" variant="primary" type="submit">
+                <Button className="w-full" type="submit" variant="primary">
                   {t("common:submit_filter")}
                 </Button>
               </div>

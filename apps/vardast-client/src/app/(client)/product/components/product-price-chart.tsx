@@ -70,20 +70,6 @@ const ProductPriceChart = ({ productId }: Props) => {
       )}
       {data && (
         <Line
-          id="price-chart"
-          options={{
-            responsive: true,
-            plugins: {
-              legend: {
-                display: false,
-                labels: {
-                  font: {
-                    family: "Iran Yekan" // Specify the Persian font family
-                  }
-                }
-              }
-            }
-          }}
           data={{
             labels: data.priceChart.labels.map((label) =>
               convertToPersianDate({
@@ -106,16 +92,30 @@ const ProductPriceChart = ({ productId }: Props) => {
               }
             ]
           }}
+          id="price-chart"
+          options={{
+            responsive: true,
+            plugins: {
+              legend: {
+                display: false,
+                labels: {
+                  font: {
+                    family: "Iran Yekan" // Specify the Persian font family
+                  }
+                }
+              }
+            }
+          }}
         />
       )}
       <ToggleGroup
         className="flex gap-6"
+        defaultValue={ChartEnum.Daily}
         type="single"
         value={value}
         onValueChange={(value: ChartEnum) => {
           value && setValue(value)
         }}
-        defaultValue={ChartEnum.Daily}
       >
         <ToggleGroupItem
           className={clsx(

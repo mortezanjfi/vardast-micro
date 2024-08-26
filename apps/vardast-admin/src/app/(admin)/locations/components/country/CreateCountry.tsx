@@ -125,7 +125,7 @@ const CreateCountry = (_: Props) => {
             </DialogTitle>
           </DialogHeader>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+            <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
               <>
                 {createCountryMutation.isError && <p>خطایی رخ داده</p>}
                 <div className="flex flex-col gap-6">
@@ -249,16 +249,16 @@ const CreateCountry = (_: Props) => {
               <DialogFooter>
                 <div className="flex items-center justify-end gap-2">
                   <Button
-                    variant="ghost"
                     disabled={form.formState.isSubmitting}
+                    variant="ghost"
                     onClick={() => setOpen(false)}
                   >
                     {t("common:cancel")}
                   </Button>
                   <Button
-                    type="submit"
-                    loading={form.formState.isSubmitting}
                     disabled={form.formState.isSubmitting}
+                    loading={form.formState.isSubmitting}
+                    type="submit"
                   >
                     {t("common:submit")}
                   </Button>

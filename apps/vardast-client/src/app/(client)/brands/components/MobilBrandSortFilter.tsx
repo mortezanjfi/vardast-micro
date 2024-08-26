@@ -60,10 +60,10 @@ const MobilBrandSortFilter = ({
             <div className="sticky top-0 border-b border-alpha-200 bg-white p-4">
               <div className="flex items-center gap-2">
                 <Button
-                  onClick={() => setSortFilterVisibility(false)}
-                  variant="ghost"
-                  size="small"
                   iconOnly
+                  size="small"
+                  variant="ghost"
+                  onClick={() => setSortFilterVisibility(false)}
                 >
                   <LucideArrowRight className="h-5 w-5" />
                 </Button>
@@ -74,6 +74,7 @@ const MobilBrandSortFilter = ({
               {Object.entries(sortBrand).map(([_, value]) => (
                 <div className="flex h-16 gap-1">
                   <Checkbox
+                    checked={sort === value.value}
                     className="flex
                     h-5
                     w-5
@@ -87,7 +88,6 @@ const MobilBrandSortFilter = ({
                     outline-none
                     data-[state='checked']:border-primary-500
                     data-[state='checked']:bg-primary-500"
-                    checked={sort === value.value}
                     onCheckedChange={() => {
                       onSortChanged(value.value)
                     }}

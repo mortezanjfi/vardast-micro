@@ -100,17 +100,17 @@ const DeleteProvinceModal = ({
             <AlertDialogFooter>
               <div className="flex items-center gap-2">
                 <Button
+                  disabled={removeProvinceMutation.isLoading}
                   variant="ghost"
                   onClick={() => onOpenChange(false)}
-                  disabled={removeProvinceMutation.isLoading}
                 >
                   {t("common:cancel")}
                 </Button>
                 <Button
-                  variant="danger"
-                  onClick={() => onDelete()}
                   disabled={removeProvinceMutation.isLoading}
                   loading={removeProvinceMutation.isLoading}
+                  variant="danger"
+                  onClick={() => onDelete()}
                 >
                   {t("common:delete")}
                 </Button>

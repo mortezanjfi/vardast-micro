@@ -22,7 +22,7 @@ export default async () => {
     <ReactQueryHydrate state={dehydratedState}>
       <InfoPage
         isMobileView={isMobileView}
-        title={(await generateMetadata()).title?.toString() as string}
+        title={(await generateMetadata()).title?.toString()}
       />
     </ReactQueryHydrate>
   )

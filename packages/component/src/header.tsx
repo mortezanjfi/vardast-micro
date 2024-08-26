@@ -24,8 +24,8 @@ const Header = ({ isMobileView }: HeaderProps) => {
     <>
       {isMobileView && (
         <div
-          className="h-[calc(64px+env(safe-area-inset-bottom))]"
           aria-hidden="true"
+          className="h-[calc(64px+env(safe-area-inset-bottom))]"
         ></div>
       )}
       <div
@@ -40,16 +40,16 @@ const Header = ({ isMobileView }: HeaderProps) => {
           <Link href="/">
             <div className="relative h-8 lg:h-12">
               <Image
-                src={logoHorizontal}
                 alt={`${process.env.NEXT_PUBLIC_TITLE} - ${process.env.NEXT_PUBLIC_SLOGAN}`}
-                loading="lazy"
                 className="hidden h-12 w-auto object-contain lg:block"
+                loading="lazy"
+                src={logoHorizontal}
               />
               <Image
-                src={logoSign}
                 alt={`${process.env.NEXT_PUBLIC_TITLE} - ${process.env.NEXT_PUBLIC_SLOGAN}`}
-                loading="lazy"
                 className="h-8 w-auto object-contain lg:hidden"
+                loading="lazy"
+                src={logoSign}
               />
             </div>
           </Link>

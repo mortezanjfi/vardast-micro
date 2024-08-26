@@ -34,8 +34,8 @@ const Stepper = ({ steps, step }: { steps: Step[]; step: number }) => {
             <div className="gap-y-base py-base flex flex-col items-center justify-center text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-full p">
                 <DynamicIcon
-                  name={Icon}
                   className={clsx("icon")}
+                  name={Icon}
                   strokeWidth={1.5}
                 />
               </div>

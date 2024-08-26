@@ -45,19 +45,12 @@ const CategoryFilterSection = ({
       badgeNumber={
         selectedCategoryIds?.length > 0 ? selectedCategoryIds?.length : null
       }
-      title="دسته‌بندی"
       openDefault={true}
+      title="دسته‌بندی"
     >
       <div className=" flex w-full flex-col gap-4">
         <Input
           autoFocus
-          value={categoryQueryTemp}
-          onChange={(e) => {
-            setCategoryQueryTemp(e.target.value)
-            setCategoryQuery(e.target.value)
-          }}
-          type="text"
-          placeholder="دسته بندی"
           className=" flex w-full
                       items-center
                           gap-2
@@ -66,16 +59,27 @@ const CategoryFilterSection = ({
                           px-4
                           py-3.5
                            focus:!ring-0 disabled:bg-alpha-100"
+          placeholder="دسته بندی"
+          type="text"
+          value={categoryQueryTemp}
+          onChange={(e) => {
+            setCategoryQueryTemp(e.target.value)
+            setCategoryQuery(e.target.value)
+          }}
         />
         <div className=" flex max-h-44 flex-col overflow-y-auto">
           {categories?.data?.allCategoriesV2?.map(
             (category) =>
               category && (
                 <Label.Root
-                  key={category.id}
                   className="flex items-center gap-2 border-b border-x-alpha-200 py-4"
+                  key={category.id}
                 >
                   <Checkbox.Root
+                    checked={
+                      category.id ===
+                      selectedCategoryIds?.find((id) => id === category.id)
+                    }
                     className="flex
                     h-5
                     w-5
@@ -89,10 +93,6 @@ const CategoryFilterSection = ({
                     outline-none
                     data-[state='checked']:border-primary-500
                          data-[state='checked']:bg-primary-500"
-                    checked={
-                      category.id ===
-                      selectedCategoryIds?.find((id) => id === category.id)
-                    }
                     onCheckedChange={() => handleCheckboxChange(category.id)}
                   >
                     <Checkbox.Indicator className="text-white">

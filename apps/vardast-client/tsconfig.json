@@ -42,13 +42,5 @@
     "**/*.tsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "build",
-    "dist",
-    ".next",
-    "node_modules",
-    "old-to-delete",
-    "src/stories/**/*.ts"
-  ]
+  "exclude": ["node_modules", "build", "dist", ".next", "node_modules"]
 }

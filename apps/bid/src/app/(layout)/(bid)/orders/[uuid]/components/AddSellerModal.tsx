@@ -167,10 +167,10 @@ function AddSellerModal({
             <FormLabel>{t("common:cellphone")}</FormLabel>
             <FormControl>
               <Input
-                type="tel"
-                inputMode="numeric"
                 className="placeholder:text-right"
+                inputMode="numeric"
                 placeholder={t("common:cellphone")}
+                type="tel"
                 {...field}
                 onChange={(e) =>
                   e.target.value.length <= 11 &&
@@ -190,10 +190,10 @@ function AddSellerModal({
             <FormLabel>شماره ثابت</FormLabel>
             <FormControl>
               <Input
-                type="tel"
-                inputMode="numeric"
                 className="placeholder:text-right"
+                inputMode="numeric"
                 placeholder="وارد کنید"
+                type="tel"
                 {...field}
                 onChange={(e) =>
                   e.target.value.length <= 11 &&

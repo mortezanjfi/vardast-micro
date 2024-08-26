@@ -80,7 +80,7 @@ const LegalMemberModal = ({
   )
 
   const onSubmit = (data: CreateMemberInput) => {
-    let body = {
+    const body = {
       ...data,
       cellphone: data?.cellphone ? digitsFaToEn(data?.cellphone) : undefined
     }
@@ -164,7 +164,7 @@ const LegalMemberModal = ({
               *
             </FormLabel>
             <FormControl>
-              <Input {...field} type="text" placeholder={t("common:enter")} />
+              <Input {...field} placeholder={t("common:enter")} type="text" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -180,10 +180,10 @@ const LegalMemberModal = ({
             </FormLabel>
             <FormControl>
               <Input
-                type="tel"
-                inputMode="numeric"
                 className="placeholder:text-right"
+                inputMode="numeric"
                 placeholder={digitsEnToFa("09*********")}
+                type="tel"
                 {...field}
                 onChange={(e) => {
                   e.target.value.length <= 11 &&
@@ -203,11 +203,6 @@ const LegalMemberModal = ({
             <FormLabel>{t("common:role")}</FormLabel>
             <FormControl>
               <SelectPopover
-                onSelect={(value) => {
-                  form.setValue("role", value.toUpperCase() as MemberRoles, {
-                    shouldDirty: true
-                  })
-                }}
                 options={Object.entries(enumToKeyValueObject(MemberRoles))?.map(
                   ([value, key]) => ({
                     key: MemberRolesFa[key as MemberRoles]?.name_fa,
@@ -215,6 +210,11 @@ const LegalMemberModal = ({
                   })
                 )}
                 value={`${field.value}`}
+                onSelect={(value) => {
+                  form.setValue("role", value.toUpperCase() as MemberRoles, {
+                    shouldDirty: true
+                  })
+                }}
               />
             </FormControl>
             <FormMessage />
@@ -229,11 +229,6 @@ const LegalMemberModal = ({
             <FormLabel>{t("common:visibility")}</FormLabel>
             <FormControl>
               <SelectPopover
-                onSelect={(value) => {
-                  form.setValue("isActive", value === "true", {
-                    shouldDirty: true
-                  })
-                }}
                 options={[
                   {
                     key: t("common:active"),
@@ -245,6 +240,11 @@ const LegalMemberModal = ({
                   }
                 ]}
                 value={`${field.value}`}
+                onSelect={(value) => {
+                  form.setValue("isActive", value === "true", {
+                    shouldDirty: true
+                  })
+                }}
               />
             </FormControl>
             <FormMessage />

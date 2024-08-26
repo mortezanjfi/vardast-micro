@@ -13,7 +13,7 @@ export default async () => {
 
   return (
     <>
-      <link rel="canonical" href={process.env.NEXT_PUBLIC_VARDAST} />
+      <link href={process.env.NEXT_PUBLIC_VARDAST} rel="canonical" />
       <HomeIndex isMobileView={isMobileView} />
     </>
   )

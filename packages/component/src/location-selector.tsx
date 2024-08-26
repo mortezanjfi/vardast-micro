@@ -52,10 +52,10 @@ const LocationSelector = () => {
             province && (
               <>
                 <Button
+                  className="flex items-center justify-between py-3"
+                  key={province.id}
                   noStyle
                   onClick={() => setSelectedProvince(province)}
-                  key={province.id}
-                  className="flex items-center justify-between py-3"
                 >
                   <span>{province.name}</span>
                   <LucideChevronLeft className="h-4 w-4 text-alpha-500" />
@@ -87,8 +87,8 @@ const LocationSelector = () => {
             (city) =>
               city && (
                 <Label
-                  key={city?.id}
                   className="flex w-full items-center gap-1.5 pt-3"
+                  key={city?.id}
                 >
                   <Checkbox
                     checked={
@@ -116,7 +116,7 @@ const LocationSelector = () => {
   return (
     <Dialog onOpenChange={() => loadCountry()}>
       <DialogTrigger asChild>
-        <Button variant="secondary" size="small">
+        <Button size="small" variant="secondary">
           <LucideMapPin className="icon" />
           <span>انتخاب شهر</span>
         </Button>
@@ -129,14 +129,14 @@ const LocationSelector = () => {
               {selectedCities &&
                 selectedCities.map((city) => (
                   <div
-                    key={city.id}
                     className="flex items-center gap-1 rounded border border-alpha-200 px-2 py-1 pl-1 text-sm"
+                    key={city.id}
                   >
                     {city.name}
                     <Button
-                      variant="ghost"
-                      size="xsmall"
                       iconOnly
+                      size="xsmall"
+                      variant="ghost"
                       onClick={() => {
                         setSelectedCities((values) => {
                           return values.filter((item) => item.id !== city.id)

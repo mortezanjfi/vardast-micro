@@ -67,8 +67,8 @@ const DesktopCategoriesCardsSection = ({
           <div className="hide-scrollbar relative flex items-stretch gap-3 overflow-x-hidden overflow-y-hidden rounded-2xl bg-alpha-50 px">
             {[...Array(8)].map((_, index) => (
               <div
-                key={`desktop-home-category-${index}`}
                 className="w-4h-44 h-44"
+                key={`desktop-home-category-${index}`}
               ></div>
             ))}
           </div>
@@ -90,28 +90,28 @@ const DesktopCategoriesCardsSection = ({
               (children) =>
                 children && (
                   <div
-                    key={children.id}
                     className={clsx("h-44 w-full", !showMoreFlag && "hidden")}
+                    key={children.id}
                   >
                     <CategoryListItem
-                      isSubCategory
                       className="!min-h-full min-w-full !rounded-2xl !bg-alpha-50 outline outline-1 outline-alpha-400 sm:max-h-full sm:max-w-full"
-                      title={children?.title}
+                      href={encodeURI(
+                        `/products/${children.id}/${children.title}`
+                      )}
                       id={children.id}
+                      isSubCategory
+                      productsCount={children.productsCount}
                       selectedItemId={selectedItemId}
                       src={
                         (children &&
                           children?.imageCategory &&
                           (children?.imageCategory[0]?.file.presignedUrl
-                            ?.url as string)) ??
+                            ?.url)) ??
                         "" ??
                         `/images/category/${children.id}.png`
                       }
-                      productsCount={children.productsCount}
+                      title={children?.title}
                       onClick={() => setSelectedItemId(children.id)}
-                      href={encodeURI(
-                        `/products/${children.id}/${children.title}`
-                      )}
                     />
                   </div>
                 )

@@ -9,12 +9,12 @@ import { objToCssVariables } from "./objToCssVariables"
  */
 export const themeToCssVariables = (config: Config) => {
   return Object.keys(config).reduce((acc, key) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+     
     const value = config[key]
     if (key === "colors") {
       acc = {
         ...acc,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+         
         ...objToCssVariables(value, {
           prefix: "app"
         })
@@ -22,7 +22,7 @@ export const themeToCssVariables = (config: Config) => {
     } else {
       acc = {
         ...acc,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+         
         ...objToCssVariables(value, {
           prefix: "app",
           convertHexToRgb: false

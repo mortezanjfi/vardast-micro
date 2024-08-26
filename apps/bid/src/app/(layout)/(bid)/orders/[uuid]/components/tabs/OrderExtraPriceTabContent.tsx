@@ -16,7 +16,7 @@ export const OrderExtraPriceTabContent = ({
   return (
     <>
       {additionalExpenses.map((item) => (
-        <div key={item} className="form-item checkbox-field gap-4">
+        <div className="form-item checkbox-field gap-4" key={item}>
           <div className="form-control">
             <Checkbox
               checked={expenses.includes(item)}

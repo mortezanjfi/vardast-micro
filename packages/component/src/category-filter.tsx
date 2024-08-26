@@ -18,14 +18,14 @@ interface CategoryFilterProps {
 
 const CategoryFilter = ({ selectedCategoryId }: CategoryFilterProps) => {
   const args: GetCategoryQueryVariables = {}
-  args["id"] = selectedCategoryId
+  args.id = selectedCategoryId
   const { data } = useQuery<GetCategoryQuery>({
     queryKey: [QUERY_FUNCTIONS_KEY.CATEGORY_QUERY_KEY, args],
     queryFn: () => getCategoryQueryFn(selectedCategoryId)
   })
 
   return (
-    <FilterBlock title="دسته‌بندی" openDefault={true}>
+    <FilterBlock openDefault={true} title="دسته‌بندی">
       {data && (
         <ol className="flex flex-col gap-2 [&_ol]:ms-6">
           {data.category.parentCategory ? (

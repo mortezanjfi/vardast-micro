@@ -25,8 +25,8 @@ const PastDurationEventsChart = (_: Props) => {
 
   return (
     <Card
-      title="تعداد نمایش اطلاعات تماس شما"
       description="این آمار مربوط به ۳۰ روز گذشته است"
+      title="تعداد نمایش اطلاعات تماس شما"
     >
       {isLoading && (
         <div className="animate-pulse">
@@ -43,14 +43,6 @@ const PastDurationEventsChart = (_: Props) => {
       )}
       {data && (
         <Bar
-          options={{
-            responsive: true,
-            plugins: {
-              legend: {
-                display: false
-              }
-            }
-          }}
           data={{
             labels: data.pastDurationEventsChart.labels,
             datasets: [
@@ -62,6 +54,14 @@ const PastDurationEventsChart = (_: Props) => {
                 data: data.pastDurationEventsChart.data
               }
             ]
+          }}
+          options={{
+            responsive: true,
+            plugins: {
+              legend: {
+                display: false
+              }
+            }
           }}
         />
       )}

@@ -43,13 +43,13 @@ const ContactPage = async () => {
             <div className="flex flex-col gap-y-11 rounded-3xl bg-alpha-white p-11">
               <div className="h-[30vw] w-full overflow-hidden rounded-xl">
                 <iframe
-                  src="https://maps.google.com/maps?q=35.7808002,51.448611&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0, display: "inline-block" }}
                   allowFullScreen
                   aria-hidden="false"
+                  height="100%"
+                  src="https://maps.google.com/maps?q=35.7808002,51.448611&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                  style={{ border: 0, display: "inline-block" }}
                   tabIndex={0}
+                  width="100%"
                 ></iframe>
               </div>
               <div className="flex flex-col gap-y-11">

@@ -67,8 +67,8 @@ function VerifyOffer({ offerId }: VerifyOfferProps) {
       <Orders />
       <FormLayout
         {...form}
-        onSubmit={form.handleSubmit(onSubmit)}
         className="flex justify-between"
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <Card
           actionButton={{

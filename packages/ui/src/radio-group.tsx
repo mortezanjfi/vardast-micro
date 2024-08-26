@@ -25,8 +25,8 @@ const RadioGroupItem = forwardRef<
 >(({ className, ...props }, ref) => {
   return (
     <RadioGroupPrimitive.Item
-      ref={ref}
       className={mergeClasses("radio", className)}
+      ref={ref}
       {...props}
     >
       <RadioGroupPrimitive.Indicator className="radio-indicator">

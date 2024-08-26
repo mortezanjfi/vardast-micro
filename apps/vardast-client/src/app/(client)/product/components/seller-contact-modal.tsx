@@ -36,9 +36,9 @@ export const AddressItem = ({
       {address?.latitude && address?.longitude && (
         <div className="flex justify-end">
           <Link
+            className="text-left text-lg font-semibold text-info underline"
             href={`https://www.google.com/maps/search/?api=1&query=${address?.latitude},${address?.longitude}`}
             target="_blank"
-            className="text-left text-lg font-semibold text-info underline"
           >
             نمایش روی نقشه
           </Link>
@@ -69,8 +69,8 @@ const SellerContactModal = (_: SellerContactModalProps) => {
       <DialogContent>
         <DialogHeader className="border-b pb">
           <CardAvatar
-            url={data?.logoFile?.presignedUrl.url as string}
             name={data?.name || ""}
+            url={data?.logoFile?.presignedUrl.url}
           />
         </DialogHeader>
         {/* <div className="flex items-center gap-2.5 rounded-md bg-alpha-50 p-4">
@@ -105,9 +105,9 @@ const SellerContactModal = (_: SellerContactModalProps) => {
             <div className="flex divide-x divide-alpha-200">
               {mobile && mobile?.number ? (
                 <Link
-                  href={`tel:+98${mobile.number}`}
-                  dir="ltr"
                   className="font-semibold underline"
+                  dir="ltr"
+                  href={`tel:+98${mobile.number}`}
                 >
                   {digitsEnToFa(`${mobile.number}`)}
                 </Link>
@@ -124,9 +124,9 @@ const SellerContactModal = (_: SellerContactModalProps) => {
             <div className="flex divide-x divide-alpha-200">
               {tel && tel.code && tel.number ? (
                 <Link
-                  href={`tel:+98${+tel.code}${tel.number}`}
-                  dir="ltr"
                   className="font-semibold underline"
+                  dir="ltr"
+                  href={`tel:+98${+tel.code}${tel.number}`}
                 >
                   {digitsEnToFa(`${tel.code}-${tel.number}`)}
                 </Link>
@@ -162,12 +162,12 @@ const SellerContactModal = (_: SellerContactModalProps) => {
             data.addresses.length > 0 &&
             data.addresses.map(({ address, latitude, longitude, id }) => (
               <AddressItem
-                key={id}
                 address={{
                   address,
                   latitude,
                   longitude
                 }}
+                key={id}
               />
             ))}
         </div>

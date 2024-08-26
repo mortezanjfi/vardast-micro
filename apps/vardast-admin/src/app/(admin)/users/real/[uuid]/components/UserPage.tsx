@@ -127,7 +127,7 @@ const UserPage = ({ uuid }: Props) => {
       },
       fetch: {
         directData: {
-          data: user?.addresses as Address[],
+          data: user?.addresses,
           directLoading: getUserQuery.isLoading || getUserQuery.isFetching
         }
       },
@@ -177,8 +177,8 @@ const UserPage = ({ uuid }: Props) => {
           cell: ({ row }) => {
             return (
               <Button
-                variant="link"
                 size="small"
+                variant="link"
                 onClick={() => {
                   onChangeModals({
                     type: RealModalEnum.DELETE_ADDRESS,
@@ -213,9 +213,9 @@ const UserPage = ({ uuid }: Props) => {
   return (
     <>
       <UserInfo
+        loading={getUserQuery.isLoading}
         modal={[modals, onChangeModals, onCloseModals]}
         user={user}
-        loading={getUserQuery.isLoading}
       />
       <AddressModal {...modalProps(RealModalEnum.ADDRESS)} />
       <AddressDeleteModal {...modalProps(RealModalEnum.DELETE_ADDRESS)} />

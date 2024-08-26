@@ -34,7 +34,7 @@ export default function ShareIcon({ name }: Props) {
   }
 
   return (
-    <Button variant={"ghost"} iconOnly onClick={handleOnClick}>
+    <Button iconOnly variant={"ghost"} onClick={handleOnClick}>
       <ShareIconHero className="h-6 w-6 text-alpha" />
     </Button>
   )

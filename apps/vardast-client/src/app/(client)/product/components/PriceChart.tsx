@@ -58,21 +58,6 @@ const PriceChart = ({ productId }: Props) => {
         )}
         {data && (
           <Line
-            options={{
-              responsive: true,
-              maintainAspectRatio: false,
-              layout: {},
-              plugins: {
-                legend: {
-                  display: false
-                }
-              },
-              elements: {
-                line: {
-                  tension: 0.4
-                }
-              }
-            }}
             data={{
               labels: formattedLabels,
               datasets: [
@@ -87,6 +72,21 @@ const PriceChart = ({ productId }: Props) => {
                   data: data.priceChart.data
                 }
               ]
+            }}
+            options={{
+              responsive: true,
+              maintainAspectRatio: false,
+              layout: {},
+              plugins: {
+                legend: {
+                  display: false
+                }
+              },
+              elements: {
+                line: {
+                  tension: 0.4
+                }
+              }
             }}
           />
         )}

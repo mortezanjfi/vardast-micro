@@ -8,7 +8,7 @@ import ProductCard from "./product-card"
 import ProductVerticalCard from "./ProductVerticalCard"
 
 export type ProductSliderProps = {
-  products: Array<Product>
+  products: Product[]
   isMobileView?: boolean
   hasExtraItem?:
     | {
@@ -35,11 +35,11 @@ const ProductSlider = ({
                 {hasExtraItem.title}
               </h3> */}
               <Image
-                src={sameProductImage}
                 alt={"same-product"}
-                width={isMobileView ? 120 : 230}
-                height={isMobileView ? 120 : 230}
                 className="object-contain"
+                height={isMobileView ? 120 : 230}
+                src={sameProductImage}
+                width={isMobileView ? 120 : 230}
               />
               <div className="flex items-center gap-1">
                 {/* <h3 className="font-semibold text-alpha-white">

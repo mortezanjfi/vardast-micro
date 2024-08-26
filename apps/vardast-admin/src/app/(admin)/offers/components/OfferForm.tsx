@@ -181,16 +181,16 @@ const OfferForm = ({ offer }: OfferFormProps) => {
           </AlertDescription>
         </Alert>
       )}
-      <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+      <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
         <div className="mb-6 mt-8 flex items-end justify-between">
           <h2 className="text-xl font-black text-alpha-800 lg:text-3xl">
             {t("common:new_entity", { entity: t("common:offer") })}
           </h2>
           <Button
             className="sticky top-0"
-            type="submit"
-            loading={form.formState.isSubmitting}
             disabled={form.formState.isSubmitting}
+            loading={form.formState.isSubmitting}
+            type="submit"
           >
             {t("common:save_entity", { entity: t("common:offer") })}
           </Button>
@@ -206,10 +206,10 @@ const OfferForm = ({ offer }: OfferFormProps) => {
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
+                        className="input-field flex items-center text-start"
                         disabled={products.isLoading || products.isError}
                         noStyle
                         role="combobox"
-                        className="input-field flex items-center text-start"
                       >
                         {field.value
                           ? products.data?.productsWithoutPagination.find(
@@ -239,8 +239,8 @@ const OfferForm = ({ offer }: OfferFormProps) => {
                           (product) =>
                             product && (
                               <CommandItem
-                                value={product.name}
                                 key={product.id}
+                                value={product.name}
                                 onSelect={(value) => {
                                   form.setValue(
                                     "productId",
@@ -285,10 +285,10 @@ const OfferForm = ({ offer }: OfferFormProps) => {
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
+                          className="input-field flex items-center text-start"
                           disabled={sellers.isLoading || sellers.isError}
                           noStyle
                           role="combobox"
-                          className="input-field flex items-center text-start"
                         >
                           {field.value
                             ? sellers.data?.sellersWithoutPagination.find(
@@ -318,8 +318,8 @@ const OfferForm = ({ offer }: OfferFormProps) => {
                             (seller) =>
                               seller && (
                                 <CommandItem
-                                  value={seller.name}
                                   key={seller.id}
+                                  value={seller.name}
                                   onSelect={(value) => {
                                     form.setValue(
                                       "sellerId",
@@ -362,13 +362,13 @@ const OfferForm = ({ offer }: OfferFormProps) => {
                 <FormItem>
                   <FormLabel>{t("common:status")}</FormLabel>
                   <Select
+                    defaultValue={field.value}
                     onValueChange={(value) => {
                       form.setValue(
                         "status",
                         value as ThreeStateSupervisionStatuses
                       )
                     }}
-                    defaultValue={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -379,7 +379,7 @@ const OfferForm = ({ offer }: OfferFormProps) => {
                     </FormControl>
                     <SelectContent>
                       {Object.keys(statuses).map((type) => (
-                        <SelectItem value={statuses[type]} key={type}>
+                        <SelectItem key={type} value={statuses[type]}>
                           {type}
                         </SelectItem>
                       ))}

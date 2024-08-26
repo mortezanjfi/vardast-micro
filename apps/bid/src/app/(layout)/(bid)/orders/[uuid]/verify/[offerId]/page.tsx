@@ -12,5 +12,5 @@ export default async ({
 }: {
   params: { uuid: string; offerId: string }
 }) => {
-  return <VerifyOffer uuid={uuid} offerId={offerId} />
+  return <VerifyOffer offerId={offerId} uuid={uuid} />
 }

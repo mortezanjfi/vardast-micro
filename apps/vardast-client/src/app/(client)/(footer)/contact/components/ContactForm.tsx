@@ -41,11 +41,11 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-// eslint-disable-next-line no-unused-vars
+ 
 enum TopicEnum {
-  // eslint-disable-next-line no-unused-vars
+   
   BUG = "BUG",
-  // eslint-disable-next-line no-unused-vars
+   
   SALE = "SALE"
 }
 
@@ -120,22 +120,22 @@ const ContactForm = ({ isMobileView }: { isMobileView: boolean }) => {
         </Alert>
       )}
       <form
-        onSubmit={form.handleSubmit(onSubmitStepOne)}
-        noValidate
         className="flex flex-col gap-6 px pt md:grid md:grid-cols-2 md:px-0 md:pt-0"
+        noValidate
+        onSubmit={form.handleSubmit(onSubmitStepOne)}
       >
         {isMobileView && (
           <>
             <div className="h-[30vw] w-full overflow-hidden rounded-xl">
               <iframe
                 // src="https://maps.google.com/maps?q=30.273250595532225,57.019030094151475&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                src="https://maps.google.com/maps?q=35.7808002,51.448611&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                width="100%"
-                height="100%"
-                style={{ border: 0, display: "inline-block" }}
                 allowFullScreen
                 aria-hidden="false"
+                height="100%"
+                src="https://maps.google.com/maps?q=35.7808002,51.448611&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                style={{ border: 0, display: "inline-block" }}
                 tabIndex={0}
+                width="100%"
               ></iframe>
             </div>
             <div className="flex flex-col gap-y border-b pb-6">
@@ -152,8 +152,8 @@ const ContactForm = ({ isMobileView }: { isMobileView: boolean }) => {
                   <PhoneIcon className="h-4 w-4 text-primary" />
                 </div>{" "}
                 <Link
-                  href="tel:+982187132501"
                   className="text-md text-info underline"
+                  href="tel:+982187132501"
                 >
                   {`${digitsEnToFa("5")} - ${digitsEnToFa(
                     "87132500"
@@ -170,10 +170,10 @@ const ContactForm = ({ isMobileView }: { isMobileView: boolean }) => {
             <FormItem>
               <FormLabel>{t("common:topic")}</FormLabel>
               <Select
+                defaultValue={field.value}
                 onValueChange={(value) => {
                   form.setValue("topic", value as TopicEnum)
                 }}
-                defaultValue={field.value}
               >
                 <FormControl>
                   <SelectTrigger>
@@ -182,7 +182,7 @@ const ContactForm = ({ isMobileView }: { isMobileView: boolean }) => {
                 </FormControl>
                 <SelectContent>
                   {Object.keys(topicEnum).map((type) => (
-                    <SelectItem value={topicEnum[type]} key={type}>
+                    <SelectItem key={type} value={topicEnum[type]}>
                       {type}
                     </SelectItem>
                   ))}
@@ -260,9 +260,9 @@ const ContactForm = ({ isMobileView }: { isMobileView: boolean }) => {
         />
         <div className="md:col-span-2">
           <Dropzone
-            withHeight={false}
             existingImages={undefined}
             uploadPath={uploadPaths.brandCatalog}
+            withHeight={false}
             onAddition={(file) => {
               console.log(file)
               setFileUuid(file.uuid)
@@ -287,7 +287,7 @@ const ContactForm = ({ isMobileView }: { isMobileView: boolean }) => {
           />
         </div>
         <div className="md:col-span-2 md:mr-auto">
-          <Button type="submit" block={isMobileView}>
+          <Button block={isMobileView} type="submit">
             ثبت و ارسال
           </Button>
         </div>

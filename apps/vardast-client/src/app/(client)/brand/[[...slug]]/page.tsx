@@ -19,9 +19,9 @@ import BrandProfile from "@/app/(client)/brand/components/BrandProfile"
 
 interface BrandIndexProps {
   params: {
-    slug: Array<string | number>
+    slug: (string | number)[]
   }
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Record<string, string | string[] | undefined>
 }
 
 const brandPageTitle = process.env.NEXT_PUBLIC_BRAND_TITLE
@@ -64,11 +64,11 @@ const BrandIndex = async ({
   const session = await getServerSession(authOptions)
 
   const args: IndexProductInput = {}
-  args["page"] =
+  args.page =
     searchParams.page && +searchParams.page[0] > 0 ? +searchParams.page[0] : 1
-  if (slug && slug.length) args["brandId"] = +slug[0]
+  if (slug && slug.length) args.brandId = +slug[0]
   if (searchParams.query && searchParams.query.length)
-    args["query"] = searchParams.query as string
+    args.query = searchParams.query as string
 
   // if (searchParams.categoryId && searchParams.categoryId.length)
   //   args["categoryIds"] = Array.isArray(searchParams.categoryId)
@@ -76,11 +76,11 @@ const BrandIndex = async ({
   //     : [+searchParams.categoryId]
 
   if (searchParams.orderBy) {
-    args["orderBy"] = searchParams.orderBy as ProductSortablesEnum
+    args.orderBy = searchParams.orderBy as ProductSortablesEnum
   } else {
-    args["orderBy"] = ProductSortablesEnum.Newest
+    args.orderBy = ProductSortablesEnum.Newest
   }
-  args["attributes"] = []
+  args.attributes = []
 
   if (searchParams) {
     for (const key in searchParams) {
@@ -91,11 +91,11 @@ const BrandIndex = async ({
         if (match && match.length === 2) {
           const id = parseInt(match[1], 10)
           const value: string[] = Array.isArray(searchParams[key])
-            ? (searchParams[key] as string[])
+            ? (searchParams[key])
             : ([searchParams[key]] as string[])
 
           value.forEach((val) => {
-            args["attributes"]?.push({ id, value: val })
+            args.attributes?.push({ id, value: val })
           })
         }
       }
@@ -150,9 +150,9 @@ const BrandIndex = async ({
   return (
     <ReactQueryHydrate state={dehydratedState}>
       <BrandProfile
-        session={session}
-        isMobileView={isMobileView}
         args={args}
+        isMobileView={isMobileView}
+        session={session}
         slug={slug}
       />
     </ReactQueryHydrate>

@@ -96,17 +96,17 @@ const DeleteCityModal = ({ cityToDelete, open, onOpenChange }: Props) => {
             <AlertDialogFooter>
               <div className="flex items-center gap-2">
                 <Button
+                  disabled={removeCityMutation.isLoading}
                   variant="ghost"
                   onClick={() => onOpenChange(false)}
-                  disabled={removeCityMutation.isLoading}
                 >
                   {t("common:cancel")}
                 </Button>
                 <Button
-                  variant="danger"
-                  onClick={() => onDelete()}
                   disabled={removeCityMutation.isLoading}
                   loading={removeCityMutation.isLoading}
+                  variant="danger"
+                  onClick={() => onDelete()}
                 >
                   {t("common:delete")}
                 </Button>

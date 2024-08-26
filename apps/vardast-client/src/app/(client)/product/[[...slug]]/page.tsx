@@ -14,7 +14,7 @@ import ProductPage from "@/app/(client)/product/components/ProductPage"
 
 interface ProductIndexProps {
   params: {
-    slug: Array<string | number>
+    slug: (string | number)[]
   }
 }
 const productPageTitle = process.env.NEXT_PUBLIC_PRODUCT_TITLE

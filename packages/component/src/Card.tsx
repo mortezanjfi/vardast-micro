@@ -75,14 +75,14 @@ const Card = ({
             )}
             {button && (
               <Button
+                className={clsx("py-2", button.className)}
                 disabled={button.disabled}
                 loading={button.loading}
-                onClick={(e) => {
-                  button?.onClick && button.onClick(e)
-                }}
                 type={button.type}
                 variant={button.variant}
-                className={clsx("py-2", button.className)}
+                onClick={(e) => {
+                  button?.onClick?.(e)
+                }}
               >
                 {button.text}
               </Button>
@@ -97,14 +97,14 @@ const Card = ({
       {actionButton && (
         <div className="col-span-full flex justify-end">
           <Button
+            className={clsx("py-2", actionButton.className)}
             disabled={actionButton.disabled}
             loading={actionButton.loading}
-            onClick={(e) => {
-              actionButton?.onClick && actionButton.onClick(e)
-            }}
             type={actionButton.type}
             variant={actionButton.variant}
-            className={clsx("py-2", actionButton.className)}
+            onClick={(e) => {
+              actionButton?.onClick?.(e)
+            }}
           >
             {actionButton.text}
           </Button>

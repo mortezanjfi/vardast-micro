@@ -23,9 +23,9 @@ const BrandsPage = ({ isMobileView, args, limitPage }: BrandsPageProps) => {
       )}
     >
       <BrandsList
-        limitPage={limitPage}
         args={args}
         isMobileView={isMobileView}
+        limitPage={limitPage}
       />
     </div>
   )

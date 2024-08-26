@@ -125,39 +125,39 @@ const ProductImages = ({
             <div className="relative z-0 h-full w-full overflow-hidden">
               <ChevronLeft
                 className=" absolute left-0 top-1/2 z-20  text-primary"
-                width={40}
                 height={40}
+                width={40}
                 onClick={() => {
                   handlePrevButton(activeSlide - 1)
                 }}
               />
               <Swiper
-                ref={sliderRef}
                 dir="rtl"
-                spaceBetween={50}
-                onSlideChange={(swiper) => {
-                  setActiveSlide(swiper.realIndex)
-                }}
-                onAutoplay={(swiper) => {
-                  setActiveSlide(swiper.realIndex)
-                }}
-                slidesPerView={1}
                 loop={true}
-                navigation={true}
-                // thumbs={{ swiper: thumbsSwiper }}
-                modules={[Pagination, Thumbs, Zoom, Navigation]}
                 pagination={{
                   enabled: true,
                   dynamicBullets: true,
                   dynamicMainBullets: 4,
                   clickable: true
                 }}
+                ref={sliderRef}
+                slidesPerView={1}
+                spaceBetween={50}
                 zoom={{
                   maxRatio: 5
                 }}
+                onAutoplay={(swiper) => {
+                  setActiveSlide(swiper.realIndex)
+                }}
+                onSlideChange={(swiper) => {
+                  setActiveSlide(swiper.realIndex)
+                }}
+                navigation={true}
+                // thumbs={{ swiper: thumbsSwiper }}
+                modules={[Pagination, Thumbs, Zoom, Navigation]}
               >
                 {images.map((image, idx) => (
-                  <SwiperSlide key={idx} className=" rounded-lg bg-alpha-white">
+                  <SwiperSlide className=" rounded-lg bg-alpha-white" key={idx}>
                     <div
                       className={`${
                         isMobileView
@@ -166,12 +166,12 @@ const ProductImages = ({
                       }`}
                     >
                       <Image
-                        src={image?.file.presignedUrl.url as string}
-                        alt={image?.file.name as string}
+                        alt={image?.file.name}
+                        className="object-contain "
                         fill
                         priority={idx === 0}
                         sizes="(max-width: 640px) 100vw, 33vw"
-                        className="object-contain "
+                        src={image?.file.presignedUrl.url}
                       />
                     </div>
                   </SwiperSlide>
@@ -179,8 +179,8 @@ const ProductImages = ({
               </Swiper>
               <ChevronRight
                 className=" absolute right-0 top-1/2 z-20 text-primary"
-                width={40}
                 height={40}
+                width={40}
                 onClick={() => {
                   handleNextButton(activeSlide + 1)
                 }}
@@ -200,25 +200,24 @@ const ProductImages = ({
               )}
             >
               <Button
-                variant="ghost"
+                className={clsx("shadow-custom", "rounded border-2")}
                 size="xsmall"
+                variant="ghost"
                 onClick={() => {
                   handlePrevButton(activeSlide - 1)
                 }}
-                className={clsx("shadow-custom", "rounded border-2")}
               >
                 <ChevronUp className="h-4 w-4 text-alpha-500" />
               </Button>
               <Swiper
-                //   @ts-ignore
-                onSwiper={setThumbsSwiper}
-                spaceBetween={10}
-                slidesPerView={"auto"}
-                freeMode={true}
-                watchSlidesProgress={true}
-                modules={[Thumbs]}
-                direction="vertical"
                 className={clsx("w-full overflow-hidden")}
+                direction="vertical"
+                freeMode={true}
+                modules={[Thumbs]}
+                slidesPerView={"auto"}
+                spaceBetween={10}
+                watchSlidesProgress={true}
+                onSwiper={setThumbsSwiper}
               >
                 {images.map((image, idx) => (
                   <SwiperSlide
@@ -232,22 +231,22 @@ const ProductImages = ({
                       )}
                     >
                       <Image
-                        src={image.file.presignedUrl.url}
                         alt={image.file.name}
-                        fill
                         className="h-full w-full object-contain px-1"
+                        fill
+                        src={image.file.presignedUrl.url}
                       />
                     </div>
                   </SwiperSlide>
                 ))}
               </Swiper>
               <Button
-                variant="ghost"
+                className={clsx("shadow-custom", "rounded border-2")}
                 size="xsmall"
+                variant="ghost"
                 onClick={() => {
                   handleNextButton(activeSlide + 1)
                 }}
-                className={clsx("shadow-custom", "rounded border-2")}
               >
                 <ChevronDown className="h-4 w-4 text-alpha-500" />
               </Button>
@@ -261,22 +260,12 @@ const ProductImages = ({
           >
             <div className=" h-full overflow-hidden">
               <Swiper
-                ref={sliderRef}
-                dir="rtl"
-                spaceBetween={50}
-                onSlideChange={(swiper) => {
-                  setActiveSlide(swiper.realIndex)
-                }}
-                onAutoplay={(swiper) => {
-                  setActiveSlide(swiper.realIndex)
-                }}
-                slidesPerView={1}
                 className={clsx(
                   "md:rounded-lg md:border-2",
                   imagesContainerHeightClassName
                 )}
+                dir="rtl"
                 loop={true}
-                thumbs={{ swiper: thumbsSwiper }}
                 modules={[Pagination, Thumbs, Zoom]}
                 pagination={{
                   enabled: true,
@@ -284,24 +273,34 @@ const ProductImages = ({
                   dynamicMainBullets: 4,
                   clickable: true
                 }}
+                ref={sliderRef}
+                slidesPerView={1}
+                spaceBetween={50}
+                thumbs={{ swiper: thumbsSwiper }}
                 zoom={{
                   maxRatio: 5
+                }}
+                onAutoplay={(swiper) => {
+                  setActiveSlide(swiper.realIndex)
+                }}
+                onSlideChange={(swiper) => {
+                  setActiveSlide(swiper.realIndex)
                 }}
               >
                 {images.map((image, idx) => (
                   <SwiperSlide key={idx}>
                     <div
-                      onClick={handleClick}
                       className={clsx(
                         isMobileView
                           ? "h-96 w-full"
                           : clsx("swiper-zoom-container h-full w-full")
                       )}
+                      onClick={handleClick}
                     >
                       <Image
-                        src={image.file.presignedUrl.url}
                         alt={image.file.name}
                         fill
+                        src={image.file.presignedUrl.url}
                         priority={idx === 0}
                         // sizes="(max-width: 640px) 100vw, 33vw"
                         className="object-contain "

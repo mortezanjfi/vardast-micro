@@ -19,15 +19,15 @@ const Command = forwardRef<
 >(({ className, ...props }, ref) => (
   <div className="combobox-list-container">
     <CommandPrimitive
-      ref={ref}
       className={mergeClasses("combobox-popover", className)}
+      ref={ref}
       {...props}
     />
   </div>
 ))
 Command.displayName = CommandPrimitive.displayName
 
-interface CommandDialogProps extends DialogProps {}
+type CommandDialogProps = DialogProps
 
 const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
   return (
@@ -52,8 +52,8 @@ const CommandInput = forwardRef<
       <LucideSearch className="combobox-search-icon" />
     )}
     <CommandPrimitive.Input
-      ref={ref}
       className={mergeClasses("combobox-search-input", className)}
+      ref={ref}
       {...props}
     />
   </div>
@@ -66,8 +66,8 @@ const CommandList = forwardRef<
   ComponentPropsWithoutRef<typeof CommandPrimitive.List>
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.List
-    ref={ref}
     className={mergeClasses("combobox-list", className)}
+    ref={ref}
     {...props}
   />
 ))
@@ -78,7 +78,7 @@ const CommandEmpty = forwardRef<
   ElementRef<typeof CommandPrimitive.Empty>,
   ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
 >((props, ref) => (
-  <CommandPrimitive.Empty ref={ref} className="combobox-empty" {...props} />
+  <CommandPrimitive.Empty className="combobox-empty" ref={ref} {...props} />
 ))
 
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName
@@ -88,8 +88,8 @@ const CommandGroup = forwardRef<
   ComponentPropsWithoutRef<typeof CommandPrimitive.Group>
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Group
-    ref={ref}
     className={mergeClasses("combobox-group", className)}
+    ref={ref}
     {...props}
   />
 ))
@@ -101,8 +101,8 @@ const CommandSeparator = forwardRef<
   ComponentPropsWithoutRef<typeof CommandPrimitive.Separator>
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Separator
-    ref={ref}
     className={mergeClasses("combobox-separator", className)}
+    ref={ref}
     {...props}
   />
 ))
@@ -113,8 +113,8 @@ const CommandItem = forwardRef<
   ComponentPropsWithoutRef<typeof CommandPrimitive.Item>
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Item
-    ref={ref}
     className={mergeClasses("combobox-list-item", className)}
+    ref={ref}
     {...props}
   />
 ))

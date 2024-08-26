@@ -154,7 +154,7 @@ const CreatePriceModal = ({
           </Alert>
         )}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+          <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-6 py-8">
               <FormField
                 control={form.control}
@@ -166,10 +166,10 @@ const CreatePriceModal = ({
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            className="input-field flex items-center text-start"
                             disabled={sellers.isLoading || sellers.isError}
                             noStyle
                             role="combobox"
-                            className="input-field flex items-center text-start"
                           >
                             {field.value
                               ? sellers.data?.sellersWithoutPagination.find(
@@ -200,8 +200,8 @@ const CreatePriceModal = ({
                               (seller) =>
                                 seller && (
                                   <CommandItem
-                                    value={seller.name}
                                     key={seller.id}
+                                    value={seller.name}
                                     onSelect={(value) => {
                                       form.setValue(
                                         "sellerId",
@@ -275,17 +275,17 @@ const CreatePriceModal = ({
             <DialogFooter>
               <div className="flex items-center justify-end gap-2">
                 <Button
-                  variant="ghost"
-                  type="button"
                   disabled={form.formState.isSubmitting}
+                  type="button"
+                  variant="ghost"
                   onClick={() => onClose()}
                 >
                   {t("common:cancel")}
                 </Button>
                 <Button
-                  type="submit"
-                  loading={form.formState.isSubmitting}
                   disabled={form.formState.isSubmitting}
+                  loading={form.formState.isSubmitting}
+                  type="submit"
                 >
                   {t("common:submit")}
                 </Button>

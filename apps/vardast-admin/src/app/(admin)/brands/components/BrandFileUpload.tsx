@@ -18,7 +18,7 @@ export const BrandFileUpload = () => {
       </div>
       <div className="flex w-[194px] flex-col gap-[10px]">
         <Button type="submit">بارگذاری فایل اکسل</Button>{" "}
-        <Button variant="secondary" type="button">
+        <Button type="button" variant="secondary">
           دانلود اکسل نمونه
         </Button>
       </div>

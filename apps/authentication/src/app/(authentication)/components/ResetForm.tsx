@@ -67,9 +67,9 @@ const ResetForm = (_: Props) => {
         }
 
         if (nextState === "VALIDATE_OTP") {
-          setValidationKey(validationKey as string)
-          startCountdown(remainingSeconds as number)
-          setMessage(message as string)
+          setValidationKey(validationKey)
+          startCountdown(remainingSeconds)
+          setMessage(message)
           setFormState(2)
           setPageLoading(false)
         }
@@ -86,7 +86,7 @@ const ResetForm = (_: Props) => {
       onSuccess: (data) => {
         const { nextState, message } = data.validateOtp
         setErrors(null)
-        setMessage(message as string)
+        setMessage(message)
 
         if (nextState === "VALIDATE_CELLPHONE") {
           setFormState(1)
@@ -122,7 +122,7 @@ const ResetForm = (_: Props) => {
           router.replace(paths.signin)
         }
 
-        setMessage(message as string)
+        setMessage(message)
       }
     }
   )
@@ -248,10 +248,10 @@ const ResetForm = (_: Props) => {
         {formState === 1 && (
           <Form {...formStepOne}>
             <form
-              id="login-cellphone"
-              onSubmit={formStepOne.handleSubmit(onSubmitStepOne)}
-              noValidate
               className="flex flex-1 flex-col gap-8"
+              id="login-cellphone"
+              noValidate
+              onSubmit={formStepOne.handleSubmit(onSubmitStepOne)}
             >
               <FormField
                 control={formStepOne.control}
@@ -260,9 +260,9 @@ const ResetForm = (_: Props) => {
                   <FormItem>
                     <FormControl>
                       <Input
-                        type="tel"
                         inputMode="numeric"
                         placeholder={digitsEnToFa("09*********")}
+                        type="tel"
                         {...field}
                         onChange={(e) =>
                           e.target.value.length <= 11 &&
@@ -271,8 +271,8 @@ const ResetForm = (_: Props) => {
                       />
                     </FormControl>
                     <Link
-                      href={paths.signin}
                       className="text-left text-sm underline"
+                      href={paths.signin}
                     >
                       رمز عبور دارم
                     </Link>
@@ -286,10 +286,10 @@ const ResetForm = (_: Props) => {
         {formState === 2 && (
           <Form {...formStepTwo}>
             <form
-              id="verify-otp-form"
-              onSubmit={formStepTwo.handleSubmit(onSubmitStepTwo)}
-              noValidate
               className="flex flex-1 flex-col gap-8"
+              id="verify-otp-form"
+              noValidate
+              onSubmit={formStepTwo.handleSubmit(onSubmitStepTwo)}
             >
               <FormField
                 control={formStepTwo.control}
@@ -299,10 +299,10 @@ const ResetForm = (_: Props) => {
                     <FormLabel>{t("common:otp")}</FormLabel>
                     <FormControl>
                       <Input
-                        type="tel"
-                        inputMode="numeric"
                         className="placeholder:text-right"
+                        inputMode="numeric"
                         placeholder={t("common:otp")}
+                        type="tel"
                         {...field}
                         onChange={(e) =>
                           e.target.value.length <= 5 &&
@@ -313,13 +313,13 @@ const ResetForm = (_: Props) => {
                     <FormMessage />
                     <div className="flex items-center justify-between">
                       <Button
+                        size={"xsmall"}
+                        type="button"
+                        variant="ghost"
                         onClick={() => {
                           setFormState(1)
                           formStepTwo.reset()
                         }}
-                        size={"xsmall"}
-                        type="button"
-                        variant="ghost"
                       >
                         ویرایش شماره همراه
                       </Button>
@@ -342,10 +342,10 @@ const ResetForm = (_: Props) => {
         {formState === 3 && (
           <Form {...formStepThree}>
             <form
-              id="change-password-form"
-              onSubmit={formStepThree.handleSubmit(onSubmitStepThree)}
-              noValidate
               className="flex flex-1 flex-col gap-8 pb-6"
+              id="change-password-form"
+              noValidate
+              onSubmit={formStepThree.handleSubmit(onSubmitStepThree)}
             >
               <FormField
                 control={formStepThree.control}
@@ -370,17 +370,17 @@ const ResetForm = (_: Props) => {
         <div className="flex w-full flex-col gap-y">
           {formState === 1 && (
             <Button
-              form="login-cellphone"
-              type="submit"
               block
               disabled={
                 validateCellphoneMutation.isLoading ||
                 formStepOne.formState.isSubmitting
               }
+              form="login-cellphone"
               loading={
                 validateCellphoneMutation.isLoading ||
                 formStepOne.formState.isSubmitting
               }
+              type="submit"
             >
               دریافت رمز یکبار مصرف
             </Button>
@@ -388,34 +388,34 @@ const ResetForm = (_: Props) => {
           {formState === 2 && (
             <>
               <Button
+                block
+                disabled={secondsLeft > 0}
+                loading={validateCellphoneMutation.isLoading}
+                type="button"
+                variant="ghost"
                 onClick={() => {
                   onSubmitStepOne({
                     cellphone: formStepOne.watch("cellphone")
                   })
                 }}
-                loading={validateCellphoneMutation.isLoading}
-                disabled={secondsLeft > 0}
-                variant="ghost"
-                type="button"
-                block
               >
                 ارسال مجدد رمز یکبار مصرف
               </Button>
               <Button
-                type="submit"
-                form="verify-otp-form"
                 block
                 disabled={
                   validateOtpMutation.isLoading ||
                   validateCellphoneMutation.isLoading ||
                   formStepTwo.formState.isSubmitting
                 }
+                form="verify-otp-form"
                 loading={
                   pageLoading ||
                   validateOtpMutation.isLoading ||
                   validateCellphoneMutation.isLoading ||
                   formStepTwo.formState.isSubmitting
                 }
+                type="submit"
               >
                 تایید تلفن همراه
               </Button>
@@ -423,17 +423,17 @@ const ResetForm = (_: Props) => {
           )}
           {formState === 3 && (
             <Button
-              form="change-password-form"
-              type="submit"
               block
               disabled={
                 passwordResetMutation.isLoading ||
                 formStepThree.formState.isSubmitting
               }
+              form="change-password-form"
               loading={
                 passwordResetMutation.isLoading ||
                 formStepThree.formState.isSubmitting
               }
+              type="submit"
             >
               تغییر کلمه عبور
             </Button>

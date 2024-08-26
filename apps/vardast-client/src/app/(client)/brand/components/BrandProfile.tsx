@@ -37,21 +37,21 @@ import ProductsTab from "./ProductsTab"
 export interface IBrandOrSellerProfile {
   limitPage?: number
   isMobileView: boolean
-  slug: Array<string | number>
+  slug: (string | number)[]
   args: IndexProductInput
   session: Session | null
 }
 
 export enum BrandProfileTabEnum {
-  // eslint-disable-next-line no-unused-vars
+   
   PRODUCT = "PRODUCT",
-  // eslint-disable-next-line no-unused-vars
+   
   CATEGORY = "CATEGORY",
-  // eslint-disable-next-line no-unused-vars
+   
   SELLERS = "SELLERS",
-  // eslint-disable-next-line no-unused-vars
+   
   PRICE_LIST = "PRICE_LIST",
-  // eslint-disable-next-line no-unused-vars
+   
   CATALOG = "CATALOG"
 }
 
@@ -118,12 +118,12 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
               <div className="relative flex aspect-square h-[calc(56vw)] max-h-[calc(56vw)] min-h-[calc(56vw)] w-full items-center justify-center overflow-hidden px-6 py-5">
                 <div className="relative h-full w-full overflow-hidden rounded-2xl">
                   <Image
+                    alt="seller"
+                    className="rounded-2xl object-cover"
+                    layout="fill"
                     src={
                       brandQuery?.data?.brand?.bannerMobile?.presignedUrl?.url
                     }
-                    alt="seller"
-                    layout="fill"
-                    className="rounded-2xl object-cover"
                   />
                 </div>
               </div>
@@ -159,9 +159,9 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
               <div className="col-span-2 flex grid-cols-2 md:grid md:gap-0 md:divide-x md:divide-x-reverse md:border-t md:py-3">
                 <ShareIcon name={brandQuery?.data?.brand.name} />
                 <FavoriteIcon
-                  type={EntityTypeEnum.Brand}
                   entityId={+slug[0]}
                   isFavoriteQuery={isFavoriteQuery}
+                  type={EntityTypeEnum.Brand}
                 />
               </div>
             </div>
@@ -171,14 +171,14 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
       {!isMobileView && (
         <div className="relative hidden aspect-auto w-full overflow-hidden rounded-2xl border md:col-span-9 md:block">
           <Image
+            alt="banner"
+            className="h-full w-full object-cover"
+            fill
             src={
               brandQuery?.data?.brand.bannerDesktop?.presignedUrl.url
                 ? `${brandQuery?.data?.brand?.bannerDesktop?.presignedUrl.url}`
                 : brandSellerBlank
             }
-            className="h-full w-full object-cover"
-            alt="banner"
-            fill
           />
         </div>
       )}
@@ -201,8 +201,8 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
   return (
     <div className="flex flex-col">
       <Tabs
-        value={activeTab}
         className="flex h-full w-full flex-col bg-alpha-white"
+        value={activeTab}
         onValueChange={(e) => setActiveTab(e as BrandProfileTabEnum)}
       >
         <TabsList className="sticky top-0 z-50 grid w-full grid-cols-4 bg-alpha-white font-medium sm:z-0 md:mb-6  md:flex">
@@ -262,15 +262,15 @@ const BrandProfile = ({ isMobileView, args, slug }: IBrandOrSellerProfile) => {
         <TabsContent value={BrandProfileTabEnum.CATALOG}>
           <PdfTabItem
             access_token={session?.accessToken}
-            title="کاتالوگ"
             file={brandQuery.data?.brand.catalog as File}
+            title="کاتالوگ"
           />
         </TabsContent>
         <TabsContent value={BrandProfileTabEnum.PRICE_LIST}>
           <PdfTabItem
             access_token={session?.accessToken}
-            title="لیست قیمت"
             file={brandQuery.data?.brand.priceList as File}
+            title="لیست قیمت"
           />
         </TabsContent>
       </Tabs>

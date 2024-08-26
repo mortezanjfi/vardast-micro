@@ -34,13 +34,13 @@ export const SellersTabContent = ({ sellerQuery }: SellersTabContentProps) => {
                 (seller) =>
                   seller && (
                     <BrandOrSellerCard
-                      selectedItemId={selectedItemId}
-                      setSelectedItemId={setSelectedItemId}
-                      key={seller.id}
                       content={{
                         ...(seller as Seller),
                         __typename: "Seller"
                       }}
+                      key={seller.id}
+                      selectedItemId={selectedItemId}
+                      setSelectedItemId={setSelectedItemId}
                     />
                   )
               )}

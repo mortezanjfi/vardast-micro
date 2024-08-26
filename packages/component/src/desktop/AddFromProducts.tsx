@@ -105,7 +105,7 @@ export const AddFromProducts = ({
 
   return (
     <div className="flex flex-col gap">
-      <ProductsFilter isAdmin={isAdmin} form={form} isMyProductsPage={false} />
+      <ProductsFilter form={form} isAdmin={isAdmin} isMyProductsPage={false} />
       {renderedListStatus[getContentByApiStatus(data, !!productsLength)] || (
         <div
           className={clsx("table-responsive py-5", !isAdmin && "card rounded ")}
@@ -116,15 +116,15 @@ export const AddFromProducts = ({
                 <div className="flex gap-1">
                   <span className=" text-nowrap">نتایج جستجو در </span>
                   <Image
-                    src={logoHorizontal}
                     alt={`وردست`}
                     className="w-auto object-contain"
+                    src={logoHorizontal}
                   />
                 </div>
                 <div className="flex gap-2">
                   <span>تعداد نتایج:</span>
                   <span className="text-secondary">{`${digitsEnToFa(
-                    addCommas(data.data?.products.total as number)
+                    addCommas(data.data?.products.total)
                   )} کالا`}</span>
                 </div>
               </div>
@@ -152,21 +152,21 @@ export const AddFromProducts = ({
                         <td className="flex gap-2 border">
                           <div className="relative aspect-square h-12 w-12 overflow-hidden rounded">
                             <Image
+                              alt={product.name}
+                              fill
+                              sizes="5vw"
                               src={
                                 (product.images.at(0)?.file.presignedUrl
-                                  .url as string) ?? "/images/seller-blank.png"
+                                  .url) ?? "/images/seller-blank.png"
                               }
-                              alt={product.name}
-                              sizes="5vw"
-                              fill
                             />
                           </div>
                           <div className="flex flex-col">
                             <Link
-                              prefetch={false}
                               href={checkSellerRedirectUrl(
                                 `/product/${product.id}/${product.name}`
                               )}
+                              prefetch={false}
                               target="_blank"
                             >
                               {product.name}
@@ -218,19 +218,19 @@ export const AddFromProducts = ({
                         <td className="w-[159px] border">
                           {" "}
                           <Button
-                            variant="secondary"
-                            size="xsmall"
-                            type="button"
-                            loading={
-                              loadingBtn === product.id && !isAdmin
-                                ? sellerCreateOfferMutation.isLoading
-                                : false
-                            }
                             disabled={
                               !isAdmin
                                 ? sellerCreateOfferMutation.isLoading
                                 : false
                             }
+                            loading={
+                              loadingBtn === product.id && !isAdmin
+                                ? sellerCreateOfferMutation.isLoading
+                                : false
+                            }
+                            size="xsmall"
+                            type="button"
+                            variant="secondary"
                             onClick={(e) => {
                               e.stopPropagation()
                               e.nativeEvent.preventDefault()
@@ -261,8 +261,8 @@ export const AddFromProducts = ({
               </tbody>
             </table>
             <Pagination
-              total={data?.data?.products.lastPage ?? 0}
               page={currentPage}
+              total={data?.data?.products.lastPage ?? 0}
               onChange={(page) => {
                 setCurrentPage(page)
               }}

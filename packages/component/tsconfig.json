@@ -43,12 +43,5 @@
     ".next/types/**/*.ts",
     "**/*.svg"
   ],
-  "exclude": [
-    "node_modules",
-    "build",
-    "dist",
-    ".next",
-    "node_modules",
-    "old-to-delete"
-  ]
+  "exclude": ["node_modules", "build", "dist", ".next", "node_modules"]
 }

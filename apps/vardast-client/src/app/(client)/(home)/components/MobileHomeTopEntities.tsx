@@ -32,18 +32,18 @@ const MobileHomeTopEntities = ({
 
   return (
     <MobileHomeSection
-      viewAllHref={`/${__typename?.toLowerCase()}s`}
       bgWhite
-      title={title}
       block
+      title={title}
+      viewAllHref={`/${__typename?.toLowerCase()}s`}
     >
       <div className="relative overflow-hidden">
         {!inViewNext && !isMobileView && (
           <SwiperNavigationButton
-            swiperRef={swiperRef}
             action={SwiperButtonAction.HANDLE_NEXT}
             direction={SwiperButtonsDirection.LEFT}
             iconSize={20}
+            swiperRef={swiperRef}
           />
         )}
         <Swiper
@@ -52,16 +52,15 @@ const MobileHomeTopEntities = ({
           //   clickable: true
           // }}
           // modules={[FreeMode]}
-          onSwiper={setSwiperRef}
-          // centeredSlides={centeredSlides ?? true}
-          slidesPerView={"auto"}
           spaceBetween={15}
           // className="h-full pb-12 sm:px-5 sm:py-8 md:px-0"
           className="px-4 pb-8 sm:!pb-4 sm:pt-8 md:px-0"
+          onSwiper={setSwiperRef}
+          // centeredSlides={centeredSlides ?? true}
+          slidesPerView={"auto"}
         >
           {query?.map((brand, index) => (
             <SwiperSlide
-              key={brand.id}
               className={clsx(
                 "overflow-hidden rounded-2xl bg-alpha-white",
                 isMobileView ? "w-[calc(100vw-45px)]" : "w-[350px]"
@@ -69,6 +68,7 @@ const MobileHomeTopEntities = ({
                 //   ? "border-2 border-primary"
                 //   : "border-alpha-50"
               )}
+              key={brand.id}
             >
               <div
                 ref={
@@ -86,10 +86,10 @@ const MobileHomeTopEntities = ({
         </Swiper>
         {!inViewPrev && !isMobileView && (
           <SwiperNavigationButton
-            swiperRef={swiperRef}
             action={SwiperButtonAction.HANDLE_PREVIOUS}
             direction={SwiperButtonsDirection.RIGHT}
             iconSize={20}
+            swiperRef={swiperRef}
           />
         )}
       </div>

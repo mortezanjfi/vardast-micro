@@ -118,9 +118,6 @@ const BrandInformationForm = ({
         },
         body: formData
       }).then(async (response) => {
-        if (!response.ok) {
-        }
-
         const uploadResult = await response.json()
         form.setValue("logoFileUuid", uploadResult.uuid)
 
@@ -156,7 +153,7 @@ const BrandInformationForm = ({
   ]
   const submit = (data: NewBrandInformationType) => {
     setNewBrandData((prev) => ({
-      ...prev!,
+      ...prev,
       generalInformation: data
     }))
     const currentIndex = ["information", "catalog", "price"].indexOf(activeTab)
@@ -189,8 +186,8 @@ const BrandInformationForm = ({
       )} */}
 
       <form
-        noValidate
         className="relative flex flex-col gap-7 pb-7"
+        noValidate
         onSubmit={form.handleSubmit(submit)}
       >
         <Card className="px-7 pb-52 pt-7">
@@ -248,12 +245,12 @@ const BrandInformationForm = ({
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            className="input-field flex items-center text-start"
                             disabled={
                               categories.isLoading || categories.isError
                             }
                             noStyle
                             role="combobox"
-                            className="input-field flex items-center text-start"
                           >
                             {field.value
                               ? categories.data?.allCategoriesV2.find(
@@ -271,14 +268,14 @@ const BrandInformationForm = ({
                         <Command>
                           <CommandInput
                             loading={categories.isLoading}
+                            placeholder={t("common:search_entity", {
+                              entity: t("common:category")
+                            })}
                             value={categoryQueryTemp}
                             onValueChange={(newQuery) => {
                               setCategoryQuery(newQuery)
                               setCategoryQueryTemp(newQuery)
                             }}
-                            placeholder={t("common:search_entity", {
-                              entity: t("common:category")
-                            })}
                           />
                           <CommandEmpty>
                             {t("common:no_entity_found", {
@@ -290,8 +287,8 @@ const BrandInformationForm = ({
                               (category) =>
                                 category && (
                                   <CommandItem
-                                    value={category.title}
                                     key={category.id}
+                                    value={category.title}
                                     onSelect={(value) => {
                                       form.setValue(
                                         "categoryId",
@@ -337,10 +334,10 @@ const BrandInformationForm = ({
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            className="input-field flex items-center text-start"
                             disabled={provinces.isLoading || provinces.isError}
                             noStyle
                             role="combobox"
-                            className="input-field flex items-center text-start"
                           >
                             {field.value
                               ? provinces.data?.provinces.data.find(
@@ -358,14 +355,14 @@ const BrandInformationForm = ({
                         <Command>
                           <CommandInput
                             loading={provinces.isLoading}
+                            placeholder={t("common:search_entity", {
+                              entity: t("common:province")
+                            })}
                             value={provinceQueryTemp}
                             onValueChange={(newQuery) => {
                               // setProvinceQuery(newQuery)
                               setProvinceQueryTemp(newQuery)
                             }}
-                            placeholder={t("common:search_entity", {
-                              entity: t("common:province")
-                            })}
                           />
                           <CommandEmpty>
                             {t("common:no_entity_found", {
@@ -377,8 +374,8 @@ const BrandInformationForm = ({
                               (province) =>
                                 province && (
                                   <CommandItem
-                                    value={province.name}
                                     key={province.id}
+                                    value={province.name}
                                     onSelect={(value) => {
                                       form.setValue(
                                         "provinceId",
@@ -422,6 +419,7 @@ const BrandInformationForm = ({
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            className="input-field flex items-center text-start"
                             disabled={
                               cities.isFetching ||
                               cities.isLoading ||
@@ -429,7 +427,6 @@ const BrandInformationForm = ({
                             }
                             noStyle
                             role="combobox"
-                            className="input-field flex items-center text-start"
                           >
                             {field.value
                               ? cities?.data?.province.cities.find(
@@ -459,8 +456,8 @@ const BrandInformationForm = ({
                               (city) =>
                                 city && (
                                   <CommandItem
-                                    value={city.name}
                                     key={city.id}
+                                    value={city.name}
                                     onSelect={(value) => {
                                       const selected =
                                         cities.data?.province.cities.find(
@@ -508,9 +505,9 @@ const BrandInformationForm = ({
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            className="input-field flex items-center text-start"
                             noStyle
                             role="combobox"
-                            className="input-field flex items-center text-start"
                           >
                             {statuses.find((st) => st.value === field.value)
                               ?.status || t("common:select_placeholder")}
@@ -528,8 +525,8 @@ const BrandInformationForm = ({
                           <CommandGroup>
                             {statuses.map((st) => (
                               <CommandItem
-                                value={st.value}
                                 key={st.status}
+                                value={st.value}
                                 onSelect={(value) => {
                                   form.setValue("brandStatus", value)
                                   setBrandStatusDialog(false)
@@ -582,22 +579,19 @@ const BrandInformationForm = ({
                 <div className="flex flex-col items-start gap-6">
                   <h1>{t("common:logo")}</h1>
                   <Input
+                    accept="image/*"
+                    className="hidden"
+                    ref={logoFileFieldRef}
                     type="file"
                     onChange={(e) => onLogoFileChange(e)}
-                    className="hidden"
-                    accept="image/*"
-                    ref={logoFileFieldRef}
                   />
                   <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
                     {logoPreview || brand?.logoFile ? (
                       <Image
-                        src={
-                          logoPreview ||
-                          (brand?.logoFile?.presignedUrl.url as string)
-                        }
-                        fill
                         alt="..."
                         className="object-contain p-3"
+                        fill
+                        src={logoPreview || brand?.logoFile?.presignedUrl.url}
                       />
                     ) : (
                       <LucideWarehouse
@@ -610,10 +604,10 @@ const BrandInformationForm = ({
                     <div>
                       {" "}
                       <Button
-                        size="xlarge"
                         className="flex flex-col gap-4 border-dashed"
-                        variant="secondary"
+                        size="xlarge"
                         type="button"
+                        variant="secondary"
                         onClick={() => {
                           logoFileFieldRef.current?.click()
                         }}
@@ -627,8 +621,8 @@ const BrandInformationForm = ({
                       </Button>
                       {logoPreview && (
                         <Button
-                          variant="danger"
                           iconOnly
+                          variant="danger"
                           onClick={() => {
                             form.setValue("logoFileUuid", "")
                             setLogoFile(null)
@@ -668,8 +662,8 @@ const BrandInformationForm = ({
         <Card className="flex w-full justify-end gap-3">
           <Button
             className=" top-0 ml-3 px-16   py-2"
-            variant="secondary"
             type="reset"
+            variant="secondary"
             onClick={() => {
               router.push("/brands")
             }}

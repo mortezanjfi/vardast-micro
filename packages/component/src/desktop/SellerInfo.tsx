@@ -14,12 +14,12 @@ const SellerInfo = ({ seller, classNames }: SellerInfoProps) => {
         <div className="relative h-[66px] w-[66px]">
           <Image
             src={
-              (seller?.logoFile?.presignedUrl.url as string) || sellerBlankImage
+              (seller?.logoFile?.presignedUrl.url) || sellerBlankImage
             }
             // src="/images/frame.png"
-            fill
             alt={seller?.name}
             className="rounded-xl bg-white object-contain shadow-md"
+            fill
           />
         </div>
         <div className="flex flex-col">

@@ -26,15 +26,15 @@ export type IGetCategoryQueryResult = UseQueryResult<
   unknown
 > | null
 
-// eslint-disable-next-line no-unused-vars
+ 
 export enum CategoryModalEnumType {
-  // eslint-disable-next-line no-unused-vars
+   
   EditAttribute = "EditAttribute",
-  // eslint-disable-next-line no-unused-vars
+   
   CreateCategory = "CreateCategory",
-  // eslint-disable-next-line no-unused-vars
+   
   EditCategory = "EditCategory",
-  // eslint-disable-next-line no-unused-vars
+   
   RemoveCategory = "RemoveCategory"
 }
 
@@ -70,7 +70,7 @@ const Categories = ({ slug, session }: Props) => {
     currentCategory,
     type
   }: OnOpenCategoryChangeProps) => {
-    let tempModalsOpen: Omit<CategoryActionModalState, "category"> = {
+    const tempModalsOpen: Omit<CategoryActionModalState, "category"> = {
       [CategoryModalEnumType.EditAttribute]: false,
       [CategoryModalEnumType.EditCategory]: false,
       [CategoryModalEnumType.RemoveCategory]: false,
@@ -101,9 +101,9 @@ const Categories = ({ slug, session }: Props) => {
     <>
       {modalsOpen[CategoryModalEnumType.CreateCategory] && (
         <CategoryFormModal
+          actionType="create"
           modalsOpen={modalsOpen}
           onOpenChange={onOpenChange}
-          actionType="create"
         />
       )}
       <PageHeader title={vocabularyQuery.data.vocabulary.title}>
@@ -126,11 +126,11 @@ const Categories = ({ slug, session }: Props) => {
         <div className="flex flex-col gap-2">
           {vocabularyQuery.data.vocabulary.categories.map((category) => (
             <CategoryCard
-              session={session}
               category={category as Category}
-              modalsOpen={modalsOpen}
-              onOpenChange={onOpenChange}
               key={category?.id}
+              modalsOpen={modalsOpen}
+              session={session}
+              onOpenChange={onOpenChange}
             />
           ))}
         </div>

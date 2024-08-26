@@ -30,7 +30,6 @@ const ProductDescription = ({ description }: ProductDescriptionProps) => {
 
   return (
     <ProductSectionContainer
-      title="معرفی"
       subtitle={
         showSubtitle
           ? {
@@ -39,13 +38,14 @@ const ProductDescription = ({ description }: ProductDescriptionProps) => {
             }
           : undefined
       }
+      title="معرفی"
     >
       <div className="flex flex-col items-start gap-7">
         <h3
-          ref={descriptionRef}
           className={`w-full text-justify text-sm  text-alpha-500 ${
             !descriptionMoreFlag ? "line-clamp-3" : ""
           }`}
+          ref={descriptionRef}
         >
           {description}
         </h3>

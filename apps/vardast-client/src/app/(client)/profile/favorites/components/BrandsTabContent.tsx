@@ -32,10 +32,10 @@ const BrandsTabContent = ({ brandQuery }: BrandsTabContentProps) => {
                 (brand) =>
                   brand && (
                     <BrandOrSellerCard
+                      content={{ ...(brand as Brand), __typename: "Brand" }}
+                      key={brand.id}
                       selectedItemId={selectedItemId}
                       setSelectedItemId={setSelectedItemId}
-                      key={brand.id}
-                      content={{ ...(brand as Brand), __typename: "Brand" }}
                     />
                   )
               )}

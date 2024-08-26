@@ -30,15 +30,15 @@ const FilterBlock = ({
   return (
     <Collapsible.Root open={open} onOpenChange={setOpen}>
       <div className="flex items-center gap-2 py-3">
-        {icon && <DynamicHeroIcon icon={icon} className="h-7 w-7" solid />}{" "}
+        {icon && <DynamicHeroIcon className="h-7 w-7" icon={icon} solid />}{" "}
         <span className=" font-medium text-alpha-800">{title}</span>
         {badgeNumber && (
-          <Badge variant="danger" size="xs">
+          <Badge size="xs" variant="danger">
             {badgeNumber}
           </Badge>
         )}
         <Collapsible.Trigger asChild>
-          <Button variant="ghost" size="small" className="mr-auto" iconOnly>
+          <Button className="mr-auto" iconOnly size="small" variant="ghost">
             <LucideChevronDown
               className={clsx(["icon", open ? "rotate-180" : ""])}
             />

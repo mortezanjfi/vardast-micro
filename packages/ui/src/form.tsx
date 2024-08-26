@@ -89,12 +89,12 @@ const FormLayout = forwardRef(
     return (
       <FormProvider {...formProps}>
         <form
+          className={mergeClasses(formLayoutVariants({ template }), className)}
           ref={ref}
           onSubmit={(e) => {
             e.preventDefault()
             onSubmit(e)
           }}
-          className={mergeClasses(formLayoutVariants({ template }), className)}
           {...props}
         >
           {props.children}
@@ -166,8 +166,8 @@ const FormItem = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     return (
       <FormItemContext.Provider value={{ id }}>
         <div
-          ref={ref}
           className={mergeClasses("form-field", className)}
+          ref={ref}
           {...props}
         />
       </FormItemContext.Provider>
@@ -188,9 +188,9 @@ const FormLabel = forwardRef<
 
   return (
     <Label
-      ref={ref}
       className={mergeClasses(error && "text-destructive", className)}
       htmlFor={formItemId}
+      ref={ref}
       {...props}
     />
   )
@@ -246,14 +246,14 @@ const FormControl = forwardRef<
               <div className="input-element">{prefixElement}</div>
             )}
             <Slot
-              ref={ref}
-              id={formItemId}
               aria-describedby={
                 !error
                   ? `${formDescriptionId}`
                   : `${formDescriptionId} ${formMessageId}`
               }
               aria-invalid={!!error}
+              id={formItemId}
+              ref={ref}
               {...props}
             />
             {suffixElement && (
@@ -276,9 +276,9 @@ const FormDescription = forwardRef<
 
   return (
     <p
-      ref={ref}
-      id={formDescriptionId}
       className={mergeClasses("form-message", className)}
+      id={formDescriptionId}
+      ref={ref}
       {...props}
     />
   )
@@ -298,9 +298,9 @@ const FormMessage = forwardRef<
 
   return (
     <p
-      ref={ref}
-      id={formMessageId}
       className={mergeClasses("form-message error", className)}
+      id={formMessageId}
+      ref={ref}
       {...props}
     >
       {body}

@@ -25,7 +25,7 @@ const AddressEdit = ({ uuid, fallback }: AddressEditProps) => {
   if (!data) notFound()
 
   return (
-    <AddressForm passedAddress={data.address as Address} fallback={fallback} />
+    <AddressForm fallback={fallback} passedAddress={data.address as Address} />
   )
 }
 

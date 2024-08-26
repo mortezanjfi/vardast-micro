@@ -57,13 +57,13 @@ const Areas = ({ citySlug }: Props) => {
             (area) =>
               area && (
                 <AreaCard
+                  area={area as Area}
+                  key={area.id}
+                  show={activesOnly ? area.isActive : true}
                   onDeleteTriggered={(area) => {
                     setDeleteModalOpen(true)
                     setAreaToDelete(area)
                   }}
-                  show={activesOnly ? area.isActive : true}
-                  key={area.id}
-                  area={area as Area}
                 />
               )
           )}

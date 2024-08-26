@@ -129,7 +129,7 @@ const CreateVocavulary = (_: Props) => {
             </Alert>
           )}
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+            <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
               <div className="flex flex-col gap-6 py-8">
                 <FormField
                   control={form.control}
@@ -193,15 +193,15 @@ const CreateVocavulary = (_: Props) => {
               <DialogFooter>
                 <div className="flex items-center gap-2">
                   <Button
-                    variant="ghost"
-                    type="button"
-                    onClick={() => setOpen(false)}
-                    loading={form.formState.isSubmitting}
                     disabled={form.formState.isSubmitting}
+                    loading={form.formState.isSubmitting}
+                    type="button"
+                    variant="ghost"
+                    onClick={() => setOpen(false)}
                   >
                     {t("common:cancel")}
                   </Button>
-                  <Button type="submit" disabled={form.formState.isSubmitting}>
+                  <Button disabled={form.formState.isSubmitting} type="submit">
                     {t("common:submit")}
                   </Button>
                 </div>

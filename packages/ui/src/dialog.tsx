@@ -38,8 +38,8 @@ const DialogOverlay = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Overlay
-    ref={ref}
     className={mergeClasses("dialog-overlay", className)}
+    ref={ref}
     {...props}
   />
 ))
@@ -53,8 +53,8 @@ const DialogContent = React.forwardRef<
   <DialogPortal container={container}>
     <DialogOverlay />
     <DialogPrimitive.Content
-      ref={ref}
       className={mergeClasses(dialogVariants({ size }), className)}
+      ref={ref}
       {...props}
     >
       {children}
@@ -88,8 +88,8 @@ const DialogTitle = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
-    ref={ref}
     className={mergeClasses("dialog-title", className)}
+    ref={ref}
     {...props}
   />
 ))
@@ -100,8 +100,8 @@ const DialogDescription = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
-    ref={ref}
     className={mergeClasses("dialog-description", className)}
+    ref={ref}
     {...props}
   />
 ))

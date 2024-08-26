@@ -66,11 +66,11 @@ const MegaMenu = () => {
         <MegaMenuLoader />
       ) : (
         <div
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeaveContainer}
           className={clsx(
             "relative flex flex-col items-center gap-3 text-base text-alpha-800 hover:text-gray-700"
           )}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeaveContainer}
         >
           <div
             className={clsx(
@@ -84,9 +84,9 @@ const MegaMenu = () => {
         </div>
       )}
       <MegaMenuModal
-        megaMenuData={megaMenuData}
         handleMouseEnterList={handleMouseEnterList}
         handleMouseLeaveContainer={handleMouseLeaveContainer}
+        megaMenuData={megaMenuData}
       />
     </>
   )
@@ -120,14 +120,14 @@ export const MegaMenuModal = ({
     <AnimatePresence>
       {open && (
         <motion.div
-          key="mega-menu-modal"
-          initial={{ opacity: 0, y: 0 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 0 }}
           className={clsx([
             open ? "z-[99]" : "",
             open ? "mx-auto md:max-w-md lg:max-w-lg" : ""
           ])}
+          exit={{ opacity: 0, y: 0 }}
+          initial={{ opacity: 0, y: 0 }}
+          key="mega-menu-modal"
         >
           {" "}
           <div
@@ -137,28 +137,28 @@ export const MegaMenuModal = ({
             ])}
           ></div>
           <div
+            className="absolute  top-full z-50 flex  max-h-[calc(100vh-300px)] w-[calc(100%-400px)]  overflow-hidden rounded-2xl bg-white text-gray-900 shadow-lg 2xl:grid-cols-5"
             onMouseEnter={handleMouseEnterList}
             onMouseLeave={handleMouseLeaveContainer}
-            className="absolute  top-full z-50 flex  max-h-[calc(100vh-300px)] w-[calc(100%-400px)]  overflow-hidden rounded-2xl bg-white text-gray-900 shadow-lg 2xl:grid-cols-5"
           >
             {/* Category Sidebar */}
             <div className="col-span-1 max-h-[calc(100vh-300px)] min-w-max max-w-xs overflow-y-auto bg-alpha-100 py-5">
               {megaMenuData?.data?.mega_menu?.map((category) => (
                 <Link
-                  onClick={() => setOpen(false)}
-                  href={`/category/${category?.id}/${category.title}`}
-                  key={category.id}
-                  onMouseEnter={() => setActiveCategory(category)}
                   className={clsx(
                     "flex cursor-pointer items-center gap-3 px-4 py-4 hover:bg-alpha-50",
                     category?.id === activeCategory?.id && "text-primary"
                   )}
+                  href={`/category/${category?.id}/${category.title}`}
+                  key={category.id}
+                  onClick={() => setOpen(false)}
+                  onMouseEnter={() => setActiveCategory(category)}
                 >
                   <Image
+                    alt="main-categories"
+                    height={24}
                     src={category?.image_url}
                     width={24}
-                    height={24}
-                    alt="main-categories"
                   />
                   {category.title}
                 </Link>
@@ -170,13 +170,13 @@ export const MegaMenuModal = ({
               {activeCategory && (
                 <div className="flex max-h-[calc(100vh-300px)] flex-col overflow-hidden">
                   <Link
-                    href={`/category/${activeCategory?.id}/${activeCategory.title}`}
                     className="flex items-center gap-4 px-7 py-5 text-blue-600"
+                    href={`/category/${activeCategory?.id}/${activeCategory.title}`}
                   >
                     <h3 className="text-base font-medium">
                       {activeCategory.title}
                     </h3>
-                    <ChevronLeft width={16} height={16} />
+                    <ChevronLeft height={16} width={16} />
                   </Link>
                   <div className="flex max-h-[calc(100vh-300px)] max-w-full overflow-y-auto px-7 py-5">
                     {columns.map((column, columnIndex) => (
@@ -190,21 +190,21 @@ export const MegaMenuModal = ({
                             key={subcategory.id}
                           >
                             <Link
-                              onClick={() => setOpen(false)}
-                              href={`/category/${subcategory?.id}/${subcategory.title}`}
                               className="flex items-center gap-4 border-r-1 border-primary py-2 pr-3"
+                              href={`/category/${subcategory?.id}/${subcategory.title}`}
+                              onClick={() => setOpen(false)}
                             >
                               <span className="hover:text-primary">
                                 {subcategory.title}
                               </span>
-                              <ChevronLeft width={16} height={16} />
+                              <ChevronLeft height={16} width={16} />
                             </Link>
                             <ul className="pr-3">
                               {subcategory.children.map((subSubcategory) => (
                                 <Link
-                                  onClick={() => setOpen(false)}
                                   href={`/category/${subSubcategory?.id}/${subSubcategory.title}`}
                                   key={subSubcategory.id}
+                                  onClick={() => setOpen(false)}
                                 >
                                   <li className="py-2 text-alpha-500 hover:text-primary">
                                     {subSubcategory.title}

@@ -96,12 +96,12 @@ const ProductList = ({
     args.orderBy || ProductSortablesEnum.Newest
   )
   const [filterAttributes, setFilterAttributes] = useState<FilterAttribute[]>(
-    args["attributes"] || []
+    args.attributes || []
   )
 
   const [categoryIdsFilter, setCategoryIdsFilter] = useState<
     (typeof args)["categoryIds"]
-  >(args["categoryIds"] || [])
+  >(args.categoryIds || [])
 
   const {
     categoriesFilterVisibilityAtom,
@@ -302,41 +302,41 @@ const ProductList = ({
         <div className="flex flex-grow flex-wrap items-center justify-start gap-1 md:w-full md:border-b-2 md:border-b-alpha-200 md:py-6">
           {brandName && (
             <Button
+              className="rounded-full border border-alpha-200"
               size="small"
               variant="primary"
-              className="rounded-full border border-alpha-200"
               onClick={() => {
                 removeFilterParamByQueryName(["brandName", "brandId"])
               }}
             >
               {`برند: ${brandName}`}
-              <XMarkIcon width={16} height={16} />
+              <XMarkIcon height={16} width={16} />
             </Button>
           )}
           {sellerName && (
             <Button
+              className="rounded-full border border-alpha-200"
               size="small"
               variant="primary"
-              className="rounded-full border border-alpha-200"
               onClick={() => {
                 removeFilterParamByQueryName(["sellerName", "sellerId"])
               }}
             >
               {`فروشنده: ${sellerName}`}
-              <XMarkIcon width={16} height={16} />
+              <XMarkIcon height={16} width={16} />
             </Button>
           )}
           {queryFilterParam && (
             <Button
+              className="rounded-full border border-alpha-200"
               size="small"
               variant="primary"
-              className="rounded-full border border-alpha-200"
               onClick={() => {
                 removeFilterParamByQueryName("query")
               }}
             >
               {queryFilterParam}
-              <XMarkIcon width={16} height={16} />
+              <XMarkIcon height={16} width={16} />
             </Button>
           )}
         </div>
@@ -362,24 +362,24 @@ const ProductList = ({
         <>
           {brandId && isMobileView && (
             <BrandOrSellerCategoryFilter
+              brandId={brandId}
               categoryIdsFilter={categoryIdsFilter}
               onCategoryIdsFilterChanged={onCategoryIdsFilterChanged}
-              brandId={brandId}
             />
           )}
           {sellerId && isMobileView && (
             <BrandOrSellerCategoryFilter
               categoryIdsFilter={categoryIdsFilter}
-              onCategoryIdsFilterChanged={onCategoryIdsFilterChanged}
               sellerId={sellerId}
+              onCategoryIdsFilterChanged={onCategoryIdsFilterChanged}
             />
           )}
           {selectedCategoryIds &&
             selectedCategoryIds.length === 1 &&
             selectedCategoryIds[0] !== 0 && (
               <FiltersContainer
-                selectedCategoryId={selectedCategoryIds[0]}
                 filterAttributes={filterAttributes}
+                selectedCategoryId={selectedCategoryIds[0]}
                 onFilterAttributesChanged={onFilterAttributesChanged}
               />
             )}
@@ -473,7 +473,7 @@ const ProductList = ({
         countItemTitle={"product"}
         itemCount={
           allProductsQuery.data?.pages[0].products.total
-            ? (allProductsQuery.data?.pages[0].products.total as number)
+            ? (allProductsQuery.data?.pages[0].products.total)
             : 0
         }
       />
@@ -492,14 +492,6 @@ const ProductList = ({
             )}
             <Input
               autoFocus
-              value={queryTemp}
-              defaultValue={query}
-              onChange={(e) => {
-                setQueryTemp(e.target.value)
-                setQuery(e.target.value)
-              }}
-              type="text"
-              placeholder="نام کالا | برند | فروشنده | دسته بندی | SKU"
               className="flex h-full
                 w-full
                 items-center
@@ -509,12 +501,20 @@ const ProductList = ({
                 px-4
                 py-3
                 focus:!ring-0 disabled:bg-alpha-100"
+              defaultValue={query}
+              placeholder="نام کالا | برند | فروشنده | دسته بندی | SKU"
+              type="text"
+              value={queryTemp}
+              onChange={(e) => {
+                setQueryTemp(e.target.value)
+                setQuery(e.target.value)
+              }}
             />
             <Button
-              variant="ghost"
-              size="small"
-              iconOnly
               className="rounded-full"
+              iconOnly
+              size="small"
+              variant="ghost"
               onClick={() => {
                 setQuery("")
                 setQueryTemp("")
@@ -542,20 +542,20 @@ const ProductList = ({
               .length > 0 && (
               <>
                 <MobileCategoriesFilter
-                  categoryId={selectedCategoryIds}
                   brandId={brandId}
-                  sellerId={sellerId}
+                  categoryId={selectedCategoryIds}
                   categoryIdsFilter={categoryIdsFilter}
+                  sellerId={sellerId}
                   onCategoryFilterChanged={({ status, value }) => {
                     onCategoryIdsFilterChanged({ status, value })
                     setCategoriesFilterVisibility(false)
                   }}
                 />
                 <Button
-                  onClick={() => setFiltersVisibility(true)}
+                  className="rounded-full border border-alpha-200 py-0"
                   size="small"
                   variant="secondary"
-                  className="rounded-full border border-alpha-200 py-0"
+                  onClick={() => setFiltersVisibility(true)}
                 >
                   {filterAttributes.length > 0 && (
                     <span className="absolute -right-1 -top-1 block h-2.5 w-2.5 rounded-full bg-primary-500"></span>
@@ -589,10 +589,10 @@ const ProductList = ({
           دسته‌بندی‌ها
         </Button> */}
           <Button
-            onClick={() => setSortFilterVisibility(true)}
+            className="rounded-full border border-alpha-200 py-0"
             size="small"
             variant="secondary"
-            className="rounded-full border border-alpha-200 py-0"
+            onClick={() => setSortFilterVisibility(true)}
           >
             <LucideSortDesc className="icon text-alpha" />
             مرتب‌سازی
@@ -610,8 +610,8 @@ const ProductList = ({
           <>
             {[...Array(10)].map((_, index) => (
               <ProductCardSkeleton
-                key={`product-page-skeleton-${index}`}
                 containerType={containerType}
+                key={`product-page-skeleton-${index}`}
               />
             ))}
           </>
@@ -632,15 +632,15 @@ const ProductList = ({
               <>
                 {page.products.data.map((product, index) => (
                   <ProductCard
-                    isSellerPanel={isSellerPanel}
-                    selectedItemId={selectedItemId}
-                    setSelectedItemId={setSelectedItemId}
                     containerType={containerType}
+                    isSellerPanel={isSellerPanel}
+                    key={product?.id}
+                    product={product as Product}
                     ref={
                       page.products.data.length - 1 === index ? ref : undefined
                     }
-                    key={product?.id}
-                    product={product as Product}
+                    selectedItemId={selectedItemId}
+                    setSelectedItemId={setSelectedItemId}
                   />
                 ))}
               </>
@@ -656,10 +656,10 @@ const ProductList = ({
 
   return (
     <DesktopMobileViewOrganizer
-      isMobileView={isMobileView}
+      Content={Content}
       DesktopHeader={DesktopHeader}
       MobileHeader={hasFilter ? MobileHeader : <></>}
-      Content={Content}
+      isMobileView={isMobileView}
     />
   )
 }

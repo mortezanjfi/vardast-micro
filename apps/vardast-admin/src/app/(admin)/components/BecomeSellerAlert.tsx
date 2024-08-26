@@ -92,9 +92,6 @@ const BecomeSellerAlert = () => {
         },
         body: formData
       }).then(async (response) => {
-        if (!response.ok) {
-        }
-
         const uploadResult = await response.json()
         form.setValue("logoFileUuid", uploadResult.uuid)
 
@@ -138,7 +135,7 @@ const BecomeSellerAlert = () => {
             </Alert>
           )}
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+            <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
               <Alert variant="warning">
                 <LucideAlertOctagon className="h-6 w-6" />
                 <AlertTitle>{t("common:notice")}</AlertTitle>
@@ -178,19 +175,19 @@ const BecomeSellerAlert = () => {
                 />
                 <div className="flex items-end gap-6">
                   <Input
+                    accept="image/*"
+                    className="hidden"
+                    ref={logoFileFieldRef}
                     type="file"
                     onChange={(e) => onLogoFileChange(e)}
-                    className="hidden"
-                    accept="image/*"
-                    ref={logoFileFieldRef}
                   />
                   <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
                     {logoPreview ? (
                       <Image
-                        src={logoPreview}
-                        fill
                         alt="..."
                         className="object-contain p-3"
+                        fill
+                        src={logoPreview}
                       />
                     ) : (
                       <LucideWarehouse
@@ -201,8 +198,8 @@ const BecomeSellerAlert = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     <Button
-                      variant="secondary"
                       type="button"
+                      variant="secondary"
                       onClick={() => {
                         logoFileFieldRef.current?.click()
                       }}
@@ -211,8 +208,8 @@ const BecomeSellerAlert = () => {
                     </Button>
                     {logoPreview && (
                       <Button
-                        variant="danger"
                         iconOnly
+                        variant="danger"
                         onClick={() => {
                           form.setValue("logoFileUuid", "")
                           setLogoFile(null)
@@ -228,17 +225,17 @@ const BecomeSellerAlert = () => {
               <DialogFooter>
                 <div className="flex items-center justify-end gap-2">
                   <Button
-                    variant="ghost"
-                    type="button"
                     disabled={form.formState.isSubmitting}
+                    type="button"
+                    variant="ghost"
                     onClick={() => setOpen(false)}
                   >
                     {t("common:cancel")}
                   </Button>
                   <Button
-                    type="submit"
-                    loading={form.formState.isSubmitting}
                     disabled={form.formState.isSubmitting}
+                    loading={form.formState.isSubmitting}
+                    type="submit"
                   >
                     {t("common:submit")}
                   </Button>

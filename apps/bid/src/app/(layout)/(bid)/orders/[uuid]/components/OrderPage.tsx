@@ -372,8 +372,8 @@ const OrderPage = ({ uuid }: IOrderPageProps) => {
               <>
                 {row.original.status === OrderOfferStatuses.Invoice ? (
                   <Button
-                    variant="link"
                     size="small"
+                    variant="link"
                     onClick={() => {
                       axiosDownLoad({
                         access_token: session?.accessToken,
@@ -387,8 +387,8 @@ const OrderPage = ({ uuid }: IOrderPageProps) => {
                 ) : row.original.status ===
                   OrderOfferStatuses.PaymentSubmited ? (
                   <Button
-                    variant="link"
                     size="small"
+                    variant="link"
                     onClick={() => {
                       axiosDownLoad({
                         access_token: session?.accessToken,
@@ -401,8 +401,8 @@ const OrderPage = ({ uuid }: IOrderPageProps) => {
                   </Button>
                 ) : (
                   <Button
-                    variant="link"
                     size="small"
+                    variant="link"
                     onClick={() => {
                       setLoading(row.original.id)
                       updateOrderOfferMutation.mutate({
@@ -456,7 +456,6 @@ const OrderPage = ({ uuid }: IOrderPageProps) => {
         {...sectionProps}
       />
       <DetailsCard
-        items={items}
         badges={badges}
         card={{
           title: t("common:order-info"),
@@ -479,6 +478,7 @@ const OrderPage = ({ uuid }: IOrderPageProps) => {
             type: "button"
           }
         }}
+        items={items}
       />
       <Table {...tableProps} />
       <Table {...offersTableProps} />

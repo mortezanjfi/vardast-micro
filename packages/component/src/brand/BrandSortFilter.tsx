@@ -59,8 +59,9 @@ const BrandOrSellerCategoryFilter = ({
     <div className="flex flex-col">
       <div className="flex flex-col divide-y divide-alpha-300">
         {Object.entries(sortBrand).map(([key, value]) => (
-          <Label.Root key={key} className="flex items-center gap-2  py-4">
+          <Label.Root className="flex items-center gap-2  py-4" key={key}>
             <Checkbox.Root
+              checked={sort === value.value}
               className="flex
                     h-5
                     w-5
@@ -74,7 +75,6 @@ const BrandOrSellerCategoryFilter = ({
                     outline-none
                     data-[state='checked']:border-primary-500
                     data-[state='checked']:bg-primary-500"
-              checked={sort === value.value}
               onCheckedChange={() => {
                 onSortChanged(value.value)
               }}

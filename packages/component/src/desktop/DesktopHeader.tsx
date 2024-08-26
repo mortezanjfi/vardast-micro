@@ -66,14 +66,14 @@ const DesktopHeader = ({ search, button }: ILayoutDesktopHeader) => {
       {/* <MegaMenuModal /> */}
       <div className="container grid grid-cols-12 grid-rows-2 items-center py-3 md:grid-rows-1 md:gap-x-12">
         <Link
-          href="/"
           className="relative col-span-4 row-start-1 flex h-full items-center md:col-span-3 lg:col-span-3"
+          href="/"
         >
           <Image
-            src={logoHorizontal}
             alt={`وردست`}
             className="w-auto object-contain lg:h-12"
             priority
+            src={logoHorizontal}
           />
         </Link>
         <div
@@ -97,9 +97,9 @@ const DesktopHeader = ({ search, button }: ILayoutDesktopHeader) => {
               <div className="col-span-2">
                 {button && (
                   <Link
-                    href={process.env.NEXT_PUBLIC_SELLER_VARDAST as string}
-                    target="_blank"
                     className="btn flex h-full !bg-secondary text-sm font-semibold text-white"
+                    href={process.env.NEXT_PUBLIC_SELLER_VARDAST}
+                    target="_blank"
                   >
                     {status === "authenticated" &&
                     session?.profile?.roles.some(
@@ -119,13 +119,13 @@ const DesktopHeader = ({ search, button }: ILayoutDesktopHeader) => {
                       </NavigationMenuItem>
                       <NavigationMenuItem>
                         <NavigationMenuTrigger
-                          onPointerMove={(event) => event.preventDefault()}
-                          onPointerLeave={(event) => event.preventDefault()}
                           className="!px-0"
+                          onPointerLeave={(event) => event.preventDefault()}
+                          onPointerMove={(event) => event.preventDefault()}
                         ></NavigationMenuTrigger>
                         <NavigationMenuContent
-                          onPointerMove={(event) => event.preventDefault()}
                           onPointerLeave={(event) => event.preventDefault()}
+                          onPointerMove={(event) => event.preventDefault()}
                         >
                           <div className="bg-alpha-white py-4">
                             {checkProjectName() === EProjectName.CLIENT && (
@@ -177,9 +177,9 @@ const DesktopHeader = ({ search, button }: ILayoutDesktopHeader) => {
                               ) && (
                                 <NavigationMenuLink className="flex w-full justify-start text-nowrap bg-alpha-white px-4 py-2 md:z-50">
                                   <Link
-                                    target="_blank"
-                                    href={process.env.NEXT_PUBLIC_ADMIN_VARDAST}
                                     className="btn !text-alpha"
+                                    href={process.env.NEXT_PUBLIC_ADMIN_VARDAST}
+                                    target="_blank"
                                   >
                                     ورود به پنل ادمین
                                   </Link>
@@ -187,8 +187,8 @@ const DesktopHeader = ({ search, button }: ILayoutDesktopHeader) => {
                               )}
                             <NavigationMenuLink className="flex w-full justify-start text-nowrap bg-alpha-white px-4 py-2 md:z-50">
                               <Link
-                                href="/auth/signout"
                                 className="btn !text-error"
+                                href="/auth/signout"
                               >
                                 خروج از حساب کاربری
                               </Link>
@@ -201,8 +201,8 @@ const DesktopHeader = ({ search, button }: ILayoutDesktopHeader) => {
                 </div>
               ) : (
                 <Link
-                  href={`${paths.signin}?ru=${pathname}`}
                   className="btn btn-primary col-span-2 flex text-sm font-semibold"
+                  href={`${paths.signin}?ru=${pathname}`}
                 >
                   ورود
                 </Link>

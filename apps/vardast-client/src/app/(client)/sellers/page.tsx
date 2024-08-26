@@ -10,7 +10,7 @@ import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 import SellersPage from "@/app/(client)/sellers/components/sellers-page"
 
 interface SellersIndexProps {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Record<string, string | string[] | undefined>
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -26,11 +26,11 @@ const SellersIndex = async ({ searchParams }: SellersIndexProps) => {
 
   const args: IndexSellerInput = {}
 
-  args["page"] =
+  args.page =
     searchParams.page && +searchParams.page[0] > 0 ? +searchParams.page[0] : 1
   if (searchParams.query && searchParams.query.length)
-    args["name"] = searchParams.query as string
-  args["name"] = ""
+    args.name = searchParams.query as string
+  args.name = ""
   await queryClient.prefetchInfiniteQuery(
     [QUERY_FUNCTIONS_KEY.ALL_SELLERS_QUERY_KEY, args],
     () => getAllSellersQueryFn(args)
@@ -42,9 +42,9 @@ const SellersIndex = async ({ searchParams }: SellersIndexProps) => {
     <ReactQueryHydrate state={dehydratedState}>
       <SellersPage
         // hasSearch
-        limitPage={5}
         args={args}
         isMobileView={isMobileView}
+        limitPage={5}
       />
     </ReactQueryHydrate>
   )

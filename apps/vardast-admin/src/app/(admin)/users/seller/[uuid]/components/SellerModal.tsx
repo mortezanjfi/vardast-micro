@@ -90,7 +90,7 @@ const SellerModal = ({
   )
 
   function onSubmit(data: SellerModalType) {
-    let body = {
+    const body = {
       ...data
     }
 
@@ -165,15 +165,6 @@ const SellerModal = ({
             <FormLabel>{t("common:status")}</FormLabel>
             <FormControl>
               <SelectPopover
-                onSelect={(value) => {
-                  form.setValue(
-                    "status",
-                    value.toUpperCase() as ThreeStateSupervisionStatuses,
-                    {
-                      shouldDirty: true
-                    }
-                  )
-                }}
                 options={Object.entries(
                   enumToKeyValueObject(ThreeStateSupervisionStatuses)
                 )?.map(([value, key]) => ({
@@ -183,6 +174,15 @@ const SellerModal = ({
                   value: value.toUpperCase()
                 }))}
                 value={`${field.value}`}
+                onSelect={(value) => {
+                  form.setValue(
+                    "status",
+                    value.toUpperCase() as ThreeStateSupervisionStatuses,
+                    {
+                      shouldDirty: true
+                    }
+                  )
+                }}
               />
             </FormControl>
             <FormMessage />
@@ -197,11 +197,6 @@ const SellerModal = ({
             <FormLabel>{t("common:visibility")}</FormLabel>
             <FormControl>
               <SelectPopover
-                onSelect={(value) => {
-                  form.setValue("isPublic", value === "true", {
-                    shouldDirty: true
-                  })
-                }}
                 options={[
                   {
                     key: "نمایش",
@@ -213,6 +208,11 @@ const SellerModal = ({
                   }
                 ]}
                 value={`${field.value}`}
+                onSelect={(value) => {
+                  form.setValue("isPublic", value === "true", {
+                    shouldDirty: true
+                  })
+                }}
               />
             </FormControl>
             <FormMessage />
@@ -240,10 +240,10 @@ const SellerModal = ({
             <FormLabel>{t("common:logo")}</FormLabel>
             <FormControl className="mx-auto">
               <Dropzone
-                maxFiles={1}
-                withHeight={false}
                 existingImages={undefined}
+                maxFiles={1}
                 uploadPath={uploadPaths.sellerLogo}
+                withHeight={false}
                 onAddition={(file) => {
                   form.setValue("logoFileUuid", file.uuid)
                 }}

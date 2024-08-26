@@ -28,9 +28,9 @@ const CategorySegment = ({
                 (props) =>
                   props && (
                     <CategoryCircleItem
+                      data={props as Category}
                       isMobileView
                       key={`category-segment-${props.id}`}
-                      data={props as Category}
                     />
                   )
               )}

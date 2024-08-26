@@ -11,46 +11,46 @@ function InsightCardsSection({}: Props) {
   return (
     <div className="row-span-1 grid grid-cols-1 gap-6 lg:grid-cols-3">
       <InsightCard
-        href="/products"
-        title="کالا"
         count={allInsightInfo?.data?.totalInfo?.countOfProducts}
+        href="/products"
         icon="CubeIcon"
         iconBackground="bg-primary-600"
+        title="کالا"
       />
       <InsightCard
-        href="/vocabularies"
-        title="دسته بندی"
         count={allInsightInfo?.data?.totalInfo?.countOfCategories}
+        href="/vocabularies"
         icon="Squares2X2Icon"
         iconBackground="bg-blue-500"
+        title="دسته بندی"
       />
       <InsightCard
-        href="/"
-        title="برند"
         count={allInsightInfo?.data?.totalInfo?.countOfBrands}
+        href="/"
         icon="HomeModernIcon"
         iconBackground="bg-success-500"
+        title="برند"
       />
       <InsightCard
-        href="/users/admin"
-        title="کاربر"
         count={allInsightInfo?.data?.totalInfo?.countOfUsers}
+        href="/users/admin"
         icon="UsersIcon"
         iconBackground="bg-indigo-500"
+        title="کاربر"
       />
       <InsightCard
-        href="/sellers"
-        title="فروشنده"
         count={allInsightInfo?.data?.totalInfo?.countOfSellers}
+        href="/sellers"
         icon="BuildingStorefrontIcon"
         iconBackground="bg-rose-500"
+        title="فروشنده"
       />
       <InsightCard
-        href="/orders"
-        title="سفارش"
         count={allInsightInfo?.data?.totalInfo?.countOfOrders}
+        href="/orders"
         icon="ClipboardDocumentIcon"
         iconBackground="bg-orange-500"
+        title="سفارش"
       />
 
       {/* <div className="card flex flex-col gap-2 rounded p-4">

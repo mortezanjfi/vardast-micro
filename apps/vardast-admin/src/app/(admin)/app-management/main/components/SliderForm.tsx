@@ -312,24 +312,24 @@ function SliderForm({ slider }: Props) {
             {/* small------------------> */}
             <div className="col-span-2 flex items-end gap-6">
               <Input
+                accept="image/*"
+                className="hidden"
+                ref={smallFileRef}
                 type="file"
                 onChange={(e) =>
                   onSliderUpload(e, "smallUuid", setSmallFile, setSmallPreview)
                 }
-                className="hidden"
-                accept="image/*"
-                ref={smallFileRef}
               />
               <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
                 {smallPreview || slider?.small ? (
                   <Image
-                    src={
-                      smallPreview ||
-                      (slider?.small?.presignedUrl.url as string)
-                    }
-                    fill
                     alt="..."
                     className="object-contain p-3"
+                    fill
+                    src={
+                      smallPreview ||
+                      (slider?.small?.presignedUrl.url)
+                    }
                   />
                 ) : (
                   <LucideWarehouse
@@ -340,8 +340,8 @@ function SliderForm({ slider }: Props) {
               </div>
               <div className="flex items-center gap-2">
                 <Button
-                  variant="secondary"
                   type="button"
+                  variant="secondary"
                   onClick={() => {
                     smallFileRef.current?.click()
                   }}
@@ -352,8 +352,8 @@ function SliderForm({ slider }: Props) {
                 </Button>
                 {smallPreview && (
                   <Button
-                    variant="danger"
                     iconOnly
+                    variant="danger"
                     onClick={() => {
                       form.setValue("smallUuid", "")
                       setSmallFile(null)
@@ -369,6 +369,9 @@ function SliderForm({ slider }: Props) {
             {/* medium------------------> */}
             <div className="col-span-2 flex items-end gap-6">
               <Input
+                accept="image/*"
+                className="hidden"
+                ref={mediumFileRef}
                 type="file"
                 onChange={(e) =>
                   onSliderUpload(
@@ -378,20 +381,17 @@ function SliderForm({ slider }: Props) {
                     setMediumPreview
                   )
                 }
-                className="hidden"
-                accept="image/*"
-                ref={mediumFileRef}
               />
               <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
                 {mediumPreview || slider?.medium ? (
                   <Image
-                    src={
-                      mediumPreview ||
-                      (slider?.medium?.presignedUrl.url as string)
-                    }
-                    fill
                     alt="..."
                     className="object-contain p-3"
+                    fill
+                    src={
+                      mediumPreview ||
+                      (slider?.medium?.presignedUrl.url)
+                    }
                   />
                 ) : (
                   <LucideWarehouse
@@ -402,8 +402,8 @@ function SliderForm({ slider }: Props) {
               </div>
               <div className="flex items-center gap-2">
                 <Button
-                  variant="secondary"
                   type="button"
+                  variant="secondary"
                   onClick={() => {
                     mediumFileRef.current?.click()
                   }}
@@ -414,8 +414,8 @@ function SliderForm({ slider }: Props) {
                 </Button>
                 {mediumPreview && (
                   <Button
-                    variant="danger"
                     iconOnly
+                    variant="danger"
                     onClick={() => {
                       form.setValue("mediumUuid", "")
                       setMediumFile(null)
@@ -431,24 +431,24 @@ function SliderForm({ slider }: Props) {
             {/* large------------------> */}
             <div className="col-span-2 flex items-end gap-6">
               <Input
+                accept="image/*"
+                className="hidden"
+                ref={largeFileRef}
                 type="file"
                 onChange={(e) =>
                   onSliderUpload(e, "largeUuid", setLargeFile, setLargePreview)
                 }
-                className="hidden"
-                accept="image/*"
-                ref={largeFileRef}
               />
               <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
                 {largePreview || slider?.large ? (
                   <Image
-                    src={
-                      largePreview ||
-                      (slider?.large?.presignedUrl.url as string)
-                    }
-                    fill
                     alt="..."
                     className="object-contain p-3"
+                    fill
+                    src={
+                      largePreview ||
+                      (slider?.large?.presignedUrl.url)
+                    }
                   />
                 ) : (
                   <LucideWarehouse
@@ -459,8 +459,8 @@ function SliderForm({ slider }: Props) {
               </div>
               <div className="flex items-center gap-2">
                 <Button
-                  variant="secondary"
                   type="button"
+                  variant="secondary"
                   onClick={() => {
                     largeFileRef.current?.click()
                   }}
@@ -471,8 +471,8 @@ function SliderForm({ slider }: Props) {
                 </Button>
                 {largePreview && (
                   <Button
-                    variant="danger"
                     iconOnly
+                    variant="danger"
                     onClick={() => {
                       form.setValue("largeUuid", "")
                       setLargeFile(null)
@@ -488,6 +488,9 @@ function SliderForm({ slider }: Props) {
             {/* Xlarge------------------> */}
             <div className="col-span-2 flex items-end gap-6">
               <Input
+                accept="image/*"
+                className="hidden"
+                ref={xlargeFileRef}
                 type="file"
                 onChange={(e) =>
                   onSliderUpload(
@@ -497,20 +500,17 @@ function SliderForm({ slider }: Props) {
                     setXlargePreview
                   )
                 }
-                className="hidden"
-                accept="image/*"
-                ref={xlargeFileRef}
               />
               <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
                 {xlargePreview || slider?.xlarge ? (
                   <Image
-                    src={
-                      xlargePreview ||
-                      (slider?.xlarge?.presignedUrl.url as string)
-                    }
-                    fill
                     alt="..."
                     className="object-contain p-3"
+                    fill
+                    src={
+                      xlargePreview ||
+                      (slider?.xlarge?.presignedUrl.url)
+                    }
                   />
                 ) : (
                   <LucideWarehouse
@@ -521,8 +521,8 @@ function SliderForm({ slider }: Props) {
               </div>
               <div className="flex items-center gap-2">
                 <Button
-                  variant="secondary"
                   type="button"
+                  variant="secondary"
                   onClick={() => {
                     xlargeFileRef.current?.click()
                   }}
@@ -533,8 +533,8 @@ function SliderForm({ slider }: Props) {
                 </Button>
                 {xlargePreview && (
                   <Button
-                    variant="danger"
                     iconOnly
+                    variant="danger"
                     onClick={() => {
                       form.setValue("xlargeUuid", "")
                       setXlargeFile(null)
@@ -553,11 +553,11 @@ function SliderForm({ slider }: Props) {
             {t("common:submit")}
           </Button>
           <Button
+            type="button"
+            variant="ghost"
             onClick={() => {
               router.push("/app-management/main")
             }}
-            type="button"
-            variant="ghost"
           >
             {t("common:cancel")}
           </Button>

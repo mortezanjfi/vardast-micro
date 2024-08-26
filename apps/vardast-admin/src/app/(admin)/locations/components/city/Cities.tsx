@@ -58,15 +58,15 @@ const Cities = ({ provinceSlug, countrySlug }: Props) => {
             (city) =>
               city && (
                 <CityCard
+                  city={city as City}
+                  countrySlug={countrySlug}
                   key={city.id}
+                  provinceSlug={provinceSlug}
+                  show={activesOnly ? city.isActive : true}
                   onDeleteTriggered={(city) => {
                     setDeleteModalOpen(true)
                     setCityToDelete(city)
                   }}
-                  show={activesOnly ? city.isActive : true}
-                  city={city as City}
-                  countrySlug={countrySlug}
-                  provinceSlug={provinceSlug}
                 />
               )
           )}

@@ -10,8 +10,8 @@ const Checkbox = forwardRef<
   ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
 >(({ className, ...props }, ref) => (
   <CheckboxPrimitive.Root
-    ref={ref}
     className={mergeClasses("checkbox-indicator", className)}
+    ref={ref}
     {...props}
   >
     <CheckboxPrimitive.Indicator

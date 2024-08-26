@@ -144,8 +144,8 @@ const ProductPage = ({ id, isMobileView }: ProductPageProps) => {
         "@type": "ListItem",
         position: 1,
         item: {
-          "@id": process.env.NEXT_PUBLIC_URL as string,
-          name: process.env.NEXT_PUBLIC_TITLE as string
+          "@id": process.env.NEXT_PUBLIC_URL,
+          name: process.env.NEXT_PUBLIC_TITLE
         }
       },
       ...(breadcrumbJsonLdArray as ItemList[]),
@@ -230,10 +230,10 @@ const ProductPage = ({ id, isMobileView }: ProductPageProps) => {
           {queryProduct.data?.product.images &&
             queryProduct.data?.product.images.length > 0 && (
               <ProductImages
-                isMobileView={isMobileView}
                 images={queryProduct.data?.product.images as ProductImage[]}
-                session={session}
+                isMobileView={isMobileView}
                 product={queryProduct.data?.product as Product}
+                session={session}
               />
             )}
 
@@ -241,18 +241,18 @@ const ProductPage = ({ id, isMobileView }: ProductPageProps) => {
             <div className="flex w-full flex-col  divide-y-4 divide-alpha-50 md:gap-0 md:bg-alpha-white">
               <ProductIntroduce
                 isMobileView={isMobileView}
-                session={session}
                 product={queryProduct.data?.product as Product}
+                session={session}
               />
               {groupedAttributes.filter((item) => !!item.isRequired).length >
                 0 && (
                 <ProductAttributes
-                  title="مشخصات اصلی"
                   attributes={
                     groupedAttributes.filter(
                       (item) => !!item.isRequired
-                    ) as GroupedAttributes[]
+                    )
                   }
+                  title="مشخصات اصلی"
                 />
               )}
               {queryProduct.data?.product.attributeValues &&
@@ -262,20 +262,20 @@ const ProductPage = ({ id, isMobileView }: ProductPageProps) => {
                   // />
 
                   <ProductAttributes
-                    title="مشخصات فرعی"
                     attributes={
                       groupedAttributes.filter(
                         (item) => !item.isRequired
-                      ) as GroupedAttributes[]
+                      )
                     }
+                    title="مشخصات فرعی"
                   />
                 )}
               {queryProduct.data?.product.publicOffers &&
                 queryProduct.data?.product.publicOffers.length > 0 && (
                   <ProductOffers
                     isMobileView={isMobileView}
-                    uom={queryProduct.data?.product.uom as Uom}
                     offers={queryProduct.data?.product.publicOffers as Offer[]}
+                    uom={queryProduct.data?.product.uom as Uom}
                   />
                 )}
 
@@ -294,11 +294,11 @@ const ProductPage = ({ id, isMobileView }: ProductPageProps) => {
           {queryProduct.data?.product.sameCategory &&
             queryProduct.data?.product.sameCategory.length > 0 && (
               <SameCategories
-                isMobileView={isMobileView}
                 hasExtraItem={{
                   title: "کالاهای مشابه",
                   subtitle: "نمایش همه"
                 }}
+                isMobileView={isMobileView}
                 products={queryProduct.data?.product.sameCategory as Product[]}
               />
             )}
@@ -306,12 +306,12 @@ const ProductPage = ({ id, isMobileView }: ProductPageProps) => {
       </div>
 
       <script
-        type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        type="application/ld+json"
       />
       <script
-        type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+        type="application/ld+json"
       />
     </>
   )

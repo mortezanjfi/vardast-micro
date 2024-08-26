@@ -28,7 +28,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: {
     template: `%s | ${process.env.NEXT_PUBLIC_TITLE} `,
-    default: process.env.NEXT_PUBLIC_TITLE as string
+    default: process.env.NEXT_PUBLIC_TITLE
   },
   appleWebApp: {
     capable: true,
@@ -89,10 +89,10 @@ export default async function NextAppProvider({
         {process.env.NEXT_PUBLIC_SITE_URL === "https://vardast.com" && (
           <noscript>
             <iframe
-              src="https://www.googletagmanager.com/ns.html?id=GTM-MHFGSPC9"
               height="0"
-              width="0"
+              src="https://www.googletagmanager.com/ns.html?id=GTM-MHFGSPC9"
               style={{ display: "none", visibility: "hidden" }}
+              width="0"
             ></iframe>
           </noscript>
         )}

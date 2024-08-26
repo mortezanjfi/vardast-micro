@@ -39,12 +39,12 @@ const SelectPopoverTrigger = ({
   return (
     <div
       {...props}
-      role="combobox"
       aria-disabled={disabled || loading}
       className={mergeClasses(
         "input-field flex w-full cursor-pointer items-center text-start",
         props.className
       )}
+      role="combobox"
       style={{ pointerEvents: disabled || loading ? "none" : "auto" }}
     >
       <span className="truncate">{label}</span>
@@ -84,7 +84,7 @@ const SelectPopover = ({
 
   useEffect(() => {
     setLabel(() =>
-      !!value
+      value
         ? loading
           ? "در حال بارگزاری..."
           : options?.find((item) => item.value === value)?.key ||
@@ -95,20 +95,20 @@ const SelectPopover = ({
 
   return (
     <>
-      <div ref={customContainerRef} className="z-[99999999]" />
+      <div className="z-[99999999]" ref={customContainerRef} />
       <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
         <PopoverTrigger
-          disabled={disabled || loading || !options?.length}
           className={clsx(
             "w-full",
             (disabled || loading || !options?.length) &&
               "btn-disabled btn btn-link hover:!no-underline"
           )}
+          disabled={disabled || loading || !options?.length}
         >
           <SelectPopoverTrigger
-            loading={loading}
             disabled={disabled || loading || !options?.length}
             label={label}
+            loading={loading}
           />
         </PopoverTrigger>
         <PopoverContent container={customContainerRef.current}>
@@ -128,20 +128,20 @@ const SelectPopover = ({
                 {setSearch && (
                   <CommandInput
                     loading={loading}
+                    placeholder={"جستجو"}
                     value={queryTemp}
                     onValueChange={(e) => {
                       setQueryTemp(e)
                       setQuery(e)
                     }}
-                    placeholder={"جستجو"}
                   />
                 )}
                 {internalSearchable && (
                   <CommandInput
                     loading={loading}
+                    placeholder={"جستجو"}
                     value={internalSearch}
                     onValueChange={setInternalSearch}
-                    placeholder={"جستجو"}
                   />
                 )}
               </>
@@ -150,8 +150,8 @@ const SelectPopover = ({
             <CommandGroup>
               {options?.map((item) => (
                 <CommandItem
-                  value={item.value}
                   key={item.value}
+                  value={item.value}
                   onSelect={(value) => {
                     setLabel(item.key)
                     onSelect(value)

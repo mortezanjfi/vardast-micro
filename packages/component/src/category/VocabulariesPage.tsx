@@ -27,9 +27,9 @@ const VocabulariesPage = ({ isMobileView }: VocabulariesPageProps) => {
 
   return (
     <CategoriesList
-      isMobileView={isMobileView}
       data={data?.vocabulary.categories.slice(0, 14)}
       isLoading={isLoading}
+      isMobileView={isMobileView}
     />
   )
 }

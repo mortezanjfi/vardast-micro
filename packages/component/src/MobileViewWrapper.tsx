@@ -11,7 +11,7 @@ const MobileViewWrapper = ({ children }: Props) => {
   const userAgent = headersList.get("user-agent")
 
   // Let's check if the device is a mobile device
-  let isMobileView = userAgent!.match(
+  const isMobileView = userAgent.match(
     /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
   )
 

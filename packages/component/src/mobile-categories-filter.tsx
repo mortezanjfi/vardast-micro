@@ -53,8 +53,8 @@ const VocabulariesList = ({ onCategoryChanged }: VocabulariesListProps) => {
         (category) =>
           category && (
             <li
-              key={category.id}
               className="flex items-center justify-between py-3"
+              key={category.id}
               onClick={() => onCategoryChanged(category as Category)}
             >
               {category.title}
@@ -114,8 +114,8 @@ const CategoriesList = ({
         (category) =>
           category && (
             <li
-              key={category.id}
               className="flex items-center justify-between py-3"
+              key={category.id}
               onClick={() => onCategoryChanged(category as Category, false)}
             >
               {category.title}
@@ -151,8 +151,8 @@ const BrandOrSellerCategories = ({
   categoryIdsFilter
 }: BrandOrSellerCategoriesProps) => {
   const args: IndexCategoryInput = {}
-  if (brandId) args["brandId"] = brandId
-  if (sellerId) args["sellerId"] = sellerId
+  if (brandId) args.brandId = brandId
+  if (sellerId) args.sellerId = sellerId
   const { data } = useQuery<GetAllCategoriesQuery>({
     queryKey: [QUERY_FUNCTIONS_KEY.ALL_CATEGORIES_QUERY_KEY, args],
     queryFn: () => getAllCategoriesQueryFn(args)
@@ -166,8 +166,12 @@ const BrandOrSellerCategories = ({
         categories.data.map(
           (category) =>
             category && (
-              <Label.Root key={category.id} className="flex items-center gap-2">
+              <Label.Root className="flex items-center gap-2" key={category.id}>
                 <Checkbox.Root
+                  checked={
+                    !!categoryIdsFilter &&
+                    categoryIdsFilter.some((item) => item === category.id)
+                  }
                   className="flex
                     h-5
                     w-5
@@ -181,10 +185,6 @@ const BrandOrSellerCategories = ({
                     outline-none
                     data-[state='checked']:border-primary-500
                     data-[state='checked']:bg-primary-500"
-                  checked={
-                    !!categoryIdsFilter &&
-                    categoryIdsFilter.some((item) => item === category.id)
-                  }
                   onCheckedChange={(checked) =>
                     onCategoryFilterChanged({
                       status: checked,
@@ -258,6 +258,9 @@ const MobileCategoriesFilter = ({
           <div className="sticky top-0 border-b border-alpha-200 bg-white p-4">
             <div className="flex items-center gap-2">
               <Button
+                iconOnly
+                size="small"
+                variant="ghost"
                 onClick={() => {
                   if (!brandId && !sellerId) {
                     if (!selectedCategory) setCategoriesFilterVisibility(false)
@@ -274,9 +277,6 @@ const MobileCategoriesFilter = ({
                     setCategoriesFilterVisibility(false)
                   }
                 }}
-                variant="ghost"
-                size="small"
-                iconOnly
               >
                 <LucideArrowRight className="h-5 w-5" />
               </Button>
@@ -297,8 +297,8 @@ const MobileCategoriesFilter = ({
             )}
             {sellerId && (
               <BrandOrSellerCategories
-                sellerId={sellerId}
                 categoryIdsFilter={categoryIdsFilter}
+                sellerId={sellerId}
                 onCategoryFilterChanged={onCategoryFilterChanged}
               />
             )}
@@ -307,10 +307,7 @@ const MobileCategoriesFilter = ({
               selectedCategory &&
               selectedCategory.id !== 0 && (
                 <CategoriesList
-                  onMounted={(category) => {
-                    setSelectedCategory(category)
-                    setPreviousCategory(category.parentCategory || null)
-                  }}
+                  categoryId={selectedCategory.id}
                   onCategoryChanged={(category, force) => {
                     category.childrenCount > 0 && !force
                       ? (setPreviousCategory(selectedCategory),
@@ -318,7 +315,10 @@ const MobileCategoriesFilter = ({
                       : (setCategoriesFilterVisibility(false),
                         push(`/products/${category.id}/${category.title}`))
                   }}
-                  categoryId={selectedCategory.id}
+                  onMounted={(category) => {
+                    setSelectedCategory(category)
+                    setPreviousCategory(category.parentCategory || null)
+                  }}
                 />
               )}
             {!brandId &&

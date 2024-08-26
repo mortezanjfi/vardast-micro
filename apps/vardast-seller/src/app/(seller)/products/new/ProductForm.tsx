@@ -263,7 +263,6 @@ const ProductForm = ({ isMobile }: ProductFormProps) => {
       }
     }
     getAttr()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.watch("categoryId")])
 
   return (
@@ -625,8 +624,8 @@ const ProductForm = ({ isMobile }: ProductFormProps) => {
                         setImages((prevImages) => [
                           ...prevImages,
                           {
-                            uuid: file.uuid as string,
-                            expiresAt: file.expiresAt as string
+                            uuid: file.uuid,
+                            expiresAt: file.expiresAt
                           }
                         ])
                       }}
@@ -994,8 +993,8 @@ const ProductForm = ({ isMobile }: ProductFormProps) => {
                         setImages((prevImages) => [
                           ...prevImages,
                           {
-                            uuid: file.uuid as string,
-                            expiresAt: file.expiresAt as string
+                            uuid: file.uuid,
+                            expiresAt: file.expiresAt
                           }
                         ])
                       }}

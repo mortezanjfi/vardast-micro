@@ -9,8 +9,8 @@ const Tabs = forwardRef<
   ComponentPropsWithoutRef<typeof TabsPrimitive.Root>
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.Root
-    ref={ref}
     className={mergeClasses(["tabs", className])}
+    ref={ref}
     {...props}
   />
 ))
@@ -21,8 +21,8 @@ const TabsList = forwardRef<
   ComponentPropsWithoutRef<typeof TabsPrimitive.List>
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.List
-    ref={ref}
     className={mergeClasses(["tab-list", className])}
+    ref={ref}
     {...props}
   />
 ))
@@ -33,8 +33,8 @@ const TabsTrigger = forwardRef<
   ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.Trigger
-    ref={ref}
     className={mergeClasses(["tab", className])}
+    ref={ref}
     {...props}
   />
 ))
@@ -45,8 +45,8 @@ const TabsContent = forwardRef<
   ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.Content
-    ref={ref}
     className={mergeClasses(["tab-panel", className])}
+    ref={ref}
     {...props}
   />
 ))

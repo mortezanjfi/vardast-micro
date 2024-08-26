@@ -17,11 +17,11 @@ const ToastViewport = forwardRef<
   ComponentPropsWithoutRef<typeof ToastPrimitives.Viewport>
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Viewport
-    ref={ref}
     className={mergeClasses(
       "fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse sm:bottom-0 sm:left-0 sm:top-auto sm:flex-col md:max-w-[420px]",
       className
     )}
+    ref={ref}
     {...props}
   />
 ))
@@ -54,8 +54,8 @@ const Toast = forwardRef<
 >(({ className, variant, ...props }, ref) => {
   return (
     <ToastPrimitives.Root
-      ref={ref}
       className={mergeClasses(toastVariants({ variant }), className)}
+      ref={ref}
       {...props}
     />
   )
@@ -67,11 +67,11 @@ const ToastAction = forwardRef<
   ComponentPropsWithoutRef<typeof ToastPrimitives.Action>
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Action
-    ref={ref}
     className={mergeClasses(
       "inline-flex h-8 shrink-0 items-center justify-center rounded-md border border-black/50 bg-transparent px-3 text-sm font-medium ring-offset-black/20 transition-colors hover:bg-black/10 focus:outline-none focus:ring-2 focus:ring-black/10 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
       className
     )}
+    ref={ref}
     {...props}
   />
 ))
@@ -82,11 +82,11 @@ const ToastClose = forwardRef<
   ComponentPropsWithoutRef<typeof ToastPrimitives.Close>
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Close
-    ref={ref}
     className={mergeClasses(
       "absolute left-2 top-2 rounded-md p-1 text-white/50 opacity-0 transition-opacity hover:text-white focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100",
       className
     )}
+    ref={ref}
     toast-close=""
     {...props}
   >
@@ -100,8 +100,8 @@ const ToastTitle = forwardRef<
   ComponentPropsWithoutRef<typeof ToastPrimitives.Title>
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Title
-    ref={ref}
     className={mergeClasses("text-sm font-semibold", className)}
+    ref={ref}
     {...props}
   />
 ))
@@ -112,8 +112,8 @@ const ToastDescription = forwardRef<
   ComponentPropsWithoutRef<typeof ToastPrimitives.Description>
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Description
-    ref={ref}
     className={mergeClasses("text-sm opacity-90", className)}
+    ref={ref}
     {...props}
   />
 ))

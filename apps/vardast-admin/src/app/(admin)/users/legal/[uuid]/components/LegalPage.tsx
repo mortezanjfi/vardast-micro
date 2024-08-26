@@ -120,8 +120,8 @@ function LegalPage({ uuid }: Props) {
           cell: ({ row }) => {
             return (
               <Button
-                variant="link"
                 size="small"
+                variant="link"
                 onClick={() => {
                   onChangeModals({
                     type: LegalModalEnum.DELETE_ADDRESS,
@@ -214,8 +214,8 @@ function LegalPage({ uuid }: Props) {
           cell: ({ row }) => {
             return (
               <Button
-                variant="link"
                 size="small"
+                variant="link"
                 onClick={() => {
                   onChangeModals({
                     type: LegalModalEnum.DELETE_MEMBER,
@@ -317,8 +317,8 @@ function LegalPage({ uuid }: Props) {
           cell: ({ row }) => {
             return (
               <Button
-                variant="link"
                 size="small"
+                variant="link"
                 onClick={() => {
                   onChangeModals({
                     type: LegalModalEnum.DELETE_CONTACT,
@@ -353,6 +353,8 @@ function LegalPage({ uuid }: Props) {
   return (
     <>
       <LegalInfo
+        legal={getOneLegalQuery?.data?.findOneLegal as Legal}
+        loading={getOneLegalQuery.isLoading}
         modal={[
           modals,
           onChangeModals,
@@ -361,8 +363,6 @@ function LegalPage({ uuid }: Props) {
             getOneLegalQuery.refetch()
           }
         ]}
-        loading={getOneLegalQuery.isLoading}
-        legal={getOneLegalQuery?.data?.findOneLegal as Legal}
       />
       <LegalMemberModal {...modalProps(LegalModalEnum.MEMBER)} />
       <ContactInfoModal {...modalProps(LegalModalEnum.CONTACT)} />

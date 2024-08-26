@@ -108,18 +108,18 @@ const ProjectMemberModal = ({
             <FormLabel>{t("common:city")}</FormLabel>
             <FormControl>
               <SelectPopover
-                onSelect={(value) => {
-                  form.setValue("memberId", +value, {
-                    shouldDirty: true
-                  })
-                }}
+                internalSearchable
                 loading={getMembersQuery.isFetching}
                 options={getMembersQuery.data?.members?.data?.map((member) => ({
                   key: member?.user?.fullName,
                   value: `${member?.id}`
                 }))}
-                internalSearchable
                 value={`${field.value}`}
+                onSelect={(value) => {
+                  form.setValue("memberId", +value, {
+                    shouldDirty: true
+                  })
+                }}
               />
             </FormControl>
             <FormMessage />

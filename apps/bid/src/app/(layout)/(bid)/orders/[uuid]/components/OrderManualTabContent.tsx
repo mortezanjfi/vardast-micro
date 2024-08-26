@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+ 
 "use client"
 
 import "chart.js/auto"
@@ -19,8 +19,8 @@ const OrderManualTabContent = ({ addProductLine, form }: any) => {
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(addProductLine)}
         className="flex w-full flex-col gap-5 py-5"
+        onSubmit={form.handleSubmit(addProductLine)}
       >
         <div className="grid w-full grid-cols-3 gap-7">
           <FormField

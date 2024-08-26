@@ -64,7 +64,7 @@ const BrandsPage = ({ session }: BrandsPageProps) => {
                     setSelectedItemId={setSelectedItemId}
                     key={myProduct.id}
                     content={{
-                      ...(myProduct as Brand),
+                      ...(myProduct),
                       __typename: "Brand"
                     }}
                   />

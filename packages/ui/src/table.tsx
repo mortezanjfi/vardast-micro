@@ -10,8 +10,8 @@ const Table = forwardRef<HTMLTableElement, HTMLAttributes<HTMLTableElement>>(
   ({ className, ...props }, ref) => (
     <div className="w-full overflow-auto">
       <table
-        ref={ref}
         className={mergeClasses("w-full caption-bottom text-sm", className)}
+        ref={ref}
         {...props}
       />
     </div>
@@ -24,8 +24,8 @@ const TableHeader = forwardRef<
   HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
   <thead
-    ref={ref}
     className={mergeClasses("[&_tr]:border-b", className)}
+    ref={ref}
     {...props}
   />
 ))
@@ -36,8 +36,8 @@ const TableBody = forwardRef<
   HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
   <tbody
-    ref={ref}
     className={mergeClasses("[&_tr:last-child]:border-0", className)}
+    ref={ref}
     {...props}
   />
 ))
@@ -48,11 +48,11 @@ const TableFooter = forwardRef<
   HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
   <tfoot
-    ref={ref}
     className={mergeClasses(
       "text-primary-foreground bg-primary font-medium",
       className
     )}
+    ref={ref}
     {...props}
   />
 ))
@@ -63,11 +63,11 @@ const TableRow = forwardRef<
   HTMLAttributes<HTMLTableRowElement>
 >(({ className, ...props }, ref) => (
   <tr
-    ref={ref}
     className={mergeClasses(
       "hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors",
       className
     )}
+    ref={ref}
     {...props}
   />
 ))
@@ -78,11 +78,11 @@ const TableHead = forwardRef<
   ThHTMLAttributes<HTMLTableCellElement>
 >(({ className, ...props }, ref) => (
   <th
-    ref={ref}
     className={mergeClasses(
       "text-muted-foreground h-12 px-4 text-left align-middle font-medium [&:has([role=checkbox])]:pr-0",
       className
     )}
+    ref={ref}
     {...props}
   />
 ))
@@ -93,11 +93,11 @@ const TableCell = forwardRef<
   TdHTMLAttributes<HTMLTableCellElement>
 >(({ className, ...props }, ref) => (
   <td
-    ref={ref}
     className={mergeClasses(
       "p-4 align-middle [&:has([role=checkbox])]:pr-0",
       className
     )}
+    ref={ref}
     {...props}
   />
 ))
@@ -108,8 +108,8 @@ const TableCaption = forwardRef<
   HTMLAttributes<HTMLTableCaptionElement>
 >(({ className, ...props }, ref) => (
   <caption
-    ref={ref}
     className={mergeClasses("text-muted-foreground mt-4 text-sm", className)}
+    ref={ref}
     {...props}
   />
 ))

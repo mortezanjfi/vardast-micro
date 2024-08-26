@@ -30,6 +30,6 @@ const OfferItemStepper = ({ steppers, urlToStepMapper }: offerItemStepper) => {
 
   useEffect(() => {}, [pathname])
 
-  return <Stepper steps={steppers} step={matchedUrlStepIndex} />
+  return <Stepper step={matchedUrlStepIndex} steps={steppers} />
 }
 export default OfferItemStepper

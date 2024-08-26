@@ -52,7 +52,7 @@ const MobileNavigation = ({
     const pathnameSplit = pathname.split("/").filter(Boolean).join("")
 
     if (pathnameSplit > pathSplit) {
-      if (pathnameSplit.slice(0, pathSplit.length) === pathSplit) {
+      if (pathnameSplit.startsWith(pathSplit)) {
         return true
       }
     } else if (pathSplit === pathnameSplit) {
@@ -99,7 +99,7 @@ const MobileNavigation = ({
   )
 
   const showSellerContact = () => {
-    if (!!session?.data) {
+    if (session?.data) {
       createEventTrackerMutation.mutate({
         createEventTrackerInput: {
           type,
@@ -122,16 +122,16 @@ const MobileNavigation = ({
 
             return (
               <Link
-                key={id}
-                href={href}
                 className={`group inline-flex h-full flex-col items-center justify-center gap-y-0.5 pb-2`}
+                href={href}
+                key={id}
               >
                 <DynamicHeroIcon
-                  icon={icon}
                   className={mergeClasses(
                     "icon h-7 w-7 transform transition-all",
                     getIsActiveNav(href) ? "text-primary-600" : "text-alpha-500"
                   )}
+                  icon={icon}
                   solid={getIsActiveNav(href)}
                 />
                 <p
@@ -157,19 +157,19 @@ const MobileNavigation = ({
           <AnimatePresence>
             {back && (
               <motion.div
-                key="bottom-navigation-back-button"
-                initial={{ opacity: 0, x: 100, display: "none" }}
                 animate={{ opacity: 1, x: 0, display: "block" }}
-                exit={{ opacity: 0, x: 100, display: "none" }}
                 className="h-full"
+                exit={{ opacity: 0, x: 100, display: "none" }}
+                initial={{ opacity: 0, x: 100, display: "none" }}
+                key="bottom-navigation-back-button"
               >
                 <Button
                   // variant="ghost"
                   block
+                  iconOnly
                   onClick={() => {
                     router.back()
                   }}
-                  iconOnly
                 >
                   <ArrowRight className="" />
                 </Button>
@@ -177,21 +177,11 @@ const MobileNavigation = ({
             )}
             {(action || search) && (
               <motion.div
-                key="bottom-navigation-content"
                 className="w-full transform transition-all delay-300 duration-300"
+                key="bottom-navigation-content"
               >
                 {action && (
                   <Button
-                    onClick={showSellerContact}
-                    loading={
-                      createEventTrackerMutation.isLoading ||
-                      session?.status === "loading"
-                    }
-                    disabled={
-                      createEventTrackerMutation.isLoading ||
-                      session?.status === "loading" ||
-                      (!data?.contacts.length && !data?.addresses.length)
-                    }
                     className="btn btn-md btn-primary
                             relative
                             flex
@@ -203,6 +193,16 @@ const MobileNavigation = ({
                             px-4
                             py-3
                             font-semibold"
+                    disabled={
+                      createEventTrackerMutation.isLoading ||
+                      session?.status === "loading" ||
+                      (!data?.contacts.length && !data?.addresses.length)
+                    }
+                    loading={
+                      createEventTrackerMutation.isLoading ||
+                      session?.status === "loading"
+                    }
+                    onClick={showSellerContact}
                   >
                     <span className="relative flex flex-col items-center justify-center">
                       {title}

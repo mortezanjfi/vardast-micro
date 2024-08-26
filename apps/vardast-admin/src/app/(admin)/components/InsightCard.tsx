@@ -25,8 +25,8 @@ const InsightCard = ({ icon, title, count, iconBackground, href }: Props) => {
             </span>
           </div>
           <DynamicHeroIcon
-            icon={icon}
             className={clsx("h-12 w-12 rounded p-2 text-white", iconBackground)}
+            icon={icon}
             solid
           />
         </div>

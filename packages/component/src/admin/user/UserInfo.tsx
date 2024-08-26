@@ -26,7 +26,7 @@ const UserInfo = ({ user, loading, modal }: UserInfoProps) => {
   const [modals, onChangeModals, onCloseModals] = modal
 
   const items = useMemo(() => {
-    let result: DetailsCardPropsType["items"] = [
+    const result: DetailsCardPropsType["items"] = [
       {
         item: {
           key: t("common:firstName"),
@@ -86,7 +86,7 @@ const UserInfo = ({ user, loading, modal }: UserInfoProps) => {
         item: {
           key: t("common:roles"),
           value: user?.roles.map((role) => (
-            <Badge variant="secondary" className="mx-2">
+            <Badge className="mx-2" variant="secondary">
               {role.displayName}
             </Badge>
           ))
@@ -131,7 +131,7 @@ const UserInfo = ({ user, loading, modal }: UserInfoProps) => {
               roles,
               birth
             } = user
-            let data = {
+            const data = {
               email,
               firstName,
               lastName,
@@ -167,9 +167,9 @@ const UserInfo = ({ user, loading, modal }: UserInfoProps) => {
     <>
       <DetailsCard {...detailsCardProps} />
       <UserModal
-        onCloseModals={onCloseModals}
         modals={modals}
         open={modals?.type === RealModalEnum.INFO}
+        onCloseModals={onCloseModals}
       />
     </>
   )

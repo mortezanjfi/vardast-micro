@@ -40,6 +40,12 @@ const InfoPage = (_: InfoPageProps) => {
     <>
       {isLegal === UserType.Legal ? (
         <LegalInfo
+          legal={getOneLegalQuery.data?.findOneLegal as Legal}
+          loading={
+            status === "loading" ||
+            status === "unauthenticated" ||
+            getOneLegalQuery.isLoading
+          }
           modal={[
             modalsLegal,
             onChangeModalsLegal,
@@ -48,15 +54,10 @@ const InfoPage = (_: InfoPageProps) => {
               update()
             }
           ]}
-          legal={getOneLegalQuery.data?.findOneLegal as Legal}
-          loading={
-            status === "loading" ||
-            status === "unauthenticated" ||
-            getOneLegalQuery.isLoading
-          }
         />
       ) : (
         <UserInfo
+          loading={status === "loading" || status === "unauthenticated"}
           modal={[
             modalsReal,
             onChangeModalsReal,
@@ -66,7 +67,6 @@ const InfoPage = (_: InfoPageProps) => {
             }
           ]}
           user={session?.profile}
-          loading={status === "loading" || status === "unauthenticated"}
         />
       )}
     </>

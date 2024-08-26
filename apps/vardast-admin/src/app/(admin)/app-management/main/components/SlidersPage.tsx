@@ -64,7 +64,7 @@ function SlidersPage({}: Props) {
     <>
       <SliderDeleteModal
         open={deleteModalOpen}
-        sliderToDelete={sliderToDelete as Banner}
+        sliderToDelete={sliderToDelete}
         onOpenChange={setDeleteModalOpen}
       />
       <div className="flex flex-col gap-7">
@@ -153,8 +153,8 @@ function SlidersPage({}: Props) {
                             <td>{statusSliderFa[slider?.status]?.name_fa}</td>
                             <td>
                               <Link
-                                target="_blank"
                                 href={`/app-management/main/${slider?.id}`}
+                                target="_blank"
                               >
                                 <span className="tag cursor-pointer text-blue-500">
                                   {t("common:edit")}

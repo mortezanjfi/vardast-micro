@@ -19,8 +19,8 @@ const TemplateActionButton = ({ children }: { children: React.ReactNode }) => {
         <PageHeader title={isMounted ? document.title : ""} />
         <div>
           <Button
-            variant="secondary"
             size="medium"
+            variant="secondary"
             onClick={() => router.back()}
           >
             بازگشت

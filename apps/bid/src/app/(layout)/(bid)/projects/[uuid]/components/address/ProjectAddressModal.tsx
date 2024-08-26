@@ -110,11 +110,7 @@ const ProjectAddressModal = ({
             <FormLabel>{t("common:address")}</FormLabel>
             <FormControl>
               <SelectPopover
-                onSelect={(value) => {
-                  form.setValue("addressId", +value, {
-                    shouldDirty: true
-                  })
-                }}
+                internalSearchable
                 loading={getAllAddressesQuery.isFetching}
                 options={getAllAddressesQuery.data?.addresses?.data?.map(
                   (address) => ({
@@ -122,8 +118,12 @@ const ProjectAddressModal = ({
                     value: `${address?.id}`
                   })
                 )}
-                internalSearchable
                 value={`${field.value}`}
+                onSelect={(value) => {
+                  form.setValue("addressId", +value, {
+                    shouldDirty: true
+                  })
+                }}
               />
             </FormControl>
             <FormMessage />

@@ -4,12 +4,12 @@ import logoTypeImage from "@vardast/asset/images/logo-type.png"
 const Logo = () => {
   return (
     <Image
-      src={logoTypeImage}
       alt="..."
-      loading="lazy"
-      width={1315}
-      height={186}
       className="h-12 w-auto object-contain"
+      height={186}
+      loading="lazy"
+      src={logoTypeImage}
+      width={1315}
     />
   )
 }

@@ -52,7 +52,7 @@ const DesktopHomeIndex = ({
       </div>
       <div className="border-t-2 bg-alpha-white">
         <div className="container mx-auto py-8">
-          <MobileHomeSection viewAllHref="/category" title="دسته‌بندی‌ها">
+          <MobileHomeSection title="دسته‌بندی‌ها" viewAllHref="/category">
             <div className="grid grid-cols-3 gap-y-10 sm:grid-cols-4 sm:pb-4 sm:pt-8 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7">
               {getVocabularyQueryFcQuery.isLoading
                 ? [...Array(14)].map((_, index) => (
@@ -67,9 +67,9 @@ const DesktopHomeIndex = ({
                       (props) =>
                         props && (
                           <CategoryCircleItem
-                            key={props.id}
-                            isMobileView={isMobileView}
                             data={props as Category}
+                            isMobileView={isMobileView}
+                            key={props.id}
                           />
                         )
                     )}
@@ -91,8 +91,8 @@ const DesktopHomeIndex = ({
           <div className="container mx-auto ">
             <MobileHomeTopEntities
               __typename="Brand"
-              title="جدیدترین برندها"
               query={allBrandsCount.data?.brands.data.slice(0, 8) as Brand[]}
+              title="جدیدترین برندها"
             />
           </div>
         </div>
@@ -102,8 +102,8 @@ const DesktopHomeIndex = ({
           <div className="container mx-auto rounded-xl py-8">
             <MobileHomeNewestProducts
               centeredSlides={false}
-              title="جدیدترین کالاها"
               query={allProductsQuery}
+              title="جدیدترین کالاها"
             />
           </div>
         </div>
@@ -112,8 +112,8 @@ const DesktopHomeIndex = ({
         <div className="border-t-2 bg-alpha-white">
           <div className="container mx-auto py-8">
             <MobileHomeTopBlogs
-              isMobileView={false}
               getAllBlogsQuery={getAllBlogsQuery}
+              isMobileView={false}
             />
           </div>
         </div>
@@ -135,7 +135,7 @@ const DesktopHomeIndex = ({
             <div className={clsx("gap-y-6", !blogFlag && "line-clamp-6")}>
               {getVocabularyQueryFcQuery.data?.vocabulary.categories.map(
                 (category, index) => (
-                  <div key={category?.id} className={clsx(index > 0 && "mt-7")}>
+                  <div className={clsx(index > 0 && "mt-7")} key={category?.id}>
                     <h4 className="font-semibold">{category?.title}</h4>
                     <p className="pt text-justify leading-7">
                       {category?.description}

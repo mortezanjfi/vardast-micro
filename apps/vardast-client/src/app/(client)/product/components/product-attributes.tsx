@@ -13,7 +13,7 @@ const ProductAttributes = ({
   title = "ویژگی‌ها"
 }: ProductAttributesProps) => {
   return (
-    <ProductSectionContainer titleCostumClass="!px-0" title={title}>
+    <ProductSectionContainer title={title} titleCostumClass="!px-0">
       <ul className="flex list-disc flex-col gap-y-2  py-3 pr-6 marker:text-alpha-500">
         {attributes.map((attribute, idx) => (
           <li key={idx}>

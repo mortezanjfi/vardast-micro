@@ -59,10 +59,10 @@ export const OffersFilter = ({
 
   const handleSubmit = () => {
     setOffersQueryParams({
-      sellerId: form.getValues("sellerId") as number,
-      isPublic: form.getValues("isPublic") as string,
-      status: form.getValues("status") as string,
-      isAvailable: form.getValues("isAvailable") as string
+      sellerId: form.getValues("sellerId"),
+      isPublic: form.getValues("isPublic"),
+      status: form.getValues("status"),
+      isAvailable: form.getValues("isAvailable")
     })
   }
   const handleReset = () => {
@@ -70,10 +70,10 @@ export const OffersFilter = ({
     form.reset()
 
     setOffersQueryParams({
-      sellerId: form.getValues("sellerId") as number,
-      isPublic: form.getValues("isPublic") as string,
-      status: form.getValues("status") as string,
-      isAvailable: form.getValues("isAvailable") as string
+      sellerId: form.getValues("sellerId"),
+      isPublic: form.getValues("isPublic"),
+      status: form.getValues("status"),
+      isAvailable: form.getValues("isAvailable")
     })
   }
   const statuses = enumToKeyValueObject(ThreeStateSupervisionStatuses)
@@ -102,10 +102,10 @@ export const OffersFilter = ({
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            className="input-field flex items-center text-start"
                             disabled={sellers.isLoading || sellers.isError}
                             noStyle
                             role="combobox"
-                            className="input-field flex items-center text-start"
                           >
                             {field.value
                               ? sellers.data?.sellers.data.find(
@@ -140,8 +140,8 @@ export const OffersFilter = ({
                               (seller) =>
                                 seller && (
                                   <CommandItem
-                                    value={seller.name}
                                     key={seller.id}
+                                    value={seller.name}
                                     onSelect={(value: string) => {
                                       form.setValue(
                                         "sellerId",
@@ -191,9 +191,9 @@ export const OffersFilter = ({
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            className="input-field flex items-center text-start"
                             noStyle
                             role="combobox"
-                            className="input-field flex items-center text-start"
                           >
                             {statusesOfActivation.find(
                               (st) => st.value === field.value
@@ -212,8 +212,8 @@ export const OffersFilter = ({
                           <CommandGroup>
                             {statusesOfActivation.map((st) => (
                               <CommandItem
-                                value={st.value}
                                 key={st.status}
+                                value={st.value}
                                 onSelect={(value) => {
                                   form.setValue("isPublic", value)
                                   setIsPublicDialog(false)
@@ -252,9 +252,9 @@ export const OffersFilter = ({
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            className="input-field flex items-center text-start"
                             noStyle
                             role="combobox"
-                            className="input-field flex items-center text-start"
                           >
                             {Object.keys(statuses).find(
                               (type) => statuses[type] === field.value
@@ -269,12 +269,12 @@ export const OffersFilter = ({
                           <CommandGroup>
                             {Object.keys(statuses).map((type) => (
                               <CommandItem
-                                value={type}
                                 key={statuses[type]}
+                                value={type}
                                 onSelect={() => {
                                   form.setValue(
                                     "status",
-                                    statuses[type] as string
+                                    statuses[type]
                                   )
                                   setStatusDialog(false)
                                 }}
@@ -299,9 +299,9 @@ export const OffersFilter = ({
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            className="input-field flex items-center text-start"
                             noStyle
                             role="combobox"
-                            className="input-field flex items-center text-start"
                           >
                             {field.value
                               ? statusesOfAvailability.find(
@@ -322,8 +322,8 @@ export const OffersFilter = ({
                           <CommandGroup>
                             {statusesOfAvailability.map((st) => (
                               <CommandItem
-                                value={st.value}
                                 key={st.status}
+                                value={st.value}
                                 onSelect={(value) => {
                                   form.setValue("isAvailable", value)
                                 }}
@@ -352,13 +352,13 @@ export const OffersFilter = ({
               <div className="col-start-4 flex justify-end gap-3">
                 <Button
                   className="w-full"
-                  variant="secondary"
                   type="reset"
+                  variant="secondary"
                   onClick={handleReset}
                 >
                   {t("common:remove_filter")}
                 </Button>
-                <Button className="w-full" variant="primary" type="submit">
+                <Button className="w-full" type="submit" variant="primary">
                   {t("common:submit_filter")}
                 </Button>
               </div>

@@ -18,8 +18,8 @@ const SelectTrigger = forwardRef<
   ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => (
   <SelectPrimitive.Trigger
-    ref={ref}
     className={mergeClasses("input-field select-field", className)}
+    ref={ref}
     {...props}
   >
     {children}
@@ -36,13 +36,13 @@ const SelectContent = forwardRef<
 >(({ className, children, position = "popper", ...props }, ref) => (
   <SelectPrimitive.Portal>
     <SelectPrimitive.Content
-      ref={ref}
       className={mergeClasses(
         "select-list-container",
         position === "popper" && "translate-y-1",
         className
       )}
       position={position}
+      ref={ref}
       {...props}
     >
       <SelectPrimitive.Viewport
@@ -64,11 +64,11 @@ const SelectLabel = forwardRef<
   ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Label
-    ref={ref}
     className={mergeClasses(
       "py-1.5 pl-8 pr-2 text-sm font-semibold",
       className
     )}
+    ref={ref}
     {...props}
   />
 ))
@@ -79,8 +79,8 @@ const SelectItem = forwardRef<
   ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
 >(({ className, children, ...props }, ref) => (
   <SelectPrimitive.Item
-    ref={ref}
     className={mergeClasses("select-list-item", className)}
+    ref={ref}
     {...props}
   >
     <span className="select-list-selected-item-indicator">
@@ -99,8 +99,8 @@ const SelectSeparator = forwardRef<
   ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Separator
-    ref={ref}
     className={mergeClasses("bg-muted -mx-1 my-1 h-px", className)}
+    ref={ref}
     {...props}
   />
 ))

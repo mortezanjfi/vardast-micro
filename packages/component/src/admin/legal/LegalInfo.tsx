@@ -128,9 +128,9 @@ const LegalInfo = ({ legal, loading, modal }: LegalInfoProps) => {
   return (
     <>
       <LegalModal
-        onCloseModals={onCloseModals}
         modals={modals}
         open={modals?.type === LegalModalEnum.INFO}
+        onCloseModals={onCloseModals}
       />
       <DetailsCard {...detailsCardProps} />
     </>

@@ -49,13 +49,13 @@ export const BulletSwiper = ({
       >
         {[...Array(contentSize)]?.map((_, index) => (
           <span
+            className={`h-2 transform cursor-pointer rounded-full transition-all ${
+              activeSlide === index ? "w-2 bg-primary" : "w-2 bg-alpha-400"
+            }`}
             key={`home-slider-dot-${index}`}
             onClick={() => {
               handleSlideTo(index)
             }}
-            className={`h-2 transform cursor-pointer rounded-full transition-all ${
-              activeSlide === index ? "w-2 bg-primary" : "w-2 bg-alpha-400"
-            }`}
           ></span>
         ))}
       </div>
@@ -96,27 +96,27 @@ const MobileHomeSlider = ({
           <div className={clsx("animated-card", sliderClass)}></div>
         ) : (
           <Swiper
-            key="home-banner-slider"
-            ref={sliderRef}
-            loop
-            centeredSlides
-            slidesPerView={isMobileView ? 1.2 : 1}
-            onSlideChange={(swiper) => {
-              setActiveSlide(swiper.realIndex)
-            }}
-            onAutoplay={(swiper) => {
-              setActiveSlide(swiper.realIndex)
-            }}
-            modules={[Autoplay]}
             autoplay={{
               delay: 7000,
               disableOnInteraction: false
             }}
+            centeredSlides
             className={clsx(
               "mx-auto h-full w-full sm:px-0",
               isMobileView ? "px-0" : "px-16"
             )}
+            key="home-banner-slider"
+            loop
+            modules={[Autoplay]}
+            ref={sliderRef}
+            slidesPerView={isMobileView ? 1.2 : 1}
             spaceBetween={15}
+            onAutoplay={(swiper) => {
+              setActiveSlide(swiper.realIndex)
+            }}
+            onSlideChange={(swiper) => {
+              setActiveSlide(swiper.realIndex)
+            }}
           >
             {query.data?.getBanners.map((banner) => {
               const responsiveImage = chooseBannerImageSize(
@@ -124,17 +124,15 @@ const MobileHomeSlider = ({
                 width
               )
               return (
-                <SwiperSlide key={banner.id} className={sliderClass}>
+                <SwiperSlide className={sliderClass} key={banner.id}>
                   <Link
+                    href={banner.url && `${banner.url}`}
                     onClick={() => {
                       responsiveImage.url && setSelectedItemId(banner.id)
                     }}
-                    href={banner.url && `${banner.url}`}
                   >
                     <Image
-                      src={responsiveImage.presignedUrl.url}
                       alt="slider"
-                      fill
                       className={clsx(
                         "h-full w-full rounded-xl border-2 object-cover sm:rounded-none sm:border-0",
                         responsiveImage.id,
@@ -142,6 +140,8 @@ const MobileHomeSlider = ({
                           ? "border-primary"
                           : "border-alpha-50"
                       )}
+                      fill
+                      src={responsiveImage.presignedUrl.url}
                     />
                   </Link>
                 </SwiperSlide>

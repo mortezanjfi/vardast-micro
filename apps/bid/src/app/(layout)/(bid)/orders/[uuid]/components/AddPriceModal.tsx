@@ -240,11 +240,11 @@ const AddPriceModal = ({
             <div className="flex items-center gap-1">
               <FormControl>
                 <Switch
+                  checked={field.value}
                   disabled={
                     calculatePriceOfferLineMutation.isLoading ||
                     createOrderOfferLineMutation.isLoading
                   }
-                  checked={field.value}
                   onCheckedChange={field.onChange}
                 />
               </FormControl>

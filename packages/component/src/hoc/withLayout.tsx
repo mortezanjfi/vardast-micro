@@ -46,8 +46,8 @@ export default function withLayout<T>(
                   <div>
                     <div className="app-header-ghost mobile"></div>
                     <header
-                      id="mobile-header-navbar"
                       className="app-header mobile"
+                      id="mobile-header-navbar"
                     >
                       <MobileHeader {...layout?.mobile?.header} />
                     </header>
@@ -77,8 +77,8 @@ export default function withLayout<T>(
               </main>
               {layout?.mobile?.footer && (
                 <footer
-                  id="mobile-navigation-bar"
                   className="app-footer mobile"
+                  id="mobile-navigation-bar"
                 >
                   <MobileNavigation {...layout?.mobile?.footer} />
                 </footer>
@@ -132,18 +132,18 @@ export default function withLayout<T>(
                   />
                 )}
                 <MotionSection
-                  variants={{
-                    hidden: { opacity: 0 },
-                    enter: { opacity: 1 }
-                  }}
-                  initial="hidden" // Set the initial state to variants.hidden
                   animate="enter" // Animated state to variants.enter
-                  exit="exit" // Exit state (used later) to variants.exit
-                  transition={{ type: "linear" }} // Set the transition to linear
                   className={clsx(
                     "app-content desktop",
                     layout?.desktop?.sidebar ? "pr-6" : "pr-0.5"
                   )}
+                  exit="exit" // Exit state (used later) to variants.exit
+                  initial="hidden" // Set the initial state to variants.hidden
+                  transition={{ type: "linear" }} // Set the transition to linear
+                  variants={{
+                    hidden: { opacity: 0 },
+                    enter: { opacity: 1 }
+                  }}
                 >
                   {layout?.desktop?.main?.breadcrumb && (
                     <Suspense>

@@ -79,7 +79,7 @@ const ProductLowestPriceInfo = ({
   )
 
   const showSellerContact = () => {
-    if (!!session) {
+    if (session) {
       createEventTrackerMutation.mutate({
         createEventTrackerInput: {
           type: EventTrackerTypes.ViewOffer,
@@ -111,11 +111,11 @@ const ProductLowestPriceInfo = ({
           <DialogContent>
             <DialogHeader className="border-b pb">
               <CardAvatar
+                name={mainOffer?.seller?.name || ""}
                 url={
-                  (lowestPrice?.seller.logoFile?.presignedUrl.url as string) ||
+                  (lowestPrice?.seller.logoFile?.presignedUrl.url) ||
                   "/images/seller-blank.png"
                 }
-                name={mainOffer?.seller?.name || ""}
               />
             </DialogHeader>
 
@@ -128,9 +128,9 @@ const ProductLowestPriceInfo = ({
                 <div className="flex divide-x divide-alpha-200">
                   {tel && tel?.number ? (
                     <Link
-                      href={`tel:+98${tel.number}`}
-                      dir="ltr"
                       className="font-semibold underline"
+                      dir="ltr"
+                      href={`tel:+98${tel.number}`}
                     >
                       {digitsEnToFa(`${tel.number}`)}
                     </Link>
@@ -146,9 +146,9 @@ const ProductLowestPriceInfo = ({
                 <div className="flex divide-x divide-alpha-200">
                   {mobile && mobile.code && mobile.number ? (
                     <Link
-                      href={`mobile:+98${+mobile.code}${mobile.number}`}
-                      dir="ltr"
                       className="font-semibold underline"
+                      dir="ltr"
+                      href={`mobile:+98${+mobile.code}${mobile.number}`}
                     >
                       {digitsEnToFa(`${mobile.code}-${mobile.number}`)}
                     </Link>
@@ -163,12 +163,12 @@ const ProductLowestPriceInfo = ({
                 mainOffer?.seller?.addresses.map(
                   ({ address, latitude, longitude, id }) => (
                     <AddressItem
-                      key={id}
                       address={{
                         address,
                         latitude,
                         longitude
                       }}
+                      key={id}
                     />
                   )
                 )}
@@ -182,7 +182,7 @@ const ProductLowestPriceInfo = ({
         {lowestPrice.discount && (
           <div className="flex gap-2">
             <span className="text-alpha-500 line-through">
-              {digitsEnToFa(addCommas(lowestPrice.amount as number))}
+              {digitsEnToFa(addCommas(lowestPrice.amount))}
             </span>
             <span>تومان</span>
             <DiscountBadge
@@ -193,7 +193,7 @@ const ProductLowestPriceInfo = ({
         <div className="flex items-center justify-between">
           {!isMobileView && (
             <Button
-              onClick={showSellerContact}
+              className=" font-normal"
               disabled={
                 (!lowestPrice.seller?.contacts.length &&
                   !lowestPrice.seller?.addresses.length) ||
@@ -201,8 +201,8 @@ const ProductLowestPriceInfo = ({
               }
               loading={createEventTrackerMutation.isLoading}
               size="medium"
-              className=" font-normal"
               variant="primary"
+              onClick={showSellerContact}
             >
               اطلاعات تماس
             </Button>
@@ -211,8 +211,8 @@ const ProductLowestPriceInfo = ({
             {discount &&
               discount.map((discountItem) => (
                 <div
-                  key={discountItem.id}
                   className="flex w-full items-center justify-end gap-x"
+                  key={discountItem.id}
                 >
                   <span className="text-sm text-alpha-500 line-through">
                     {discountItem.calculated_price &&

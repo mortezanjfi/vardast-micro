@@ -5,9 +5,9 @@ const VerticalSpace: React.FC<{ numberOfSpaces?: 1 | 2 | 3 | 4 }> = ({
 }) => {
   return [...Array(numberOfSpaces)].map((_, index) => (
     <div
-      key={`vertical-space-${index}`}
-      className={`h-20`}
       aria-hidden="true"
+      className={`h-20`}
+      key={`vertical-space-${index}`}
     ></div>
   ))
 }

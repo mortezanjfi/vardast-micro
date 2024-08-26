@@ -8,7 +8,7 @@ import ProductList from "@/app/(seller)/products/components/product-list"
 
 interface ProductsPageProps {
   isMobileView: boolean
-  slug: Array<string | number>
+  slug: (string | number)[]
   args: SearchSellerRepresentativeInput
 
   session: Session | null

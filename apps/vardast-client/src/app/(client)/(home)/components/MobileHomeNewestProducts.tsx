@@ -36,7 +36,7 @@ const MobileHomeNewestProducts = ({
   const { ref: refPrev, inView: inViewPrev } = useInView({ threshold: 0.1 })
 
   return (
-    <MobileHomeSection viewAllHref="/products" bgWhite block title={title}>
+    <MobileHomeSection bgWhite block title={title} viewAllHref="/products">
       {isMobileView ? (
         <div className="sm:pt-6">
           <ProductListContainer
@@ -50,10 +50,10 @@ const MobileHomeNewestProducts = ({
                   .slice(0, 12)
                   .map((product) => (
                     <ProductCard
-                      selectedItemId={selectedItemId}
-                      setSelectedItemId={setSelectedItemId}
                       key={product?.id}
                       product={product as Product}
+                      selectedItemId={selectedItemId}
+                      setSelectedItemId={setSelectedItemId}
                     />
                   ))}
               </>
@@ -64,10 +64,10 @@ const MobileHomeNewestProducts = ({
         <div className="relative overflow-hidden">
           {!inViewNext && (
             <SwiperNavigationButton
-              swiperRef={swiperRef}
               action={SwiperButtonAction.HANDLE_NEXT}
               direction={SwiperButtonsDirection.LEFT}
               iconSize={20}
+              swiperRef={swiperRef}
             />
           )}
           <Swiper
@@ -76,14 +76,14 @@ const MobileHomeNewestProducts = ({
             //   clickable: true
             // }}
             // modules={[FreeMode]}
-            onSwiper={setSwiperRef}
             centeredSlides={centeredSlides ?? true}
+            onSwiper={setSwiperRef}
             slidesPerView={"auto"}
             // spaceBetween={16}
             className="h-full w-full pb-12 sm:p-4 sm:px-5 sm:pt-8 md:px-0"
           >
             {query?.data?.products?.data?.map((product, index) => (
-              <SwiperSlide key={product.id} className={clsx("w-72")}>
+              <SwiperSlide className={clsx("w-72")} key={product.id}>
                 <div
                   ref={
                     index === query?.data?.products?.data?.length - 1
@@ -94,10 +94,10 @@ const MobileHomeNewestProducts = ({
                   }
                 >
                   <ProductCard
-                    selectedItemId={selectedProduct}
-                    setSelectedItemId={setSelectedProduct}
                     key={product?.id}
                     product={product as Product}
+                    selectedItemId={selectedProduct}
+                    setSelectedItemId={setSelectedProduct}
                   />
                 </div>
               </SwiperSlide>
@@ -105,10 +105,10 @@ const MobileHomeNewestProducts = ({
           </Swiper>
           {!inViewPrev && (
             <SwiperNavigationButton
-              swiperRef={swiperRef}
               action={SwiperButtonAction.HANDLE_PREVIOUS}
               direction={SwiperButtonsDirection.RIGHT}
               iconSize={20}
+              swiperRef={swiperRef}
             />
           )}
         </div>

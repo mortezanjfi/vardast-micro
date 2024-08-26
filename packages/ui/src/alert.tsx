@@ -29,9 +29,9 @@ const Alert = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
 >(({ className, variant, ...props }, ref) => (
   <div
+    className={mergeClasses(alertVariants({ variant }), className)}
     ref={ref}
     role="alert"
-    className={mergeClasses(alertVariants({ variant }), className)}
     {...props}
   />
 ))
@@ -42,11 +42,11 @@ const AlertTitle = React.forwardRef<
   React.HTMLAttributes<HTMLHeadingElement>
 >(({ className, ...props }, ref) => (
   <h5
-    ref={ref}
     className={mergeClasses(
       "mb-1 font-medium leading-none tracking-tight",
       className
     )}
+    ref={ref}
     {...props}
   />
 ))
@@ -57,8 +57,8 @@ const AlertDescription = React.forwardRef<
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => (
   <div
-    ref={ref}
     className={mergeClasses("text-sm [&_p]:leading-relaxed", className)}
+    ref={ref}
     {...props}
   />
 ))

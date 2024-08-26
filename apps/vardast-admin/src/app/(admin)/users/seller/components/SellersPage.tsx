@@ -123,10 +123,10 @@ const SellersPage = ({ title }: Props) => {
               <div className="relative flex aspect-square h-12 w-12 items-center justify-center overflow-hidden rounded bg-alpha-50">
                 {row?.original?.logoFile ? (
                   <Image
-                    src={row?.original?.logoFile.presignedUrl.url}
                     alt={row?.original?.name}
-                    fill
                     className="object-contain"
+                    fill
+                    src={row?.original?.logoFile.presignedUrl.url}
                   />
                 ) : (
                   <LucideWarehouse
@@ -188,10 +188,10 @@ const SellersPage = ({ title }: Props) => {
   return (
     <>
       <SellerModal
-        onCloseModals={onCloseModals}
-        onChangeModals={onChangeModals}
         modals={modals}
         open={modals?.type === SellerModalEnum.INFO}
+        onChangeModals={onChangeModals}
+        onCloseModals={onCloseModals}
       />
       <Table {...tableProps} />
     </>

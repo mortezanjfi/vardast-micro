@@ -59,9 +59,9 @@ export const ProductsFilter = ({
 
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(formSubmit)}
-          noValidate
           className="flex w-full items-end justify-between gap-7"
+          noValidate
+          onSubmit={form.handleSubmit(formSubmit)}
         >
           <div className="w-full">
             <FormField
@@ -75,13 +75,6 @@ export const ProductsFilter = ({
                       <LucideSearch className="h-6 w-6 text-primary" />
                       <Input
                         autoFocus
-                        value={queryTemp}
-                        onChange={(e) => {
-                          setQueryTemp(e.target.value)
-                          console.log(e.target.value)
-                        }}
-                        type="text"
-                        placeholder="نام کالا"
                         className="flex h-full w-full
                     items-center
                     gap-2
@@ -89,12 +82,19 @@ export const ProductsFilter = ({
                     bg-alpha-100
                     px-4
                     py-3 focus:!ring-0 disabled:bg-alpha-100"
+                        placeholder="نام کالا"
+                        type="text"
+                        value={queryTemp}
+                        onChange={(e) => {
+                          setQueryTemp(e.target.value)
+                          console.log(e.target.value)
+                        }}
                       />
                       <Button
-                        variant="ghost"
-                        size="small"
-                        iconOnly
                         className="rounded-full"
+                        iconOnly
+                        size="small"
+                        variant="ghost"
                         onClick={() => {
                           setQueryTemp("")
                         }}
@@ -107,7 +107,7 @@ export const ProductsFilter = ({
               )}
             />
           </div>
-          <Button type="submit" size="large" className="h-[40px]">
+          <Button className="h-[40px]" size="large" type="submit">
             جستجو
           </Button>
         </form>

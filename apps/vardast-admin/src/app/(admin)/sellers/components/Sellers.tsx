@@ -107,9 +107,9 @@ const Sellers = () => {
       />
       <Card className="table-responsive mt-8 rounded">
         <PageHeader
+          containerClass="items-center"
           title="لیست فروشندگان"
           titleClasses="text-[14px] font-normal "
-          containerClass="items-center"
           titleContainerClasses="border-b-2 border-primary-600 py-2"
         >
           {session?.abilities.includes("gql.products.seller.index") && (
@@ -145,10 +145,10 @@ const Sellers = () => {
                           <div className="relative flex aspect-square h-12 w-12 items-center justify-center overflow-hidden rounded bg-alpha-50">
                             {seller.logoFile ? (
                               <Image
-                                src={seller.logoFile.presignedUrl.url}
                                 alt={seller.name}
-                                fill
                                 className="object-contain p-1"
+                                fill
+                                src={seller.logoFile.presignedUrl.url}
                               />
                             ) : (
                               <LucideWarehouse
@@ -238,8 +238,8 @@ const Sellers = () => {
             </table>
 
             <Pagination
-              total={data?.data?.sellers?.lastPage ?? 0}
               page={currentPage}
+              total={data?.data?.sellers?.lastPage ?? 0}
               onChange={(page) => {
                 setCurrentPage(page)
               }}

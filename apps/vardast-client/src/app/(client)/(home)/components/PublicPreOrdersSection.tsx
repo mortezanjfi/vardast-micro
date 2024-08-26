@@ -28,13 +28,13 @@ const PublicPreOrdersSection = ({ query, isMobileView }: Props) => {
   const { ref: refPrev, inView: inViewPrev } = useInView({ threshold: 0.1 })
 
   const mappedData = useMemo(() => {
-    let temp = []
+    const temp = []
     if (flag) {
       return query?.data?.publicOrders
     }
     query?.data?.publicOrders?.forEach((item) => {
       item.orders.map((bib) => {
-        let temp2 = { ...item, ...bib }
+        const temp2 = { ...item, ...bib }
         delete temp2.orders
         temp.push(temp2)
       })
@@ -48,10 +48,10 @@ const PublicPreOrdersSection = ({ query, isMobileView }: Props) => {
       <div className="relative overflow-hidden sm:pb-4">
         {!inViewNext && !isMobileView && (
           <SwiperNavigationButton
-            swiperRef={swiperRef}
             action={SwiperButtonAction.HANDLE_NEXT}
             direction={SwiperButtonsDirection.LEFT}
             iconSize={20}
+            swiperRef={swiperRef}
           />
         )}
         <Swiper
@@ -60,21 +60,21 @@ const PublicPreOrdersSection = ({ query, isMobileView }: Props) => {
           //   clickable: true
           // }}
           // modules={[FreeMode]}
-          onSwiper={setSwiperRef}
-          // centeredSlides={centeredSlides ?? true}
-          slidesPerView={"auto"}
-          // className="h-full pb-12 sm:px-5 sm:py-8 md:px-0"
           className="px-4 pb-8 sm:!pb-4 sm:pt-8 md:px-0"
+          // centeredSlides={centeredSlides ?? true}
+          onSwiper={setSwiperRef}
+          // className="h-full pb-12 sm:px-5 sm:py-8 md:px-0"
+          slidesPerView={"auto"}
         >
           {query.isLoading || query.isFetching ? (
             <>
               {[...Array(10)].map((_, index) => (
                 <SwiperSlide
-                  key={index}
                   className={clsx(
                     "!ml-0 overflow-hidden bg-alpha-white",
                     isMobileView ? "w-[calc(100vw-45px)]" : "w-[402px]"
                   )}
+                  key={index}
                 >
                   <div></div>
                 </SwiperSlide>
@@ -85,11 +85,11 @@ const PublicPreOrdersSection = ({ query, isMobileView }: Props) => {
               (data, index) =>
                 data && (
                   <SwiperSlide
-                    key={index}
                     className={clsx(
                       "ml-5 overflow-hidden bg-alpha-white md:!ml-0",
                       isMobileView ? "w-[calc(100vw-45px)]" : "w-[402px]"
                     )}
+                    key={index}
                   >
                     <div
                       ref={
@@ -111,10 +111,10 @@ const PublicPreOrdersSection = ({ query, isMobileView }: Props) => {
         </Swiper>
         {!inViewPrev && !isMobileView && (
           <SwiperNavigationButton
-            swiperRef={swiperRef}
             action={SwiperButtonAction.HANDLE_PREVIOUS}
             direction={SwiperButtonsDirection.RIGHT}
             iconSize={20}
+            swiperRef={swiperRef}
           />
         )}
       </div>

@@ -36,30 +36,29 @@ const MobileHomeTopBlogs = ({
 
   return (
     <MobileHomeSection
-      viewAllHref="https://blog.vardast.com/"
       bgWhite
-      title="جدیدترین اخبار و مطالب"
       block={true}
+      title="جدیدترین اخبار و مطالب"
+      viewAllHref="https://blog.vardast.com/"
     >
       <div className="relative overflow-hidden">
         {!inViewNext && !isMobileView && (
           <SwiperNavigationButton
-            swiperRef={swiperRef}
             action={SwiperButtonAction.HANDLE_NEXT}
             direction={SwiperButtonsDirection.LEFT}
             iconSize={20}
+            swiperRef={swiperRef}
           />
         )}
         <Swiper
-          onSwiper={setSwiperRef}
+          className="px-6 pb-4 sm:!pb-0 sm:pt-8 md:px-0"
           key="blog-swiper"
           slidesPerView={"auto"}
           spaceBetween={15}
-          className="px-6 pb-4 sm:!pb-0 sm:pt-8 md:px-0"
+          onSwiper={setSwiperRef}
         >
           {getAllBlogsQuery?.data?.getAllBlogs?.data?.map((blog, index) => (
             <SwiperSlide
-              key={blog?.id}
               className={clsx(
                 "overflow-hidden rounded-2xl  bg-alpha-white",
                 isMobileView ? "w-[calc(100vw-45px)]" : "w-[350px]",
@@ -67,6 +66,7 @@ const MobileHomeTopBlogs = ({
                   ? "border-2 border-primary"
                   : "border-alpha-50"
               )}
+              key={blog?.id}
             >
               <div
                 className="rounded-2xl "
@@ -79,11 +79,11 @@ const MobileHomeTopBlogs = ({
                 }
               >
                 <Link
+                  className={clsx("h-full w-full")}
+                  href={blog?.url || "/"}
                   onClick={() => {
                     setSelectedItemId(blog?.id || 0)
                   }}
-                  className={clsx("h-full w-full")}
-                  href={blog?.url || "/"}
                 >
                   <div
                     className={clsx(
@@ -92,12 +92,12 @@ const MobileHomeTopBlogs = ({
                     )}
                   >
                     <Image
-                      src={blog?.image_url || "/images/blank.png"}
                       alt="category"
+                      className="h-full w-full rounded-2xl border border-alpha-50 object-fill"
                       fill
                       // width={400}
                       // height={300}
-                      className="h-full w-full rounded-2xl border border-alpha-50 object-fill"
+                      src={blog?.image_url || "/images/blank.png"}
                     />
                   </div>
                   <div className="relative z-20 flex flex-col items-start justify-between gap-y-2 bg-alpha-white bg-opacity-60 py-4 text-center">
@@ -124,10 +124,10 @@ const MobileHomeTopBlogs = ({
         </Swiper>
         {!inViewPrev && !isMobileView && (
           <SwiperNavigationButton
-            swiperRef={swiperRef}
             action={SwiperButtonAction.HANDLE_PREVIOUS}
             direction={SwiperButtonsDirection.RIGHT}
             iconSize={20}
+            swiperRef={swiperRef}
           />
         )}
         {/* {!isMobileView && <ShadowRectangle />} */}

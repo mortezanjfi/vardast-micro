@@ -14,8 +14,8 @@ import { getVocabularyQueryFn } from "@vardast/query/queryFns/vocabularyQueryFns
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
 type SearchIndexProps = {
-  params: { slug: Array<string | number> }
-  searchParams: { [key: string]: string | string[] | undefined }
+  params: { slug: (string | number)[] }
+  searchParams: Record<string, string | string[] | undefined>
 }
 
 export async function generateMetadata(
@@ -52,25 +52,25 @@ const SearchIndex = async ({
 
   const args: IndexProductInput = {}
 
-  args["brandId"] = searchParams.brandId ? +searchParams.brandId : undefined
-  args["sellerId"] = searchParams.sellerId ? +searchParams.sellerId : undefined
+  args.brandId = searchParams.brandId ? +searchParams.brandId : undefined
+  args.sellerId = searchParams.sellerId ? +searchParams.sellerId : undefined
 
-  args["page"] =
+  args.page =
     searchParams.page && +searchParams.page[0] > 0 ? +searchParams.page[0] : 1
 
-  if (slug && slug.length) args["categoryIds"] = [+slug[0]]
+  if (slug && slug.length) args.categoryIds = [+slug[0]]
 
   // args["query"] = ""
   if (searchParams.query && searchParams.query.length)
-    args["query"] = searchParams.query as string
+    args.query = searchParams.query as string
 
   if (searchParams.orderBy) {
-    args["orderBy"] = searchParams.orderBy as ProductSortablesEnum
+    args.orderBy = searchParams.orderBy as ProductSortablesEnum
   } else {
-    args["orderBy"] = ProductSortablesEnum.Newest
+    args.orderBy = ProductSortablesEnum.Newest
   }
 
-  args["attributes"] = []
+  args.attributes = []
 
   if (searchParams) {
     for (const key in searchParams) {
@@ -81,11 +81,11 @@ const SearchIndex = async ({
         if (match && match.length === 2) {
           const id = parseInt(match[1], 10)
           const value: string[] = Array.isArray(searchParams[key])
-            ? (searchParams[key] as string[])
+            ? (searchParams[key])
             : ([searchParams[key]] as string[])
 
           value.forEach((val) => {
-            args["attributes"]?.push({ id, value: val })
+            args.attributes?.push({ id, value: val })
           })
         }
       }
@@ -93,7 +93,7 @@ const SearchIndex = async ({
   }
 
   if (searchParams.categoryId && searchParams.categoryId.length)
-    args["categoryIds"] = Array.isArray(searchParams.categoryId)
+    args.categoryIds = Array.isArray(searchParams.categoryId)
       ? searchParams.categoryId.map((item) => +item)
       : [+searchParams.categoryId]
 
@@ -123,10 +123,10 @@ const SearchIndex = async ({
     <ReactQueryHydrate state={dehydratedState}>
       <ProductsPage
         // hasSearch
-        needCategoryFilterSection
-        slug={slug}
         args={args}
         isMobileView={isMobileView}
+        needCategoryFilterSection
+        slug={slug}
       />
     </ReactQueryHydrate>
   )

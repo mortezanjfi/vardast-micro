@@ -27,16 +27,16 @@ export const DetailsWithTitle = ({
     <div className={clsx("flex items-center gap-2 py-1", className)}>
       {item?.icon && (
         <DynamicHeroIcon
-          icon={item.icon}
           className={mergeClasses(
             "icon h-7 w-7 flex-shrink-0 transform rounded-md p-1 text-alpha-500 transition-all"
           )}
+          icon={item.icon}
           solid={false}
         />
       )}
       {item?.key && (
         <div className="flex items-center gap-2">
-          <ListBulletIcon className="text-alpha-500" width={6} height={6} />
+          <ListBulletIcon className="text-alpha-500" height={6} width={6} />
           {item?.key && (
             <span className="whitespace-nowrap text-alpha-500">
               {item?.key}:

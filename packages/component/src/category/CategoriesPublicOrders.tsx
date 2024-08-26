@@ -36,9 +36,9 @@ function CategoriesPublicOrders({ publicPreOrders, title }: Props) {
             data.orders.map((order, orderIndex) => (
               <OrderCard
                 forHomeCard
-                verticalDetails
                 key={orderIndex}
                 preOrder={order as unknown as PreOrder & PreOrderDto}
+                verticalDetails
               />
             ))
           )

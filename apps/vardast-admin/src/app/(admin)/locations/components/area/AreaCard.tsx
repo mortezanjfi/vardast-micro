@@ -73,20 +73,20 @@ const AreaCard = ({ show, area, onDeleteTriggered }: AreaCardProps) => {
     >
       <span className="text-alpha-800 dark:text-alpha-400">{name}</span>
       <div className="mr-auto flex items-center gap-2">
-        <Label noStyle className="flex items-center">
+        <Label className="flex items-center" noStyle>
           <>
             <Switch
-              onCheckedChange={toggleActive}
               checked={active}
-              size="small"
               disabled={updateAreaMutation.isLoading}
+              size="small"
+              onCheckedChange={toggleActive}
             />
             <span>{t("common:is_active")}</span>
           </>
         </Label>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" iconOnly>
+            <Button iconOnly variant="ghost">
               <LucideMoreVertical className="icon" />
             </Button>
           </DropdownMenuTrigger>
@@ -101,8 +101,8 @@ const AreaCard = ({ show, area, onDeleteTriggered }: AreaCardProps) => {
               <>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  onSelect={toggleRemoveItem}
                   className="danger"
+                  onSelect={toggleRemoveItem}
                 >
                   <LucideTrash className="dropdown-menu-item-icon" />
                   <span>{t("common:delete")}</span>

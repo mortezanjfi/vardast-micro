@@ -31,32 +31,32 @@ const MobileHomeIndex = ({
           <NewPriceSlider query={recentPriceProductsQuery} />
         </div>
       )}
-      <MobileHomeSlider query={homeSlidersQuery} isMobileView={isMobileView} />
+      <MobileHomeSlider isMobileView={isMobileView} query={homeSlidersQuery} />
 
       <MobileHomeCategory
         getVocabularyQueryFcQuery={getVocabularyQueryFcQuery}
       />
       {publicOrdersQuery && (
         <MobileHomeSection
-          block
           bgWhite
+          block
           title="جدیدترین سفارشات"
           viewAllHref="/orders"
         >
-          <PublicPreOrdersSection query={publicOrdersQuery} isMobileView />
+          <PublicPreOrdersSection isMobileView query={publicOrdersQuery} />
         </MobileHomeSection>
       )}
       <MobileHomeTopEntities
-        isMobileView
         __typename="Brand"
-        title="جدیدترین برندها"
+        isMobileView
         query={allBrandsCount.data?.brands.data.slice(0, 8) as Brand[]}
+        title="جدیدترین برندها"
       />
       {allProductsQuery.data && (
         <MobileHomeNewestProducts
           isMobileView
-          title="جدیدترین کالاها"
           query={allProductsQuery}
+          title="جدیدترین کالاها"
         />
       )}
       {getAllBlogsQuery.data && (

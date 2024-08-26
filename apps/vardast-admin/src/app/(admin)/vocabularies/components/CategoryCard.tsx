@@ -77,9 +77,9 @@ const CategoryCard = ({
           />
           {modalsOpen[CategoryModalEnumType.EditCategory] && (
             <CategoryFormModal
+              actionType="edit"
               modalsOpen={modalsOpen}
               onOpenChange={onOpenChange}
-              actionType="edit"
             />
           )}
           <CategoryDeleteModal
@@ -91,12 +91,12 @@ const CategoryCard = ({
       <div className="card flex items-center gap-3 rounded px-4 py-2 pe-2">
         <div className="flex flex-1 items-center gap-2">
           <LucideGripVertical className="hidden h-5 w-5 text-alpha-400" />
-          <Button noStyle className="flex h-8 w-8 items-center justify-center">
+          <Button className="flex h-8 w-8 items-center justify-center" noStyle>
             {category.childrenCount ? (
               <LucidePlus
-                onClick={toggleChild}
                 className="h-5 w-5 text-alpha-500 dark:text-alpha-700"
                 strokeWidth={1.5}
+                onClick={toggleChild}
               />
             ) : (
               <LucideMinus
@@ -106,21 +106,21 @@ const CategoryCard = ({
             )}
           </Button>
           <Image
-            width={48}
-            height={48}
+            alt="category-image"
             className="h-[50px] w-[50px]"
+            height={48}
             src={
               category.imageCategory
                 ? category.imageCategory[0]?.file?.presignedUrl?.url
                 : "/images/blank.png"
             }
-            alt="category-image"
+            width={48}
           />
           <div className="flex flex-col gap-2">
             <Button
+              className="text-right font-bold text-alpha-800 underline-offset-2 hover:text-alpha-900 hover:underline dark:text-alpha-400 dark:hover:text-alpha-300"
               noStyle
               onClick={() => (category.childrenCount ? toggleChild() : null)}
-              className="text-right font-bold text-alpha-800 underline-offset-2 hover:text-alpha-900 hover:underline dark:text-alpha-400 dark:hover:text-alpha-300"
             >
               {category.title}
             </Button>
@@ -145,13 +145,13 @@ const CategoryCard = ({
         </div>
         <div className="mr-auto flex items-center gap-2">
           <Button
+            size={"small"}
             onClick={() =>
               onOpenChange({
                 currentCategory: category,
-                type: CategoryModalEnumType["EditAttribute"]
+                type: CategoryModalEnumType.EditAttribute
               })
             }
-            size={"small"}
           >
             ویرایش مشخصه ها
           </Button>
@@ -161,7 +161,7 @@ const CategoryCard = ({
             onOpenChange={setDropDownMenuOpen}
           >
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" iconOnly>
+              <Button iconOnly variant="ghost">
                 <LucideMoreVertical className="icon" />
               </Button>
             </DropdownMenuTrigger>
@@ -174,7 +174,7 @@ const CategoryCard = ({
                     onSelect={() =>
                       onOpenChange({
                         currentCategory: category,
-                        type: CategoryModalEnumType["EditCategory"]
+                        type: CategoryModalEnumType.EditCategory
                       })
                     }
                   >
@@ -189,13 +189,13 @@ const CategoryCard = ({
                 <>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
+                    className="danger"
                     onSelect={() =>
                       onOpenChange({
                         currentCategory: category,
-                        type: CategoryModalEnumType["RemoveCategory"]
+                        type: CategoryModalEnumType.RemoveCategory
                       })
                     }
-                    className="danger"
                   >
                     <LucideTrash className="dropdown-menu-item-icon" />
                     <span>{t("common:delete")}</span>
@@ -211,11 +211,11 @@ const CategoryCard = ({
           <div className="flex flex-col gap-2">
             {getCategoryQuery.data?.category.children.map((childCategory) => (
               <CategoryCard
-                session={session}
-                modalsOpen={modalsOpen}
-                onOpenChange={onOpenChange}
                 category={childCategory as Category}
                 key={childCategory?.id}
+                modalsOpen={modalsOpen}
+                session={session}
+                onOpenChange={onOpenChange}
               />
             ))}
           </div>

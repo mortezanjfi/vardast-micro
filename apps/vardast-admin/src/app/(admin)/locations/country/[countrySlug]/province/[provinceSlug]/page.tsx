@@ -15,8 +15,8 @@ const CitiesPage = async ({
     redirect("/")
   }
 
-  const countrySlug = params.countrySlug as string
-  const provinceSlug = params.provinceSlug as string
+  const countrySlug = params.countrySlug
+  const provinceSlug = params.provinceSlug
 
   return <Cities countrySlug={countrySlug} provinceSlug={provinceSlug} />
 }

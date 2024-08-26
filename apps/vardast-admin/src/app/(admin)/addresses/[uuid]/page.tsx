@@ -6,7 +6,7 @@ import AddressEdit from "@/app/(admin)/addresses/components/AddressEdit"
 
 type AddressEditPageProps = {
   params: { uuid: string }
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Record<string, string | string[] | undefined>
 }
 
 const AddressEditPage = async ({
@@ -21,7 +21,7 @@ const AddressEditPage = async ({
 
   return (
     uuid && (
-      <AddressEdit uuid={uuid} fallback={searchParams.fallback as string} />
+      <AddressEdit fallback={searchParams.fallback as string} uuid={uuid} />
     )
   )
 }

@@ -108,20 +108,20 @@ const AttributeSection = ({
               <AlertDialogFooter>
                 <div className="flex items-center gap-2">
                   <Button
+                    disabled={removeAttributeValueMutation.isLoading}
                     variant="ghost"
                     onClick={() => {
                       setAttributeToDelete(null)
                       setDeleteModalOpen(false)
                     }}
-                    disabled={removeAttributeValueMutation.isLoading}
                   >
                     {t("common:cancel")}
                   </Button>
                   <Button
-                    variant="danger"
-                    onClick={() => onDelete()}
                     disabled={removeAttributeValueMutation.isLoading}
                     loading={removeAttributeValueMutation.isLoading}
+                    variant="danger"
+                    onClick={() => onDelete()}
                   >
                     {t("common:delete")}
                   </Button>
@@ -177,10 +177,10 @@ const AttributeSection = ({
                                 {t("common:edit")}
                               </Button>
                               <Button
-                                size="small"
-                                variant="link"
                                 className="!text-red-500"
+                                size="small"
                                 type="button"
+                                variant="link"
                                 onClick={() => {
                                   setAttributeToDelete(attribute)
                                   setDeleteModalOpen(true)
@@ -200,8 +200,8 @@ const AttributeSection = ({
 
           <div className="mt-8 flex justify-end">
             <Button
-              variant="secondary"
               type="button"
+              variant="secondary"
               onClick={() => onOpenCreateModal()}
             >
               {t("common:add_entity", { entity: t("common:attribute") })}

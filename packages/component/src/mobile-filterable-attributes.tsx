@@ -30,9 +30,9 @@ const MobileFilterableAttributeItem = ({
 }: MobileFilterableAttributeItemProps) => {
   return (
     <Button
+      className="py-3"
       noStyle
       onClick={() => onFilterableAttributeChanged()}
-      className="py-3"
     >
       <div className="flex w-full items-center gap-2">
         {filterAttributes.some((item) => item.id === attribute.id) && (
@@ -73,8 +73,11 @@ const MobileFilterableAttributePage = ({
       {attribute?.values?.options?.map(
         (value: string, idx: number) =>
           value && (
-            <Label.Root key={idx} className="flex items-center gap-2">
+            <Label.Root className="flex items-center gap-2" key={idx}>
               <Checkbox.Root
+                checked={filterAttributes.some(
+                  (item) => item.id === attribute.id && item.value === value
+                )}
                 className="flex
                     h-5
                     w-5
@@ -88,9 +91,6 @@ const MobileFilterableAttributePage = ({
                     outline-none
                     data-[state='checked']:border-primary-500
                     data-[state='checked']:bg-primary-500"
-                checked={filterAttributes.some(
-                  (item) => item.id === attribute.id && item.value === value
-                )}
                 onCheckedChange={(checked) =>
                   onFilterAttributesChanged({
                     status: checked,
@@ -160,13 +160,13 @@ const MobileFilterableAttributes = ({
           <div className="sticky top-0 border-b border-alpha-200 bg-white p-4">
             <div className="flex items-center gap-2">
               <Button
+                iconOnly
+                size="small"
+                variant="ghost"
                 onClick={() => {
                   if (!selectedFilterAttribute) setFiltersVisibility(false)
                   if (selectedFilterAttribute) setSelectedFilterAttribute(null)
                 }}
-                variant="ghost"
-                size="small"
-                iconOnly
               >
                 <LucideArrowRight className="h-5 w-5" />
               </Button>
@@ -177,9 +177,9 @@ const MobileFilterableAttributes = ({
               </div>
               {filterAttributes.length > 0 && (
                 <Button
-                  size="small"
-                  noStyle
                   className="ms-auto text-sm text-red-500"
+                  noStyle
+                  size="small"
                   onClick={() => onRemoveAllFilters()}
                 >
                   حذف همه فیلترها
@@ -190,8 +190,8 @@ const MobileFilterableAttributes = ({
           <div className="p-4">
             {selectedFilterAttribute ? (
               <MobileFilterableAttributePage
-                filterAttributes={filterAttributes}
                 attribute={selectedFilterAttribute}
+                filterAttributes={filterAttributes}
                 onFilterAttributesChanged={({ status, id, value }) => {
                   setSelectedFilterAttribute(null)
                   onFilterAttributesChanged({ status, id, value })
@@ -204,9 +204,9 @@ const MobileFilterableAttributes = ({
                     (filter) =>
                       filter && (
                         <MobileFilterableAttributeItem
-                          key={filter.id}
                           attribute={filter as Attribute}
                           filterAttributes={filterAttributes}
+                          key={filter.id}
                           onFilterableAttributeChanged={() =>
                             setSelectedFilterAttribute(filter as Attribute)
                           }

@@ -50,13 +50,13 @@ const Countries = () => {
             (country) =>
               country && (
                 <CountryCard
-                  show={activesOnly ? country.isActive : true}
+                  country={country as Country}
                   key={country.id}
+                  show={activesOnly ? country.isActive : true}
                   onDeleteTriggered={(country) => {
                     setDeleteModalOpen(true)
                     setCountryToDelete(country)
                   }}
-                  country={country as Country}
                 />
               )
           )}

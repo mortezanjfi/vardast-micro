@@ -24,40 +24,40 @@ const SellerCard = ({ seller }: SellerCardProps) => {
   return (
     <div className="relative px transition hover:z-10 md:h-auto md:hover:shadow-lg">
       <Link
-        href={`/seller/${seller?.id}/${seller?.name}`}
         className="flex h-full w-full rounded-xl bg-alpha-white lg:px-4"
+        href={`/seller/${seller?.id}/${seller?.name}`}
       >
         <div className="grid flex-1 grid-cols-3 gap-4 lg:flex lg:flex-col">
           <div
-            id={`seller-image-${seller?.id}`}
             className={`relative w-32 flex-shrink-0 bg-[url('/images/blank.png')] bg-[length:2em] bg-center bg-no-repeat align-middle duration-1000 ease-out lg:h-48 lg:w-full ${
               seller?.logoFile?.presignedUrl.url ? "opacity-0" : ""
             }`}
+            id={`seller-image-${seller?.id}`}
           >
             {seller?.logoFile?.presignedUrl.url ? (
               <Image
-                src={seller?.logoFile?.presignedUrl.url as string}
                 alt={seller?.name}
-                fill
-                sizes="(max-width: 640px) 33vw, 10vw"
                 className="object-contain"
+                fill
                 loading="eager"
-                onLoad={onLoadImage}
+                sizes="(max-width: 640px) 33vw, 10vw"
+                src={seller?.logoFile?.presignedUrl.url}
                 onError={onLoadImage}
+                onLoad={onLoadImage}
               />
             ) : (
               <Image
-                src={sellerBlankImage}
                 alt={seller?.name}
-                fill
-                sizes="(max-width: 640px) 33vw, 10vw"
                 className="object-contain"
+                fill
                 loading="eager"
+                sizes="(max-width: 640px) 33vw, 10vw"
+                src={sellerBlankImage}
               />
             )}
           </div>
           <div className="lg:col-span1 col-span-2 flex flex-1 flex-col items-start gap-2 border-r p-2 sm:border-r-0 md:gap-0">
-            <h4 title={seller?.name} className="font-bold text-alpha-800">
+            <h4 className="font-bold text-alpha-800" title={seller?.name}>
               {seller?.name}
             </h4>
             <p className="text-primary-500">

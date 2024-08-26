@@ -43,6 +43,7 @@ const FavoritesProfile = ({ tabs, isMobileView }: IFavoritesProfile) => {
   return (
     <div className="bg-alpha-white pt md:pt-0">
       <Segments
+        className="sticky left-0 right-0 top-0 h-full flex-col  gap-9 bg-alpha-white sm:flex md:mt md:w-full"
         value={activeTab}
         onValueChange={(value) => {
           if (value === tabs[0].value) {
@@ -52,21 +53,20 @@ const FavoritesProfile = ({ tabs, isMobileView }: IFavoritesProfile) => {
           }
           setOpenTabName(value)
         }}
-        className="sticky left-0 right-0 top-0 h-full flex-col  gap-9 bg-alpha-white sm:flex md:mt md:w-full"
       >
-        <SegmentsList wrap className="border-b pb  md:border-b-2 md:pb-5">
+        <SegmentsList className="border-b pb  md:border-b-2 md:pb-5" wrap>
           {tabs.map(({ title, value }) => (
             <SegmentsListItem
+              className={clsx("no-select")}
               key={value}
               noStyle
-              className={clsx("no-select")}
-              value={value}
               style={{
                 width:
                   !isMobileView || tabs.length > 3
                     ? "auto"
                     : `${100 / tabs.length}%`
               }}
+              value={value}
             >
               <>
                 <div

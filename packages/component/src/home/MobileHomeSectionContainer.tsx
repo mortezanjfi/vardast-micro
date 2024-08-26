@@ -36,9 +36,9 @@ const MobileHomeSectionContainer: React.FC<
           )}
           {customButton ? (
             <Button
-              onClick={customButton.onClick}
-              variant="link"
               className="md:text-md flex items-center gap-x-0.5 text-sm font-semibold !text-primary"
+              variant="link"
+              onClick={customButton.onClick}
             >
               {customButton.title}
               <ChevronLeftIcon className="h-4 w-4 text-primary" />
@@ -46,8 +46,8 @@ const MobileHomeSectionContainer: React.FC<
           ) : (
             viewAllHref && (
               <Link
-                href={viewAllHref}
                 className="md:text-md flex items-center gap-x-0.5 text-sm font-semibold text-primary"
+                href={viewAllHref}
               >
                 مشاهده همه
                 <ChevronLeftIcon className="h-4 w-4 text-primary" />

@@ -17,10 +17,10 @@ const BrandHeader = ({ brand }: BrandHeaderProps) => {
         <div className="relative flex h-16 w-16 items-center justify-center rounded-md border border-alpha-200 bg-alpha-50 md:h-28 md:w-28">
           {brand.logoFile ? (
             <Image
-              src={brand.logoFile?.presignedUrl.url}
-              fill
               alt={brand.name}
               className="object-contain p-3"
+              fill
+              src={brand.logoFile?.presignedUrl.url}
             />
           ) : (
             <LucideWarehouse

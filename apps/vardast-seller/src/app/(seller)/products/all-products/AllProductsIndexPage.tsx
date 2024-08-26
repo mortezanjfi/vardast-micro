@@ -13,7 +13,7 @@ import ProductsPage from "@/app/(seller)/products/components/products-page"
 
 type SearchIndexProps = {
   isMobileView: boolean
-  slug: Array<string | number>
+  slug: (string | number)[]
   args: IndexProductInput
 }
 

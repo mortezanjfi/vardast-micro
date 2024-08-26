@@ -23,7 +23,7 @@ const NavigationItem = (props: Props) => {
   const [open, setOpen] = useState<boolean>(false)
   const { width } = useWindowSize()
 
-  const isMobileView = width < breakpoints["md"]
+  const isMobileView = width < breakpoints.md
 
   const { menu } = props
 
@@ -48,17 +48,17 @@ const NavigationItem = (props: Props) => {
         className={clsx([
           "app-navigation-item",
           menu?.items && "has-child",
-          isActive(menu.path as string) && "active",
+          isActive(menu.path) && "active",
           open && "open"
         ])}
       >
         <span>
-          <Link href={menu.path as string} className="app-navigation-item-link">
+          <Link className="app-navigation-item-link" href={menu.path}>
             {menu?.icon && (
               <DynamicHeroIcon
-                icon={menu?.icon}
                 className={clsx("icon", menu.background_color, menu.color)}
-                solid={isActive(menu.path as string)}
+                icon={menu?.icon}
+                solid={isActive(menu.path)}
               />
             )}
             <span>
@@ -72,7 +72,7 @@ const NavigationItem = (props: Props) => {
                   className="app-navigation-item-arrow"
                   noStyle
                   onClick={() => {
-                    if (!isActive(menu.path as string)) {
+                    if (!isActive(menu.path)) {
                       toggleOpen()
                     }
                   }}
@@ -106,8 +106,8 @@ const NavigationItem = (props: Props) => {
                             !menuItem.abilities) && (
                             <NavigationItem
                               key={idx}
-                              session={props?.session}
                               menu={menuItem}
+                              session={props?.session}
                             />
                           )
                       )}
@@ -116,13 +116,13 @@ const NavigationItem = (props: Props) => {
                 )
               }
               return (
-                <li key={idx} className="app-navigation-item-children-item">
+                <li className="app-navigation-item-children-item" key={idx}>
                   <Link
-                    href={menuChildren.path as string}
                     className={clsx([
                       "app-navigation-item-children-item-link",
-                      isActive(menuChildren.path as string) && "active"
+                      isActive(menuChildren.path) && "active"
                     ])}
+                    href={menuChildren.path}
                   >
                     <span>{menuChildren.title}</span>
                   </Link>

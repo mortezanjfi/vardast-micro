@@ -21,10 +21,10 @@ const PopoverContent = forwardRef<
   ) => (
     <PopoverPrimitive.Portal container={container}>
       <PopoverPrimitive.Content
-        ref={ref}
         align={align}
-        sideOffset={sideOffset}
         className={mergeClasses(className)}
+        ref={ref}
+        sideOffset={sideOffset}
         {...props}
       />
     </PopoverPrimitive.Portal>

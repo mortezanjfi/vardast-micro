@@ -59,7 +59,7 @@ type AttributeItemFormProps = {
     values?: {
       __typename?: "AttributeValues"
       options?: any | null
-      defaults?: Array<string> | null
+      defaults?: string[] | null
     } | null
   } | null
 }
@@ -80,10 +80,10 @@ const EditCategoryAttributeModal = ({
   return (
     <>
       <Dialog
-        open={modalsOpen[CategoryModalEnumType["EditAttribute"]]}
+        open={modalsOpen[CategoryModalEnumType.EditAttribute]}
         onOpenChange={() =>
           onOpenChange({
-            type: CategoryModalEnumType["EditAttribute"],
+            type: CategoryModalEnumType.EditAttribute,
             currentCategory: modalsOpen.category
           })
         }
@@ -107,7 +107,7 @@ const EditCategoryAttributeModal = ({
           <div className="flex flex-col divide-y">
             {uetAllFilterableAdminAttributesQuery.isLoading ? (
               <Loading />
-            ) : !!uetAllFilterableAdminAttributesQuery.error ? (
+            ) : uetAllFilterableAdminAttributesQuery.error ? (
               <LoadingFailed />
             ) : !uetAllFilterableAdminAttributesQuery.data ? (
               notFound()
@@ -198,19 +198,19 @@ const AttributeItem = ({ category }: AttributeItemFormProps) => {
           </AlertDescription>
         </Alert>
       )}
-      <form className="py-4" onSubmit={form.handleSubmit(onSubmit)} noValidate>
+      <form className="py-4" noValidate onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex items-center gap-6">
           <Link
+            className="flex flex-1 flex-col"
             href={`/attributes/${category?.id}`}
             target="_blank"
-            className="flex flex-1 flex-col"
           >
             <p className="font-bold">{category?.name}</p>
             <div className="pr pt">
               {category?.values?.options?.map(
                 (value: string, idx: number) =>
                   value && (
-                    <span key={idx} className="inline-block leading-none">
+                    <span className="inline-block leading-none" key={idx}>
                       {value}
                     </span>
                   )
@@ -225,8 +225,8 @@ const AttributeItem = ({ category }: AttributeItemFormProps) => {
                 <div className="flex items-center gap-1">
                   <FormControl>
                     <Switch
-                      type="submit"
                       checked={field.value}
+                      type="submit"
                       onCheckedChange={field.onChange}
                     />
                   </FormControl>
@@ -244,8 +244,8 @@ const AttributeItem = ({ category }: AttributeItemFormProps) => {
                 <div className="flex items-center gap-1">
                   <FormControl>
                     <Switch
-                      type="submit"
                       checked={field.value}
+                      type="submit"
                       onCheckedChange={field.onChange}
                     />
                   </FormControl>
@@ -263,8 +263,8 @@ const AttributeItem = ({ category }: AttributeItemFormProps) => {
                 <div className="flex items-center gap-1">
                   <FormControl>
                     <Switch
-                      type="submit"
                       checked={field.value}
+                      type="submit"
                       onCheckedChange={field.onChange}
                     />
                   </FormControl>

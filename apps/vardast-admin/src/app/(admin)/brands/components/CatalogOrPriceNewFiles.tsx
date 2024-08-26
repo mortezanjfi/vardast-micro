@@ -69,19 +69,19 @@ export const CatalogOrPriceNewFiles = ({
     <>
       <BrandFilesModal
         activeTab={activeTab}
-        setFilesList={setFilesList}
         open={addCatalogModalOpen}
-        onOpenChange={setAddCatalogModalOpen}
+        setFilesList={setFilesList}
         setNewBrandData={setNewBrandData}
+        onOpenChange={setAddCatalogModalOpen}
       />
       <div className="flex flex-col gap-7">
         <Card className="h-[722px]">
           <PageHeader
+            containerClass="items-center"
             title={t("common:entity_list", {
               entity: t(`common:${activeTab}`)
             })}
             titleClasses="text-[14px] font-normal "
-            containerClass="items-center"
           >
             <Button
               size="medium"
@@ -113,7 +113,7 @@ export const CatalogOrPriceNewFiles = ({
                     <div className="flex flex-col">
                       <span>{brand.catalog?.name}</span>
                       <span className="text-xs text-alpha-500">
-                        {formatFileSize(brand?.catalog?.size as number)}
+                        {formatFileSize(brand?.catalog?.size)}
                       </span>
                     </div>
                   </td>
@@ -128,7 +128,7 @@ export const CatalogOrPriceNewFiles = ({
                     <div className="flex flex-col">
                       <span>{brand.priceList?.name}</span>
                       <span className="text-xs text-alpha-500">
-                        {formatFileSize(brand?.priceList?.size as number)}
+                        {formatFileSize(brand?.priceList?.size)}
                       </span>
                     </div>
                   </td>
@@ -192,8 +192,8 @@ export const CatalogOrPriceNewFiles = ({
         <Card className="flex w-full justify-end gap-3">
           <Button
             className=" top-0 ml-3 px-16   py-2"
-            variant="secondary"
             type="reset"
+            variant="secondary"
             onClick={() => {
               router.push("/brands")
             }}

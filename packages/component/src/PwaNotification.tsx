@@ -92,13 +92,12 @@ export default function PwaNotification({ isMobileView }: Props) {
         // }
       }, 5000)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (isMobileView) {
     return (
       <Drawer open={pwaModal} onClose={onOpenChange}>
-        <DrawerContent onBlur={onOpenChange} className="bg-alpha-white">
+        <DrawerContent className="bg-alpha-white" onBlur={onOpenChange}>
           <div className="flex h-full flex-col">
             <div className="flex flex-1 flex-col justify-center gap-y overflow-y-scroll p text-right">
               {/* <Image
@@ -137,27 +136,27 @@ export default function PwaNotification({ isMobileView }: Props) {
             </div>
             <div className="flex justify-center gap-x-6 border-t py-6">
               <Link
+                className="w-36 rounded border"
                 href="http://cafebazaar.ir/app/?id=com.vardast.twa&ref=share"
                 target="_blank"
-                className="w-36 rounded border"
               >
                 <Image
-                  src={bazar}
                   alt="bazar"
                   className="w-full object-contain"
                   priority
+                  src={bazar}
                 />
               </Link>
               <Link
+                className="w-36 rounded border"
                 href="https://myket.ir/app/com.vardast.twa"
                 target="_blank"
-                className="w-36 rounded border"
               >
                 <Image
-                  src={myket}
                   alt="myket"
                   className="w-full object-contain"
                   priority
+                  src={myket}
                 />
               </Link>
             </div>

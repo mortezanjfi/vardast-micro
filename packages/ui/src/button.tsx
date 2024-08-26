@@ -3,7 +3,8 @@
 import { forwardRef } from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva  } from "class-variance-authority"
+import type {VariantProps} from "class-variance-authority";
 
 const buttonVariants = cva("btn", {
   variants: {

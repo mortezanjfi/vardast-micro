@@ -58,6 +58,8 @@ export const SidebarProfile = () => {
           onCloseModals={onCloseModals}
         />
         <LegalModal
+          modals={modals}
+          open={modals?.type === LegalModalEnum.ADD}
           onCloseModals={(data) => {
             onCloseModals()
             if (data) {
@@ -70,8 +72,6 @@ export const SidebarProfile = () => {
               })
             }
           }}
-          modals={modals}
-          open={modals?.type === LegalModalEnum.ADD}
         />
         <section className="app-navigation-section">
           <ol className="app-navigation-section-list">
@@ -79,6 +79,7 @@ export const SidebarProfile = () => {
               <div className="w-full p-4">
                 <ToggleGroup
                   className="grid grid-cols-2 rounded-md bg-alpha-50 p-1"
+                  defaultValue={UserType.Real}
                   type="single"
                   value={session?.type}
                   onValueChange={(value: UserType) => {
@@ -101,30 +102,29 @@ export const SidebarProfile = () => {
                       }
                     }
                   }}
-                  defaultValue={UserType.Real}
                 >
                   <ToggleGroupItem
-                    disabled={
-                      status === "loading" || refreshUserMutation.isLoading
-                    }
                     className={clsx(
                       "bg-inherit py-2 text-base text-alpha-500",
                       session?.type === UserType.Real &&
                         "sha !bg-alpha-white !text-alpha-800  shadow-lg"
                     )}
+                    disabled={
+                      status === "loading" || refreshUserMutation.isLoading
+                    }
                     value={UserType.Real}
                   >
                     حقیقی
                   </ToggleGroupItem>
                   <ToggleGroupItem
-                    disabled={
-                      status === "loading" || refreshUserMutation.isLoading
-                    }
                     className={clsx(
                       "bg-inherit py-2 text-base text-alpha-500",
                       session?.type === UserType.Legal &&
                         "sha !bg-alpha-white !text-alpha-800 shadow-lg"
                     )}
+                    disabled={
+                      status === "loading" || refreshUserMutation.isLoading
+                    }
                     value={UserType.Legal}
                   >
                     حقوقی
@@ -179,12 +179,12 @@ export const SidebarProfile = () => {
               <span className="not-hover">
                 <div className="app-navigation-item-link">
                   <DynamicHeroIcon
-                    icon={_authentication_profile_wallet.icon}
                     className={clsx(
                       "icon",
                       _authentication_profile_wallet.background_color,
                       _authentication_profile_wallet.color
                     )}
+                    icon={_authentication_profile_wallet.icon}
                   />
                   <span>
                     {"کیف پول"}
@@ -235,12 +235,12 @@ const Sidebar = ({
         <div className="pointer-events-none fixed inset-0 z-50 h-full w-full bg-alpha-800 bg-opacity-80"></div>
       )}
       <aside
-        ref={ref}
         className={clsx(
           "app-sidebar",
           open && "open",
           withHeader && "app-sidebar-has-header"
         )}
+        ref={ref}
       >
         {/* {open && (
           <div className="fixed left-0 top-0 z-50 flex w-full items-center justify-end">

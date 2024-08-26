@@ -65,7 +65,7 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
   const { toast } = useToast()
   const router = useRouter()
   const [selectedCategories, setSelectedCategories] = useState<Category[]>(
-    (attribute?.categories as Category[]) || []
+    (attribute?.categories) || []
   )
   const [values, setValues] = useState<string[]>(
     (attribute?.values?.options as string[]) || []
@@ -217,7 +217,7 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
           </AlertDescription>
         </Alert>
       )}
-      <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+      <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
         <div className="mb-6 mt-8 flex items-end justify-between">
           <h2 className="text-xl font-black text-alpha-800 lg:text-3xl">
             {name
@@ -226,9 +226,9 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
           </h2>
           <Button
             className="sticky top-0"
-            type="submit"
-            loading={form.formState.isSubmitting}
             disabled={form.formState.isSubmitting}
+            loading={form.formState.isSubmitting}
+            type="submit"
           >
             {t("common:save_entity", { entity: t("common:attribute") })}
           </Button>
@@ -269,10 +269,10 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
               <FormItem>
                 <FormLabel>{t("common:type")}</FormLabel>
                 <Select
+                  defaultValue={field.value}
                   onValueChange={(value) => {
                     form.setValue("type", value as AttributeTypesEnum)
                   }}
-                  defaultValue={field.value}
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -283,7 +283,7 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
                   </FormControl>
                   <SelectContent>
                     {Object.keys(attributeTypes).map((type) => (
-                      <SelectItem value={attributeTypes[type]} key={type}>
+                      <SelectItem key={type} value={attributeTypes[type]}>
                         {type}
                       </SelectItem>
                     ))}
@@ -304,10 +304,10 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
+                        className="input-field flex items-center text-start"
                         disabled={uoms.isLoading || uoms.isError}
                         noStyle
                         role="combobox"
-                        className="input-field flex items-center text-start"
                       >
                         {field.value
                           ? uoms.data?.uomsWithoutPagination.find(
@@ -337,8 +337,8 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
                           (uom) =>
                             uom && (
                               <CommandItem
-                                value={uom.name}
                                 key={uom.id}
+                                value={uom.name}
                                 onSelect={(value) => {
                                   form.setValue(
                                     "uomId",
@@ -383,6 +383,12 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
                     </FormLabel>
                     <FormControl>
                       <TagInput
+                        placeholder={t(
+                          "common:entity_comma_separated_options_placeholder",
+                          {
+                            entity: t("common:checkbox")
+                          }
+                        )}
                         tags={values}
                         onAddition={(item) => {
                           setValues((prevValues) => {
@@ -398,12 +404,6 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
                             return newValues
                           })
                         }}
-                        placeholder={t(
-                          "common:entity_comma_separated_options_placeholder",
-                          {
-                            entity: t("common:checkbox")
-                          }
-                        )}
                       />
                     </FormControl>
                   </FormItem>
@@ -456,6 +456,12 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
                     </FormLabel>
                     <FormControl>
                       <TagInput
+                        placeholder={t(
+                          "common:entity_comma_separated_options_placeholder",
+                          {
+                            entity: t("common:radio")
+                          }
+                        )}
                         tags={values}
                         onAddition={(item) => {
                           setValues((prevValues) => {
@@ -471,12 +477,6 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
                             return newValues
                           })
                         }}
-                        placeholder={t(
-                          "common:entity_comma_separated_options_placeholder",
-                          {
-                            entity: t("common:radio")
-                          }
-                        )}
                       />
                     </FormControl>
                     <FormMessage />
@@ -532,6 +532,12 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
                     </FormLabel>
                     <FormControl>
                       <TagInput
+                        placeholder={t(
+                          "common:entity_comma_separated_options_placeholder",
+                          {
+                            entity: t("common:select_box")
+                          }
+                        )}
                         tags={values}
                         onAddition={(item) => {
                           setValues((prevValues) => {
@@ -547,12 +553,6 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
                             return newValues
                           })
                         }}
-                        placeholder={t(
-                          "common:entity_comma_separated_options_placeholder",
-                          {
-                            entity: t("common:select_box")
-                          }
-                        )}
                       />
                     </FormControl>
                   </FormItem>
@@ -706,10 +706,10 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
+                      className="input-field flex items-center text-start"
                       disabled={categories.isLoading || categories.isError}
                       noStyle
                       role="combobox"
-                      className="input-field flex items-center text-start"
                     >
                       {t("common:choose_entity", {
                         entity: t("common:category")
@@ -735,8 +735,8 @@ const AttributeForm = ({ attribute, categoryId }: AttributeFormProps) => {
                         (category) =>
                           category && (
                             <CommandItem
-                              value={category.title}
                               key={category.id}
+                              value={category.title}
                               onSelect={(value) => {
                                 setSelectedCategories((prevValues) => {
                                   return [

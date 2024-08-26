@@ -40,7 +40,6 @@ const Avatar = forwardRef<
     VariantProps<typeof avatarVariants>
 >(({ size, rounded, className, ...props }: AvatarProps, ref) => (
   <AvatarPrimitive.Root
-    ref={ref}
     className={mergeClasses(
       avatarVariants({
         size,
@@ -48,6 +47,7 @@ const Avatar = forwardRef<
         className
       })
     )}
+    ref={ref}
     {...props}
   />
 ))
@@ -58,8 +58,8 @@ const AvatarImage = forwardRef<
   ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
 >(({ className, ...props }, ref) => (
   <AvatarPrimitive.Image
-    ref={ref}
     className={mergeClasses("aspect-square h-full w-full", className)}
+    ref={ref}
     {...props}
   />
 ))
@@ -70,11 +70,11 @@ const AvatarFallback = forwardRef<
   ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
 >(({ className, ...props }, ref) => (
   <AvatarPrimitive.Fallback
-    ref={ref}
     className={mergeClasses(
       "bg-muted flex h-full w-full items-center justify-center rounded-full",
       className
     )}
+    ref={ref}
     {...props}
   />
 ))

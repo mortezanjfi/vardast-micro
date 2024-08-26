@@ -20,11 +20,11 @@ const ToggleGroup = React.forwardRef<
     VariantProps<typeof toggleVariants>
 >(({ className, variant, size, children, ...props }, ref) => (
   <ToggleGroupPrimitive.Root
-    ref={ref}
     className={mergeClasses(
       "flex h-full w-full items-center justify-center gap-1",
       className
     )}
+    ref={ref}
     {...props}
   >
     <ToggleGroupContext.Provider value={{ variant, size }}>
@@ -44,7 +44,6 @@ const ToggleGroupItem = React.forwardRef<
 
   return (
     <ToggleGroupPrimitive.Item
-      ref={ref}
       className={mergeClasses(
         toggleVariants({
           variant: context.variant || variant,
@@ -52,6 +51,7 @@ const ToggleGroupItem = React.forwardRef<
         }),
         className
       )}
+      ref={ref}
       {...props}
     >
       {children}

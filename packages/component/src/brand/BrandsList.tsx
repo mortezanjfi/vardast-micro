@@ -76,7 +76,7 @@ const BrandsList = ({
   const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>([])
   const [selectedCityId, setSelectedCityId] = useState<number | null>()
   useEffect(() => {
-    args["categoryIds"] = selectedCategoryIds
+    args.categoryIds = selectedCategoryIds
   }, [selectedCategoryIds])
   const allBrandsQuery = useInfiniteQuery<GetAllBrandsQuery>(
     [
@@ -167,13 +167,13 @@ const BrandsList = ({
                   (brand, index) =>
                     brand && (
                       <BrandCard
+                        brand={brand as Brand}
                         isMobileView={isMobileView}
                         ref={
                           page.brands.data.length - 1 === index
                             ? ref
                             : undefined
                         }
-                        brand={brand as Brand}
                       />
 
                       // <BrandOrSellerCard
@@ -200,33 +200,25 @@ const BrandsList = ({
 
   const DesktopSidebar = (
     <FiltersSidebarContainer
-      sort={
-        <BrandSortFilter
-          searchParams={searchParams}
-          pathname={pathname}
-          setSort={setSort}
-          sort={sort}
-        />
-      }
       filters={
         <>
           {" "}
           <Input
             autoFocus
+            className=" flex w-full items-center gap-2 rounded-lg bg-alpha-100 px-4 focus:!ring-0 disabled:bg-alpha-100"
+            placeholder="نام برند"
+            type="text"
             value={brandsQueryTemp}
             onChange={(e) => {
               setBrandsQueryTemp(e.target.value)
               setBrandsQuery(e.target.value)
             }}
-            type="text"
-            placeholder="نام برند"
-            className=" flex w-full items-center gap-2 rounded-lg bg-alpha-100 px-4 focus:!ring-0 disabled:bg-alpha-100"
           />
           {/* args.categoryId means user is in the brand tab of a category */}
           {!args.categoryId && (
             <CategoryFilterSection
-              setSelectedCategoryIds={setSelectedCategoryIds}
               selectedCategoryIds={selectedCategoryIds}
+              setSelectedCategoryIds={setSelectedCategoryIds}
             />
           )}
           <CityFilterSection
@@ -234,6 +226,14 @@ const BrandsList = ({
             setSelectedCityId={setSelectedCityId}
           />
         </>
+      }
+      sort={
+        <BrandSortFilter
+          pathname={pathname}
+          searchParams={searchParams}
+          setSort={setSort}
+          sort={sort}
+        />
       }
     />
   )
@@ -243,35 +243,35 @@ const BrandsList = ({
     <div className="sticky top-0 z-30 border-b border-b-alpha-300 bg-alpha-white p-4">
       <div className="grid grid-cols-2">
         <MobileBrandSortFilter
-          searchParams={searchParams}
           pathname={pathname}
+          searchParams={searchParams}
           setSort={setSort}
           sort={sort}
         />
         <MobilBrandsFilter
           args={args}
           brandsQueryTemp={brandsQueryTemp}
-          setBrandsQuery={setBrandsQuery}
-          setBrandsQueryTemp={setBrandsQueryTemp}
           selectedCategoryIds={selectedCategoryIds}
           selectedCityId={selectedCityId}
+          setBrandsQuery={setBrandsQuery}
+          setBrandsQueryTemp={setBrandsQueryTemp}
           setSelectedCategoryIds={setSelectedCategoryIds}
           setSelectedCityId={setSelectedCityId}
         />
         <Button
-          onClick={() => setSortFilterVisibility(true)}
+          className=" h-full w-full rounded-none !border-l border-alpha-300 py-0 !text-alpha-black"
           size="small"
           variant="ghost"
-          className=" h-full w-full rounded-none !border-l border-alpha-300 py-0 !text-alpha-black"
+          onClick={() => setSortFilterVisibility(true)}
         >
           <LucideSortDesc className="icon text-alpha" />
           مرتب‌سازی
         </Button>
         <Button
-          onClick={() => setFiltersVisibility(true)}
+          className=" h-full w-full rounded-none py-0  !text-alpha-black"
           size="small"
           variant="ghost"
-          className=" h-full w-full rounded-none py-0  !text-alpha-black"
+          onClick={() => setFiltersVisibility(true)}
         >
           <LucideSlidersHorizontal className="icon text-alpha" />
           فیلترها
@@ -283,19 +283,19 @@ const BrandsList = ({
 
   return (
     <DesktopMobileViewOrganizer
-      isMobileView={isMobileView}
       Content={Content}
-      MobileHeader={MobileHeader}
       DesktopHeader={
         hasTitle && (
           <ListHeader
-            secondTitle="brand"
             borderBottom
-            total={allBrandsQuery?.data?.pages[0].brands?.total}
             listName={"brands"}
+            secondTitle="brand"
+            total={allBrandsQuery?.data?.pages[0].brands?.total}
           />
         )
       }
+      MobileHeader={MobileHeader}
+      isMobileView={isMobileView}
     />
   )
 }

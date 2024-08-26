@@ -42,9 +42,9 @@ const FakeSplashScreenProvider: React.FC<
         className="absolute left-0 top-0 flex h-screen w-screen flex-col items-center justify-center overflow-hidden bg-alpha-white"
       >
         <Image
-          src={logoHorizontal}
           alt={`${process.env.NEXT_PUBLIC_TITLE} - ${process.env.NEXT_PUBLIC_SLOGAN}`}
           priority
+          src={logoHorizontal}
         />
       </motion.div>
     </>

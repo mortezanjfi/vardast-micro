@@ -1,8 +1,5 @@
 "use client"
 
-import { useCallback, useContext, useEffect, useState } from "react"
-import Image from "next/image"
-import { usePathname, useRouter } from "next/navigation"
 import { ChevronLeftIcon } from "@heroicons/react/24/outline"
 import {
   useClickOutside,
@@ -18,6 +15,9 @@ import clsx from "clsx"
 import { AnimatePresence, motion } from "framer-motion"
 import { useAtom } from "jotai"
 import { Loader2, LucideSearch, LucideTrash, LucideX } from "lucide-react"
+import Image from "next/image"
+import { usePathname, useRouter } from "next/navigation"
+import { useCallback, useContext, useEffect, useState } from "react"
 
 import Link from "./Link"
 import Progress from "./Progress"
@@ -53,8 +53,6 @@ const Search: React.FC<ISearch> = ({ isMobileView }) => {
         ])}
       >
         <Button
-          onClick={() => setOpen(true)}
-          noStyle
           className="flex
           h-full
           w-full
@@ -64,6 +62,8 @@ const Search: React.FC<ISearch> = ({ isMobileView }) => {
           bg-alpha-100
           px-4
           py-3"
+          noStyle
+          onClick={() => setOpen(true)}
         >
           <LucideSearch className="h-6 w-6 text-primary" />
           <span className="text-alpha-800">جستجو در وردست...</span>
@@ -127,7 +127,6 @@ export const SearchActionModal: React.FC<ISearch> = ({ isMobileView }) => {
     setOpen(false)
     setLoader(false)
     setQuery("")
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -138,10 +137,7 @@ export const SearchActionModal: React.FC<ISearch> = ({ isMobileView }) => {
     <AnimatePresence>
       {open && (
         <motion.div
-          key="search-modal"
-          initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 100 }}
           className={clsx([
             open ? "z-[99]" : "",
             "w-full",
@@ -151,13 +147,16 @@ export const SearchActionModal: React.FC<ISearch> = ({ isMobileView }) => {
                 : "relative mx-auto md:max-w-md lg:max-w-lg"
               : ""
           ])}
+          exit={{ opacity: 0, y: 100 }}
+          initial={{ opacity: 0, y: 100 }}
+          key="search-modal"
         >
           <div
-            ref={ref}
             className={clsx([
               "card absolute w-full overscroll-contain px-4 pt-3",
               isMobileView ? "top-0 h-full " : "top rounded-md"
             ])}
+            ref={ref}
           >
             <div className="relative flex transform items-center rounded-lg border-alpha-200 bg-alpha-100 pr-2 transition-all">
               {loader ? (
@@ -167,11 +166,6 @@ export const SearchActionModal: React.FC<ISearch> = ({ isMobileView }) => {
               )}
               <Input
                 autoFocus
-                disabled={loader}
-                defaultValue={query}
-                onChange={(e) => setQuery(e.target.value)}
-                type="text"
-                placeholder="جستجو در وردست..."
                 className="flex h-full
                 w-full
                 items-center
@@ -181,12 +175,17 @@ export const SearchActionModal: React.FC<ISearch> = ({ isMobileView }) => {
                 px-4
                 py-3
                 placeholder:text-alpha-700 focus:!ring-0 disabled:bg-alpha-100"
+                defaultValue={query}
+                disabled={loader}
+                placeholder="جستجو در وردست..."
+                type="text"
+                onChange={(e) => setQuery(e.target.value)}
               />
               <Button
-                variant="ghost"
-                size="small"
-                iconOnly
                 className="rounded-full"
+                iconOnly
+                size="small"
+                variant="ghost"
                 onClick={() => onCloseModal()}
               >
                 <LucideX className="icon" />
@@ -201,9 +200,9 @@ export const SearchActionModal: React.FC<ISearch> = ({ isMobileView }) => {
                     </div>
                     <Button
                       disabled={loader}
-                      variant="ghost"
                       iconOnly
                       size="small"
+                      variant="ghost"
                       onClick={() => SetLatestSearch([])}
                     >
                       <LucideTrash className="icon text-alpha-400" />
@@ -213,9 +212,9 @@ export const SearchActionModal: React.FC<ISearch> = ({ isMobileView }) => {
                     {latestSearch.map((item, idx: number) => (
                       <li key={idx}>
                         <Button
+                          className="inline-flex rounded-lg border border-alpha-200 px-3 py-2 text-sm text-alpha-600 shadow-sm hover:bg-alpha-100 hover:text-alpha-700"
                           disabled={loader}
                           noStyle
-                          className="inline-flex rounded-lg border border-alpha-200 px-3 py-2 text-sm text-alpha-600 shadow-sm hover:bg-alpha-100 hover:text-alpha-700"
                           onClick={() => {
                             navigateTo({
                               uri: `${item.uri}`
@@ -249,26 +248,26 @@ export const SearchActionModal: React.FC<ISearch> = ({ isMobileView }) => {
                         (suggestedProduct) =>
                           suggestedProduct && (
                             <Button
+                              className="flex items-start gap-2 rounded-md border border-alpha-200 p-2"
                               disabled={loader}
+                              key={suggestedProduct.id}
                               noStyle
                               onClick={() =>
                                 navigateTo({
                                   uri: `/product/${suggestedProduct.id}/${suggestedProduct.name}`
                                 })
                               }
-                              key={suggestedProduct.id}
-                              className="flex items-start gap-2 rounded-md border border-alpha-200 p-2"
                             >
                               <div className="relative h-14 w-14 rounded-md">
                                 <Image
-                                  src={
-                                    suggestedProduct.images.at(0)?.file
-                                      .presignedUrl.url as string
-                                  }
                                   alt={suggestedProduct.name}
                                   className="object-contain"
-                                  sizes="5vw"
                                   fill
+                                  sizes="5vw"
+                                  src={
+                                    suggestedProduct.images.at(0)?.file
+                                      .presignedUrl.url
+                                  }
                                 />
                               </div>
                               <div className="text-sm text-alpha-800">
@@ -278,8 +277,8 @@ export const SearchActionModal: React.FC<ISearch> = ({ isMobileView }) => {
                           )
                       )}
                       <Link
-                        href="/products"
                         className="flex items-center gap-x-0.5 text-sm font-semibold text-primary"
+                        href="/products"
                       >
                         نمایش همه
                         <ChevronLeftIcon className="h-4 w-4 text-primary" />
@@ -292,16 +291,16 @@ export const SearchActionModal: React.FC<ISearch> = ({ isMobileView }) => {
                         (suggestedCategory) =>
                           suggestedCategory && (
                             <Button
-                              disabled={loader}
-                              noStyle
                               className="w-full rounded px-3 py-2 text-start text-alpha-700 hover:bg-alpha-50"
+                              disabled={loader}
+                              key={suggestedCategory.id}
+                              noStyle
                               onClick={() =>
                                 navigateTo({
                                   query,
                                   uri: `/products/${suggestedCategory.id}/${suggestedCategory.title}`
                                 })
                               }
-                              key={suggestedCategory.id}
                             >
                               جستجوی {query} در دسته{" "}
                               <strong className="text-primary-500">
@@ -311,8 +310,8 @@ export const SearchActionModal: React.FC<ISearch> = ({ isMobileView }) => {
                           )
                       )}
                       <Link
-                        href="/categories"
                         className="flex items-center justify-end gap-x-0.5 text-sm font-semibold text-primary"
+                        href="/categories"
                       >
                         نمایش همه
                         <ChevronLeftIcon className="h-4 w-4 text-primary" />
@@ -325,16 +324,16 @@ export const SearchActionModal: React.FC<ISearch> = ({ isMobileView }) => {
                         (suggestedCategory) =>
                           suggestedCategory && (
                             <Button
-                              disabled={loader}
-                              noStyle
                               className="w-full rounded px-3 py-2 text-start text-alpha-700 hover:bg-alpha-50"
+                              disabled={loader}
+                              key={suggestedCategory.id}
+                              noStyle
                               onClick={() =>
                                 navigateTo({
                                   query,
                                   uri: `/brand/${suggestedCategory.id}/${suggestedCategory.name}`
                                 })
                               }
-                              key={suggestedCategory.id}
                             >
                               جستجوی {query} در برند{" "}
                               <strong className="text-primary-500">
@@ -344,8 +343,8 @@ export const SearchActionModal: React.FC<ISearch> = ({ isMobileView }) => {
                           )
                       )}
                       <Link
-                        href="/brands"
                         className="flex items-center justify-end gap-x-0.5 text-sm font-semibold text-primary"
+                        href="/brands"
                       >
                         نمایش همه
                         <ChevronLeftIcon className="h-4 w-4 text-primary" />
@@ -358,16 +357,16 @@ export const SearchActionModal: React.FC<ISearch> = ({ isMobileView }) => {
                         (suggestedCategory) =>
                           suggestedCategory && (
                             <Button
-                              disabled={loader}
-                              noStyle
                               className="w-full rounded px-3 py-2 text-start text-alpha-700 hover:bg-alpha-50"
+                              disabled={loader}
+                              key={suggestedCategory.id}
+                              noStyle
                               onClick={() =>
                                 navigateTo({
                                   query,
                                   uri: `/seller/${suggestedCategory.id}/${suggestedCategory.name}`
                                 })
                               }
-                              key={suggestedCategory.id}
                             >
                               جستجوی {query} در فروشنده‌{" "}
                               <strong className="text-primary-500">
@@ -377,8 +376,8 @@ export const SearchActionModal: React.FC<ISearch> = ({ isMobileView }) => {
                           )
                       )}
                       <Link
-                        href="/sellers"
                         className="flex items-center justify-end gap-x-0.5 self-center text-sm font-semibold text-primary"
+                        href="/sellers"
                       >
                         نمایش همه
                         <ChevronLeftIcon className="h-4 w-4 text-primary" />
@@ -387,9 +386,9 @@ export const SearchActionModal: React.FC<ISearch> = ({ isMobileView }) => {
                   )}
                   <div>
                     <Button
+                      className="flex w-full items-center gap-2 rounded px-3 py-2 text-start text-alpha-700 hover:bg-alpha-50"
                       disabled={loader}
                       noStyle
-                      className="flex w-full items-center gap-2 rounded px-3 py-2 text-start text-alpha-700 hover:bg-alpha-50"
                       onClick={() =>
                         navigateTo({
                           query,

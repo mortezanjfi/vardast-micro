@@ -38,8 +38,8 @@ const BrandOrSellerCategoryFilter = ({
   onCategoryIdsFilterChanged
 }: BrandCategoryFilterProps) => {
   const args: IndexCategoryInput = {}
-  if (brandId) args["brandId"] = brandId
-  if (sellerId) args["sellerId"] = sellerId
+  if (brandId) args.brandId = brandId
+  if (sellerId) args.sellerId = sellerId
   const { data } = useQuery<GetAllCategoriesQuery>({
     queryKey: [QUERY_FUNCTIONS_KEY.ALL_CATEGORIES_QUERY_KEY, args],
     queryFn: () => getAllCategoriesQueryFn(args)
@@ -48,17 +48,21 @@ const BrandOrSellerCategoryFilter = ({
   const categories = data ? data.categories : undefined
 
   return (
-    <FilterBlock title="دسته‌بندی" openDefault={true}>
+    <FilterBlock openDefault={true} title="دسته‌بندی">
       <div className="flex flex-col gap-3">
         {categories?.data &&
           categories.data.map(
             (category) =>
               category && (
                 <Label.Root
-                  key={category.id}
                   className="flex items-center gap-2"
+                  key={category.id}
                 >
                   <Checkbox.Root
+                    checked={
+                      !!categoryIdsFilter &&
+                      categoryIdsFilter.some((item) => item === category.id)
+                    }
                     className="flex
                     h-5
                     w-5
@@ -72,10 +76,6 @@ const BrandOrSellerCategoryFilter = ({
                     outline-none
                     data-[state='checked']:border-primary-500
                     data-[state='checked']:bg-primary-500"
-                    checked={
-                      !!categoryIdsFilter &&
-                      categoryIdsFilter.some((item) => item === category.id)
-                    }
                     onCheckedChange={(checked) =>
                       onCategoryIdsFilterChanged({
                         status: checked,

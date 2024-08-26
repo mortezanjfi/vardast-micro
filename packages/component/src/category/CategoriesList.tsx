@@ -42,12 +42,12 @@ const CategoriesList = ({
   setSidebar(DesktopSidebar)
   return (
     <CategoryListContainer
-      isMobileView={isMobileView}
       blog={blog}
-      getAllBlogsQuery={getAllBlogsQuery}
-      isSubcategory={isSubcategory}
       description={description}
+      getAllBlogsQuery={getAllBlogsQuery}
       href={href}
+      isMobileView={isMobileView}
+      isSubcategory={isSubcategory}
     >
       {({ selectedItemId, setSelectedItemId }) => (
         <>
@@ -55,24 +55,24 @@ const CategoriesList = ({
             (category) =>
               category && (
                 <CategoryListItem
-                  isSubCategory={isSubcategory}
-                  onClick={() => {
-                    setSelectedItemId(category.id)
-                  }}
                   href={`/category/${category.id}/${category.title}`}
-                  selectedItemId={selectedItemId}
-                  key={category.id}
-                  title={category.title}
-                  productsCount={category.productsCount}
                   id={category.id}
+                  isSubCategory={isSubcategory}
+                  key={category.id}
+                  productsCount={category.productsCount}
+                  selectedItemId={selectedItemId}
                   src={
                     (category &&
                       category?.imageCategory &&
                       (category?.imageCategory[0]?.file.presignedUrl
-                        ?.url as string)) ??
+                        ?.url)) ??
                     "" ??
                     `/images/category/${category.id}.png`
                   }
+                  title={category.title}
+                  onClick={() => {
+                    setSelectedItemId(category.id)
+                  }}
                 />
               )
           )}

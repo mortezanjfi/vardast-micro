@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+ 
 "use client"
 
 import { PropsWithChildren } from "react"
@@ -52,10 +52,10 @@ const MobileHomeSection: React.FC<IProps> = ({
 }) => {
   return (
     <MobileHomeSectionContainer
-      viewAllHref={viewAllHref}
       bgWhite={bgWhite}
-      title={title}
       customButton={customButton}
+      title={title}
+      viewAllHref={viewAllHref}
     >
       <div
         className={clsx(

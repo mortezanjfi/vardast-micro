@@ -23,10 +23,10 @@ const CardAvatar = ({
     <div className="flex  items-center justify-start gap-x">
       <div className={cardAvatarVariants({ size })}>
         <Image
-          src={url}
           alt="category"
-          fill
           className="h-full w-full rounded-full object-contain"
+          fill
+          src={url}
         />
       </div>
       {name && <h5 className="text-right font-semibold">{name}</h5>}

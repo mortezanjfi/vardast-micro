@@ -45,11 +45,10 @@ const BasketPageIndex = () => {
     return () => {
       setCacheFlag(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (status === "authenticated") {
-    return <ProductsTabContent session={session} productQuery={productQuery} />
+    return <ProductsTabContent productQuery={productQuery} session={session} />
   }
 
   return (

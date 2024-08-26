@@ -43,7 +43,7 @@ function SellerAdminConfirmationModal({
       <DialogContent>
         <DialogHeader className=" pb">
           <span className="flex gap-5">
-            <CheckCircleIcon width={22} height={22} className="text-success" />
+            <CheckCircleIcon className="text-success" height={22} width={22} />
             آیا مطمئن هستید؟
           </span>
         </DialogHeader>

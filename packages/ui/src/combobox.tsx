@@ -15,7 +15,7 @@ import { FormControl } from "./form"
 import { Popover, PopoverContent, PopoverTrigger } from "./popover"
 
 interface ComboBoxProps extends ControllerRenderProps {
-  items: { [k: string]: any }[]
+  items: Record<string, any>[]
   filterKey: string
   labelKey: string
   triggerPlaceholder?: string
@@ -40,9 +40,9 @@ const ComboBox = ({
       <PopoverTrigger asChild>
         <FormControl>
           <Button
+            className="input-field flex items-center text-start"
             noStyle
             role="combobox"
-            className="input-field flex items-center text-start"
           >
             {props.value
               ? items.find((item) => item[filterKey] === props.value)?.[
@@ -60,8 +60,8 @@ const ComboBox = ({
           <CommandGroup className="max-h-[100px] overflow-auto">
             {items.map((item) => (
               <CommandItem
-                value={item[filterKey]}
                 key={item[filterKey]}
+                value={item[filterKey]}
                 onSelect={onChange}
               >
                 <LucideCheck

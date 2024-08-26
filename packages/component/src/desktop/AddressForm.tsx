@@ -243,7 +243,7 @@ const AddressForm = ({
           </AlertDescription>
         </Alert>
       )}
-      <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+      <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
         <div className="mb-6 mt-8 flex items-end justify-between">
           <h2 className="text-3xl font-black text-alpha-800">
             {passedAddress
@@ -252,9 +252,9 @@ const AddressForm = ({
           </h2>
           <Button
             className="sticky top-0"
-            type="submit"
-            loading={form.formState.isSubmitting}
             disabled={form.formState.isSubmitting}
+            loading={form.formState.isSubmitting}
+            type="submit"
           >
             {t("common:save_entity", { entity: t("common:address") })}
           </Button>
@@ -298,10 +298,10 @@ const AddressForm = ({
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            className="input-field flex items-center text-start"
                             disabled={countries.isLoading || countries.isError}
                             noStyle
                             role="combobox"
-                            className="input-field flex items-center text-start"
                           >
                             {field.value
                               ? countries.data?.countries.data.find(
@@ -332,8 +332,8 @@ const AddressForm = ({
                               (country) =>
                                 country && (
                                   <CommandItem
-                                    value={country.name}
                                     key={country.id}
+                                    value={country.name}
                                     onSelect={(value) => {
                                       const selected =
                                         countries.data?.countries.data.find(
@@ -377,6 +377,7 @@ const AddressForm = ({
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            className="input-field flex items-center text-start"
                             disabled={
                               provinces.isFetching ||
                               provinces.isLoading ||
@@ -384,7 +385,6 @@ const AddressForm = ({
                             }
                             noStyle
                             role="combobox"
-                            className="input-field flex items-center text-start"
                           >
                             {field.value
                               ? provinces.data?.country.provinces.find(
@@ -415,8 +415,8 @@ const AddressForm = ({
                               (province) =>
                                 province && (
                                   <CommandItem
-                                    value={province.name}
                                     key={province.id}
+                                    value={province.name}
                                     onSelect={(value) => {
                                       const selected =
                                         provinces.data?.country.provinces.find(
@@ -459,6 +459,7 @@ const AddressForm = ({
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            className="input-field flex items-center text-start"
                             disabled={
                               cities.isFetching ||
                               cities.isLoading ||
@@ -466,7 +467,6 @@ const AddressForm = ({
                             }
                             noStyle
                             role="combobox"
-                            className="input-field flex items-center text-start"
                           >
                             {field.value
                               ? cities?.data?.province.cities.find(
@@ -496,8 +496,8 @@ const AddressForm = ({
                               (city) =>
                                 city && (
                                   <CommandItem
-                                    value={city.name}
                                     key={city.id}
+                                    value={city.name}
                                     onSelect={(value) => {
                                       const selected =
                                         cities.data?.province.cities.find(
@@ -585,13 +585,13 @@ const AddressForm = ({
                   <FormItem>
                     <FormLabel>{t("common:status")}</FormLabel>
                     <Select
+                      defaultValue={field.value}
                       onValueChange={(value) => {
                         form.setValue(
                           "status",
                           value as ThreeStateSupervisionStatuses
                         )
                       }}
-                      defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -602,7 +602,7 @@ const AddressForm = ({
                       </FormControl>
                       <SelectContent>
                         {Object.keys(statuses).map((type) => (
-                          <SelectItem value={statuses[type]} key={type}>
+                          <SelectItem key={type} value={statuses[type]}>
                             {type}
                           </SelectItem>
                         ))}

@@ -62,7 +62,7 @@ const Navigation = (props: Props) => {
                   </li>
                 )}
                 {profileMenu && (
-                  <NavigationItem session={session} menu={profileMenu} />
+                  <NavigationItem menu={profileMenu} session={session} />
                 )}
                 {menuSection.items &&
                   menuSection.items.map(
@@ -72,8 +72,8 @@ const Navigation = (props: Props) => {
                         !menuItem.abilities) && (
                         <NavigationItem
                           key={idx}
-                          session={session}
                           menu={menuItem}
+                          session={session}
                         />
                       )
                   )}
@@ -86,7 +86,7 @@ const Navigation = (props: Props) => {
       {loginToggleMenu && (
         <section className="app-navigation-section">
           <ol className="app-navigation-section-list">
-            <NavigationItem session={session} menu={loginToggleMenu} />
+            <NavigationItem menu={loginToggleMenu} session={session} />
           </ol>
         </section>
       )}

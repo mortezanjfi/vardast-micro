@@ -54,8 +54,8 @@ const Footer = ({
         </div>
       )}
       <Button
-        type="button"
         className="w-full md:w-auto"
+        type="button"
         variant="secondary"
         onClick={() => onOpenChange()}
       >
@@ -121,9 +121,9 @@ const Modal = <TFieldValues extends FieldValues>({
             {children}
             {(action || secondAction) && (
               <Footer
-                onOpenChange={onOpenChange}
                 action={action}
                 secondAction={secondAction}
+                onOpenChange={onOpenChange}
               />
             )}
           </FormLayout>
@@ -132,9 +132,9 @@ const Modal = <TFieldValues extends FieldValues>({
             {children}
             {(action || secondAction) && (
               <Footer
-                onOpenChange={onOpenChange}
                 action={action}
                 secondAction={secondAction}
+                onOpenChange={onOpenChange}
               />
             )}
           </>

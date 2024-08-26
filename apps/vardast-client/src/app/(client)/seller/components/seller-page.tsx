@@ -18,7 +18,7 @@ import SellerHeader from "@/app/(client)/seller/components/seller-header"
 
 interface SellerPageProps {
   isMobileView: boolean
-  slug: Array<string | number>
+  slug: (string | number)[]
   args: IndexProductInput
 }
 

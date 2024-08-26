@@ -77,8 +77,8 @@ const HomeTopSellersLoading = () => {
             >
               {[...Array(3)].map((_, brand) => (
                 <div
-                  key={`top-home-sellers-loading-${brand}`}
                   className="relative z-20 flex flex-col items-center justify-between bg-opacity-60 text-center font-semibold"
+                  key={`top-home-sellers-loading-${brand}`}
                 >
                   <div
                     className={clsx(
@@ -116,7 +116,7 @@ const HomeTopSellers = ({
   )
 
   return (
-    <MobileHomeSection viewAllHref="/sellers" bgWhite title={title} block>
+    <MobileHomeSection bgWhite block title={title} viewAllHref="/sellers">
       <div className="relative overflow-hidden">
         {!allSellersCount ||
         allSellersCount?.isLoading ||
@@ -124,10 +124,10 @@ const HomeTopSellers = ({
           <div className="hide-scrollbar inline-flex gap-x overflow-x-auto px-5 pb-12 md:px-0">
             {[...Array(7)].map((_, index) => (
               <div
-                key={`Home-top-sellers-loading-${index}`}
                 className={clsx(
                   isMobileView ? "w-[60vw]" : "w-[220px] max-w-[220px]"
                 )}
+                key={`Home-top-sellers-loading-${index}`}
               >
                 <HomeTopSellersLoading />
               </div>
@@ -137,10 +137,10 @@ const HomeTopSellers = ({
           <>
             {!inViewNext && !isMobileView && (
               <SwiperNavigationButton
-                swiperRef={swiperRef}
                 action={SwiperButtonAction.HANDLE_NEXT}
                 direction={SwiperButtonsDirection.LEFT}
                 iconSize={20}
+                swiperRef={swiperRef}
               />
             )}
             <Swiper
@@ -149,21 +149,22 @@ const HomeTopSellers = ({
               //   clickable: true
               // }}
               // modules={[FreeMode]}
-              onSwiper={setSwiperRef}
+              className="h-full w-full px-5 pb-12 sm:py-8 md:px-0"
               key="seller-swiper"
               slidesPerView={isMobileView ? 1.5 : "auto"}
               spaceBetween={16}
-              className="h-full w-full px-5 pb-12 sm:py-8 md:px-0"
+              onSwiper={setSwiperRef}
             >
               {theSlides.map((seller, index) => {
                 if (seller) {
                   const { id, brands, logoFile, name, addresses } = seller
                   return (
                     <SwiperSlide
-                      key={id}
                       className={clsx(!isMobileView && "w-[220px]")}
+                      key={id}
                     >
                       <Link
+                        href={`/seller/${id}`}
                         ref={
                           index === theSlides.length - 1
                             ? refNext
@@ -174,7 +175,6 @@ const HomeTopSellers = ({
                         onClick={() => {
                           setSelectedItemId(id)
                         }}
-                        href={`/seller/${id}`}
                       >
                         <div className={clsx("h-full", circleSizes.paddingTop)}>
                           <div
@@ -201,10 +201,10 @@ const HomeTopSellers = ({
                                 )}
                               >
                                 <Image
-                                  src={logoFile?.presignedUrl.url ?? ""}
                                   alt="category"
-                                  fill
                                   className="h-full w-full object-contain"
+                                  fill
+                                  src={logoFile?.presignedUrl.url ?? ""}
                                 />
                               </div>
                             </div>
@@ -236,8 +236,8 @@ const HomeTopSellers = ({
                               >
                                 {brands.slice(0, 3).map((brand) => (
                                   <div
-                                    key={brand?.id}
                                     className="relative z-20 flex flex-col items-center justify-between bg-opacity-60 text-center font-semibold"
+                                    key={brand?.id}
                                   >
                                     <div
                                       className={clsx(
@@ -247,13 +247,13 @@ const HomeTopSellers = ({
                                       )}
                                     >
                                       <Image
+                                        alt="category"
+                                        className="h-full w-full rounded-full object-fill"
+                                        fill
                                         src={
                                           brand?.logoFile?.presignedUrl.url ??
                                           "/images/seller-blank.png"
                                         }
-                                        alt="category"
-                                        fill
-                                        className="h-full w-full rounded-full object-fill"
                                       />
                                     </div>
                                   </div>
@@ -270,10 +270,10 @@ const HomeTopSellers = ({
             </Swiper>
             {!inViewPrev && !isMobileView && (
               <SwiperNavigationButton
-                swiperRef={swiperRef}
                 action={SwiperButtonAction.HANDLE_PREVIOUS}
                 direction={SwiperButtonsDirection.RIGHT}
                 iconSize={20}
+                swiperRef={swiperRef}
               />
             )}
           </>

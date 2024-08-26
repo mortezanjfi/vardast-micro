@@ -17,12 +17,12 @@ const Label = forwardRef<
   ComponentPropsWithoutRef<typeof LabelPrimitive.Root> & LabelProps
 >(({ noStyle = false, className, ...props }, ref) => (
   <LabelPrimitive.Root
-    ref={ref}
     className={
       noStyle
         ? mergeClasses(className)
         : mergeClasses(labelVariants(), className)
     }
+    ref={ref}
     {...props}
   />
 ))

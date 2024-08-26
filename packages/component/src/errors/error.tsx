@@ -20,14 +20,14 @@ export default function Error({
   return (
     <div className="mx-auto flex h-screen w-full flex-col items-center justify-center">
       <div className="leading-relaxed">
-        <Image src={sadFace} alt="Something went wrong!" />
+        <Image alt="Something went wrong!" src={sadFace} />
         <h2 className="mt-4 font-bold">ببخشید!</h2>
         <h2>خطایی هنگام درست کردن صفحه رخ داده...</h2>
         <div className="flex flex-col gap-y">
-          <Button onClick={() => reset()} className="mt-8">
+          <Button className="mt-8" onClick={() => reset()}>
             تلاش مجدد
           </Button>
-          <Link href="/" className="inline-block text-sm text-primary-500">
+          <Link className="inline-block text-sm text-primary-500" href="/">
             برگشت به خانه
           </Link>
         </div>

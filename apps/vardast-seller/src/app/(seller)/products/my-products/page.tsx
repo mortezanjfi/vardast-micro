@@ -12,8 +12,8 @@ import ProductsPageIndex from "@/app/(seller)/products/components/my-products-pa
 import { SellerDesktopMyProducts } from "@/app/(seller)/products/components/SellerDesktopMyProducts"
 
 type SearchIndexProps = {
-  params: { slug: Array<string | number> }
-  searchParams: { [key: string]: string | string[] | undefined }
+  params: { slug: (string | number)[] }
+  searchParams: Record<string, string | string[] | undefined>
 }
 
 async function MyProductsPage({ params: { slug } }: SearchIndexProps) {

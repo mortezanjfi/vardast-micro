@@ -37,8 +37,6 @@ const CategoryListItem = forwardRef(
   ) => {
     return (
       <Link
-        ref={ref}
-        href={checkSellerRedirectUrl(href)}
         className={clsx(
           "border !border-alpha-400",
           isSubCategory
@@ -53,8 +51,10 @@ const CategoryListItem = forwardRef(
 
           // "sm:max-w-full sm:max-h-full",
         )}
-        onClick={onClick}
+        href={checkSellerRedirectUrl(href)}
+        ref={ref}
         shallow
+        onClick={onClick}
       >
         {/* {selectedItemId === id ? <CategoryListLoader /> : <></>} */}
         <div
@@ -68,19 +68,16 @@ const CategoryListItem = forwardRef(
           )} کالا`}</p>
         </div>
         <div
-          id={`category-image-${id}`}
           className={`${
             isSubCategory ? "row-span-4" : "row-span-3"
           } w-full flex-1 flex-shrink-0  transform bg-center bg-no-repeat align-middle opacity-0 transition-all duration-1000 ease-out`}
+          id={`category-image-${id}`}
         >
           <Image
-            src={src}
-            // src={`/images/all-categories/${id}.png`}
-            alt={title}
-            width={isSubCategory ? 1600 : 1600}
-            height={isSubCategory ? 900 : 1600}
             className="h-full w-full"
+            height={isSubCategory ? 900 : 1600}
             loading="eager"
+            width={isSubCategory ? 1600 : 1600}
             onLoadingComplete={() => {
               const div =
                 typeof window !== "undefined" &&
@@ -89,6 +86,9 @@ const CategoryListItem = forwardRef(
                 div.className = div.className + " opacity-100"
               }
             }}
+            src={src}
+            // src={`/images/all-categories/${id}.png`}
+            alt={title}
           />
         </div>
       </Link>

@@ -28,9 +28,9 @@ const AboutPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
         <>
           <div className="mx-auto w-[calc(48%)] pt-6 md:pt lg:w-1/2">
             <Image
-              src={logo}
               alt="وردست"
               className="w-full shrink-0 object-contain"
+              src={logo}
             />
           </div>
         </>
@@ -135,9 +135,9 @@ const AboutPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
               <div className="grid grid-cols-4 gap-7">
                 {_about_items.map(({ Icon, href, title }) => (
                   <Link
-                    key={href}
-                    href={href}
                     className="flex items-center justify-start gap-x rounded-xl bg-alpha-white p-7"
+                    href={href}
+                    key={href}
                   >
                     <div className="flex items-center justify-center rounded bg-alpha-50 p">
                       <Icon className="h-6 w-6 text-primary" />

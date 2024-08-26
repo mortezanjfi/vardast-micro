@@ -80,8 +80,8 @@ const PdfTabItem = ({ file, access_token, title }: PdfTabItemProps) => {
               برای مشاهده {title}، لطفا ابتدا وارد حساب کاربری خود شوید.
             </h4>
             <Link
-              href={`${paths.signin}?ru=${pathname}`}
               className="btn btn-md btn-primary block px"
+              href={`${paths.signin}?ru=${pathname}`}
             >
               ورود به حساب کاربری
             </Link>

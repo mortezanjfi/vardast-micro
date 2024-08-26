@@ -61,20 +61,24 @@ const FiltersContainer = ({
               filter && (
                 <FilterBlock
                   key={filter.id}
-                  title={filter.name}
                   openDefault={filterAttributes.some(
                     (item) => item.id === filter.id
                   )}
+                  title={filter.name}
                 >
                   <div className="flex flex-col">
                     {filter.values?.options?.map(
                       (value: string, idx: number) =>
                         value && (
                           <Label.Root
-                            key={idx}
                             className="flex items-center gap-2 border-b-2 border-alpha-200 py-3"
+                            key={idx}
                           >
                             <Checkbox.Root
+                              checked={filterAttributes.some(
+                                (item) =>
+                                  item.id === filter.id && item.value === value
+                              )}
                               className="flex
                         h-5
                         w-5
@@ -86,10 +90,6 @@ const FiltersContainer = ({
                         outline-none
                         data-[state='checked']:border-primary-500
                         data-[state='checked']:bg-primary-500"
-                              checked={filterAttributes.some(
-                                (item) =>
-                                  item.id === filter.id && item.value === value
-                              )}
                               onCheckedChange={(checked) =>
                                 onFilterAttributesChanged({
                                   status: checked,

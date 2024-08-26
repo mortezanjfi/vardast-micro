@@ -58,8 +58,8 @@ const SearchHeader = ({ selectedCategoryId }: SearchHeaderProps) => {
         "@type": "ListItem",
         position: 1,
         item: {
-          "@id": process.env.NEXT_PUBLIC_API_ENDPOINT as string,
-          name: process.env.NEXT_PUBLIC_TITLE as string
+          "@id": process.env.NEXT_PUBLIC_API_ENDPOINT,
+          name: process.env.NEXT_PUBLIC_TITLE
         }
       },
       ...(breadcrumbJsonLdArray as ItemList[])
@@ -88,8 +88,8 @@ const SearchHeader = ({ selectedCategoryId }: SearchHeaderProps) => {
 
   return (
     <script
-      type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      type="application/ld+json"
     />
   )
 }

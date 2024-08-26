@@ -118,7 +118,7 @@ const ContactInfoModal = <TEnum,>({
   })
 
   function onSubmit(data: ContactInfoFormDataType) {
-    let body = {
+    const body = {
       ...data,
       number: data?.number ? digitsFaToEn(data?.number) : undefined,
       sort: data?.sort ? +digitsFaToEn(`${data?.sort}`) : undefined
@@ -218,6 +218,13 @@ const ContactInfoModal = <TEnum,>({
             <FormLabel>{t("common:type")}</FormLabel>
             <FormControl>
               <SelectPopover
+                options={Object.entries(
+                  enumToKeyValueObject(ContactInfoTypes)
+                )?.map(([value, key]) => ({
+                  key: ContactInfoTypesFa[key as ContactInfoTypes]?.name_fa,
+                  value: value.toUpperCase()
+                }))}
+                value={`${field.value}`}
                 onSelect={(value) => {
                   form.setValue(
                     "type",
@@ -227,13 +234,6 @@ const ContactInfoModal = <TEnum,>({
                     }
                   )
                 }}
-                options={Object.entries(
-                  enumToKeyValueObject(ContactInfoTypes)
-                )?.map(([value, key]) => ({
-                  key: ContactInfoTypesFa[key as ContactInfoTypes]?.name_fa,
-                  value: value.toUpperCase()
-                }))}
-                value={`${field.value}`}
               />
             </FormControl>
             <FormMessage />
@@ -248,10 +248,10 @@ const ContactInfoModal = <TEnum,>({
             <FormLabel>{t("common:number")}</FormLabel>
             <FormControl>
               <Input
-                type="tel"
-                inputMode="numeric"
                 className="placeholder:text-right"
+                inputMode="numeric"
                 placeholder={digitsEnToFa("09*********")}
+                type="tel"
                 {...field}
                 onChange={(e) => {
                   e.target.value.length <= 11 &&
@@ -271,15 +271,6 @@ const ContactInfoModal = <TEnum,>({
             <FormLabel>{t("common:status")}</FormLabel>
             <FormControl>
               <SelectPopover
-                onSelect={(value) => {
-                  form.setValue(
-                    "status",
-                    value.toUpperCase() as ThreeStateSupervisionStatuses,
-                    {
-                      shouldDirty: true
-                    }
-                  )
-                }}
                 options={Object.entries(
                   enumToKeyValueObject(ThreeStateSupervisionStatuses)
                 )?.map(([value, key]) => ({
@@ -289,6 +280,15 @@ const ContactInfoModal = <TEnum,>({
                   value: value.toUpperCase()
                 }))}
                 value={`${field.value}`}
+                onSelect={(value) => {
+                  form.setValue(
+                    "status",
+                    value.toUpperCase() as ThreeStateSupervisionStatuses,
+                    {
+                      shouldDirty: true
+                    }
+                  )
+                }}
               />
             </FormControl>
             <FormMessage />
@@ -303,10 +303,10 @@ const ContactInfoModal = <TEnum,>({
             <FormLabel>{t("common:display_sort")}</FormLabel>
             <FormControl>
               <Input
-                type="tel"
-                inputMode="numeric"
                 className="placeholder:text-right"
+                inputMode="numeric"
                 placeholder={t("common:enter")}
+                type="tel"
                 {...field}
                 onChange={(e) => {
                   field.onChange(digitsEnToFa(e.target.value))
@@ -325,11 +325,6 @@ const ContactInfoModal = <TEnum,>({
             <FormLabel>{t("common:visibility")}</FormLabel>
             <FormControl>
               <SelectPopover
-                onSelect={(value) => {
-                  form.setValue("isPublic", value === "true", {
-                    shouldDirty: true
-                  })
-                }}
                 options={[
                   {
                     key: "نمایش",
@@ -341,6 +336,11 @@ const ContactInfoModal = <TEnum,>({
                   }
                 ]}
                 value={`${field.value}`}
+                onSelect={(value) => {
+                  form.setValue("isPublic", value === "true", {
+                    shouldDirty: true
+                  })
+                }}
               />
             </FormControl>
             <FormMessage />

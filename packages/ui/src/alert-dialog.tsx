@@ -37,8 +37,8 @@ const AlertDialogContent = React.forwardRef<
   <AlertDialogPortal>
     <AlertDialogOverlay />
     <AlertDialogPrimitive.Content
-      ref={ref}
       className={mergeClasses("dialog-content", className)}
+      ref={ref}
       {...props}
     />
   </AlertDialogPortal>
@@ -66,8 +66,8 @@ const AlertDialogTitle = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Title>
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Title
-    ref={ref}
     className={mergeClasses("dialog-title", className)}
+    ref={ref}
     {...props}
   />
 ))
@@ -78,8 +78,8 @@ const AlertDialogDescription = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description>
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Description
-    ref={ref}
     className={mergeClasses("dialog-description", className)}
+    ref={ref}
     {...props}
   />
 ))
@@ -91,8 +91,8 @@ const AlertDialogAction = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action>
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Action
-    ref={ref}
     className={mergeClasses(buttonVariants(), className)}
+    ref={ref}
     {...props}
   />
 ))
@@ -103,12 +103,12 @@ const AlertDialogCancel = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Cancel
-    ref={ref}
     className={mergeClasses(
       buttonVariants({ variant: "ghost" }),
       "mt-2 sm:mt-0",
       className
     )}
+    ref={ref}
     {...props}
   />
 ))

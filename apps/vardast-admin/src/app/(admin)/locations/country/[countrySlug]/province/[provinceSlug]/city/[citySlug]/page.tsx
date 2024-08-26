@@ -17,7 +17,7 @@ const AreasPage = async ({
 
   // const countrySlug = params.countrySlug as string
   // const provinceSlug = params.provinceSlug as string
-  const citySlug = params.citySlug as string
+  const citySlug = params.citySlug
 
   return <Areas citySlug={citySlug} />
 }

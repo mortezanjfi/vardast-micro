@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+ 
 "use client"
 
 import * as Checkbox from "@radix-ui/react-checkbox"
@@ -34,11 +34,12 @@ export const sortBrand = {
 }
 const CategoriesSort = ({ sort, onSortChanged }: CategoriesSortProps) => {
   return (
-    <FilterBlock title="مرتب سازی" openDefault={true}>
+    <FilterBlock openDefault={true} title="مرتب سازی">
       <div className="flex flex-col gap-3">
         {Object.entries(sortBrand).map(([key, value]) => (
-          <Label.Root key={key} className="flex items-center gap-2">
+          <Label.Root className="flex items-center gap-2" key={key}>
             <Checkbox.Root
+              checked={sort === value.value}
               className="flex
                     h-5
                     w-5
@@ -52,7 +53,6 @@ const CategoriesSort = ({ sort, onSortChanged }: CategoriesSortProps) => {
                     outline-none
                     data-[state='checked']:border-primary-500
                     data-[state='checked']:bg-primary-500"
-              checked={sort === value.value}
               onCheckedChange={() => {
                 onSortChanged(value.value)
               }}

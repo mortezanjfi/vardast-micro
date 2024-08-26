@@ -194,7 +194,7 @@ const ProductCard = forwardRef(
               >
                 {product.images.at(0)?.file.presignedUrl.url ? (
                   <Image
-                    src={product.images.at(0)?.file.presignedUrl.url as string}
+                    src={product.images.at(0)?.file.presignedUrl.url}
                     alt={product.name}
                     fill
                     className="object-contain"

@@ -96,17 +96,17 @@ const DeleteAreaModal = ({ areaToDelete, open, onOpenChange }: Props) => {
             <AlertDialogFooter>
               <div className="flex items-center gap-2">
                 <Button
+                  disabled={removeAreaMutation.isLoading}
                   variant="ghost"
                   onClick={() => onOpenChange(false)}
-                  disabled={removeAreaMutation.isLoading}
                 >
                   {t("common:cancel")}
                 </Button>
                 <Button
-                  variant="danger"
-                  onClick={() => onDelete()}
                   disabled={removeAreaMutation.isLoading}
                   loading={removeAreaMutation.isLoading}
+                  variant="danger"
+                  onClick={() => onDelete()}
                 >
                   {t("common:delete")}
                 </Button>

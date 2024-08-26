@@ -110,7 +110,7 @@ const AddressModal = <TEnum,>({
   )
 
   function onSubmit(data: AddressFormDataType) {
-    let body = {
+    const body = {
       ...data,
       postalCode: data?.postalCode ? digitsFaToEn(data?.postalCode) : undefined,
       sort: data?.sort ? +digitsFaToEn(`${data?.sort}`) : undefined
@@ -246,12 +246,7 @@ const AddressModal = <TEnum,>({
             <FormLabel>{t("common:province")}</FormLabel>
             <FormControl>
               <SelectPopover
-                onSelect={(value) => {
-                  form.setValue("provinceId", +value, {
-                    shouldDirty: true
-                  })
-                  form.setValue("cityId", null)
-                }}
+                internalSearchable
                 loading={
                   provinces.isLoading ||
                   provinces.isError ||
@@ -261,8 +256,13 @@ const AddressModal = <TEnum,>({
                   key: province?.name,
                   value: `${province?.id}`
                 }))}
-                internalSearchable
                 value={`${field.value}`}
+                onSelect={(value) => {
+                  form.setValue("provinceId", +value, {
+                    shouldDirty: true
+                  })
+                  form.setValue("cityId", null)
+                }}
               />
             </FormControl>
             <FormMessage />
@@ -277,18 +277,18 @@ const AddressModal = <TEnum,>({
             <FormLabel>{t("common:city")}</FormLabel>
             <FormControl>
               <SelectPopover
-                onSelect={(value) => {
-                  form.setValue("cityId", +value, {
-                    shouldDirty: true
-                  })
-                }}
+                internalSearchable
                 loading={cities.isFetching}
                 options={cities.data?.province?.cities?.map((city) => ({
                   key: city?.name,
                   value: `${city?.id}`
                 }))}
-                internalSearchable
                 value={`${field.value}`}
+                onSelect={(value) => {
+                  form.setValue("cityId", +value, {
+                    shouldDirty: true
+                  })
+                }}
               />
             </FormControl>
             <FormMessage />
@@ -303,10 +303,10 @@ const AddressModal = <TEnum,>({
             <FormLabel>{t("common:postalCode")}</FormLabel>
             <FormControl>
               <Input
-                type="tel"
-                inputMode="numeric"
                 className="placeholder:text-right"
+                inputMode="numeric"
                 placeholder={t("common:enter")}
+                type="tel"
                 {...field}
                 onChange={(e) => {
                   e.target.value.length <= 10 &&
@@ -326,15 +326,6 @@ const AddressModal = <TEnum,>({
             <FormLabel>{t("common:status")}</FormLabel>
             <FormControl>
               <SelectPopover
-                onSelect={(value) => {
-                  form.setValue(
-                    "status",
-                    value.toUpperCase() as ThreeStateSupervisionStatuses,
-                    {
-                      shouldDirty: true
-                    }
-                  )
-                }}
                 options={Object.entries(
                   enumToKeyValueObject(ThreeStateSupervisionStatuses)
                 )?.map(([value, key]) => ({
@@ -344,6 +335,15 @@ const AddressModal = <TEnum,>({
                   value: value.toUpperCase()
                 }))}
                 value={`${field.value}`}
+                onSelect={(value) => {
+                  form.setValue(
+                    "status",
+                    value.toUpperCase() as ThreeStateSupervisionStatuses,
+                    {
+                      shouldDirty: true
+                    }
+                  )
+                }}
               />
             </FormControl>
             <FormMessage />
@@ -358,10 +358,10 @@ const AddressModal = <TEnum,>({
             <FormLabel>{t("common:display_sort")}</FormLabel>
             <FormControl>
               <Input
-                type="tel"
-                inputMode="numeric"
                 className="placeholder:text-right"
+                inputMode="numeric"
                 placeholder={t("common:enter")}
+                type="tel"
                 {...field}
                 onChange={(e) => {
                   field.onChange(digitsEnToFa(e.target.value))
@@ -380,11 +380,6 @@ const AddressModal = <TEnum,>({
             <FormLabel>{t("common:visibility")}</FormLabel>
             <FormControl>
               <SelectPopover
-                onSelect={(value) => {
-                  form.setValue("isPublic", value === "true", {
-                    shouldDirty: true
-                  })
-                }}
                 options={[
                   {
                     key: "نمایش",
@@ -396,6 +391,11 @@ const AddressModal = <TEnum,>({
                   }
                 ]}
                 value={`${field.value}`}
+                onSelect={(value) => {
+                  form.setValue("isPublic", value === "true", {
+                    shouldDirty: true
+                  })
+                }}
               />
             </FormControl>
             <FormMessage />

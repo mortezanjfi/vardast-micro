@@ -116,8 +116,8 @@ const OrderProductsTabsModal = ({
         title: <SegmentTabTitle title="هزینه های جانبی" />,
         Content: () => (
           <OrderExtraPriceTabContent
-            loading={createLineMutation.isLoading}
             expenses={expenses}
+            loading={createLineMutation.isLoading}
             setExpenses={setExpenses}
           />
         )
@@ -168,9 +168,9 @@ const OrderProductsTabsModal = ({
   return (
     <Modal {...modalProps}>
       <SegmentTab
+        activeTab={activeTab}
         tabs={tabs}
         onValueChange={onValueChange}
-        activeTab={activeTab}
       />
     </Modal>
   )

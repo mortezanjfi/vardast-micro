@@ -40,7 +40,6 @@ function RouteChangeComplete() {
 
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => onRouteChangeComplete(), [pathname, searchParams])
 
   return null

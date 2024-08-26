@@ -81,8 +81,8 @@ const PriceSection = ({ onOpenCreateModal, prices }: PriceSectionProps) => {
 
         <div className="mt-8 flex justify-end">
           <Button
-            variant="secondary"
             type="button"
+            variant="secondary"
             onClick={() => onOpenCreateModal()}
           >
             {t("common:add_entity", { entity: t("common:price") })}

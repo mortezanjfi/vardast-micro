@@ -9,7 +9,7 @@ import Link from "../Link"
 import { ICategoryListLoader } from "./CategoryListLoader"
 
 type Props = {
-  slug?: Array<string | number>
+  slug?: (string | number)[]
   isProductsPage?: boolean
   data: Category
   isMobileView?: boolean
@@ -70,15 +70,15 @@ export default function CategoryCircleItem({
 
   return (
     <Link
-      onClick={() => {
-        setSelectedItemId(data.id)
-      }}
-      href={`${!(slug?.length > 0) && `/category/${data.id}/${data.title}`}`}
       className={clsx(
         categoryDefaultClassName,
         isMobileView ? "" : "mx-auto",
         isProductsPage ? productPageSizes.width : circleSizes.width
       )}
+      href={`${!(slug?.length > 0) && `/category/${data.id}/${data.title}`}`}
+      onClick={() => {
+        setSelectedItemId(data.id)
+      }}
     >
       <div
         className={clsx(
@@ -88,15 +88,15 @@ export default function CategoryCircleItem({
         )}
       >
         <Image
+          alt="category"
+          className="rounded-xl object-cover"
+          fill
+          sizes="100"
           src={
             data?.imageCategory
               ? data?.imageCategory[0]?.file.presignedUrl?.url
               : `/images/categories/1.png`
           }
-          alt="category"
-          fill
-          sizes="100"
-          className="rounded-xl object-cover"
         />
       </div>
       <h5

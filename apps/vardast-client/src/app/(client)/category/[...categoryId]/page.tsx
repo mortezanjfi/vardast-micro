@@ -58,7 +58,7 @@ const CategoryIdPage: React.FC<CategoryIdPageIndexProps> = async ({
 
   return (
     <ReactQueryHydrate state={dehydratedState}>
-      <CategoriesPage isMobileView={isMobileView} categoryId={categoryId[0]} />
+      <CategoriesPage categoryId={categoryId[0]} isMobileView={isMobileView} />
     </ReactQueryHydrate>
   )
 }

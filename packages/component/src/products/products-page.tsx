@@ -19,7 +19,7 @@ import ProductsHeader from "../search-header"
 interface ProductsPageProps {
   needCategoryFilterSection?: boolean
   isMobileView: boolean
-  slug: Array<string | number>
+  slug: (string | number)[]
   args: IndexProductInput
   hasSearch?: boolean
   isSellerPanel?: boolean
@@ -36,7 +36,7 @@ const ProductsPage = ({
   const selectedCategoryId = slug && slug.length > 0 ? +slug[0] : 0
 
   const categoryArgs: GetCategoryQueryVariables = {}
-  categoryArgs["id"] = selectedCategoryId
+  categoryArgs.id = selectedCategoryId
 
   const getCategoryQuery = useQuery<GetCategoryQuery>({
     queryKey: [QUERY_FUNCTIONS_KEY.CATEGORY_QUERY_KEY, categoryArgs],
@@ -61,8 +61,8 @@ const ProductsPage = ({
       <div className={clsx("flex flex-col gap-9", isMobileView && "!gap-0")}>
         {isMobileView && selectedCategoryId ? (
           <MobileCategoriesCardSection
-            slug={slug}
             getCategoryQuery={getCategoryQuery}
+            slug={slug}
           />
         ) : (
           <DesktopCategoriesCardsSection
@@ -72,12 +72,12 @@ const ProductsPage = ({
         )}
 
         <ProductList
-          needCategoryFilterSection={needCategoryFilterSection}
-          hasSearch={hasSearch}
-          isSellerPanel={isSellerPanel}
-          isMobileView={isMobileView}
           args={args}
+          hasSearch={hasSearch}
+          isMobileView={isMobileView}
+          isSellerPanel={isSellerPanel}
           limitPage={selectedCategoryId ? undefined : 5}
+          needCategoryFilterSection={needCategoryFilterSection}
         />
         {getCategoryQuery.data?.category.description && (
           <div>

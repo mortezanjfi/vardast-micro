@@ -177,13 +177,13 @@ const Brands = () => {
             return (
               <div className="relative aspect-square h-12 w-12 overflow-hidden rounded">
                 <Image
+                  alt={row?.original?.name}
+                  fill
+                  sizes="5vw"
                   src={
-                    (row?.original?.logoFile?.presignedUrl?.url as string) ??
+                    (row?.original?.logoFile?.presignedUrl?.url) ??
                     "/images/seller-blank.png"
                   }
-                  alt={row?.original?.name}
-                  sizes="5vw"
-                  fill
                 />
               </div>
             )
@@ -290,7 +290,7 @@ const Brands = () => {
           cell: ({ row }) => {
             return (
               <div className="flex gap-2">
-                <Link target="_blank" href={`/brands/${row?.original?.id}`}>
+                <Link href={`/brands/${row?.original?.id}`} target="_blank">
                   <span className="tag cursor-pointer text-blue-500">
                     {t("common:edit")}
                   </span>
@@ -324,10 +324,10 @@ const Brands = () => {
   return (
     <>
       <BrandDeleteModal
-        onChangeModals={onChangeModals}
-        onCloseModals={onCloseModals}
         modals={modals}
         open={modals?.type === BrandModalEnum.DELETE}
+        onChangeModals={onChangeModals}
+        onCloseModals={onCloseModals}
       />
       <Table {...tableProps} />
     </>

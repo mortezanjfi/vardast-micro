@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const SellersIndex = async () => {
   return (
     <SellersPage
-      title={(await generateMetadata()).title?.toString() as string}
+      title={(await generateMetadata()).title?.toString()}
     />
   )
 }

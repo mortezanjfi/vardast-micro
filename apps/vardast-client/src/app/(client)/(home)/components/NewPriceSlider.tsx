@@ -23,15 +23,15 @@ const NewPriceSlider = ({
           <div className={clsx("animated-card", sliderClass)}></div>
         ) : (
           <Swiper
-            loop
-            key="new-price-slider"
-            centeredSlides
-            slidesPerView={"auto"}
-            modules={[Autoplay]}
             autoplay={{
               delay: 0,
               disableOnInteraction: false
             }}
+            centeredSlides
+            key="new-price-slider"
+            loop
+            modules={[Autoplay]}
+            slidesPerView={"auto"}
             speed={10000}
             className="h-full w-full sm:px-0"
             // spaceBetween={15}

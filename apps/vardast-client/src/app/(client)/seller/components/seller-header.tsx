@@ -20,10 +20,10 @@ const SellerHeader = ({ seller }: SellerHeaderProps) => {
       <div className="relative flex h-16 w-full items-center justify-center rounded-md border border-alpha-200 bg-alpha-50 md:h-28 md:w-28">
         {seller.logoFile ? (
           <Image
-            src={seller.logoFile.presignedUrl.url}
-            fill
             alt={seller.name}
             className="object-contain p-3"
+            fill
+            src={seller.logoFile.presignedUrl.url}
           />
         ) : (
           <LucideWarehouse
@@ -58,7 +58,7 @@ const SellerHeader = ({ seller }: SellerHeaderProps) => {
         <div className="mr-auto">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="secondary" size="small">
+              <Button size="small" variant="secondary">
                 <LucideInfo className="icon" />
                 جزئیات
               </Button>

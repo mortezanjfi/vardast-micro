@@ -24,11 +24,11 @@ import CategoriesTab from "../../brand/components/CategoryTab"
 import ProductsTab from "../../brand/components/ProductsTab"
 
 export enum SellerProfileTabEnum {
-  // eslint-disable-next-line no-unused-vars
+   
   PRODUCT = "PRODUCT",
-  // eslint-disable-next-line no-unused-vars
+   
   CATEGORY = "CATEGORY",
-  // eslint-disable-next-line no-unused-vars
+   
   BRAND = "BRAND"
 }
 
@@ -70,10 +70,7 @@ const SellerProfile = ({
       {
         value: SellerProfileTabEnum.PRODUCT,
         title: (
-          <SegmentTabTitle
-            title="کالاها"
-            total={query.data?.seller.sum as number}
-          />
+          <SegmentTabTitle title="کالاها" total={query.data?.seller.sum} />
         ),
         Content: () => {
           return (
@@ -94,12 +91,11 @@ const SellerProfile = ({
         title: (
           <SegmentTabTitle
             title="دسته‌بندی‌ها"
-            total={query.data?.seller.categoriesCount as number}
+            total={query.data?.seller.categoriesCount}
           />
         ),
         Content: () => (
           <CategoriesTab
-            sellerName={query.data?.seller.name}
             isBrand={false}
             productsProps={{
               args,
@@ -107,6 +103,7 @@ const SellerProfile = ({
               session,
               slug
             }}
+            sellerName={query.data?.seller.name}
           />
         )
       },
@@ -116,24 +113,23 @@ const SellerProfile = ({
         title: (
           <SegmentTabTitle
             title="برندها"
-            total={query.data?.seller.brandsCount as number}
+            total={query.data?.seller.brandsCount}
           />
         ),
         Content: () => (
           <BrandOrSellersTab
+            isBrand={false}
             productsProps={{
               args,
               isMobileView,
               session,
               slug
             }}
-            isBrand={false}
             slug={slug}
           />
         )
       }
     ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [args, isMobileView, session, slug]
   )
 
@@ -147,12 +143,12 @@ const SellerProfile = ({
 
   return (
     <BrandOrSellerProfile
-      isMobileView={isMobileView}
-      isFavoriteQuery={isFavoriteQuery}
-      type={EntityTypeEnum.Seller}
       data={query.data?.seller}
+      isFavoriteQuery={isFavoriteQuery}
+      isMobileView={isMobileView}
       slug={slug}
       tabs={tabs}
+      type={EntityTypeEnum.Seller}
     />
   )
 }

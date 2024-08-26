@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+ 
 declare module "@react-stately/toast" {
   // interface User extends LoginUserMutation { }
   interface ToastOptions {

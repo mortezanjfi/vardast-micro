@@ -115,8 +115,8 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
         </Alert>
       )} */}
       <form
-        noValidate
         className="relative flex flex-col gap-7 pb-7"
+        noValidate
         onSubmit={form.handleSubmit(submit)}
       >
         <Card>
@@ -132,10 +132,10 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            className="input-field flex items-center text-start"
                             disabled={brands.isLoading || brands.isError}
                             noStyle
                             role="combobox"
-                            className="input-field flex items-center text-start"
                           >
                             {field.value
                               ? brands.data?.brandsWithoutPagination.find(
@@ -169,8 +169,8 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
                               (brand) =>
                                 brand && (
                                   <CommandItem
-                                    value={brand.name}
                                     key={brand.id}
+                                    value={brand.name}
                                     onSelect={(value) => {
                                       form.setValue(
                                         "brandId",
@@ -216,12 +216,12 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            className="input-field flex items-center gap-1 overflow-hidden text-start"
                             disabled={
                               categories.isLoading || categories.isError
                             }
                             noStyle
                             role="combobox"
-                            className="input-field flex items-center gap-1 overflow-hidden text-start"
                           >
                             {field.value
                               ? categories.data?.allCategoriesV2.find(
@@ -239,12 +239,12 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
                         <Command>
                           <CommandInput
                             loading={categories.isLoading}
-                            onValueChange={(newQuery) => {
-                              setCategoryQuery(newQuery)
-                            }}
                             placeholder={t("common:search_entity", {
                               entity: t("common:category")
                             })}
+                            onValueChange={(newQuery) => {
+                              setCategoryQuery(newQuery)
+                            }}
                           />
                           <CommandEmpty>
                             {t("common:no_entity_found", {
@@ -256,8 +256,8 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
                               (category) =>
                                 category && (
                                   <CommandItem
-                                    value={category.title}
                                     key={category.id}
+                                    value={category.title}
                                     onSelect={(value) => {
                                       const selectedId =
                                         categories.data.allCategoriesV2.find(
@@ -267,7 +267,7 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
                                         )?.id
                                       form.setValue(
                                         "categoryId",
-                                        selectedId as number
+                                        selectedId
                                       )
                                       setCategoryDialog(false)
                                     }}
@@ -302,12 +302,6 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
                       <div className="relative flex w-full transform items-center rounded-lg border-alpha-200 bg-alpha-100 pr-2 transition-all">
                         <LucideSearch className="h-6 w-6 text-primary" />
                         <Input
-                          defaultValue=""
-                          onChange={(e) => {
-                            form.setValue("faName", e.target.value)
-                          }}
-                          type="text"
-                          placeholder={t("common:enter")}
                           className="flex h-full w-full
                           items-center
                           gap-2
@@ -315,6 +309,12 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
                           bg-alpha-100
                           px-4
                            focus:!ring-0 disabled:bg-alpha-100"
+                          defaultValue=""
+                          placeholder={t("common:enter")}
+                          type="text"
+                          onChange={(e) => {
+                            form.setValue("faName", e.target.value)
+                          }}
                         />
                       </div>
                     </FormControl>{" "}
@@ -332,12 +332,6 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
                       <div className="relative flex w-full transform items-center rounded-lg border-alpha-200 bg-alpha-100 pr-2 transition-all">
                         <LucideSearch className="h-6 w-6 text-primary" />
                         <Input
-                          defaultValue=""
-                          onChange={(e) => {
-                            form.setValue("enName", e.target.value)
-                          }}
-                          type="text"
-                          placeholder={t("common:enter")}
                           className="flex h-full w-full
                         items-center
                         gap-2
@@ -345,6 +339,12 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
                         bg-alpha-100
                         px-4
                          focus:!ring-0 disabled:bg-alpha-100"
+                          defaultValue=""
+                          placeholder={t("common:enter")}
+                          type="text"
+                          onChange={(e) => {
+                            form.setValue("enName", e.target.value)
+                          }}
                         />
                       </div>
                     </FormControl>{" "}
@@ -362,12 +362,6 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
                       <div className="relative flex w-full transform items-center rounded-lg border-alpha-200 bg-alpha-100 pr-2 transition-all">
                         <LucideSearch className="h-6 w-6 text-primary" />
                         <Input
-                          defaultValue=""
-                          onChange={(e) => {
-                            form.setValue("sku", e.target.value)
-                          }}
-                          type="text"
-                          placeholder="SKU"
                           className="flex h-full w-full
                       items-center
                       gap-2
@@ -375,6 +369,12 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
                       bg-alpha-100
                       px-4
                        focus:!ring-0 disabled:bg-alpha-100"
+                          defaultValue=""
+                          placeholder="SKU"
+                          type="text"
+                          onChange={(e) => {
+                            form.setValue("sku", e.target.value)
+                          }}
                         />
                       </div>
                     </FormControl>{" "}
@@ -392,10 +392,10 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            className="input-field flex items-center text-start"
                             disabled={uoms.isLoading || uoms.isError}
                             noStyle
                             role="combobox"
-                            className="input-field flex items-center text-start"
                           >
                             {field.value
                               ? uoms.data?.uomsWithoutPagination.find(
@@ -425,8 +425,8 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
                               (uom) =>
                                 uom && (
                                   <CommandItem
-                                    value={uom.name}
                                     key={uom.id}
+                                    value={uom.name}
                                     onSelect={(value) => {
                                       form.setValue(
                                         "uomId",
@@ -468,9 +468,9 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
 
                     <FormControl>
                       <Switch
-                        size="xlarge"
-                        className="flex"
                         checked={field.value}
+                        className="flex"
+                        size="xlarge"
                         onCheckedChange={field.onChange}
                       />
                     </FormControl>
@@ -564,8 +564,8 @@ export const ProductInformationTab = ({}: ProductInformationTabProps) => {
         <Card className="flex w-full justify-end gap-3">
           <Button
             className=" top-0 ml-3 px-16   py-2"
-            variant="secondary"
             type="reset"
+            variant="secondary"
             onClick={() => {
               router.push("/products")
             }}

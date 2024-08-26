@@ -10,12 +10,12 @@ interface IInfiniteScrollPagination<T> {
   infiniteQuery: UseInfiniteQueryResult<T, unknown>
   CardLoader: React.FC
   fetchingLoaderCount?: number
-  // eslint-disable-next-line no-unused-vars
+
   children(
     _: T,
-    // eslint-disable-next-line no-unused-vars
+
     ref: ((node?: Element | null | undefined) => void) | undefined,
-    // eslint-disable-next-line no-unused-vars
+
     props: any
   ): ReactElement
 }
@@ -33,7 +33,6 @@ const InfiniteScrollPagination = <T extends unknown>({
     if (inView) {
       infiniteQuery.fetchNextPage()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView])
 
   return (

@@ -99,14 +99,6 @@ const SellersPage = ({
             )}
             <Input
               autoFocus
-              value={queryTemp}
-              defaultValue={query}
-              onChange={(e) => {
-                setQueryTemp(e.target.value)
-                setQuery(e.target.value)
-              }}
-              type="text"
-              placeholder="نام کالا | برند | فروشنده | دسته بندی | SKU"
               className="flex h-full
               w-full
               items-center
@@ -116,12 +108,20 @@ const SellersPage = ({
               px-4
               py-3
               focus:!ring-0 disabled:bg-alpha-100"
+              defaultValue={query}
+              placeholder="نام کالا | برند | فروشنده | دسته بندی | SKU"
+              type="text"
+              value={queryTemp}
+              onChange={(e) => {
+                setQueryTemp(e.target.value)
+                setQuery(e.target.value)
+              }}
             />
             <Button
-              variant="ghost"
-              size="small"
-              iconOnly
               className="rounded-full"
+              iconOnly
+              size="small"
+              variant="ghost"
               onClick={() => {
                 setQuery("")
                 setQueryTemp("")
@@ -133,9 +133,9 @@ const SellersPage = ({
         </div>
       )}
       <SellersList
-        limitPage={limitPage}
         args={args}
         isMobileView={isMobileView}
+        limitPage={limitPage}
       />
     </div>
   )

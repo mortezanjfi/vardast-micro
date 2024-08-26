@@ -38,9 +38,9 @@ const Pagination = ({ total, page, onChange }: Props) => {
       >
         {pagination.active !== 1 && (
           <Button
+            className="inline-flex cursor-pointer items-center justify-center bg-white px-2 text-alpha-700 hover:bg-alpha-50 md:px-3"
             noStyle
             onClick={() => pagination.previous()}
-            className="inline-flex cursor-pointer items-center justify-center bg-white px-2 text-alpha-700 hover:bg-alpha-50 md:px-3"
           >
             قبلی
           </Button>
@@ -50,14 +50,14 @@ const Pagination = ({ total, page, onChange }: Props) => {
           <Fragment key={idx}>
             {typeof page === "number" ? (
               <Button
-                noStyle
-                onClick={() => pagination.setPage(page)}
                 className={clsx([
                   "inline-flex h-8 w-8 cursor-pointer items-center justify-center hover:bg-alpha-50 md:h-12 md:w-12",
                   page === pagination.active
                     ? "bg-alpha-50 font-bold text-alpha-800"
                     : "bg-white"
                 ])}
+                noStyle
+                onClick={() => pagination.setPage(page)}
               >
                 {digitsEnToFa(page)}
               </Button>
@@ -70,25 +70,25 @@ const Pagination = ({ total, page, onChange }: Props) => {
         ))}
         {pagination.active !== total && (
           <Button
+            className="inline-flex cursor-pointer items-center justify-center bg-white px-2 hover:bg-alpha-50 md:px-3"
             noStyle
             onClick={() => pagination.next()}
-            className="inline-flex cursor-pointer items-center justify-center bg-white px-2 hover:bg-alpha-50 md:px-3"
           >
             بعدی
           </Button>
         )}
         <Input
           placeholder="شماره صفحه را وارد کنید"
+          value={inputValue}
           onChange={(e) => {
             setInputValue(e.target.value)
           }}
-          value={inputValue}
         />
         <Button
-          noStyle
-          disabled={!inputValue}
-          onClick={() => pagination.setPage(+inputValue)}
           className="inline-flex cursor-pointer items-center justify-center bg-white px-2 hover:bg-alpha-50 md:px-3"
+          disabled={!inputValue}
+          noStyle
+          onClick={() => pagination.setPage(+inputValue)}
         >
           برو
         </Button>

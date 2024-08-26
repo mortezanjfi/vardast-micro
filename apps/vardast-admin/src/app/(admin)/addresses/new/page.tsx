@@ -5,8 +5,8 @@ import { AddressRelatedTypes } from "@vardast/graphql/generated"
 import { getServerSession } from "next-auth"
 
 type CreateAddressPageProps = {
-  params: { slug: Array<string | number> }
-  searchParams: { [key: string]: string | string[] | undefined }
+  params: { slug: (string | number)[] }
+  searchParams: Record<string, string | string[] | undefined>
 }
 
 const CreateAddressPage = async ({
@@ -24,9 +24,9 @@ const CreateAddressPage = async ({
 
   return (
     <AddressForm
+      fallback={fallback as string}
       relatedId={+id}
       relatedType={type as keyof typeof AddressRelatedTypes}
-      fallback={fallback as string}
     />
   )
 }

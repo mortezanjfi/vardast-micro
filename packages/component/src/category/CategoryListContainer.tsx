@@ -58,8 +58,8 @@ const CategoryListContainer: React.FC<ICategoryListContainer> = ({
         <div className="border-t-2 bg-alpha-white">
           <div className="container mx-auto sm:py-8">
             <MobileHomeTopBlogs
-              isMobileView={isMobileView}
               getAllBlogsQuery={getAllBlogsQuery}
+              isMobileView={isMobileView}
             />
           </div>
         </div>
@@ -69,11 +69,11 @@ const CategoryListContainer: React.FC<ICategoryListContainer> = ({
           <div className="flex flex-col gap-y border-t-2 bg-alpha-white px-6 py-8">
             <h4 className="text-alpha-500">معرفی</h4>
             <div
-              ref={descriptionRef}
               className={`${more ? "" : "line-clamp-2"}`}
+              ref={descriptionRef}
             >
               {description.split("\n\n").map((paragraph, index) => (
-                <p key={index} className="text-justify text-base leading-6">
+                <p className="text-justify text-base leading-6" key={index}>
                   {paragraph}
                 </p>
               ))}

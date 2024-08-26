@@ -41,7 +41,7 @@ export type CheckedTypeByArgs<T, K> = T extends undefined ? K : T
 export type OnRowFunctionType<T> = (row: Row<T>) => void
 export type TableDirectDataType<T> = {
   directLoading?: boolean
-  data: Array<Partial<T>>
+  data: Partial<T>[]
 }
 
 type FetchWithData<TData> = {
@@ -72,7 +72,7 @@ export type UseTableType = <
   dependencies?: DependencyList
 }) => ITableProps<T, TSchema, TState, TResponse>
 
-export type Column<T> = Array<ColumnDef<T>>
+export type Column<T> = ColumnDef<T>[]
 export interface ITableProps<
   T,
   TSchema extends ZodType<any, any, any> = undefined,
@@ -88,10 +88,10 @@ export interface ITableProps<
   container?: Omit<CardProps, "children">
   onRow?: {
     onClick?: (row: Row<T>) => void
-    url?: (row: Row<T>) => string | string
+    url?: (row: Row<T>) => string  
   }
   fetch: FetchConfig<T, TArgs, TSchema>
-  handleResponse?: (args: TResponse) => Array<Partial<T>>
+  handleResponse?: (args: TResponse) => Partial<T>[]
   getTableState?: (args: Partial<TableState> & { data: T[] }) => void
   filters?: FilterOptions<TSchema>
 }

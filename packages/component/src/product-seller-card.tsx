@@ -44,16 +44,16 @@ export const ProductSellerCardSkeleton = ({
         >
           <div className="w-full">
             <Image
-              src={frameLessImage}
               alt="skeleton"
-              width={400}
+              className="animated-card"
               height={400 / ratio}
               layout="fixed"
+              objectFit="contain"
+              src={frameLessImage}
+              width={400}
               onLoad={({ naturalWidth, naturalHeight }: any) => {
                 setRatio(naturalWidth / naturalHeight)
               }}
-              objectFit="contain"
-              className="animated-card"
             />
           </div>
         </div>
@@ -109,11 +109,6 @@ const ProductSellerCard = forwardRef(
 
     return (
       <Link
-        ref={ref}
-        href={`/product/${product.id}/${product.name}`}
-        onClick={() => {
-          setSelectedItemId && setSelectedItemId(product.id)
-        }}
         className={clsx(
           "md:h-none relative grid h-[calc((100vw-1.5rem)/2)] max-h-[calc((100vw-1.5rem)/2)] min-h-[calc((100vw-1.5rem)/2)] w-full flex-1 gap-2 rounded border bg-alpha-white p transition hover:z-10 md:h-full md:max-h-full md:min-h-full md:py md:ring-1 md:!ring-alpha-200 md:hover:shadow-lg lg:flex lg:flex-col lg:px-4",
           containerType === ProductContainerType.LARGE_LIST
@@ -121,6 +116,11 @@ const ProductSellerCard = forwardRef(
             : "overflow-hidden"
           // product.id === selectedItemId && "!border-y border-primary"
         )}
+        href={`/product/${product.id}/${product.name}`}
+        ref={ref}
+        onClick={() => {
+          setSelectedItemId && setSelectedItemId(product.id)
+        }}
       >
         {product.id === selectedItemId && (
           <div className="absolute left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center bg-alpha-white bg-opacity-50">
@@ -128,29 +128,29 @@ const ProductSellerCard = forwardRef(
           </div>
         )}
         <div
-          ref={productContainerRef}
           className={`relative flex flex-shrink-0 transform flex-col items-center justify-center bg-center bg-no-repeat align-middle opacity-0 transition-all duration-1000 ease-out`}
+          ref={productContainerRef}
         >
           <div
+            className="w-full"
             style={{
               height: imageContainerHeight
             }}
-            className="w-full"
           >
             {product.images.at(0)?.file.presignedUrl.url ? (
               <Image
-                src={product.images.at(0)?.file.presignedUrl.url as string}
                 alt={product.name}
-                fill
                 className="object-contain"
+                fill
+                src={product.images.at(0)?.file.presignedUrl.url}
                 onLoad={onLoaddImage}
               />
             ) : (
               <Image
-                src={blankImage}
                 alt={product.name}
-                fill
                 className="object-contain"
+                fill
+                src={blankImage}
                 onLoad={onLoaddImage}
               />
             )}
@@ -161,8 +161,8 @@ const ProductSellerCard = forwardRef(
             <div></div>
             <div className="row-span-2">
               <h5
-                title={product.name}
                 className="my-auto line-clamp-2 max-h-10 overflow-hidden whitespace-pre-wrap font-semibold"
+                title={product.name}
               >
                 {product.name}
               </h5>
@@ -189,7 +189,7 @@ const ProductSellerCard = forwardRef(
                   )}
                 </div>
                 <div className="flex w-full items-center justify-end">
-                  <PriceTitle size="xs" price={product.lowestPrice.amount} />
+                  <PriceTitle price={product.lowestPrice.amount} size="xs" />
                 </div>
                 {product?.uom?.name && (
                   <div className="flex items-center justify-end text-xs text-alpha-500">

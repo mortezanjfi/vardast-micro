@@ -10,8 +10,8 @@ const IconProvider = ({
 }) => {
   return (
     <Link
-      href={href}
       className="mx-auto flex h-14 w-14 flex-col items-center justify-center rounded-lg bg-alpha-50 p-1.5 text-primary"
+      href={href}
     >
       <Icon className="h-2/3 w-2/3" />
     </Link>

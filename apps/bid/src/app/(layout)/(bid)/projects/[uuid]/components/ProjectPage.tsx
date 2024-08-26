@@ -100,8 +100,8 @@ const ProjectPage = ({ uuid }: IOrderPageProps) => {
           cell: ({ row }) => {
             return (
               <Button
-                variant="link"
                 size="small"
+                variant="link"
                 onClick={() => {
                   onChangeModals({
                     type: OrderModalEnum.DELETE_ADDRESS,
@@ -167,8 +167,8 @@ const ProjectPage = ({ uuid }: IOrderPageProps) => {
           cell: ({ row }) => {
             return (
               <Button
-                variant="link"
                 size="small"
+                variant="link"
                 onClick={() => {
                   onChangeModals({
                     type: OrderModalEnum.DELETE_USER,

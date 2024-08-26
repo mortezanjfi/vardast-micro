@@ -40,8 +40,8 @@ const Vocabularies = () => {
         )}
       </PageHeader>
       <VocabularyDeleteModal
-        vocabularyToDelete={vocabularyToDelete}
         open={deleteModalOpen}
+        vocabularyToDelete={vocabularyToDelete}
         onOpenChange={setDeleteModalOpen}
       />
       <div className="flex flex-col gap-2">
@@ -49,12 +49,12 @@ const Vocabularies = () => {
           (vocabulary) =>
             vocabulary && (
               <VocabularyCard
+                key={vocabulary.id}
                 vocabulary={vocabulary as Vocabulary}
                 onDeleteTriggered={(vocabulary) => {
                   setDeleteModalOpen(true)
                   setVocabularyToDelete(vocabulary)
                 }}
-                key={vocabulary.id}
               />
             )
         )}

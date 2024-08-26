@@ -76,12 +76,12 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
   //args need for products tab------->
   const productArgs: IndexProductInput = {}
   if (categoryId && categoryId.length > 0)
-    productArgs["categoryIds"] = [+categoryId]
+    productArgs.categoryIds = [+categoryId]
 
   //args need for brands tab-------->
   const brandsArgs: IndexBrandInput = {}
   if (categoryId && categoryId.length > 0)
-    brandsArgs["categoryId"] = +categoryId
+    brandsArgs.categoryId = +categoryId
 
   if (!categoryQuery) {
     // return <NoProductFound />
@@ -109,14 +109,14 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
     <div className="flex flex-col">
       {isMobileView ? (
         <SearchHeader
-          selectedCategoryId={categoryId as unknown as number}
           isMobileView={isMobileView}
+          selectedCategoryId={categoryId as unknown as number}
         />
       ) : null}
       <Tabs
+        className="flex h-full w-full flex-col bg-alpha-white"
         value={activeTab}
         onValueChange={(e) => setActiveTab(e as CATEGORY_PAGE_TABS)}
-        className="flex h-full w-full flex-col bg-alpha-white"
       >
         {categoryQuery.isLoading ||
         categoryQuery.isFetching ||
@@ -127,9 +127,9 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
           <TabsList className="sticky top-0 z-50 grid w-full auto-cols-auto grid-flow-col bg-alpha-white font-medium sm:z-0  md:flex">
             {categoryQuery?.data?.category?.childrenCount > 0 && (
               <TabsTrigger
-                onClick={(value) => console.log(value)}
                 className="whitespace-nowrap py-4"
                 value={CATEGORY_PAGE_TABS.SUBCATEGORIES}
+                onClick={(value) => console.log(value)}
               >
                 {t(`common:${CATEGORY_PAGE_TABS.SUBCATEGORIES}`)}
               </TabsTrigger>
@@ -169,34 +169,34 @@ const CategoriesPage = ({ categoryId, isMobileView }: CategoriesPageProps) => {
                   ? false
                   : true
               }
-              getAllBlogsQuery={getAllBlogsQuery}
-              description={categoryQuery?.data?.category?.description}
               data={categoryQuery?.data?.category.children}
+              description={categoryQuery?.data?.category?.description}
+              getAllBlogsQuery={getAllBlogsQuery}
               isLoading={categoryQuery.isLoading}
-              isSubcategory
               isMobileView={isMobileView}
+              isSubcategory
             />
           </TabsContent>
         )}
         <TabsContent value={CATEGORY_PAGE_TABS.ORDERS}>
           <CategoriesPublicOrders
+            categoryId={categoryId}
             publicPreOrders={publicPreOrders}
             title={false}
-            categoryId={categoryId}
           />
         </TabsContent>
         <TabsContent value={CATEGORY_PAGE_TABS.BRANDS}>
           <BrandsList
-            hasTitle={false}
             args={brandsArgs}
+            hasTitle={false}
             isMobileView={isMobileView}
           />
         </TabsContent>
         <TabsContent value={CATEGORY_PAGE_TABS.PRODUCTS}>
           <ProductList
+            args={productArgs}
             hasTitle={false}
             isMobileView={isMobileView}
-            args={productArgs}
           />
         </TabsContent>
       </Tabs>

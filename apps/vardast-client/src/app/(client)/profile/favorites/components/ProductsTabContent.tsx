@@ -41,10 +41,10 @@ export const ProductsTabContent = ({
                 (product) =>
                   product && (
                     <ProductCard
-                      selectedItemId={selectedItemId}
-                      setSelectedItemId={setSelectedItemId}
                       key={product.id}
                       product={product as Product}
+                      selectedItemId={selectedItemId}
+                      setSelectedItemId={setSelectedItemId}
                     />
                   )
               )}

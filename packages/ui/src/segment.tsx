@@ -126,8 +126,6 @@ const SegmentsListItem = forwardRef(
   ) => {
     return (
       <div
-        ref={ref}
-        onClick={onClick}
         className={clsx(
           "relative inline-block w-auto",
           !noStyle &&
@@ -136,7 +134,9 @@ const SegmentsListItem = forwardRef(
               : "mx-1 cursor-pointer rounded-full border border-alpha-300"),
           className
         )}
+        ref={ref}
         style={style}
+        onClick={onClick}
       >
         {React.Children.map(children as ReactNode, (child) => {
           if (React.isValidElement(child)) {
@@ -167,7 +167,7 @@ const SegmentsContent: React.FC<
   }
 > = ({ isVisible, style, className, id, children }) => {
   return isVisible ? (
-    <div id={id ?? undefined} style={style} className={className}>
+    <div className={className} id={id ?? undefined} style={style}>
       {children}
     </div>
   ) : null
@@ -214,23 +214,23 @@ const SegmentTab = <T extends string>({
 }: ISegmentTab<T>) => {
   return (
     <Segments
+      className="col-span-full flex w-full flex-col bg-alpha-white"
       value={activeTab}
       onValueChange={onValueChange}
-      className="col-span-full flex w-full flex-col bg-alpha-white"
     >
-      <SegmentsList wrap={false} className="!justify-start border-b pb md:py-6">
+      <SegmentsList className="!justify-start border-b pb md:py-6" wrap={false}>
         {tabs.map(({ title, value }) => (
           <SegmentsListItem
+            className={clsx("no-select")}
             key={value}
             noStyle
-            className={clsx("no-select")}
-            value={value}
             style={{
               width:
                 !isMobileView || tabs.length > 3
                   ? "auto"
                   : `${100 / tabs.length}%`
             }}
+            value={value}
           >
             <>
               <div

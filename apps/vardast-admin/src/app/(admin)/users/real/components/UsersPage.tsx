@@ -136,10 +136,10 @@ const UsersPage = ({ title, roleIds }: Props) => {
   return (
     <>
       <UserModal
-        onCloseModals={onCloseModals}
-        onChangeModals={onChangeModals}
         modals={modals}
         open={modals?.type === RealModalEnum.INFO}
+        onChangeModals={onChangeModals}
+        onCloseModals={onCloseModals}
       />
       <Table {...tableProps} />
     </>

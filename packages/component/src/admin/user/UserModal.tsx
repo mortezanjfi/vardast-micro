@@ -130,7 +130,7 @@ const UserModal = ({
   )
 
   const onSubmit = (data: UserModalType) => {
-    let body = {
+    const body = {
       ...data,
       cellphone: data?.cellphone ? digitsFaToEn(data?.cellphone) : undefined,
       nationalCode: data?.nationalCode
@@ -236,10 +236,10 @@ const UserModal = ({
             </FormLabel>
             <FormControl>
               <Input
-                type="tel"
-                inputMode="numeric"
                 className="placeholder:text-left"
+                inputMode="numeric"
                 placeholder={digitsEnToFa("***********")}
+                type="tel"
                 {...field}
                 onChange={(e) => {
                   e.target.value.length <= 10 &&
@@ -259,10 +259,10 @@ const UserModal = ({
             <FormLabel>{t("common:cellphone")}</FormLabel>
             <FormControl>
               <Input
-                type="tel"
-                inputMode="numeric"
                 className="placeholder:text-left"
+                inputMode="numeric"
                 placeholder={digitsEnToFa("09*********")}
+                type="tel"
                 {...field}
                 onChange={(e) => {
                   e.target.value.length <= 11 &&
@@ -285,18 +285,18 @@ const UserModal = ({
             <FormControl>
               <DatePicker
                 clock={false}
-                value={value ? new DateObject(new Date(value)) : ""}
-                onChange={(dateObject: DateObject) => {
-                  onChange(
-                    dateObject?.isValid ? dateObject?.toDate?.().toString() : ""
-                  )
-                }}
                 render={(renderedValue, openCalendar) => {
                   return (
                     <SelectPopoverTrigger
                       label={renderedValue}
                       onClick={openCalendar}
                     />
+                  )
+                }}
+                value={value ? new DateObject(new Date(value)) : ""}
+                onChange={(dateObject: DateObject) => {
+                  onChange(
+                    dateObject?.isValid ? dateObject?.toDate?.().toString() : ""
                   )
                 }}
               />
@@ -328,6 +328,13 @@ const UserModal = ({
                 <FormLabel>{t("common:status")}</FormLabel>
                 <FormControl>
                   <SelectPopover
+                    options={Object.entries(
+                      enumToKeyValueObject(UserStatusesEnum)
+                    )?.map(([value, key]) => ({
+                      key: UserStatusesEnumFa[key as UserStatusesEnum]?.name_fa,
+                      value: value.toUpperCase()
+                    }))}
+                    value={`${field.value}`}
                     onSelect={(value) => {
                       form.setValue(
                         "status",
@@ -337,13 +344,6 @@ const UserModal = ({
                         }
                       )
                     }}
-                    options={Object.entries(
-                      enumToKeyValueObject(UserStatusesEnum)
-                    )?.map(([value, key]) => ({
-                      key: UserStatusesEnumFa[key as UserStatusesEnum]?.name_fa,
-                      value: value.toUpperCase()
-                    }))}
-                    value={`${field.value}`}
                   />
                 </FormControl>
                 <FormMessage />
@@ -358,6 +358,14 @@ const UserModal = ({
                 <FormLabel>{t("common:language")}</FormLabel>
                 <FormControl>
                   <SelectPopover
+                    options={Object.entries(
+                      enumToKeyValueObject(UserLanguagesEnum)
+                    )?.map(([value, key]) => ({
+                      key: UserLanguagesEnumFa[key as UserLanguagesEnum]
+                        ?.name_fa,
+                      value: value.toUpperCase()
+                    }))}
+                    value={`${field.value}`}
                     onSelect={(value) => {
                       form.setValue(
                         "language",
@@ -367,14 +375,6 @@ const UserModal = ({
                         }
                       )
                     }}
-                    options={Object.entries(
-                      enumToKeyValueObject(UserLanguagesEnum)
-                    )?.map(([value, key]) => ({
-                      key: UserLanguagesEnumFa[key as UserLanguagesEnum]
-                        ?.name_fa,
-                      value: value.toUpperCase()
-                    }))}
-                    value={`${field.value}`}
                   />
                 </FormControl>
                 <FormMessage />
@@ -406,16 +406,16 @@ const UserModal = ({
                 </FormLabel>
                 <FormControl>
                   <SelectPopover
-                    onSelect={(value) => {
-                      form.setValue("displayRoleId", value, {
-                        shouldDirty: true
-                      })
-                    }}
                     options={displayRoles?.map((role) => ({
                       key: role.displayName,
                       value: `${role.id}`
                     }))}
                     value={`${field.value}`}
+                    onSelect={(value) => {
+                      form.setValue("displayRoleId", value, {
+                        shouldDirty: true
+                      })
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -431,7 +431,7 @@ const UserModal = ({
                   {getAllRolesQuery.data?.roles?.data
                     ?.filter((role) => role && role.isActive)
                     ?.map((role) => (
-                      <FormItem key={role?.id} className="checkbox-field">
+                      <FormItem className="checkbox-field" key={role?.id}>
                         <FormControl>
                           <Checkbox
                             checked={field?.value?.includes(role?.id)}

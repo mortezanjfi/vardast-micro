@@ -40,7 +40,7 @@ const BrandOrSellersTab = ({
   isBrand = true,
   productsProps
 }: {
-  slug: Array<string | number>
+  slug: (string | number)[]
   isBrand?: boolean
   productsProps: IBrandOrSellerProfile
 }) => {
@@ -142,6 +142,7 @@ const BrandOrSellersTab = ({
                 />
                 {!productsProps.isMobileView && (
                   <TotalItemsReport
+                    title="فروشندگان این برند"
                     total={
                       brandToSellerQuery.isLoading ||
                       brandToSellerQuery.isFetching
@@ -149,7 +150,6 @@ const BrandOrSellersTab = ({
                         : brandToSellerQuery.data?.pages[0].takeBrandToSeller
                             .total
                     }
-                    title="فروشندگان این برند"
                   />
                 )}
               </div>
@@ -163,6 +163,7 @@ const BrandOrSellersTab = ({
                 />{" "}
                 {!productsProps.isMobileView && (
                   <TotalItemsReport
+                    title="برندهای این فروشنده"
                     total={
                       brandsOfSellerQuery.isLoading ||
                       brandsOfSellerQuery.isFetching
@@ -170,7 +171,6 @@ const BrandOrSellersTab = ({
                         : brandsOfSellerQuery.data?.pages[0].brandsOfSeller
                             .total
                     }
-                    title="برندهای این فروشنده"
                   />
                 )}
               </div>
@@ -192,19 +192,19 @@ const BrandOrSellersTab = ({
                             (seller, index) =>
                               seller && (
                                 <BrandOrSellerCard
+                                  content={{
+                                    ...(seller as Seller),
+                                    __typename: "Seller"
+                                  }}
+                                  key={seller.id}
                                   ref={
                                     page.takeBrandToSeller.data.length - 1 ===
                                     index
                                       ? ref
                                       : undefined
                                   }
-                                  key={seller.id}
                                   selectedItemId={selectedItemId}
                                   setSelectedItemId={setSelectedItemId}
-                                  content={{
-                                    ...(seller as Seller),
-                                    __typename: "Seller"
-                                  }}
                                 />
                               )
                           )}
@@ -222,19 +222,19 @@ const BrandOrSellersTab = ({
                             (brandsOfSeller, index) =>
                               brandsOfSeller && (
                                 <BrandOrSellerCard
-                                  selectedItemId={selectedItemId}
-                                  setSelectedItemId={setSelectedItemId}
+                                  content={{
+                                    ...(brandsOfSeller as Brand),
+                                    __typename: "Brand"
+                                  }}
+                                  key={brandsOfSeller.id}
                                   ref={
                                     page.brandsOfSeller.data.length - 1 ===
                                     index
                                       ? ref
                                       : undefined
                                   }
-                                  key={brandsOfSeller.id}
-                                  content={{
-                                    ...(brandsOfSeller as Brand),
-                                    __typename: "Brand"
-                                  }}
+                                  selectedItemId={selectedItemId}
+                                  setSelectedItemId={setSelectedItemId}
                                 />
                               )
                           )}

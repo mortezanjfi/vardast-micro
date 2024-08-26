@@ -10,8 +10,8 @@ export default function NextThemeProvider({ children }: Props) {
   return (
     <ThemeProvider
       attribute="class"
-      enableSystem={false}
       disableTransitionOnChange
+      enableSystem={false}
     >
       {children}
     </ThemeProvider>

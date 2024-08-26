@@ -37,7 +37,7 @@ const MobileHeader = ({
       )}
       {back && (
         <div className="flex h-full flex-col items-center justify-center">
-          <Button variant={"ghost"} onClick={() => router.back()} iconOnly>
+          <Button iconOnly variant={"ghost"} onClick={() => router.back()}>
             <ArrowRightIcon className="h-6 w-6 text-alpha-white" />
           </Button>
         </div>
@@ -45,9 +45,9 @@ const MobileHeader = ({
       {hamburger && (
         <div className="flex h-full flex-col items-center justify-center">
           <Button
-            onClick={() => setSidebarHamburger(true)}
-            variant={"ghost"}
             iconOnly
+            variant={"ghost"}
+            onClick={() => setSidebarHamburger(true)}
           >
             <Bars3Icon className="h-6 w-6 text-alpha-white" />
           </Button>
@@ -59,10 +59,10 @@ const MobileHeader = ({
             {title.type === "image" ? (
               <div className="relative mx-auto h-full">
                 <Image
-                  src={title.value ?? logo}
                   alt={"vardast"}
-                  fill
                   className="mx-auto h-full w-full object-contain"
+                  fill
+                  src={title.value ?? logo}
                 />
               </div>
             ) : (

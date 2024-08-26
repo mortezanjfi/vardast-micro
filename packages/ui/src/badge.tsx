@@ -1,6 +1,7 @@
 import * as React from "react"
 import { mergeClasses } from "@vardast/tailwind-config/mergeClasses"
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva  } from "class-variance-authority"
+import type {VariantProps} from "class-variance-authority";
 
 const badgeVariants = cva(
   "focus:ring-ring inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2",

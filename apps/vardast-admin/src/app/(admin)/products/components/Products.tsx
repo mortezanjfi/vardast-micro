@@ -212,13 +212,13 @@ const Products = () => {
               return (
                 <div className="relative aspect-square h-12 w-12 overflow-hidden rounded">
                   <Image
+                    alt={row.original.name}
+                    fill
+                    sizes="5vw"
                     src={
                       (row.original.images.at(0)?.file.presignedUrl
-                        .url as string) ?? "/images/seller-blank.png"
+                        .url) ?? "/images/seller-blank.png"
                     }
-                    alt={row.original.name}
-                    sizes="5vw"
-                    fill
                   />
                 </div>
               )
@@ -320,8 +320,8 @@ const Products = () => {
               return (
                 <div className="flex gap-2">
                   <Link
-                    target="_blank"
                     href={`/products/${row.original.id}/${row.original.name}`}
+                    target="_blank"
                   >
                     <span className="tag cursor-pointer text-blue-500">
                       {t("common:edit")}
@@ -350,10 +350,10 @@ const Products = () => {
   return (
     <>
       <ProductDeleteModal
-        onChangeModals={onChangeModals}
-        onCloseModals={onCloseModals}
         modals={modals}
         open={modals?.type === ProductModalEnum.DELETE}
+        onChangeModals={onChangeModals}
+        onCloseModals={onCloseModals}
       />
       <Table {...tableProps} />
     </>

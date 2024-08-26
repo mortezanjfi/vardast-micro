@@ -86,9 +86,7 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@vardast/eslint-config/base",
-      "@vardast/eslint-config/nextjs",
-      "@vardast/eslint-config/react"
+      "@vardast/eslint-config/base"
     ]
   },
   "prettier": "@vardast/prettier-config"

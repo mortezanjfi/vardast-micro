@@ -8,9 +8,8 @@ import useTranslation from "next-translate/useTranslation"
 import { z } from "zod"
 
 import { CatalogModalType } from "@/app/(admin)/brands/components/BrandFilesModal"
-import BrandInformationForm, {
-  type NewBrandInformationType
-} from "@/app/(admin)/brands/components/BrandInformationForm"
+import BrandInformationForm from "@/app/(admin)/brands/components/BrandInformationForm"
+import type {NewBrandInformationType} from "@/app/(admin)/brands/components/BrandInformationForm";
 import { CatalogOrPriceNewFiles } from "@/app/(admin)/brands/components/CatalogOrPriceNewFiles"
 
 export type NewBrandType = {
@@ -47,26 +46,26 @@ export const BrandForm = ({ brand }: BrandFormProps) => {
 
         <TabsContent value="information">
           <BrandInformationForm
-            brand={brand as Brand}
-            setNewBrandData={setNewBrandData}
-            setActiveTab={setActiveTab}
             activeTab={activeTab}
+            brand={brand}
+            setActiveTab={setActiveTab}
+            setNewBrandData={setNewBrandData}
           />
         </TabsContent>
         <TabsContent value="catalog">
           <CatalogOrPriceNewFiles
-            brand={brand as Brand}
-            setNewBrandData={setNewBrandData}
             activeTab={activeTab}
+            brand={brand}
             setActiveTab={setActiveTab}
+            setNewBrandData={setNewBrandData}
           />
         </TabsContent>
         <TabsContent value="price">
           <CatalogOrPriceNewFiles
-            brand={brand as Brand}
-            setNewBrandData={setNewBrandData}
             activeTab={activeTab}
+            brand={brand}
             setActiveTab={setActiveTab}
+            setNewBrandData={setNewBrandData}
           />
         </TabsContent>
       </Tabs>{" "}

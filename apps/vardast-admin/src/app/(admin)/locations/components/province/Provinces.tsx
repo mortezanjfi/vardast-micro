@@ -40,8 +40,8 @@ const Provinces = ({ countrySlug }: Props) => {
   return (
     <>
       <DeleteProvinceModal
-        provinceToDelete={provinceToDelete}
         open={deleteModalOpen}
+        provinceToDelete={provinceToDelete}
         onOpenChange={setDeleteModalOpen}
       />
       <PageHeader title={data.country.name}>
@@ -57,14 +57,14 @@ const Provinces = ({ countrySlug }: Props) => {
             (province) =>
               province && (
                 <ProvinceCard
+                  countrySlug={countrySlug}
                   key={province.id}
+                  province={province as Province}
+                  show={activesOnly ? province.isActive : true}
                   onDeleteTriggered={(province) => {
                     setDeleteModalOpen(true)
                     setProvinceToDelete(province)
                   }}
-                  show={activesOnly ? province.isActive : true}
-                  province={province as Province}
-                  countrySlug={countrySlug}
                 />
               )
           )}

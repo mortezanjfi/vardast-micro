@@ -7,8 +7,8 @@ import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 import AllProductsIndexPage from "@/app/(seller)/products/all-products/AllProductsIndexPage"
 
 type SearchIndexProps = {
-  params: { slug: Array<string | number> }
-  searchParams: { [key: string]: string | string[] | undefined }
+  params: { slug: (string | number)[] }
+  searchParams: Record<string, string | string[] | undefined>
 }
 
 async function ManageProductPage({

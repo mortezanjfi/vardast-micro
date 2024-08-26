@@ -95,11 +95,10 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   { href, onClick, prefetch, ...rest },
   ref
 ) {
-  const useLink = href && (href as string).startsWith("/")
+  const useLink = href && href.startsWith("/")
 
-  if (!useLink) return <a href={href as string} onClick={onClick} {...rest} />
+  if (!useLink) return <a href={href} onClick={onClick} {...rest} />
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { onRouteChangeStart } = useRouteChangeContext()
   return (
     <NextLink
@@ -108,7 +107,7 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
         if (!isModifiedEvent(event)) {
           const { pathname, search, hash } = window.location
           const hrefCurrent = `${pathname}${search}${hash}`
-          const hrefTarget = href as string
+          const hrefTarget = href
           if (hrefTarget !== hrefCurrent) {
             onRouteChangeStart()
           }

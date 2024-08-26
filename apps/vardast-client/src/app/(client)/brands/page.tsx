@@ -9,7 +9,7 @@ import QUERY_FUNCTIONS_KEY from "@vardast/query/queryFns/queryFunctionsKey"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
 interface BrandsIndexProps {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Record<string, string | string[] | undefined>
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -24,14 +24,14 @@ const BrandsIndex = async ({ searchParams }: BrandsIndexProps) => {
 
   const args: IndexBrandInput = {}
 
-  args["page"] =
+  args.page =
     searchParams.page && +searchParams.page[0] > 0 ? +searchParams.page[0] : 1
   if (searchParams.query && searchParams.query.length)
-    args["name"] = searchParams.query as string
-  args["name"] = ""
-  args["orderBy"] = searchParams.sortType as SortBrandEnum
-  args["categoryId"] = +searchParams.categoryId
-  args["categoryIds"] = [+searchParams.categoryIds]
+    args.name = searchParams.query as string
+  args.name = ""
+  args.orderBy = searchParams.sortType as SortBrandEnum
+  args.categoryId = +searchParams.categoryId
+  args.categoryIds = [+searchParams.categoryIds]
 
   await queryClient.prefetchInfiniteQuery(
     [QUERY_FUNCTIONS_KEY.GET_ALL_BRANDS_QUERY_KEY, args],
@@ -44,9 +44,9 @@ const BrandsIndex = async ({ searchParams }: BrandsIndexProps) => {
     <ReactQueryHydrate state={dehydratedState}>
       <BrandsPage
         // hasSearch
-        limitPage={5}
         args={args}
         isMobileView={isMobileView}
+        limitPage={5}
       />
     </ReactQueryHydrate>
   )

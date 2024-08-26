@@ -37,10 +37,10 @@ const MobileSortFilter = ({ sort, onSortChanged }: MobileSortFilterProps) => {
             <div className="sticky top-0 border-b border-alpha-200 bg-white p-4">
               <div className="flex items-center gap-2">
                 <Button
-                  onClick={() => setSortFilterVisibility(false)}
-                  variant="ghost"
-                  size="small"
                   iconOnly
+                  size="small"
+                  variant="ghost"
+                  onClick={() => setSortFilterVisibility(false)}
                 >
                   <LucideArrowRight className="h-5 w-5" />
                 </Button>
@@ -50,25 +50,25 @@ const MobileSortFilter = ({ sort, onSortChanged }: MobileSortFilterProps) => {
             <div className="p-4">
               <div className="flex flex-col divide-y divide-alpha-200">
                 <Button
-                  noStyle
                   className={clsx([
                     "py-3 text-start",
                     sort === ProductSortablesEnum.Newest
                       ? "font-bold text-primary-500"
                       : "text-alpha-700"
                   ])}
+                  noStyle
                   onClick={() => onSortChanged(ProductSortablesEnum.Newest)}
                 >
                   جدیدترین
                 </Button>
                 <Button
-                  noStyle
                   className={clsx([
                     "py-3 text-start",
                     sort === ProductSortablesEnum.MostAffordable
                       ? "font-bold text-primary-500"
                       : "text-alpha-700"
                   ])}
+                  noStyle
                   onClick={() =>
                     onSortChanged(ProductSortablesEnum.MostAffordable)
                   }
@@ -76,13 +76,13 @@ const MobileSortFilter = ({ sort, onSortChanged }: MobileSortFilterProps) => {
                   ارزان‌ترین
                 </Button>
                 <Button
-                  noStyle
                   className={clsx([
                     "py-3 text-start",
                     sort === ProductSortablesEnum.MostExpensive
                       ? "font-bold text-primary-500"
                       : "text-alpha-700"
                   ])}
+                  noStyle
                   onClick={() =>
                     onSortChanged(ProductSortablesEnum.MostExpensive)
                   }

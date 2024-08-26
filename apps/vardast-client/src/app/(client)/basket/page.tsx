@@ -20,7 +20,7 @@ export default async () => {
   const queryClient = getQueryClient()
   const session = await getServerSession(authOptions)
 
-  if (!!session) {
+  if (session) {
     await queryClient.prefetchQuery(
       [
         QUERY_FUNCTIONS_KEY.GET_ALL_USER_FAVORITE_PRODUCT,

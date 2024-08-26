@@ -23,13 +23,13 @@ const BrandSort = ({
       <ol className="flex items-center gap-2">
         <li>
           <Button
-            noStyle
             className={clsx([
               "rounded-lg px-3 py-2",
               sort === SortBrandEnum.Newest
                 ? `${bgColor}  text-alpha-white`
                 : "text-alpha-600"
             ])}
+            noStyle
             onClick={() => onSortChanged(SortBrandEnum.Newest)}
           >
             جدیدترین
@@ -37,13 +37,13 @@ const BrandSort = ({
         </li>
         <li>
           <Button
-            noStyle
             className={clsx([
               "rounded-lg px-3 py-2",
               sort === SortBrandEnum.Rating
                 ? `${bgColor}  text-alpha-white`
                 : "text-alpha-600"
             ])}
+            noStyle
             onClick={() => onSortChanged(SortBrandEnum.Rating)}
           >
             بالاترین امتیاز
@@ -51,13 +51,13 @@ const BrandSort = ({
         </li>
         <li>
           <Button
-            noStyle
             className={clsx([
               "rounded-lg px-3 py-2",
               sort === SortBrandEnum.Sum
                 ? `${bgColor}  text-alpha-white`
                 : "text-alpha-600"
             ])}
+            noStyle
             onClick={() => onSortChanged(SortBrandEnum.Sum)}
           >
             بیشترین کالا

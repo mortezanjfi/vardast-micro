@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+ 
 import { Button } from "@vardast/ui/button"
 import clsx from "clsx"
 import { LucideSortDesc } from "lucide-react"
@@ -29,13 +29,13 @@ const SellersSort = ({
       <ol className="flex items-center gap-2">
         <li>
           <Button
-            noStyle
             className={clsx([
               "rounded-lg px-3 py-2",
               sort === SellerSortStatic.Newest
                 ? `${bgColor} text-alpha-white`
                 : "text-alpha-600"
             ])}
+            noStyle
             onClick={() => onSortChanged(SellerSortStatic.Newest)}
           >
             جدیدترین
@@ -43,13 +43,13 @@ const SellersSort = ({
         </li>
         <li>
           <Button
-            noStyle
             className={clsx([
               "rounded-lg px-3 py-2",
               sort === SellerSortStatic.Rating
                 ? `${bgColor} text-alpha-white`
                 : "text-alpha-600"
             ])}
+            noStyle
             onClick={() => onSortChanged(SellerSortStatic.Rating)}
           >
             بالاترین امتیاز
@@ -57,13 +57,13 @@ const SellersSort = ({
         </li>
         <li>
           <Button
-            noStyle
             className={clsx([
               "rounded-lg px-3 py-2",
               sort === SellerSortStatic.Sum
                 ? `${bgColor} text-alpha-white`
                 : "text-alpha-600"
             ])}
+            noStyle
             onClick={() => onSortChanged(SellerSortStatic.Sum)}
           >
             بیشترین کالا

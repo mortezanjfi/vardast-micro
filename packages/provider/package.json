@@ -34,8 +34,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "@vardast/eslint-config/base",
-      "@vardast/eslint-config/react"
+      "@vardast/eslint-config/base"
     ]
   },
   "prettier": "@vardast/prettier-config"

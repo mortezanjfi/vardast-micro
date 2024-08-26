@@ -28,7 +28,7 @@ export const DesktopMenuCard = ({
       <ul className="flex flex-col gap-7 px-7 py-7">
         {listItems.map((listItem) => (
           <li key={listItem.id} className="hover:text-secondary">
-            <Link href={listItem.href as string}>{listItem.listText}</Link>
+            <Link href={listItem.href}>{listItem.listText}</Link>
           </li>
         ))}
       </ul>

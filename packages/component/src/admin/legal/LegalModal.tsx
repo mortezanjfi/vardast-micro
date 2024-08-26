@@ -99,7 +99,7 @@ const LegalModal = ({
   )
 
   const onSubmit = (data: CreateLegalInput) => {
-    let body = {
+    const body = {
       ...data,
       cellphone: data?.cellphone ? digitsFaToEn(data?.cellphone) : undefined,
       national_id: data?.national_id
@@ -207,7 +207,7 @@ const LegalModal = ({
               *
             </FormLabel>
             <FormControl>
-              <Input {...field} type="text" placeholder={t("common:enter")} />
+              <Input {...field} placeholder={t("common:enter")} type="text" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -226,10 +226,10 @@ const LegalModal = ({
             </FormLabel>
             <FormControl>
               <Input
-                type="tel"
-                inputMode="numeric"
                 className="placeholder:text-right"
+                inputMode="numeric"
                 placeholder={t("common:enter")}
+                type="tel"
                 {...field}
                 onChange={(e) => {
                   e.target.value.length <= 11 &&
@@ -253,10 +253,10 @@ const LegalModal = ({
             </FormLabel>
             <FormControl>
               <Input
-                type="tel"
-                inputMode="numeric"
                 className="placeholder:text-right"
+                inputMode="numeric"
                 placeholder={t("common:enter")}
+                type="tel"
                 {...field}
                 onChange={(e) => {
                   e.target.value.length <= 18 &&
@@ -280,10 +280,10 @@ const LegalModal = ({
             </FormLabel>
             <FormControl>
               <Input
-                type="tel"
-                inputMode="numeric"
                 className="placeholder:text-right"
+                inputMode="numeric"
                 placeholder={t("common:enter")}
+                type="tel"
                 {...field}
                 onChange={(e) => {
                   e.target.value.length <= 24 &&
@@ -307,10 +307,10 @@ const LegalModal = ({
                 </FormLabel>
                 <FormControl>
                   <Input
-                    type="tel"
-                    inputMode="numeric"
                     className="placeholder:text-left"
+                    inputMode="numeric"
                     placeholder={digitsEnToFa("09*********")}
+                    type="tel"
                     {...field}
                     onChange={(e) => {
                       e.target.value.length <= 11 &&
@@ -330,10 +330,10 @@ const LegalModal = ({
                 <FormLabel>{`${t("common:wallet")} (${t("common:toman")})`}</FormLabel>
                 <FormControl>
                   <Input
-                    type="tel"
-                    inputMode="numeric"
                     className="placeholder:text-right"
+                    inputMode="numeric"
                     placeholder={t("common:enter")}
+                    type="tel"
                     {...field}
                     onChange={(e) => {
                       field.onChange(digitsEnToFa(e.target.value))
@@ -352,6 +352,13 @@ const LegalModal = ({
                 <FormLabel>{t("common:status")}</FormLabel>
                 <FormControl>
                   <SelectPopover
+                    options={Object.entries(
+                      enumToKeyValueObject(LegalStatusEnum)
+                    )?.map(([value, key]) => ({
+                      key: LegalStatusEnumFa[key as LegalStatusEnum]?.name_fa,
+                      value: value.toUpperCase()
+                    }))}
+                    value={`${field.value}`}
                     onSelect={(value) => {
                       form.setValue(
                         "status",
@@ -361,13 +368,6 @@ const LegalModal = ({
                         }
                       )
                     }}
-                    options={Object.entries(
-                      enumToKeyValueObject(LegalStatusEnum)
-                    )?.map(([value, key]) => ({
-                      key: LegalStatusEnumFa[key as LegalStatusEnum]?.name_fa,
-                      value: value.toUpperCase()
-                    }))}
-                    value={`${field.value}`}
                   />
                 </FormControl>
                 <FormMessage />

@@ -2,7 +2,7 @@
 
 import Link from "@vardast/component/Link"
 import ProductSectionContainer from "@vardast/component/ProductSectionContainer"
-import { Price, Product } from "@vardast/graphql/generated"
+import { Product } from "@vardast/graphql/generated"
 import slugify from "@vardast/util/persian-slugify"
 import { Session } from "next-auth"
 
@@ -32,9 +32,9 @@ const ProductIntroduce = ({
         </Link>
         <ProductLowestPriceInfo
           isMobileView={isMobileView}
-          uom={product.uom.name}
+          lowestPrice={product.lowestPrice}
           session={session}
-          lowestPrice={product.lowestPrice as Price}
+          uom={product.uom.name}
         />
       </div>
     </ProductSectionContainer>

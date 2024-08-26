@@ -116,18 +116,18 @@ const SellersList = ({ limitPage, args, isMobileView }: SellersListProps) => {
                   (seller, index) =>
                     seller && (
                       <BrandOrSellerCard
-                        selectedItemId={selectedItemId}
-                        setSelectedItemId={setSelectedItemId}
+                        content={{
+                          ...(seller as Seller),
+                          __typename: "Seller"
+                        }}
+                        key={seller.id}
                         ref={
                           page.sellers.data.length - 1 === index
                             ? ref
                             : undefined
                         }
-                        key={seller.id}
-                        content={{
-                          ...(seller as Seller),
-                          __typename: "Seller"
-                        }}
+                        selectedItemId={selectedItemId}
+                        setSelectedItemId={setSelectedItemId}
                       />
                     )
                 )}
@@ -164,9 +164,9 @@ const SellersList = ({ limitPage, args, isMobileView }: SellersListProps) => {
 
   return (
     <DesktopMobileViewOrganizer
-      isMobileView={isMobileView}
       Content={Content}
       DesktopHeader={DesktopHeader}
+      isMobileView={isMobileView}
     />
   )
 }

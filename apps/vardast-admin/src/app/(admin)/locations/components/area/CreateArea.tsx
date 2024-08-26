@@ -120,7 +120,7 @@ const CreateArea = ({ cityId }: Props) => {
             </DialogTitle>
           </DialogHeader>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+            <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
               <>
                 {createAreaMutation.isError && <p>خطایی رخ داده</p>}
                 <div className="flex flex-col gap-6">
@@ -205,16 +205,16 @@ const CreateArea = ({ cityId }: Props) => {
               <DialogFooter>
                 <div className="flex items-center justify-end gap-2">
                   <Button
+                    disabled={form.formState.isSubmitting}
                     variant="ghost"
                     onClick={() => setOpen(false)}
-                    disabled={form.formState.isSubmitting}
                   >
                     {t("common:cancel")}
                   </Button>
                   <Button
-                    type="submit"
                     disabled={form.formState.isSubmitting}
                     loading={form.formState.isSubmitting}
+                    type="submit"
                   >
                     {t("common:submit")}
                   </Button>

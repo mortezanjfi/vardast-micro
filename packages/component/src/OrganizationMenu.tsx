@@ -11,7 +11,7 @@ const OrganizationMenu = (_: Props) => {
     <div className="mb-6">
       <div className="flex items-center gap-2 rounded p-1">
         <span className="avatar avatar-sm bg-white p-1">
-          <Image priority src={ndpLogo} alt="..." className="!rounded-none" />
+          <Image alt="..." className="!rounded-none" priority src={ndpLogo} />
         </span>
         <span className="truncate text-sm font-medium text-alpha-800">
           نیک داده پرداز

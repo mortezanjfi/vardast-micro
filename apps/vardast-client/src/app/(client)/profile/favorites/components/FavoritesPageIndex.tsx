@@ -58,10 +58,10 @@ const NotFoundItemsHelp = ({ text = "کالا" }) => {
       <div className="flex flex-col items-center justify-center">
         <div className="relative h-12 w-12">
           <Image
-            src="/favorite-gif.gif"
             alt="favorite-gif"
-            fill
             className="object-fill"
+            fill
+            src="/favorite-gif.gif"
             unoptimized={true}
           />
         </div>
@@ -127,15 +127,14 @@ const FavoritesPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
     return () => {
       setCacheFlag(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (status === "authenticated") {
     return (
       <Tabs
+        className="flex h-full w-full flex-col bg-alpha-white"
         value={activeTab}
         onValueChange={(e) => setActiveTab(e as FAVORITE_PAGE_TABS)}
-        className="flex h-full w-full flex-col bg-alpha-white"
       >
         <TabsList className="sticky top-0 z-50 grid w-full auto-cols-auto grid-flow-col bg-alpha-white font-medium sm:z-0  md:flex">
           <TabsTrigger
@@ -164,7 +163,7 @@ const FavoritesPageIndex = ({ isMobileView }: { isMobileView: boolean }) => {
         </TabsList>
 
         <TabsContent value={FAVORITE_PAGE_TABS.PRODUCTS}>
-          <ProductsTabContent session={session} productQuery={productQuery} />
+          <ProductsTabContent productQuery={productQuery} session={session} />
         </TabsContent>
         <TabsContent value={FAVORITE_PAGE_TABS.BRANDS}>
           <BrandsTabContent brandQuery={brandQuery} />

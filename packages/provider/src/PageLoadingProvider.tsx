@@ -32,11 +32,11 @@ const PageLoadingProvider = (_: Props) => {
         >
           <div className="mx-auto aspect-square h-16 w-16 md:h-28 md:w-28">
             <Image
-              src={logo}
               alt="seller"
-              width={50}
-              height={50}
               className="h-full w-full object-contain"
+              height={50}
+              src={logo}
+              width={50}
             />
           </div>
         </div>

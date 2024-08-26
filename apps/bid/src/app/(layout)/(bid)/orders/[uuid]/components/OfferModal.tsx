@@ -120,25 +120,25 @@ function OfferModal({
               id: "fi_price",
               header: t("common:fi_price"),
               accessorFn: ({ fi_price }) =>
-                digitsEnToFa(!!+fi_price ? addCommas(fi_price) : "-")
+                digitsEnToFa(+fi_price ? addCommas(fi_price) : "-")
             },
             {
               id: "tax_price",
               header: t("common:tax_price"),
               accessorFn: ({ tax_price }) =>
-                digitsEnToFa(!!+tax_price ? addCommas(tax_price) : "-")
+                digitsEnToFa(+tax_price ? addCommas(tax_price) : "-")
             },
             {
               id: "total_price",
               header: t("common:total_price"),
               accessorFn: ({ total_price }) =>
-                digitsEnToFa(!!+total_price ? addCommas(total_price) : "-")
+                digitsEnToFa(+total_price ? addCommas(total_price) : "-")
             },
             {
               id: "total_price",
               header: t("common:total_price"),
               accessorFn: ({ total_price }) =>
-                digitsEnToFa(!!+total_price ? addCommas(total_price) : "-")
+                digitsEnToFa(+total_price ? addCommas(total_price) : "-")
             }
           ]
         },
@@ -148,8 +148,8 @@ function OfferModal({
           cell: ({ row }) => {
             return (
               <Button
-                variant="link"
                 size="small"
+                variant="link"
                 onClick={() => {
                   onChangeModalsPrice({
                     data: row.original,
@@ -197,8 +197,8 @@ function OfferModal({
   return (
     <>
       <AddPriceModal
-        open={modalsPrice?.type === OrderModalEnum.ADD_OFFER}
         modals={modalsPrice}
+        open={modalsPrice?.type === OrderModalEnum.ADD_OFFER}
         onChangeModals={onChangeModalsPrice}
         onCloseModals={onCloseModalsPrice}
       />

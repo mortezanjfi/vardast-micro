@@ -267,30 +267,30 @@ const Dropzone = ({
                     (image) =>
                       image && (
                         <li
-                          key={image?.file.uuid}
                           className="relative h-32 overflow-hidden rounded border border-alpha-200"
+                          key={image?.file.uuid}
                           onClick={(e) => {
                             e.stopPropagation()
                           }}
                         >
                           <Image
+                            alt={image.file.uuid}
+                            className="relative z-0 h-full w-full object-contain"
+                            height={100}
                             src={
                               image.file.presignedUrl.url ||
                               blankProductImageSrc
                             }
-                            alt={image.file.uuid}
                             width={100}
-                            height={100}
-                            className="relative z-0 h-full w-full object-contain"
                           />
                           {!isCsv && (
                             <button
+                              className="absolute bottom-0 left-0 z-10 m-2 flex h-6 w-6 items-center justify-center rounded bg-red-500 text-white ring-2 ring-transparent transition hover:bg-red-600 hover:ring-red-500/50"
                               type="button"
                               onClick={(e) => {
                                 e.stopPropagation()
                                 onImageDelete(image.id)
                               }}
-                              className="absolute bottom-0 left-0 z-10 m-2 flex h-6 w-6 items-center justify-center rounded bg-red-500 text-white ring-2 ring-transparent transition hover:bg-red-600 hover:ring-red-500/50"
                             >
                               <Trash className="h-4 w-4" strokeWidth={1.5} />
                             </button>
@@ -300,10 +300,10 @@ const Dropzone = ({
                   )}
                 {files.map((file) => (
                   <li
-                    key={file.name}
                     className={clsx(
                       "relative h-32 overflow-hidden rounded border border-alpha-200"
                     )}
+                    key={file.name}
                   >
                     {file.status === "uploading" && (
                       <div className="absolute inset-0 z-10 flex h-full w-full items-center justify-center bg-alpha-800 bg-opacity-10 text-primary-600 backdrop-blur-sm">
@@ -313,6 +313,9 @@ const Dropzone = ({
                       </div>
                     )}
                     <Image
+                      alt={file.name}
+                      className="relative z-0 h-full w-full object-contain"
+                      height={100}
                       src={
                         file.name.includes(".png") ||
                         file.name.includes(".jpeg") ||
@@ -321,19 +324,16 @@ const Dropzone = ({
                           ? file.preview
                           : blankProductImageSrc
                       }
-                      alt={file.name}
                       width={100}
-                      height={100}
                       onLoad={() => {
                         URL.revokeObjectURL(file.preview)
                       }}
-                      className="relative z-0 h-full w-full object-contain"
                     />
                     {(file.status === "uploaded" || file.status === "failed") &&
                       !isCsv && (
                         <button
-                          type="button"
                           className="absolute bottom-0 left-0 z-10 m-2 flex h-6 w-6 items-center justify-center rounded bg-red-500 text-white ring-2 ring-transparent transition hover:bg-red-600 hover:ring-red-500/50"
+                          type="button"
                           onClick={() => removeFile(file.name)}
                         >
                           <Trash className="h-4 w-4" strokeWidth={1.5} />
@@ -343,11 +343,11 @@ const Dropzone = ({
                 ))}
                 {!isCsv && files.length < maxFiles && (
                   <button
-                    onClick={open}
-                    type="button"
                     className={
                       "btn flex h-32 w-32 flex-col gap-1 overflow-hidden rounded border border-alpha-200"
                     }
+                    type="button"
+                    onClick={open}
                   >
                     <PlusIcon className="h-12 w-12 text-alpha-400" />
                   </button>

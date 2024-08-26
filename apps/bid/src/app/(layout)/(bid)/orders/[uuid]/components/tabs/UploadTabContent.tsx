@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+ 
 import Card from "@vardast/component/Card"
 import Dropzone from "@vardast/component/Dropzone"
 import Link from "@vardast/component/Link"
@@ -40,30 +40,30 @@ function UploadTabContent({ uuid, onSubmit }: OrderProductTabContentProps) {
       <Card className="col-span-full">
         <Dropzone
           uploadPath={uploadPaths.orderPriceList}
+          withHeight={false}
           onAddition={(file) => {
             addFilePreOrderMutation.mutate({
               addFilePreOrderInput: {
-                file_uuid: file.uuid as string,
+                file_uuid: file.uuid,
                 pre_order_id: +uuid
               }
             })
           }}
-          withHeight={false}
         />
       </Card>
       <Card className="col-span-full">
         <Dropzone
-          uuidForCsv={uuid}
           isCsv={true}
+          uuidForCsv={uuid}
+          withHeight={false}
           onAddition={() => {
             onSubmit()
           }}
-          withHeight={false}
         />
         <Link
+          className="btn btn-md btn-primary"
           href="https://storage.vardast.com/vardast/order/example-order-csv.csv"
           target="_blank"
-          className="btn btn-md btn-primary"
         >
           دانلود فایل csv نمونه
         </Link>

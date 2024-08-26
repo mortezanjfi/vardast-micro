@@ -42,7 +42,7 @@ export type SellerQuery = GetSellerQuery["seller"]
 export type BrandQuery = GetBrandQuery["brand"]
 
 interface IBrandOrSellerProfile {
-  slug: Array<string | number>
+  slug: (string | number)[]
   type: EntityTypeEnum.Brand | EntityTypeEnum.Seller
   data?: BrandQuery | SellerQuery
   isFavoriteQuery: UseQueryResult<GetIsFavoriteQuery, unknown>
@@ -104,6 +104,9 @@ const BrandOrSellerProfile = ({
                   )}
                   <div className="aspect-square h-full w-full">
                     <Image
+                      alt="seller"
+                      className="h-full w-full object-contain md:rounded-full"
+                      height={100}
                       src={
                         isMobileView &&
                         (data as BrandQuery)?.bannerMobile?.presignedUrl?.url
@@ -111,10 +114,7 @@ const BrandOrSellerProfile = ({
                               ?.url
                           : brandSellerBlank
                       }
-                      alt="seller"
                       width={100}
-                      height={100}
-                      className="h-full w-full object-contain md:rounded-full"
                     />
                   </div>
                 </div>
@@ -139,13 +139,13 @@ const BrandOrSellerProfile = ({
                   <Image
                     alt="logo"
                     className="rounded-full border border-alpha-400"
-                    width={64}
                     height={64}
                     src={
                       data?.logoFile?.presignedUrl?.url
                         ? data?.logoFile?.presignedUrl?.url
                         : brandSellerBlank
                     }
+                    width={64}
                   />
                   <h1 className="text-base font-semibold">{data?.name}</h1>
                 </div>
@@ -165,14 +165,14 @@ const BrandOrSellerProfile = ({
       {!isMobileView && (
         <div className="relative hidden aspect-auto w-full overflow-hidden rounded-2xl border md:col-span-9 md:block">
           <Image
+            alt="banner"
+            className="h-full w-full object-cover"
+            fill
             src={
               (data as BrandQuery).bannerDesktop?.presignedUrl.url
                 ? `${(data as BrandQuery).bannerDesktop?.presignedUrl.url}`
                 : brandSellerBlank
             }
-            className="h-full w-full object-cover"
-            alt="banner"
-            fill
           />
         </div>
       )}
@@ -184,6 +184,7 @@ const BrandOrSellerProfile = ({
   return (
     <div className="flex flex-col bg-alpha-white md:h-full md:gap-9">
       <Segments
+        className="sticky left-0 right-0 top-0 h-full flex-col gap-9 bg-alpha-white sm:flex md:ml-auto md:w-full md:overflow-visible"
         value={activeTab}
         onValueChange={(value) => {
           if (value === tabs[0].value) {
@@ -193,21 +194,20 @@ const BrandOrSellerProfile = ({
           }
           setOpenTabName(value)
         }}
-        className="sticky left-0 right-0 top-0 h-full flex-col gap-9 bg-alpha-white sm:flex md:ml-auto md:w-full md:overflow-visible"
       >
-        <SegmentsList wrap className="border-b pb  md:border-b-2 md:pb-5">
+        <SegmentsList className="border-b pb  md:border-b-2 md:pb-5" wrap>
           {tabs.map(({ title, value }) => (
             <SegmentsListItem
+              className={clsx("no-select")}
               key={value}
               noStyle
-              className={clsx("no-select")}
-              value={value}
               style={{
                 width:
                   !isMobileView || tabs.length > 3
                     ? "auto"
                     : `${100 / tabs.length}%`
               }}
+              value={value}
             >
               <>
                 <div

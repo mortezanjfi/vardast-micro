@@ -80,15 +80,15 @@ const FrontPageHeader = ({ session }: Props) => {
           <>
             {session?.profile?.roles.some((role) => role?.name === "admin") ? (
               <Link
-                href={process.env.NEXT_PUBLIC_ADMIN_VARDAST}
                 className="btn btn-md btn-primary block"
+                href={process.env.NEXT_PUBLIC_ADMIN_VARDAST}
               >
                 ورود به پنل ادمین
               </Link>
             ) : (
               <Link
-                href={process.env.NEXT_PUBLIC_SELLER_VARDAST}
                 className="btn btn-md btn-primary block"
+                href={process.env.NEXT_PUBLIC_SELLER_VARDAST}
               >
                 ورود به پنل فروشنده
               </Link>
@@ -97,8 +97,8 @@ const FrontPageHeader = ({ session }: Props) => {
         ) : (
           !session?.user && (
             <Link
-              href={`${paths.signin}?ru=${pathname}`}
               className="btn btn-ghost"
+              href={`${paths.signin}?ru=${pathname}`}
             >
               ورود / ثبت‌نام
             </Link>

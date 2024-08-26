@@ -115,28 +115,28 @@ function OrdersReportsCharts({}: Props) {
           <div className="flex items-center gap-3">
             <span className="whitespace-nowrap text-xs">از تاریخ:</span>
             <DatePicker
-              value={startDate ? new DateObject(new Date(startDate)) : ""}
-              onChange={(value) => {
-                handleStartDateChange(value)
-              }}
               render={(value, openCalendar) => {
                 return (
                   <SelectPopoverTrigger label={value} onClick={openCalendar} />
                 )
+              }}
+              value={startDate ? new DateObject(new Date(startDate)) : ""}
+              onChange={(value) => {
+                handleStartDateChange(value)
               }}
             />
 
             <span className="whitespace-nowrap text-xs">تا تاریخ:</span>
             <DatePicker
               highlightToday
-              value={endDate ? new DateObject(new Date(endDate)) : ""}
-              onChange={(value) => {
-                handleEndDateChange(value)
-              }}
               render={(value, openCalendar) => {
                 return (
                   <SelectPopoverTrigger label={value} onClick={openCalendar} />
                 )
+              }}
+              value={endDate ? new DateObject(new Date(endDate)) : ""}
+              onChange={(value) => {
+                handleEndDateChange(value)
               }}
             />
           </div>
@@ -186,7 +186,7 @@ function OrdersReportsCharts({}: Props) {
           />
         </div>
       </Card>
-      <Card title="درصد سفارشات" className="col-span-1 h-fit">
+      <Card className="col-span-1 h-fit" title="درصد سفارشات">
         <div className="h-80">
           <Pie
             data={pieData}

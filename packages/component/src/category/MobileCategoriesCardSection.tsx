@@ -9,7 +9,7 @@ import CategoryCircleItem, {
 } from "./CategoryCircleItem"
 
 type Props = {
-  slug: Array<string | number>
+  slug: (string | number)[]
   getCategoryQuery: UseQueryResult<GetCategoryQuery, unknown>
 }
 
@@ -31,8 +31,8 @@ const MobileCategoriesCardSection = ({ slug, getCategoryQuery }: Props) => {
           <>
             {[...Array(10)].map((_, index) => (
               <SwiperSlide
-                key={index}
                 className="overflow-hidden bg-alpha-white"
+                key={index}
               >
                 <CategoryCircleItemLoader isMobileView isProductsPage />
               </SwiperSlide>
@@ -42,13 +42,13 @@ const MobileCategoriesCardSection = ({ slug, getCategoryQuery }: Props) => {
           getCategoryQuery?.data.category.children?.map(
             (category, index) =>
               category && (
-                <SwiperSlide key={index} className="w-20 overflow-hidden ">
+                <SwiperSlide className="w-20 overflow-hidden " key={index}>
                   <div>
                     <CategoryCircleItem
-                      slug={slug}
+                      data={category as Category}
                       isMobileView
                       isProductsPage
-                      data={category as Category}
+                      slug={slug}
                     />
                   </div>
                 </SwiperSlide>

@@ -96,8 +96,8 @@ const Offers = () => {
   const queryParams: any = {
     page: currentPage,
     sellerId: offersQueryParams.sellerId,
-    isPublic: checkBooleanByString(offersQueryParams.isPublic as string),
-    isAvailable: checkBooleanByString(offersQueryParams.isAvailable as string)
+    isPublic: checkBooleanByString(offersQueryParams.isPublic),
+    isAvailable: checkBooleanByString(offersQueryParams.isAvailable)
   }
 
   if (offersQueryParams.status) {
@@ -126,9 +126,9 @@ const Offers = () => {
       <OffersFilter form={form} setOffersQueryParams={setOffersQueryParams} />
       <Card className=" table-responsive mt-8 rounded">
         <PageHeader
+          containerClass="items-center"
           title={t("common:offers_index_title")}
           titleClasses="text-[14px] font-normal "
-          containerClass="items-center"
           titleContainerClasses="border-b-2 border-primary-600 py-2"
         >
           {session?.abilities.includes("gql.products.offer.index") && (
@@ -141,9 +141,9 @@ const Offers = () => {
           )}
         </PageHeader>
         <OfferDeleteModal
+          offerToDelete={offerToDelete}
           open={deleteModalOpen}
           onOpenChange={setDeleteModalOpen}
-          offerToDelete={offerToDelete as Offer}
         />
         {renderedListStatus[getContentByApiStatus(data, !!offersLength)] || (
           <>
@@ -233,7 +233,7 @@ const Offers = () => {
                           )}
                         </td>
                         <td>
-                          <Link target="_blank" href={`/offers/${offer.id}`}>
+                          <Link href={`/offers/${offer.id}`} target="_blank">
                             <span className="tag cursor-pointer text-blue-500">
                               {" "}
                               {t("common:edit")}
@@ -257,8 +257,8 @@ const Offers = () => {
             </table>
 
             <Pagination
-              total={data.data?.offers.lastPage as number}
               page={currentPage}
+              total={data.data?.offers.lastPage}
               onChange={(page) => {
                 setCurrentPage(page)
               }}

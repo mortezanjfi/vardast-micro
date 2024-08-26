@@ -59,7 +59,7 @@ const CreatePriceModal = ({
   const [errors, setErrors] = useState<ClientError>()
   const [discountTemp, setDiscountTemp] = useDebouncedState<number>(0, 200)
   const [tempAmount, setTempAmount] = useState<string>(
-    (product?.myPrice?.amount?.toString() as string) || ""
+    (product?.myPrice?.amount?.toString()) || ""
   )
 
   const queryClient = useQueryClient()
@@ -90,7 +90,7 @@ const CreatePriceModal = ({
   const amountAfterDiscount = useCalculatePriceQuery(
     graphqlRequestClientWithToken,
     {
-      amount: form.getValues("amount")?.toString() || (tempAmount as string),
+      amount: form.getValues("amount")?.toString() || (tempAmount),
       valueDiscount: discountTemp.toString()
     },
     { queryKey: [{ valueDiscount: discountTemp.toString() }] }
@@ -110,7 +110,7 @@ const CreatePriceModal = ({
       createPriceInput: {
         amount,
         productId: product.id,
-        valueDiscount: discountTemp.toString() as string
+        valueDiscount: discountTemp.toString()
       }
     })
   }
