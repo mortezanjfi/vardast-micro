@@ -106,7 +106,6 @@ const MobilBrandsFilter = ({
             {/* args.categoryId means user is in the brand tab of a category */}
             {!args.categoryId && (
               <CategoryFilterSection
-                openDefault
                 selectedCategoryIds={selectedCategoryIds}
                 setSelectedCategoryIds={setSelectedCategoryIds}
               />
