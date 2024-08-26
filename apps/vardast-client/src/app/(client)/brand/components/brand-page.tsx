@@ -6,7 +6,6 @@ import { useQuery } from "@tanstack/react-query"
 import Loading from "@vardast/component/Loading"
 import LoadingFailed from "@vardast/component/LoadingFailed"
 import NoResult from "@vardast/component/NoResult"
-import ProductList from "@vardast/component/product-list"
 import { GetBrandQuery, IndexProductInput } from "@vardast/graphql/generated"
 import { setBreadCrumb } from "@vardast/provider/LayoutProvider/use-layout"
 import { getBrandQueryFn } from "@vardast/query/queryFns/brandQueryFns"
@@ -67,12 +66,6 @@ const BrandPage = ({ isMobileView, args, slug }: BrandPageProps) => {
           )}
         </div>
       </div>
-      <ProductList
-        args={args}
-        brandId={+slug[0]}
-        isMobileView={isMobileView}
-        selectedCategoryIds={args.categoryIds || undefined}
-      />
     </>
   )
 }
