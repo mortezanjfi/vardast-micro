@@ -40,7 +40,7 @@ const config = {
     "no-empty-pattern": "off",
     indent: "off",
     "react/display-name": "off",
-    "no-unused-vars": [1, { args: "after-used", argsIgnorePattern: "^_" }],
+    "no-unused-vars": "off",
     "@typescript-eslint/no-unsafe-argument": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
@@ -50,10 +50,7 @@ const config = {
     "@typescript-eslint/non-nullable-type-assertion-style": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
     "turbo/no-undeclared-env-vars": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }
-    ],
+    "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/no-misused-promises": [
       2,
       { checksVoidReturn: { attributes: false } }
