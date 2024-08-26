@@ -83,7 +83,8 @@ const config = {
     "@typescript-eslint/no-unnecessary-type-constraint": "off",
     "no-unsafe-optional-chaining": "off",
     "no-empty": "off",
-    "prefer-const": "off"
+    "prefer-const": "off",
+    "@typescript-eslint/dot-notation": "off"
   },
   ignorePatterns: [
     "**/*.config.js",
