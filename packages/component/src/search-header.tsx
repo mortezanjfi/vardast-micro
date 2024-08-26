@@ -1,7 +1,6 @@
 "use client"
 
 import { notFound } from "next/navigation"
-import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import { useQuery } from "@tanstack/react-query"
 import { GetCategoryQuery } from "@vardast/graphql/generated"
 import { setBreadCrumb } from "@vardast/provider/LayoutProvider/use-layout"
@@ -89,9 +88,7 @@ const SearchHeader = ({
           : `/products/${data.category.id}/${data.category.title}`
       }`
     ),
-    label: `${data.category.title} (${digitsEnToFa(
-      addCommas(data.category.productsCount)
-    )} کالا)`,
+    label: data.category.title,
     isCurrent: true
   })
 

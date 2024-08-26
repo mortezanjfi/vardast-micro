@@ -362,24 +362,24 @@ const ProductList = ({
         <>
           {brandId && isMobileView && (
             <BrandOrSellerCategoryFilter
-              brandId={brandId}
               categoryIdsFilter={categoryIdsFilter}
               onCategoryIdsFilterChanged={onCategoryIdsFilterChanged}
+              brandId={brandId}
             />
           )}
           {sellerId && isMobileView && (
             <BrandOrSellerCategoryFilter
               categoryIdsFilter={categoryIdsFilter}
-              sellerId={sellerId}
               onCategoryIdsFilterChanged={onCategoryIdsFilterChanged}
+              sellerId={sellerId}
             />
           )}
           {selectedCategoryIds &&
             selectedCategoryIds.length === 1 &&
             selectedCategoryIds[0] !== 0 && (
               <FiltersContainer
-                filterAttributes={filterAttributes}
                 selectedCategoryId={selectedCategoryIds[0]}
+                filterAttributes={filterAttributes}
                 onFilterAttributesChanged={onFilterAttributesChanged}
               />
             )}
@@ -473,7 +473,7 @@ const ProductList = ({
         countItemTitle={"product"}
         itemCount={
           allProductsQuery.data?.pages[0].products.total
-            ? (allProductsQuery.data?.pages[0].products.total)
+            ? allProductsQuery.data?.pages[0].products.total
             : 0
         }
       />

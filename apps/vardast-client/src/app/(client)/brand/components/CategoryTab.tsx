@@ -230,8 +230,8 @@ const CategoriesTab = ({
                                   fill
                                   src={
                                     (imageCategory &&
-                                      (imageCategory[0]?.file.presignedUrl
-                                        ?.url)) ??
+                                      imageCategory[0]?.file.presignedUrl
+                                        ?.url) ??
                                     "" ??
                                     `/images/categories/${id}.png`
                                   }
@@ -323,8 +323,8 @@ const CategoriesTab = ({
                           src={
                             (category &&
                               category?.imageCategory &&
-                              (category?.imageCategory[0]?.file.presignedUrl
-                                ?.url)) ??
+                              category?.imageCategory[0]?.file.presignedUrl
+                                ?.url) ??
                             "" ??
                             `/images/category/${category.id}.png`
                           }

@@ -59,7 +59,7 @@ const BrandOrSellerCategoryFilter = ({
     <div className="flex flex-col">
       <div className="flex flex-col divide-y divide-alpha-300">
         {Object.entries(sortBrand).map(([key, value]) => (
-          <Label.Root className="flex items-center gap-2  py-4" key={key}>
+          <Label.Root key={key} className="flex items-center gap-2  py-4">
             <Checkbox.Root
               checked={sort === value.value}
               className="flex

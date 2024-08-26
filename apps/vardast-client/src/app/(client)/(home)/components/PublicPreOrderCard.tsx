@@ -1,4 +1,3 @@
-import Image from "next/image"
 import OrderCard from "@vardast/component/category/OrderCard"
 import {
   PreOrder,
@@ -12,7 +11,7 @@ function PublicPreOrderCard({ data }: Props) {
   return (
     data && (
       <div className="flex flex-col md:px-5 md:pt-1">
-        <div className="flex items-center gap-2 border-b pb-1">
+        {/* <div className="flex items-center gap-2 border-b pb-1">
           <Image
             alt="category"
             className="rounded-xl object-cover"
@@ -28,7 +27,7 @@ function PublicPreOrderCard({ data }: Props) {
           <span className="h-full  text-base font-semibold">
             {data.categoryName}
           </span>
-        </div>
+        </div> */}
         <OrderCard
           forHomeCard
           preOrder={data as unknown as PreOrder & PreOrderDto}

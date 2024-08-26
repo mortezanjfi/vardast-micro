@@ -81,7 +81,7 @@ const SearchIndex = async ({
         if (match && match.length === 2) {
           const id = parseInt(match[1], 10)
           const value: string[] = Array.isArray(searchParams[key])
-            ? (searchParams[key])
+            ? searchParams[key]
             : ([searchParams[key]] as string[])
 
           value.forEach((val) => {
@@ -123,10 +123,10 @@ const SearchIndex = async ({
     <ReactQueryHydrate state={dehydratedState}>
       <ProductsPage
         // hasSearch
-        args={args}
-        isMobileView={isMobileView}
         needCategoryFilterSection
         slug={slug}
+        args={args}
+        isMobileView={isMobileView}
       />
     </ReactQueryHydrate>
   )

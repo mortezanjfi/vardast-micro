@@ -41,8 +41,8 @@ const CityFilterSection = ({
   return (
     <FilterBlock
       badgeNumber={selectedCityId ? 1 : null}
-      openDefault={true}
       title="شهر"
+      openDefault={true}
     >
       <div className=" flex w-full flex-col gap-4">
         <Input

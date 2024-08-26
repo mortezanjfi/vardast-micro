@@ -33,7 +33,7 @@ const FilterBlock = ({
         {icon && <DynamicHeroIcon className="h-7 w-7" icon={icon} solid />}{" "}
         <span className=" font-medium text-alpha-800">{title}</span>
         {badgeNumber && (
-          <Badge size="xs" variant="danger">
+          <Badge variant="danger" size="xs">
             {badgeNumber}
           </Badge>
         )}

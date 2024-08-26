@@ -16,7 +16,8 @@ export const getAllProductsQueryFn = async ({
   orderBy,
   sellerId,
   sortField,
-  sortDirection
+  sortDirection,
+  cityId
 }: getAllProductsQueryFnArgs = {}): Promise<GetAllProductsQuery> => {
   return await request(
     process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT!,
@@ -31,7 +32,8 @@ export const getAllProductsQueryFn = async ({
         orderBy,
         sellerId,
         sortField,
-        sortDirection
+        sortDirection,
+        cityId
       }
     }
   )

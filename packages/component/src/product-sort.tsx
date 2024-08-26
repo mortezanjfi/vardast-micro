@@ -27,12 +27,11 @@ export const sortProducts = {
 }
 const ProductSort = ({ sort, onSortChanged }: ProductSortProps) => {
   return (
-    <FilterBlock openDefault={true} title="مرتب سازی">
+    <FilterBlock title="مرتب سازی" openDefault={true}>
       <div className="flex flex-col divide-y divide-alpha-300">
         {Object.entries(sortProducts).map(([key, value]) => (
-          <Label.Root className="flex items-center gap-2  py-4" key={key}>
+          <Label.Root key={key} className="flex items-center gap-2  py-4">
             <Checkbox.Root
-              checked={sort === value.value}
               className="flex
                h-5
                w-5
@@ -46,6 +45,7 @@ const ProductSort = ({ sort, onSortChanged }: ProductSortProps) => {
                outline-none
                data-[state='checked']:border-primary-500
                data-[state='checked']:bg-primary-500"
+              checked={sort === value.value}
               onCheckedChange={() => {
                 onSortChanged(value.value)
               }}

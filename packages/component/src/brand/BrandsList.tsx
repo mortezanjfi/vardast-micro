@@ -200,6 +200,14 @@ const BrandsList = ({
 
   const DesktopSidebar = (
     <FiltersSidebarContainer
+      sort={
+        <BrandSortFilter
+          searchParams={searchParams}
+          pathname={pathname}
+          setSort={setSort}
+          sort={sort}
+        />
+      }
       filters={
         <>
           {" "}
@@ -226,14 +234,6 @@ const BrandsList = ({
             setSelectedCityId={setSelectedCityId}
           />
         </>
-      }
-      sort={
-        <BrandSortFilter
-          pathname={pathname}
-          searchParams={searchParams}
-          setSort={setSort}
-          sort={sort}
-        />
       }
     />
   )

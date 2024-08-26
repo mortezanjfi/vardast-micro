@@ -306,15 +306,15 @@ const ProductList = ({
         <>
           {needCategoryFilterSection && (
             <CategoryFilterSection
-              selectedCategoryIds={categoryIdsFilter}
               setSelectedCategoryIds={setCategoryIdsFilter}
+              selectedCategoryIds={categoryIdsFilter}
             />
           )}
 
           {!args.brandId && (
             <BrandsFilterSection
-              selectedBrand={selectedBrand}
               setSelectedBrand={setSelectedBrand}
+              selectedBrand={selectedBrand}
             />
           )}
 
@@ -331,8 +331,8 @@ const ProductList = ({
             getFilterableAttributesQuery?.data?.filterableAttributes?.filters
               .length > 0 && (
               <FiltersContainer
-                filterAttributes={filterAttributes}
                 selectedCategoryId={args.categoryIds[0]}
+                filterAttributes={filterAttributes}
                 onFilterAttributesChanged={onFilterAttributesChanged}
               />
             )}
@@ -458,10 +458,10 @@ const ProductList = ({
           )}
           <div className="grid grid-cols-2">
             <MobileCategoriesFilter
-              brandId={args.brandId}
               categoryId={args.categoryIds}
-              categoryIdsFilter={categoryIdsFilter}
+              brandId={args.brandId}
               sellerId={sellerId}
+              categoryIdsFilter={categoryIdsFilter}
               onCategoryFilterChanged={({ status, value }) => {
                 onCategoryIdsFilterChanged({ status, value })
                 setCategoriesFilterVisibility(false)
@@ -520,10 +520,9 @@ const ProductList = ({
               //       .length > 0
               //   )
               // }
-              className=" h-full w-full rounded-none  py-0 !text-alpha-black"
+              onClick={() => setFiltersVisibility(true)}
               size="small"
               variant="ghost"
-              onClick={() => setFiltersVisibility(true)}
             >
               {filterAttributes.length > 0 && (
                 <span className="absolute right-1 top-1 block h-2.5 w-2.5 rounded-full bg-primary-500"></span>

@@ -152,7 +152,7 @@ const ProductCard = forwardRef(
         className={clsx(
           homeSlider
             ? "relative flex items-center gap-2 border-x bg-transparent px-3 transition hover:z-10"
-            : "sm:h-none relative grid h-[calc((100vw-1.5rem)/2)] max-h-[calc((100vw-1.5rem)/2)] min-h-[calc((100vw-1.5rem)/2)] w-full flex-1 gap-2 bg-alpha-white transition hover:z-10 sm:flex sm:h-full sm:max-h-full sm:min-h-full sm:flex-col sm:px-4 sm:py sm:ring-2 sm:!ring-alpha-200 sm:hover:shadow-lg",
+            : "sm:h-none relative grid h-[calc((100vw-1.5rem)/2)] max-h-[calc((100vw-1.5rem)/2)] min-h-[calc((100vw-1.5rem)/2)] w-full flex-1 gap-2 bg-alpha-white transition hover:z-10 sm:flex sm:h-full sm:max-h-full sm:min-h-full sm:flex-col sm:px-4 sm:py   sm:hover:shadow-lg",
           ref && "!border-b !border-alpha-200 sm:!border-none",
 
           containerType === ProductContainerType.LARGE_LIST
@@ -173,7 +173,7 @@ const ProductCard = forwardRef(
         )}
         <div
           className={clsx(
-            `relative flex flex-shrink-0 transform flex-col items-center justify-center bg-center bg-no-repeat align-middle opacity-0 transition-all duration-1000 ease-out`,
+            `relative flex flex-shrink-0 transform flex-col items-center justify-center overflow-hidden rounded-2xl bg-center bg-no-repeat align-middle opacity-0 transition-all duration-1000 ease-out`,
             homeSlider && "!h-12 !w-12"
           )}
           ref={productContainerRef}

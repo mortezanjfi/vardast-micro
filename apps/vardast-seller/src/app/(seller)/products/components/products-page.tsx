@@ -33,7 +33,7 @@ const ProductsPage = ({
   args.categoryIds = slug && slug.length > 0 ? [+slug[0]] : []
 
   const caategoryArgs: GetCategoryQueryVariables = {}
-  caategoryArgs.id = args.categoryIds[0]
+  caategoryArgs["id"] = args.categoryIds[0]
   const getCategoryQuery = useQuery<GetCategoryQuery>({
     queryKey: [QUERY_FUNCTIONS_KEY.CATEGORY_QUERY_KEY, caategoryArgs],
     queryFn: () => getCategoryQueryFn(args.categoryIds[0])

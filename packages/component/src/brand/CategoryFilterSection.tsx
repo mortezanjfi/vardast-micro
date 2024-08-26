@@ -45,8 +45,8 @@ const CategoryFilterSection = ({
       badgeNumber={
         selectedCategoryIds?.length > 0 ? selectedCategoryIds?.length : null
       }
-      openDefault={true}
       title="دسته‌بندی"
+      openDefault={true}
     >
       <div className=" flex w-full flex-col gap-4">
         <Input

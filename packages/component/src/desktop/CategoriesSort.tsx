@@ -1,4 +1,3 @@
- 
 "use client"
 
 import * as Checkbox from "@radix-ui/react-checkbox"
@@ -34,10 +33,10 @@ export const sortBrand = {
 }
 const CategoriesSort = ({ sort, onSortChanged }: CategoriesSortProps) => {
   return (
-    <FilterBlock openDefault={true} title="مرتب سازی">
-      <div className="flex flex-col gap-3">
+    <FilterBlock title="مرتب سازی" openDefault={true}>
+      <div className="flex flex-col divide-y divide-alpha-300">
         {Object.entries(sortBrand).map(([key, value]) => (
-          <Label.Root className="flex items-center gap-2" key={key}>
+          <Label.Root key={key} className="flex items-center gap-2  py-4">
             <Checkbox.Root
               checked={sort === value.value}
               className="flex
