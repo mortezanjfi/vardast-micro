@@ -1,0 +1,10 @@
+{
+  "name": "@vardast/locale",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "typecheck": "tsc --noEmit"
+  }
+}
