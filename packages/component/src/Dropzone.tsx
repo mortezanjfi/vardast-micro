@@ -34,7 +34,7 @@ interface DropzoneProps {
   maxFiles?: number
   existingImages?: Maybe<ImageType | ImageCategory>[]
   uploadPath?: string
-  onAddition: (_: FilesWithPreview) => void
+  onAddition?: (_: FilesWithPreview) => void
   onDelete?: (_: FilesWithPreview) => void
   withHeight?: boolean
   withText?: boolean
@@ -251,7 +251,7 @@ const Dropzone = ({
 
   return (
     <>
-      <div {...getRootProps()}>
+      <div>
         <input {...getInputProps()} />
         <div
           className={clsx([
@@ -283,7 +283,7 @@ const Dropzone = ({
                             }
                             width={100}
                           />
-                          {!isCsv && (
+                          {!isCsv && (onAddition || onDelete) && (
                             <button
                               className="absolute bottom-0 left-0 z-10 m-2 flex h-6 w-6 items-center justify-center rounded bg-red-500 text-white ring-2 ring-transparent transition hover:bg-red-600 hover:ring-red-500/50"
                               type="button"
@@ -343,6 +343,7 @@ const Dropzone = ({
                 ))}
                 {!isCsv && files.length < maxFiles && (
                   <button
+                    {...getRootProps()}
                     className={
                       "btn flex h-32 w-32 flex-col gap-1 overflow-hidden rounded border border-alpha-200"
                     }
@@ -356,6 +357,7 @@ const Dropzone = ({
             </>
           ) : (
             <div
+              {...getRootProps()}
               className={clsx(
                 "flex w-full cursor-pointer flex-col items-center justify-center gap-1",
                 withHeight && "h-60"

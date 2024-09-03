@@ -1,12 +1,18 @@
 "use client"
 
+import { PropsWithChildren } from "react"
 import { Badge } from "@vardast/ui/badge"
 
 import Card from "../Card"
 import { DetailsCardPropsType } from "../types/type"
 import { DetailsWithTitle } from "./DetailsWithTitle"
 
-const DetailsCard = ({ badges, items, card }: DetailsCardPropsType) => {
+const DetailsCard: React.FC<PropsWithChildren<DetailsCardPropsType>> = ({
+  badges,
+  items,
+  card,
+  children
+}) => {
   return (
     <Card {...card} template="1/2-sm">
       {badges && badges?.length && (
@@ -20,6 +26,7 @@ const DetailsCard = ({ badges, items, card }: DetailsCardPropsType) => {
           {...props}
         />
       ))}
+      {children}
     </Card>
   )
 }

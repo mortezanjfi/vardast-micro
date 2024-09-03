@@ -66,7 +66,7 @@ const config = {
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/prefer-nullish-coalescing": "off",
     "@typescript-eslint/no-unused-vars": "warn",
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
     "@typescript-eslint/require-await": "off",
     "@typescript-eslint/prefer-optional-chain": "off",
     "@typescript-eslint/no-base-to-string": "off",
@@ -84,7 +84,10 @@ const config = {
     "no-unsafe-optional-chaining": "off",
     "no-empty": "off",
     "prefer-const": "off",
-    "@typescript-eslint/dot-notation": "off"
+    "@typescript-eslint/dot-notation": "off",
+    "@typescript-eslint/consistent-indexed-object-style": "off",
+    "@typescript-eslint/array-type": "off",
+    "@typescript-eslint/ban-ts-comment": "off"
   },
   ignorePatterns: [
     "**/*.config.js",

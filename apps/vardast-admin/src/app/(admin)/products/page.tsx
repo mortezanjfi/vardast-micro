@@ -1,6 +1,9 @@
 import type { Metadata } from "next"
+import { dehydrate } from "@tanstack/query-core"
+import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
+import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 
-import Products from "./components/Products"
+import ProductsPage from "@/app/(admin)/products/components/ProductsPage"
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -8,8 +11,13 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-const ProductsIndex = async () => {
-  return <Products title={(await generateMetadata()).title?.toString()} />
-}
+export default async () => {
+  const queryClient = getQueryClient()
 
-export default ProductsIndex
+  const dehydratedState = dehydrate(queryClient)
+  return (
+    <ReactQueryHydrate state={dehydratedState}>
+      <ProductsPage title={(await generateMetadata()).title?.toString()} />
+    </ReactQueryHydrate>
+  )
+}

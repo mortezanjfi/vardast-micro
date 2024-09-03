@@ -421,5 +421,7 @@
   "date": "تاریخ",
   "date_entity": "تاریخ {{entity}}",
   "default_entity": "{{entity}} پیشفرض",
-  "position": "سمت"
+  "position": "سمت",
+  "rating": "امتیاز",
+  "images": "تصاویر"
 }

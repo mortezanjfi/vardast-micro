@@ -43,5 +43,14 @@
     ".next/types/**/*.ts",
     "../../packages/component/src/admin/legal/LegalModal.tsx"
   ],
-  "exclude": ["node_modules", "build", "dist", ".next", "node_modules"]
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    ".next",
+    "node_modules",
+    "./src/app/(admin)/(bid)",
+    "./src/app/(authentication)",
+    "./locales"
+  ]
 }

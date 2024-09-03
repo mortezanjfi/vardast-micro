@@ -1,46 +1,35 @@
 import { useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { ProductModalEnum } from "@vardast/component/type"
-import { Product, useRemoveProductMutation } from "@vardast/graphql/generated"
-import { useToast } from "@vardast/hook/use-toast"
+import {
+  AttributeValue,
+  useRemoveAttributeValueMutation
+} from "@vardast/graphql/generated"
 import graphqlRequestClientWithToken from "@vardast/query/queryClients/graphqlRequestClientWithToken"
 import { IUseModal, Modal, ModalProps } from "@vardast/ui/modal"
 import { ClientError } from "graphql-request"
 import useTranslation from "next-translate/useTranslation"
 
-const ProductDeleteModal = ({
+const AttributeDeleteModal = ({
+  open,
   modals,
-  onChangeModals,
   onCloseModals
-}: IUseModal<ProductModalEnum, Product>) => {
+}: IUseModal<ProductModalEnum, AttributeValue>) => {
   const { t } = useTranslation()
-  const { toast } = useToast()
   const [errors, setErrors] = useState<ClientError>()
   const queryClient = useQueryClient()
 
-  const removeProductMutation = useRemoveProductMutation(
+  const removeProductMutation = useRemoveAttributeValueMutation(
     graphqlRequestClientWithToken,
     {
       onError: (errors: ClientError) => {
-        toast({
-          description: (
-            errors?.response?.errors?.at(0)?.extensions
-              ?.displayErrors as string[]
-          )?.map((error) => error),
-          duration: 2000,
-          variant: "danger"
-        })
+        setErrors(errors)
       },
-      onSuccess: () => {
+      onSuccess: (data) => {
         queryClient.invalidateQueries({
           queryKey: ["GetAllProducts"]
         })
-        onChangeModals()
-        toast({
-          description: "کالا با موفقیت حذف شد",
-          duration: 2000,
-          variant: "success"
-        })
+        onCloseModals(data)
       }
     }
   )
@@ -48,7 +37,7 @@ const ProductDeleteModal = ({
     removeProductMutation.mutate({ id: modals.data.id })
   }
   const modalProps: ModalProps = {
-    open: modals?.type === ProductModalEnum.DELETE,
+    open,
     modalType: "delete",
     size: "sm",
     onOpenChange: onCloseModals,
@@ -58,7 +47,7 @@ const ProductDeleteModal = ({
       "common:are_you_sure_you_want_to_delete_x_entity_this_action_cannot_be_undone_and_all_associated_data_will_be_permanently_removed",
       {
         entity: `${t(`common:product`)}`,
-        name: modals?.data?.name
+        name: modals?.data?.value
       }
     ),
     action: { onClick: () => onDelete(), title: t("common:delete") }
@@ -67,4 +56,4 @@ const ProductDeleteModal = ({
   return <Modal {...modalProps} />
 }
 
-export default ProductDeleteModal
+export default AttributeDeleteModal

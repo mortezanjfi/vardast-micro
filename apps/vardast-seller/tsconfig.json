@@ -42,5 +42,14 @@
     "**/*.tsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "build", "dist", ".next", "node_modules"]
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    ".next",
+    "node_modules",
+    "./src/app/(admin)/(bid)",
+    "./src/app/(authentication)",
+    "./locales"
+  ]
 }

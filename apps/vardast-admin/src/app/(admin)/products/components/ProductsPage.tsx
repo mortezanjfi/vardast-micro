@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import Image from "next/image"
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools"
 import {
@@ -32,7 +32,8 @@ import { setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
 import useTranslation from "next-translate/useTranslation"
 
-import ProductDeleteModal from "@/app/(admin)/products/components/ProductDeleteModal"
+import ProductDeleteModal from "@/app/(admin)/products/[uuid]/components/ProductDeleteModal"
+import ProductModal from "@/app/(admin)/products/[uuid]/components/ProductModal"
 
 const ProductInputSchema = IndexProductInputSchema()
   .omit({
@@ -45,7 +46,7 @@ type Props = {
   title?: string
 }
 
-const Products = ({ title }: Props) => {
+const ProductsPage = ({ title }: Props) => {
   const { t } = useTranslation()
   const [categoryQuery, setCategoryQuery] = useState("")
   const [brandsQuery, setBrandsQuery] = useState("")
@@ -89,8 +90,7 @@ const Products = ({ title }: Props) => {
         api: getAllProductsQueryFn
       },
       onRow: {
-        url: (row) =>
-          `https://vardast.com/product/${row.original.id}/${row.original.name}`
+        url: (row) => `/products/${row.original.id}`
       },
       filters: {
         schema: ProductInputSchema,
@@ -278,17 +278,23 @@ const Products = ({ title }: Props) => {
     dependencies: [categoryQuery, brandsQuery, categories.data, brands.data]
   })
 
+  const modalProps = useCallback(
+    (type: ProductModalEnum) => ({
+      onCloseModals,
+      onChangeModals,
+      modals,
+      open: modals?.type === type
+    }),
+    [modals]
+  )
+
   return (
     <>
-      <ProductDeleteModal
-        modals={modals}
-        open={modals?.type === ProductModalEnum.DELETE}
-        onChangeModals={onChangeModals}
-        onCloseModals={onCloseModals}
-      />
+      <ProductModal {...modalProps(ProductModalEnum.INFO)} />
+      <ProductDeleteModal {...modalProps(ProductModalEnum.DELETE)} />
       <Table {...tableProps} />
     </>
   )
 }
 
-export default Products
+export default ProductsPage

@@ -26,7 +26,12 @@ export enum SellerModalEnum {
 
 export enum ProductModalEnum {
   INFO,
-  DELETE
+  DELETE,
+  PUBLIC_OFFER,
+  PUBLIC_OFFER_DELETE,
+  ATTRIBUTE,
+  ATTRIBUTE_DELETE,
+  IMAGE
 }
 
 export enum BrandModalEnum {

@@ -13,6 +13,7 @@ import {
   OrderOfferStatuses,
   PaymentMethodEnum,
   PreOrderStates,
+  ProductTypesEnum,
   SellerType,
   ThreeStateSupervisionStatuses,
   UserLanguagesEnum,
@@ -103,6 +104,24 @@ export const ThreeStateSupervisionStatusesFa: StatusFaType<ThreeStateSupervision
       name_fa: "در انتظار بررسی"
     }
   }
+export const ProductTypesEnumFa: StatusFaType<ProductTypesEnum> = {
+  [ProductTypesEnum.Physical]: {
+    variant: "default",
+    name_fa: "فیزیکی"
+  },
+  [ProductTypesEnum.Digital]: {
+    variant: "default",
+    name_fa: "دیجیتالی"
+  },
+  [ProductTypesEnum.Gift]: {
+    variant: "default",
+    name_fa: "هدیه"
+  },
+  [ProductTypesEnum.Bundle]: {
+    variant: "default",
+    name_fa: "شخصی"
+  }
+}
 
 export const LegalStatusEnumFa: StatusFaType<LegalStatusEnum> = {
   [LegalStatusEnum.Active]: {
@@ -142,6 +161,17 @@ export const VisibilityFa: StatusFaType<HasEntityEnum> = {
   [HasEntityEnum.FALSE]: {
     variant: "danger",
     name_fa: "غیر قابل رویت"
+  }
+}
+
+export const ActiveNotActiveFa: StatusFaType<HasEntityEnum> = {
+  [HasEntityEnum.TRUE]: {
+    variant: "success",
+    name_fa: "فعال"
+  },
+  [HasEntityEnum.FALSE]: {
+    variant: "danger",
+    name_fa: "غیر فعال"
   }
 }
 

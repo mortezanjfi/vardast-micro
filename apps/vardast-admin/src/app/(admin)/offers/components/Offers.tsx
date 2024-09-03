@@ -28,7 +28,7 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-import OfferDeleteModal from "@/app/(admin)/offers/components/OfferDeleteModal"
+import OfferDeleteModal from "@/app/(admin)/offers/components/OfferDeleteModal_old"
 import { OffersFilter } from "@/app/(admin)/offers/components/OffersFilter"
 
 export type IGetOffersQueryResult = UseQueryResult<
