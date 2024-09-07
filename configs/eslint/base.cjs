@@ -101,7 +101,10 @@ const config = {
     "pnpm-lock.yaml",
     "**/src/app/(authentication)",
     "**/src/app/(authentication)/*.ts",
-    "**/src/app/(authentication)/*.tsx"
+    "**/src/app/(authentication)/*.tsx",
+    "**/src/app/(admin)/(bid)",
+    "**/src/app/(admin)/(bid)/*.ts",
+    "**/src/app/(admin)/(bid)/*.tsx"
   ],
   reportUnusedDisableDirectives: true
 }
