@@ -15,9 +15,9 @@
   },
   "dependencies": {
     "@heroicons/react": "*",
-    "@vardast/ui": "workspace:*",
     "@vardast/graphql": "workspace:*",
-    "@vardast/type": "workspace:*"
+    "@vardast/type": "workspace:*",
+    "@vardast/ui": "workspace:*"
   },
   "devDependencies": {
     "@vardast/eslint-config": "workspace:*",

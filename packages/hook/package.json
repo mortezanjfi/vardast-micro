@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "@vardast/lib": "workspace:*",
-    "@vardast/util": "workspace:*",
-    "@vardast/ui": "workspace:*"
+    "@vardast/ui": "workspace:*",
+    "@vardast/util": "workspace:*"
   },
   "devDependencies": {
     "@vardast/eslint-config": "workspace:*",

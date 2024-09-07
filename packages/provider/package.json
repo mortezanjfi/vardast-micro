@@ -15,18 +15,18 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "*",
-    "clsx": "*",
-    "@vardast/ui": "workspace:*",
-    "@vardast/type": "workspace:*",
-    "@vardast/hook": "workspace:*",
-    "@vardast/util": "workspace:*",
-    "@vardast/style": "workspace:*",
-    "@vardast/lib": "workspace:*",
     "@vardast/asset": "workspace:*",
-    "@vardast/query": "workspace:*",
     "@vardast/graphql": "workspace:*",
-    "@vardast/tailwind-config": "workspace:*"
+    "@vardast/hook": "workspace:*",
+    "@vardast/lib": "workspace:*",
+    "@vardast/query": "workspace:*",
+    "@vardast/style": "workspace:*",
+    "@vardast/tailwind-config": "workspace:*",
+    "@vardast/type": "workspace:*",
+    "@vardast/ui": "workspace:*",
+    "@vardast/util": "workspace:*",
+    "clsx": "*",
+    "next": "*"
   },
   "devDependencies": {
     "@vardast/eslint-config": "workspace:*",

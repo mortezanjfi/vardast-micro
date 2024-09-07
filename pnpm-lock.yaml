@@ -879,6 +879,8 @@ importers:
         specifier: workspace:*
         version: link:../typescript
 
+  configs/locales: {}
+
   configs/prettier:
     dependencies:
       '@ianvs/prettier-plugin-sort-imports':

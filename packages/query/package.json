@@ -14,12 +14,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@vardast/ui": "workspace:*",
     "@formatjs/intl-enumerator": "^1.3.2",
+    "@tanstack/react-query": "^4.33.0",
+    "@tanstack/react-query-devtools": "^4.33.0",
     "@vardast/auth": "workspace:*",
     "@vardast/graphql": "workspace:*",
-    "@tanstack/react-query": "^4.33.0",
-    "@tanstack/react-query-devtools": "^4.33.0"
+    "@vardast/ui": "workspace:*"
   },
   "devDependencies": {
     "@vardast/eslint-config": "workspace:*",
