@@ -37,6 +37,7 @@ import { TypeOf, z } from "zod"
 
 type Props = {}
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SingupForm = (_: Props) => {
   const { t } = useTranslation()
   const session = useSession()

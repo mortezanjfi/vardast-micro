@@ -39,6 +39,7 @@ import { TypeOf, z } from "zod"
 
 type Props = { isMobileView?: boolean }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ResetForm = (_: Props) => {
   const { t } = useTranslation()
   const router = useRouter()

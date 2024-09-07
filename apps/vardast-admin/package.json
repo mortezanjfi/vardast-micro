@@ -88,6 +88,11 @@
     "extends": [
       "@vardast/eslint-config/base",
       "@vardast/eslint-config/nextjs"
+    ],
+    "ignorePatterns": [
+      "./src/app/(admin)/(bid)",
+      "./src/app/(authentication)",
+      "./locales"
     ]
   },
   "prettier": "@vardast/prettier-config"
