@@ -98,7 +98,10 @@ const config = {
     "**/public/*.map",
     ".next",
     "dist",
-    "pnpm-lock.yaml"
+    "pnpm-lock.yaml",
+    "**/src/app/(authentication)",
+    "**/src/app/(authentication)/*.ts",
+    "**/src/app/(authentication)/*.tsx"
   ],
   reportUnusedDisableDirectives: true
 }

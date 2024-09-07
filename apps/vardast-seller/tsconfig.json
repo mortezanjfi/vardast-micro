@@ -48,7 +48,6 @@
     "dist",
     ".next",
     "node_modules",
-    "./src/app/(admin)/(bid)",
     "./src/app/(authentication)",
     "./src/app/(admin)/(bid)/*.ts",
     "./src/app/(admin)/(bid)/*.tsx",
