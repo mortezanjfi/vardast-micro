@@ -35,5 +35,6 @@ export enum ProductModalEnum {
 }
 
 export enum BrandModalEnum {
+  INFO,
   DELETE
 }

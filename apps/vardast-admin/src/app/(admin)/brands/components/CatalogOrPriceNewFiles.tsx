@@ -9,8 +9,8 @@ import { LucidePlus } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 import { z } from "zod"
 
+import { NewBrandType } from "@/app/(admin)/brands/[uuid]/components/BrandForm"
 import { BrandFilesModal } from "@/app/(admin)/brands/components/BrandFilesModal"
-import { NewBrandType } from "@/app/(admin)/brands/components/BrandForm"
 
 export interface FileObject {
   file: File

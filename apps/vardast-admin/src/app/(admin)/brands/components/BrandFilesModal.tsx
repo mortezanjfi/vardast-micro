@@ -38,7 +38,7 @@ import useTranslation from "next-translate/useTranslation"
 import { useForm } from "react-hook-form"
 import { TypeOf, z } from "zod"
 
-import { NewBrandType } from "@/app/(admin)/brands/components/BrandForm"
+import { NewBrandType } from "@/app/(admin)/brands/[uuid]/components/BrandForm"
 import { FileObject } from "@/app/(admin)/brands/components/CatalogOrPriceNewFiles"
 
 type BrandFilesModalProps = {

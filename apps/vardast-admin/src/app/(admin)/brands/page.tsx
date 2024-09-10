@@ -2,7 +2,7 @@ import { redirect } from "next/navigation"
 import { authOptions } from "@vardast/auth/authOptions"
 import { getServerSession } from "next-auth"
 
-import Brands from "./components/Brands"
+import BrandsPage from "./components/BrandsPage"
 
 const BrandsIndex = async () => {
   const session = await getServerSession(authOptions)
@@ -11,7 +11,7 @@ const BrandsIndex = async () => {
     redirect("/")
   }
 
-  return <Brands />
+  return <BrandsPage />
 }
 
 export default BrandsIndex

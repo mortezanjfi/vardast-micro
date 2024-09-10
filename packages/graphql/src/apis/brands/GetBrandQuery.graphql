@@ -9,6 +9,13 @@ query GetBrand($id: Int!) {
     sum
     rating
     sellersCount
+    views
+    status
+    createdAt
+    category {
+      id
+      title
+    }
     categoriesCount
     bannerFile {
       presignedUrl {

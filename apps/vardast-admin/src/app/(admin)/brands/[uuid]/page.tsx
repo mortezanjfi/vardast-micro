@@ -1,21 +1,24 @@
-import { redirect } from "next/navigation"
-import { authOptions } from "@vardast/auth/authOptions"
-import { getServerSession } from "next-auth"
+import { Metadata } from "next"
+import { dehydrate } from "@tanstack/react-query"
+import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
+import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 
-import BrandEdit from "@/app/(admin)/brands/components/BrandEdit"
+import BrandPage from "@/app/(admin)/brands/[uuid]/components/BrandPage"
 
-const BrandEditPage = async ({
-  params: { uuid }
-}: {
-  params: { uuid: string }
-}) => {
-  const session = await getServerSession(authOptions)
-
-  if (!session?.abilities?.includes("gql.products.brand.index")) {
-    redirect("/")
+export async function generateMetadata(): Promise<Metadata> {
+  // parent: ResolvingMetadata
+  return {
+    title: "ویرایش برند"
   }
-
-  return uuid && <BrandEdit uuid={uuid} />
 }
 
-export default BrandEditPage
+export default async ({ params: { uuid } }: { params: { uuid: string } }) => {
+  const queryClient = getQueryClient()
+
+  const dehydratedState = dehydrate(queryClient)
+  return (
+    <ReactQueryHydrate state={dehydratedState}>
+      <BrandPage uuid={uuid} />
+    </ReactQueryHydrate>
+  )
+}

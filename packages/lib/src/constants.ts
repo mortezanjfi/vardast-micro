@@ -164,6 +164,17 @@ export const VisibilityFa: StatusFaType<HasEntityEnum> = {
   }
 }
 
+export const HasHasNotFa: StatusFaType<HasEntityEnum> = {
+  [HasEntityEnum.TRUE]: {
+    variant: "success",
+    name_fa: "دارد"
+  },
+  [HasEntityEnum.FALSE]: {
+    variant: "danger",
+    name_fa: "ندارد"
+  }
+}
+
 export const ActiveNotActiveFa: StatusFaType<HasEntityEnum> = {
   [HasEntityEnum.TRUE]: {
     variant: "success",
