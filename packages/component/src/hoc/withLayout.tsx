@@ -29,6 +29,8 @@ export default function withLayout<T>(
         ? 4
         : 0) + (layout?.mobile?.footer?.options ? 3.5 : 0)
 
+    console.log("main layout options:", { layout })
+
     return (
       <LayoutProvider>
         <PageLoadingProvider />

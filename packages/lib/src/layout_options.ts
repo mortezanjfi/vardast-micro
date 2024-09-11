@@ -529,7 +529,7 @@ const createOptionByMobileTitle = (
 ) => {
   const temp = { ...options[optionName || "_default"] }
   temp.mobile.header.title = title
-  return temp
+  return { ...temp, key: title }
 }
 
 export default {
