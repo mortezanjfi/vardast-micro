@@ -51,7 +51,10 @@ export default function withLayout<T>(
                       className="app-header mobile"
                       id="mobile-header-navbar"
                     >
-                      <MobileHeader {...layout?.mobile?.header} />
+                      <MobileHeader
+                        {...layout?.mobile?.header}
+                        key={layout?.mobile?.header?.title?.value}
+                      />
                     </header>
                   </div>
                 </>

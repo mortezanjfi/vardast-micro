@@ -26,11 +26,11 @@ const MobileHeader = ({
   const slugTitle = useMemo(() => {
     const slug = Object.values(params)?.at(0)
     return slug?.at(-1) && decodeURI(slug?.at(-1))
-  }, [router, title])
+  }, [params, title])
 
   const titleColSpan = useMemo(
     () => 9 - (back ? 1 : 0) - (hamburger ? 2 : 0) - (options ? 1 : 0),
-    [router, title]
+    [params, title]
   )
 
   console.log("second layout header:", { title, slugTitle })
