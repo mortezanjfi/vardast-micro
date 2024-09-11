@@ -301,7 +301,6 @@ const Table = <
         let resetValues:
           | TypeOf<TSchema>
           | DefaultValues<TypeOf<TSchema>>
-          // eslint-disable-next-line no-unused-vars
           | ((formValues: TypeOf<TSchema>) => TypeOf<TSchema>)
 
         filters.options.forEach((item) => {
