@@ -62,7 +62,7 @@ const Segments = <T extends string>({
             })
           } else if (child.type === SegmentsContent) {
             return React.cloneElement(child as ReactElement<any>, {
-              isVisible: child.props.value === props.value ?? selectedValue
+              isVisible: child.props.value === props.value || selectedValue
             })
           } else {
             return child
