@@ -8,7 +8,7 @@ export const getMyProfileBrandsSellerQueryFns = async ({
   accessToken = "",
   name = ""
 }): Promise<GetMyProfileBrandsSellerQuery> => {
-  return await request(
+  return await request<any>(
     process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT as string,
     GetMyProfileBrandsSellerDocument,
     {

@@ -17,7 +17,7 @@ export const getCategoryQueryFn = async (
   //     ? await getServerSession(authOptions)
   //     : await getSession()
 
-  return await request(
+  return await request<any>(
     process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT!,
     GetCategoryDocument,
     {

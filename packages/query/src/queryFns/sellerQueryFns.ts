@@ -10,7 +10,7 @@ export const getSellerQueryFn = async ({
   id,
   accessToken
 }: getSellerQueryFnType): Promise<GetSellerQuery> => {
-  return await request(
+  return await request<any>(
     process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT!,
     GetSellerDocument,
     {

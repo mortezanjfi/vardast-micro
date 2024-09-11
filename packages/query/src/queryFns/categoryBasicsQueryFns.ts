@@ -13,7 +13,7 @@ export const getCategoryBasicsQueryFn = async ({
   id,
   accessToken
 }: getCategoryBasicsQueryFnType): Promise<GetCategoryBasicsQuery> => {
-  return await request(
+  return await request<any>(
     process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT!,
     GetCategoryBasicsDocument,
     {

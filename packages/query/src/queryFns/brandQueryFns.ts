@@ -10,7 +10,7 @@ export const getBrandQueryFn = async ({
   id,
   accessToken
 }: getBrandQueryFnType): Promise<GetBrandQuery> => {
-  return await request(
+  return await request<any>(
     process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT!,
     GetBrandDocument,
     {

@@ -10,7 +10,7 @@ interface GetBannerHomePageQueryFnArgs extends IndexBannerInput {}
 export const bannerHomePageQueryFns = async ({
   type
 }: GetBannerHomePageQueryFnArgs): Promise<GetBannerHomePageQuery> => {
-  return await request(
+  return await request<any>(
     process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT as string,
     GetBannerHomePageDocument,
     {

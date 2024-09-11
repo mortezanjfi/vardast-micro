@@ -7,7 +7,7 @@ import request from "graphql-request"
 export const getCountTotalEventQueryFns = async (
   accessToken = ""
 ): Promise<GetCountTotalEventQuery> => {
-  return await request(
+  return await request<any>(
     process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT as string,
     GetCountTotalEventDocument,
     {},

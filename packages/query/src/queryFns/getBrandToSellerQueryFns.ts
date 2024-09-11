@@ -11,7 +11,7 @@ export const getBrandToSellerQueryFns = async ({
   page,
   brandId
 }: IGetBrandToSellerQueryFns): Promise<GetBrandToSellerQuery> => {
-  return await request(
+  return await request<any>(
     process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT as string,
     GetBrandToSellerQueryDocument,
     {

@@ -6,7 +6,7 @@ import request from "graphql-request"
 
 export const getAllSellersCountQueryFn =
   async (): Promise<GetAllSellersCountQuery> => {
-    return await request(
+    return await request<any>(
       process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT as string,
       GetAllSellersCountDocument,
       {}
