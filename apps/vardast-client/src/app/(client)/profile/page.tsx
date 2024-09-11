@@ -5,7 +5,7 @@ import { ReactQueryHydrate } from "@vardast/provider/ReactQueryHydrate"
 import getQueryClient from "@vardast/query/queryClients/getQueryClient"
 import { CheckIsMobileView } from "@vardast/util/checkIsMobileView"
 
-import ProfilePageIndex from "../components/ProfilePageIndex"
+import ProfilePageIndex from "@/app/(client)/profile/components/ProfilePageIndex"
 
 // set dynamic metadata
 export async function generateMetadata(): Promise<Metadata> {
