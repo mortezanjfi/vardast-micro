@@ -136,12 +136,11 @@ const Table = <T extends any, TSchema extends ZodSchema<any> = ZodSchema<any>>({
     [filters?.schema]
   )
 
-  const { data, isLoading, isFetching, isError } = useQuery(
+  const { data, isLoading, isFetching, isError } = useQuery<any>(
     [name, "table", memoizeFetchArgs, fetch?.directData?.data],
-    async () => {
+    async function (): Promise<Partial<T>[]> {
       let response: Partial<T>[]
-      // console.log("Starting data fetch...")
-
+      // console.log("Starting data fetch...")No overload matches this call.
       if (fetch?.directData?.data) {
         response = fetch.directData.data
         // console.log("Using direct data:", response)
