@@ -57,7 +57,9 @@ export default function withLayout<T>(
                     >
                       <MobileHeader
                         {...layout?.mobile?.header}
-                        key={layout?.mobile?.header?.title?.value}
+                        key={
+                          layout?.mobile?.header?.title?.value ?? Math.random()
+                        }
                       />
                     </header>
                   </div>
