@@ -83,7 +83,7 @@ const getConvertedApiData = (data) => {
   return data[Object.keys(data)[0]]
 }
 
-const Table = <T, TSchema extends ZodSchema<any> = ZodSchema<any>>({
+const Table = <T extends any, TSchema extends ZodSchema<any> = ZodSchema<any>>({
   name,
   columns: columnsProp,
   onRow,
