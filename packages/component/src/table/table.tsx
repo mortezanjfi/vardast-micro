@@ -141,7 +141,7 @@ const Table = <
   const { data, isLoading, isFetching, isError } = useQuery(
     [name, "table", memoizeFetchArgs, fetch?.directData?.data],
     async () => {
-      let response: Partial<T>[]
+      let response: any
       // console.log("Starting data fetch...")
 
       if (fetch?.directData?.data) {
