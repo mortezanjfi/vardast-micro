@@ -208,7 +208,7 @@ const ProfileSellerForm = ({ isMobileView }: { isMobileView: boolean }) => {
           </form>
           <Link
             className="btn btn-secondary btn-md"
-            href={"/profile?t=حساب کاربری"}
+            href={"/profile"}
             type="button"
           >
             {t("common:back")}
@@ -345,7 +345,7 @@ const ProfileSellerForm = ({ isMobileView }: { isMobileView: boolean }) => {
             <div className="mt-7 flex flex-col gap-2">
               <Link
                 className="btn btn-secondary btn-md"
-                href={"/profile?t=حساب کاربری"}
+                href={"/profile"}
                 type="button"
               >
                 {t("common:back")}

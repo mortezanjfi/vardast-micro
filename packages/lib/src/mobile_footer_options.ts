@@ -57,7 +57,17 @@ const _default: ILayoutOption[] = [
     icon: "UserIcon",
     button: {
       type: "link",
-      value: "/profile?t=حساب کاربری"
+      value: [
+        "/profile/main",
+        "/profile/info",
+        "/profile/favorites",
+        "/profile/projects",
+        "/profile/orders",
+        "/profile/about",
+        "/profile/contact",
+        "/profile/faq",
+        "/profile/privacy"
+      ]
     },
     title: "حساب کاربری"
   }

@@ -12,7 +12,7 @@ const readAllFile = () => {
       const projects = dirNext.replace("vardast-", "");
       const alters = {
         admin: "(admin)",
-        client: "(client)/profile/(layout)",
+        client: "(client)/profile/main",
         seller: "(seller)",
       };
       const subDir = alters[projects];

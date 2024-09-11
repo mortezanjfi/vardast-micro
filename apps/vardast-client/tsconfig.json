@@ -27,7 +27,7 @@
       "@vardast/util/*": ["node_modules/@vardast/util/src/*"],
       "@vardast/style/*": ["node_modules/@vardast/style/src/*"],
       "@/*": ["src/*"],
-      "@/app/(layout)/(bid)/*": ["src/app/(client)/profile/(layout)/(bid)/*"]
+      "@/app/(layout)/(bid)/*": ["src/app/(client)/profile/main/(bid)/*"]
     },
     "plugins": [
       {

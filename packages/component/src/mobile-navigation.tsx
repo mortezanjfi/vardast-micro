@@ -62,8 +62,10 @@ const MobileNavigation = ({
     return false
   }
 
-  const getActiveClassName = (activePath: string) => {
-    const isActiveNav = getIsActiveNav(activePath)
+  const getActiveClassName = (activePath: string | string[]) => {
+    const isActiveNav = Array.isArray(activePath)
+      ? activePath.some((item) => getIsActiveNav(item))
+      : getIsActiveNav(activePath)
 
     return isActiveNav
       ? "text-primary-600 dark:text-primary-500"
@@ -118,21 +120,26 @@ const MobileNavigation = ({
       <div className="grid h-14 w-full grid-cols-4 bg-alpha-white bg-opacity-5">
         {mobile_footer_options[`${options.name}`].map(
           ({ button, id, title, icon }) => {
-            const href = button.value as string
+            const href = button.value as string | string[]
+            const isActive = Array.isArray(href)
+              ? href.some((item) => getIsActiveNav(item))
+              : getIsActiveNav(href)
+
+            const hrefLink = Array.isArray(href) ? href?.at(0) : href
 
             return (
               <Link
                 className={`group inline-flex h-full flex-col items-center justify-center gap-y-0.5 pb-2`}
-                href={href}
+                href={hrefLink}
                 key={id}
               >
                 <DynamicHeroIcon
                   className={mergeClasses(
                     "icon h-7 w-7 transform transition-all",
-                    getIsActiveNav(href) ? "text-primary-600" : "text-alpha-500"
+                    isActive ? "text-primary-600" : "text-alpha-500"
                   )}
                   icon={icon}
-                  solid={getIsActiveNav(href)}
+                  solid={isActive}
                 />
                 <p
                   className={mergeClasses(

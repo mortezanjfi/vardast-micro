@@ -24,7 +24,7 @@ export interface ILayoutDesktopSidebar {
 
 interface ILayoutButton {
   type: "click" | "link"
-  value: string | (() => void)
+  value: string | (() => void) | string[]
 }
 
 type ILayoutBackground = {
