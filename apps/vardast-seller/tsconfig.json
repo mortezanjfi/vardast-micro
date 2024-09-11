@@ -47,12 +47,8 @@
     "build",
     "dist",
     ".next",
-    "node_modules",
-    "./src/app/(authentication)",
-    "./src/app/(seller)/(bid)/*.ts",
-    "./src/app/(seller)/(bid)/*.tsx",
-    "./src/app/(authentication)/*.ts",
-    "./src/app/(authentication)/*.tsx",
+    "**/(bid)",
+    "**(authentication)",
     "./locales"
   ]
 }
