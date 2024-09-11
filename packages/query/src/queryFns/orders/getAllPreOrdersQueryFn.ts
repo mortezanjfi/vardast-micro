@@ -5,7 +5,11 @@ import request from "graphql-request"
 import { getServerSession } from "next-auth"
 import { getSession } from "next-auth/react"
 
-export const getAllPreOrdersQueryFn: any = async (args) => {
+import { TableFetchApiFunctionType } from "../../type"
+
+export const getAllPreOrdersQueryFn: TableFetchApiFunctionType = async (
+  args
+) => {
   const session =
     typeof window === "undefined"
       ? await getServerSession(authOptions)

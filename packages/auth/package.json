@@ -32,7 +32,8 @@
   },
   "eslintConfig": {
     "extends": [
-      "@vardast/eslint-config/base"
+      "@vardast/eslint-config/base",
+      "@vardast/eslint-config/nextjs"
     ],
     "include": [
       ".next/types/**/*.ts"
