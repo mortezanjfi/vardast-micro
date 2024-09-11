@@ -1,8 +1,8 @@
 "use client"
 
-import { useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import Image from "next/image"
-import { useParams, useRouter } from "next/navigation"
+import { useParams, usePathname, useRouter } from "next/navigation"
 import { ArrowRightIcon, Bars3Icon } from "@heroicons/react/24/solid"
 import logo from "@vardast/asset/logo-horizontal-v2-persian-dark-bg-white.svg"
 import { useSetSidebarHamburger } from "@vardast/provider/LayoutProvider/use-layout"
@@ -21,7 +21,9 @@ const MobileHeader = ({
 }: ILayoutMobileHeader) => {
   const router = useRouter()
   const params = useParams()
+  const pathname = usePathname()
   const setSidebarHamburger = useSetSidebarHamburger()
+  const [renderForce, setRenderForce] = useState(false)
 
   const slugTitle = useMemo(() => {
     const slug = Object.values(params)?.at(0)
@@ -33,7 +35,13 @@ const MobileHeader = ({
     [params, title]
   )
 
-  console.log("second layout header:", { title, slugTitle })
+  useEffect(() => {
+    if (pathname === "/profile") {
+      console.log("force render happenedddddddddddddddd!", title)
+
+      setRenderForce(!renderForce)
+    }
+  }, [router, params])
 
   return (
     <div className="grid h-full grid-cols-9 items-center">

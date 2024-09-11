@@ -17,7 +17,7 @@ import { SearchActionModal } from "../Search"
 import Sidebar from "../Sidebar"
 
 const MobileHeader = dynamic(() => import("../header/MobileHeader"), {
-  ssr: false // Disable server-side rendering for this component
+  ssr: true // Disable server-side rendering for this component
 })
 
 export default function withLayout<T>(
@@ -32,8 +32,6 @@ export default function withLayout<T>(
       layout?.mobile?.footer?.action
         ? 4
         : 0) + (layout?.mobile?.footer?.options ? 3.5 : 0)
-
-    console.log("main layout options:", { layout })
 
     return (
       <LayoutProvider>

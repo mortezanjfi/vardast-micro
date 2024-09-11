@@ -22,8 +22,6 @@ const MobileHomeIndex = ({
   publicOrdersQuery,
   isMobileView
 }: IHomeProps) => {
-  console.log("ddddddddddd")
-
   return (
     <>
       {recentPriceProductsQuery?.data?.products?.data.length > 0 && (
