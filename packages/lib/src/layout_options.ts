@@ -527,7 +527,7 @@ const createOptionByMobileTitle = (
   title: ILayoutTitle<"image" | "text">,
   optionName?: OptionName
 ) => {
-  const temp = options[optionName || "_default"]
+  const temp = { ...options[optionName || "_default"] }
   temp.mobile.header.title = title
   return temp
 }

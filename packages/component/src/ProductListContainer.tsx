@@ -1,4 +1,3 @@
- 
 import { ReactElement, useState } from "react"
 import { ICategoryListLoader } from "@vardast/type/Loader"
 import clsx from "clsx"
@@ -34,7 +33,7 @@ const ProductListContainer: React.FC<IProductListContainer> = ({
         type === ProductContainerType.LARGE_LIST
           ? "grid-cols-1 divide-y divide-alpha-300 px-6 sm:grid-cols-2 md:grid-cols-3 md:divide-none md:px-0 lg:grid-cols-4 xl:grid-cols-6"
           : type === ProductContainerType.PRODUCT_PAGE_LIST
-            ? "grid-cols-1 gap-3 px-6 sm:grid-cols-3 md:grid-cols-2 md:divide-none md:px-0 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+            ? "grid-cols-1 divide-y divide-alpha-300 px-6 sm:grid-cols-3 md:grid-cols-2 md:divide-none md:px-0 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
             : "grid-cols-2 gap-0.5"
       )}
     >

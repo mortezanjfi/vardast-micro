@@ -24,7 +24,7 @@ function CategoriesPublicOrders({ publicPreOrders, title }: Props) {
           listName={"orders"}
         />
       )}
-      <div className="flex flex-col gap-4  px-6 sm:grid sm:grid-cols-2 sm:gap-6  sm:!px-0 lg:grid-cols-3 2xl:grid-cols-4">
+      <div className="flex flex-col gap-4 px-6 pt-6 sm:grid sm:grid-cols-2 sm:gap-6  sm:!px-0 lg:grid-cols-3 2xl:grid-cols-4">
         {publicPreOrders.isFetching || publicPreOrders.isLoading ? (
           <>
             {[...Array(10)].map((_, index) => (

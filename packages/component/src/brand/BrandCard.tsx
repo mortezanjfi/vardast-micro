@@ -69,7 +69,7 @@ const BrandCard = forwardRef(
     return (
       <Link
         className={clsx(
-          "flex h-full flex-col overflow-hidden bg-alpha-white py-6 sm:py-0"
+          "flex h-full flex-col bg-alpha-white py-6 sm:py-0"
           // selectedItemId === brand?.id
           //   ? "border-2 border-primary"
           //   : "border-alpha-50"

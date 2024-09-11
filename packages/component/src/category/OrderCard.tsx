@@ -39,7 +39,7 @@ const OrderCard = ({
   const { colorClass, timeDisplay } = getBidTimeLeft(preOrder?.bid_end)
 
   return (
-    <Card className="overflow-hidden !p-0">
+    <Card className="overflow-hidden rounded-2xl !p-0">
       <div
         onClick={() => {
           isSellerPanel &&
@@ -151,16 +151,17 @@ const OrderCard = ({
             </div>
             <div className="flex flex-col pt-3">
               <DetailsWithTitle
+                textCustomStyle="line-clamp-1"
                 item={{ value: preOrder?.lines[0]?.item_name }}
               />
-              {preOrder?.lines?.length > 1 && (
+              {/* {preOrder?.lines?.length > 1 && (
                 <div className="flex items-center gap-1">
                   <DetailsWithTitle
                     item={{ value: preOrder?.lines[1]?.item_name }}
                   />
                   {preOrder?.lines?.length > 2 && <span>...</span>}
                 </div>
-              )}
+              )} */}
             </div>
           </div>
 
