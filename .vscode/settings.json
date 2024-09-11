@@ -54,6 +54,7 @@
   "[xml]": {
     "editor.defaultFormatter": "redhat.vscode-xml"
   },
+  "i18n-ally.localesPaths": ["locales"],
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   }
