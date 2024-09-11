@@ -215,7 +215,7 @@ const ProfileSellerForm = ({ isMobileView }: { isMobileView: boolean }) => {
           <Link
             type="button"
             className="btn btn-secondary btn-md"
-            href={"/profile"}
+            href={"/profile?t=حساب کاربری"}
           >
             {t("common:back")}
           </Link>
@@ -352,7 +352,7 @@ const ProfileSellerForm = ({ isMobileView }: { isMobileView: boolean }) => {
               <Link
                 type="button"
                 className="btn btn-secondary btn-md"
-                href={"/profile"}
+                href={"/profile?t=حساب کاربری"}
               >
                 {t("common:back")}
               </Link>

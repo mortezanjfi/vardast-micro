@@ -2,7 +2,12 @@
 
 import { useEffect, useMemo, useState } from "react"
 import Image from "next/image"
-import { useParams, usePathname, useRouter } from "next/navigation"
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams
+} from "next/navigation"
 import { ArrowRightIcon, Bars3Icon } from "@heroicons/react/24/solid"
 import logo from "@vardast/asset/logo-horizontal-v2-persian-dark-bg-white.svg"
 import { useSetSidebarHamburger } from "@vardast/provider/LayoutProvider/use-layout"
@@ -20,10 +25,13 @@ const MobileHeader = ({
   hamburger
 }: ILayoutMobileHeader) => {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const params = useParams()
   const pathname = usePathname()
   const setSidebarHamburger = useSetSidebarHamburger()
   const [renderForce, setRenderForce] = useState(false)
+
+  const searchParamTitle = searchParams.get("t") || ""
 
   const slugTitle = useMemo(() => {
     const slug = Object.values(params)?.at(0)
@@ -41,7 +49,7 @@ const MobileHeader = ({
 
       setRenderForce(!renderForce)
     }
-  }, [router, params])
+  }, [router, params, searchParamTitle])
 
   return (
     <div className="grid h-full grid-cols-9 items-center">
@@ -82,7 +90,7 @@ const MobileHeader = ({
               </div>
             ) : (
               <h2 className="line-clamp-1 text-center !text-lg font-bold text-alpha-white">
-                {title?.value ?? slugTitle ?? "وردست"}
+                {title?.value ?? slugTitle ?? searchParamTitle ?? "وردست"}
               </h2>
             )}
           </div>

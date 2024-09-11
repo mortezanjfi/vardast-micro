@@ -524,12 +524,12 @@ const options = {
 type OptionName = keyof typeof options
 
 const createOptionByMobileTitle = (
-  title: ILayoutTitle<"image" | "text">,
+  title: ILayoutTitle<"image" | "text" | "none">,
   optionName?: OptionName
 ) => {
   const temp = { ...options[optionName || "_default"] }
   temp.mobile.header.title = title
-  return { ...temp, key: title }
+  return { ...temp, key: title ?? Math.random() }
 }
 
 export default {

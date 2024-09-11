@@ -3,11 +3,13 @@ import * as OutlineIcons from "@heroicons/react/24/outline"
 
 export type THeroIconName = keyof typeof SolidIcons | keyof typeof OutlineIcons
 
-type ILayoutTitleType = "image" | "text"
+type ILayoutTitleType = "image" | "text" | "none"
 
 type ILayoutTitleMap<T extends ILayoutTitleType> = T extends "image"
   ? { type: "image"; value?: string }
-  : { type: "text"; value?: string }
+  : T extends "text"
+    ? { type: "text"; value?: string }
+    : { type: "none"; value?: null }
 
 export type ILayoutTitle<T extends ILayoutTitleType> = ILayoutTitleMap<T>
 
@@ -39,7 +41,7 @@ export interface ILayoutOption {
 
 export interface ILayoutDesktopHeader {
   background?: ILayoutBackground
-  title?: ILayoutTitle<"image" | "text">
+  title?: ILayoutTitle<"image" | "text" | "none">
   search?: boolean
   button?: ILayoutButton
   options?: {
@@ -49,7 +51,7 @@ export interface ILayoutDesktopHeader {
 
 export interface ILayoutMobileHeader {
   background?: ILayoutBackground
-  title?: ILayoutTitle<"image" | "text">
+  title?: ILayoutTitle<"image" | "text" | "none">
   back?: boolean
   progress?: boolean
   hamburger?: boolean

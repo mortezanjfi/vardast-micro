@@ -5,7 +5,7 @@ const _bidding: NavigationType[] = [
     items: [
       {
         title: "پروژه ها",
-        path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}projects`,
+        path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}projects?t=پروژه ها`,
         background_color: "bg-gray-400",
         color: "text-white",
         icon: "FolderOpenIcon"
@@ -18,11 +18,11 @@ const _bidding: NavigationType[] = [
         items: [
           {
             title: "بر اساس سفارش",
-            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders`
+            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders?t=سفارشات`
           },
           {
             title: "بر اساس اقلام",
-            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}lines`
+            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}lines?t=سفارشات`
           }
         ]
       }
@@ -36,7 +36,7 @@ const _profile: NavigationType[] = [
       {
         title: "پروژه ها",
         icon: "FolderOpenIcon",
-        path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}projects`,
+        path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}projects?t=پروژه ها`,
         background_color: "bg-blue-500",
         color: "text-white"
       },
@@ -46,11 +46,11 @@ const _profile: NavigationType[] = [
         items: [
           {
             title: "بر اساس سفارش",
-            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders`
+            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders?t=سفارشات`
           },
           {
             title: "بر اساس اقلام",
-            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}lines`
+            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}lines?t=سفارشات`
           }
         ],
         background_color: "bg-orange-500",
@@ -180,7 +180,7 @@ const _admin: NavigationType[] = [
       },
       {
         title: "پروژه ها",
-        path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}projects`,
+        path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}projects?t=پروژه ها`,
         background_color: "bg-orange-500",
         color: "text-white",
         icon: "FolderOpenIcon"
@@ -193,11 +193,11 @@ const _admin: NavigationType[] = [
         items: [
           {
             title: "بر اساس سفارش",
-            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders`
+            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders?t=سفارشات`
           },
           {
             title: "بر اساس اقلام",
-            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}lines`
+            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}lines?t=سفارشات`
           }
         ]
       },
@@ -276,7 +276,7 @@ export const _seller_panel: NavigationType[] = [
       },
       {
         title: "پروژه ها",
-        path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}projects`,
+        path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}projects?t=پروژه ها`,
         background_color: "bg-orange-500",
         color: "text-white",
         icon: "FolderOpenIcon"
@@ -289,11 +289,11 @@ export const _seller_panel: NavigationType[] = [
         items: [
           {
             title: "بر اساس سفارش",
-            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders`
+            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}orders?t=سفارشات`
           },
           {
             title: "بر اساس اقلام",
-            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}lines`
+            path: `${process.env.NEXT_PUBLIC_BIDDING_PATH}lines?t=سفارشات`
           }
         ]
       },
