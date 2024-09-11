@@ -24,7 +24,7 @@
     "@tanstack/react-query": "^4.33.0",
     "@tanstack/react-query-devtools": "^4.33.0",
     "graphql": "^16.8.0",
-    "graphql-request": "^6.1.0"
+    "graphql-request": "^7.1.0"
   },
   "devDependencies": {
     "@vardast/eslint-config": "workspace:*",

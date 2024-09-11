@@ -13,7 +13,7 @@ export const getAllPreOrdersQueryFn: TableFetchApiFunctionType = async (
     typeof window === "undefined"
       ? await getServerSession(authOptions)
       : await getSession()
-  return await request<any>(
+  return await request(
     process.env.NEXT_PUBLIC_GRAPHQL_API_ENDPOINT as string,
     GetAllPreOrdersQueryDocument,
     {
