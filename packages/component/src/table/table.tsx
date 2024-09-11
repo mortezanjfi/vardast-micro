@@ -1,5 +1,8 @@
+// @ts-ignore
 "use client"
 
+import { FormEvent, useCallback, useEffect, useMemo, useState } from "react"
+import { usePathname, useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import { useQuery } from "@tanstack/react-query"
@@ -23,8 +26,6 @@ import {
   parseAsInteger,
   useQueryStates
 } from "next-usequerystate"
-import { usePathname, useRouter } from "next/navigation"
-import { FormEvent, useCallback, useEffect, useMemo, useState } from "react"
 import { DefaultValues, useForm } from "react-hook-form"
 import { AnyZodObject, TypeOf, ZodDefault, ZodSchema } from "zod"
 
@@ -301,7 +302,6 @@ const Table = <
         let resetValues:
           | TypeOf<TSchema>
           | DefaultValues<TypeOf<TSchema>>
-           
           | ((formValues: TypeOf<TSchema>) => TypeOf<TSchema>)
 
         filters.options.forEach((item) => {
