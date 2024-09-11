@@ -1,3 +1,4 @@
+// @ts-ignore
 import { authOptions } from "@vardast/auth/authOptions"
 import { GetAllPreOrdersQueryDocument } from "@vardast/graphql/generated"
 import request from "graphql-request"
