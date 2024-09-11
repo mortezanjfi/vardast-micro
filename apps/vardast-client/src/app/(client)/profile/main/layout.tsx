@@ -7,6 +7,6 @@ export default WithLayoutMaker({
       type: "text",
       value: "حساب کاربری"
     },
-    "_profile"
+    "_main_profile"
   )
 })

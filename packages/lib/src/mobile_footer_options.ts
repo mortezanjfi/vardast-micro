@@ -63,10 +63,11 @@ const _default: ILayoutOption[] = [
         "/profile/favorites",
         "/profile/projects",
         "/profile/orders",
-        "/profile/about",
-        "/profile/contact",
-        "/profile/faq",
-        "/profile/privacy"
+        "/about",
+        "/contact",
+        "/faq",
+        "/basket",
+        "/privacy"
       ]
     },
     title: "حساب کاربری"

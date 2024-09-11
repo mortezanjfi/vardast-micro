@@ -4,12 +4,12 @@ const _profile: WithNavigationRouteItem[] = [
   {
     forceEqual: true,
     dynamicRouteAllow: true,
-    path: "profile/orders"
+    path: "profile/main/orders"
   },
   {
     forceEqual: true,
     dynamicRouteAllow: true,
-    path: "profile/projects"
+    path: "profile/main/projects"
   },
   {
     forceEqual: true,
