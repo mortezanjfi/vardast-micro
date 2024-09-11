@@ -28,6 +28,8 @@ const MobileHeader = ({
   const titleColSpan =
     9 - (back ? 1 : 0) - (hamburger ? 2 : 0) - (options ? 1 : 0)
 
+  console.log("second layout header:", { title, slugTitle })
+
   return (
     <div className="grid h-full grid-cols-9 items-center">
       {progress && (
