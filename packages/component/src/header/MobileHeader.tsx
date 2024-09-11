@@ -1,5 +1,6 @@
 "use client"
 
+import { useMemo } from "react"
 import Image from "next/image"
 import { useParams, useRouter } from "next/navigation"
 import { ArrowRightIcon, Bars3Icon } from "@heroicons/react/24/solid"
@@ -21,12 +22,16 @@ const MobileHeader = ({
   const router = useRouter()
   const params = useParams()
   const setSidebarHamburger = useSetSidebarHamburger()
-  const slug = Object.values(params)?.at(0)
 
-  const slugTitle = slug?.at(-1) && decodeURI(slug?.at(-1))
+  const slugTitle = useMemo(() => {
+    const slug = Object.values(params)?.at(0)
+    return slug?.at(-1) && decodeURI(slug?.at(-1))
+  }, [router, title])
 
-  const titleColSpan =
-    9 - (back ? 1 : 0) - (hamburger ? 2 : 0) - (options ? 1 : 0)
+  const titleColSpan = useMemo(
+    () => 9 - (back ? 1 : 0) - (hamburger ? 2 : 0) - (options ? 1 : 0),
+    [router, title]
+  )
 
   console.log("second layout header:", { title, slugTitle })
 
