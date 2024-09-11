@@ -1,4 +1,5 @@
 import { PropsWithChildren, Suspense } from "react"
+import dynamic from "next/dynamic"
 import LayoutProvider from "@vardast/provider/LayoutProvider"
 import PageLoadingProvider from "@vardast/provider/PageLoadingProvider"
 import { ILayoutProps } from "@vardast/type/layout"
@@ -9,12 +10,15 @@ import Breadcrumb from "../Breadcrumb"
 import DesktopFooter from "../desktop/DesktopFooter"
 import DesktopHeader from "../desktop/DesktopHeader"
 import PageBanner from "../desktop/PageBanner"
-import MobileHeader from "../header/MobileHeader"
 import MobileScrollProvider from "../header/MobileScrollProvider"
 import MobileNavigation from "../mobile-navigation"
 import { MotionSection } from "../motion/Motion"
 import { SearchActionModal } from "../Search"
 import Sidebar from "../Sidebar"
+
+const MobileHeader = dynamic(() => import("../header/MobileHeader"), {
+  ssr: false // Disable server-side rendering for this component
+})
 
 export default function withLayout<T>(
   Component: React.FC<PropsWithChildren<T>>,
