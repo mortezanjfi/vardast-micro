@@ -6,7 +6,6 @@ import {
 } from "@vardast/graphql/generated"
 import clsx from "clsx"
 
-import ListHeader from "../desktop/ListHeader"
 import OrderCard from "./OrderCard"
 
 type Props = {
@@ -18,12 +17,12 @@ type Props = {
 function CategoriesPublicOrders({ publicPreOrders, title }: Props) {
   return (
     <div className={clsx(!title && "sm:py-5 ")}>
-      {title && (
+      {/* {title && (
         <ListHeader
           // total={publicPreOrders?.data?.publicOrders.}
           listName={"orders"}
         />
-      )}
+      )} */}
       <div className="flex flex-col gap-4 px-6 pt-6 sm:grid sm:grid-cols-2 sm:gap-6  sm:!px-0 lg:grid-cols-3 2xl:grid-cols-4">
         {publicPreOrders.isFetching || publicPreOrders.isLoading ? (
           <>
