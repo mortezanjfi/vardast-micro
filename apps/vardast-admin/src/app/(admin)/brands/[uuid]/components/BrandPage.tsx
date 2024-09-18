@@ -8,6 +8,7 @@ import { setDefaultOptions } from "date-fns"
 import { faIR } from "date-fns/locale"
 
 import BrandInfo from "@/app/(admin)/brands/[uuid]/components/BrandInfo"
+import OldBrandForm from "@/app/(admin)/brands/[uuid]/components/OldBrandForm"
 
 type Props = { uuid: string }
 
@@ -36,6 +37,7 @@ function BrandPage({ uuid }: Props) {
         loading={getBrandQuery.isLoading}
         modal={[modals, onChangeModals, onCloseModals]}
       />
+      <OldBrandForm brand={getBrandQuery?.data?.brand as Brand} />
     </>
   )
 }

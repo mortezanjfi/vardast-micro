@@ -40,8 +40,7 @@
     "src/@core/types/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "../../packages/component/src/admin/legal/LegalModal.tsx"
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

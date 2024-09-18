@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo } from "react"
+import Image from "next/image"
 import { digitsEnToFa } from "@persian-tools/persian-tools"
 import DetailsCard from "@vardast/component/desktop/DetailsCard"
 import { BrandModalEnum } from "@vardast/component/type"
@@ -9,6 +10,7 @@ import { Brand } from "@vardast/graphql/generated"
 import { ThreeStateSupervisionStatusesFa } from "@vardast/lib/constants"
 import { UseModalsReturn } from "@vardast/ui/modal"
 import { formatDistanceToNow } from "date-fns"
+import { LucideWarehouse } from "lucide-react"
 import useTranslation from "next-translate/useTranslation"
 
 import BrandModal from "@/app/(admin)/brands/[uuid]/components/BrandModal"
@@ -41,6 +43,28 @@ const BrandInfo = ({ brand, loading, modal }: BrandInfoProps) => {
             value: brand?.name
           },
           className: "font-bold text-lg col-span-full"
+        },
+        {
+          item: {
+            value: (
+              <div className="relative flex h-28 w-28 items-center justify-center rounded-md border border-alpha-200">
+                {brand?.logoFile ? (
+                  <Image
+                    alt="..."
+                    className="object-contain p-3"
+                    fill
+                    src={brand?.logoFile?.presignedUrl.url}
+                  />
+                ) : (
+                  <LucideWarehouse
+                    className="h-8 w-8 text-alpha-400"
+                    strokeWidth={1.5}
+                  />
+                )}
+              </div>
+            )
+          },
+          className: "col-span-full"
         },
         {
           item: {
