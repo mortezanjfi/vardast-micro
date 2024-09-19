@@ -36,7 +36,6 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "@tanstack/react-query": "*",
     "@fullcalendar/core": "^6.1.8",
     "@fullcalendar/daygrid": "^6.1.8",
     "@fullcalendar/react": "^6.1.8",
@@ -44,6 +43,7 @@
     "@persian-tools/persian-tools": "^3.5.0",
     "@react-pdf-viewer/core": "3.12.0",
     "@react-pdf-viewer/default-layout": "^3.12.0",
+    "@tanstack/react-query": "*",
     "@vardast/asset": "workspace:*",
     "@vardast/auth": "workspace:*",
     "@vardast/component": "workspace:*",
